@@ -1476,14 +1476,14 @@
 					"frontendTokens": [
 						{
 							"defaultValue": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-							"label": "font-family-sans-serif",
+							"label": "font-family-base",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "font-family-sans-serif"
+									"value": "font-family-base"
 								}
 							],
-							"name": "fontFamilySansSerif",
+							"name": "fontFamilyBase",
 							"type": "String"
 						},
 						{
@@ -1500,16 +1500,16 @@
 						},
 						{
 							"defaultValue": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-							"label": "font-family-base",
+							"label": "font-family-sans-serif",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "font-family-base"
+									"value": "font-family-sans-serif"
 								}
 							],
-							"name": "fontFamilyBase",
+							"name": "fontFamilySansSerif",
 							"type": "String"
-						}
+						}	
 					],
 					"label": "font-family",
 					"name": "fontFamily"
@@ -1817,6 +1817,18 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "1.2",
+							"label": "display-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display-line-height"
+								}
+							],
+							"name": "displayLineHeight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "6rem",
 							"label": "display-1-size",
 							"mappings": [
@@ -1826,6 +1838,18 @@
 								}
 							],
 							"name": "display1Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-1-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display1-weight"
+								}
+							],
+							"name": "display1Weight",
 							"type": "String"
 						},
 						{
@@ -1841,6 +1865,18 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-2-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display2-weight"
+								}
+							],
+							"name": "display2Weight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "3.0625rem",
 							"label": "display-3-size",
 							"mappings": [
@@ -1850,6 +1886,18 @@
 								}
 							],
 							"name": "display3Size",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "display-3-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "display3-weight"
+								}
+							],
+							"name": "display3Weight",
 							"type": "String"
 						},
 						{
@@ -1866,42 +1914,6 @@
 						},
 						{
 							"defaultValue": "var(--font-weight-light)",
-							"label": "display-1-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display1-weight"
-								}
-							],
-							"name": "display1Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-2-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display2-weight"
-								}
-							],
-							"name": "display2Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "display-3-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display3-weight"
-								}
-							],
-							"name": "display3Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
 							"label": "display-4-weight",
 							"mappings": [
 								{
@@ -1910,18 +1922,6 @@
 								}
 							],
 							"name": "display4Weight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1.2",
-							"label": "display-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "display-line-height"
-								}
-							],
-							"name": "displayLineHeight",
 							"type": "String"
 						}
 					],
@@ -1985,30 +1985,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "1rem",
-							"label": "text-link-md-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-md-font-size"
-								}
-							],
-							"name": "textLinkMdFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.875rem",
-							"label": "text-link-sm-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-sm-font-size"
-								}
-							],
-							"name": "textLinkSmFontSize",
-							"type": "String"
-						},
-						{
 							"defaultValue": "28px",
 							"label": "text-link-lg-line-height",
 							"mappings": [
@@ -2021,6 +1997,18 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "1rem",
+							"label": "text-link-md-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-md-font-size"
+								}
+							],
+							"name": "textLinkMdFontSize",
+							"type": "String"
+						},
+						{
 							"defaultValue": "24px",
 							"label": "text-link-md-line-height",
 							"mappings": [
@@ -2030,6 +2018,18 @@
 								}
 							],
 							"name": "textLinkMdLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "text-link-sm-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-sm-font-size"
+								}
+							],
+							"name": "textLinkSmFontSize",
 							"type": "String"
 						},
 						{
@@ -2050,43 +2050,6 @@
 				},
 				{
 					"frontendTokens": [
-						{
-							"defaultValue": "1.25rem",
-							"label": "lead-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "lead-font-size"
-								}
-							],
-							"name": "leadFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-light)",
-							"label": "lead-font-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "lead-font-weight"
-								}
-							],
-							"name": "leadFontWeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-4)",
-							"editorType": "ColorPicker",
-							"label": "text-muted",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-muted"
-								}
-							],
-							"name": "textMuted",
-							"type": "String"
-						},
 						{
 							"defaultValue": "1.25rem",
 							"label": "blockquote-font-size",
@@ -2137,18 +2100,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "1px",
-							"label": "hr-border-width",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "hr-border-width"
-								}
-							],
-							"name": "hrBorderWidth",
-							"type": "String"
-						},
-						{
 							"defaultValue": "1rem",
 							"label": "hr-border-margin-y",
 							"mappings": [
@@ -2161,6 +2112,42 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "1px",
+							"label": "hr-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "hr-border-width"
+								}
+							],
+							"name": "hrBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.25rem",
+							"label": "lead-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-size"
+								}
+							],
+							"name": "leadFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-light)",
+							"label": "lead-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lead-font-weight"
+								}
+							],
+							"name": "leadFontWeight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "var(--color-brand-secondary-lighten-5)",
 							"label": "marked-text-background-color",
 							"mappings": [
@@ -2170,6 +2157,19 @@
 								}
 							],
 							"name": "markedTextBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-4)",
+							"editorType": "ColorPicker",
+							"label": "text-muted",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-muted"
+								}
+							],
+							"name": "textMuted",
 							"type": "String"
 						}
 					],
@@ -2243,16 +2243,15 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#5E38BA",
-							"editorType": "ColorPicker",
-							"label": "link-visited-color",
+							"defaultValue": "underline",
+							"label": "link-hover-text-decoration",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "link-visited-color"
+									"value": "link-hover-text-decoration"
 								}
 							],
-							"name": "linkVisitedColor",
+							"name": "linkHoverTextDecoration",
 							"type": "String"
 						},
 						{
@@ -2268,15 +2267,16 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "underline",
-							"label": "link-hover-text-decoration",
+							"defaultValue": "#5E38BA",
+							"editorType": "ColorPicker",
+							"label": "link-visited-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "link-hover-text-decoration"
+									"value": "link-visited-color"
 								}
 							],
-							"name": "linkHoverTextDecoration",
+							"name": "linkVisitedColor",
 							"type": "String"
 						},
 						{
@@ -2412,18 +2412,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--elevation-tight-1) rgba(0, 0, 0, .075)",
-							"label": "box-shadow-sm",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "box-shadow-sm"
-								}
-							],
-							"name": "boxShadowSm",
-							"type": "String"
-						},
-						{
 							"defaultValue": "var(--elevation-fluffy-3) rgba(0, 0, 0, .175)",
 							"label": "box-shadow-lg",
 							"mappings": [
@@ -2434,6 +2422,18 @@
 							],
 							"name": "boxShadowLg",
 							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-tight-1) rgba(0, 0, 0, .075)",
+							"label": "box-shadow-sm",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "box-shadow-sm"
+								}
+							],
+							"name": "boxShadowSm",
+							"type": "String"
 						}
 					],
 					"label": "box-shadows",
@@ -2441,6 +2441,90 @@
 				},
 				{
 					"frontendTokens": [
+						{
+							"defaultValue": "0 5px 15px",
+							"label": "elevation-fluffy-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-1"
+								}
+							],
+							"name": "elevationFluffy1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 6.25px 20px",
+							"label": "elevation-fluffy-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-2"
+								}
+							],
+							"name": "elevationFluffy2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 10px 30px",
+							"label": "elevation-fluffy-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-3"
+								}
+							],
+							"name": "elevationFluffy3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 10px 35px",
+							"label": "elevation-fluffy-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-4"
+								}
+							],
+							"name": "elevationFluffy4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 15px 60px",
+							"label": "elevation-fluffy-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-5"
+								}
+							],
+							"name": "elevationFluffy5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 17.5px 70px",
+							"label": "elevation-fluffy-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-6"
+								}
+							],
+							"name": "elevationFluffy6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 35px 90px",
+							"label": "elevation-fluffy-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-7"
+								}
+							],
+							"name": "elevationFluffy7",
+							"type": "String"
+						},
 						{
 							"defaultValue": "0 1px 3px",
 							"label": "elevation-tight-1",
@@ -2547,90 +2631,6 @@
 								}
 							],
 							"name": "elevationTight9",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 5px 15px",
-							"label": "elevation-fluffy-1",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-1"
-								}
-							],
-							"name": "elevationFluffy1",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 6.25px 20px",
-							"label": "elevation-fluffy-2",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-2"
-								}
-							],
-							"name": "elevationFluffy2",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 10px 30px",
-							"label": "elevation-fluffy-3",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-3"
-								}
-							],
-							"name": "elevationFluffy3",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 10px 35px",
-							"label": "elevation-fluffy-4",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-4"
-								}
-							],
-							"name": "elevationFluffy4",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 15px 60px",
-							"label": "elevation-fluffy-5",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-5"
-								}
-							],
-							"name": "elevationFluffy5",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 17.5px 70px",
-							"label": "elevation-fluffy-6",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-6"
-								}
-							],
-							"name": "elevationFluffy6",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0 35px 90px",
-							"label": "elevation-fluffy-7",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "elevation-fluffy-7"
-								}
-							],
-							"name": "elevationFluffy7",
 							"type": "String"
 						}
 					],
@@ -3282,30 +3282,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--spacer-3)",
-							"label": "card-body-padding-top",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "card-body-padding-top"
-								}
-							],
-							"name": "cardBodyPaddingTop",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--spacer-4)",
-							"label": "card-body-padding-right",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "card-body-padding-right"
-								}
-							],
-							"name": "cardBodyPaddingRight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "var(--spacer-4)",
 							"label": "card-body-padding-bottom",
 							"mappings": [
@@ -3327,6 +3303,30 @@
 								}
 							],
 							"name": "cardBodyPaddingLeft",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "card-body-padding-right",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-right"
+								}
+							],
+							"name": "cardBodyPaddingRight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "card-body-padding-top",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-body-padding-top"
+								}
+							],
+							"name": "cardBodyPaddingTop",
 							"type": "String"
 						}
 					],
@@ -3354,27 +3354,15 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--aspect-ratio-1)",
-							"label": "card-horizontal-aspect-ratio-default",
+							"defaultValue": "24rem",
+							"label": "card-autofit-col-lg-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-horizontal-aspect-ratio-default"
+									"value": "card-autofit-col-lg-width"
 								}
 							],
-							"name": "cardHorizontalAspectRatioDefault",
-							"type": "String"
-						},
-						{
-							"defaultValue": "8rem",
-							"label": "card-autofit-col-sm-width",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "card-autofit-col-sm-width"
-								}
-							],
-							"name": "cardAutofitColSmWidth",
+							"name": "cardAutofitColLgWidth",
 							"type": "String"
 						},
 						{
@@ -3390,15 +3378,27 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "24rem",
-							"label": "card-autofit-col-lg-width",
+							"defaultValue": "8rem",
+							"label": "card-autofit-col-sm-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-autofit-col-lg-width"
+									"value": "card-autofit-col-sm-width"
 								}
 							],
-							"name": "cardAutofitColLgWidth",
+							"name": "cardAutofitColSmWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--aspect-ratio-1)",
+							"label": "card-horizontal-aspect-ratio-default",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "card-horizontal-aspect-ratio-default"
+								}
+							],
+							"name": "cardHorizontalAspectRatioDefault",
 							"type": "String"
 						}
 					],
@@ -3873,30 +3873,6 @@
 						},
 						{
 							"defaultValue": "0.25rem",
-							"label": "form-input-label-margin-top",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "form-input-label-margin-top"
-								}
-							],
-							"name": "formInputLabelMarginTop",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1rem",
-							"label": "form-input-label-margin-right",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "form-input-label-margin-right"
-								}
-							],
-							"name": "formInputLabelMarginRight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.25rem",
 							"label": "form-input-label-margin-bottom",
 							"mappings": [
 								{
@@ -3920,6 +3896,30 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "1rem",
+							"label": "form-input-label-margin-right",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "form-input-label-margin-right"
+								}
+							],
+							"name": "formInputLabelMarginRight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.25rem",
+							"label": "form-input-label-margin-top",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "form-input-label-margin-top"
+								}
+							],
+							"name": "formInputLabelMarginTop",
+							"type": "String"
+						},
+						{
 							"defaultValue": "var(--color-state-error)",
 							"label": "form-input-label-reference-mark-color",
 							"mappings": [
@@ -3931,6 +3931,7 @@
 							"name": "formInputLabelReferenceMarkColor",
 							"type": "String"
 						}
+						
 					],
 					"label": "form-input-label",
 					"name": "formInputLabel"
@@ -4345,6 +4346,32 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "var(--color-action-primary-disabled)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-border-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-border-color-disabled"
+								}
+							],
+							"name": "customControlBorderColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active-lighten)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-color-hover"
+								}
+							],
+							"name": "customControlColorHover",
+							"type": "String"
+						},
+						{
 							"defaultValue": "var(--form-input-label-color)",
 							"editorType": "ColorPicker",
 							"label": "custom-control-label-color",
@@ -4404,32 +4431,6 @@
 							],
 							"name": "customControlLabelPaddingLeft",
 							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-action-primary-disabled)",
-							"editorType": "ColorPicker",
-							"label": "custom-control-border-color-disabled",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "custom-control-border-color-disabled"
-								}
-							],
-							"name": "customControlBorderColorDisabled",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-action-primary-active-lighten)",
-							"editorType": "ColorPicker",
-							"label": "custom-control-color-hover",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "custom-control-color-hover"
-								}
-							],
-							"name": "customControlColorHover",
-							"type": "String"
 						}
 					],
 					"label": "custom-control",
@@ -4437,6 +4438,94 @@
 				},
 				{
 					"frontendTokens": [
+						{
+							"defaultValue": "0",
+							"label": "condensed-form-feedback-item-margin",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-feedback-item-margin"
+								}
+							],
+							"name": "condensedFormFeedbackItemMargin",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-2)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-background-color"
+								}
+							],
+							"name": "condensedFormInputBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-background-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-background-color-disabled"
+								}
+							],
+							"name": "condensedFormInputBackgroundColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-5)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-filled-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-border-color"
+								}
+							],
+							"name": "condensedFormInputFilledBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-filled-label-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-color"
+								}
+							],
+							"name": "condensedFormInputFilledLabelColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-font-size)",
+							"label": "condensed-form-input-filled-label-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-font-size"
+								}
+							],
+							"name": "condensedFormInputFilledLabelFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bolder)",
+							"label": "condensed-form-input-filled-label-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-font-weight"
+								}
+							],
+							"name": "condensedFormInputFilledLabelFontWeight",
+							"type": "String"
+						},
 						{
 							"defaultValue": "var(--color-neutral-5)",
 							"editorType": "ColorPicker",
@@ -4448,6 +4537,19 @@
 								}
 							],
 							"name": "condensedFormInputLabelColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-4)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-label-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-label-color-disabled"
+								}
+							],
+							"name": "condensedFormInputLabelColorDisabled",
 							"type": "String"
 						},
 						{
@@ -4499,31 +4601,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-background-color"
-								}
-							],
-							"name": "condensedFormInputBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0",
-							"label": "condensed-form-feedback-item-margin",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-feedback-item-margin"
-								}
-							],
-							"name": "condensedFormFeedbackItemMargin",
-							"type": "String"
-						},
-						{
 							"defaultValue": "var(--text-paragraph-sm-font-size)",
 							"label": "condensed-form-text-font-size",
 							"mappings": [
@@ -4545,82 +4622,6 @@
 								}
 							],
 							"name": "condensedFormTextFontWeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-8)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-filled-label-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-color"
-								}
-							],
-							"name": "condensedFormInputFilledLabelColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--text-paragraph-sm-font-size)",
-							"label": "condensed-form-input-filled-label-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-font-size"
-								}
-							],
-							"name": "condensedFormInputFilledLabelFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--font-weight-bolder)",
-							"label": "condensed-form-input-filled-label-font-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-font-weight"
-								}
-							],
-							"name": "condensedFormInputFilledLabelFontWeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-5)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-filled-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-border-color"
-								}
-							],
-							"name": "condensedFormInputFilledBorderColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-4)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-label-color-disabled",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-label-color-disabled"
-								}
-							],
-							"name": "condensedFormInputLabelColorDisabled",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-1)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-background-color-disabled",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-background-color-disabled"
-								}
-							],
-							"name": "condensedFormInputBackgroundColorDisabled",
 							"type": "String"
 						}
 					],

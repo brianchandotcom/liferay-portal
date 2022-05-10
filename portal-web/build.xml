@@ -20,7 +20,6 @@
 		<pathelement location="${project.dir}/lib/development/jstl-impl.jar" />
 		<pathelement location="${project.dir}/lib/development/mail.jar" />
 		<pathelement location="${project.dir}/lib/development/velocity.jar" />
-		<pathelement location="${project.dir}/lib/portal/commons-collections.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-lang.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-logging.jar" />
 		<pathelement location="${project.dir}/lib/portal/dom4j.jar" />

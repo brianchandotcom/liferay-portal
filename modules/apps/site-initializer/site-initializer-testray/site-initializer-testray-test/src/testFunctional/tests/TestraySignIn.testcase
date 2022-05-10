@@ -28,30 +28,28 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150436 - Verify when filling the field, the field label is green."
-    @priority = "2"
-    test CanFieldLabelBeGreen {
-        task ("Go to Testray and exit Testray") {
-            ApplicationsMenu.gotoSite(site = "Testray2");
+	@priority = "2"
+	test CanFieldLabelBeGreen {
+		task ("Go to Testray and exit Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray2");
 
 			var portalURL = PropsUtil.get("portal.url");
 
-            Testray.signOutTestray();
-        }
+			Testray.signOutTestray();
+		}
 
-        task ("Sign in New Account and assert the name field label is Green") {
+		task ("Sign in New Account and assert the name field label is Green") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
-            Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
+			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
-            TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
-
-            TestraySignIn.addPasswordTestray(key_itemvalue = "test");
+			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
 
 			TestraySignIn.assertTitleSucess(key_title = "Email Address");
 
-            User.firstLoginPG();
-
-        }
-    }
+			User.firstLoginPG();
+		}
+	}
 
 	@description = "This is a test for LPS-150437 - Verify when deleting the field, the field label is red."
 	@priority = "2"
@@ -65,7 +63,6 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the name field label is Red") {
-
 			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
@@ -92,7 +89,6 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the user can enter with an valid email") {
-
 			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
@@ -119,8 +115,7 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the user can enter with an valid email after getting the password wrong") {
-
-			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");		
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 

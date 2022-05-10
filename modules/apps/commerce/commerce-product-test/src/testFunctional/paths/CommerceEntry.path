@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WISH_LIST_NAME</td>
+	<td>//td[contains(@class,'lfr-name-column')]//*[contains(.,'${wishListName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_TABLE_PAGINATION</td>
 	<td>//li[contains(@class,'page-item active')]//button[contains(.,'${key_pageNumber}')]</td>
 	<td></td>

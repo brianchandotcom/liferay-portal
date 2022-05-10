@@ -1,9 +1,8 @@
-.applications-products-container .legend-content {
-	font-size: 14px;
-	width: 130px;
+.applications-status-container {
+	min-height: 257px;
 }
 
-.applications-products-container .applications-products-title::after {
+.applications-status-container .applications-status-title::after {
 	background-color: var(--primary);
 	content: '';
 	display: block;
@@ -11,44 +10,4 @@
 	margin-top: 6px;
 	position: absolute;
 	width: 19px;
-}
-
-.applications-products-container .applications-products-tooltip {
-	border: 1px solid #55c2ff;
-	color: #55c2ff;
-	font-size: 0.875rem;
-	font-style: normal;
-	width: 100%;
-}
-
-.applications-products-container .bb-chart-arcs-title {
-	dominant-baseline: central;
-	font-size: 32px;
-	font-weight: 700;
-}
-
-.applications-products-container .chart-legend {
-	line-height: 2;
-}
-
-.applications-products-container .legend-color {
-	height: 8px;
-	width: 8px;
-}
-
-.applications-products-container .legend-title {
-	color: #5c5e5e;
-	font-size: 14px;
-}	
-
-.applications-products-container .legend-container {
-	flex-direction: column;
-}
-
-@media screen and (max-width: 1845px) {
-	.applications-products-container .legend-container {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-evenly;
-	}
 }

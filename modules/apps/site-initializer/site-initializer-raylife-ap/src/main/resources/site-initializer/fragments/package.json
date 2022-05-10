@@ -1,12 +1,14 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.40.0",
+		"@clayui/charts": "3.56.0",
 		"react": "16.12.0",
 		"react-dom": "16.12.0",
 		"yo": "^4.3.0"
 	},
 	"devDependencies": {
-		"generator-liferay-fragments": "2.0.0-rc3"
+		"css-loader": "^5.0.0",
+		"generator-liferay-fragments": "2.0.0-rc3",
+		"style-loader": "^2.0.0"
 	},
 	"name": "@liferay/site-initializer-ap-fragments",
 	"scripts": {

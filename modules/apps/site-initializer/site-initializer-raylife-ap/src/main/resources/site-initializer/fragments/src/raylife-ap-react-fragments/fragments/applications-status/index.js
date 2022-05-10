@@ -12,28 +12,21 @@
  * details.
  */
 
-import ClayChart from '@clayui/charts';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import DonutChart from '../../../common/components/donut-chart';
 import {getApplicationsStatus} from '../../../common/services/Application';
 import {CONSTANTS} from '../../../common/utils/constants';
 
 export default function () {
+	const [chartTitle, setChartTitle] = useState('');
+	const [loadData, setLoadData] = useState(false);
+
 	const [chartData, setChartData] = useState({
 		colors: {},
 		columns: [],
 		type: 'donut',
 	});
-
-	const chartRef = useRef();
-
-	const titleUpdate = (title) => {
-		const titleElement = chartRef.current.element.querySelector(
-			'.bb-chart-arcs-title'
-		);
-
-		titleElement.textContent = title;
-	};
 
 	const getTotalCount = (result) => {
 		return result?.value?.data?.totalCount || 0;
@@ -52,8 +45,8 @@ export default function () {
 			const [
 				boundApplicationsResult,
 				incompleteApplicationsResult,
-				openApplicationsResults,
 				quotedApplicationsResult,
+				openApplicationsResults,
 				rejectedApplicationsResult,
 				reviewedApplicationsResult,
 				underwritingApplicationsResult,
@@ -95,8 +88,9 @@ export default function () {
 					getTotalCount(boundApplicationsResult),
 				],
 			];
+
 			const columns = cols.filter((col) => col[1] > 0);
-			setChartData({...chartData, ...{colors, columns}});
+			setChartData({...chartData, ...{colors, columns: []}});
 
 			const title = columns
 				.map((array) => array[1])
@@ -105,7 +99,9 @@ export default function () {
 				})
 				.toString();
 
-			titleUpdate(title);
+			setChartTitle(title);
+
+			setLoadData(true);
 		});
 	};
 
@@ -115,74 +111,20 @@ export default function () {
 	}, []);
 
 	return (
-		<div className="applications-products-container d-flex flex-column flex-shrink-0 pb-4 pt-3 px-3 w-100">
-			<div className="applications-products-title font-weight-bold h4 raylife-status-chart">
+		<div className="applications-status-container d-flex flex-column flex-shrink-0 pb-4 pt-3 px-3 w-100">
+			<div className="applications-status-title font-weight-bold h4 raylife-status-chart">
 				Status
 			</div>
 
-			<div className="align-items-center d-flex flex-wrap justify-content-center">
-				<ClayChart
-					data={chartData}
-					donut={{
-						label: {
-							show: false,
-						},
-						title: '0',
-						width: 15,
-					}}
-					legend={{
-						show: false,
-					}}
-					ref={chartRef}
-					size={{
-						height: 190,
-						width: 190,
-					}}
-					tooltip={{
-						contents: (
-							data,
-							_defaultTitleFormat,
-							_defaultValueFormat,
-							_color
-						) => {
-							const title = Liferay.Language.get(data[0].id);
-							const percent = (data[0].ratio * 100).toFixed(1);
+			{chartData.columns.length > 0 && (
+				<DonutChart chartData={chartData} title={chartTitle} />
+			)}
 
-							return `<div class="applications-products-tooltip bg-neutral-0 d-flex font-weight-bold p-2 rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> ${percent}%</div>`;
-						},
-					}}
-				/>
-
-				<div className="d-flex legend-container">
-					{chartData.columns.map((column, index) => (
-						<div
-							className="chart-legend d-flex flex-row justify-content-between legend-content pr-1"
-							key={index}
-						>
-							<div className="align-items-center d-flex flex-row justify-content-between mr-2">
-								<div
-									className="flex-shrink-0 legend-color mr-1 rounded-circle"
-									style={{
-										backgroundColor:
-											chartData.colors[column[0]],
-									}}
-								></div>
-
-								<div className="d-flex flex-row legend-title text-capitalize text-truncate">
-									{column[0]}
-								</div>
-							</div>
-
-							<div
-								className="font-weight-bolder"
-								style={{fontSize: '14px'}}
-							>
-								{column[1]}
-							</div>
-						</div>
-					))}
+			{chartData.columns.length === 0 && loadData && (
+				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
+					<span>No Data Applications</span>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }

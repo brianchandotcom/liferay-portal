@@ -12,31 +12,21 @@
  * details.
  */
 
-import ClayChart from '@clayui/charts';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import DonutChart from '../../../common/components/donut-chart';
 import {getApplications, getProductQuotes} from '../../../common/services/';
 
 const MAX_NAME_LENGHT = 15;
 
 export default function () {
-	const chartRef = useRef();
 	const [columns, setColumns] = useState([]);
 	const [colors, setColors] = useState({});
 
+	const [chartTitle, setChartTitle] = useState('');
+	const [loadData, setLoadData] = useState(false);
+
 	const colorsArray = ['#7154E1', '#55C2FF', '#4BC286', '#FF9A24'];
-
-	const titleUpdate = (title, classNames = '') => {
-		const titleElement = chartRef.current.element.querySelector(
-			'.bb-chart-arcs-title'
-		);
-
-		titleElement.textContent = title;
-
-		if (classNames !== '') {
-			titleElement.classList.add(...classNames);
-		}
-	};
 
 	useEffect(() => {
 		Promise.allSettled([getProductQuotes(), getApplications()]).then(
@@ -46,9 +36,7 @@ export default function () {
 				const columnsArr = [];
 				const colorsObj = {};
 
-				titleUpdate(applicationsResult?.value?.data?.totalCount, [
-					'h2',
-				]);
+				setChartTitle(applicationsResult?.value?.data?.totalCount);
 
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
@@ -88,8 +76,11 @@ export default function () {
 
 				setColumns(columnsArr);
 				setColors(colorsObj);
+
+				setLoadData(true);
 			}
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -105,70 +96,15 @@ export default function () {
 				Products
 			</div>
 
-			<div className="align-items-center d-flex flex-wrap justify-content-center">
-				{chartData && (
-					<ClayChart
-						data={chartData}
-						donut={{
-							label: {
-								show: false,
-							},
-							title: '0',
-							width: 15,
-						}}
-						legend={{
-							show: false,
-						}}
-						ref={chartRef}
-						size={{
-							height: 190,
-							width: 190,
-						}}
-						tooltip={{
-							contents: (
-								data,
-								_defaultTitleFormat,
-								_defaultValueFormat,
-								_color
-							) => {
-								const title = Liferay.Language.get(data[0].id);
-								const percent = (data[0].ratio * 100).toFixed(
-									1
-								);
+			{chartData.columns.length > 0 && (
+				<DonutChart chartData={chartData} title={chartTitle} />
+			)}
 
-								return `<div class="applications-products-tooltip bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex mr-2 w-100">${title}</span> ${percent}%</div>`;
-							},
-						}}
-					/>
-				)}
-
-				<div className="d-flex legend-container">
-					{chartData?.columns?.map((column, index) => (
-						<div
-							className="d-flex flex-row justify-content-between legend-content pr-1"
-							key={index}
-						>
-							<div className="align-items-center d-flex flex-row justify-content-between mr-2">
-								<div
-									className="flex-shrink-0 legend-color mr-2 rounded-circle"
-									style={{
-										backgroundColor:
-											chartData?.colors[column[0]],
-									}}
-								></div>
-
-								<span className="legend-title">
-									{column[2]}
-								</span>
-							</div>
-
-							<span className="font-weight-bolder">
-								{column[1]}
-							</span>
-						</div>
-					))}
+			{chartData.columns.length === 0 && loadData && (
+				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
+					<span>No Data Applications</span>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }

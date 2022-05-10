@@ -82,12 +82,13 @@ public class FrontendIconsServlet extends HttpServlet {
 			String[] iconPacks;
 
 			if (packOrSite.equals("site")) {
-				FrontendIconPacksConfiguration frontendIconPacksConfiguration =
-					_configurationProvider.getGroupConfiguration(
-						FrontendIconPacksConfiguration.class,
-						GetterUtil.getLong(packNameOrSiteId));
+				FrontendIconsPacksConfiguration
+					frontendIconsPacksConfiguration =
+						_configurationProvider.getGroupConfiguration(
+							FrontendIconsPacksConfiguration.class,
+							GetterUtil.getLong(packNameOrSiteId));
 
-				iconPacks = frontendIconPacksConfiguration.selectedIconPacks();
+				iconPacks = frontendIconsPacksConfiguration.selectedIconPacks();
 			}
 			else if (packOrSite.equals("pack")) {
 				iconPacks = new String[] {packNameOrSiteId};

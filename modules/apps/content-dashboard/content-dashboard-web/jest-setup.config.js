@@ -14,4 +14,4 @@
 
 window.Liferay = window.Liferay || {};
 
-window.Liferay = {...window.Liferay, __FF__: {}};
+window.Liferay = {...window.Liferay, FeatureFlags: {}};

@@ -25,7 +25,7 @@ const SelectTypeAndSubtype = ({
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
-	return Liferay?.__FF__['LPS-144630'] ? (
+	return Liferay?.FeatureFlags['LPS-144630'] ? (
 		<ClayTreeFilter
 			childrenPropertyKey="itemSubtypes"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}

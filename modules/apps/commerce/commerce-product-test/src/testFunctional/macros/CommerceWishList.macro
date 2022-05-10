@@ -1,0 +1,40 @@
+definition {
+    macro addProductToWishList {
+		for (var productList : list "${productName}") {
+			CommerceProducts.searchProduct(search = "${productList}");
+
+			Click(
+				key_productName = "${productList}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+
+			AssertElementPresent(
+				key_productName = "${productList}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_ASSERT_WISH_LIST_HEART_FULL");
+		}
+	}
+
+	macro assertWishListProduct {
+		AssertElementPresent(
+			locator1 = "CommerceEntry#WISH_LIST_NAME",
+			wishListName = "${wishListName}");
+
+		for (var productList : list "${productName}") {
+			AssertTextEquals(
+				locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+				value1 = "${productList}");
+		}
+	}
+
+    macro addWishList {
+		Click(locator1 = "Button#PLUS");
+
+        Click(locator1 = "Button#EDIT");
+
+        Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${wishListName}");
+
+        Button.clickSave();
+    }
+}

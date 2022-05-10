@@ -71,7 +71,7 @@ export default withRouter(
 	}) => {
 		const sectionRef = useRef(null);
 
-		const executeScroll = () =>
+		const runScroll = () =>
 			sectionRef.current.scrollIntoView({
 				behavior: 'smooth',
 				block: 'start',
@@ -404,13 +404,11 @@ export default withRouter(
 												)}
 
 												{isPageScroll &&
-													answers.items?.length >
-														0 && (
+													!!answers.items?.length && (
 														<ClayButton
+															className="btn btn-secondary"
 															displayType="secondary"
-															onClick={
-																executeScroll
-															}
+															onClick={runScroll}
 														>
 															{Liferay.Language.get(
 																'go-to-answers'

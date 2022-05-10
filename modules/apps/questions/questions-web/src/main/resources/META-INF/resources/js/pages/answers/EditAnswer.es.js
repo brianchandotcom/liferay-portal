@@ -83,16 +83,16 @@ export default withRouter(
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
 						<h1>
-							{!isAReplyMessage
-								? Liferay.Language.get('edit-answer')
-								: Liferay.Language.get('edit-comment')}
+							{isAReplyMessage
+								? Liferay.Language.get('edit-comment')
+								: Liferay.Language.get('edit-answer')}
 						</h1>
 
 						<DefaultQuestionsEditor
 							label={
-								!isAReplyMessage
-									? Liferay.Language.get('your-answer')
-									: Liferay.Language.get('your-comment')
+								isAReplyMessage
+									? Liferay.Language.get('your-comment')
+									: Liferay.Language.get('your-answer')
 							}
 							onContentLengthValid={setIsUpdateButtonDisabled}
 							onInstanceReady={onInstanceReady}
@@ -107,12 +107,12 @@ export default withRouter(
 								onClick={handleClickMessage}
 							>
 								{context.trustedUser
-									? !isAReplyMessage
+									? isAReplyMessage
 										? Liferay.Language.get(
-												'update-your-answer'
+												'update-your-comment'
 										  )
 										: Liferay.Language.get(
-												'update-your-comment'
+												'update-your-answer'
 										  )
 									: Liferay.Language.get(
 											'submit-for-publication'

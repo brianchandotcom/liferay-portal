@@ -63,7 +63,7 @@ export default withRouter(
 
 		useEffect(() => {
 			setShowAsAnswer(answer.showAsAnswer);
-		}, [answer, answer.showAsAnswer]);
+		}, [answer.showAsAnswer]);
 
 		useEffect(() => {
 			setDateModified(new Date(answer.dateModified).toLocaleDateString());
@@ -236,21 +236,22 @@ export default withRouter(
 
 											{/* this is an extra double check, remove it without creating 2 clay-group-item */}
 
-											{answer.actions.replace && (
-												<ClayButton
-													className="text-reset"
-													displayType="unstyled"
-												>
-													<Link
+											{editable &&
+												answer.actions.replace && (
+													<ClayButton
 														className="text-reset"
-														to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
+														displayType="unstyled"
 													>
-														{Liferay.Language.get(
-															'edit'
-														)}
-													</Link>
-												</ClayButton>
-											)}
+														<Link
+															className="text-reset"
+															to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
+														>
+															{Liferay.Language.get(
+																'edit'
+															)}
+														</Link>
+													</ClayButton>
+												)}
 										</ClayButton.Group>
 									)}
 								</div>
@@ -281,10 +282,10 @@ export default withRouter(
 					</div>
 				</div>
 				<div className="c-mb-3 col-md-9 offset-md-1">
-					{editable && comments.length > 0 && !showNewComment && (
+					{editable && !!comments.length && !showNewComment && (
 						<ClayButton.Group
 							className="font-weight-bold text-secondary"
-							spaced={true}
+							spaced
 						>
 							{answer.actions['reply-to-message'] &&
 								answer.status !== 'pending' && (

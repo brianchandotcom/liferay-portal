@@ -37,7 +37,7 @@ export default withRouter(
 			setDateModified(
 				new Date(comment.dateModified).toLocaleDateString()
 			);
-		}, [comment, comment.dateModified]);
+		}, [comment.dateModified]);
 
 		return (
 			<div className="c-my-3 questions-reply row">

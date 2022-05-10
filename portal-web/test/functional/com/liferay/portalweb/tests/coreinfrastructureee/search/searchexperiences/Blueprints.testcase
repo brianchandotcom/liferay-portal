@@ -584,9 +584,15 @@ definition {
 	test AssertNoXSSTitle {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(
-			description = "Test Description",
-			title = '''<script>alert(123);</script>''');
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "<script>alert(123);</script>");
+
+		PortletEntry.inputDescription(description = "<script>alert(123);</script>");
+
+		PortletEntry.create();
+
+		AssertAlertNotPresent();
 
 		PortletEntry.save();
 

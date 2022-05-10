@@ -204,9 +204,7 @@ definition {
 		}
 
 		task ("View the empty info in Segments admin") {
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "No Segments Created");
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
 
 			AssertVisible(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
 		}
@@ -254,9 +252,7 @@ definition {
 		}
 
 		task ("View the empty info in Segments admin") {
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "No Segments Created");
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
 
 			AssertVisible(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
 		}
@@ -931,7 +927,7 @@ definition {
 		task ("Switch tab to membership and check the membership list") {
 			ACNavigation.switchTab(tabName = "Membership");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.Learn more about individuals.");
 		}
 
 		task ("Edit the segment") {
@@ -1615,9 +1611,8 @@ definition {
 		task ("Cancel the creation") {
 			ACSegments.cancelSegment();
 
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "No Segments Created");
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
+
 		}
 
 		task ("Add a new dynamic segment") {

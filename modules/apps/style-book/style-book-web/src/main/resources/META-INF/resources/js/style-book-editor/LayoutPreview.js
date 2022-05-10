@@ -23,10 +23,14 @@ import React, {
 	useState,
 } from 'react';
 
-import {StyleBookContext} from './StyleBookContext';
+import {StyleBookContext, useDispatch, useLoading} from './StyleBookContext';
+import {LOADING} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {
+	const dispatch = useDispatch();
+	const loading = useLoading();
+
 	const iframeRef = useRef();
 	const [iframeLoaded, setIframeLoaded] = useState(false);
 
@@ -34,8 +38,6 @@ export default function LayoutPreview() {
 		frontendTokensValues = {},
 		previewLayout,
 		previewLayoutType,
-		loading,
-		setLoading,
 	} = useContext(StyleBookContext);
 
 	const loadFrontendTokenValues = useCallback(() => {
@@ -52,10 +54,10 @@ export default function LayoutPreview() {
 					}
 				);
 
-				setLoading(false);
+				dispatch({type: LOADING, value: false});
 			}
 		}
-	}, [frontendTokensValues, setLoading, iframeLoaded]);
+	}, [dispatch, frontendTokensValues, iframeLoaded]);
 
 	useEffect(() => {
 		loadFrontendTokenValues();

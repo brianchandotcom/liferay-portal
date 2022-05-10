@@ -12,23 +12,37 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext, useReducer} from 'react';
 
+import reducer from './reducer';
+
+const StyleBookDispatchContext = React.createContext(() => {});
 export const StyleBookContext = React.createContext({
 	frontendTokensValues: {},
 	loading: true,
 	previewLayout: {},
 	previewLayoutType: null,
 	setFrontendTokensValues: () => {},
-	setLoading: () => {},
 	setPreviewLayout: () => {},
 	setPreviewLayoutType: () => {},
 });
 
 export function StyleBookContextProvider({children, value}) {
+	const [state, dispatch] = useReducer(reducer, value);
+
 	return (
-		<StyleBookContext.Provider value={value}>
-			{children}
-		</StyleBookContext.Provider>
+		<StyleBookDispatchContext.Provider value={dispatch}>
+			<StyleBookContext.Provider value={state}>
+				{children}
+			</StyleBookContext.Provider>
+		</StyleBookDispatchContext.Provider>
 	);
+}
+
+export function useDispatch() {
+	return useContext(StyleBookDispatchContext);
+}
+
+export function useLoading() {
+	return useContext(StyleBookContext).loading;
 }

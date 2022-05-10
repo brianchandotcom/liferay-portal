@@ -15,7 +15,7 @@
 package com.liferay.frontend.icons.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconsPacksConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -41,11 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
-		"mvc.command.name=/site_settings/save_site_frontend_icon_packs"
+		"mvc.command.name=/site_settings/save_site_frontend_icons_packs"
 	},
 	service = MVCActionCommand.class
 )
-public class SaveSiteFrontendIconPacksMVCActionCommand
+public class SaveSiteFrontendIconsPacksMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -61,7 +61,7 @@ public class SaveSiteFrontendIconPacksMVCActionCommand
 
 		try {
 			_configurationProvider.saveGroupConfiguration(
-				FrontendIconPacksConfiguration.class,
+				FrontendIconsPacksConfiguration.class,
 				themeDisplay.getSiteGroupId(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"selectedIconPacks", selectedIconPacks
@@ -75,7 +75,7 @@ public class SaveSiteFrontendIconPacksMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SaveSiteFrontendIconPacksMVCActionCommand.class);
+		SaveSiteFrontendIconsPacksMVCActionCommand.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

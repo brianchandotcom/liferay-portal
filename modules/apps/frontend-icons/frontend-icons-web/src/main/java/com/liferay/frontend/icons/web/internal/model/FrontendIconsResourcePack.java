@@ -36,7 +36,7 @@ public class FrontendIconsResourcePack {
 		this(true, name);
 	}
 
-	public void addFrontendIconResource(
+	public void addFrontendIconsResource(
 		FrontendIconsResource frontendIconsResource) {
 
 		_frontendIconsResources.put(
@@ -46,7 +46,7 @@ public class FrontendIconsResourcePack {
 	public void addFrontendIconsResources(
 		List<FrontendIconsResource> frontendIconsResources) {
 
-		frontendIconsResources.forEach(this::addFrontendIconResource);
+		frontendIconsResources.forEach(this::addFrontendIconsResource);
 	}
 
 	public void deleteFrontendIconsResource(String name) {

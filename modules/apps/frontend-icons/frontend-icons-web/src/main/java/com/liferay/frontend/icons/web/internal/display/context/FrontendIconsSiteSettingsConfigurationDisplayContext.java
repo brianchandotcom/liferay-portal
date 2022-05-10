@@ -94,7 +94,7 @@ public class FrontendIconsSiteSettingsConfigurationDisplayContext {
 			PortletURLBuilder.createActionURL(
 				_renderResponse
 			).setActionName(
-				"/site_settings/save_site_frontend_icon_packs"
+				"/site_settings/save_site_frontend_icons_packs"
 			).buildString()
 		).put(
 			"siteIconResourcePacks",

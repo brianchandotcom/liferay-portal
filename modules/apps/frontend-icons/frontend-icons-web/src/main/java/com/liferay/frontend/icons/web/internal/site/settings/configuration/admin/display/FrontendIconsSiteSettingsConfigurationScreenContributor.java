@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.icons.web.internal.site.settings.configuration.admin.display;
 
-import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconsPacksConfiguration;
 import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsSiteSettingsConfigurationDisplayContext;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -85,8 +85,8 @@ public class FrontendIconsSiteSettingsConfigurationScreenContributor
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		FrontendIconPacksConfiguration frontendIconPacksConfiguration =
-			_getFrontendIconPacksConfiguration(themeDisplay.getSiteGroupId());
+		FrontendIconsPacksConfiguration frontendIconsPacksConfiguration =
+			_getFrontendIconsPacksConfiguration(themeDisplay.getSiteGroupId());
 
 		httpServletRequest.setAttribute(
 			FrontendIconsSiteSettingsConfigurationDisplayContext.class.
@@ -95,15 +95,15 @@ public class FrontendIconsSiteSettingsConfigurationScreenContributor
 				_frontendIconsResourcePackRepository, httpServletRequest,
 				(RenderResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE),
-				frontendIconPacksConfiguration.selectedIconPacks()));
+				frontendIconsPacksConfiguration.selectedIconPacks()));
 	}
 
-	private FrontendIconPacksConfiguration _getFrontendIconPacksConfiguration(
+	private FrontendIconsPacksConfiguration _getFrontendIconsPacksConfiguration(
 		long groupId) {
 
 		try {
 			return ConfigurationProviderUtil.getGroupConfiguration(
-				FrontendIconPacksConfiguration.class, groupId);
+				FrontendIconsPacksConfiguration.class, groupId);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(

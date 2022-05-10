@@ -70,4 +70,50 @@ definition {
 		}
 	}
 
+	@description = "Nested fields in oneToMany Updated relationship"
+	@priority = "5"
+	test CanReturnNestedFieldsDetailsInOneToManyUpdatedRelationship {
+		property portal.acceptance = "true";
+
+		task ("Given two manager accounts created") {
+			var managerId1 = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
+
+			var managerId2 = ObjectDefinitionAPI.createManager(managerFirstname = "Aaron");
+		}
+
+		task ("Given two employee accounts created") {
+			var employeeId1 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Bruce",
+				managerId = "${managerId1}");
+
+			var employeeId2 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Riley",
+				managerId = "${managerId2}");
+		}
+
+		task ("Given the employee account updated by changing manager") {
+			ObjectDefinitionAPI.updateEmployee(
+				employeeFirstname = "Bruce",
+				employeeId = "${employeeId1}",
+				newManagerId = "${managerId2}");
+		}
+
+		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
+			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedObject = "manager",
+				objects = "employees");
+		}
+
+		task ("Then 'employee' information should be provided with 'manager' information nested as an object") {
+			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
+				expectedEmployeeFirstname = "Bruce",
+				expectedManagerFirstname = "Aaron",
+				expectedManagerId = "${managerId2}",
+				nestedField = "manager",
+				objectId = "${employeeId1}",
+				relationshipName = "supervisor",
+				responseToParse = "${getEmployeesWithManager}");
+		}
+	}
+
 }

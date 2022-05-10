@@ -38,7 +38,7 @@ import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
-	const hasInputChild = useHasInputChild();
+	const hasInputChild = useHasInputChild(item.itemId);
 	const selectItem = useSelectItem();
 	const widgets = useWidgets();
 

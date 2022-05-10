@@ -375,7 +375,7 @@ const VisibilityButton = ({
 	selectedViewportSize,
 	visible,
 }) => {
-	const hasInputChild = useHasInputChild();
+	const hasInputChild = useHasInputChild(node.id);
 
 	return (
 		<ClayButton

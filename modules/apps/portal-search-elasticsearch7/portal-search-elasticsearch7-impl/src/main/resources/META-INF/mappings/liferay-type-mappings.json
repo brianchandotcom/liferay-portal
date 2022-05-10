@@ -83,6 +83,19 @@
 				}
 			},
 			{
+				"template_string_sortable_de_AT": {
+					"mapping": {
+						"country": "AT",
+						"language": "de",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "\\w+_de_AT_sortable\\b|\\w+_de_AT_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
 				"template_string_sortable_de": {
 					"mapping": {
 						"language": "de",
@@ -174,6 +187,19 @@
 						"type": "icu_collation_keyword"
 					},
 					"match": "\\w+_fi_[A-Z]{2}_sortable\\b|\\w+_fi_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_string_sortable_fr_CA": {
+					"mapping": {
+						"country": "CA",
+						"language": "fr",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "\\w+_fr_CA_sortable\\b|\\w+_fr_CA_\\w+_sortable\\b",
 					"match_mapping_type": "string",
 					"match_pattern": "regex"
 				}

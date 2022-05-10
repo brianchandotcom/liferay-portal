@@ -2571,6 +2571,11 @@ definition {
 		if (isSet(instanceSettings)) {
 			DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 		}
+		else if (isSet(siteSettings)) {
+			DMNavigator.openToConfigInSiteSettings(
+				portlet = "Documents and Media Size Limits",
+				siteURLKey = "${siteURLKey}");
+		}
 		else {
 			DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
 		}
@@ -2595,10 +2600,17 @@ definition {
 	}
 
 	macro updateMimeTypeSizeLimit {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Documents and Media Size Limits",
-			configurationScope = "Site Scope");
+		if (isSet(instanceSettings)) {
+			DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+		}
+		else if (isSet(siteSettings)) {
+			DMNavigator.openToConfigInSiteSettings(
+				portlet = "Documents and Media Size Limits",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
+		}
 
 		if ("${indexNumber}" == "2") {
 			Click(locator1 = "Button#DUPLICATE");

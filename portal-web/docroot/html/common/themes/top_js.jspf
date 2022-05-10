@@ -152,7 +152,13 @@
 			};
 		})();
 
-		Liferay.FeatureFlags = <%= PropsValues.FEATURE_FLAGS_JSON %>;
+		var featureFlags = <%= PropsValues.FEATURE_FLAGS_JSON %>;
+
+		Liferay.FeatureFlags = Object.keys(featureFlags).reduce(
+			(acc, key) => ({
+				...acc, [key]: Boolean(featureFlags[key])
+			}), {}
+		);
 
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',

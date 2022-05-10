@@ -303,9 +303,7 @@ definition {
 				cartSummaryTotal = "${cartSummarySubtotal}");
 
 			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
-		}
 
-		task ("And given the buyer select a pending order") {
 			SelectFrameTop();
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");

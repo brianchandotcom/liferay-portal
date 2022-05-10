@@ -1,5 +1,6 @@
 definition {
-    macro addProductToWishList {
+
+	macro addProductToWishList {
 		for (var productList : list "${productName}") {
 			CommerceProducts.searchProduct(search = "${productList}");
 
@@ -11,6 +12,19 @@ definition {
 				key_productName = "${productList}",
 				locator1 = "CommerceEntry#PRODUCT_CARD_ASSERT_WISH_LIST_HEART_FULL");
 		}
+	}
+
+	macro addWishList {
+		Click(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#EDIT");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${wishListName}");
+
+		Button.clickSave();
 	}
 
 	macro assertWishListProduct {
@@ -25,16 +39,4 @@ definition {
 		}
 	}
 
-    macro addWishList {
-		Click(locator1 = "Button#PLUS");
-
-        Click(locator1 = "Button#EDIT");
-
-        Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${wishListName}");
-
-        Button.clickSave();
-    }
 }

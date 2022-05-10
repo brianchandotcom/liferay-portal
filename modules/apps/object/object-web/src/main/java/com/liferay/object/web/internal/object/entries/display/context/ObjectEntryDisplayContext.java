@@ -36,6 +36,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilde
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
@@ -84,6 +85,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -314,9 +316,16 @@ public class ObjectEntryDisplayContext {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
-		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new ObjectEntryItemSelectorReturnType()));
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151676"))) {
+			infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new InfoItemItemSelectorReturnType()));
+		}
+		else {
+			infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new ObjectEntryItemSelectorReturnType()));
+		}
 
 		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
@@ -346,6 +355,10 @@ public class ObjectEntryDisplayContext {
 
 				return objectDefinition1.getObjectDefinitionId();
 			}
+		).setParameter(
+			"objectFieldId", objectRelationship.getObjectFieldId2()
+		).setParameter(
+			"objectRelationshipType", objectRelationship.getType()
 		).buildString();
 	}
 

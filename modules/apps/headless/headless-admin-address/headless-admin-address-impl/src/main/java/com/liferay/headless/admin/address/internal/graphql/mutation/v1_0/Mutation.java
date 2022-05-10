@@ -15,7 +15,9 @@
 package com.liferay.headless.admin.address.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.admin.address.dto.v1_0.Country;
+import com.liferay.headless.admin.address.dto.v1_0.Region;
 import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
+import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -51,6 +53,14 @@ public class Mutation {
 
 		_countryResourceComponentServiceObjects =
 			countryResourceComponentServiceObjects;
+	}
+
+	public static void setRegionResourceComponentServiceObjects(
+		ComponentServiceObjects<RegionResource>
+			regionResourceComponentServiceObjects) {
+
+		_regionResourceComponentServiceObjects =
+			regionResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -98,6 +108,29 @@ public class Mutation {
 			_countryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			countryResource -> countryResource.deleteCountryBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Region createRegion(@GraphQLName("region") Region region)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.postRegion(region));
+	}
+
+	@GraphQLField
+	public Response createRegionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.postRegionBatch(
 				callbackURL, object));
 	}
 
@@ -155,8 +188,26 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(RegionResource regionResource)
+		throws Exception {
+
+		regionResource.setContextAcceptLanguage(_acceptLanguage);
+		regionResource.setContextCompany(_company);
+		regionResource.setContextHttpServletRequest(_httpServletRequest);
+		regionResource.setContextHttpServletResponse(_httpServletResponse);
+		regionResource.setContextUriInfo(_uriInfo);
+		regionResource.setContextUser(_user);
+		regionResource.setGroupLocalService(_groupLocalService);
+		regionResource.setRoleLocalService(_roleLocalService);
+
+		regionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private static ComponentServiceObjects<CountryResource>
 		_countryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RegionResource>
+		_regionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

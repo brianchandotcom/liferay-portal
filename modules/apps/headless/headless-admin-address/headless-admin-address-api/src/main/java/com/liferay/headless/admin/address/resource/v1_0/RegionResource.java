@@ -38,6 +38,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -69,6 +70,11 @@ public interface RegionResource {
 
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Region postRegion(Region region) throws Exception;
+
+	public Response postRegionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Region getRegion(Long regionId) throws Exception;

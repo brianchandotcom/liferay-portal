@@ -729,6 +729,21 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testPostRegion() throws Exception {
+		Region randomRegion = randomRegion();
+
+		Region postRegion = testPostRegion_addRegion(randomRegion);
+
+		assertEquals(randomRegion, postRegion);
+		assertValid(postRegion);
+	}
+
+	protected Region testPostRegion_addRegion(Region region) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetRegion() throws Exception {
 		Region postRegion = testGetRegion_addRegion();
 

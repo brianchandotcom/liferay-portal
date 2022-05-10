@@ -139,7 +139,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String objectDefinitionShortName, ObjectEntry objectEntry)
+			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _objectDefinitions.get(
@@ -150,6 +150,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			throw new PortalException("Object Definition not found");
 		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(properties);
 
 		return _objectEntryManager.addObjectEntry(
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
@@ -185,9 +189,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 				Element fileElement = (Element)fileNode;
 
-				ObjectEntry objectEntry = new ObjectEntry();
-
-				objectEntry.setProperties(
+				_addObjectEntry(
+					"Attachment",
 					HashMapBuilder.<String, Object>put(
 						"name", fileElement.getAttribute("name")
 					).put(
@@ -198,8 +201,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					).put(
 						"value", fileElement.getAttribute("value")
 					).build());
-
-				_addObjectEntry("Attachment", objectEntry);
 			}
 		}
 	}
@@ -234,9 +235,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			testrayProjectId, testrayTeamId);
 
 		if (testrayCaseId == 0) {
-			ObjectEntry objectEntry = new ObjectEntry();
-
-			objectEntry.setProperties(
+			ObjectEntry objectEntry = _addObjectEntry(
+				"Case",
 				HashMapBuilder.<String, Object>put(
 					"caseNumber",
 					_increment(
@@ -263,8 +263,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				).put(
 					"r_projectToCases_c_projectId", testrayProjectId
 				).build());
-
-			objectEntry = _addObjectEntry("Case", objectEntry);
 
 			testrayCaseId = objectEntry.getId();
 
@@ -296,9 +294,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		_addObjectEntry(
+			"CaseResultsIssues",
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
 				testrayCaseResultId
@@ -320,8 +317,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					return testrayIssueId;
 				}
 			).build());
-
-		_addObjectEntry("CaseResultsIssues", objectEntry);
 	}
 
 	private void _addTestrayCases(
@@ -349,9 +344,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			long testrayRunId)
 		throws Exception {
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		_addObjectEntry(
+			"Factor",
 			HashMapBuilder.<String, Object>put(
 				"classNameId", testrayRunId
 			).put(
@@ -367,19 +361,14 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"testrayFactorOptionName", testrayFactorOptionName
 			).build());
-
-		_addObjectEntry("Factor", objectEntry);
 	}
 
 	private long _addTestrayIssue(String testrayIssueName) throws Exception {
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Issue",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayIssueName
 			).build());
-
-		objectEntry = _addObjectEntry("Issue", objectEntry);
 
 		return objectEntry.getId();
 	}
@@ -397,16 +386,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		for (String warning : warningsList) {
-			ObjectEntry objectEntry = new ObjectEntry();
-
-			objectEntry.setProperties(
+			_addObjectEntry(
+				"Warning",
 				HashMapBuilder.<String, Object>put(
 					"content", warning
 				).put(
 					"r_caseResultToWarnings_c_caseResultId", testrayCaseResultId
 				).build());
-
-			_addObjectEntry("Warning", objectEntry);
 		}
 	}
 
@@ -565,9 +551,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			companyId, testrayProjectId,
 			propertiesMap.get("testray.build.type"));
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Build",
 			HashMapBuilder.<String, Object>put(
 				"description", _getTestrayBuildDescription(propertiesMap)
 			).put(
@@ -586,8 +571,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"r_routineToBuilds_c_routineId", testrayRoutineId
 			).build());
-
-		objectEntry = _addObjectEntry("Build", objectEntry);
 
 		testrayBuildId = objectEntry.getId();
 
@@ -652,50 +635,47 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			long testrayComponentId, long testrayRunId)
 		throws Exception {
 
-		ObjectEntry objectEntry = new ObjectEntry();
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"closedDate", testrayBuildTime
+		).put(
+			"dueStatus",
+			() -> {
+				String testrayTestcaseStatus =
+					(String)testrayCasePropertiesMap.get(
+						"testray.testcase.status");
 
-		objectEntry.setProperties(
-			HashMapBuilder.<String, Object>put(
-				"closedDate", testrayBuildTime
-			).put(
-				"dueStatus",
-				() -> {
-					String testrayTestcaseStatus =
-						(String)testrayCasePropertiesMap.get(
-							"testray.testcase.status");
-
-					if (testrayTestcaseStatus.equals("blocked")) {
-						return _TESTRAY_CASE_RESULT_STATUS_BLOCKED;
-					}
-					else if (testrayTestcaseStatus.equals("dnr")) {
-						return _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN;
-					}
-					else if (testrayTestcaseStatus.equals("failed")) {
-						return _TESTRAY_CASE_RESULT_STATUS_FAILED;
-					}
-					else if (testrayTestcaseStatus.equals("in-progress")) {
-						return _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS;
-					}
-					else if (testrayTestcaseStatus.equals("passed")) {
-						return _TESTRAY_CASE_RESULT_STATUS_PASSED;
-					}
-					else if (testrayTestcaseStatus.equals("test-fix")) {
-						return _TESTRAY_CASE_RESULT_STATUS_TEST_FIX;
-					}
-
-					return _TESTRAY_CASE_RESULT_STATUS_UNTESTED;
+				if (testrayTestcaseStatus.equals("blocked")) {
+					return _TESTRAY_CASE_RESULT_STATUS_BLOCKED;
 				}
-			).put(
-				"r_buildToCaseResult_c_buildId", testrayBuildId
-			).put(
-				"r_caseToCaseResult_c_caseId", testrayCaseId
-			).put(
-				"r_componentToCaseResult_c_componentId", testrayComponentId
-			).put(
-				"r_runToCaseResult_c_runId", testrayRunId
-			).put(
-				"startDate", testrayBuildTime
-			).build());
+				else if (testrayTestcaseStatus.equals("dnr")) {
+					return _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN;
+				}
+				else if (testrayTestcaseStatus.equals("failed")) {
+					return _TESTRAY_CASE_RESULT_STATUS_FAILED;
+				}
+				else if (testrayTestcaseStatus.equals("in-progress")) {
+					return _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS;
+				}
+				else if (testrayTestcaseStatus.equals("passed")) {
+					return _TESTRAY_CASE_RESULT_STATUS_PASSED;
+				}
+				else if (testrayTestcaseStatus.equals("test-fix")) {
+					return _TESTRAY_CASE_RESULT_STATUS_TEST_FIX;
+				}
+
+				return _TESTRAY_CASE_RESULT_STATUS_UNTESTED;
+			}
+		).put(
+			"r_buildToCaseResult_c_buildId", testrayBuildId
+		).put(
+			"r_caseToCaseResult_c_caseId", testrayCaseId
+		).put(
+			"r_componentToCaseResult_c_componentId", testrayComponentId
+		).put(
+			"r_runToCaseResult_c_runId", testrayRunId
+		).put(
+			"startDate", testrayBuildTime
+		).build();
 
 		Element element = (Element)testcaseNode;
 
@@ -707,14 +687,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			String message = _getAttributeValue("message", failureNode);
 
 			if (!message.isEmpty()) {
-				objectEntry.getProperties(
-				).put(
-					"errors", message
-				);
+				properties.put("errors", message);
 			}
 		}
 
-		objectEntry = _addObjectEntry("CaseResult", objectEntry);
+		ObjectEntry objectEntry = _addObjectEntry("CaseResult", properties);
 
 		return objectEntry.getId();
 	}
@@ -733,14 +710,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayCaseTypeId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"CaseType",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayCaseTypeName
 			).build());
-
-		objectEntry = _addObjectEntry("CaseType", objectEntry);
 
 		testrayCaseTypeId = objectEntry.getId();
 
@@ -769,9 +743,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayComponentId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Component",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayComponentName
 			).put(
@@ -779,8 +752,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"r_teamToComponents_c_teamId", testrayTeamId
 			).build());
-
-		objectEntry = _addObjectEntry("Component", objectEntry);
 
 		testrayComponentId = objectEntry.getId();
 
@@ -804,14 +775,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayFactorCategoryId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"FactorCategory",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayFactorCategoryName
 			).build());
-
-		objectEntry = _addObjectEntry("FactorCategory", objectEntry);
 
 		testrayFactorCategoryId = objectEntry.getId();
 
@@ -840,17 +808,14 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayFactorOptionId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"FactorOption",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayFactorOptionName
 			).put(
 				"r_factorCategoryToOptions_c_factorCategoryId",
 				testrayFactorCategoryId
 			).build());
-
-		objectEntry = _addObjectEntry("FactorOption", objectEntry);
 
 		testrayFactorOptionId = objectEntry.getId();
 
@@ -875,16 +840,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayProductVersionId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"ProductVersion",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayProductVersionName
 			).put(
 				"r_projectToProductVersions_c_projectId", testrayProjectId
 			).build());
-
-		objectEntry = _addObjectEntry("ProductVersion", objectEntry);
 
 		testrayProductVersionId = objectEntry.getId();
 
@@ -906,14 +868,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayProjectId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Project",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayProjectName
 			).build());
-
-		objectEntry = _addObjectEntry("Project", objectEntry);
 
 		testrayProjectId = objectEntry.getId();
 
@@ -941,16 +900,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayRoutineId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Routine",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayRoutineName
 			).put(
 				"r_routineToProjects_c_projectId", testrayProjectId
 			).build());
-
-		objectEntry = _addObjectEntry("Routine", objectEntry);
 
 		testrayRoutineId = objectEntry.getId();
 
@@ -1017,9 +973,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayRunId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Run",
 			HashMapBuilder.<String, Object>put(
 				"externalReferencePK", propertiesMap.get("testray.run.id")
 			).put(
@@ -1036,8 +991,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build());
-
-		objectEntry = _addObjectEntry("Run", objectEntry);
 
 		testrayRunId = objectEntry.getId();
 
@@ -1074,16 +1027,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return testrayTeamId;
 		}
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(
+		ObjectEntry objectEntry = _addObjectEntry(
+			"Team",
 			HashMapBuilder.<String, Object>put(
 				"name", testrayTeamName
 			).put(
 				"r_projectToTeams_c_projectId", testrayProjectId
 			).build());
-
-		objectEntry = _addObjectEntry("Team", objectEntry);
 
 		_objectEntryIds.put(objectEntryMapKey, objectEntry.getId());
 

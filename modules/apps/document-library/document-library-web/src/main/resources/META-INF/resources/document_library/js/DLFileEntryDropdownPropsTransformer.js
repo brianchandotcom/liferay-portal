@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {addParams, navigate, openModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	checkin({checkinURL}, portletNamespace) {
@@ -23,20 +23,29 @@ const ACTIONS = {
 				let portletURL = checkinURL;
 
 				if (versionIncrease) {
-					portletURL += `&${portletNamespace}versionIncrease=${encodeURIComponent(
-						versionIncrease
-					)}`;
+					portletURL = addParams(
+						`${portletNamespace}versionIncrease=${encodeURIComponent(
+							versionIncrease
+						)}`,
+						portletURL
+					);
 				}
 
 				if (changeLog) {
-					portletURL += `&${portletNamespace}changeLog=${encodeURIComponent(
-						changeLog
-					)}`;
+					portletURL = addParams(
+						`${portletNamespace}changeLog=${encodeURIComponent(
+							changeLog
+						)}`,
+						portletURL
+					);
 				}
 
-				portletURL += `&${portletNamespace}updateVersionDetails=true`;
+				portletURL = addParams(
+					`${portletNamespace}updateVersionDetails=true`,
+					portletURL
+				);
 
-				window.location.href = portletURL;
+				navigate(portletURL);
 			});
 		});
 	},

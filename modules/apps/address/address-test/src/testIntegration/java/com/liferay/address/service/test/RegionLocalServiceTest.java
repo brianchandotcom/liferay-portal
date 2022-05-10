@@ -326,7 +326,10 @@ public class RegionLocalServiceTest {
 				Arrays.asList(expectedRegions),
 				Comparator.comparing(
 					Region::getName, String.CASE_INSENSITIVE_ORDER)),
-			baseModelSearchResult.getBaseModels());
+			ListUtil.sort(
+				baseModelSearchResult.getBaseModels(),
+				Comparator.comparing(
+					Region::getName, String.CASE_INSENSITIVE_ORDER)));
 	}
 
 	@Inject

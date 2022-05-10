@@ -11,6 +11,7 @@
 import {useQuery} from '@apollo/client';
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
+import i18n from '../../../../../../common/I18n';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
 import {getKoroneikiAccounts} from '../../../../../../common/services/liferay/graphql/queries';
@@ -101,7 +102,7 @@ const Commerce = () => {
 			accessor: 'version',
 			bodyClass: 'border border-0 py-4 pl-4',
 			header: {
-				name: 'Version',
+				name: i18n.translate('version'),
 				styles:
 					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-minw-200 py-3 pl-4',
 			},
@@ -111,7 +112,7 @@ const Commerce = () => {
 			accessor: 'instructions',
 			bodyClass: 'border border-0',
 			header: {
-				name: 'Instructions',
+				name: i18n.translate('instructions'),
 				styles:
 					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 			},

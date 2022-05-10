@@ -9,13 +9,14 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../common/I18n';
 import ActivationKeysInputs from './Inputs';
 import ActivationKeysSkeleton from './Skeleton';
 
 const ActivationKeysLayout = ({children}) => {
 	return (
 		<div className="mr-4">
-			<h1 className="m-0 py-4">Activation Keys</h1>
+			<h1 className="m-0 py-4">{i18n.translate('activation-keys')}</h1>
 
 			{children}
 		</div>

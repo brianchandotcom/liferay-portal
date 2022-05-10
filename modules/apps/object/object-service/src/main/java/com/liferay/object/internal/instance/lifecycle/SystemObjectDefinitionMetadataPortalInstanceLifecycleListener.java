@@ -14,11 +14,17 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.constants.ObjectSAPConstants;
+import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
+import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -37,9 +43,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -186,12 +196,29 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
 					companyId, systemObjectDefinitionMetadata);
 
-			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
-				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectEntryLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService),
-				null);
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-151676"))) {
+
+				_bundleContext.registerService(
+					ObjectRelatedModelsProvider.class,
+					new SystemObject1toMObjectRelatedModelsProviderImpl(
+						objectDefinition, _objectEntryLocalService,
+						_objectFieldLocalService,
+						_objectRelationshipLocalService,
+						_persistedModelLocalServiceRegistry,
+						systemObjectDefinitionMetadata),
+					null);
+			}
+			else {
+				_bundleContext.registerService(
+					ObjectRelatedModelsProvider.class,
+					new ObjectEntry1toMObjectRelatedModelsProviderImpl(
+						objectDefinition, _objectEntryLocalService,
+						_objectFieldLocalService,
+						_objectRelationshipLocalService),
+					null);
+			}
+
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(
@@ -201,6 +228,16 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					true),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
+				).build());
+			_bundleContext.registerService(
+				ItemSelectorView.class,
+				new SystemObjectEntryItemSelectorView(
+					_itemSelectorViewDescriptorRenderer, objectDefinition,
+					_objectEntryLocalService, _objectFieldLocalService,
+					_objectRelatedModelsProviderRegistry,
+					systemObjectDefinitionMetadata, _portal),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"item.selector.view.order", 500
 				).build());
 		}
 		catch (PortalException portalException) {
@@ -217,6 +254,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
+		_itemSelectorViewDescriptorRenderer;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
@@ -226,10 +267,21 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
+
+	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

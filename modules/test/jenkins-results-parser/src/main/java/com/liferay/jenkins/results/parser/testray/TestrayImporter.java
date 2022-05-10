@@ -38,6 +38,7 @@ import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
+import com.liferay.jenkins.results.parser.PullRequestSubrepositoryTopLevelBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
@@ -1544,8 +1545,20 @@ public class TestrayImporter {
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
+		String portalUpstreamBranchName = _topLevelBuild.getBranchName();
+
+		if (_topLevelBuild instanceof PullRequestSubrepositoryTopLevelBuild) {
+			PullRequestSubrepositoryTopLevelBuild
+				pullRequestSubrepositoryTopLevelBuild =
+					(PullRequestSubrepositoryTopLevelBuild)_topLevelBuild;
+
+			portalUpstreamBranchName =
+				pullRequestSubrepositoryTopLevelBuild.
+					getPortalUpstreamBranchName();
+		}
+
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			_topLevelBuild.getBranchName());
+			portalUpstreamBranchName);
 	}
 
 	private String _getSlackBody(File testBaseDir) {

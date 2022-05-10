@@ -581,7 +581,8 @@ definition {
 		Portlet.viewNoPermissionPG();
 	}
 
-	test AssertNoXSSTitle {
+	@description = "This is a use case for LPS-132856."
+	test AssertTitleAndDescriptionNoXSS {
 		Blueprints.openBlueprintsAdmin();
 
 		Click(locator1 = "Button#PLUS");

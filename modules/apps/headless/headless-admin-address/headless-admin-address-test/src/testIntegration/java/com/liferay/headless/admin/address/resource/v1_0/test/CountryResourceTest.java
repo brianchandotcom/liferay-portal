@@ -192,6 +192,73 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		_testPostCountryProblem(country, DuplicateCountryException.class);
 	}
 
+	@Test
+	public void testPutCountry() throws Exception {
+		super.testPutCountry();
+
+		Country existingCountry = _addCountry(randomCountry());
+
+		Country country = randomCountry();
+
+		country.setA2((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setA2("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setA2("too long");
+
+		_testPostCountryProblem(country, CountryA2Exception.class);
+
+		country.setA2(existingCountry.getA2());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setA3((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setA3("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setA3("too long");
+
+		_testPostCountryProblem(country, CountryA3Exception.class);
+
+		country.setA3(existingCountry.getA3());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setName((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setName("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setName(existingCountry.getName());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setNumber((Integer)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setNumber(existingCountry.getNumber());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"a2", "a3", "name", "number"};
@@ -351,73 +418,6 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		throws Exception {
 
 		return _addCountry(country);
-	}
-
-	@Test
-	public void testPutCountry() throws Exception {
-		super.testPutCountry();
-
-		Country existingCountry = _addCountry(randomCountry());
-
-		Country country = randomCountry();
-
-		country.setA2((String)null);
-
-		_testPostCountryProblem(country, null);
-
-		country.setA2("");
-
-		_testPostCountryProblem(country, null);
-
-		country.setA2("too long");
-
-		_testPostCountryProblem(country, CountryA2Exception.class);
-
-		country.setA2(existingCountry.getA2());
-
-		_testPostCountryProblem(country, DuplicateCountryException.class);
-
-		country = randomCountry();
-
-		country.setA3((String)null);
-
-		_testPostCountryProblem(country, null);
-
-		country.setA3("");
-
-		_testPostCountryProblem(country, null);
-
-		country.setA3("too long");
-
-		_testPostCountryProblem(country, CountryA3Exception.class);
-
-		country.setA3(existingCountry.getA3());
-
-		_testPostCountryProblem(country, DuplicateCountryException.class);
-
-		country = randomCountry();
-
-		country.setName((String)null);
-
-		_testPostCountryProblem(country, null);
-
-		country.setName("");
-
-		_testPostCountryProblem(country, null);
-
-		country.setName(existingCountry.getName());
-
-		_testPostCountryProblem(country, DuplicateCountryException.class);
-
-		country = randomCountry();
-
-		country.setNumber((Integer)null);
-
-		_testPostCountryProblem(country, null);
-
-		country.setNumber(existingCountry.getNumber());
-
-		_testPostCountryProblem(country, DuplicateCountryException.class);
 	}
 
 	@Override

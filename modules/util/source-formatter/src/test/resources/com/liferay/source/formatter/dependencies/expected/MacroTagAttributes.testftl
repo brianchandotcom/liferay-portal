@@ -1,0 +1,16 @@
+<#macro getPermissionParameter
+	javaMethodParameter
+	javaMethodSignature
+	properties
+>
+</#macro>
+
+<#macro getGetterParameters
+	javaMethodSignature
+>
+</#macro>
+
+<#macro getTestGetterMethods
+	javaMethodSignature
+>
+</#macro>

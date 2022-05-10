@@ -152,12 +152,17 @@ function OtherTypeMapping({item, onValueSelect}) {
 							validValues: availableItemTypes,
 						},
 					}}
-					onValueSelect={(_name, classNameId) =>
-						onValueSelect({
+					onValueSelect={(_name, classNameId) => {
+						const type = availableItemTypes.find(
+							({value}) => value === classNameId
+						);
+
+						return onValueSelect({
 							classNameId,
+							classTypeId: type?.subtypes?.[0].value || '0',
 							formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						})
-					}
+						});
+					}}
 					value={item.config.classNameId}
 				/>
 			)}

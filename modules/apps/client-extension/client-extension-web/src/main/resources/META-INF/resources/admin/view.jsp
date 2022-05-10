@@ -27,6 +27,5 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 	id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_ENTRIES %>"
 	itemsPerPage="<%= 10 %>"
 	selectedItemsKey="clientExtensionEntryId"
-	selectionType="multiple"
 	style="fluid"
 />

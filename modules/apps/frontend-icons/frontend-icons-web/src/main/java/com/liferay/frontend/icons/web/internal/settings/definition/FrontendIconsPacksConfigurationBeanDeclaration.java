@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.icons.web.internal.settings.definition;
 
-import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconsPacksConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Bryce Osterhaus
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class FrontendIconPacksConfigurationBeanDeclaration
+public class FrontendIconsPacksConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return FrontendIconPacksConfiguration.class;
+		return FrontendIconsPacksConfiguration.class;
 	}
 
 }

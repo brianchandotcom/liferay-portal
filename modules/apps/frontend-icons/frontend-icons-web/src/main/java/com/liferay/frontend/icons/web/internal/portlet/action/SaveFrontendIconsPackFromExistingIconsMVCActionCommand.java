@@ -113,7 +113,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 						frontendIconsResourceName);
 
 				if (frontendIconsResource != null) {
-					frontendIconsResourcePack.addFrontendIconResource(
+					frontendIconsResourcePack.addFrontendIconsResource(
 						frontendIconsResource);
 				}
 			}

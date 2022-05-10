@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.icons.web.internal.servlet;
 
-import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconsPacksConfiguration;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;

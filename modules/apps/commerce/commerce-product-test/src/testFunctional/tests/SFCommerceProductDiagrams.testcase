@@ -187,14 +187,101 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8209. Assert that a Buyer is able to add a part from Diagram to the cart"
 	@priority = "4"
 	test AssertIfTheQuantityFromThePopupAreCorrect {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8209 AssertIfTheQuantityFromThePopupAreCorrect pending implementation
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 1 pin linked to an SKU within the image") {
+			CommerceProducts.openProductsAdmin();
 
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When I go into the product details of the diagram on Minium") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("And click on the pin linked to ABS Sensor") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+		}
+
+		task ("Then choose the desired quantity (2), and add to the cart by clicking on the add to cart button") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = "2");
+		}
+
+		task ("When I click on the add to cart button a little dot appears on the button, it's located on the right of the cart icon inside the blue button") {
+			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
+				attribute = "outline-style",
+				element = "//div[contains(@class,'product-detail')]//button[contains(@class,'add-to-cart')]//span[*[name()='svg'][contains(@class,'lexicon-icon-shopping-cart')]]",
+				pseudo = "::after");
+
+			TestUtils.assertEquals(
+				actual = "${backgroundImageOutlineStyle}",
+				expected = "none");
+		}
+
+		task ("And assert reopen the pop-up can still see the dot in the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+
+			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
+				attribute = "outline-style",
+				element = "//div[contains(@class,'product-detail')]//button[contains(@class,'add-to-cart')]//span[*[name()='svg'][contains(@class,'lexicon-icon-shopping-cart')]]",
+				pseudo = "::after");
+
+			TestUtils.assertEquals(
+				actual = "${backgroundImageOutlineStyle}",
+				expected = "none");
+		}
+
+		task ("And click on the cart icon on the top-right of the screen") {
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("Then I can verify if the correct quantity was added correctly from the pop-up") {
+			FrontStore.viewMiniCartItem(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "50",
+				cartItemQuantity = "2",
+				cartItemSku = "MIN93015");
+		}
 	}
 
 	@description = "[Please Update]"

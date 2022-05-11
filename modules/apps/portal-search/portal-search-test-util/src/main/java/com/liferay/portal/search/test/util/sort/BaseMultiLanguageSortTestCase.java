@@ -65,11 +65,6 @@ public abstract class BaseMultiLanguageSortTestCase
 	}
 
 	@Test
-	public void testJapanKanji() {
-		testLocaleSort(LocaleUtil.JAPAN, new String[] {"色", "赤"}, "[赤, 色]");
-	}
-
-	@Test
 	public void testJapanKatakana() {
 		testLocaleSort(
 			LocaleUtil.JAPAN, new String[] {"オ", "イ", "ア", "エ", "ウ"},

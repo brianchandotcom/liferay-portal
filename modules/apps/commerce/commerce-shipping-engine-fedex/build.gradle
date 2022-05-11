@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "com.fedex.ws", version: "1.0.0"
+	compileInclude group: "com.liferay", name: "javax.xml.rpc", version: "1.1"
 	compileInclude group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
 	compileInclude group: "commons-discovery", name: "commons-discovery", version: "0.4"
 

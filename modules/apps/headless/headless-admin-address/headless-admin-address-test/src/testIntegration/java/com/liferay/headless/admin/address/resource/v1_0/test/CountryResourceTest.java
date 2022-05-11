@@ -192,6 +192,7 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		_testPostCountryProblem(country, DuplicateCountryException.class);
 	}
 
+	@Override
 	@Test
 	public void testPutCountry() throws Exception {
 		super.testPutCountry();

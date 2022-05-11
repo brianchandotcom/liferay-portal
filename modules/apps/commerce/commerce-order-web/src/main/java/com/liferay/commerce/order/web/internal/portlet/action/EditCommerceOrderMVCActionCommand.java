@@ -35,7 +35,7 @@ import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -437,7 +437,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(),
 			GetterUtil.getLong(commerceDeliveryTermId), 0,
-			LanguageUtil.getLanguageId(actionRequest.getLocale()));
+			_language.getLanguageId(actionRequest.getLocale()));
 	}
 
 	private void _updateOrderSummary(ActionRequest actionRequest)
@@ -535,7 +535,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(), 0,
 			GetterUtil.getLong(commercePaymentTermId),
-			LanguageUtil.getLanguageId(actionRequest.getLocale()));
+			_language.getLanguageId(actionRequest.getLocale()));
 	}
 
 	private void _updatePrintedNote(ActionRequest actionRequest)
@@ -678,6 +678,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

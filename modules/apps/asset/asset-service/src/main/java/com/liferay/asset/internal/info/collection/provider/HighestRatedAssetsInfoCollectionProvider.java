@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -61,7 +61,7 @@ public class HighestRatedAssetsInfoCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "highest-rated-assets");
+		return _language.get(locale, "highest-rated-assets");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -69,5 +69,8 @@ public class HighestRatedAssetsInfoCollectionProvider
 
 	@Reference
 	private AssetEntryService _assetEntryService;
+
+	@Reference
+	private Language _language;
 
 }

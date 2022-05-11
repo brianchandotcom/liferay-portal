@@ -19,7 +19,7 @@ import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -62,7 +62,7 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_DESCRIPTION);
@@ -79,7 +79,7 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				MEASUREMENT_UNITS_COMMERCE_HEALTH_STATUS_KEY);
@@ -103,5 +103,8 @@ public class MeasurementUnitsCommerceHealthHttpStatus
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private Language _language;
 
 }

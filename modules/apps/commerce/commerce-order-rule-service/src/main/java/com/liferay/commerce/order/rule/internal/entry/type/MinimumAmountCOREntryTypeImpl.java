@@ -22,7 +22,7 @@ import com.liferay.commerce.order.rule.constants.COREntryConstants;
 import com.liferay.commerce.order.rule.entry.type.COREntryType;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -158,7 +158,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 				orderCurrencyAmount.subtract(applyToAmount), locale)
 		};
 
-		return LanguageUtil.format(
+		return _language.format(
 			resourceBundle,
 			"the-minimum-order-amount-is-x.-this-order-needs-an-additional-x-" +
 				"to-meet-the-requirement",
@@ -175,7 +175,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "minimum-order-amount");
+		return _language.get(resourceBundle, "minimum-order-amount");
 	}
 
 	@Reference
@@ -183,5 +183,8 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private Language _language;
 
 }

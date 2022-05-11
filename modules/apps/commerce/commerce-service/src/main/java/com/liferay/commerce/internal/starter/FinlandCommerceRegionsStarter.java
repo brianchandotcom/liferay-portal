@@ -15,11 +15,12 @@
 package com.liferay.commerce.internal.starter;
 
 import com.liferay.commerce.starter.CommerceRegionsStarter;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
@@ -35,7 +36,7 @@ public class FinlandCommerceRegionsStarter extends BaseCommerceRegionsStarter {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "country.finland");
+		return _language.get(locale, "country.finland");
 	}
 
 	@Override
@@ -50,5 +51,8 @@ public class FinlandCommerceRegionsStarter extends BaseCommerceRegionsStarter {
 
 	private static final String _FILEPATH =
 		"com/liferay/commerce/internal/finland.json";
+
+	@Reference
+	private Language _language;
 
 }

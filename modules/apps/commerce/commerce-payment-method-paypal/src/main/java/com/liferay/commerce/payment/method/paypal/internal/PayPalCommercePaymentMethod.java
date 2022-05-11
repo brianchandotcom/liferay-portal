@@ -33,7 +33,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -464,7 +464,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, KEY);
+		return _language.get(locale, KEY);
 	}
 
 	/**
@@ -1296,7 +1296,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			locale = LocaleUtil.getSiteDefault();
 		}
 
-		return LanguageUtil.get(_getResourceBundle(locale), key);
+		return _language.get(_getResourceBundle(locale), key);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -1366,5 +1366,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 }

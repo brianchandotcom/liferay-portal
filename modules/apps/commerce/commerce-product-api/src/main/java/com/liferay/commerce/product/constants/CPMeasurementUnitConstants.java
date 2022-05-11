@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.product.constants;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
@@ -25,5 +30,15 @@ public class CPMeasurementUnitConstants {
 	public static final int TYPE_UNIT = 2;
 
 	public static final int TYPE_WEIGHT = 1;
+
+	public static final Map<Integer, String> typesMap =
+		Collections.unmodifiableMap(
+			HashMapBuilder.put(
+				TYPE_DIMENSION, "Dimensions"
+			).put(
+				TYPE_UNIT, "Unit"
+			).put(
+				TYPE_WEIGHT, "Weight"
+			).build());
 
 }

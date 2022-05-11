@@ -108,6 +108,10 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clickInviteMembers {
+		Click(locator1 = "CustomerPortalSite#INVITE_BUTTON");
+	}
+
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 	}

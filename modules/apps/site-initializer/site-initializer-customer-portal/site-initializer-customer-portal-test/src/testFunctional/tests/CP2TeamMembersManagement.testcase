@@ -3,7 +3,7 @@ definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
-	property portal.upstream = "false";
+	property portal.upstream = "quarantine";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Customer Portal";
 
@@ -24,7 +24,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}

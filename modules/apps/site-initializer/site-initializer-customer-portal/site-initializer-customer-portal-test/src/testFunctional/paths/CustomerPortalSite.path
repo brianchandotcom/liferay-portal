@@ -110,6 +110,11 @@
 	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INVITE_BUTTON</td>
+	<td>//button[contains(@class,'invite-button')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -41,7 +41,7 @@
 			<finder-column name="notificationTemplateId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="NotificationTemplate" remote-service="false" uuid="true">
+	<entity local-service="true" name="NotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

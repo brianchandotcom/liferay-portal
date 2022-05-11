@@ -11,6 +11,8 @@ components:
                     type: object
                 active:
                     type: boolean
+                conditionExpression:
+                    type: string
                 dateCreated:
                     format: date
                     readOnly: true

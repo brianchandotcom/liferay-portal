@@ -28,23 +28,22 @@ export default function ImportTranslation({
 	errorMessage: initialErrorMessage = '',
 	publishButtonLabel,
 	saveButtonLabel,
-	saveDraftBtnId,
-	submitBtnId,
 	title,
 	workflowPending = false,
 }) {
 	const [importFiles, setImportFiles] = useState([]);
 	const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
+	const [publishButtonDisabled, setPublishButtonDisabled] = useState(
+		workflowPending
+	);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState();
 
 	const inputFileRef = useRef();
 
 	useEffect(() => {
-		Liferay.Util.toggleDisabled('#' + saveDraftBtnId, !importFiles.length);
-		Liferay.Util.toggleDisabled(
-			'#' + submitBtnId,
-			!importFiles.length || workflowPending
-		);
-	}, [importFiles, saveDraftBtnId, submitBtnId, workflowPending]);
+		setSaveButtonDisabled(!importFiles.length);
+		setPublishButtonDisabled(workflowPending || !importFiles.length);
+	}, [importFiles, workflowPending]);
 
 	const handleOnCloseError = () => {
 		setErrorMessage('');
@@ -54,8 +53,9 @@ export default function ImportTranslation({
 		<>
 			<Toolbar
 				cancelURL={cancelURL}
-				publishButtonDisabled={workflowPending}
+				publishButtonDisabled={publishButtonDisabled}
 				publishButtonLabel={publishButtonLabel}
+				saveButtonDisabled={saveButtonDisabled}
 				saveButtonLabel={saveButtonLabel}
 				title={title}
 			/>

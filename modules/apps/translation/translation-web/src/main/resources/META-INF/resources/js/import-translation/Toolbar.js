@@ -22,6 +22,7 @@ export default function Toolbar({
 	cancelURL,
 	publishButtonDisabled,
 	publishButtonLabel,
+	saveButtonDisabled,
 	saveButtonLabel,
 	title,
 }) {
@@ -53,6 +54,7 @@ export default function Toolbar({
 								</ClayLink>
 
 								<ClayButton
+									disabled={saveButtonDisabled}
 									displayType="secondary"
 									small
 									type="submit"

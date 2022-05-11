@@ -55,7 +55,7 @@ String exceptionErrorMessage = null;
 								</div>
 
 								<div class="btn-group-item">
-									<aui:button cssClass="btn-sm" disabled="<%= true %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
+									<aui:button cssClass="btn-sm" disabled="<%= true %>" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
 								</div>
 						</div>
 					</li>
@@ -109,10 +109,6 @@ String exceptionErrorMessage = null;
 					"publishButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getPublishButtonLabel())
 				).put(
 					"saveButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getSaveButtonLabel())
-				).put(
-					"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
-				).put(
-					"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
 				).put(
 					"title", HtmlUtil.escape(importTranslationDisplayContext.getTitle())
 				).put(

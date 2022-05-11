@@ -41,19 +41,43 @@ public class CPMeasurementUnitServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPMeasurementUnit addCPMeasurementUnit(
-			Map<java.util.Locale, String> nameMap, String key, double rate,
-			boolean primary, double priority, int type,
+			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
+			String key, double rate, boolean primary, double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPMeasurementUnit(
-			nameMap, key, rate, primary, priority, type, serviceContext);
+			externalReferenceCode, nameMap, key, rate, primary, priority, type,
+			serviceContext);
 	}
 
 	public static void deleteCPMeasurementUnit(long cpMeasurementUnitId)
 		throws PortalException {
 
 		getService().deleteCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
+	public static CPMeasurementUnit fetchCPMeasurementUnit(
+			long cpMeasurementUnitId)
+		throws PortalException {
+
+		return getService().fetchCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
+	public static CPMeasurementUnit
+			fetchCPMeasurementUnitByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchCPMeasurementUnitByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	public static CPMeasurementUnit fetchCPMeasurementUnitByKey(
+			long companyId, String key)
+		throws PortalException {
+
+		return getService().fetchCPMeasurementUnitByKey(companyId, key);
 	}
 
 	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
@@ -63,11 +87,32 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().fetchPrimaryCPMeasurementUnit(companyId, type);
 	}
 
+	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
+			long companyId, int type)
+		throws PortalException {
+
+		return getService().fetchPrimaryCPMeasurementUnitByType(
+			companyId, type);
+	}
+
 	public static CPMeasurementUnit getCPMeasurementUnit(
 			long cpMeasurementUnitId)
 		throws PortalException {
 
 		return getService().getCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
+	public static CPMeasurementUnit getCPMeasurementUnitByKey(
+			long companyId, String key)
+		throws PortalException {
+
+		return getService().getCPMeasurementUnitByKey(companyId, key);
+	}
+
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(long companyId)
+		throws PortalException {
+
+		return getService().getCPMeasurementUnits(companyId);
 	}
 
 	public static List<CPMeasurementUnit> getCPMeasurementUnits(
@@ -86,6 +131,22 @@ public class CPMeasurementUnitServiceUtil {
 
 		return getService().getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
+	}
+
+	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
+			long companyId, int type)
+		throws PortalException {
+
+		return getService().getCPMeasurementUnitsByType(companyId, type);
+	}
+
+	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
+			long companyId, int type, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException {
+
+		return getService().getCPMeasurementUnitsByType(
+			companyId, type, start, end, orderByComparator);
 	}
 
 	public static int getCPMeasurementUnitsCount(long companyId)
@@ -117,14 +178,15 @@ public class CPMeasurementUnitServiceUtil {
 	}
 
 	public static CPMeasurementUnit updateCPMeasurementUnit(
-			long cpMeasurementUnitId, Map<java.util.Locale, String> nameMap,
-			String key, double rate, boolean primary, double priority, int type,
+			String externalReferenceCode, long cpMeasurementUnitId,
+			Map<java.util.Locale, String> nameMap, String key, double rate,
+			boolean primary, double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPMeasurementUnit(
-			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type,
-			serviceContext);
+			externalReferenceCode, cpMeasurementUnitId, nameMap, key, rate,
+			primary, priority, type, serviceContext);
 	}
 
 	public static CPMeasurementUnitService getService() {

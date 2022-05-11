@@ -66,12 +66,26 @@ public interface CPMeasurementUnitService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp measurement unit remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPMeasurementUnitServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPMeasurementUnit addCPMeasurementUnit(
-			Map<Locale, String> nameMap, String key, double rate,
-			boolean primary, double priority, int type,
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			String key, double rate, boolean primary, double priority, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
+			long companyId, String key)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -80,7 +94,21 @@ public interface CPMeasurementUnitService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
+			long companyId, int type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit getCPMeasurementUnitByKey(
+			long companyId, String key)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMeasurementUnit> getCPMeasurementUnits(long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -92,6 +120,17 @@ public interface CPMeasurementUnitService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
 			long companyId, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
+			long companyId, int type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
+			long companyId, int type, int start, int end,
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws PortalException;
 
@@ -115,8 +154,9 @@ public interface CPMeasurementUnitService extends BaseService {
 		throws PortalException;
 
 	public CPMeasurementUnit updateCPMeasurementUnit(
-			long cpMeasurementUnitId, Map<Locale, String> nameMap, String key,
-			double rate, boolean primary, double priority, int type,
+			String externalReferenceCode, long cpMeasurementUnitId,
+			Map<Locale, String> nameMap, String key, double rate,
+			boolean primary, double priority, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 

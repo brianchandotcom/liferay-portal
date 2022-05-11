@@ -27,6 +27,7 @@ if (Validator.isNotNull(backURL)) {
 }
 
 renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
+
 %>
 
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
@@ -43,16 +44,15 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	<aui:input name="type" type="hidden" value="<%= editSegmentsEntryDisplayContext.getType() %>" />
 	<aui:input name="dynamic" type="hidden" value="<%= true %>" />
 
-	<div id="<%= liferayPortletResponse.getNamespace() + "-segment-edit-root" %>">
-		<div class="inline-item my-5 p-5 w-100">
-			<span aria-hidden="true" class="loading-animation"></span>
-		</div>
-
-		<react:component
-			module="js/SegmentsApp.es"
-			props="<%= editSegmentsEntryDisplayContext.getData() %>"
+	<c:if test='<%= !segmentsDisplayContext.isSegmentationEnabled(themeDisplay.getCompanyId())%>'>
+		<clay:stripe
+			displayType="warning"
+			elementClasses="segmentation-is-disabled-warning"
+			message="segmentation-is-disabled.to-enable,-go-to-system-settings-segments-segments-service"
+			title="Warning"
 		/>
-	</div>
+	</c:if>
+
 </aui:form>
 
 <aui:script>

@@ -301,6 +301,18 @@ public class SegmentsDisplayContext {
 		return false;
 	}
 
+	public boolean isSegmentationEnabled(long companyId){
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return false;
+	}
+
 	public boolean isShowCreationMenu() {
 		if (SegmentsResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(),

@@ -49,6 +49,7 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegi
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.odata.ExpressionVisitorImpl;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
 
@@ -438,8 +439,17 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
 		).put(
+			"isSegmentationEnabled", _isSegmentationEnabled()
+		).put(
 			"showInEditMode", _isShowInEditMode()
 		).build();
+	}
+
+	private boolean _isSegmentationEnabled() {
+		SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)_renderRequest.getAttribute(
+			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
+
+		return segmentsDisplayContext.isSegmentationEnabled(_themeDisplay.getCompanyId());
 	}
 
 	private List<SegmentsCriteriaContributor> _getSegmentsCriteriaContributors()

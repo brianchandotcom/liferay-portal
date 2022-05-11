@@ -34,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SystemProperties {
 
+	public static final String SYSTEM_ENV_OVERRIDE_PREFIX = "SYSTEM_LIFERAY_";
+
 	public static final String SYSTEM_PROPERTIES_QUIET =
 		"system.properties.quiet";
 
@@ -160,6 +162,9 @@ public class SystemProperties {
 		// java.util.Properties
 
 		PropertiesUtil.fromProperties(properties, _properties);
+
+		EnvPropertiesUtil.loadEnvOverrides(
+			SYSTEM_ENV_OVERRIDE_PREFIX, SystemProperties::set);
 
 		if (urls != null) {
 			for (URL url : urls) {

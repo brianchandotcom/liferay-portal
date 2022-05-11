@@ -44,7 +44,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gogo.shell.client", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.5"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.8"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.13"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.33"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.29"

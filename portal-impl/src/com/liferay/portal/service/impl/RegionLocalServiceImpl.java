@@ -64,7 +64,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		_countryPersistence.findByPrimaryKey(countryId);
 
-		validate(-1, countryId, name, regionCode);
+		_validate(-1, countryId, name, regionCode);
 
 		long regionId = counterLocalService.increment();
 
@@ -236,7 +236,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		Region region = regionPersistence.findByPrimaryKey(regionId);
 
-		validate(regionId, region.getCountryId(), name, regionCode);
+		_validate(regionId, region.getCountryId(), name, regionCode);
 
 		region.setActive(active);
 		region.setName(name);
@@ -244,26 +244,6 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		region.setRegionCode(regionCode);
 
 		return regionPersistence.update(region);
-	}
-
-	protected void validate(
-			long regionId, long countryId, String name, String regionCode)
-		throws PortalException {
-
-		if (Validator.isNull(name)) {
-			throw new RegionNameException("Name is null");
-		}
-
-		if (Validator.isNull(regionCode)) {
-			throw new RegionCodeException("Region code is null");
-		}
-
-		Region region = fetchRegion(countryId, regionCode);
-
-		if ((region != null) && (region.getRegionId() != regionId)) {
-			throw new DuplicateRegionException(
-				"Region code belongs to another region");
-		}
 	}
 
 	private OrderByStep _getGroupByStep(
@@ -333,6 +313,26 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 					return null;
 				}
 			));
+	}
+
+	private void _validate(
+			long regionId, long countryId, String name, String regionCode)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new RegionNameException("Name is null");
+		}
+
+		if (Validator.isNull(regionCode)) {
+			throw new RegionCodeException("Region code is null");
+		}
+
+		Region region = fetchRegion(countryId, regionCode);
+
+		if ((region != null) && (region.getRegionId() != regionId)) {
+			throw new DuplicateRegionException(
+				"Region code belongs to another region");
+		}
 	}
 
 	@BeanReference(type = AddressLocalService.class)

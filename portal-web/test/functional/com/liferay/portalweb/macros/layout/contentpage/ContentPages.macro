@@ -385,6 +385,32 @@ definition {
 			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");
 	}
 
+	macro viewFragmentCommonStyle {
+		if (isSet(className)) {
+			var fragmentName = "${className}";
+		}
+		else {
+			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+		}
+
+		var commonStylesClass = ContentPages.getCommonStylesClass(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
+		var actualStyleValue = Css.getStyleValue(
+			className = "${commonStylesClass}",
+			id = "layout-common-styles",
+			styleName = "${styleName}");
+
+		if (contains("${actualStyleValue}", "${styleValue}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: expected '${styleValue}', actual was '${actualStyleValue}'");
+		}
+	}
+
 	macro viewFragmentImage {
 		if (!(isSet(position))) {
 			var position = "1";

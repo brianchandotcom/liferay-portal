@@ -92,12 +92,10 @@ definition {
 		}
 
 		task ("Then the common styles of new fragment shown in page editor") {
-			var commonStylesClass = PageEditor.getCommonStylesClass(fragmentName = "Fragment Name");
-
 			PageEditor.viewFragmentCommonStyle(
-				commonStylesClass = "${commonStylesClass}",
+				fragmentName = "Fragment Name",
 				styleName = "color",
-				styleValue = "var(--success)");
+				styleValue = "success");
 		}
 
 		task ("When the page creator opens the preview modal") {
@@ -107,10 +105,10 @@ definition {
 		task ("Then the common styles of new fragment shown on preview modal") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			PageEditor.viewFragmentCommonStyle(
-				commonStylesClass = "${commonStylesClass}",
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "Fragment Name",
 				styleName = "color",
-				styleValue = "var(--success)");
+				styleValue = "success");
 
 			IFrame.closeFrame();
 
@@ -124,10 +122,10 @@ definition {
 		}
 
 		task ("Then the common styles of new fragment shown at view mode") {
-			PageEditor.viewFragmentCommonStyle(
-				commonStylesClass = "${commonStylesClass}",
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "Fragment Name",
 				styleName = "color",
-				styleValue = "var(--success)");
+				styleValue = "success");
 		}
 	}
 

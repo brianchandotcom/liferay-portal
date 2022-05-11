@@ -9,11 +9,11 @@ components:
                     readOnly: true
                     type: integer
                 errorDescription:
-                    example: "Unable to find currency. Currency code should be expressed with\n3-letter ISO 4217 format."
+                    example: "Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format."
                     readOnly: true
                     type: string
                 message:
-                    example: "No CommerceCurrency exists with the key {groupId=41811, code=US\nDollar}"
+                    example: "No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}"
                     readOnly: true
                     type: string
                 status:

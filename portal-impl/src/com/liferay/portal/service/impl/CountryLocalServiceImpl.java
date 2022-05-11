@@ -67,8 +67,8 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		throws PortalException {
 
 		validate(
-			a2, a3, serviceContext.getCompanyId(),
-			CountryConstants.DEFAULT_COUNTRY_ID, name, number);
+			CountryConstants.DEFAULT_COUNTRY_ID, serviceContext.getCompanyId(),
+			a2, a3, name, number);
 
 		long countryId = counterLocalService.increment();
 
@@ -267,7 +267,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);
 
-		validate(a2, a3, country.getCompanyId(), countryId, name, number);
+		validate(countryId, country.getCompanyId(), a2, a3, name, number);
 
 		country.setA2(a2);
 		country.setA3(a3);
@@ -296,7 +296,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			String a2, String a3, long companyId, long countryId, String name,
+			long countryId, long companyId, String a2, String a3, String name,
 			String number)
 		throws PortalException {
 

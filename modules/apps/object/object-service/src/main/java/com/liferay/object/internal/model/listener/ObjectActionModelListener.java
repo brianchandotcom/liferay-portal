@@ -96,6 +96,8 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 			additionalInfoJSONObject.put(
 				"active", objectAction.isActive()
 			).put(
+				"conditionExpression", objectAction.getConditionExpression()
+			).put(
 				"name", objectAction.getName()
 			).put(
 				"parameters", objectAction.getParameters()

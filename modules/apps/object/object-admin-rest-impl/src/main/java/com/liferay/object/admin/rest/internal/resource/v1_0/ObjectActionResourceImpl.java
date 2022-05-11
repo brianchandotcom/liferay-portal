@@ -104,6 +104,7 @@ public class ObjectActionResourceImpl
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
+				objectAction.getConditionExpression(),
 				objectAction.getDescription(), objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
@@ -120,6 +121,7 @@ public class ObjectActionResourceImpl
 		return _toObjectAction(
 			_objectActionService.updateObjectAction(
 				objectActionId, objectAction.getActive(),
+				objectAction.getConditionExpression(),
 				objectAction.getDescription(), objectAction.getName(),
 				UnicodePropertiesBuilder.create(
 					(Map<String, String>)objectAction.getParameters(), true

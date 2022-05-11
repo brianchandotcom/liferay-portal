@@ -19,6 +19,7 @@
 	"objectActions": [
 		{
 			"active": true,
+			"conditionExpression": "",
 			"description": "",
 			"name": "Action",
 			"objectActionExecutorKey": "webhook",

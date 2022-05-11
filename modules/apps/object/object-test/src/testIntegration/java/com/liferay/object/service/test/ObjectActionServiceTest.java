@@ -154,6 +154,7 @@ public class ObjectActionServiceTest {
 		return _objectActionLocalService.addObjectAction(
 			user.getUserId(), _objectDefinition.getObjectDefinitionId(), true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			new UnicodeProperties());
@@ -175,6 +176,7 @@ public class ObjectActionServiceTest {
 			objectAction = _objectActionService.addObjectAction(
 				_objectDefinition.getObjectDefinitionId(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				new UnicodeProperties());
@@ -234,7 +236,7 @@ public class ObjectActionServiceTest {
 			objectAction = _objectActionService.updateObjectAction(
 				objectAction.getObjectActionId(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new UnicodeProperties());
+				RandomTestUtil.randomString(), new UnicodeProperties());
 		}
 		finally {
 			if (objectAction != null) {

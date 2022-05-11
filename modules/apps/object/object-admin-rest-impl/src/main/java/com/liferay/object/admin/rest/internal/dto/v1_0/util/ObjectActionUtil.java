@@ -34,6 +34,8 @@ public class ObjectActionUtil {
 		ObjectAction objectAction = new ObjectAction() {
 			{
 				active = serviceBuilderObjectAction.isActive();
+				conditionExpression =
+					serviceBuilderObjectAction.getConditionExpression();
 				dateCreated = serviceBuilderObjectAction.getCreateDate();
 				dateModified = serviceBuilderObjectAction.getModifiedDate();
 				description = serviceBuilderObjectAction.getDescription();

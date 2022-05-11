@@ -207,8 +207,6 @@ definition {
 		ObjectCustomViews.assertColumnPresentOnDefaultSort(
 			colunmName = "Author",
 			sortingLabel = "Ascending");
-
-			
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"

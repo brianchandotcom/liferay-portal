@@ -228,7 +228,7 @@ definition {
 				value1 = "${activeOrderId}");
 		}
 
-		task ("And by clicking Submit button, comletes the checkout process") {
+		task ("Then by clicking Submit button, comletes the checkout process") {
 			CommerceNavigator.gotoMiniCart();
 
        		Button.click(button = "Submit");
@@ -316,7 +316,7 @@ definition {
 				productQuantity = "1");
 		}
 
-		task ("And by clicking Submit button from minicart, comletes the checkout process") {
+		task ("Then by clicking Submit button from minicart, comletes the checkout process") {
 			CommerceNavigator.gotoMiniCart();
 
        		Button.click(button = "Submit");
@@ -405,7 +405,7 @@ definition {
 				productQuantity = "1");
 		}
 
-		task ("And by clicking View Details from minicart, comletes the checkout process") {
+		task ("Then by clicking View Details from minicart, comletes the checkout process") {
 			CommerceCheckout.gotoCheckout();
 			
 			CommerceCheckout.initializersCheckout(

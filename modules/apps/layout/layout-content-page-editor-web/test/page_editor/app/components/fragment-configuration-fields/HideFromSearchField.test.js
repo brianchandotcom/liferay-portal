@@ -73,7 +73,7 @@ const renderComponent = ({
 		</StoreAPIContextProvider>
 	);
 
-describe('TextField', () => {
+describe('HideFromSearchField', () => {
 	it('calls dispatch method with selected value for Hide From Search checkbox', async () => {
 		renderComponent();
 

@@ -402,6 +402,23 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
+				siteNavigationMenuItem.getGroupId(),
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classNameId")),
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")),
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classTypeId")))) {
+
+			return false;
+		}
+
 		return true;
 	}
 

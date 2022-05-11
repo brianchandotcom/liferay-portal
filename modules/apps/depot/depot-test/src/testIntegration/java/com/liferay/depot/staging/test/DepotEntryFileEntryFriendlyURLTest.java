@@ -187,6 +187,137 @@ public class DepotEntryFileEntryFriendlyURLTest {
 		}
 	}
 
+	@Test
+	public void testRemoteStagedDepotEntryFileEntryFriendlyURLEntriesNormalizedTitle()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringPool.BLANK,
+				StringUtil.randomString(), StringUtil.randomString(),
+				new byte[0], null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_liveDepotEntry.getGroupId()));
+
+			_stagingDepotEntry = _addDepotEntry();
+
+			Group stagingDepotEntryGroup = _stagingDepotEntry.getGroup();
+
+			stagingDepotEntryGroup.setLiveGroupId(_liveDepotEntry.getGroupId());
+
+			GroupLocalServiceUtil.updateGroup(stagingDepotEntryGroup);
+
+			_liveDepotEntry = DepotStagingTestUtil.enableRemoteStaging(
+				_liveDepotEntry, _stagingDepotEntry);
+
+			FileEntry stagedFileEntry =
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), _liveDepotEntry.getGroupId());
+
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(FileEntry.class),
+					stagedFileEntry.getFileEntryId());
+
+			Assert.assertNotNull(friendlyURLEntry);
+			Assert.assertEquals(
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					fileEntry.getTitle()),
+				friendlyURLEntry.getUrlTitle());
+		}
+	}
+
+	@Test
+	public void testStagedDepotEntryFileEntryFriendlyURLEntriesNormalizedTitle()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringPool.BLANK,
+				StringUtil.randomString(), StringUtil.randomString(),
+				new byte[0], null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_liveDepotEntry.getGroupId()));
+
+			_stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
+				_liveDepotEntry);
+
+			FileEntry stagedFileEntry =
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), _liveDepotEntry.getGroupId());
+
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(FileEntry.class),
+					stagedFileEntry.getFileEntryId());
+
+			Assert.assertNotNull(friendlyURLEntry);
+			Assert.assertEquals(
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					fileEntry.getTitle()),
+				friendlyURLEntry.getUrlTitle());
+		}
+	}
+
+	@Test
+	public void testStageDepotEntryFileEntryFriendlyURLEntries()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), "urltitle",
+				StringUtil.randomString(), StringUtil.randomString(),
+				new byte[0], null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_liveDepotEntry.getGroupId()));
+
+			_stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
+				_liveDepotEntry);
+
+			FileEntry stagedFileEntry =
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), _liveDepotEntry.getGroupId());
+
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(FileEntry.class),
+					stagedFileEntry.getFileEntryId());
+
+			Assert.assertNotNull(friendlyURLEntry);
+			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
+		}
+	}
+
 	private DepotEntry _addDepotEntry() throws Exception {
 		return _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(

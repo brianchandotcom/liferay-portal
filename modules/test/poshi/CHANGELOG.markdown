@@ -1,5 +1,31 @@
 # Poshi Runner Change Log
 
+## 1.0.349
+
+### Functions
+
+* [POSHI-326](https://issues.liferay.com/browse/POSHI-326) - Missing functions in Poshi standalone
+
+### Other
+
+* [LPS-150378](https://issues.liferay.com/browse/LPS-150378) - [SF] Inline what can be inlined
+
+### Script
+
+* [POSHI-244](https://issues.liferay.com/browse/POSHI-244) - Poshi parsing should fail for unescaped quotes in 'contains' elements
+* [POSHI-314](https://issues.liferay.com/browse/POSHI-314) - Investigate failure in com.liferay.poshi.runner.util.HttpRequestUtilTest
+* [POSHI-340](https://issues.liferay.com/browse/POSHI-340) - Add/remove the empty lines between vars in PoshiScript
+* [POSHI-343](https://issues.liferay.com/browse/POSHI-343) - Static vars that use arithmetic notation don't parse correctly
+
+### Utils
+
+* [POSHI-285](https://issues.liferay.com/browse/POSHI-285) - Expansion of StringUtil and other utilties to include additional helpful commands
+
+### Validation
+
+* [POSHI-147](https://issues.liferay.com/browse/POSHI-147) - Give proper error messages instead of NPE's
+* [POSHI-338](https://issues.liferay.com/browse/POSHI-338) - Throw validation exception when referenced selenium method does not exist in LiferaySelenium interface
+
 ## 1.0.346
 
 ### Core

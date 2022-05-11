@@ -36,7 +36,7 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -223,7 +223,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			return simpleDateFormat.format(formattedRequestedDeliveryDate);
 		}
 		catch (IllegalArgumentException | ParseException exception) {
-			return LanguageUtil.get(locale, "request-delivery-date-invalid");
+			return _language.get(locale, "request-delivery-date-invalid");
 		}
 	}
 
@@ -317,7 +317,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 		CommerceOrderImporterItem commerceOrderImporterItem, Locale locale) {
 
 		if (commerceOrderImporterItem.isValid()) {
-			return LanguageUtil.get(locale, "ok");
+			return _language.get(locale, "ok");
 		}
 
 		String[] errorMessages = commerceOrderImporterItem.getErrorMessages();
@@ -357,6 +357,9 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

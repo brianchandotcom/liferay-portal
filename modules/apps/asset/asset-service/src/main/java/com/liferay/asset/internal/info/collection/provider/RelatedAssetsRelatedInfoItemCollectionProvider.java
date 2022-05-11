@@ -25,7 +25,7 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -85,7 +85,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "related-assets");
+		return _language.get(locale, "related-assets");
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
@@ -154,6 +154,9 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 	@Reference
 	private AssetEntryService _assetEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

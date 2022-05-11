@@ -23,7 +23,7 @@ import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -54,7 +54,7 @@ public class ProductInteractionCommerceMLRecommendationCPDataSourceImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(locale),
 			"product-interaction-based-recommendations");
 	}
@@ -144,6 +144,9 @@ public class ProductInteractionCommerceMLRecommendationCPDataSourceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductInteractionCommerceMLRecommendationCPDataSourceImpl.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference(unbind = "-")
 	private ProductInteractionCommerceMLRecommendationManager

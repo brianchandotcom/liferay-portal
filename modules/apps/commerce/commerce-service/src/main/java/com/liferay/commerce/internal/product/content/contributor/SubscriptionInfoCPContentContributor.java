@@ -28,7 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -114,13 +114,13 @@ public class SubscriptionInfoCPContentContributor
 		StringBundler sb = new StringBundler(
 			(maxSubscriptionCycles > 0) ? 6 : 3);
 
-		sb.append(LanguageUtil.get(httpServletRequest, "payment-subscription"));
+		sb.append(_language.get(httpServletRequest, "payment-subscription"));
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		String subscriptionPeriodKey = _getPeriodKey(
 			subscriptionLength, period);
 
-		String subscriptionMessage = LanguageUtil.format(
+		String subscriptionMessage = _language.format(
 			httpServletRequest, "every-x-x",
 			new Object[] {subscriptionLength, subscriptionPeriodKey}, true);
 
@@ -135,7 +135,7 @@ public class SubscriptionInfoCPContentContributor
 
 			String durationPeriodKey = _getPeriodKey(totalLength, period);
 
-			String durationMessage = LanguageUtil.format(
+			String durationMessage = _language.format(
 				httpServletRequest, "duration-x-x",
 				new Object[] {totalLength, durationPeriodKey}, true);
 
@@ -155,6 +155,9 @@ public class SubscriptionInfoCPContentContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

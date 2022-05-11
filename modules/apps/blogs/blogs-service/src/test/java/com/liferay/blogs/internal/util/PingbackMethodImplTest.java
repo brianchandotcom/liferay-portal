@@ -423,6 +423,8 @@ public class PingbackMethodImplTest {
 		ReflectionTestUtil.setFieldValue(
 			pingbackMethodImpl, "_http", HttpUtil.getHttp());
 		ReflectionTestUtil.setFieldValue(
+			pingbackMethodImpl, "_language", LanguageUtil.getLanguage());
+		ReflectionTestUtil.setFieldValue(
 			pingbackMethodImpl, "_portal", PortalUtil.getPortal());
 		ReflectionTestUtil.setFieldValue(
 			pingbackMethodImpl, "_portletLocalService", _portletLocalService);

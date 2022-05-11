@@ -20,7 +20,7 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -50,7 +50,7 @@ public class RestoreQuantityCommerceInventoryAuditTypeImpl
 
 		User user = _userLocalService.getUserById(userId);
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "x-restocked-the-quantity-from-shipment-x",
 			new Object[] {
 				user.getFullName(),
@@ -81,6 +81,9 @@ public class RestoreQuantityCommerceInventoryAuditTypeImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

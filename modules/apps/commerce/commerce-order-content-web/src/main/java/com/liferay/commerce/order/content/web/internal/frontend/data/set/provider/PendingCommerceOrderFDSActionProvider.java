@@ -22,7 +22,7 @@ import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -69,12 +69,15 @@ public class PendingCommerceOrderFDSActionProvider
 					CommerceOrderFDSUtil.getEditOrderURL(
 						order.getOrderId(), httpServletRequest)
 				).setLabel(
-					LanguageUtil.get(httpServletRequest, "view")
+					_language.get(httpServletRequest, "view")
 				).build());
 		}
 
 		return dropdownItems;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

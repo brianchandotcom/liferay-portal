@@ -40,7 +40,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -75,7 +75,7 @@ public class ProductHelperImpl implements ProductHelper {
 			"content.Language", locale, getClass());
 
 		return new PriceModel(
-			LanguageUtil.format(
+			_language.format(
 				resourceBundle, "from-x",
 				cpDefinitionMinimumPriceCommerceMoney.format(locale), false));
 	}
@@ -333,6 +333,9 @@ public class ProductHelperImpl implements ProductHelper {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;

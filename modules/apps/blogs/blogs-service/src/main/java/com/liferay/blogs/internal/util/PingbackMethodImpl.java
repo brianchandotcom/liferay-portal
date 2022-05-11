@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -201,7 +201,7 @@ public class PingbackMethodImpl implements Method {
 
 		String body = StringBundler.concat(
 			"[...] ", _getExcerpt(), " [...] <a href=", _sourceURI, ">",
-			LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more"), "</a>");
+			_language.get(LocaleUtil.getSiteDefault(), "read-more"), "</a>");
 
 		ServiceContext serviceContext = _buildServiceContext(
 			companyId, groupId, entry.getUrlTitle());
@@ -219,7 +219,7 @@ public class PingbackMethodImpl implements Method {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		String pingbackUserName = LanguageUtil.get(
+		String pingbackUserName = _language.get(
 			LocaleUtil.getSiteDefault(), "pingback");
 
 		serviceContext.setAttribute("pingbackUserName", pingbackUserName);
@@ -466,6 +466,10 @@ public class PingbackMethodImpl implements Method {
 	private Http _http;
 
 	private InetAddressLookup _inetAddressLookup;
+
+	@Reference
+	private Language _language;
+
 	private PingbackProperties _pingbackProperties;
 
 	@Reference

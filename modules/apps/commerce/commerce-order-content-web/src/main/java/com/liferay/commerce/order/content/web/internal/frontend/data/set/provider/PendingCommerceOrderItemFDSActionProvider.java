@@ -26,7 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -88,7 +88,7 @@ public class PendingCommerceOrderItemFDSActionProvider
 				}
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "view"));
+					_language.get(httpServletRequest, "view"));
 			}
 		).add(
 			() ->
@@ -101,7 +101,7 @@ public class PendingCommerceOrderItemFDSActionProvider
 				dropdownItem.setHref(
 					_getDeleteCommerceOrderItemURL(orderItem.getOrderItemId()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("async");
 			}
 		).build();
@@ -120,6 +120,9 @@ public class PendingCommerceOrderItemFDSActionProvider
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

@@ -32,7 +32,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -97,7 +97,7 @@ public class PricingCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				PRICING_COMMERCE_HEALTH_STATUS_DESCRIPTION);
@@ -113,7 +113,7 @@ public class PricingCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.PRICING_COMMERCE_HEALTH_STATUS_KEY);
 	}
@@ -255,6 +255,9 @@ public class PricingCommerceHealthHttpStatus
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
+	@Reference
+	private Language _language;
+
 	private class PricingCallable implements Callable<Object> {
 
 		@Override
@@ -278,7 +281,7 @@ public class PricingCommerceHealthHttpStatus
 					_addCatalogBaseCommercePriceList(
 						commerceCatalog,
 						CommercePriceListConstants.TYPE_PRICE_LIST,
-						LanguageUtil.format(
+						_language.format(
 							LocaleUtil.fromLanguageId(
 								commerceCatalog.getCatalogDefaultLanguageId()),
 							"x-base-price-list", commerceCatalog.getName(),
@@ -287,7 +290,7 @@ public class PricingCommerceHealthHttpStatus
 					_addCatalogBaseCommercePriceList(
 						commerceCatalog,
 						CommercePriceListConstants.TYPE_PROMOTION,
-						LanguageUtil.format(
+						_language.format(
 							LocaleUtil.fromLanguageId(
 								commerceCatalog.getCatalogDefaultLanguageId()),
 							"x-base-promotion", commerceCatalog.getName(),

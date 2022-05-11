@@ -20,7 +20,7 @@ import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.commerce.helper.CommerceSAPHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -71,7 +71,7 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				SAP_COMMERCE_HEALTH_STATUS_DESCRIPTION);
@@ -87,7 +87,7 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.SAP_COMMERCE_HEALTH_STATUS_KEY);
 	}
@@ -140,6 +140,9 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 
 	@Reference
 	private CommerceSAPHelper _commerceSAPHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

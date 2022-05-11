@@ -17,11 +17,12 @@ package com.liferay.commerce.payment.internal.notification.type;
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -65,9 +66,12 @@ public class SubscriptionCancelledCommerceNotificationTypeImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			locale,
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_CANCELLED);
 	}
+
+	@Reference
+	private Language _language;
 
 }

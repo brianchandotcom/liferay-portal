@@ -38,7 +38,7 @@ import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -180,7 +180,7 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			period = cpSubscriptionType.getLabel(locale);
 
 			if (cpSubscriptionInfo.getSubscriptionLength() > 1) {
-				period = LanguageUtil.get(
+				period = _language.get(
 					locale,
 					StringUtil.toLowerCase(
 						cpSubscriptionType.getLabel(LocaleUtil.US) +
@@ -188,7 +188,7 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			}
 		}
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "every-x-x",
 			new Object[] {cpSubscriptionInfo.getSubscriptionLength(), period});
 	}
@@ -336,5 +336,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+
+	@Reference
+	private Language _language;
 
 }

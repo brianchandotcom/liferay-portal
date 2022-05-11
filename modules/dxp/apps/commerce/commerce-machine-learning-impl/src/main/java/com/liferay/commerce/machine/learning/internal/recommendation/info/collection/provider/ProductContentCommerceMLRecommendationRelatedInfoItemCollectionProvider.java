@@ -23,7 +23,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -111,8 +111,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			locale, "content-based-product-recommendations");
+		return _language.get(locale, "content-based-product-recommendations");
 	}
 
 	@Override
@@ -127,6 +126,9 @@ public class
 
 	@Reference(unbind = "-")
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(unbind = "-")
 	private ProductContentCommerceMLRecommendationManager

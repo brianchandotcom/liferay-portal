@@ -17,7 +17,7 @@ package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -46,7 +46,7 @@ public class SettingsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(getLocale(portletRequest), "settings");
+		return _language.get(getLocale(portletRequest), "settings");
 	}
 
 	@Override
@@ -80,6 +80,9 @@ public class SettingsPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletPermission _portletPermission;

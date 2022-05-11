@@ -224,7 +224,8 @@ export default function useFilters(setFilterTerm, productName) {
 						"contains(licenseEntryType, 'cluster')"
 					);
 				}
-			} else {
+			}
+			else {
 				hasFilterPill = true;
 			}
 

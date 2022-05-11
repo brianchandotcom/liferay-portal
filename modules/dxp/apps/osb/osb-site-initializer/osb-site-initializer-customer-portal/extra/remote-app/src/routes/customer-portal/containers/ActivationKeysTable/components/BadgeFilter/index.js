@@ -64,7 +64,8 @@ const BadgeFilter = ({
 					)
 				) {
 					keyTypesDisplay.push(i18n.translate('virtual-cluster'));
-				} else if (
+				}
+				else if (
 					filterKeyType.value?.minNodes ===
 					filterKeyType.value?.maxNodes
 				) {
@@ -73,7 +74,8 @@ const BadgeFilter = ({
 							filterKeyType.value?.minNodes,
 						])
 					);
-				} else {
+				}
+				else {
 					const nodesDisplay = [];
 
 					if (filterKeyType.value?.minNodes) {

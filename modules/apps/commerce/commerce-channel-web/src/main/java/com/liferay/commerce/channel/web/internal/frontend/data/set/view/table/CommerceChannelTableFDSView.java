@@ -33,7 +33,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Sort;
@@ -99,7 +99,7 @@ public class CommerceChannelTableFDSView
 				dropdownItem.setHref(portletURL.toString());
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 			}
 		).add(
 			() -> _commerceChannelPermission.contains(
@@ -110,7 +110,7 @@ public class CommerceChannelTableFDSView
 					_getManageChannelPermissionsURL(
 						channel, httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "permissions"));
+					_language.get(httpServletRequest, "permissions"));
 				dropdownItem.setTarget("modal-permissions");
 			}
 		).add(
@@ -140,7 +140,7 @@ public class CommerceChannelTableFDSView
 
 				dropdownItem.setHref(deleteURL);
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -177,7 +177,7 @@ public class CommerceChannelTableFDSView
 				new Channel(
 					commerceChannel.getCommerceChannelId(),
 					commerceChannel.getName(),
-					LanguageUtil.get(
+					_language.get(
 						httpServletRequest, commerceChannel.getType())));
 		}
 
@@ -237,6 +237,9 @@ public class CommerceChannelTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

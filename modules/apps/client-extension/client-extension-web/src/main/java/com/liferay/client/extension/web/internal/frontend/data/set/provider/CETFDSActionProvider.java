@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -131,7 +131,7 @@ public class CETFDSActionProvider implements FDSActionProvider {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		return LanguageUtil.get(resourceBundle, key);
+		return _language.get(resourceBundle, key);
 	}
 
 	private String _getPortletId(HttpServletRequest httpServletRequest) {
@@ -151,6 +151,9 @@ public class CETFDSActionProvider implements FDSActionProvider {
 		return requestBackedPortletURLFactory.createRenderURL(
 			_getPortletId(httpServletRequest));
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

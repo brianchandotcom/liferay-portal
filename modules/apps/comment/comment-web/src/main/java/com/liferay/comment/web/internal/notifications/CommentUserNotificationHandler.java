@@ -23,7 +23,7 @@ import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
@@ -127,7 +127,7 @@ public class CommentUserNotificationHandler
 		}
 
 		if (assetRenderer != null) {
-			message = LanguageUtil.format(
+			message = _language.format(
 				serviceContext.getLocale(), message,
 				new String[] {
 					HtmlUtil.escape(
@@ -139,7 +139,7 @@ public class CommentUserNotificationHandler
 				false);
 		}
 		else {
-			message = LanguageUtil.format(
+			message = _language.format(
 				serviceContext.getLocale(), message,
 				new String[] {
 					HtmlUtil.escape(
@@ -175,6 +175,9 @@ public class CommentUserNotificationHandler
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;

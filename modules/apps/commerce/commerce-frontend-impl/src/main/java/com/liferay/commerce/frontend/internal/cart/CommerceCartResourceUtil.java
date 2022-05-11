@@ -39,7 +39,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -80,7 +80,7 @@ public class CommerceCartResourceUtil {
 
 		OrderStatusInfo orderStatusInfo = new OrderStatusInfo(
 			commerceOrder.getOrderStatus(), orderStatusInfoLabel,
-			LanguageUtil.get(locale, orderStatusInfoLabel));
+			_language.get(locale, orderStatusInfoLabel));
 
 		return new Cart(
 			detailsUrl, commerceOrderId, product,
@@ -350,6 +350,9 @@ public class CommerceCartResourceUtil {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ProductHelper _productHelper;

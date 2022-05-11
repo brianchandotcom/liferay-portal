@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
@@ -53,7 +54,7 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "import-export");
+		return _language.get(resourceBundle, "import-export");
 	}
 
 	@Override
@@ -68,5 +69,8 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 
 		return super.isShow(permissionChecker, group);
 	}
+
+	@Reference
+	private Language _language;
 
 }

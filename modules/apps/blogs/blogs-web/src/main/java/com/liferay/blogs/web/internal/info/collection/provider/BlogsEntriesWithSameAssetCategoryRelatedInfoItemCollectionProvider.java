@@ -24,7 +24,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -116,7 +116,7 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "blogs-with-this-category");
+		return _language.get(locale, "blogs-with-this-category");
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
@@ -206,6 +206,9 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

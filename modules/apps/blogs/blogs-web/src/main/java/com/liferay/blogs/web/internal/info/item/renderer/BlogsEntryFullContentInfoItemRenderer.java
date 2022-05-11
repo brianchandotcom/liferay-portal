@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.info.item.renderer;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -40,7 +40,7 @@ public class BlogsEntryFullContentInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "full-content");
+		return _language.get(locale, "full-content");
 	}
 
 	@Override
@@ -68,6 +68,9 @@ public class BlogsEntryFullContentInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

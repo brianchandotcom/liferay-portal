@@ -15,7 +15,7 @@
 package com.liferay.blogs.internal.search.spi.model.index.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -55,7 +55,7 @@ public class BlogsEntryModelDocumentContributor
 		document.addKeywordSortable("urlTitle", blogsEntry.getUrlTitle());
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(blogsEntry.getGroupId())) {
+				_language.getAvailableLocales(blogsEntry.getGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -70,5 +70,8 @@ public class BlogsEntryModelDocumentContributor
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 }

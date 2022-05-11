@@ -16,7 +16,7 @@ package com.liferay.asset.tags.navigation.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -46,7 +47,7 @@ public class AssetTagsCloudPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "x-template",
 			portal.getPortletTitle(
 				AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
@@ -58,5 +59,8 @@ public class AssetTagsCloudPortletDisplayTemplateHandler
 	public String getResourceName() {
 		return AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD;
 	}
+
+	@Reference
+	private Language _language;
 
 }

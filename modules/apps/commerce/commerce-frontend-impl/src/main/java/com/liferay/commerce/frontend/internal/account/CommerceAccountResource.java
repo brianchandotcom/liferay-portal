@@ -40,7 +40,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -359,10 +359,9 @@ public class CommerceAccountResource {
 		for (CommerceOrder commerceOrder : userCommerceOrders) {
 			Date modifiedDate = commerceOrder.getModifiedDate();
 
-			String modifiedDateTimeDescription =
-				LanguageUtil.getTimeDescription(
-					httpServletRequest,
-					System.currentTimeMillis() - modifiedDate.getTime(), true);
+			String modifiedDateTimeDescription = _language.getTimeDescription(
+				httpServletRequest,
+				System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 			orders.add(
 				new Order(
@@ -370,7 +369,7 @@ public class CommerceAccountResource {
 					commerceOrder.getCommerceAccountId(),
 					commerceOrder.getCommerceAccountName(),
 					commerceOrder.getPurchaseOrderNumber(),
-					LanguageUtil.format(
+					_language.format(
 						httpServletRequest, "x-ago",
 						modifiedDateTimeDescription),
 					WorkflowConstants.getStatusLabel(commerceOrder.getStatus()),
@@ -479,6 +478,9 @@ public class CommerceAccountResource {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

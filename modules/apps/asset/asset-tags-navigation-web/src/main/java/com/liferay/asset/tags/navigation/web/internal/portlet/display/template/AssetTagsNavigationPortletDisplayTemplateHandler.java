@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -55,7 +55,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return language.format(
 			locale, "x-template",
 			portal.getPortletTitle(
 				AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
@@ -106,6 +106,9 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		return "com/liferay/asset/tags/navigation/web/portlet/display" +
 			"/template/dependencies/portlet-display-templates.xml";
 	}
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

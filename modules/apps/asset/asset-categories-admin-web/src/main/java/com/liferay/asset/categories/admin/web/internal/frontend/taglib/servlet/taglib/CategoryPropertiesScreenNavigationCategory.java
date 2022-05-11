@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class CategoryPropertiesScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "properties");
+		return _language.get(locale, "properties");
 	}
 
 	@Override
@@ -87,5 +87,8 @@ public class CategoryPropertiesScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 }

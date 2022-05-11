@@ -18,7 +18,7 @@ import com.liferay.commerce.exception.CommerceTaxEngineException;
 import com.liferay.commerce.tax.CommerceTaxCalculateRequest;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.CommerceTaxValue;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -50,13 +50,13 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			_getResourceBundle(locale), "avalara-tax-rate-description");
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), KEY);
+		return _language.get(_getResourceBundle(locale), KEY);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -66,5 +66,8 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 
 	@Reference(target = "(commerce.tax.engine.key=by-address)")
 	private CommerceTaxEngine _commerceTaxEngine;
+
+	@Reference
+	private Language _language;
 
 }

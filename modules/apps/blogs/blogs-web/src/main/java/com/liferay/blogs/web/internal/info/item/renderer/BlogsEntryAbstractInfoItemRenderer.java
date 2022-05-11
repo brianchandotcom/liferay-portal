@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -42,7 +42,7 @@ public class BlogsEntryAbstractInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "abstract");
+		return _language.get(locale, "abstract");
 	}
 
 	@Override
@@ -77,6 +77,9 @@ public class BlogsEntryAbstractInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

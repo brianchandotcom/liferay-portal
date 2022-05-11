@@ -27,7 +27,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -142,7 +142,7 @@ public class AssetVocabularyCTDisplayRenderer
 			String name = null;
 
 			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) {
-				name = LanguageUtil.get(
+				name = _language.get(
 					displayBuilder.getLocale(), "all-asset-types");
 			}
 			else if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
@@ -195,6 +195,9 @@ public class AssetVocabularyCTDisplayRenderer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

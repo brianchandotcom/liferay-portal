@@ -20,7 +20,7 @@ import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -62,7 +62,7 @@ public class CancelledCommerceOrderStatusImpl implements CommerceOrderStatus {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			locale, CommerceOrderConstants.getOrderStatusLabel(KEY));
 	}
 
@@ -100,5 +100,8 @@ public class CancelledCommerceOrderStatusImpl implements CommerceOrderStatus {
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
+	private Language _language;
 
 }

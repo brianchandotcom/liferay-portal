@@ -23,7 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -71,7 +71,7 @@ public class CommerceAccountGroupAccountItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "accounts");
+		return _language.get(locale, "accounts");
 	}
 
 	@Override
@@ -120,6 +120,9 @@ public class CommerceAccountGroupAccountItemSelectorView
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.item.selector.web)"

@@ -26,7 +26,7 @@ import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -131,7 +131,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, key);
+		return _language.get(resourceBundle, key);
 	}
 
 	@Reference
@@ -151,5 +151,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

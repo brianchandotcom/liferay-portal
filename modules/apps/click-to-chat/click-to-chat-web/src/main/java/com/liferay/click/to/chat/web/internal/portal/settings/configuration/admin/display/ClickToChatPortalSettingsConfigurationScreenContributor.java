@@ -17,7 +17,7 @@ package com.liferay.click.to.chat.web.internal.portal.settings.configuration.adm
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -55,7 +55,7 @@ public class ClickToChatPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "click-to-chat-configuration-name");
+		return _language.get(locale, "click-to-chat-configuration-name");
 	}
 
 	@Override
@@ -91,6 +91,9 @@ public class ClickToChatPortalSettingsConfigurationScreenContributor
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.click.to.chat.web)",

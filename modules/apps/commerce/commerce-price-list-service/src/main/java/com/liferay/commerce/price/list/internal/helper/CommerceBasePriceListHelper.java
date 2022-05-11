@@ -23,7 +23,7 @@ import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -64,14 +64,14 @@ public class CommerceBasePriceListHelper {
 
 		_addCatalogBaseCommercePriceList(
 			commerceCatalog, CommercePriceListConstants.TYPE_PRICE_LIST,
-			LanguageUtil.format(
+			_language.format(
 				LocaleUtil.fromLanguageId(
 					commerceCatalog.getCatalogDefaultLanguageId()),
 				"x-base-price-list", commerceCatalog.getName(), false),
 			serviceContext);
 		_addCatalogBaseCommercePriceList(
 			commerceCatalog, CommercePriceListConstants.TYPE_PROMOTION,
-			LanguageUtil.format(
+			_language.format(
 				LocaleUtil.fromLanguageId(
 					commerceCatalog.getCatalogDefaultLanguageId()),
 				"x-base-promotion", commerceCatalog.getName(), false),
@@ -135,5 +135,8 @@ public class CommerceBasePriceListHelper {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 }

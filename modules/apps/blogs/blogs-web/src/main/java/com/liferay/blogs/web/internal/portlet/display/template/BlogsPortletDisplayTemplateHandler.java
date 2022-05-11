@@ -25,7 +25,6 @@ import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
@@ -88,7 +87,7 @@ public class BlogsPortletDisplayTemplateHandler
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

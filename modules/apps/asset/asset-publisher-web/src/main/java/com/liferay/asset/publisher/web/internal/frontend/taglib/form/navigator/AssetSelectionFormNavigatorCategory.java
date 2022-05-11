@@ -16,11 +16,12 @@ package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -44,7 +45,10 @@ public class AssetSelectionFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "asset-selection");
+		return _language.get(locale, "asset-selection");
 	}
+
+	@Reference
+	private Language _language;
 
 }

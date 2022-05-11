@@ -27,7 +27,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -131,7 +131,7 @@ public class AssetRSSHelper {
 
 			String value = null;
 
-			String languageId = LanguageUtil.getLanguageId(portletRequest);
+			String languageId = _language.getLanguageId(portletRequest);
 
 			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
@@ -318,6 +318,9 @@ public class AssetRSSHelper {
 
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

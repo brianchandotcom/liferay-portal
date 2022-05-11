@@ -19,7 +19,7 @@ import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemS
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class AssetVocabularyItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "vocabularies");
+		return _language.get(locale, "vocabularies");
 	}
 
 	@Override
@@ -86,5 +86,8 @@ public class AssetVocabularyItemSelectorView
 	private ItemSelectorViewDescriptorRenderer
 		<AssetVocabularyItemSelectorCriterion>
 			_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private Language _language;
 
 }

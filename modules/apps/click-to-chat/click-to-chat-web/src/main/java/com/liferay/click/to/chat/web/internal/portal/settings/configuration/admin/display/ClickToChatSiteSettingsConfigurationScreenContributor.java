@@ -17,7 +17,7 @@ package com.liferay.click.to.chat.web.internal.portal.settings.configuration.adm
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfigurationUtil;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,7 +60,7 @@ public class ClickToChatSiteSettingsConfigurationScreenContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "click-to-chat");
+		return _language.get(resourceBundle, "click-to-chat");
 	}
 
 	@Override
@@ -107,6 +107,9 @@ public class ClickToChatSiteSettingsConfigurationScreenContributor
 			ClickToChatWebKeys.CLICK_TO_CHAT_HIDE_IN_CONTROL_PANEL,
 			clickToChatConfiguration.hideInControlPanel());
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.click.to.chat.web)",

@@ -32,6 +32,7 @@
 	"france": "France",
 	"future": "Future",
 	"germany": "Germany",
+	"hide": "Hide",
 	"hungary": "Hungary",
 	"in-progress": "In Progress",
 	"india": "India",
@@ -81,6 +82,7 @@
 	"project-name": "Project Name",
 	"provisioned": "Provisioned",
 	"purchased": "Purchased",
+	"quick-links": "Quick Links",
 	"raleigh": "Raleigh",
 	"ready-set-go": "Ready, set, go!",
 	"remove": "Remove",
@@ -126,7 +128,5 @@
 	"x-items": "{0} Items",
 	"x-of-x-available": "{0} of {1} available",
 	"x-result-for-x": "{0} result for {1}",
-	"x-results-for-x": "{0} results for {1}",
-	"quick-links": "Quick Links",
-	"hide": "Hide"
+	"x-results-for-x": "{0} results for {1}"
 }

@@ -450,7 +450,7 @@ definition {
 			ContentPages.viewFragmentText(
 				assetType = "journal",
 				fragmentName = "Content Display",
-				text = "FF0D0D");
+				text = "#FF0D0D");
 		}
 	}
 

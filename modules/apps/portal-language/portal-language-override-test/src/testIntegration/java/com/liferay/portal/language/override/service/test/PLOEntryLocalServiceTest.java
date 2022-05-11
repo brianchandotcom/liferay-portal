@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
+import com.liferay.portal.language.override.exception.PLOEntryValueException;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
@@ -97,6 +98,16 @@ public class PLOEntryLocalServiceTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), key,
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 			RandomTestUtil.randomString());
+	}
+
+	@Test(expected = PLOEntryValueException.MustNotBeNull.class)
+	public void testAddPLOEntryWithEmptyValue() throws Exception {
+		String value = StringPool.BLANK;
+
+		_ploEntryLocalService.addOrUpdatePLOEntry(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(),
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()), value);
 	}
 
 	private void _assertTranslationValue(String key, String value) {

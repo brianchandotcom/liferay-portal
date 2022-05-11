@@ -16,6 +16,7 @@ package com.liferay.poshi.core.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -226,12 +227,38 @@ public class FileUtil {
 		return sb.toString();
 	}
 
+	public static void replaceStringInFile(
+			String filePath, String placeholder, String text)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+
+		File file = new File(filePath);
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new FileReader(file));
+
+		while ((line = bufferedReader.readLine()) != null) {
+			if (line.contains(placeholder)) {
+				line = line.replace(placeholder, text);
+			}
+
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		bufferedReader.close();
+
+		write(file, sb.toString());
+	}
+
 	public static void write(File file, byte[] bytes) throws IOException {
 		FileUtils.writeByteArrayToFile(file, bytes);
 	}
 
 	public static void write(File file, String string) throws IOException {
-		FileUtils.writeStringToFile(file, string);
+		FileUtils.writeStringToFile(file, string, "UTF-8");
 	}
 
 	public static void write(String fileName, byte[] bytes) throws IOException {

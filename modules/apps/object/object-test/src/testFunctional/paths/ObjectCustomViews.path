@@ -76,6 +76,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DEFAULT_SORT_SEARCH_RESULT</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//p[contains(@class,'list-group-title') and contains(text(),'${key_columnName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_SORT_SORTING_LABEL</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//p[contains(@class,'list-group-text') and contains(text(),'${key_sortingLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_COLUMNS_SEARCH_BAR</td>
 		<td>//div[contains(@class,'modal-body')]//input[contains(@aria-label,'Search')]</td>
 		<td></td>
@@ -113,6 +123,41 @@
 	 <tr>
 		<td>SELECT_ANY_PERMISSIONS</td>
 		<td>//input[@id='${key_roleName}_ACTION_${key_permissionName}']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_SORT_TAB</td>
+		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Default Sort')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_COLUMN_ON_DEFAULT_SORT</td>
+		<td>//div[@class = 'custom-select__content form-control']//span[contains(text(),'Choose an Option')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_SORTING_ON_DEFAULT_SORT</td>
+		<td>//input[@placeholder='Choose an Option' and contains(@value,'Ascending') or contains (@value,'Descending')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_NEW_DEFAULT_SORT</td>
+		<td>//button[contains(text(),'New Default Sort')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_SORT_COLUMN_OPTION</td>
+		<td>//button[(@class='dropdown-item') and contains(.,'${key_columnOption}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SORT_OPTION</td>
+		<td>//button[(@class='dropdown-item') and contains(.,'${key_sortOption}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_SORT_ADD_BUTTON</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//button[contains(@class,'nav-btn nav-btn-monospaced btn btn-monospaced btn-primary')]</td>
 		<td></td>
 	</tr>
 	<tr>

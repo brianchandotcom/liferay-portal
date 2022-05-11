@@ -12,6 +12,35 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
+	macro addDefaultSort {
+		if (IsElementPresent(key_text = "No default sort was created yet", locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT")) {
+			ObjectCustomViews.addNewDefaultSort();
+		}
+		else {
+			Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_ADD_BUTTON");
+		}
+
+		Click(locator1 = "ObjectCustomViews#SELECT_COLUMN_ON_DEFAULT_SORT");
+
+		Click(
+			key_columnOption = "${columnOption}",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_COLUMN_OPTION");
+
+		Click(locator1 = "ObjectCustomViews#SELECT_SORTING_ON_DEFAULT_SORT");
+
+		Click(
+			key_sortOption = "${sortOption}",
+			locator1 = "ObjectCustomViews#SORT_OPTION");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+	}
+
+	macro addNewDefaultSort {
+		Click(locator1 = "ObjectCustomViews#ADD_NEW_DEFAULT_SORT");
+	}
+
 	macro addObjectViewViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -46,6 +75,17 @@ definition {
 		AssertElementPresent(
 			key_columnName = "${colunmName}",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
+	macro assertColumnPresentOnDefaultSort {
+		AssertElementPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
+
+		AssertTextEquals(
+			key_sortingLabel = "${sortingLabel}",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SORTING_LABEL",
+			value1 = "${sortingLabel}");
 	}
 
 	macro assertColumnVisibleOnAddColumnModal {
@@ -114,6 +154,10 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
 
 		DropdownMenuItem.click(menuItem = "Edit");
+	}
+
+	macro goToDefaultSortTab {
+		Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_TAB");
 	}
 
 	macro gotoPermissions {

@@ -175,12 +175,40 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to create a Default Sort when there is column (Ascending or Descending)"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateDefaultSort {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152053",
+			objectName = "CustomObject152053",
+			pluralLabelName = "Custom Objects 152053");
 
-		// TODO LPS-152053 CanCreateDefaultSort pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152053");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addDefaultSort(
+			columnOption = "Author",
+			sortOption = "Ascending");
+
+		ObjectCustomViews.assertColumnPresentOnDefaultSort(
+			colunmName = "Author",
+			sortingLabel = "Ascending");
+
+			
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"

@@ -17,7 +17,7 @@ package com.liferay.change.tracking.web.internal.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,7 +47,7 @@ public class CompanyCTDisplayRenderer extends BaseCTDisplayRenderer<Company> {
 
 	@Override
 	public String getTypeName(Locale locale) {
-		return LanguageUtil.get(locale, "company");
+		return _language.get(locale, "company");
 	}
 
 	@Override
@@ -78,20 +78,22 @@ public class CompanyCTDisplayRenderer extends BaseCTDisplayRenderer<Company> {
 					return maxUsers;
 				}
 
-				return LanguageUtil.get(
-					displayBuilder.getLocale(), "unlimited");
+				return _language.get(displayBuilder.getLocale(), "unlimited");
 			}
 		).display(
 			"active",
 			() -> {
 				if (company.isActive()) {
-					return LanguageUtil.get(displayBuilder.getLocale(), "yes");
+					return _language.get(displayBuilder.getLocale(), "yes");
 				}
 
-				return LanguageUtil.get(displayBuilder.getLocale(), "no");
+				return _language.get(displayBuilder.getLocale(), "no");
 			}
 		);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

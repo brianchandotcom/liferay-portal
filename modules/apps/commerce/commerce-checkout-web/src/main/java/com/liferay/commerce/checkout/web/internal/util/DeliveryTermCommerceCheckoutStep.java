@@ -32,7 +32,7 @@ import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -86,7 +86,7 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			_commerceCheckoutStepHttpHelper.
 				isActiveDeliveryTermCommerceCheckoutStep(
 					httpServletRequest, commerceOrder,
-					LanguageUtil.getLanguageId(
+					_language.getLanguageId(
 						_portal.getLocale(httpServletRequest)));
 
 		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
@@ -136,7 +136,7 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		commerceOrder = _commerceOrderLocalService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(),
 			Long.valueOf(commerceDeliveryTermId), 0,
-			LanguageUtil.getLanguageId(actionRequest.getLocale()));
+			_language.getLanguageId(actionRequest.getLocale()));
 
 		actionRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
@@ -198,6 +198,9 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

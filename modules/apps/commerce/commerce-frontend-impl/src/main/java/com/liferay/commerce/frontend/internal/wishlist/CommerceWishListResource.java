@@ -33,7 +33,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -104,8 +104,8 @@ public class CommerceWishListResource {
 
 			if (commerceWishList == null) {
 				commerceWishList = _commerceWishListService.addCommerceWishList(
-					LanguageUtil.get(serviceContext.getLocale(), "default"),
-					true, serviceContext);
+					_language.get(serviceContext.getLocale(), "default"), true,
+					serviceContext);
 			}
 
 			CPCatalogEntry cpCatalogEntry =
@@ -207,6 +207,9 @@ public class CommerceWishListResource {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

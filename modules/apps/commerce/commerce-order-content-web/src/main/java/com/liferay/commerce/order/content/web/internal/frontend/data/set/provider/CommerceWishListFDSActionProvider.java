@@ -21,7 +21,7 @@ import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +29,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -50,8 +51,11 @@ public class CommerceWishListFDSActionProvider implements FDSActionProvider {
 				CommerceOrderFDSUtil.getWishListCommerceOrderPreviewURL(
 					(WishList)model, httpServletRequest)
 			).setLabel(
-				LanguageUtil.get(httpServletRequest, "select")
+				_language.get(httpServletRequest, "select")
 			).build());
 	}
+
+	@Reference
+	private Language _language;
 
 }

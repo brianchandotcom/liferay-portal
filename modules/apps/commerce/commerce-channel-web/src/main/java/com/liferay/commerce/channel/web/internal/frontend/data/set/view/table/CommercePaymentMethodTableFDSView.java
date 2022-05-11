@@ -37,7 +37,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -101,7 +101,7 @@ public class CommercePaymentMethodTableFDSView
 						LiferayWindowState.POP_UP
 					).buildPortletURL());
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
@@ -122,7 +122,7 @@ public class CommercePaymentMethodTableFDSView
 							commercePaymentMethodGroupRel,
 							paymentMethod.getKey(), httpServletRequest));
 					dropdownItem.setLabel(
-						LanguageUtil.get(httpServletRequest, "permissions"));
+						_language.get(httpServletRequest, "permissions"));
 					dropdownItem.setTarget("modal-permissions");
 				});
 		}
@@ -271,6 +271,9 @@ public class CommercePaymentMethodTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

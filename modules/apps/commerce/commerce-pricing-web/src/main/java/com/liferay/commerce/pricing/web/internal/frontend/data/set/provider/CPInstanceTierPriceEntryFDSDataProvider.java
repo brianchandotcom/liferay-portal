@@ -25,7 +25,7 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,14 +83,14 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 
 			Date createDate = commerceTierPriceEntry.getCreateDate();
 
-			String createDateDescription = LanguageUtil.getTimeDescription(
+			String createDateDescription = _language.getTimeDescription(
 				httpServletRequest,
 				System.currentTimeMillis() - createDate.getTime(), true);
 
 			instanceTierPriceEntries.add(
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
-					LanguageUtil.format(
+					_language.format(
 						httpServletRequest, "x-ago", createDateDescription,
 						false),
 					commerceTierPriceEntry.getMinQuantity(),
@@ -116,6 +116,9 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

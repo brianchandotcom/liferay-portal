@@ -27,7 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -115,14 +115,13 @@ public class DeliverySubscriptionInfoCPContentContributor
 		StringBundler sb = new StringBundler(
 			(maxDeliverySubscriptionCycles > 0) ? 6 : 3);
 
-		sb.append(
-			LanguageUtil.get(httpServletRequest, "delivery-subscription"));
+		sb.append(_language.get(httpServletRequest, "delivery-subscription"));
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		String deliverySubscriptionPeriodKey = _getPeriodKey(
 			deliverySubscriptionLength, period);
 
-		String deliverySubscriptionMessage = LanguageUtil.format(
+		String deliverySubscriptionMessage = _language.format(
 			httpServletRequest, "every-x-x",
 			new Object[] {
 				deliverySubscriptionLength, deliverySubscriptionPeriodKey
@@ -142,7 +141,7 @@ public class DeliverySubscriptionInfoCPContentContributor
 			String deliveryDurationPeriodKey = _getPeriodKey(
 				totalLength, period);
 
-			String deliveryDurationMessage = LanguageUtil.format(
+			String deliveryDurationMessage = _language.format(
 				httpServletRequest, "duration-x-x",
 				new Object[] {totalLength, deliveryDurationPeriodKey}, true);
 
@@ -162,6 +161,9 @@ public class DeliverySubscriptionInfoCPContentContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

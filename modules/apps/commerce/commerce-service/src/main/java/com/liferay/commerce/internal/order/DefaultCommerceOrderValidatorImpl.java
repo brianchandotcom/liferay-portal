@@ -24,7 +24,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -192,10 +192,10 @@ public class DefaultCommerceOrderValidatorImpl
 			"content.Language", locale, getClass());
 
 		if (arguments == null) {
-			return LanguageUtil.get(resourceBundle, key);
+			return _language.get(resourceBundle, key);
 		}
 
-		return LanguageUtil.format(resourceBundle, key, arguments);
+		return _language.format(resourceBundle, key, arguments);
 	}
 
 	@Reference
@@ -205,5 +205,8 @@ public class DefaultCommerceOrderValidatorImpl
 	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

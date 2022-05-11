@@ -20,7 +20,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,7 +72,7 @@ public class CommercePriceListItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "price-lists");
+		return _language.get(resourceBundle, "price-lists");
 	}
 
 	@Override
@@ -111,6 +111,9 @@ public class CommercePriceListItemSelectorView
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.item.selector.web)"

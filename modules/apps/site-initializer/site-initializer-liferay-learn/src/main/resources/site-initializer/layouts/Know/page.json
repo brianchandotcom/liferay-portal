@@ -1,1 +1,11 @@
-{"hidden":false,"name_i18n":{"en_US":"Know"},"private":false,"system":false,"type":"content","typeSettings":[]}
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Know"
+	},
+	"private": false,
+	"system": false,
+	"type": "content",
+	"typeSettings": [
+	]
+}

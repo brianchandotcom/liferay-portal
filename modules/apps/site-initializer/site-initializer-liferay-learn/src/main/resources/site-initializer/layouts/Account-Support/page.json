@@ -1,1 +1,11 @@
-{"hidden":false,"name_i18n":{"en_US":"Account Support"},"private":false,"system":false,"type":"content","typeSettings":[]}
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Account Support"
+	},
+	"private": false,
+	"system": false,
+	"type": "content",
+	"typeSettings": [
+	]
+}

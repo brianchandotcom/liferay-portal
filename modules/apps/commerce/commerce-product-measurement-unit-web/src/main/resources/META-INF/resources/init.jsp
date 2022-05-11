@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyException" %><%@
+<%@ page import="com.liferay.commerce.product.exception.DuplicateCPMeasurementUnitKeyException" %><%@
 page import="com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@

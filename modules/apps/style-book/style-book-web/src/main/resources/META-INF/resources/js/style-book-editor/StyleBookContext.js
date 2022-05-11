@@ -18,6 +18,7 @@ import reducer from './reducer';
 
 const StyleBookDispatchContext = React.createContext(() => {});
 export const StyleBookContext = React.createContext({
+	draftStatus: null,
 	frontendTokensValues: {},
 	loading: true,
 	previewLayout: {},
@@ -38,6 +39,10 @@ export function StyleBookContextProvider({children, value}) {
 
 export function useDispatch() {
 	return useContext(StyleBookDispatchContext);
+}
+
+export function useDraftStatus() {
+	return useContext(StyleBookContext).draftStatus;
 }
 
 export function useFrontendTokensValues() {

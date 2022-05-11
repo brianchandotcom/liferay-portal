@@ -14,6 +14,7 @@
 
 import {
 	LOADING,
+	SET_DRAFT_STATUS,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUE,
@@ -25,6 +26,15 @@ export default function reducer(state, action) {
 			const {value} = action;
 
 			return {...state, loading: value};
+		}
+
+		case SET_DRAFT_STATUS: {
+			const {value} = action;
+
+			return {
+				...state,
+				draftStatus: value,
+			};
 		}
 
 		case SET_PREVIEW_LAYOUT: {

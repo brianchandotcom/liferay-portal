@@ -14,26 +14,28 @@
 
 import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
 import {
 	StyleBookContextProvider,
+	useDispatch,
 	useFrontendTokensValues,
 } from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config, initializeConfig} from './config';
+import {SET_DRAFT_STATUS} from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
-	setDraftStatus,
 }) => {
 	useCloseProductMenu();
 
+	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
 	useEffect(() => {
@@ -41,25 +43,31 @@ const StyleBookEditor = ({
 			return;
 		}
 
-		setDraftStatus(DRAFT_STATUS.saving);
+		dispatch({type: SET_DRAFT_STATUS, value: DRAFT_STATUS.saving});
 
 		saveDraft(frontendTokensValues, config.styleBookEntryId)
 			.then(() => {
-				setDraftStatus(DRAFT_STATUS.draftSaved);
+				dispatch({
+					type: SET_DRAFT_STATUS,
+					value: DRAFT_STATUS.draftSaved,
+				});
 			})
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
 
-				setDraftStatus(DRAFT_STATUS.notSaved);
+				dispatch({
+					type: SET_DRAFT_STATUS,
+					value: DRAFT_STATUS.notSaved,
+				});
 
 				openToast({
 					message: error.message,
 					type: 'danger',
 				});
 			});
-	}, [initialFrontendTokensValues, frontendTokensValues, setDraftStatus]);
+	}, [dispatch, initialFrontendTokensValues, frontendTokensValues]);
 
 	return (
 		<div className="cadmin style-book-editor">
@@ -104,11 +112,10 @@ export default function ({
 		themeName,
 	});
 
-	const [, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-
 	return (
 		<StyleBookContextProvider
 			value={{
+				draftStatus: DRAFT_STATUS.notSaved,
 				frontendTokensValues,
 				previewLayout: getMostRecentLayout(config.previewOptions),
 				previewLayoutType: config.previewOptions.find((type) =>
@@ -120,10 +127,7 @@ export default function ({
 				)?.type,
 			}}
 		>
-			<StyleBookEditor
-				frontendTokensValues={frontendTokensValues}
-				setDraftStatus={setDraftStatus}
-			/>
+			<StyleBookEditor frontendTokensValues={frontendTokensValues} />
 		</StyleBookContextProvider>
 	);
 }

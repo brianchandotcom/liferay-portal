@@ -567,7 +567,7 @@ definition {
 		task ("Search for an attribute that doesn't exist and check that it doesn't appear") {
 			ACEventAnalysis.searchEventAnalysis(searchItem = "acqa");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no items found.");
 		}
 	}
 

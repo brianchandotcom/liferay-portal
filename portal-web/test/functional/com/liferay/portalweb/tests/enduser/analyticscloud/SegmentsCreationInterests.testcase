@@ -135,7 +135,7 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Membership");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 		}
 	}
 

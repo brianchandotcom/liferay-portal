@@ -48,7 +48,7 @@ definition {
 		task ("View the CSV Data Source is deleted") {
 			ACUtils.searchBar(searchItem = "CSV Data Source");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Data Sources found.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 

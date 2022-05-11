@@ -352,7 +352,7 @@ definition {
 		task ("Assert that a wrong word will be not found") {
 			ACSegments.searchTheSegmentProfile(searchTerm = "userfn");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
 		}
 	}
 

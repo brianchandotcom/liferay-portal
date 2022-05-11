@@ -146,7 +146,6 @@
 	<classpathentry kind="lib" path="lib/portal/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxb-runtime.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxen.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jaxrpc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxrs-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxws-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcl-over-slf4j.jar"/>

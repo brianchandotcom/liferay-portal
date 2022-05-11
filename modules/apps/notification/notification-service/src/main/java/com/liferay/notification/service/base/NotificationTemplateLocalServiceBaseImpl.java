@@ -149,7 +149,7 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public NotificationTemplate deleteNotificationTemplate(
-		NotificationTemplate notificationTemplate) {
+		NotificationTemplate notificationTemplate) throws PortalException {
 
 		return notificationTemplatePersistence.remove(notificationTemplate);
 	}

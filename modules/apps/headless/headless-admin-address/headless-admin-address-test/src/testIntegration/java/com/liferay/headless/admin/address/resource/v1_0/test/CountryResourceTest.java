@@ -197,7 +197,7 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		super.testPutCountry();
 
 		Country country = _addCountry(randomCountry());
-		Country existingCountry = _addCountry(randomCountry());
+		Country existingCountry = countryResource.getCountryByA2("us");
 
 		Country randomCountry = randomCountry();
 

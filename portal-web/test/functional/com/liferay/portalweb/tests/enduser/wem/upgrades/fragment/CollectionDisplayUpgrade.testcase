@@ -1,0 +1,83 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Fragments,Upgrades WEM";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-146171. Check the default settings of Collection Display with collection provider and None pagination after upgrade."
+	@priority = "3"
+	test ViewDefaultSettingsOfCollectionDisplayWithNonePaginationAfterUpgrade7413 {
+		property data.archive.type = "data-archive-collection-display-with-collection-provider";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.4.13";
+
+		task ("Given a page creator has a content page with Collection Display with None pagination") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator navigates to the page editor") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Then the page creator could view the default settings of Collection Display") {
+			task ("View the pagination is still None") {
+				AssertElementNotPresent(
+					key_pageNumber = "1",
+					locator1 = "Pagination#ANY_PAGE");
+
+				AssertElementNotPresent(
+					locator1 = "Pagination#ICON",
+					type = "angle-left");
+
+				AssertElementNotPresent(
+					locator1 = "Pagination#ICON",
+					type = "angle-right");
+
+				PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Pagination",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "None");
+			}
+
+			task ("View the Display All Collection Items is unchecked") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					checkboxName = "Display All Collection Items",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("View the Maximum Number of Items to Display is 5") {
+				AssertTextEquals(
+					key_fieldLabel = "Maximum Number of Items to Display",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "5");
+
+				var n = "1";
+
+				for (var i : list "40,39,38,37,36") {
+					PageEditor.viewCollectionItem(
+						assetTitle = "Web Content Title ${i}",
+						row = "${n}");
+
+					var n = ${n} + 1;
+				}
+			}
+		}
+	}
+
+}

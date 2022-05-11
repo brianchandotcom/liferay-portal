@@ -54,6 +54,7 @@ function usePropsFirst(value, {forceProp = false}) {
 }
 
 export function ColorPicker({
+	canDetachTokenValues = true,
 	editedTokenValues,
 	field,
 	onValueSelect,
@@ -399,26 +400,29 @@ export function ColorPicker({
 							shrink
 						>
 							{tokenLabel ? (
-								<ClayButtonWithIcon
-									className="border-0"
-									displayType="secondary"
-									onClick={() => {
-										setCustomColors([
-											tokenValues[value].value.replace(
-												'#',
-												''
-											),
-										]);
+								canDetachTokenValues && (
+									<ClayButtonWithIcon
+										className="border-0"
+										displayType="secondary"
+										onClick={() => {
+											setCustomColors([
+												tokenValues[
+													value
+												].value.replace('#', ''),
+											]);
 
-										onSetValue(
-											tokenValues[value].value,
-											null
-										);
-									}}
-									small
-									symbol="chain-broken"
-									title={Liferay.Language.get('detach-token')}
-								/>
+											onSetValue(
+												tokenValues[value].value,
+												null
+											);
+										}}
+										small
+										symbol="chain-broken"
+										title={Liferay.Language.get(
+											'detach-token'
+										)}
+									/>
+								)
 							) : (
 								<DropdownColorPicker
 									active={activeDropdownColorPicker}

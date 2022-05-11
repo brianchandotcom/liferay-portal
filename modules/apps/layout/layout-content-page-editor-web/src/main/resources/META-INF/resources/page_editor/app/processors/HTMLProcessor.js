@@ -51,7 +51,7 @@ function destroyEditor() {}
  *  given value.
  * @param {string} value Element content
  */
-function render(element, value) {
+function renderFn(element, value) {
 	if (!isNullOrUndefined(value)) {
 		element.innerHTML = value;
 	}
@@ -60,5 +60,5 @@ function render(element, value) {
 export default {
 	createEditor,
 	destroyEditor,
-	render,
+	render: renderFn,
 };

@@ -87,12 +87,12 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 		Instant instant = nextFireDate.toInstant();
 
-		ZonedDateTime atZone = instant.atZone(ZoneId.of("UTC"));
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
 
 		_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
 
 		_addDispatchTrigger(
-			companyId, dispatchTriggerName, atZone.toLocalDateTime());
+			companyId, dispatchTriggerName, zonedDateTime.toLocalDateTime());
 	}
 
 	@Override

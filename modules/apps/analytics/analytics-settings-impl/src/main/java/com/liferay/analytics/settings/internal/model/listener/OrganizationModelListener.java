@@ -33,7 +33,7 @@ public class OrganizationModelListener
 		throws ModelListenerException {
 
 		if (!analyticsConfigurationTracker.isActive() ||
-			!isTrack(organization)) {
+			!isTracked(organization)) {
 
 			return;
 		}

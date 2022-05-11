@@ -29,7 +29,7 @@ public class RoleModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Role> {
 
 	@Override
-	protected boolean isTrack(Role role) {
+	protected boolean isTracked(Role role) {
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			return true;
 		}

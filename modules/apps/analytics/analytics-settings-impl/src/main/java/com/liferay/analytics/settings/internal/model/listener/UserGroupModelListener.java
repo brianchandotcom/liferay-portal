@@ -32,7 +32,9 @@ public class UserGroupModelListener
 	public void onAfterRemove(UserGroup userGroup)
 		throws ModelListenerException {
 
-		if (!analyticsConfigurationTracker.isActive() || !isTrack(userGroup)) {
+		if (!analyticsConfigurationTracker.isActive() ||
+			!isTracked(userGroup)) {
+
 			return;
 		}
 

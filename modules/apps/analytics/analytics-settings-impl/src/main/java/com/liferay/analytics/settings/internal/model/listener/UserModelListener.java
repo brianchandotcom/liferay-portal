@@ -36,7 +36,7 @@ public class UserModelListener
 	extends BaseAnalyticsDXPEntityModelListener<User> {
 
 	@Override
-	protected boolean isTrack(User user) {
+	protected boolean isTracked(User user) {
 		if ((user == null) ||
 			Objects.equals(
 				user.getScreenName(),

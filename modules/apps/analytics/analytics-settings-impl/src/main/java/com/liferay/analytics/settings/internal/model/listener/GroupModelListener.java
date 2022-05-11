@@ -30,7 +30,7 @@ public class GroupModelListener
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		if (!analyticsConfigurationTracker.isActive() || !isTrack(group)) {
+		if (!analyticsConfigurationTracker.isActive() || !isTracked(group)) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ public class GroupModelListener
 	}
 
 	@Override
-	protected boolean isTrack(Group group) {
+	protected boolean isTracked(Group group) {
 		if (group.isSite()) {
 			return true;
 		}

@@ -41,7 +41,7 @@ public class ExpandoColumnModelListener
 	extends BaseAnalyticsDXPEntityModelListener<ExpandoColumn> {
 
 	@Override
-	protected boolean isTrack(ExpandoColumn expandoColumn) {
+	protected boolean isTracked(ExpandoColumn expandoColumn) {
 		if (_isCustomField(
 				Organization.class.getName(), expandoColumn.getTableId())) {
 

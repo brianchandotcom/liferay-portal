@@ -90,6 +90,7 @@ const renderComponent = ({
 			getState={() => ({
 				fragmentEntryLinks,
 				layoutData,
+				permissions: {UPDATE: true},
 				segmentsExperienceId: '0',
 				selectedViewportSize,
 			})}

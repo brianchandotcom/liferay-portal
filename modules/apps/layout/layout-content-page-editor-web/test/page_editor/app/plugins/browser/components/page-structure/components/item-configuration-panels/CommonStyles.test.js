@@ -32,6 +32,7 @@ const STATE = {
 			segmentsExperimentURL: 'https//:default-experience.com',
 		},
 	},
+	permissions: {UPDATE: true},
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',
 };

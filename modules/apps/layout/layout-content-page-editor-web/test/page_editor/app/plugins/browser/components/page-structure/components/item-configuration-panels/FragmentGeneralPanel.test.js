@@ -167,6 +167,7 @@ const renderGeneralPanel = ({
 		defaultSegmentsExperienceId: '0',
 		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
 		languageId: 'en_US',
+		permissions: {UPDATE: true},
 		segmentsExperienceId,
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
 	};

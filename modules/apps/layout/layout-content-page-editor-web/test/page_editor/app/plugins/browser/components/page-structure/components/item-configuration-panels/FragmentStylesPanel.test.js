@@ -85,6 +85,7 @@ const renderComponent = ({
 				fragmentEntryLinks: {
 					[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink,
 				},
+				permissions: {UPDATE: true},
 				segmentsExperienceId: '0',
 				selectedViewportSize,
 			})}

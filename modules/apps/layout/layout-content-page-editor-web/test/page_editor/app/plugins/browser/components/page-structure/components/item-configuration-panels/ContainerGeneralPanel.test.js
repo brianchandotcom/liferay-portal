@@ -56,6 +56,7 @@ function renderComponent(
 			dispatch={() => {}}
 			getState={() => ({
 				languageId: 'en_US',
+				permissions: {UPDATE: true},
 				segmentsExperienceId: '0',
 				selectedViewportSize: 'desktop',
 			})}

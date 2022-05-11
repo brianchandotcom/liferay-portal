@@ -92,6 +92,7 @@ const renderComponent = (
 					deletedItems: [],
 					items: collectionFilterItems,
 				},
+				permissions: {UPDATE: true},
 			}}
 			reducer={(state) => state}
 		>

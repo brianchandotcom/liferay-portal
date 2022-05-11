@@ -234,6 +234,56 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 		List<LocalGitCommit> historicalLocalGitCommits =
 			_workspaceGitRepository.getHistoricalLocalGitCommits();
 
+		LocalGitCommit retestLocalGitCommit = historicalLocalGitCommits.get(0);
+
+		String firstSHA = retestLocalGitCommit.getSHA();
+
+		String secondSHA = null;
+
+		if (historicalLocalGitCommits.get(1) != null) {
+			retestLocalGitCommit = historicalLocalGitCommits.get(1);
+
+			secondSHA = retestLocalGitCommit.getSHA();
+		}
+
+		if ((historicalLocalGitCommits.size() > 1) &&
+			firstSHA.equals(secondSHA)) {
+
+			for (int i = 0; i < historicalLocalGitCommits.size(); i++) {
+				LocalGitCommit localGitCommit = historicalLocalGitCommits.get(
+					i);
+
+				String sha = localGitCommit.getSHA();
+
+				for (BuildData buildData : buildDataList) {
+					if (buildData instanceof PortalBuildData) {
+						PortalBuildData currentPortalBuildData =
+							(PortalBuildData)buildData;
+
+						if (sha.equals(
+								currentPortalBuildData.getPortalBranchSHA())) {
+
+							if (currentPortalBuildData != null) {
+								gitCommitGroup = new GitCommitGroup(
+									currentPortalBuildData);
+
+								gitCommitGroups.add(gitCommitGroup);
+							}
+							else if (i == 0) {
+								gitCommitGroup = new GitCommitGroup(null);
+
+								gitCommitGroups.add(gitCommitGroup);
+							}
+
+							gitCommitGroup.add(localGitCommit);
+						}
+					}
+				}
+			}
+
+			return gitCommitGroups;
+		}
+
 		for (int i = 0; i < historicalLocalGitCommits.size(); i++) {
 			LocalGitCommit localGitCommit = historicalLocalGitCommits.get(i);
 

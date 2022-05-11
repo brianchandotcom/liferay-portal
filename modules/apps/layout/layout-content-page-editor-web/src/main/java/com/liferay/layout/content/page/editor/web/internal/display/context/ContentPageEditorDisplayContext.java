@@ -682,9 +682,22 @@ public class ContentPageEditorDisplayContext {
 					ContentPageEditorActionKeys.UPDATE,
 					_hasPermissions(ActionKeys.UPDATE)
 				).put(
+					ContentPageEditorActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
+					_hasPermissions(
+						ContentPageEditorActionKeys.
+							UPDATE_LAYOUT_ADVANCED_OPTIONS)
+				).put(
+					ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC,
+					_hasPermissions(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC)
+				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
 					_hasPermissions(
 						ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT)
+				).put(
+					ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED,
+					_hasPermissions(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED)
 				).build()
 			).put(
 				"segmentsExperienceId", getSegmentsExperienceId()

@@ -12,10 +12,19 @@
  * details.
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
+
+const VIEW_TYPES = {
+	columns: 1,
+	fullscreen: 2,
+	rows: 3,
+};
+
 const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
+	const [viewType, setViewType] = useState(VIEW_TYPES.columns);
 	const [visible, setVisible] = useState(true);
 
 	const {observer, onClose} = useModal({
@@ -25,6 +34,8 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 		},
 	});
 
+	const [content, setContent] = useState(initialContent);
+
 	return (
 		visible && (
 			<ClayModal observer={observer} size="full-screen">
@@ -33,6 +44,32 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 				</ClayModal.Header>
 
 				<ClayModal.Body className="pb-0">
+					<div className="d-flex justify-content-end pr-2 w-100">
+						<ClayButton.Group>
+							<ClayButtonWithIcon
+								displayType="secondary"
+								onClick={() => setViewType(VIEW_TYPES.columns)}
+								small
+								symbol="columns"
+							/>
+
+							<ClayButtonWithIcon
+								displayType="secondary"
+								onClick={() => setViewType(VIEW_TYPES.rows)}
+								small
+								symbol="cards"
+							/>
+
+							<ClayButtonWithIcon
+								displayType="secondary"
+								onClick={() =>
+									setViewType(VIEW_TYPES.fullscreen)
+								}
+								small
+								symbol="expand"
+							/>
+						</ClayButton.Group>
+					</div>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

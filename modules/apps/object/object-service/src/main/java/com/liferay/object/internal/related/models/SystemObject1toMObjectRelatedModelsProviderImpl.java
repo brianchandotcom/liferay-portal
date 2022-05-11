@@ -145,7 +145,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			objectRelationship.getObjectDefinitionId2(),
-			GetterUtil.getLong(primaryKey1),
+			GetterUtil.getLong(primaryKey2),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectField objectField =
@@ -199,7 +199,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 		DSLQuery dslQuery = _getGroupByStep(
 			groupId, objectRelationshipId, primaryKey,
-			DSLQueryFactoryUtil.selectDistinct(_table));
+			DSLQueryFactoryUtil.countDistinct(
+				_dynamicObjectDefinitionTable.getPrimaryKeyColumn()));
 
 		return persistedModelLocalService.dslQueryCount(dslQuery);
 	}
@@ -277,10 +278,18 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
-			(Column<DynamicObjectDefinitionTable, Long>)
-				_dynamicObjectDefinitionTable.getColumn(
-					objectField.getDBColumnName());
+		Column<?, Long> primaryKeyColumn = null;
+
+		if (Objects.equals(objectField.getDBTableName(), _table)) {
+			primaryKeyColumn = (Column<?, Long>)_table.getColumn(
+				objectField.getDBColumnName());
+		}
+		else {
+			primaryKeyColumn =
+				(Column<DynamicObjectDefinitionTable, Long>)
+					_dynamicObjectDefinitionTable.getColumn(
+						objectField.getDBColumnName());
+		}
 
 		return fromStep.from(
 			_table

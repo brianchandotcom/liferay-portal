@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.List;
 
@@ -62,9 +64,27 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 
 		RelatedModel relatedModel = (RelatedModel)model;
 
-		if (!_objectEntryService.hasModelResourcePermission(
-				_objectEntryLocalService.getObjectEntry(relatedModel.getId()),
-				ActionKeys.UPDATE)) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151676")) &&
+			relatedModel.isSystem()) {
+
+			// TODO Alternative permission checker
+
+			return DropdownItemListBuilder.add(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						_getDeleteURL(
+							relatedModel.getClassName(), relatedModel.getId(),
+							httpServletRequest));
+					dropdownItem.setIcon("trash");
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, Constants.DELETE));
+				}
+			).build();
+		}
+		else if (!_objectEntryService.hasModelResourcePermission(
+					_objectEntryLocalService.getObjectEntry(
+						relatedModel.getId()),
+					ActionKeys.UPDATE)) {
 
 			return null;
 		}
@@ -80,7 +100,9 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 		).add(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					_getDeleteURL(relatedModel.getId(), httpServletRequest));
+					_getDeleteURL(
+						relatedModel.getClassName(), relatedModel.getId(),
+						httpServletRequest));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, Constants.DELETE));
@@ -89,7 +111,7 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 	}
 
 	private PortletURL _getDeleteURL(
-			long id, HttpServletRequest httpServletRequest)
+			String className, long id, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long objectEntryId = ParamUtil.getLong(
@@ -114,6 +136,8 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 			ParamUtil.getString(
 				httpServletRequest, "currentUrl",
 				_portal.getCurrentURL(httpServletRequest))
+		).setParameter(
+			"className", className
 		).setParameter(
 			"objectEntryId", objectEntryId
 		).setParameter(

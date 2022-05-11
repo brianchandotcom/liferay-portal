@@ -1,0 +1,17 @@
+@import 'atlas-variables';
+
+html#{$cadmin-selector} {
+	.page-editor__html-editor-modal {
+		&__editor-container {
+			height: calc(100% - 30px);
+		}
+
+		&__preview-columns {
+			border-left: 2px solid $gray-400;
+		}
+
+		&__preview-rows {
+			border-top: 2px solid $gray-400;
+		}
+	}
+}

@@ -12,37 +12,27 @@
  * details.
  */
 
-import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const Search = ({children, onlySearch, showMobile, ...otherProps}) => {
-	const content = (
-		<form {...otherProps} role="search">
-			{children}
-		</form>
-	);
-
+export default function ResultsBarItem({
+	children,
+	className,
+	expand = false,
+	...otherProps
+}: IProps) {
 	return (
-		<div
-			className={classNames('navbar-form navbar-form-autofit', {
-				'navbar-overlay navbar-overlay-sm-down': !onlySearch,
-				'show': showMobile,
+		<li
+			{...otherProps}
+			className={classNames('tbar-item', className, {
+				'tbar-item-expand': expand,
 			})}
 		>
-			{onlySearch ? (
-				content
-			) : (
-				<ClayLayout.ContainerFluid>{content}</ClayLayout.ContainerFluid>
-			)}
-		</div>
+			<div className="tbar-section">{children}</div>
+		</li>
 	);
-};
+}
 
-Search.propTypes = {
-	onlySearch: PropTypes.bool,
-	showMobile: PropTypes.bool,
-};
-
-export default Search;
+interface IProps extends React.LiHTMLAttributes<HTMLLIElement> {
+	expand?: boolean;
+}

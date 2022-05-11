@@ -13,27 +13,21 @@
  */
 
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const ResultsBarItem = ({
-	children,
-	className,
-	expand = false,
-	...otherProps
-}) => (
-	<li
-		{...otherProps}
-		className={classNames('tbar-item', className, {
-			'tbar-item-expand': expand,
-		})}
-	>
-		<div className="tbar-section">{children}</div>
-	</li>
-);
+export default function ItemList({children, expand}: IProps) {
+	return (
+		<ul
+			className={classNames('navbar-nav', {
+				'navbar-nav-expand': expand,
+			})}
+		>
+			{children}
+		</ul>
+	);
+}
 
-ResultsBarItem.propTypes = {
-	expand: PropTypes.bool,
-};
-
-export default ResultsBarItem;
+interface IProps {
+	children?: React.ReactNode;
+	expand?: boolean;
+}

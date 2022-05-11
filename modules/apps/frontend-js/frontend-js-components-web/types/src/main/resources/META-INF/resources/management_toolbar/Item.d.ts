@@ -12,24 +12,9 @@
  * details.
  */
 
-import ClayLayout from '@clayui/layout';
-import classNames from 'classnames';
 import React from 'react';
-
-const Container = ({active = false, children, className, ...otherProps}) => (
-	<nav
-		{...otherProps}
-		className={classNames(
-			'management-bar navbar navbar-expand-md',
-			className,
-			{
-				'management-bar-light': !active,
-				'management-bar-primary navbar-nowrap': active,
-			}
-		)}
-	>
-		<ClayLayout.ContainerFluid>{children}</ClayLayout.ContainerFluid>
-	</nav>
-);
-
-export default Container;
+export default function Item({
+	children,
+	className,
+	...otherProps
+}: React.LiHTMLAttributes<HTMLLIElement>): JSX.Element;

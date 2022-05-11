@@ -12,18 +12,10 @@
  * details.
  */
 
-import ClayLayout from '@clayui/layout';
 import React from 'react';
-
-const ResultsBar = ({children, ...otherProps}) => (
-	<nav
-		{...otherProps}
-		className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
-	>
-		<ClayLayout.ContainerFluid>
-			<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
-		</ClayLayout.ContainerFluid>
-	</nav>
-);
-
-export default ResultsBar;
+export default function ItemList({children, expand}: IProps): JSX.Element;
+interface IProps {
+	children?: React.ReactNode;
+	expand?: boolean;
+}
+export {};

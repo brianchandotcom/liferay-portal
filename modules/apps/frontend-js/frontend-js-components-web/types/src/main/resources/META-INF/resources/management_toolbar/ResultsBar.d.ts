@@ -12,22 +12,8 @@
  * details.
  */
 
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
-
-const ItemList = ({children, expand}) => (
-	<ul
-		className={classNames('navbar-nav', {
-			'navbar-nav-expand': expand,
-		})}
-	>
-		{children}
-	</ul>
-);
-
-ItemList.propTypes = {
-	expand: PropTypes.bool,
-};
-
-export default ItemList;
+export default function ResultsBar({
+	children,
+	...otherProps
+}: React.HTMLAttributes<HTMLElement>): JSX.Element;

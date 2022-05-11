@@ -12,22 +12,17 @@
  * details.
  */
 
-import Container from './Container';
-import Item from './Item';
-import ItemList from './ItemList';
-import ResultsBar from './ResultsBar';
-import ResultsBarItem from './ResultsBarItem';
-import Search from './Search';
+import classNames from 'classnames';
+import React from 'react';
 
-import './ManagementToolbar.scss';
-
-const ManagementToolbar = {};
-
-ManagementToolbar.Container = Container;
-ManagementToolbar.Item = Item;
-ManagementToolbar.ItemList = ItemList;
-ManagementToolbar.ResultsBar = ResultsBar;
-ManagementToolbar.ResultsBarItem = ResultsBarItem;
-ManagementToolbar.Search = Search;
-
-export default ManagementToolbar;
+export default function Item({
+	children,
+	className,
+	...otherProps
+}: React.LiHTMLAttributes<HTMLLIElement>) {
+	return (
+		<li {...otherProps} className={classNames('nav-item', className)}>
+			{children}
+		</li>
+	);
+}

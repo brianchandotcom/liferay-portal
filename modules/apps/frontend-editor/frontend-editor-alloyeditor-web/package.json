@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"alloyeditor": "2.14.5"
+		"alloyeditor": "2.14.6"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

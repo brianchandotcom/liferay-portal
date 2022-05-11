@@ -1028,14 +1028,6 @@
     "@clayui/shared" "^3.56.0"
     classnames "^2.2.6"
 
-"@clayui/icon@3.40.0":
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.40.0.tgz#e00efd08f9becf4aecd046bef9496a26aa2f3318"
-  integrity sha512-w9AjhqaW7Oy434QkdNA41O+SdVyhc8MImF7A7BnPKLkvI49+9MHjv6EIaXUtbyOlEFpbvPHr4yY8t2Um/tBhGQ==
-  dependencies:
-    classnames "^2.2.6"
-    warning "^4.0.3"
-
 "@clayui/icon@3.56.0", "@clayui/icon@^3.56.0":
   version "3.56.0"
   resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.56.0.tgz#c748c7c1641484593a4acb2b3cb43cbb7f42178c"
@@ -2887,10 +2879,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.14.5:
-  version "2.14.5"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.14.5.tgz#2c0fc4f68f98c818e3bc3de7f64104d381d467ae"
-  integrity sha512-6cOJzoxov/m+1joLG0rluskRjIzLpyh8+LofOd4c5Hz1KItq5Xc55u9QlRRn4bfrD1idxCoTIjncg7ikUJ0AQg==
+alloyeditor@2.14.6:
+  version "2.14.6"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.14.6.tgz#239346d3a89fb871441350a069665a8e79718e69"
+  integrity sha512-5eOGr2Bs6FYurQsh6rOALCbTA+evvpB4GYhSSCVuQR2isEBWlAIbMg4mRqjB4TgnzLnK3sBHBXwwSgw9RcJC4w==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"
@@ -5090,7 +5082,7 @@ core-js-pure@3.1.4:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.1.4.tgz#5fa17dc77002a169a3566cc48dc774d2e13e3769"
   integrity sha512-uJ4Z7iPNwiu1foygbcZYJsJs1jiXrTTCvxfLDXNhI/I+NHbSIEyr548y4fcsCEyWY0XgfAG/qqaunJ1SThHenA==
 
-core-js-pure@^3.0.0, core-js-pure@^3.20.2:
+core-js-pure@^3.20.2:
   version "3.22.4"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.22.4.tgz#a992210f4cad8b32786b8654563776c56b0e0d0a"
   integrity sha512-4iF+QZkpzIz0prAFuepmxwJ2h5t4agvE8WPYqs2mjLJMNNwJOnpch76w2Q7bUfCPEv/V7wpvOfog0w273M+ZSw==
@@ -11645,11 +11637,6 @@ node-domexception@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-domexception/-/node-domexception-1.0.0.tgz#6888db46a1f71c0b76b3f7555016b63fe64766e5"
   integrity sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==
-
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"

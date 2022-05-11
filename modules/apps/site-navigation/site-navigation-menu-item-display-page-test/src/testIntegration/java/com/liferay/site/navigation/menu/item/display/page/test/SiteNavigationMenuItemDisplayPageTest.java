@@ -461,10 +461,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		Assert.assertEquals(
 			StringPool.BLANK,

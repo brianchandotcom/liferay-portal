@@ -129,6 +129,27 @@ public class LayoutPermissionImpl
 	}
 
 	@Override
+	public void checkLayoutUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (!containsLayoutUpdatePermission(permissionChecker, layout)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Layout.class.getName(), layout.getPlid(),
+				ActionKeys.UPDATE);
+		}
+	}
+
+	@Override
+	public void checkLayoutUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException {
+
+		checkLayoutUpdatePermission(
+			permissionChecker, LayoutLocalServiceUtil.getLayout(plid));
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
@@ -181,6 +202,30 @@ public class LayoutPermissionImpl
 		return contains(
 			permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
 			actionId);
+	}
+
+	@Override
+	public boolean containsLayoutUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (contains(permissionChecker, layout, ActionKeys.UPDATE) ||
+			contains(
+				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean containsLayoutUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException {
+
+		return containsLayoutUpdatePermission(
+			permissionChecker, LayoutLocalServiceUtil.getLayout(plid));
 	}
 
 	@Override

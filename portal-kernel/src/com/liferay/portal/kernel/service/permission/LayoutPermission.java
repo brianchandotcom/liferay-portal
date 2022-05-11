@@ -43,6 +43,14 @@ public interface LayoutPermission {
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException;
 
+	public void checkLayoutUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
+	public void checkLayoutUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
@@ -59,6 +67,14 @@ public interface LayoutPermission {
 
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, String actionId)
+		throws PortalException;
+
+	public boolean containsLayoutUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
+	public boolean containsLayoutUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
 		throws PortalException;
 
 	public boolean containsWithoutViewableGroup(

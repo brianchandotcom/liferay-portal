@@ -1,48 +1,48 @@
 {
 	"object-entries": [
 		{
-			"name": "Application Server",
-			"externalReferenceCode": "TRFCAT-001"
+			"externalReferenceCode": "TRFCAT-001",
+			"name": "Application Server"
 		},
 		{
-			"name": "Browser",
-			"externalReferenceCode": "TRFCAT-002"
+			"externalReferenceCode": "TRFCAT-002",
+			"name": "Browser"
 		},
 		{
-			"name": "Database",
-			"externalReferenceCode": "TRFCAT-003"
+			"externalReferenceCode": "TRFCAT-003",
+			"name": "Database"
 		},
 		{
-			"name": "Java JDK",
-			"externalReferenceCode": "TRFCAT-004"
+			"externalReferenceCode": "TRFCAT-004",
+			"name": "Java JDK"
 		},
 		{
-			"name": "Liferay Version",
-			"externalReferenceCode": "TRFCAT-005"
+			"externalReferenceCode": "TRFCAT-005",
+			"name": "Liferay Version"
 		},
 		{
-			"name": "Mobile Browser",
-			"externalReferenceCode": "TRFCAT-006"
+			"externalReferenceCode": "TRFCAT-006",
+			"name": "Mobile Browser"
 		},
 		{
-			"name": "Mobile Device",
-			"externalReferenceCode": "TRFCAT-007"
+			"externalReferenceCode": "TRFCAT-007",
+			"name": "Mobile Device"
 		},
 		{
-			"name": "Mobile Operating System",
-			"externalReferenceCode": "TRFCAT-008"
+			"externalReferenceCode": "TRFCAT-008",
+			"name": "Mobile Operating System"
 		},
 		{
-			"name": "Operating System",
-			"externalReferenceCode": "TRFCAT-009"
+			"externalReferenceCode": "TRFCAT-009",
+			"name": "Operating System"
 		},
 		{
-			"name": "Portal Edition",
-			"externalReferenceCode": "TRFCAT-010"
+			"externalReferenceCode": "TRFCAT-010",
+			"name": "Portal Edition"
 		},
 		{
-			"name": "Product Edition",
-			"externalReferenceCode": "TRFCAT-011"
+			"externalReferenceCode": "TRFCAT-011",
+			"name": "Product Edition"
 		}
 	],
 	"objectDefinitionName": "FactorCategory"

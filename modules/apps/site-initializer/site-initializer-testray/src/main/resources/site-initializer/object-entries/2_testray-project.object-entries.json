@@ -40,32 +40,32 @@
 			"name": "Liferay Dev"
 		},
 		{
-			"name": "Liferay Portal 6.1",
-			"externalReferenceCode": "TRPROJ-001"
+			"externalReferenceCode": "TRPROJ-001",
+			"name": "Liferay Portal 6.1"
 		},
 		{
-			"name": "Liferay Portal 6.2",
-			"externalReferenceCode": "TRPROJ-002"
+			"externalReferenceCode": "TRPROJ-002",
+			"name": "Liferay Portal 6.2"
 		},
 		{
-			"name": "Liferay Portal 7.0",
-			"externalReferenceCode": "TRPROJ-003"
+			"externalReferenceCode": "TRPROJ-003",
+			"name": "Liferay Portal 7.0"
 		},
 		{
-			"name": "Liferay Portal 7.1",
-			"externalReferenceCode": "TRPROJ-004"
+			"externalReferenceCode": "TRPROJ-004",
+			"name": "Liferay Portal 7.1"
 		},
 		{
-			"name": "Liferay Portal 7.2",
-			"externalReferenceCode": "TRPROJ-005"
+			"externalReferenceCode": "TRPROJ-005",
+			"name": "Liferay Portal 7.2"
 		},
 		{
-			"name": "Liferay Portal 7.3",
-			"externalReferenceCode": "TRPROJ-006"
+			"externalReferenceCode": "TRPROJ-006",
+			"name": "Liferay Portal 7.3"
 		},
 		{
-			"name": "Liferay Portal 7.4",
-			"externalReferenceCode": "TRPROJ-007"
+			"externalReferenceCode": "TRPROJ-007",
+			"name": "Liferay Portal 7.4"
 		},
 		{
 			"name": "Liferay Sync"
@@ -109,8 +109,8 @@
 			"name": "Staging"
 		},
 		{
-			"name": "Testray",
-			"externalReferenceCode": "TRPROJ-008"
+			"externalReferenceCode": "TRPROJ-008",
+			"name": "Testray"
 		},
 		{
 			"name": "Upgrades"

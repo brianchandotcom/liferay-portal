@@ -19,6 +19,22 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro addInitializerProductToCartFromProductDetails {
+		var newItemCount = FrontStore.getCurrentCartItemCount(productName = "${productName}");
+
+		Refresh();
+
+		Type(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+			value1 = "${productQuantity}");
+
+		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+		WaitForElementPresent(
+			key_itemCount = "${newItemCount}",
+			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+	}
+
 	macro addToCartFromProductDetails {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = "${productName}");
 

@@ -946,6 +946,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 				_copyPortletPermissions(
 					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
+
+				_copyPortletPreferences(
+					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 			}
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
@@ -954,9 +957,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_copyAssetCategoryIdsAndAssetTagNames(_sourceLayout, _targetLayout);
 
 			_copyLayoutSEOEntry(_sourceLayout, _targetLayout);
-
-			_copyPortletPreferences(
-				_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());

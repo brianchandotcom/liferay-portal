@@ -109,7 +109,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 			);
 
 			if (autoArticleInput && newArticleInput) {
-				newArticleInput.disabled = true && autoArticleInput.checked;
+				newArticleInput.disabled = autoArticleInput.checked;
 
 				autoArticleInput.addEventListener('click', () => {
 					Liferay.Util.toggleDisabled(newArticleInput, !newArticleInput.disabled);

@@ -23,7 +23,6 @@ List<PublicRenderParameterConfiguration> publicRenderParameterConfigurations = (
 Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)request.getAttribute(WebKeys.PUBLIC_RENDER_PARAMETERS);
 %>
 
-<h1>edit_public_render_parameters</h1>
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
 	<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
@@ -149,7 +148,7 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 		);
 
 		if (ignoreInput && mappingInput) {
-			mappingInput.disabled = true && ignoreInput.checked;
+			mappingInput.disabled = ignoreInput.checked;
 
 			ignoreInput.addEventListener('click', () => {
 				Liferay.Util.toggleDisabled(mappingInput, !mappingInput.disabled);

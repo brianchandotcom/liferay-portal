@@ -415,7 +415,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	var newFeedCheckbox = document.getElementById('<portlet:namespace />newFeedId');
 
 	if (autoFeedInput && newFeedCheckbox) {
-		newFeedCheckbox.disabled = true && autoFeedInput.checked;
+		newFeedCheckbox.disabled = autoFeedInput.checked;
 
 		autoFeedInput.addEventListener('click', () => {
 			Liferay.Util.toggleDisabled(newFeedCheckbox, !newFeedCheckbox.disabled);

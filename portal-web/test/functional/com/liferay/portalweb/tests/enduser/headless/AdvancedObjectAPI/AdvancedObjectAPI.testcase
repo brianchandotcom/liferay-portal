@@ -95,7 +95,7 @@ definition {
 			ObjectDefinitionAPI.updateEmployee(
 				employeeFirstname = "Bruce",
 				employeeId = "${employeeId1}",
-				newManagerId = "${managerId2}");
+				managerId = "${managerId2}");
 		}
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {

@@ -95,6 +95,12 @@ public interface ObjectEntryManager {
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception;
 
+	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
+			DTOConverterContext dtoConverterContext, Long objectEntryId,
+			ObjectDefinition objectDefinition, String objectRelationshipName,
+			Pagination pagination)
+		throws Exception;
+
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,

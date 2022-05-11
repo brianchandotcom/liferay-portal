@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -29,9 +30,11 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
@@ -420,6 +423,55 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Override
+	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
+			DTOConverterContext dtoConverterContext, Long objectEntryId,
+			ObjectDefinition objectDefinition, String objectRelationshipName,
+			Pagination pagination)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipService.getObjectRelationship(
+				objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		List<ObjectEntry> objectEntries = new ArrayList<>();
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			objectEntries = _getManyToManyRelationshipObjectEntries(
+				dtoConverterContext, objectRelationship, objectEntry,
+				pagination);
+		}
+		else if (Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			objectEntries = _getOneToManyRelationshipObjectEntries(
+				dtoConverterContext, objectRelationship, objectEntry,
+				pagination);
+		}
+
+		return Page.of(
+			HashMapBuilder.put(
+				"get",
+				ActionUtil.addAction(
+					ActionKeys.VIEW, ObjectEntryResourceImpl.class,
+					objectEntry.getObjectEntryId(),
+					"getCurrentObjectEntriesObjectRelationshipNamePage", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).build(),
+			objectEntries);
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
@@ -477,12 +529,58 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 		return 0;
 	}
 
+	private List<ObjectEntry> _getManyToManyRelationshipObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			Pagination pagination)
+		throws Exception {
+
+		boolean reverse = objectRelationship.isReverse();
+
+		if (reverse) {
+			objectRelationship =
+				_objectRelationshipLocalService.fetchReverseObjectRelationship(
+					objectRelationship, false);
+		}
+
+		List<com.liferay.object.model.ObjectEntry>
+			manyToManyRelatedObjectEntries =
+				_objectEntryLocalService.getManyToManyRelatedObjectEntries(
+					objectEntry.getGroupId(),
+					objectRelationship.getObjectRelationshipId(),
+					objectEntry.getObjectEntryId(), reverse,
+					pagination.getStartPosition(), pagination.getEndPosition());
+
+		return _toObjectEntries(
+			dtoConverterContext, manyToManyRelatedObjectEntries);
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
 
 	private String _getObjectEntryPermissionName(long objectDefinitionId) {
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
+	}
+
+	private List<ObjectEntry> _getOneToManyRelationshipObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			Pagination pagination)
+		throws Exception {
+
+		List<com.liferay.object.model.ObjectEntry>
+			oneToManyRelatedObjectEntries =
+				_objectEntryLocalService.getOneToManyRelatedObjectEntries(
+					objectEntry.getGroupId(),
+					objectRelationship.getObjectRelationshipId(),
+					objectEntry.getObjectEntryId(),
+					pagination.getStartPosition(), pagination.getEndPosition());
+
+		return _toObjectEntries(
+			dtoConverterContext, oneToManyRelatedObjectEntries);
 	}
 
 	private void _processVulcanAggregation(
@@ -563,6 +661,26 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 		}
 
 		return null;
+	}
+
+	private List<ObjectEntry> _toObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			List<com.liferay.object.model.ObjectEntry> objectEntries)
+		throws Exception {
+
+		List<ObjectEntry> finalObjectEntries = new ArrayList<>();
+
+		for (com.liferay.object.model.ObjectEntry objectEntry : objectEntries) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			finalObjectEntries.add(
+				_toObjectEntry(
+					dtoConverterContext, objectDefinition, objectEntry));
+		}
+
+		return finalObjectEntries;
 	}
 
 	private ObjectEntry _toObjectEntry(
@@ -685,6 +803,9 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	@Reference
@@ -695,6 +816,9 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;

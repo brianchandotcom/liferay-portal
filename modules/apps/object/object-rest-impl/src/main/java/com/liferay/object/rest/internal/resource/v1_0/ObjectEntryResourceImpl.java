@@ -145,6 +145,21 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public Page<ObjectEntry> getCurrentObjectEntriesObjectRelationshipNamePage(
+			Long currentObjectEntryId, String objectRelationshipName,
+			Pagination pagination)
+		throws Exception {
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntryRelatedObjectEntries(
+			_getDTOConverterContext(currentObjectEntryId), currentObjectEntryId,
+			_objectDefinition, objectRelationshipName, pagination);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return new ObjectEntryEntityModel(
 			_objectFieldLocalService.getObjectFields(

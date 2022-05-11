@@ -128,7 +128,6 @@ Export-Package:\
 	javax.xml.messaging;version='1.1',\
 	javax.xml.namespace.*;version='1.4',\
 	javax.xml.parsers.*;version='1.4',\
-	javax.xml.rpc.*;version='1.1',\
 	javax.xml.soap;version='1.4.0',\
 	javax.xml.stream.*;version='1.0',\
 	javax.xml.transform.*;version='1.4',\
@@ -283,7 +282,6 @@ Provide-Capability:\
 	@../../../lib/portal/dom4j.jar,\
 	@../../../lib/portal/hibernate-core.jar,\
 	@../../../lib/portal/jaxen.jar,\
-	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-proxetta.jar,\
 	@../../../lib/portal/jodd-util.jar,\

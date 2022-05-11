@@ -40,6 +40,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8368 | Test Summary: Page profile assets card shows which assets are on the page"
 	@priority = "5"
 	test ShowsWhichAssetsOnPage {
+		property analytics.cloud.upstream = "false";
+
 		task ("Create Blog to Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 		}

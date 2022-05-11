@@ -267,6 +267,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
 	@priority = "4"
 	test CanCreateDynamicIndividualsSegmentByDate {
+		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicIndividualsSegmentByDate";
 
 		var fullNameList = "userfn userln,user1 user1";
@@ -710,9 +711,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
 	@priority = "3"
 	test CanCreateNestedCriteria {
+		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateNestedCriteria";
-
-		// AC Refactor ticket: LRAC-9707
 
 		var usernameList = "userea,user1,test";
 		var emailList = "userea@liferay.com,user1@liferay.com,test@liferay.com";

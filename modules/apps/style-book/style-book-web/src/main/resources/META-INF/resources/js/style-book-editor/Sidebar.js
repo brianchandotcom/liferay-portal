@@ -15,14 +15,14 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import FrontendTokenSet from './FrontendTokenSet';
-import {StyleBookContext} from './StyleBookContext';
+import {useFrontendTokensValues} from './StyleBookContext';
 import {config} from './config';
 
 export default function Sidebar() {
-	const {frontendTokensValues = {}} = useContext(StyleBookContext);
+	const frontendTokensValues = useFrontendTokensValues();
 	const sidebarRef = useRef();
 
 	useEffect(() => {

@@ -16,6 +16,7 @@ import {
 	LOADING,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
+	SET_TOKEN_VALUE,
 } from './constants/actionTypes';
 
 export default function reducer(state, action) {
@@ -36,6 +37,18 @@ export default function reducer(state, action) {
 			const {layoutType} = action;
 
 			return {...state, previewLayoutType: layoutType};
+		}
+
+		case SET_TOKEN_VALUE: {
+			const {name, value} = action;
+
+			return {
+				...state,
+				frontendTokensValues: {
+					...state.frontendTokensValues,
+					[name]: value,
+				},
+			};
 		}
 
 		default:

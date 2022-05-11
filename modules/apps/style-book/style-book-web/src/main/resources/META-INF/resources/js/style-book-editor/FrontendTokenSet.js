@@ -14,10 +14,11 @@
 
 import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {config} from '../style-book-editor/config';
-import {StyleBookContext} from './StyleBookContext';
+import {useDispatch, useFrontendTokensValues} from './StyleBookContext';
+import {SET_TOKEN_VALUE} from './constants/actionTypes';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
 import BooleanFrontendToken from './frontend_tokens/BooleanFrontendToken';
 import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
@@ -55,9 +56,8 @@ const getColorFrontendTokens = (
 };
 
 export default function FrontendTokenSet({frontendTokens, label, open}) {
-	const {frontendTokensValues = {}, setFrontendTokensValues} = useContext(
-		StyleBookContext
-	);
+	const dispatch = useDispatch();
+	const frontendTokensValues = useFrontendTokensValues();
 
 	const tokenValues = getColorFrontendTokens(
 		config.frontendTokenDefinition,
@@ -72,9 +72,10 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 		);
 
 		if (value) {
-			setFrontendTokensValues({
-				...frontendTokensValues,
-				[name]: {
+			dispatch({
+				name,
+				type: SET_TOKEN_VALUE,
+				value: {
 					cssVariableMapping: cssVariableMapping.value,
 					name: tokenValues[value]?.name,
 					value: tokenValues[value]?.value || value,

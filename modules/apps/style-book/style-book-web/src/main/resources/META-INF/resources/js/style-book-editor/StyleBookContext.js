@@ -22,7 +22,6 @@ export const StyleBookContext = React.createContext({
 	loading: true,
 	previewLayout: {},
 	previewLayoutType: null,
-	setFrontendTokensValues: () => {},
 });
 
 export function StyleBookContextProvider({children, value}) {
@@ -39,6 +38,10 @@ export function StyleBookContextProvider({children, value}) {
 
 export function useDispatch() {
 	return useContext(StyleBookDispatchContext);
+}
+
+export function useFrontendTokensValues() {
+	return useContext(StyleBookContext).frontendTokensValues;
 }
 
 export function useLoading() {

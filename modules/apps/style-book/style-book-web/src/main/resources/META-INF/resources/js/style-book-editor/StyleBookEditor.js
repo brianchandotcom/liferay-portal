@@ -18,7 +18,10 @@ import React, {useEffect, useState} from 'react';
 
 import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
-import {StyleBookContextProvider} from './StyleBookContext';
+import {
+	StyleBookContextProvider,
+	useFrontendTokensValues,
+} from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
@@ -27,13 +30,11 @@ import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = ({
 	frontendTokensValues: initialFrontendTokensValues,
+	setDraftStatus,
 }) => {
 	useCloseProductMenu();
 
-	const [frontendTokensValues, setFrontendTokensValues] = useState(
-		initialFrontendTokensValues
-	);
-	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
+	const frontendTokensValues = useFrontendTokensValues();
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -58,36 +59,20 @@ const StyleBookEditor = ({
 					type: 'danger',
 				});
 			});
-	}, [initialFrontendTokensValues, frontendTokensValues]);
+	}, [initialFrontendTokensValues, frontendTokensValues, setDraftStatus]);
 
 	return (
-		<StyleBookContextProvider
-			value={{
-				draftStatus,
-				frontendTokensValues,
-				previewLayout: getMostRecentLayout(config.previewOptions),
-				previewLayoutType: config.previewOptions.find((type) =>
-					type.data.recentLayouts.find(
-						(layout) =>
-							layout ===
-							getMostRecentLayout(config.previewOptions)
-					)
-				)?.type,
-				setFrontendTokensValues,
-			}}
-		>
-			<div className="cadmin style-book-editor">
-				<StyleErrorsContextProvider>
-					<Toolbar />
+		<div className="cadmin style-book-editor">
+			<StyleErrorsContextProvider>
+				<Toolbar />
 
-					<div className="d-flex">
-						<LayoutPreview />
+				<div className="d-flex">
+					<LayoutPreview />
 
-						<Sidebar />
-					</div>
-				</StyleErrorsContextProvider>
-			</div>
-		</StyleBookContextProvider>
+					<Sidebar />
+				</div>
+			</StyleErrorsContextProvider>
+		</div>
 	);
 };
 
@@ -119,7 +104,28 @@ export default function ({
 		themeName,
 	});
 
-	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;
+	const [, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
+
+	return (
+		<StyleBookContextProvider
+			value={{
+				frontendTokensValues,
+				previewLayout: getMostRecentLayout(config.previewOptions),
+				previewLayoutType: config.previewOptions.find((type) =>
+					type.data.recentLayouts.find(
+						(layout) =>
+							layout ===
+							getMostRecentLayout(config.previewOptions)
+					)
+				)?.type,
+			}}
+		>
+			<StyleBookEditor
+				frontendTokensValues={frontendTokensValues}
+				setDraftStatus={setDraftStatus}
+			/>
+		</StyleBookContextProvider>
+	);
 }
 
 function saveDraft(frontendTokensValues, styleBookEntryId) {

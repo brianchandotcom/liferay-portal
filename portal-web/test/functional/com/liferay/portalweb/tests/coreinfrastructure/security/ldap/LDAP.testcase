@@ -97,6 +97,50 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-151394. User can be unassigned from groups through LDAP. Blocked by LPS-153043"
+	@priority = "3"
+	test CanRemoveUserFromGroupThroughLDAP {
+		property apacheds.enabled = "true";
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "LDAP#CanRemoveUserFromGroupThroughLDAP";
+
+		task ("Given: User enable DEBUG log level for LDAP related loggers") {
+			LDAP.enableLDAPDebugLogs();
+		}
+
+		task ("And: Add LDAP server and configure settings") {
+			var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+
+			PortalSettings.changeGroupImportMethod(groupImportMethod = "Group");
+
+			PortalSettings.setImportIntervalTime(importIntervalTime = "1");
+		}
+
+		task ("When: User adds 2 user and to a group on LDAP, from which only one have the mandatory fields to be imported") {
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addUser");
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addGroup");
+
+			LDAP.verifyLDAPUserGroupIsImported(userGroupName = "testgroup");
+		}
+
+		task ("And: Removes the imported user on LDAP") {
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "removeUser");
+		}
+
+		task ("Then: The imported group should be empty and the user should be unassigned") {
+			LDAP.verifyLDAPUserIsRemovedFromGroup(
+				userFirstName = "firstName",
+				userGroupName = "testgroup");
+		}
+	}
+
 	@description = "This is a use case for LPS-121705. User status remain unchanged after LDAP imports."
 	@priority = "3"
 	test DeactivatedUserStayDeactivatedAfterLDAPImport {

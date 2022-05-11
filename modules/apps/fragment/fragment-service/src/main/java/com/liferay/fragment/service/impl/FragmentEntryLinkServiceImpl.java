@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerU
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
 
@@ -126,22 +127,20 @@ public class FragmentEntryLinkServiceImpl
 			classPK = layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 		}
 
-		Boolean containsPermission = Boolean.valueOf(
+		boolean containsPermission = GetterUtil.getBoolean(
 			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 				getPermissionChecker(), groupId, className, classPK,
 				ActionKeys.UPDATE));
 
-		if (checkUpdateLayoutContentPermission &&
+		if (!containsPermission && checkUpdateLayoutContentPermission &&
 			Objects.equals(className, Layout.class.getName())) {
 
-			containsPermission =
-				containsPermission ||
-				LayoutPermissionUtil.contains(
+			containsPermission = LayoutPermissionUtil.contains(
 					getPermissionChecker(), classPK,
 					ActionKeys.UPDATE_LAYOUT_CONTENT);
 		}
 
-		if ((containsPermission == null) || !containsPermission) {
+		if (!containsPermission) {
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), className, classPK, ActionKeys.UPDATE);
 		}

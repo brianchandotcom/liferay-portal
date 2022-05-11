@@ -29,6 +29,7 @@ declare type HTMLInputType =
 	| 'datetime-local'
 	| 'email'
 	| 'file'
+	| 'hidden'
 	| 'month'
 	| 'number'
 	| 'password'

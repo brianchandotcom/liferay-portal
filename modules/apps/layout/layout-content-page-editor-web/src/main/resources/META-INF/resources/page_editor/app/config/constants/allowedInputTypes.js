@@ -16,12 +16,21 @@
  * @type {import('../../../types/FormAllowedInputTypes').FormAllowedInputTypes}
  */
 export const ALLOWED_INPUT_TYPES = {
-	categories: [],
-	date: ['date', 'datetime-local', 'text', 'textarea'],
-	image: ['file', 'text'],
-	number: ['month', 'number', 'range', 'time', 'week'],
-	select: ['checkbox', 'radio', 'select'],
-	tags: [],
-	text: ['color', 'email', 'password', 'tel', 'text', 'textarea', 'url'],
-	url: ['radio', 'select', 'text', 'url'],
+	categories: ['hidden'],
+	date: ['date', 'datetime-local', 'hidden', 'text', 'textarea'],
+	image: ['file', 'hidden', 'text'],
+	number: ['hidden', 'month', 'number', 'range', 'time', 'week'],
+	select: ['checkbox', 'hidden', 'radio', 'select'],
+	tags: ['hidden'],
+	text: [
+		'color',
+		'email',
+		'hidden',
+		'password',
+		'tel',
+		'text',
+		'textarea',
+		'url',
+	],
+	url: ['hidden', 'radio', 'select', 'text', 'url'],
 };

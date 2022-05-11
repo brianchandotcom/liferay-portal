@@ -18,7 +18,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
-import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
@@ -210,7 +209,7 @@ function FormInputOptions({item}) {
 
 	return fields ? (
 		<MappingFieldSelector
-			fieldType={EDITABLE_TYPES.text}
+			fieldType={inputType}
 			fields={fields}
 			onValueSelect={handleValueSelect}
 			value={

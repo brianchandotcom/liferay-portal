@@ -129,7 +129,7 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	public void testPostCountry() throws Exception {
 		super.testPostCountry();
 
-		Country existingCountry = _addCountry(randomCountry());
+		Country existingCountry = countryResource.getCountryByA2("us");
 
 		Country country = randomCountry();
 

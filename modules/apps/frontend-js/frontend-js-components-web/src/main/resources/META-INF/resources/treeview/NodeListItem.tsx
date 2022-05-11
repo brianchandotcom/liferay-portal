@@ -14,18 +14,17 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import NodeList from './NodeList';
-import TreeviewContext from './TreeviewContext';
+import TreeviewContext, {Node} from './TreeviewContext';
 import useFocus from './useFocus';
 import useKeyboardNavigation from './useKeyboardNavigation';
 
-export default function NodeListItem({NodeComponent, node}) {
+export default function NodeListItem({NodeComponent, node}: IProps) {
 	const {dispatch} = useContext(TreeviewContext);
 
-	const focusable = useFocus(node.id);
+	const focusable = useFocus<HTMLDivElement>(node.id);
 
 	const handleKeyDown = useKeyboardNavigation(node.id);
 
@@ -39,7 +38,9 @@ export default function NodeListItem({NodeComponent, node}) {
 
 	const symbol = node.expanded ? 'hr' : 'plus';
 
-	const toggleExpanded = (event) => {
+	const toggleExpanded = (
+		event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>
+	) => {
 		if (node.children.length) {
 			event.stopPropagation();
 
@@ -63,7 +64,7 @@ export default function NodeListItem({NodeComponent, node}) {
 				onKeyDown={handleKeyDown}
 				ref={focusable}
 				role="treeitem"
-				tabIndex="-1"
+				tabIndex={-1}
 			>
 				{children.length ? (
 					<button
@@ -74,7 +75,7 @@ export default function NodeListItem({NodeComponent, node}) {
 						}`}
 						className="lfr-treeview-node-list-item__button"
 						onClick={toggleExpanded}
-						tabIndex="-1"
+						tabIndex={-1}
 						type="button"
 					>
 						<ClayIcon
@@ -102,7 +103,7 @@ export default function NodeListItem({NodeComponent, node}) {
 	);
 }
 
-NodeListItem.propTypes = {
-	NodeComponent: PropTypes.func.isRequired,
-	node: PropTypes.shape({children: PropTypes.array}),
-};
+interface IProps {
+	NodeComponent: React.ComponentType<{node: Node}>;
+	node: Node;
+}

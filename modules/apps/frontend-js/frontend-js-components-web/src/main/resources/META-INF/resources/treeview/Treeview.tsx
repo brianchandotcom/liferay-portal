@@ -12,13 +12,21 @@
  * details.
  */
 
+// @ts-ignore
+
 import {useTimeout} from '@liferay/frontend-js-react-web';
-import PropTypes from 'prop-types';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewCard from './TreeviewCard';
-import TreeviewContext from './TreeviewContext';
+import TreeviewContext, {
+	LinkedNode,
+	Node,
+	NodeFilter,
+	NodeMap,
+	TreeviewAction,
+	TreeviewState,
+} from './TreeviewContext';
 import TreeviewLabel from './TreeviewLabel';
 
 import './Treeview.scss';
@@ -27,7 +35,7 @@ import './Treeview.scss';
  * Adds parent, sibling and child links to make tree traversal in any
  * direction easy.
  */
-function addLinks(nodes, parentId = null) {
+function addLinks(nodes: Node[], parentId: string | null = null): LinkedNode[] {
 	return nodes.map((node, i) => {
 		const [previous, next] = [nodes[i - 1], nodes[i + 1]];
 
@@ -50,7 +58,15 @@ function addLinks(nodes, parentId = null) {
  * Updates the selection status of the node based on its children.
  * Having all the children selected will mark the item as selected.
  */
-function computeParentSelection(nodeId, selectedNodeIds, nodes) {
+function computeParentSelection(
+	nodeId: string | null,
+	selectedNodeIds: Set<string>,
+	nodes: NodeMap
+): Set<string> {
+	if (!nodeId) {
+		return selectedNodeIds;
+	}
+
 	const node = nodes[nodeId];
 
 	if (!node) {
@@ -77,9 +93,9 @@ function computeParentSelection(nodeId, selectedNodeIds, nodes) {
 	return computeParentSelection(node.parentId, nextSelectedNodeIds, nodes);
 }
 
-function getFilterFn(filter) {
+function getFilterFn(filter?: NodeFilter | string) {
 	if (!filter) {
-		return null;
+		return;
 	}
 
 	if (typeof filter === 'function') {
@@ -88,15 +104,16 @@ function getFilterFn(filter) {
 
 	const filterLowerCase = filter.toString().toLowerCase();
 
-	return (node) => node.name.toLowerCase().indexOf(filterLowerCase) !== -1;
+	return (node: LinkedNode) =>
+		node.name.toLowerCase().includes(filterLowerCase);
 }
 
-function filterNodes(nodes, filter) {
+function filterNodes(nodes: LinkedNode[], filter?: NodeFilter) {
 	if (!filter) {
 		return null;
 	}
 
-	const filteredNodes = [];
+	const filteredNodes: LinkedNode[] = [];
 
 	nodes.forEach((node) => {
 		if (filter(node)) {
@@ -106,7 +123,11 @@ function filterNodes(nodes, filter) {
 			});
 		}
 
-		filteredNodes.push(...filterNodes(node.children, filter));
+		const filtered = filterNodes(node.children, filter);
+
+		if (filtered) {
+			filteredNodes.push(...filtered);
+		}
 	});
 
 	return filteredNodes;
@@ -115,7 +136,7 @@ function filterNodes(nodes, filter) {
 /**
  * Recursively get all the children of a parent.
  */
-function getChildrenIds(node, childrenIds = []) {
+function getChildrenIds(node: LinkedNode, childrenIds: string[] = []) {
 	node.children.forEach((children) => {
 		childrenIds.push(children.id);
 
@@ -128,7 +149,7 @@ function getChildrenIds(node, childrenIds = []) {
 /**
  * Finds the deepest visible node in the subtree rooted at `node`.
  */
-function getLastVisible(node) {
+function getLastVisible(node: LinkedNode): LinkedNode {
 	const childCount = node.children.length;
 
 	if (!node.expanded || !childCount) {
@@ -148,6 +169,12 @@ function init({
 	initialNodes,
 	initialSelectedNodeIds,
 	multiSelection,
+}: {
+	filter?: NodeFilter | string;
+	inheritSelection: boolean;
+	initialNodes: Node[];
+	initialSelectedNodeIds: string[];
+	multiSelection?: boolean;
 }) {
 	const selectedNodeIds = new Set(initialSelectedNodeIds);
 
@@ -195,7 +222,11 @@ function init({
  *
  * Returns an updated (non-destructive) copy of the `state.nodes`.
  */
-function updateNode(state, id, callback) {
+function updateNode(
+	state: TreeviewState,
+	id: string,
+	callback: (node: LinkedNode) => LinkedNode
+) {
 	const {nodeMap} = state;
 
 	if (!nodeMap[id]) {
@@ -236,7 +267,7 @@ function updateNode(state, id, callback) {
 /**
  * Reducer function for use with `useReducer`.
  */
-function reducer(state, action) {
+function reducer(state: TreeviewState, action: TreeviewAction) {
 	const {filteredNodes, nodeMap} = state;
 
 	const nodes = filteredNodes || state.nodes;
@@ -294,7 +325,7 @@ function reducer(state, action) {
 
 		case 'SELECT_NEXT_VISIBLE':
 			{
-				let node = nodeMap[action.nodeId];
+				let node: LinkedNode | null = nodeMap[action.nodeId];
 
 				if (filteredNodes) {
 					for (let i = 0; i < filteredNodes.length - 1; i++) {
@@ -331,7 +362,8 @@ function reducer(state, action) {
 						// As last resort, go to parent's sibling.
 
 						if (node.parentId) {
-							const nextId = nodeMap[node.parentId].nextSiblingId;
+							const nextId: string | null =
+								nodeMap[node.parentId].nextSiblingId;
 
 							if (nextId) {
 								node = nodeMap[nextId];
@@ -357,7 +389,7 @@ function reducer(state, action) {
 
 		case 'SELECT_PREVIOUS_VISIBLE':
 			{
-				let node = nodeMap[action.nodeId];
+				let node: LinkedNode | null = nodeMap[action.nodeId];
 
 				if (filteredNodes) {
 					for (let i = 1; i < filteredNodes.length; i++) {
@@ -384,7 +416,9 @@ function reducer(state, action) {
 
 							// Go to parent.
 
-							node = nodeMap[node.parentId];
+							node = node.parentId
+								? nodeMap[node.parentId]
+								: null;
 							break;
 						}
 					}
@@ -683,7 +717,7 @@ function reducer(state, action) {
  * Returns the original node if it was already in the desired state;
  * otherwise returns a copy.
  */
-function toggleNode(node, selectedNodeIds) {
+function toggleNode(node: LinkedNode, selectedNodeIds: Set<String>) {
 	if (node.selected !== selectedNodeIds.has(node.id)) {
 		return {
 			...node,
@@ -702,7 +736,11 @@ function toggleNode(node, selectedNodeIds) {
  *
  * If `callback` returns the same node, no actual copies are made.
  */
-function visit(node, callback, nodeMap) {
+function visit(
+	node: LinkedNode,
+	callback: (node: LinkedNode) => LinkedNode,
+	nodeMap: NodeMap
+) {
 	const {children} = node;
 
 	let nextChildren;
@@ -738,14 +776,23 @@ function Treeview({
 	multiSelection,
 	nodes: initialNodes,
 	onSelectedNodesChange,
-}) {
+}: IProps) {
 	const delay = useTimeout();
 
-	const focusTimerRef = useRef();
+	const focusTimerRef = useRef<(() => void) | null>();
 
 	const [, setHasFocus] = useState(false);
 
-	const [state, dispatch] = useReducer(
+	const [state, dispatch] = useReducer<
+		React.Reducer<TreeviewState, TreeviewAction>,
+		{
+			filter?: NodeFilter | string;
+			inheritSelection: boolean;
+			initialNodes: Node[];
+			initialSelectedNodeIds: string[];
+			multiSelection: boolean;
+		}
+	>(
 		reducer,
 		{
 			filter,
@@ -848,23 +895,17 @@ Treeview.defaultProps = {
 	multiSelection: true,
 };
 
-Treeview.propTypes = {
-	NodeComponent: PropTypes.func,
-	filter: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-	inheritSelection: PropTypes.bool,
-	initialSelectedNodeIds: PropTypes.arrayOf(PropTypes.string),
-	multiSelection: PropTypes.bool,
-	nodes: PropTypes.arrayOf(
-		PropTypes.shape({
-			children: PropTypes.array,
-			expanded: PropTypes.bool,
-			id: PropTypes.string.isRequired,
-		})
-	).isRequired,
-	onSelectedNodesChange: PropTypes.func,
-};
-
 Treeview.Card = TreeviewCard;
 Treeview.Label = TreeviewLabel;
 
 export default Treeview;
+
+interface IProps {
+	NodeComponent: React.ComponentType<{node: Node}>;
+	filter?: NodeFilter | string;
+	inheritSelection: boolean;
+	initialSelectedNodeIds: string[];
+	multiSelection: boolean;
+	nodes: Node[];
+	onSelectedNodesChange: (selectedNodeIds?: Set<string>) => void;
+}

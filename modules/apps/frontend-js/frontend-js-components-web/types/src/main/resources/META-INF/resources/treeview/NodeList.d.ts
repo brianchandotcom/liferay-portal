@@ -13,5 +13,25 @@
  */
 
 import React from 'react';
-
-export default React.createContext({});
+import {Node} from './TreeviewContext';
+export default function NodeList({
+	NodeComponent,
+	nodes,
+	onBlur,
+	onFocus,
+	onMouseDown,
+	role,
+	tabIndex,
+}: IProps): JSX.Element | null;
+interface IProps {
+	NodeComponent: React.ComponentType<{
+		node: Node;
+	}>;
+	nodes: Node[];
+	onBlur?: () => void;
+	onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
+	onMouseDown?: (event: React.MouseEvent<HTMLDivElement>) => void;
+	role?: string;
+	tabIndex?: number;
+}
+export {};

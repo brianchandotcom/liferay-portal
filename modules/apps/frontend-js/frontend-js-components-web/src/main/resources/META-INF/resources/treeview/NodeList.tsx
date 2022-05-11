@@ -12,10 +12,10 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import NodeListItem from './NodeListItem';
+import {Node} from './TreeviewContext';
 
 export default function NodeList({
 	NodeComponent,
@@ -25,7 +25,7 @@ export default function NodeList({
 	onMouseDown,
 	role = 'group',
 	tabIndex = -1,
-}) {
+}: IProps) {
 	const rootNodeId = nodes[0] && nodes[0].id;
 
 	if (!rootNodeId) {
@@ -67,17 +67,12 @@ export default function NodeList({
 	);
 }
 
-NodeList.propTypes = {
-	NodeComponent: PropTypes.func.isRequired,
-	nodes: PropTypes.arrayOf(
-		PropTypes.shape({
-			children: PropTypes.array,
-			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-		})
-	).isRequired,
-	onBlur: PropTypes.func,
-	onFocus: PropTypes.func,
-	onMouseDown: PropTypes.func,
-	tabIndex: PropTypes.number,
-};
+interface IProps {
+	NodeComponent: React.ComponentType<{node: Node}>;
+	nodes: Node[];
+	onBlur?: () => void;
+	onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
+	onMouseDown?: (event: React.MouseEvent<HTMLDivElement>) => void;
+	role?: string;
+	tabIndex?: number;
+}

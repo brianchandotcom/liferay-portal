@@ -16,12 +16,11 @@ import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import TreeviewContext from './TreeviewContext';
+import TreeviewContext, {Node} from './TreeviewContext';
 
-export default function TreeviewCard({node}) {
+export default function TreeviewCard({node}: IProps) {
 	const {state} = useContext(TreeviewContext);
 	const {filter, focusedNodeId} = state;
 
@@ -73,11 +72,6 @@ export default function TreeviewCard({node}) {
 	);
 }
 
-TreeviewCard.propTypes = {
-	node: PropTypes.shape({
-		icon: PropTypes.string,
-		iconCssClass: PropTypes.string,
-		name: PropTypes.string.isRequired,
-		nodePath: PropTypes.string,
-	}).isRequired,
-};
+interface IProps {
+	node: Node;
+}

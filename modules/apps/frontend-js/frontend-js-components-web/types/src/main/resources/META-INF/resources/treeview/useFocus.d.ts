@@ -12,22 +12,8 @@
  * details.
  */
 
-import {useContext, useEffect, useRef} from 'react';
+/// <reference types="react" />
 
-import TreeviewContext from './TreeviewContext';
-
-export default function useFocus(nodeId) {
-	const {state} = useContext(TreeviewContext);
-
-	const {active, focusedNodeId} = state;
-
-	const focusableRef = useRef();
-
-	useEffect(() => {
-		if (active && nodeId === focusedNodeId && focusableRef.current) {
-			focusableRef.current.focus();
-		}
-	}, [active, focusedNodeId, nodeId]);
-
-	return focusableRef;
-}
+export default function useFocus<T extends HTMLElement>(
+	nodeId: string
+): import('react').RefObject<T>;

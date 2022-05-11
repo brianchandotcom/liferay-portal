@@ -41,7 +41,7 @@ const HANDLED_KEY_CODES = new Set(Object.values(KEYS));
  *
  * Plus "SPACE", which is the default key for toggling checkboxes.
  */
-const KEY_CODES_TO_ACTIONS = {
+const KEY_CODES_TO_ACTIONS: {[key: number]: KeyActionType} = {
 	[KEYS.DOWN]: 'SELECT_NEXT_VISIBLE',
 	[KEYS.END]: 'SELECT_LAST_VISIBLE',
 	[KEYS.ENTER]: 'TOGGLE_EXPANDED',
@@ -54,12 +54,12 @@ const KEY_CODES_TO_ACTIONS = {
 	[KEYS.UP]: 'SELECT_PREVIOUS_VISIBLE',
 };
 
-export default function useKeyboardNavigation(nodeId) {
+export default function useKeyboardNavigation(nodeId: string) {
 	const {dispatch, state} = useContext(TreeviewContext);
 	const {focusedNodeId} = state;
 
 	const handleKeyDown = useCallback(
-		(event) => {
+		(event: React.KeyboardEvent) => {
 			const {keyCode} = event;
 
 			if (focusedNodeId === nodeId && HANDLED_KEY_CODES.has(keyCode)) {
@@ -84,3 +84,15 @@ export default function useKeyboardNavigation(nodeId) {
 
 	return handleKeyDown;
 }
+
+type KeyActionType =
+	| 'COLLAPSE_PARENT'
+	| 'EXIT'
+	| 'EXPAND_ALL'
+	| 'EXPAND_AND_ENTER'
+	| 'SELECT_LAST_VISIBLE'
+	| 'SELECT_NEXT_VISIBLE'
+	| 'SELECT_PREVIOUS_VISIBLE'
+	| 'SELECT_ROOT'
+	| 'TOGGLE_EXPANDED'
+	| 'TOGGLE_SELECT';

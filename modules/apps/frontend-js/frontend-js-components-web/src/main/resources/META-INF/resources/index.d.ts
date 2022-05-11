@@ -50,19 +50,7 @@ export declare const ManagementToolbar: {
 	>;
 };
 
-export function Treeview(
-	NodeComponent: () => void,
-	filter: string | (() => void),
-	inheritSelection: boolean,
-	initialSelectedNodeIds: string[],
-	multiSelection: boolean,
-	nodes: Array<{
-		children: [];
-		expanded: boolean;
-		id: string;
-	}>,
-	onSelectedNodesChange: () => void
-): ReactElement;
+export {default as Treeview} from './treeview/Treeview';
 
 export function TranslationAdminModal(
 	activeLanguageIds: string[],

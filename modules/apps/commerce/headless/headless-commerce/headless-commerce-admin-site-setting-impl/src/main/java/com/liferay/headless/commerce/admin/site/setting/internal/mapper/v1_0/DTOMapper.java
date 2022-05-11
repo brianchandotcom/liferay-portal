@@ -16,10 +16,8 @@ package com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
-import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
-import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -76,26 +74,6 @@ public class DTOMapper {
 		warehouse.setZip(commerceInventoryWarehouse.getZip());
 
 		return warehouse;
-	}
-
-	public MeasurementUnit modelToDTO(CPMeasurementUnit cpMeasurementUnit) {
-		MeasurementUnit measurementUnit = new MeasurementUnit();
-
-		if (cpMeasurementUnit == null) {
-			return measurementUnit;
-		}
-
-		measurementUnit.setGroupId(cpMeasurementUnit.getGroupId());
-		measurementUnit.setId(cpMeasurementUnit.getCPMeasurementUnitId());
-		measurementUnit.setKey(cpMeasurementUnit.getKey());
-		measurementUnit.setName(
-			LanguageUtils.getLanguageIdMap(cpMeasurementUnit.getNameMap()));
-		measurementUnit.setPrimary(cpMeasurementUnit.isPrimary());
-		measurementUnit.setPriority(cpMeasurementUnit.getPriority());
-		measurementUnit.setRate(cpMeasurementUnit.getRate());
-		measurementUnit.setType(cpMeasurementUnit.getType());
-
-		return measurementUnit;
 	}
 
 	public TaxCategory modelToDTO(CPTaxCategory cpTaxCategory) {

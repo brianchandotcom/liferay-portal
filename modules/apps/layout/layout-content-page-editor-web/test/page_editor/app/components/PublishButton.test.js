@@ -120,4 +120,18 @@ describe('PublishButton', () => {
 		expect(onPublish).not.toHaveBeenCalled();
 		expect(button).toBeDisabled();
 	});
+
+	it('calls openWarningModal when there is some incomplete form', async () => {
+		useIsSomeFormIncomplete.mockImplementation(() => () =>
+			Promise.resolve(true)
+		);
+
+		renderComponent();
+
+		const button = screen.getByLabelText('publish');
+
+		await fireEvent.click(button);
+
+		expect(openWarningModal).toHaveBeenCalled();
+	});
 });

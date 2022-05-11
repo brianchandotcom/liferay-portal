@@ -87,24 +87,32 @@ String exceptionErrorMessage = null;
 							small="<%= true %>"
 						/>
 					</div>
-
-					<react:component
-						module="js/ImportTranslation"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"errorMessage", exceptionErrorMessage
-							).put(
-								"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
-							).put(
-								"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
-							).put(
-								"workflowPending", importTranslationDisplayContext.isPending()
-							).build()
-						%>'
-					/>
 				</div>
 			</clay:sheet>
 		</clay:container-fluid>
+
+		<react:component
+			module="js/import-translation/ImportTranslation"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"cancelURL", importTranslationDisplayContext.getRedirect()
+				).put(
+					"errorMessage", exceptionErrorMessage
+				).put(
+					"publishButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getPublishButtonLabel())
+				).put(
+					"saveButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getSaveButtonLabel())
+				).put(
+					"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
+				).put(
+					"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
+				).put(
+					"title", HtmlUtil.escape(importTranslationDisplayContext.getTitle())
+				).put(
+					"workflowPending", importTranslationDisplayContext.isPending()
+				).build()
+			%>'
+		/>
 	</aui:form>
 </div>
 

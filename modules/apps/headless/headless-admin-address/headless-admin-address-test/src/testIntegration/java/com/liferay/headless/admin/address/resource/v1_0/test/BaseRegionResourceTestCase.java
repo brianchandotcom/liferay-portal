@@ -803,6 +803,54 @@ public abstract class BaseRegionResourceTestCase {
 		return testGraphQLRegion_addRegion();
 	}
 
+	@Test
+	public void testPatchRegion() throws Exception {
+		Region postRegion = testPatchRegion_addRegion();
+
+		Region randomPatchRegion = randomPatchRegion();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region patchRegion = regionResource.patchRegion(
+			postRegion.getId(), randomPatchRegion);
+
+		Region expectedPatchRegion = postRegion.clone();
+
+		_beanUtilsBean.copyProperties(expectedPatchRegion, randomPatchRegion);
+
+		Region getRegion = regionResource.getRegion(patchRegion.getId());
+
+		assertEquals(expectedPatchRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testPatchRegion_addRegion() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutRegion() throws Exception {
+		Region postRegion = testPutRegion_addRegion();
+
+		Region randomRegion = randomRegion();
+
+		Region putRegion = regionResource.putRegion(
+			postRegion.getId(), randomRegion);
+
+		assertEquals(randomRegion, putRegion);
+		assertValid(putRegion);
+
+		Region getRegion = regionResource.getRegion(putRegion.getId());
+
+		assertEquals(randomRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testPutRegion_addRegion() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

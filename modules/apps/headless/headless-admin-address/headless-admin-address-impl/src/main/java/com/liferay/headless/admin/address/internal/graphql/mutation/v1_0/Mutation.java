@@ -134,6 +134,43 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public Region patchRegion(
+			@GraphQLName("regionId") Long regionId,
+			@GraphQLName("region") Region region)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.patchRegion(regionId, region));
+	}
+
+	@GraphQLField
+	public Region updateRegion(
+			@GraphQLName("regionId") Long regionId,
+			@GraphQLName("region") Region region)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.putRegion(regionId, region));
+	}
+
+	@GraphQLField
+	public Response updateRegionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.putRegionBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

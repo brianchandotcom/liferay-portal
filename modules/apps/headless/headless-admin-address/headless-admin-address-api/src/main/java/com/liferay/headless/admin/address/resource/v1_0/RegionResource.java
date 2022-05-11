@@ -79,6 +79,13 @@ public interface RegionResource {
 
 	public Region getRegion(Long regionId) throws Exception;
 
+	public Region patchRegion(Long regionId, Region region) throws Exception;
+
+	public Region putRegion(Long regionId, Region region) throws Exception;
+
+	public Response putRegionBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

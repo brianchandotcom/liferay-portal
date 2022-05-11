@@ -309,6 +309,142 @@ public abstract class BaseRegionResourceImpl
 		return new Region();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/regions/{regionId}' -d $'{"active": ___, "countryId": ___, "name": ___, "position": ___, "regionCode": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "regionId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Region")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/regions/{regionId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Region patchRegion(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("regionId")
+			Long regionId,
+			Region region)
+		throws Exception {
+
+		Region existingRegion = getRegion(regionId);
+
+		if (region.getActive() != null) {
+			existingRegion.setActive(region.getActive());
+		}
+
+		if (region.getCountryId() != null) {
+			existingRegion.setCountryId(region.getCountryId());
+		}
+
+		if (region.getName() != null) {
+			existingRegion.setName(region.getName());
+		}
+
+		if (region.getPosition() != null) {
+			existingRegion.setPosition(region.getPosition());
+		}
+
+		if (region.getRegionCode() != null) {
+			existingRegion.setRegionCode(region.getRegionCode());
+		}
+
+		if (region.getTitle_i18n() != null) {
+			existingRegion.setTitle_i18n(region.getTitle_i18n());
+		}
+
+		preparePatch(region, existingRegion);
+
+		return putRegion(regionId, existingRegion);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/regions/{regionId}' -d $'{"active": ___, "countryId": ___, "name": ___, "position": ___, "regionCode": ___, "title_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "regionId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Region")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/regions/{regionId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Region putRegion(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("regionId")
+			Long regionId,
+			Region region)
+		throws Exception {
+
+		return new Region();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/regions/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Region")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/regions/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putRegionBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				Region.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -406,6 +542,40 @@ public abstract class BaseRegionResourceImpl
 			java.util.Collection<Region> regions,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Region, Exception> regionUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			regionUnsafeConsumer = region -> patchRegion(
+				region.getId() != null ? region.getId() :
+					Long.parseLong((String)parameters.get("regionId")),
+				region);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			regionUnsafeConsumer = region -> putRegion(
+				region.getId() != null ? region.getId() :
+					Long.parseLong((String)parameters.get("regionId")),
+				region);
+		}
+
+		if (regionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Region");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(regions, regionUnsafeConsumer);
+		}
+		else {
+			for (Region region : regions) {
+				regionUnsafeConsumer.accept(region);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -545,6 +715,9 @@ public abstract class BaseRegionResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Region region, Region existingRegion) {
 	}
 
 	protected <T, R> List<R> transform(

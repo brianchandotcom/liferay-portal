@@ -48,33 +48,27 @@ public class LayoutPageTemplateStructureServiceImpl
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException {
 
-		Boolean containsPermission =
-			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-				getPermissionChecker(), groupId, Layout.class.getName(), plid,
-				ActionKeys.UPDATE);
+		if (GetterUtil.getBoolean(
+				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					getPermissionChecker(), groupId, Layout.class.getName(),
+					plid, ActionKeys.UPDATE)) ||
+			(GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) &&
+			 (_layoutPermission.contains(
+				 getPermissionChecker(), plid, ActionKeys.UPDATE) ||
+			  _layoutPermission.contains(
+				  getPermissionChecker(), plid,
+				  ActionKeys.UPDATE_LAYOUT_BASIC) ||
+			  _layoutPermission.contains(
+				  getPermissionChecker(), plid,
+				  ActionKeys.UPDATE_LAYOUT_LIMITED)))) {
 
-		if (!containsPermission &&
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) &&
-			(_layoutPermission.contains(
-				getPermissionChecker(), plid, ActionKeys.UPDATE) ||
-			 _layoutPermission.contains(
-				 getPermissionChecker(), plid,
-				 ActionKeys.UPDATE_LAYOUT_BASIC) ||
-			 _layoutPermission.contains(
-				 getPermissionChecker(), plid,
-				 ActionKeys.UPDATE_LAYOUT_LIMITED))) {
-
-			containsPermission = true;
+			return layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					groupId, plid, segmentsExperienceId, data);
 		}
 
-		if (!containsPermission) {
-			throw new PrincipalException.MustHavePermission(
-				getUserId(), Layout.class.getName(), plid, ActionKeys.UPDATE);
-		}
-
-		return layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				groupId, plid, segmentsExperienceId, data);
+		throw new PrincipalException.MustHavePermission(
+			getUserId(), Layout.class.getName(), plid, ActionKeys.UPDATE);
 	}
 
 	@Reference

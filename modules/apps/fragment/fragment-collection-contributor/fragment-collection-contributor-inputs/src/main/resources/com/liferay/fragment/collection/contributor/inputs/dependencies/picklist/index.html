@@ -1,0 +1,16 @@
+<div class="forms-picklist">
+	<input name="${input.name}" type="hidden" />
+	<span id="${fragmentEntryLinkNamespace}-label" class="sr-only">Select option:</span>
+
+	<button aria-haspopup="${fragmentEntryLinkNamespace}-listbox" aria-labelledby="${fragmentEntryLinkNamespace}-label ${fragmentEntryLinkNamespace}-button" class="form-control text-left" id="${fragmentEntryLinkNamespace}-button" type="button"></button>
+
+	<div class="dropdown-menu">
+		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox">
+		[#list input.options as option]
+		<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option?index}" role="option">
+			${option.label}
+		</li>
+		[/#list]
+		</ul>
+	</div>
+</div>

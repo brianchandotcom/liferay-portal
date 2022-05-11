@@ -1,0 +1,19 @@
+.forms-picklist .form-control {
+	position: relative;
+}
+
+.forms-picklist .form-control::after {
+	background: inherit;
+	color: inherit;
+	content: '▼';
+	font-size: 0.875em;
+	opacity: 0.8;
+	padding: 1ch;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.forms-picklist .dropdown-item {
+	cursor: pointer;
+}

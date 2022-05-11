@@ -55,6 +55,7 @@ const SidebarPanelInfoView = ({
 	modifiedDate,
 	specificFields = {},
 	subType,
+	type,
 	tags = [],
 	title,
 	preview,
@@ -103,7 +104,12 @@ const SidebarPanelInfoView = ({
 						</>
 					)}
 
-					<p className="c-mb-1 text-secondary">{subType}</p>
+					<p className="c-mb-1 text-secondary">
+						{subType ? (
+								`${type} - ${subType}`
+							) : ( 
+								`${type}`
+						)}</p>
 
 					{versions.map((version) => (
 						<div className="c-mt-2" key={version.version}>

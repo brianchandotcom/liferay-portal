@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -86,7 +87,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = ObjectEntryManager.class)
+@Component(
+	immediate = true,
+	property = "object.entry.manager.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+	service = ObjectEntryManager.class
+)
 public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override

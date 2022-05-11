@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +53,20 @@ public class LayoutPageTemplateStructureServiceImpl
 				getPermissionChecker(), groupId, Layout.class.getName(), plid,
 				ActionKeys.UPDATE);
 
+		if (!containsPermission &&
+			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) &&
+			(_layoutPermission.contains(
+				getPermissionChecker(), plid, ActionKeys.UPDATE) ||
+			 _layoutPermission.contains(
+				 getPermissionChecker(), plid,
+				 ActionKeys.UPDATE_LAYOUT_BASIC) ||
+			 _layoutPermission.contains(
+				 getPermissionChecker(), plid,
+				 ActionKeys.UPDATE_LAYOUT_LIMITED))) {
+
+			containsPermission = true;
+		}
+
 		if (!containsPermission) {
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), Layout.class.getName(), plid, ActionKeys.UPDATE);
@@ -59,6 +76,9 @@ public class LayoutPageTemplateStructureServiceImpl
 			updateLayoutPageTemplateStructureData(
 				groupId, plid, segmentsExperienceId, data);
 	}
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

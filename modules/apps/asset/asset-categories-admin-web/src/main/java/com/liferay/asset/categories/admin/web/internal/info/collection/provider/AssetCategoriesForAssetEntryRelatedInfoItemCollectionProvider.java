@@ -24,7 +24,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
@@ -136,7 +136,7 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "categories-for-this-item");
+		return _language.get(locale, "categories-for-this-item");
 	}
 
 	@Reference
@@ -145,5 +145,8 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 	@Reference
 	private AssetEntryAssetCategoryRelLocalService
 		_assetEntryAssetCategoryRelLocalService;
+
+	@Reference
+	private Language _language;
 
 }

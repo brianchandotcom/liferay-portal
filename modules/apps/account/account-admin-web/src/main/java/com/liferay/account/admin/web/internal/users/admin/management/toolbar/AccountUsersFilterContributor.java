@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.users.admin.management.toolbar;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.management.toolbar.FilterContributor;
 
@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -83,7 +84,10 @@ public class AccountUsersFilterContributor implements FilterContributor {
 	}
 
 	private String _getMessage(Locale locale, String key) {
-		return LanguageUtil.get(locale, key);
+		return _language.get(locale, key);
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -21,7 +21,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Albert Lee
@@ -62,7 +63,7 @@ public class AccountEntryUsersScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "users");
+		return _language.get(locale, "users");
 	}
 
 	@Override
@@ -79,5 +80,8 @@ public class AccountEntryUsersScreenNavigationCategory
 			PermissionCheckerFactoryUtil.create(user),
 			accountEntry.getAccountEntryId(), AccountActionKeys.VIEW_USERS);
 	}
+
+	@Reference
+	private Language _language;
 
 }

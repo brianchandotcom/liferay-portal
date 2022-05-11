@@ -23,7 +23,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,7 +65,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 	@Override
 	public String getPluralLabel(Locale locale) {
-		return LanguageUtil.get(locale, "categories");
+		return _language.get(locale, "categories");
 	}
 
 	@Override
@@ -255,5 +255,8 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private Language _language;
 
 }

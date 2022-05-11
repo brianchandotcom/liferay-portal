@@ -29,7 +29,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -131,7 +131,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 				"success", true
 			).put(
 				"successMessage",
-				LanguageUtil.get(
+				_language.get(
 					httpServletRequest,
 					"the-product-was-successfully-added-to-the-cart")
 			);
@@ -210,6 +210,9 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

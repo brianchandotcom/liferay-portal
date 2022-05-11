@@ -19,7 +19,7 @@ import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -78,7 +78,7 @@ public class AccountsCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				ACCOUNTS_COMMERCE_HEALTH_STATUS_DESCRIPTION);
@@ -95,7 +95,7 @@ public class AccountsCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.ACCOUNTS_COMMERCE_HEALTH_STATUS_KEY);
 	}
@@ -130,6 +130,9 @@ public class AccountsCommerceHealthHttpStatus
 
 	@Reference
 	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

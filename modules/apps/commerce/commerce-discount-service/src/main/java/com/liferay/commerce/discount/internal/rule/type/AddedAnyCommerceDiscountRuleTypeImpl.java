@@ -21,7 +21,7 @@ import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +34,7 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -94,7 +95,7 @@ public class AddedAnyCommerceDiscountRuleTypeImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "has-one-of-these-products");
+		return _language.get(resourceBundle, "has-one-of-these-products");
 	}
 
 	private ToLongFunction<CommerceOrderItem> _getOrderItemToLongFunction() {
@@ -107,5 +108,8 @@ public class AddedAnyCommerceDiscountRuleTypeImpl
 
 		};
 	}
+
+	@Reference
+	private Language _language;
 
 }

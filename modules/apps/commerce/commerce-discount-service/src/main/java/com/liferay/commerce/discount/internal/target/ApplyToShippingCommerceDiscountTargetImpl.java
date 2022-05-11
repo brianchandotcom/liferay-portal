@@ -16,13 +16,14 @@ package com.liferay.commerce.discount.internal.target;
 
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -49,7 +50,7 @@ public class ApplyToShippingCommerceDiscountTargetImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle, CommerceDiscountConstants.TARGET_SHIPPING);
 	}
 
@@ -57,5 +58,8 @@ public class ApplyToShippingCommerceDiscountTargetImpl
 	public Type getType() {
 		return Type.APPLY_TO_SHIPPING;
 	}
+
+	@Reference
+	private Language _language;
 
 }

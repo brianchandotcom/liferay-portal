@@ -21,7 +21,7 @@ import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -149,7 +149,7 @@ public class AssetPublisherPortletToolbarContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		String title = LanguageUtil.get(
+		String title = _language.get(
 			resourceBundle, "add-content-select-scope-and-type");
 
 		urlMenuItem.setData(
@@ -196,7 +196,7 @@ public class AssetPublisherPortletToolbarContributor
 				HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
 			).put(
 				"title",
-				LanguageUtil.format(
+				_language.format(
 					themeDisplay.getLocale(), "new-x", message, false)
 			).build());
 
@@ -286,6 +286,9 @@ public class AssetPublisherPortletToolbarContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

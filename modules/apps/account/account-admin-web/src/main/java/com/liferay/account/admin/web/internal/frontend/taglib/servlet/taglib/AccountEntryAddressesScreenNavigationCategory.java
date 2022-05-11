@@ -18,12 +18,13 @@ import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationE
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -57,7 +58,7 @@ public class AccountEntryAddressesScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "addresses");
+		return _language.get(locale, "addresses");
 	}
 
 	@Override
@@ -68,5 +69,8 @@ public class AccountEntryAddressesScreenNavigationCategory
 
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 }

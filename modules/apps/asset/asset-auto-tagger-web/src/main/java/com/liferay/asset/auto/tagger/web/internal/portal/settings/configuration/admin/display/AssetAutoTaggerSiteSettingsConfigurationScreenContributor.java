@@ -16,7 +16,7 @@ package com.liferay.asset.auto.tagger.web.internal.portal.settings.configuration
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,7 +55,7 @@ public class AssetAutoTaggerSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "asset-auto-tagging");
+		return _language.get(locale, "asset-auto-tagging");
 	}
 
 	@Override
@@ -94,6 +94,9 @@ public class AssetAutoTaggerSiteSettingsConfigurationScreenContributor
 	@Reference
 	private AssetAutoTaggerConfigurationFactory
 		_assetAutoTaggerConfigurationFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.auto.tagger.web)"

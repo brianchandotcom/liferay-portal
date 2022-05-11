@@ -23,7 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -73,7 +73,7 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetActionProvider
 						shippingOption.getCommerceChannelId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, Constants.EDIT));
+					_language.get(httpServletRequest, Constants.EDIT));
 				dropdownItem.setTarget("modal-lg");
 			}
 		).build();
@@ -103,6 +103,9 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetActionProvider
 	)
 	private ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

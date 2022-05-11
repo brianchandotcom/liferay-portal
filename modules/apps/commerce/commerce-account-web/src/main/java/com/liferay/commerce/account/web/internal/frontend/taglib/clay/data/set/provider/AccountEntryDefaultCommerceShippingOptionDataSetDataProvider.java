@@ -28,7 +28,7 @@ import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,9 +70,9 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 				pagination.getEndPosition(), sort),
 			commerceChannel -> {
 				String active = StringPool.BLANK;
-				String commerceShippingMethodName = LanguageUtil.get(
+				String commerceShippingMethodName = _language.get(
 					httpServletRequest, "use-priority-settings");
-				String commerceShippingOptionName = LanguageUtil.get(
+				String commerceShippingOptionName = _language.get(
 					httpServletRequest, "use-priority-settings");
 
 				CommerceShippingOptionAccountEntryRel
@@ -95,10 +95,10 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 							commerceShippingMethod.getName(locale);
 
 						if (commerceShippingMethod.isActive()) {
-							active = LanguageUtil.get(locale, "yes");
+							active = _language.get(locale, "yes");
 						}
 						else {
-							active = LanguageUtil.get(locale, "no");
+							active = _language.get(locale, "no");
 						}
 					}
 
@@ -144,6 +144,9 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 	@Reference
 	private CommerceShippingOptionAccountEntryRelService
 		_commerceShippingOptionAccountEntryRelService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

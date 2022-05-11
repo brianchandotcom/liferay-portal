@@ -25,7 +25,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -70,7 +70,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return language.format(
 			locale, "x-template",
 			portal.getPortletTitle(
 				AssetPublisherPortletKeys.ASSET_PUBLISHER, resourceBundle),
@@ -142,6 +142,9 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

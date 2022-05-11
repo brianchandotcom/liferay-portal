@@ -14,7 +14,6 @@
 
 import 'codemirror/mode/groovy/groovy';
 import ClayForm, {ClayToggle} from '@clayui/form';
-import {useFeatureFlag} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
@@ -53,8 +52,6 @@ export default function ObjectActionFormBase({
 
 		return triggers;
 	}, [objectActionTriggers]);
-
-	const flags = useFeatureFlag();
 
 	const onSubmit = async (objectAction: ObjectAction) => {
 		const response = await Liferay.Util.fetch(url, {
@@ -108,16 +105,14 @@ export default function ObjectActionFormBase({
 					value={values.name}
 				/>
 
-				{flags['LPS-146871'] && (
-					<Input
-						component="textarea"
-						error={errors.description}
-						label={Liferay.Language.get('description')}
-						name="description"
-						onChange={handleChange}
-						value={values.description}
-					/>
-				)}
+				<Input
+					component="textarea"
+					error={errors.description}
+					label={Liferay.Language.get('description')}
+					name="description"
+					onChange={handleChange}
+					value={values.description}
+				/>
 
 				<ClayForm.Group>
 					<ClayToggle

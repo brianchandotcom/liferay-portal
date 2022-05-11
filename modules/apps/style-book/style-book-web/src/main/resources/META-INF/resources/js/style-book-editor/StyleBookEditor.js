@@ -13,61 +13,19 @@
  */
 
 import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
-import {fetch, objectToFormData, openToast} from 'frontend-js-web';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
-import {
-	StyleBookContextProvider,
-	useDispatch,
-	useFrontendTokensValues,
-} from './StyleBookContext';
+import {StyleBookContextProvider} from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config, initializeConfig} from './config';
-import {SET_DRAFT_STATUS} from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
-const StyleBookEditor = ({
-	frontendTokensValues: initialFrontendTokensValues,
-}) => {
+const StyleBookEditor = () => {
 	useCloseProductMenu();
-
-	const dispatch = useDispatch();
-	const frontendTokensValues = useFrontendTokensValues();
-
-	useEffect(() => {
-		if (frontendTokensValues === initialFrontendTokensValues) {
-			return;
-		}
-
-		dispatch({type: SET_DRAFT_STATUS, value: DRAFT_STATUS.saving});
-
-		saveDraft(frontendTokensValues, config.styleBookEntryId)
-			.then(() => {
-				dispatch({
-					type: SET_DRAFT_STATUS,
-					value: DRAFT_STATUS.draftSaved,
-				});
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
-				dispatch({
-					type: SET_DRAFT_STATUS,
-					value: DRAFT_STATUS.notSaved,
-				});
-
-				openToast({
-					message: error.message,
-					type: 'danger',
-				});
-			});
-	}, [dispatch, initialFrontendTokensValues, frontendTokensValues]);
 
 	return (
 		<div className="cadmin style-book-editor">
@@ -127,40 +85,9 @@ export default function ({
 				)?.type,
 			}}
 		>
-			<StyleBookEditor frontendTokensValues={frontendTokensValues} />
+			<StyleBookEditor />
 		</StyleBookContextProvider>
 	);
-}
-
-function saveDraft(frontendTokensValues, styleBookEntryId) {
-	const body = objectToFormData({
-		[`${config.namespace}frontendTokensValues`]: JSON.stringify(
-			frontendTokensValues
-		),
-		[`${config.namespace}styleBookEntryId`]: styleBookEntryId,
-	});
-
-	return fetch(config.saveDraftURL, {body, method: 'post'})
-		.then((response) => {
-			return response
-				.clone()
-				.json()
-				.catch(() => response.text())
-				.then((body) => [response, body]);
-		})
-		.then(([response, body]) => {
-			if (response.status >= 400 || typeof body !== 'object') {
-				throw new Error(
-					Liferay.Language.get('an-unexpected-error-occurred')
-				);
-			}
-
-			if (body.error) {
-				throw new Error(body.error);
-			}
-
-			return body;
-		});
 }
 
 function getMostRecentLayout(previewOptions) {

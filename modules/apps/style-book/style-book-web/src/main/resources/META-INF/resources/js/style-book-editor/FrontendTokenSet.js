@@ -13,17 +13,20 @@
  */
 
 import {Collapse} from '@liferay/layout-content-page-editor-web';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../style-book-editor/config';
 import {useDispatch, useFrontendTokensValues} from './StyleBookContext';
-import {SET_TOKEN_VALUE} from './constants/actionTypes';
+import {SET_DRAFT_STATUS, SET_TOKEN_VALUE} from './constants/actionTypes';
+import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
 import BooleanFrontendToken from './frontend_tokens/BooleanFrontendToken';
 import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
+import saveDraft from './saveDraft';
 
 const getColorFrontendTokens = (
 	{frontendTokenCategories},
@@ -81,6 +84,29 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 					value: tokenValues[value]?.value || value,
 				},
 			});
+
+			saveDraft(frontendTokensValues)
+				.then(() => {
+					dispatch({
+						type: SET_DRAFT_STATUS,
+						value: DRAFT_STATUS.draftSaved,
+					});
+				})
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+
+					dispatch({
+						type: SET_DRAFT_STATUS,
+						value: DRAFT_STATUS.notSaved,
+					});
+
+					openToast({
+						message: error.message,
+						type: 'danger',
+					});
+				});
 		}
 	};
 

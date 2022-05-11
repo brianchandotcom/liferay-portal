@@ -20,13 +20,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -61,7 +62,7 @@ public class PageDesignOptionsSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (LayoutPermissionUtil.contains(
+			if (_layoutPermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 
 				return true;
@@ -78,5 +79,8 @@ public class PageDesignOptionsSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageDesignOptionsSidebarPanel.class);
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 }

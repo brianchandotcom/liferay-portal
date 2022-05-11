@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -78,7 +78,7 @@ public class MappingContentPageEditorSidebarPanel
 		}
 
 		try {
-			if (LayoutPermissionUtil.contains(
+			if (_layoutPermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 
 				return true;
@@ -98,5 +98,8 @@ public class MappingContentPageEditorSidebarPanel
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 }

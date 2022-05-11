@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_REMOVE_DEFAULT_PAYMENT</td>
+	<td>//a[@data-type='payment-terms']/..//following-sibling::span//span[normalize-space(text())='Remove']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SELECT_TERM_ENTRY_RADIO</td>
 	<td>//input[contains(@name,'selectCommerceTermEntry')]//following-sibling::span/span[normalize-space()='${key_termEntry}']</td>
 	<td></td>

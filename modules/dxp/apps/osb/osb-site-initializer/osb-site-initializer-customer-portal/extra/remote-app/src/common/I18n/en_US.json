@@ -126,5 +126,7 @@
 	"x-items": "{0} Items",
 	"x-of-x-available": "{0} of {1} available",
 	"x-result-for-x": "{0} result for {1}",
-	"x-results-for-x": "{0} results for {1}"
+	"x-results-for-x": "{0} results for {1}",
+	"quick-links": "Quick Links",
+	"hide": "Hide"
 }

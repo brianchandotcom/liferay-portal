@@ -13,6 +13,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useState} from 'react';
+import i18n from '../../../../common/I18n';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {storage} from '../../../../common/services/liferay/storage';
 import {STORAGE_KEYS} from '../../../../common/utils/constants';
@@ -102,7 +103,9 @@ const QuickLinksPanel = () => {
 					)}
 				>
 					<div className="align-items-center d-flex justify-content-between">
-						<h5 className="m-0 text-neutral-10">Quick Links</h5>
+						<h5 className="m-0 text-neutral-10">
+							{i18n.translate('quick-links')}
+						</h5>
 
 						<a
 							className={classNames(
@@ -128,7 +131,7 @@ const QuickLinksPanel = () => {
 								symbol={isQuickLinksExpanded ? 'hr' : 'plus'}
 							/>
 
-							{isQuickLinksExpanded ? 'Hide' : ''}
+							{isQuickLinksExpanded ? i18n.translate('hide') : ''}
 						</a>
 					</div>
 

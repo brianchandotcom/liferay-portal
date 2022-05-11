@@ -237,6 +237,8 @@ definition {
 	}
 
 	macro _updateEmployee {
+		Variables.assertDefined(parameterList = "${employeeId},${firstname},${managerId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -247,7 +249,7 @@ definition {
 			-d
 					{	                 
 	"firstname": "${firstname}",
-	"r_supervisor_c_managerId": "${newManagerId}"
+	"r_supervisor_c_managerId": "${managerId}"
 					}
 	''';
 		var response = JSONCurlUtil.put("${curl}");
@@ -352,7 +354,7 @@ definition {
 		ObjectDefinitionAPI._updateEmployee(
 			employeeId = "${employeeId}",
 			firstname = "${employeeFirstname}",
-			newManagerId = "${newManagerId}");
+			managerId = "${managerId}");
 
 		var firstname = ObjectDefinitionAPI._getEmployeeFirstnameById(employeeId = "${employeeId}");
 

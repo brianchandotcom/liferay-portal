@@ -14,6 +14,12 @@
 
 package com.liferay.notification.service;
 
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service utility for NotificationTemplate. This utility wraps
  * <code>com.liferay.notification.service.impl.NotificationTemplateServiceImpl</code> and is an
@@ -33,14 +39,70 @@ public class NotificationTemplateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static NotificationTemplate addNotificationTemplate(
+			long userId, String name, String description, String from,
+			Map<java.util.Locale, String> fromNameMap, String to, String cc,
+			String bcc, boolean enabled,
+			Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> bodyMap)
+		throws PortalException {
+
+		return getService().addNotificationTemplate(
+			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
+			subjectMap, bodyMap);
+	}
+
+	public static NotificationTemplate deleteNotificationTemplate(
+			long notificationTemplateId)
+		throws PortalException {
+
+		return getService().deleteNotificationTemplate(notificationTemplateId);
+	}
+
+	public static NotificationTemplate deleteNotificationTemplate(
+			NotificationTemplate notificationTemplate)
+		throws PortalException {
+
+		return getService().deleteNotificationTemplate(notificationTemplate);
+	}
+
+	public static NotificationTemplate getNotificationTemplate(
+			long notificationTemplateId)
+		throws PortalException {
+
+		return getService().getNotificationTemplate(notificationTemplateId);
+	}
+
+	public static List<NotificationTemplate> getNotificationTemplates(
+		int start, int end) {
+
+		return getService().getNotificationTemplates(start, end);
+	}
+
+	public static int getNotificationTemplatesCount() {
+		return getService().getNotificationTemplatesCount();
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static NotificationTemplate updateNotificationTemplate(
+			long notificationTemplateId, String name, String description,
+			String from, Map<java.util.Locale, String> fromNameMap, String to,
+			String cc, String bcc, boolean enabled,
+			Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> bodyMap)
+		throws PortalException {
+
+		return getService().updateNotificationTemplate(
+			notificationTemplateId, name, description, from, fromNameMap, to,
+			cc, bcc, enabled, subjectMap, bodyMap);
 	}
 
 	public static NotificationTemplateService getService() {

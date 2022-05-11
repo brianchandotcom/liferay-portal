@@ -14,13 +14,21 @@
 
 package com.liferay.notification.service.http;
 
+import com.liferay.notification.service.NotificationTemplateServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.notification.service.NotificationTemplateServiceUtil</code> service
+ * <code>NotificationTemplateServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -41,4 +49,328 @@ package com.liferay.notification.service.http;
  * @generated
  */
 public class NotificationTemplateServiceHttp {
+
+	public static com.liferay.notification.model.NotificationTemplate
+			addNotificationTemplate(
+				HttpPrincipal httpPrincipal, long userId, String name,
+				String description, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap, String to,
+				String cc, String bcc, boolean enabled,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> bodyMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"addNotificationTemplate",
+				_addNotificationTemplateParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, name, description, from, fromNameMap, to, cc,
+				bcc, enabled, subjectMap, bodyMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationTemplate
+			deleteNotificationTemplate(
+				HttpPrincipal httpPrincipal, long notificationTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"deleteNotificationTemplate",
+				_deleteNotificationTemplateParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationTemplateId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationTemplate
+			deleteNotificationTemplate(
+				HttpPrincipal httpPrincipal,
+				com.liferay.notification.model.NotificationTemplate
+					notificationTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"deleteNotificationTemplate",
+				_deleteNotificationTemplateParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationTemplate);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationTemplate
+			getNotificationTemplate(
+				HttpPrincipal httpPrincipal, long notificationTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"getNotificationTemplate",
+				_getNotificationTemplateParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationTemplateId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.notification.model.NotificationTemplate>
+			getNotificationTemplates(
+				HttpPrincipal httpPrincipal, int start, int end) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"getNotificationTemplates",
+				_getNotificationTemplatesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.notification.model.NotificationTemplate>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getNotificationTemplatesCount(
+		HttpPrincipal httpPrincipal) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"getNotificationTemplatesCount",
+				_getNotificationTemplatesCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationTemplate
+			updateNotificationTemplate(
+				HttpPrincipal httpPrincipal, long notificationTemplateId,
+				String name, String description, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap, String to,
+				String cc, String bcc, boolean enabled,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> bodyMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"updateNotificationTemplate",
+				_updateNotificationTemplateParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationTemplateId, name, description, from,
+				fromNameMap, to, cc, bcc, enabled, subjectMap, bodyMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NotificationTemplateServiceHttp.class);
+
+	private static final Class<?>[] _addNotificationTemplateParameterTypes0 =
+		new Class[] {
+			long.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			boolean.class, java.util.Map.class, java.util.Map.class
+		};
+	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _deleteNotificationTemplateParameterTypes2 =
+		new Class[] {com.liferay.notification.model.NotificationTemplate.class};
+	private static final Class<?>[] _getNotificationTemplateParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getNotificationTemplatesParameterTypes4 =
+		new Class[] {int.class, int.class};
+	private static final Class<?>[]
+		_getNotificationTemplatesCountParameterTypes5 = new Class[] {};
+	private static final Class<?>[] _updateNotificationTemplateParameterTypes6 =
+		new Class[] {
+			long.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			boolean.class, java.util.Map.class, java.util.Map.class
+		};
+
 }

@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -118,14 +119,72 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8129. Assert that a buyer can see the thumbnails for a diagram"
 	@priority = "4"
 	test AssertDiagramThumbnailIntoSearchResults {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8129 AssertDiagramThumbnailIntoSearchResults pending implementation
+		task ("Given a Buyer account is created") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And a Diagram with the "Type" set to "Default", an image (Commerce_Black.jpg) uploaded as "Diagram File"") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When a Buyer goes on Minium catalog homepage") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the Buyer will see the diagram product into the Search Results Widget") {
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test");
+		}
+
+		task ("And the thumbnail is the image we uploaded before (Commerce_Black.jpg)") {
+			AssertElementPresent(
+				key_image = "Commerce_Black",
+				key_productName = "diagram-test",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE_SPECIFIC");
+		}
 	}
 
 	@description = "[Please Update]"

@@ -110,14 +110,100 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8319. Assert default payment term can be added"
 	@priority = "4"
 	test AddADefaultPaymentTerm {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8319 AddADefaultPaymentTerm pending implementation
+		task ("Given I create two accounts") {
+			for (var entryNumber : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Test Account ${entryNumber}",
+					accountEntryType = "Business");
+			}
+		}
 
+		task ("Given that I created two Payment terms entries with different priorities into Terms and Conditions") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "BB Terms and Condition Entry",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Icon#BACK");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "AA Terms and Condition Entry",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "2");
+		}
+
+		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			AssertClick(
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_PAYMENT",
+				value1 = "Set Default Payment Commerce Terms Entry");
+		}
+
+		task ("Then a dropdown appears with all the payment term entries we created before, and the entries are sorted alphanumerically by localized name") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconList.viewListEntrySpecific(
+				listEntry = "aa-terms-and-condition-entry",
+				position = "1");
+
+			LexiconList.viewListEntrySpecific(
+				listEntry = "bb-terms-and-condition-entry",
+				position = "2");
+		}
+
+		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+		}
+
+		task ("Then I can select one single entry") {
+			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "bb-terms-and-condition-entry");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.viewDefaultPaymentCommerceTermsEntry(termEntry = "bb-terms-and-condition-entry");
+		}
+
+		task ("When I go into the "Order Defaults" tab inside the Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account 2");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+		}
+
+		task ("Then the default entry that is already selected is Use Priority Settings") {
+			Accounts.viewDefaultPaymentCommerceTermsEntry();
+		}
+
+		task ("And when I select one entry") {
+			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "aa-terms-and-condition-entry");
+		}
+
+		task ("And Remove the default payment terms, "Use Priority Settings" is displayed instead of the T&C entry") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.removeDefaultPaymentCommerceTerms();
+		}
 	}
 
 	@description = "This is a test for COMMERCE-8333. Deleting an account default delivery term will revert to Use Priority Settings"

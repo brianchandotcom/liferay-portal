@@ -12,6 +12,12 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
 	}
 
+	macro assertNameTitle {
+		AssertElementPresent(
+			key_title = "${key_name}",
+			locator1 = "Testray#NAME_TITLE");
+	}
+
 	macro assertPageNumber {
 		AssertElementPresent(
 			key_pageNumber = "${pageNumber}",
@@ -205,9 +211,4 @@ definition {
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 
-	macro assertNameTitle {
-		AssertElementPresent(
-			key_title = "${key_name}",
-			locator1 = "Testray#NAME_TITLE");
-	}
 }

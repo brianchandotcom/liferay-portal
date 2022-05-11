@@ -418,6 +418,7 @@
 		<exception>CommercePriceListCurrency</exception>
 		<exception>CommercePriceListDisplayDate</exception>
 		<exception>CommercePriceListExpirationDate</exception>
+		<exception>CommercePriceListMaxPriceValue</exception>
 		<exception>CommercePriceListParentPriceListGroupId</exception>
 		<exception>CommerceTierPriceEntryDisplayDate</exception>
 		<exception>CommerceTierPriceEntryExpirationDate</exception>

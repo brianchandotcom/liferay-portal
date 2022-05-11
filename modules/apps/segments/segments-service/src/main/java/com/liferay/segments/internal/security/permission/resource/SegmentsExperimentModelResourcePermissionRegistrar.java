@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -91,6 +93,17 @@ public class SegmentsExperimentModelResourcePermissionRegistrar {
 			if (LayoutPermissionUtil.contains(
 					permissionChecker, segmentsExperiment.getClassPK(),
 					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+			else if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-132571")) &&
+					 (LayoutPermissionUtil.contains(
+						 permissionChecker, segmentsExperiment.getClassPK(),
+						 ActionKeys.UPDATE_LAYOUT_BASIC) ||
+					  LayoutPermissionUtil.contains(
+						  permissionChecker, segmentsExperiment.getClassPK(),
+						  ActionKeys.UPDATE_LAYOUT_LIMITED))) {
 
 				return true;
 			}

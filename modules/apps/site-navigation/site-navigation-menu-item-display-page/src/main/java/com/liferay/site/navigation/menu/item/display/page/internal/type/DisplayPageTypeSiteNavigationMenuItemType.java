@@ -247,7 +247,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			return friendlyURL;
 		}
 
-		return themeDisplay.getURLCurrent() + StringPool.POUND;
+		return StringPool.BLANK;
 	}
 
 	@Override

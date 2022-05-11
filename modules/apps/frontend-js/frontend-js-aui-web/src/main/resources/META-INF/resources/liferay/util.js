@@ -247,6 +247,9 @@
 			}
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		disableElements(element) {
 			const currentElement = Util.getElement(element);
 

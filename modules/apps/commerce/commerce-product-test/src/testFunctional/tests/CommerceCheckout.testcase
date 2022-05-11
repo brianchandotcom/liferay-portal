@@ -85,7 +85,7 @@ definition {
 
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
 	@priority = "5"
-	test AddOrderFromAUserAndCheckoutFromAnotherUser {
+	test AddOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

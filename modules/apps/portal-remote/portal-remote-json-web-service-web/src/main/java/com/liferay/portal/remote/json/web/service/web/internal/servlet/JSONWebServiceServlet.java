@@ -19,6 +19,7 @@ import com.liferay.portal.jsonwebservice.JSONWebServiceServiceAction;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.PropsValues;
@@ -70,7 +71,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String path = _getPathInfo(httpServletRequest);
 
-		httpServletRequest.setAttribute("originalPathInfo", path);
+		httpServletRequest.setAttribute(WebKeys.ORIGINAL_PATH_INFO, path);
 
 		if (!PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE ||
 			(!path.equals(StringPool.BLANK) &&

@@ -181,7 +181,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		throws NoSuchJSONWebServiceException {
 
 		String path = GetterUtil.getString(
-			httpServletRequest.getAttribute("originalPathInfo"));
+			httpServletRequest.getAttribute(WebKeys.ORIGINAL_PATH_INFO));
 
 		if (path.equals("/invoke")) {
 			return new JSONWebServiceInvokerAction(httpServletRequest);

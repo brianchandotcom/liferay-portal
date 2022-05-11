@@ -68,6 +68,7 @@ import java.util.function.Function;
  * @see NotificationTemplateImpl
  * @generated
  */
+@JSON(strict = true)
 public class NotificationTemplateModelImpl
 	extends BaseModelImpl<NotificationTemplate>
 	implements NotificationTemplateModel {
@@ -374,6 +375,7 @@ public class NotificationTemplateModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -388,6 +390,7 @@ public class NotificationTemplateModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -416,6 +419,7 @@ public class NotificationTemplateModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getNotificationTemplateId() {
 		return _notificationTemplateId;
@@ -430,6 +434,7 @@ public class NotificationTemplateModelImpl
 		_notificationTemplateId = notificationTemplateId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -454,6 +459,7 @@ public class NotificationTemplateModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -484,6 +490,7 @@ public class NotificationTemplateModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -503,6 +510,7 @@ public class NotificationTemplateModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -517,6 +525,7 @@ public class NotificationTemplateModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -537,6 +546,7 @@ public class NotificationTemplateModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getBcc() {
 		if (_bcc == null) {
@@ -662,6 +672,7 @@ public class NotificationTemplateModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getCc() {
 		if (_cc == null) {
@@ -700,6 +711,7 @@ public class NotificationTemplateModelImpl
 		_description = description;
 	}
 
+	@JSON
 	@Override
 	public boolean getEnabled() {
 		return _enabled;
@@ -738,6 +750,7 @@ public class NotificationTemplateModelImpl
 		_from = from;
 	}
 
+	@JSON
 	@Override
 	public String getFromName() {
 		if (_fromName == null) {
@@ -849,6 +862,7 @@ public class NotificationTemplateModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -866,6 +880,7 @@ public class NotificationTemplateModelImpl
 		return getName(languageId);
 	}
 
+	@JSON
 	@Override
 	public String getName(Locale locale, boolean useDefault) {
 		String languageId = LocaleUtil.toLanguageId(locale);
@@ -878,6 +893,7 @@ public class NotificationTemplateModelImpl
 		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
+	@JSON
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return LocalizationUtil.getLocalization(
@@ -897,6 +913,7 @@ public class NotificationTemplateModelImpl
 		return getName(locale);
 	}
 
+	@JSON
 	@Override
 	public Map<Locale, String> getNameMap() {
 		return LocalizationUtil.getLocalizationMap(getName());
@@ -955,6 +972,7 @@ public class NotificationTemplateModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getSubject() {
 		if (_subject == null) {
@@ -1066,6 +1084,7 @@ public class NotificationTemplateModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getTo() {
 		if (_to == null) {

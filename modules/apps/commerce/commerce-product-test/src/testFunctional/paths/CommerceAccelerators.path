@@ -246,6 +246,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD</td>
+	<td>//div[contains(@class,"product-detail")]//..//..//input[contains(@class,"quantity-selector")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_ADD_TO_WISH_LIST</td>
 	<td>//div[contains(@class,'product-detail')]//div[contains(@class,'add-to-wish-list')]//button</td>
 	<td></td>

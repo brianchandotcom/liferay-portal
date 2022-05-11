@@ -9,6 +9,17 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../common/I18n';
+import getKebabCase from '../../../utils/getKebabCase';
+
 export function getEnvironmentType(productName) {
-	return productName?.substr(productName?.indexOf(' ') + 1);
+	const formatProductName = productName?.substr(
+		productName?.indexOf(' ') + 1
+	);
+
+	const translateProductName = i18n.translate(
+		getKebabCase(formatProductName)
+	);
+
+	return translateProductName;
 }

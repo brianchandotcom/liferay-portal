@@ -14,6 +14,7 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
@@ -144,13 +145,14 @@ const DeveloperKeysInputs = ({
 					prependIcon="download"
 					type="button"
 				>
-					Download Key
+					{i18n.translate('download-key')}
 				</Button>
 			</div>
 
 			<p className="text-neutral-7">
-				{`For instructions on how to activate your Liferay DXP or Liferay
-				Portal instance, please read the `}
+				{`${i18n.translate(
+					'for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the'
+				)} `}
 
 				<a
 					href={deployingActivationKeysURL}
@@ -158,7 +160,7 @@ const DeveloperKeysInputs = ({
 					target="_blank"
 				>
 					<u className="font-weight-semi-bold text-neutral-7">
-						Deploying Activation Keys article.
+						{i18n.translate('deploying-activation-keys-article')}
 					</u>
 				</a>
 			</p>

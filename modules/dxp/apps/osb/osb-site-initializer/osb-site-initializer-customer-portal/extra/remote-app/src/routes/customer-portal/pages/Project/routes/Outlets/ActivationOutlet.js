@@ -18,6 +18,7 @@ import {
 	useOutletContext,
 	useResolvedPath,
 } from 'react-router-dom';
+import i18n from '../../../../../../common/I18n';
 import {useCustomerPortal} from '../../../../context';
 import getKebabCase from '../../../../utils/getKebabCase';
 
@@ -44,7 +45,7 @@ const ActivationOutlet = () => {
 	}, [isCurrentActivationRoute, navigate, subscriptionGroups]);
 
 	if (!subscriptionGroups) {
-		return <>Loading...</>;
+		return <> {i18n.translate('loading')}...</>;
 	}
 
 	return (

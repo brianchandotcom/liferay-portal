@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import i18n from '../../../../../common/I18n';
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
 import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
@@ -27,7 +28,9 @@ const DXP = () => {
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
-					downloadTextHelper="Select the Liferay DXP version for which you want to download a developer key."
+					downloadTextHelper={i18n.translate(
+						'select-the-liferay-dxp-version-for-which-you-want-to-download-a-developer-key'
+					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}
 					productName="DXP"

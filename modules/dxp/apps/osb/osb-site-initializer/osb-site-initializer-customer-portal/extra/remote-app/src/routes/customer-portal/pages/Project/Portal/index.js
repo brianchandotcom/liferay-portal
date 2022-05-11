@@ -10,6 +10,7 @@
  */
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
+import i18n from '../../../../../common/I18n';
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
 import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
@@ -35,7 +36,9 @@ const Portal = () => {
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
-					downloadTextHelper="Select the Liferay Portal version for which you want to download a developer key."
+					downloadTextHelper={i18n.translate(
+						'select-the-liferay-portal-version-for-which-you-want-to-download-a-developer-key'
+					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.portalVersion}
 					productName="Portal"

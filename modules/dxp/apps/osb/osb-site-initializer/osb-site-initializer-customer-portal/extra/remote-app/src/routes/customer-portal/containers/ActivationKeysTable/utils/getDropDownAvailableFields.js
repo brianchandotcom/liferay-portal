@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import i18n from '../../../../../common/I18n';
 import CheckboxFilter from '../../../components/CheckboxFilter';
 import DateFilter from '../../../components/DateFilter';
 import ExpirationDateFilter from '../../../components/ExpirationDateFilter';
@@ -20,31 +21,31 @@ export function getDropDownAvailableFields(
 ) {
 	return {
 		x0a0: [
-			{child: 'x0a1', title: 'Key Type'},
+			{child: 'x0a1', title: i18n.translate('key-type')},
 			{
 				child: 'x0a2',
 				disabled: !availableFields.environmentTypes.length,
-				title: 'Environment Type',
+				title: i18n.translate('environment-type'),
 			},
-			{child: 'x0a4', title: 'Start Date'},
+			{child: 'x0a4', title: i18n.translate('start-date')},
 			{
 				child: 'x0a5',
-				title: 'Expiration Date',
+				title: i18n.translate('expiration-date'),
 			},
 			{
 				child: 'x0a6',
 				disabled: !availableFields.status.length,
-				title: 'Status',
+				title: i18n.translate('status'),
 			},
 			{
 				child: 'x0a7',
 				disabled: !availableFields.productVersions.length,
-				title: 'Product Version',
+				title: i18n.translate('product-version'),
 			},
 			{
 				child: 'x0a8',
 				disabled: !availableFields.instanceSizes.length,
-				title: 'Instance Size',
+				title: i18n.translate('instance-size'),
 			},
 		],
 		x0a1: [

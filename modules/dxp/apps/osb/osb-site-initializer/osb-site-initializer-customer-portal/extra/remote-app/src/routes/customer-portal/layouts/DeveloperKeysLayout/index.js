@@ -10,12 +10,13 @@
  */
 
 import React from 'react';
+import i18n from '../../../../common/I18n';
 import DeveloperKeysInputs from './Inputs';
 
 const DeveloperKeysLayouts = ({children}) => {
 	return (
 		<div>
-			<h4 className="m-0 py-3">Developer Keys</h4>
+			<h4 className="m-0 py-3">{i18n.translate('developer-keys')}</h4>
 
 			{children}
 		</div>

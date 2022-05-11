@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import {useEffect, useState} from 'react';
+import i18n from '../../../../common/I18n';
 
 const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 	const [checkedItems, setCheckedItems] = useState([]);
@@ -52,7 +53,7 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 					required
 					small={true}
 				>
-					Apply
+					{i18n.translate('apply')}
 				</ClayButton>
 			</div>
 		</div>

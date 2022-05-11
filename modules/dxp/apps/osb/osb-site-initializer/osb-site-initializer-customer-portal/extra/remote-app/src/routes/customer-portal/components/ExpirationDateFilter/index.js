@@ -11,6 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import {useCallback, useEffect, useState} from 'react';
+import i18n from '../../../../common/I18n';
 import DateFilter from '../DateFilter';
 
 const DNE_YEARS = 100;
@@ -63,7 +64,7 @@ export default function ExpirationDateFilter({
 			{hasDNE && (
 				<ClayCheckbox
 					checked={dneChecked}
-					label="Does Not Expire"
+					label={i18n.translate('does-not-expire')}
 					onChange={() =>
 						setDNEChecked(
 							(previousDNEChecked) => !previousDNEChecked

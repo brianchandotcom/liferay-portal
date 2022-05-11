@@ -15,11 +15,18 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
+import i18n from '../../../../common/I18n';
 
-const INVALID_NODE_MESSAGE = 'Enter a valid number';
-const INVALID_MIN_NODE_MESSAGE = 'Enter a minimum node value greater than 0';
-const INVALID_MAX_NODE_MESSAGE = 'Max nodes must be greater than min nodes';
-const INVALID_NEGATIVE_NODES_MESSAGE = 'Enter nodes values greater than 0';
+const INVALID_NODE_MESSAGE = i18n.translate('enter-a-valid-number');
+const INVALID_MIN_NODE_MESSAGE = i18n.translate(
+	'enter-a-minimum-node-value-greater-than-0'
+);
+const INVALID_MAX_NODE_MESSAGE = i18n.translate(
+	'max-nodes-must-be-greater-than-min-nodes'
+);
+const INVALID_NEGATIVE_NODES_MESSAGE = i18n.translate(
+	'enter-nodes-values-greater-than-0'
+);
 
 const KeyTypeFilter = ({
 	clearInputs,
@@ -98,7 +105,7 @@ const KeyTypeFilter = ({
 			<div className="px-3 py-2">
 				<ClayCheckbox
 					checked={onPromiseChecked}
-					label="On-Premise"
+					label={i18n.translate('on-premise')}
 					onChange={() =>
 						setOnPromiseChecked(
 							(previousOnPromiseChecked) =>
@@ -116,7 +123,7 @@ const KeyTypeFilter = ({
 				>
 					<ClayCheckbox
 						checked={clusterChecked}
-						label="Virtual Cluster"
+						label={i18n.translate('virtual-cluster')}
 						onChange={() =>
 							setClusterChecked(
 								(previousClusterChecked) =>
@@ -147,7 +154,7 @@ const KeyTypeFilter = ({
 
 							{clusterChecked && (
 								<p className="m-0 text-neutral-7 text-paragraph-sm">
-									min nodes
+									{i18n.translate('min-nodes')}
 								</p>
 							)}
 						</div>
@@ -172,7 +179,7 @@ const KeyTypeFilter = ({
 
 							{clusterChecked && (
 								<p className="m-0 text-neutral-7 text-paragraph-sm">
-									max nodes
+									{i18n.translate('max-nodes')}
 								</p>
 							)}
 						</div>
@@ -209,7 +216,7 @@ const KeyTypeFilter = ({
 					}}
 					small={true}
 				>
-					Apply
+					{i18n.translate('apply')}
 				</ClayButton>
 			</div>
 		</>

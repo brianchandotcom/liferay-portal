@@ -11,6 +11,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
+import i18n from '../../../../../../common/I18n';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
@@ -99,7 +100,9 @@ const ActivationKeysTableHeader = ({
 						{!!activationKeysByStatusPaginatedChecked.length && (
 							<>
 								<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-									{`${activationKeysByStatusPaginatedChecked.length} Keys Selected`}
+									{i18n.sub('x-keys-selected', [
+										activationKeysByStatusPaginatedChecked.length,
+									])}
 								</p>
 
 								<DeactivateButton
@@ -181,7 +184,9 @@ const ActivationKeysTableHeader = ({
 			{status.deactivate === ALERT_DOWNLOAD_TYPE.success && (
 				<DownloadAlert
 					downloadStatus="success"
-					message="Activation Key(s) were deactivated successfully."
+					message={i18n.translate(
+						'activation-key-s-were-deactivated-successfully'
+					)}
 					setDownloadStatus={(value) =>
 						setStatus((previousStatus) => ({
 							...previousStatus,
@@ -193,10 +198,9 @@ const ActivationKeysTableHeader = ({
 
 			{!isAbleToDownloadAggregateKeys && (
 				<ClayAlert className="my-2" displayType="info">
-					To download an aggregate key, select keys with identical
-					<b> Type, Start Date, End Date,</b>
-					and
-					<b> Instance Size</b>
+					{i18n.translate(
+						'to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size'
+					)}
 				</ClayAlert>
 			)}
 		</>

@@ -10,6 +10,7 @@
  */
 
 import {useEffect, useRef, useState} from 'react';
+import i18n from '../../../../../../common/I18n';
 import {Button} from '../../../../../../common/components';
 import getAvailableFieldsCheckboxs from '../../../../components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
 import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
@@ -108,7 +109,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 							className="btn-secondary px-3 py-2"
 							prependIcon="filter"
 						>
-							Filter
+							{i18n.translate('filter')}
 						</Button>
 					}
 				/>

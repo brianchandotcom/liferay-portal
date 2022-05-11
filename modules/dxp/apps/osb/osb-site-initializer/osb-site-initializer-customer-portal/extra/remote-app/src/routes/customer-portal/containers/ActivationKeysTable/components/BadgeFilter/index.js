@@ -10,6 +10,7 @@
  */
 
 import {useCallback} from 'react';
+import i18n from '../../../../../../common/I18n';
 import Button from '../../../../../../common/components/Button';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
 import BadgePillFilter from '../../../../components/BadgePillFilter';
@@ -30,7 +31,7 @@ const BadgeFilter = ({
 			todayDNE.setFullYear(todayDNE.getFullYear() + DNE_YEARS);
 
 			if (new Date(dateFilterState.value?.onOrAfter) >= todayDNE) {
-				return 'DNE';
+				return i18n.translate('dne');
 			}
 
 			dateDisplays.push(
@@ -52,7 +53,7 @@ const BadgeFilter = ({
 			const keyTypesDisplay = [];
 
 			if (filterKeyType.value?.hasOnPremise) {
-				keyTypesDisplay.push('On-Premise');
+				keyTypesDisplay.push(i18n.translate('on-premise'));
 			}
 
 			if (filterKeyType.value?.hasVirtualCluster) {
@@ -62,17 +63,17 @@ const BadgeFilter = ({
 						filterKeyType.value?.maxNodes
 					)
 				) {
-					keyTypesDisplay.push(`Virtual Cluster`);
-				}
-				else if (
+					keyTypesDisplay.push(i18n.translate('virtual-cluster'));
+				} else if (
 					filterKeyType.value?.minNodes ===
 					filterKeyType.value?.maxNodes
 				) {
 					keyTypesDisplay.push(
-						`Virtual Cluster (${filterKeyType.value?.minNodes} nodes)`
+						i18n.sub('virtual-cluster-x-nodes', [
+							filterKeyType.value?.minNodes,
+						])
 					);
-				}
-				else {
+				} else {
 					const nodesDisplay = [];
 
 					if (filterKeyType.value?.minNodes) {
@@ -84,7 +85,9 @@ const BadgeFilter = ({
 					}
 
 					keyTypesDisplay.push(
-						`Virtual Cluster (${nodesDisplay.join('-')} nodes)`
+						i18n.sub('virtual-cluster-x-nodes', [
+							nodesDisplay.join('-'),
+						])
 					);
 				}
 			}
@@ -118,11 +121,15 @@ const BadgeFilter = ({
 			<div className="d-flex">
 				{!!filters.searchTerm && !loading && (
 					<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
-						{activationKeysLength} {}
-						result
-						{activationKeysLength > 1 ? 's ' : ' '}
-						for &quot;
-						{filters.searchTerm}&quot;
+						{activationKeysLength > 1
+							? `${i18n.sub('x-results-for-x', [
+									activationKeysLength,
+									`"${filters.searchTerm}"`,
+							  ])}`
+							: `${i18n.sub('x-result-for-x', [
+									activationKeysLength,
+									`"${filters.searchTerm}"`,
+							  ])}`}
 					</p>
 				)}
 			</div>
@@ -261,7 +268,7 @@ const BadgeFilter = ({
 							prependIcon="times-circle"
 							small
 						>
-							Clear All Filters
+							{i18n.translate('clear-all-filters')}
 						</Button>
 					)}
 				</div>

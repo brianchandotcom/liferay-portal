@@ -624,28 +624,18 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout layout, long[] segmentsExperiencesIds)
 		throws Exception {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					layout.getGroupId(), segmentsExperiencesIds,
-					layout.getPlid());
+		List<String> portletIds = _getLayoutPortletIds(
+			layout, segmentsExperiencesIds);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			List<String> portletIds =
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink);
+		for (String portletId : portletIds) {
+			String resourceName = PortletIdCodec.decodePortletName(portletId);
 
-			for (String portletId : portletIds) {
-				String resourceName = PortletIdCodec.decodePortletName(
-					portletId);
+			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
 
-				String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-					layout.getPlid(), portletId);
-
-				_resourcePermissionLocalService.deleteResourcePermissions(
-					layout.getCompanyId(), resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
-			}
+			_resourcePermissionLocalService.deleteResourcePermissions(
+				layout.getCompanyId(), resourceName,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 		}
 	}
 

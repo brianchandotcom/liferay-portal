@@ -150,12 +150,15 @@ components:
             type: object
         MeasurementUnit:
             properties:
-                groupId:
-                    example: 23130
+                companyId:
+                    example: 30130
                     format: int64
                     minimum: 0
                     readOnly: true
                     type: integer
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 id:
                     example: 30130
                     format: int64
@@ -186,14 +189,12 @@ components:
                     minimum: 0
                     type: number
                 type:
-                    example: 0
-                    format: int32
-                    maximum: 1
-                    minimum: 0
-                    type: integer
+                    example: Dimensions
+                    type: string
             required:
                 - key
                 - name
+                - type
             type: object
         TaxCategory:
             properties:
@@ -665,184 +666,6 @@ paths:
             summary: Creates or Updates an Availability Estimate.
             tags:
                 - AvailabilityEstimate
-    /commerceAdminSiteSetting/{groupId}/measurementUnit:
-        get:
-            operationId: getCommerceAdminSiteSettingGroupMeasurementUnitPage
-            parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: type
-                  required: false
-                  schema:
-                      description:
-                          Type to filter
-                      example: 0
-                      format: int32
-                      maximum: 1
-                      minimum: 0
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MeasurementUnit"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MeasurementUnit"
-                                type: array
-                    description:
-                        Successful operation
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                500:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
-            security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
-            summary: Gets a list of Measurement Unit.
-            tags:
-                - MeasurementUnit
-        post:
-            operationId: postCommerceAdminSiteSettingGroupMeasurementUnit
-            parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/MeasurementUnit"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/MeasurementUnit"
-                required: true
-            responses:
-                201:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/MeasurementUnit"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/MeasurementUnit"
-                    description:
-                        Created
-                202:
-                    description:
-                        Async
-                204:
-                    description:
-                        Updated
-                400:
-                    description:
-                        Invalid input
-                401:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Authentication information is missing or invalid
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                500:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Unexpected error
-            security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
-            summary: Creates a Measurement Unit.
-            tags:
-                - MeasurementUnit
     /commerceAdminSiteSetting/{groupId}/taxCategory:
         get:
             operationId: getCommerceAdminSiteSettingGroupTaxCategoryPage
@@ -1183,7 +1006,592 @@ paths:
             summary: Creates a Warehouse.
             tags:
                 - Warehouse
-    /measurementUnit/{id}:
+    /measurement-units:
+        get:
+            operationId: getMeasurementUnitsPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MeasurementUnit"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MeasurementUnit"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.read
+            summary: Gets a List of Measurement Unit.
+            tags:
+                - MeasurementUnit
+        post:
+            operationId: postMeasurementUnit
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.write
+            summary: "Creates or updates a Measurement Unit."
+            tags:
+                - MeasurementUnit
+    /measurement-units/by-externalReferenceCode/{externalReferenceCode}:
+        delete:
+            operationId: deleteMeasurementUnitByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.write
+            summary: Deletes a Measurement Unit by external reference code.
+            tags:
+                - MeasurementUnit
+        get:
+            operationId: getMeasurementUnitByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.read
+            summary: Gets a Measurement Unit by external reference code.
+            tags:
+                - MeasurementUnit
+        patch:
+            operationId: patchMeasurementUnitByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.write
+            summary: Updates a Measurement Unit by external reference code.
+            tags:
+                - MeasurementUnit
+    /measurement-units/by-key/{key}:
+        delete:
+            operationId: deleteMeasurementUnitByKey
+            parameters:
+                - in: path
+                  explode: false
+                  name: key
+                  required: true
+                  schema:
+                      description:
+                          The resource key
+                      example: kg
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.write
+            summary: Deletes a Measurement Unit by key.
+            tags:
+                - MeasurementUnit
+        get:
+            operationId: getMeasurementUnitByKey
+            parameters:
+                - in: path
+                  explode: false
+                  name: key
+                  required: true
+                  schema:
+                      description:
+                          The resource key
+                      example: kg
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MeasurementUnit"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.read
+            summary: Gets a Measurement Unit by key.
+            tags:
+                - MeasurementUnit
+        patch:
+            operationId: patchMeasurementUnitByKey
+            parameters:
+                - in: path
+                  explode: false
+                  name: key
+                  required: true
+                  schema:
+                      description:
+                          The resource key
+                      example: kg
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MeasurementUnit"
+                required: true
+            responses:
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.write
+            summary: Updates a Measurement Unit by key.
+            tags:
+                - MeasurementUnit
+    /measurement-units/by-type/{measurementUnitType}:
+        get:
+            operationId: getMeasurementUnitsByType
+            parameters:
+                - in: path
+                  explode: false
+                  name: measurementUnitType
+                  required: true
+                  schema:
+                      description:
+                          The resource type
+                      example: Dimensions
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MeasurementUnit"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MeasurementUnit"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminSiteSetting.read
+            summary: Gets a List of Measurement Unit by type.
+            tags:
+                - MeasurementUnit
+    /measurement-units/{id}:
         delete:
             operationId: deleteMeasurementUnit
             parameters:
@@ -1201,8 +1609,9 @@ paths:
                   style: simple
             responses:
                 204:
-                    description:
-                        No content
+                    content:
+                        application/json: {}
+                        application/xml: {}
                 401:
                     content:
                         application/json:
@@ -1288,8 +1697,8 @@ paths:
             summary: Gets a Measurement Unit by ID.
             tags:
                 - MeasurementUnit
-        put:
-            operationId: putMeasurementUnit
+        patch:
+            operationId: patchMeasurementUnit
             parameters:
                 - in: path
                   explode: false

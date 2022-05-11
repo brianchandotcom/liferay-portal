@@ -122,9 +122,11 @@ public class NotificationTemplateLocalServiceUtil {
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
+	 * @throws PortalException
 	 */
 	public static NotificationTemplate deleteNotificationTemplate(
-		NotificationTemplate notificationTemplate) {
+			NotificationTemplate notificationTemplate)
+		throws PortalException {
 
 		return getService().deleteNotificationTemplate(notificationTemplate);
 	}

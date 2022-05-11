@@ -129,11 +129,13 @@ public interface NotificationTemplateLocalService
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationTemplate deleteNotificationTemplate(
-		NotificationTemplate notificationTemplate);
+			NotificationTemplate notificationTemplate)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

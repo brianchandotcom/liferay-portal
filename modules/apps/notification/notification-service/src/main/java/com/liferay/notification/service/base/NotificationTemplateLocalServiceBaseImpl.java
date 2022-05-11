@@ -145,11 +145,13 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public NotificationTemplate deleteNotificationTemplate(
-		NotificationTemplate notificationTemplate) throws PortalException {
+			NotificationTemplate notificationTemplate)
+		throws PortalException {
 
 		return notificationTemplatePersistence.remove(notificationTemplate);
 	}

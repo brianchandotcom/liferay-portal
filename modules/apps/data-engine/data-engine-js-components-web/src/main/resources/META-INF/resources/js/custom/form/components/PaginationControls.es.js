@@ -118,7 +118,7 @@ export function PaginationControls({
 					displayType="secondary"
 					onClick={() => onClick()}
 				>
-					{Liferay.Language.get('see-partial-results')}
+					{Liferay.Language.get('preview-existing-submissions')}
 				</ClayButton>
 			)}
 		</div>

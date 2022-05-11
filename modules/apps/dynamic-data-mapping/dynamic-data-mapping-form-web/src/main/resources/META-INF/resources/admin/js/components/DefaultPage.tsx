@@ -81,7 +81,7 @@ const DefaultPage: React.FC<IProps> = ({
 										onClick={() => setShowReport(true)}
 									>
 										{Liferay.Language.get(
-											'see-partial-results'
+											'preview-existing-submissions'
 										)}
 									</ClayButton>
 								)}

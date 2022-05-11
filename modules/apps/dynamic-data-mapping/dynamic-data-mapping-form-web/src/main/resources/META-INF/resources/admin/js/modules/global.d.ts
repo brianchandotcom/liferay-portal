@@ -39,7 +39,7 @@ type LocalizedTextKey =
 	| 'back'
 	| 'error'
 	| 'please-add-at-least-one-field'
-	| 'see-partial-results'
+	| 'preview-existing-submissions'
 	| 'submit-again'
 	| 'summary'
 	| 'there-are-no-entries'

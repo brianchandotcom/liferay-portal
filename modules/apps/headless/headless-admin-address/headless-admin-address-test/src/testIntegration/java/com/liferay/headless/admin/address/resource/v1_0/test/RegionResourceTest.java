@@ -283,8 +283,18 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Region testPatchRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
+	}
+
+	@Override
 	protected Region testPostRegion_addRegion(Region region) throws Exception {
 		return _addRegion(region);
+	}
+
+	@Override
+	protected Region testPutRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
 	}
 
 	private Region _addRegion(Region region) throws Exception {

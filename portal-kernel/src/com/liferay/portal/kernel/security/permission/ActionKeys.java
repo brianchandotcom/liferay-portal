@@ -239,7 +239,14 @@ public class ActionKeys {
 
 	public static final String UPDATE_DISCUSSION = "UPDATE_DISCUSSION";
 
+	public static final String UPDATE_LAYOUT_ADVANCED_OPTIONS =
+		"UPDATE_LAYOUT_ADVANCED_OPTIONS";
+
+	public static final String UPDATE_LAYOUT_BASIC = "UPDATE_LAYOUT_BASIC";
+
 	public static final String UPDATE_LAYOUT_CONTENT = "UPDATE_LAYOUT_CONTENT";
+
+	public static final String UPDATE_LAYOUT_LIMITED = "UPDATE_LAYOUT_LIMITED";
 
 	public static final String UPDATE_THREAD_PRIORITY =
 		"UPDATE_THREAD_PRIORITY";

@@ -4066,6 +4066,10 @@ definition {
 	}
 
 	macro viewFragmentCommonStyle {
+		var commonStylesClass = PageEditor.getCommonStylesClass(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
 		var actualStyleValue = Css.getStyleValue(
 			className = "${commonStylesClass}",
 			id = "layout-common-styles",

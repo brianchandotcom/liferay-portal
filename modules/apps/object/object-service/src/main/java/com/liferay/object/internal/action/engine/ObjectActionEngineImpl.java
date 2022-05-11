@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -124,7 +126,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				objectActionTriggerKey);
 
 		for (ObjectAction objectAction : objectActions) {
-			if (!_evaluateConditionExpression(
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-152181")) &&
+				!_evaluateConditionExpression(
 					objectAction.getConditionExpression(), payloadJSONObject)) {
 
 				continue;

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -101,6 +103,12 @@ public class ObjectActionResourceImpl
 			Long objectDefinitionId, ObjectAction objectAction)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152181")) &&
+			Validator.isNotNull(objectAction.getConditionExpression())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
@@ -117,6 +125,12 @@ public class ObjectActionResourceImpl
 	public ObjectAction putObjectAction(
 			Long objectActionId, ObjectAction objectAction)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152181")) &&
+			Validator.isNotNull(objectAction.getConditionExpression())) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toObjectAction(
 			_objectActionService.updateObjectAction(

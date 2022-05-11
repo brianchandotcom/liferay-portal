@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.measurement.unit.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.exception.CPMeasurementUnitKeyException;
+import com.liferay.commerce.product.exception.DuplicateCPMeasurementUnitKeyException;
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -80,7 +80,9 @@ public class EditCPMeasurementUnitMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof CPMeasurementUnitKeyException) {
+			else if (exception instanceof
+						DuplicateCPMeasurementUnitKeyException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
@@ -153,13 +155,14 @@ public class EditCPMeasurementUnitMVCActionCommand
 
 		if (cpMeasurementUnitId <= 0) {
 			cpMeasurementUnit = _cpMeasurementUnitService.addCPMeasurementUnit(
-				nameMap, key, rate, primary, priority, type, serviceContext);
+				null, nameMap, key, rate, primary, priority, type,
+				serviceContext);
 		}
 		else {
 			cpMeasurementUnit =
 				_cpMeasurementUnitService.updateCPMeasurementUnit(
-					cpMeasurementUnitId, nameMap, key, rate, primary, priority,
-					type, serviceContext);
+					null, cpMeasurementUnitId, nameMap, key, rate, primary,
+					priority, type, serviceContext);
 		}
 
 		return cpMeasurementUnit;

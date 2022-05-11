@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
@@ -136,7 +136,7 @@ public class FragmentEntryLinkServiceImpl
 			Objects.equals(className, Layout.class.getName())) {
 
 			containsPermission =
-				LayoutPermissionUtil.containsLayoutUpdatePermission(
+				_layoutPermission.containsLayoutUpdatePermission(
 					getPermissionChecker(), classPK);
 		}
 
@@ -152,5 +152,8 @@ public class FragmentEntryLinkServiceImpl
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 }

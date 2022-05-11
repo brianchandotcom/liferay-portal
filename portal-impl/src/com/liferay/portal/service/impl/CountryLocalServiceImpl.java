@@ -66,7 +66,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(
+		_validate(
 			CountryConstants.DEFAULT_COUNTRY_ID, serviceContext.getCompanyId(),
 			a2, a3, name, number);
 
@@ -267,7 +267,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);
 
-		validate(countryId, country.getCompanyId(), a2, a3, name, number);
+		_validate(countryId, country.getCompanyId(), a2, a3, name, number);
 
 		country.setA2(a2);
 		country.setA3(a3);
@@ -293,60 +293,6 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		country.setGroupFilterEnabled(groupFilterEnabled);
 
 		return countryPersistence.update(country);
-	}
-
-	protected void validate(
-			long countryId, long companyId, String a2, String a3, String name,
-			String number)
-		throws PortalException {
-
-		if (Validator.isNull(a2)) {
-			throw new CountryA2Exception("Missing A2");
-		}
-
-		if (a2.length() != 2) {
-			throw new CountryA2Exception("A2 must be exactly two characters");
-		}
-
-		if (Validator.isNull(a3)) {
-			throw new CountryA3Exception("Missing A3");
-		}
-
-		if (a3.length() != 3) {
-			throw new CountryA3Exception("A3 must be exactly three characters");
-		}
-
-		if (Validator.isNull(name)) {
-			throw new CountryNameException("Missing name");
-		}
-
-		if (Validator.isNull(number)) {
-			throw new CountryNumberException("Missing number");
-		}
-
-		if (_isConflictingCountry(countryId, fetchCountryByA2(companyId, a2))) {
-			throw new DuplicateCountryException(
-				"A2 belongs to another country");
-		}
-
-		if (_isConflictingCountry(countryId, fetchCountryByA3(companyId, a3))) {
-			throw new DuplicateCountryException(
-				"A3 belongs to another country");
-		}
-
-		if (_isConflictingCountry(
-				countryId, fetchCountryByName(companyId, name))) {
-
-			throw new DuplicateCountryException(
-				"Name belongs to another country");
-		}
-
-		if (_isConflictingCountry(
-				countryId, fetchCountryByNumber(companyId, number))) {
-
-			throw new DuplicateCountryException(
-				"Number belongs to another country");
-		}
 	}
 
 	private GroupByStep _getGroupByStep(
@@ -443,6 +389,60 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private void _validate(
+			long countryId, long companyId, String a2, String a3, String name,
+			String number)
+		throws PortalException {
+
+		if (Validator.isNull(a2)) {
+			throw new CountryA2Exception("Missing A2");
+		}
+
+		if (a2.length() != 2) {
+			throw new CountryA2Exception("A2 must be exactly two characters");
+		}
+
+		if (Validator.isNull(a3)) {
+			throw new CountryA3Exception("Missing A3");
+		}
+
+		if (a3.length() != 3) {
+			throw new CountryA3Exception("A3 must be exactly three characters");
+		}
+
+		if (Validator.isNull(name)) {
+			throw new CountryNameException("Missing name");
+		}
+
+		if (Validator.isNull(number)) {
+			throw new CountryNumberException("Missing number");
+		}
+
+		if (_isConflictingCountry(countryId, fetchCountryByA2(companyId, a2))) {
+			throw new DuplicateCountryException(
+				"A2 belongs to another country");
+		}
+
+		if (_isConflictingCountry(countryId, fetchCountryByA3(companyId, a3))) {
+			throw new DuplicateCountryException(
+				"A3 belongs to another country");
+		}
+
+		if (_isConflictingCountry(
+				countryId, fetchCountryByName(companyId, name))) {
+
+			throw new DuplicateCountryException(
+				"Name belongs to another country");
+		}
+
+		if (_isConflictingCountry(
+				countryId, fetchCountryByNumber(companyId, number))) {
+
+			throw new DuplicateCountryException(
+				"Number belongs to another country");
+		}
 	}
 
 	@BeanReference(type = AddressLocalService.class)

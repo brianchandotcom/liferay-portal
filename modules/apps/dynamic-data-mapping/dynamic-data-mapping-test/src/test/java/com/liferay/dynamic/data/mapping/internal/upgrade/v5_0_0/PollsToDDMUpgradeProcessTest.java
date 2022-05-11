@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Set;
@@ -141,17 +143,13 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 	@Test
 	public void testGetDDMFormField() throws Exception {
 		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
-			new DDMFormFieldOptions(LocaleUtil.US));
+			new DDMFormFieldOptions(LocaleUtil.US), null);
 
 		Assert.assertEquals("string", ddmFormField.getDataType());
 
-		LocalizedValue label = ddmFormField.getLabel();
-
-		Assert.assertEquals("Single Selection", label.getString(LocaleUtil.US));
-
 		Assert.assertEquals("radio", ddmFormField.getType());
 		Assert.assertFalse((boolean)ddmFormField.getProperty("inline"));
-		Assert.assertFalse(ddmFormField.isShowLabel());
+		Assert.assertTrue(ddmFormField.isShowLabel());
 		Assert.assertNotNull(ddmFormField.getDDMFormFieldOptions());
 
 		String ddmFormFieldName = ddmFormField.getName();
@@ -167,7 +165,7 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 	@Test
 	public void testGetDDMFormLayoutDefinition() throws Exception {
 		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
-			new DDMFormFieldOptions(LocaleUtil.US));
+			new DDMFormFieldOptions(LocaleUtil.US), null);
 
 		ddmFormField.setName("SingleSelection");
 
@@ -219,6 +217,10 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 				Object[] arguments = invocationOnMock.getArguments();
 
 				String xml = (String)arguments[0];
+
+				if (Validator.isNull(xml)) {
+					return StringPool.BLANK;
+				}
 
 				String languageIdAttribute =
 					"language-id='" + arguments[1] + "'>";

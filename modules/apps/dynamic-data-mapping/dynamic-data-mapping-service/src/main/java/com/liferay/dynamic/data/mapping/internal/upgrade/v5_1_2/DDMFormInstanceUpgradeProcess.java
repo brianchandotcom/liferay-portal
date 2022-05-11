@@ -42,9 +42,16 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("select formInstanceId, ");
+
+		boolean hasConvertedPolls = hasColumn(
+			"DDMFormInstance", "convertedPolls");
+
+		if (hasConvertedPolls) {
+			sb.append("convertedPolls, ");
+		}
 
 		boolean hasExpirationDate = hasColumn(
 			"DDMFormInstance", "expirationDate");
@@ -73,7 +80,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						"formInstanceVersionId = ?")) {
 
 			_upgradeDDMFormInstance(
-				hasExpirationDate, selectPreparedStatement1,
+				hasConvertedPolls, hasExpirationDate, selectPreparedStatement1,
 				selectPreparedStatement2, updatePreparedStatement1,
 				updatePreparedStatement2);
 
@@ -103,8 +110,16 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 		return expirationDate.toString();
 	}
 
+	private String _getValue(boolean convertedPools, Date expirationDate) {
+		if (convertedPools) {
+			return Boolean.TRUE.toString();
+		}
+
+		return String.valueOf(expirationDate != null);
+	}
+
 	private void _upgradeDDMFormInstance(
-			boolean hasExpirationDate,
+			boolean hasConvertedPolls, boolean hasExpirationDate,
 			PreparedStatement selectPreparedStatement1,
 			PreparedStatement selectPreparedStatement2,
 			PreparedStatement updatePreparedStatement1,
@@ -113,6 +128,12 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 
 		try (ResultSet resultSet = selectPreparedStatement1.executeQuery()) {
 			while (resultSet.next()) {
+				boolean convertedPolls = false;
+
+				if (hasConvertedPolls) {
+					convertedPolls = resultSet.getBoolean("convertedPolls");
+				}
+
 				Date expirationDate = null;
 
 				if (hasExpirationDate) {
@@ -123,7 +144,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					resultSet.getString("settings_"));
 
 				_upgradeSettings(
-					expirationDate,
+					convertedPolls, expirationDate,
 					settingsJSONObject.getJSONArray("fieldValues"));
 
 				updatePreparedStatement1.setString(
@@ -136,14 +157,14 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 				updatePreparedStatement1.addBatch();
 
 				_upgradeDDMFormInstanceVersion(
-					expirationDate, formInstanceId, selectPreparedStatement2,
-					updatePreparedStatement2);
+					convertedPolls, expirationDate, formInstanceId,
+					selectPreparedStatement2, updatePreparedStatement2);
 			}
 		}
 	}
 
 	private void _upgradeDDMFormInstanceVersion(
-			Date expirationDate, long formInstanceId,
+			boolean convertedPolls, Date expirationDate, long formInstanceId,
 			PreparedStatement selectPreparedStatement,
 			PreparedStatement updatePreparedStatement)
 		throws Exception {
@@ -159,7 +180,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						_jsonFactory.createJSONObject(settings);
 
 					_upgradeSettings(
-						expirationDate,
+						convertedPolls, expirationDate,
 						settingsJSONObject.getJSONArray("fieldValues"));
 
 					updatePreparedStatement.setString(
@@ -175,7 +196,8 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSettings(
-		Date expirationDate, JSONArray fieldValuesJSONArray) {
+		boolean convertedPolls, Date expirationDate,
+		JSONArray fieldValuesJSONArray) {
 
 		boolean hasExpirationDate = false;
 		boolean hasLimitToOneSubmissionPerUser = false;
@@ -198,7 +220,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						"limitToOneSubmissionPerUser")) {
 
 				fieldValueJSONObject.put(
-					"value", String.valueOf(expirationDate != null));
+					"value", _getValue(convertedPolls, expirationDate));
 
 				hasLimitToOneSubmissionPerUser = true;
 			}
@@ -216,9 +238,15 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						"showPartialResultsToRespondents")) {
 
 				fieldValueJSONObject.put(
-					"value", String.valueOf(expirationDate != null));
+					"value", _getValue(convertedPolls, expirationDate));
 
 				hasShowPartialResultsToRespondents = true;
+			}
+			else if (convertedPolls &&
+					 Objects.equals(
+						 fieldValueJSONObject.getString("name"), "published")) {
+
+				fieldValueJSONObject.put("value", Boolean.TRUE.toString());
 			}
 		}
 
@@ -232,7 +260,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			fieldValuesJSONArray.put(
 				_createFieldValue(
 					"limitToOneSubmissionPerUser",
-					String.valueOf(expirationDate != null)));
+					_getValue(convertedPolls, expirationDate)));
 		}
 
 		if (!hasNeverExpire) {
@@ -245,7 +273,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			fieldValuesJSONArray.put(
 				_createFieldValue(
 					"showPartialResultsToRespondents",
-					String.valueOf(expirationDate != null)));
+					_getValue(convertedPolls, expirationDate)));
 		}
 	}
 

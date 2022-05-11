@@ -9,10 +9,14 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../../common/I18n';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 
 export const ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT = {
-	[ALERT_DOWNLOAD_TYPE.danger]: 'Unable to download key, please try again.',
-	[ALERT_DOWNLOAD_TYPE.success]:
-		'Activation Key was downloaded successfully.',
+	[ALERT_DOWNLOAD_TYPE.danger]: i18n.translate(
+		'unable-to-download-key-please-try-again'
+	),
+	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
+		'activation-key-was-downloaded-successfully'
+	),
 };

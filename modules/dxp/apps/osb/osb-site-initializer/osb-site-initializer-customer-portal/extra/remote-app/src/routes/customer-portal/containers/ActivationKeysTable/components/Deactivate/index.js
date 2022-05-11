@@ -12,6 +12,7 @@
 import {Button as ClayButton} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
+import i18n from '../../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 import {putDeactivateKeys} from '../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../../utils/constants';
@@ -86,7 +87,7 @@ const DeactivateButton = ({
 				className="btn-outline-danger cp-deactivate-button mx-2 px-3 py-2"
 				onClick={() => setIsVisibleModal(true)}
 			>
-				Deactivate
+				{i18n.translate('deactivate')}
 			</ClayButton>
 		</>
 	);

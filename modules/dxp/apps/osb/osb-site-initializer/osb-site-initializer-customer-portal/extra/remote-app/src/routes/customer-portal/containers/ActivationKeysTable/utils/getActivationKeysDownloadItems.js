@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import i18n from '../../../../../common/I18n';
 import {TOOLTIP_CLASSNAMES_TYPES} from './constants';
 import {
 	downloadAggregatedActivationKey,
@@ -32,7 +33,7 @@ export function getActivationKeysDownloadItems(
 			icon: (
 				<ClayIcon className="mr-1 text-neutral-4" symbol="document" />
 			),
-			label: 'Aggregate Key (single file)',
+			label: i18n.translate('aggregate-key-single-file'),
 			onClick: async () => {
 				const downloadedAggregated = await downloadAggregatedActivationKey(
 					selectedKeysIDs,
@@ -48,7 +49,7 @@ export function getActivationKeysDownloadItems(
 		},
 		{
 			icon: <ClayIcon className="mr-1 text-neutral-4" symbol="list" />,
-			label: 'Individual Keys (multiple files)',
+			label: i18n.translate('individual-keys-multiple-files'),
 			onClick: async () => {
 				const downloadedMultiple = await downloadMultipleActivationKey(
 					selectedKeysIDs,

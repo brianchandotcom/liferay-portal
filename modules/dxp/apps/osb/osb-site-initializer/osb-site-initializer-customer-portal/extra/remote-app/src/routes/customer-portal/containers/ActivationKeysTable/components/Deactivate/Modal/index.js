@@ -12,6 +12,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+import i18n from '../../../../../../../common/I18n';
 import Button from '../../../../../../../common/components/Button';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../../utils/constants';
 
@@ -28,7 +29,7 @@ const DeactivateKeysModal = ({
 				<div className="flex-row mb-1">
 					<div className="d-flex justify-content-between">
 						<h2 className="text-neutral-10">
-							Confirm Deactivation Terms
+							{i18n.translate('confirm-deactivation-terms')}
 						</h2>
 
 						<Button
@@ -41,17 +42,15 @@ const DeactivateKeysModal = ({
 					</div>
 
 					<p className="mb-6 mt-5 text-neutral-10">
-						I certify that the instance(s) activated with the
-						selected activation key(s) has/have been shut down and
-						that there is no Liferay software installed, deployed,
-						used or executed that is activated with the selected
-						activation key(s).
+						{i18n.translate(
+							'i-certify-that-the-instance-s-activated-with-the-selected-activation-key-s-has-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key-s'
+						)}
 					</p>
 				</div>
 
 				<div className="d-flex justify-content-end my-4">
 					<Button displayType="secondary" onClick={onClose}>
-						Cancel
+						{i18n.translate('cancel')}
 					</Button>
 
 					<Button
@@ -63,10 +62,10 @@ const DeactivateKeysModal = ({
 						{isDeactivating ? (
 							<>
 								<span className="cp-spinner mr-2 mt-1 spinner-border spinner-border-sm"></span>
-								Deactivating...
+								{i18n.translate('deactivating')}...
 							</>
 						) : (
-							'Confirm & Deactivate Keys'
+							i18n.translate('confirm-deactivate-keys')
 						)}
 					</Button>
 				</div>
@@ -81,8 +80,9 @@ const DeactivateKeysModal = ({
 						/>
 
 						<p className="m-0 text-danger text-paragraph">
-							There was an unexpected error while attempting to
-							deactivate keys. Please try again in a few moments
+							{i18n.translate(
+								'there-was-an-unexpected-error-while-attempting-to-deactivate-keys-please-try-again-in-a-few-moments'
+							)}
 						</p>
 					</div>
 				)}

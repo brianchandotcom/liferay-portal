@@ -13,6 +13,7 @@ import {Button as ClayButton} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import i18n from '../../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 import {putDeactivateKeys} from '../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../../utils/constants';
@@ -96,11 +97,14 @@ const DeactivateButton = ({
 				displayType="primary"
 				onClick={() => setIsVisibleModal(true)}
 			>
-				Deactivate
 				{` ${
 					activationKeysByStatusPaginatedChecked.length > 1
-						? `${activationKeysByStatusPaginatedChecked.length} keys`
-						: `${activationKeysByStatusPaginatedChecked.length} key`
+						? i18n.sub('deactivate-x-keys', [
+								activationKeysByStatusPaginatedChecked.length,
+						  ])
+						: i18n.sub('deactivate-x-key', [
+								activationKeysByStatusPaginatedChecked.length,
+						  ])
 				}`}
 			</ClayButton>
 		</>

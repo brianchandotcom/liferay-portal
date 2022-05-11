@@ -10,6 +10,7 @@
  */
 
 import ClayModal from '@clayui/modal';
+import i18n from '../../../../../../../common/I18n';
 import Button from '../../../../../../../common/components/Button';
 
 const ConfirmationMessageModal = ({confirmKeyNoLongerVisible, observer}) => {
@@ -19,7 +20,7 @@ const ConfirmationMessageModal = ({confirmKeyNoLongerVisible, observer}) => {
 				<div className="flex-row mb-1">
 					<div className="d-flex justify-content-between">
 						<h2 className="text-neutral-10">
-							Deactivated Key(s) Request
+							{i18n.translate('deactivated-key-s-request')}
 						</h2>
 
 						<Button
@@ -32,9 +33,9 @@ const ConfirmationMessageModal = ({confirmKeyNoLongerVisible, observer}) => {
 					</div>
 
 					<p className="mb-6 mt-5 text-neutral-10">
-						A request was just sent to deactivate the selected
-						activation keys. From now on. they will be hidden and no
-						longer be visible.
+						{i18n.translate(
+							'a-request-was-just-sent-to-deactivate-the-selected-activation-keys-from-now-on-they-will-be-hidden-and-no-longer-be-visible'
+						)}
 					</p>
 				</div>
 
@@ -43,7 +44,7 @@ const ConfirmationMessageModal = ({confirmKeyNoLongerVisible, observer}) => {
 						className="bg-danger d-flex ml-2"
 						onClick={confirmKeyNoLongerVisible}
 					>
-						Continue
+						{i18n.translate('continue')}
 					</Button>
 				</div>
 			</div>

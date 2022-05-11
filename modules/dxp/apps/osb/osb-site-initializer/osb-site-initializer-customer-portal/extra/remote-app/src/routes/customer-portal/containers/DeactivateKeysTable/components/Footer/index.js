@@ -12,6 +12,7 @@
 import {Button as ClayButton} from '@clayui/core';
 import {useCallback, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
+import i18n from '../../../../../../common/I18n';
 import DeactivateButton from '../DeactivateButton';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
@@ -64,7 +65,7 @@ const DeactivateKeysTableFooter = ({
 		<div className="d-flex justify-content-between">
 			<Link to={urlPreviousPage}>
 				<ClayButton className="text-neutral-10" displayType="link">
-					Cancel
+					{i18n.translate('cancel')}
 				</ClayButton>
 			</Link>
 

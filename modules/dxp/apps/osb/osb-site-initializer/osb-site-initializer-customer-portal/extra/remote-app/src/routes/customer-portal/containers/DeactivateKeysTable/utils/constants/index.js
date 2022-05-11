@@ -9,14 +9,17 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
+import i18n from '../../../../../../common/I18n';
+
 export const DEACTIVATE_COLUMNS = [
 	{
 		accessor: 'envName',
 		bodyClass: 'border-0 cursor-pointer',
 		expanded: true,
 		header: {
-			description: 'Description',
-			name: 'Environment Name',
+			description: i18n.translate('description'),
+			name: i18n.translate('environment-name'),
 			styles: 'bg-transparent',
 		},
 	},
@@ -24,8 +27,8 @@ export const DEACTIVATE_COLUMNS = [
 		accessor: 'keyType',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			description: 'Host Name / Cluster Size',
-			name: 'Key Type',
+			description: i18n.translate('host-name-cluster-size'),
+			name: i18n.translate('key-type'),
 			noWrap: true,
 			styles: 'bg-transparent',
 		},
@@ -34,7 +37,7 @@ export const DEACTIVATE_COLUMNS = [
 		accessor: 'envType',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			name: 'Environment Type',
+			name: i18n.translate('environment-type'),
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
 		},
 	},
@@ -42,7 +45,7 @@ export const DEACTIVATE_COLUMNS = [
 		accessor: 'expirationDate',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			name: 'Exp. Date',
+			name: i18n.translate('exp-date'),
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
 		},
 		noWrap: true,
@@ -52,7 +55,17 @@ export const DEACTIVATE_COLUMNS = [
 		align: 'center',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			name: 'Status',
+			name: i18n.translate('status'),
+			styles: 'bg-transparent text-neutral-10 font-weight-bold',
+		},
+	},
+	{
+		accessor: 'download',
+		align: 'center',
+		bodyClass: 'border-0',
+		disableCustomClickOnRow: true,
+		header: {
+			name: <ClayIcon symbol="download" />,
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
 		},
 	},

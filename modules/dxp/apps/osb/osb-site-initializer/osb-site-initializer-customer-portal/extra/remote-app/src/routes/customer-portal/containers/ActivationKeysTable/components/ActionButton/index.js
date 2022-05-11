@@ -11,6 +11,7 @@
 
 import {useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
+import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
@@ -67,7 +68,7 @@ const ActionButton = ({
 		return (
 			<ButtonDropDown
 				items={activationKeysDownloadItems}
-				label="Download"
+				label={i18n.translate('download')}
 				menuElementAttrs={{
 					className: 'p-0 cp-drop-down-action-button',
 				}}
@@ -89,7 +90,7 @@ const ActionButton = ({
 					)
 				}
 			>
-				Download
+				{i18n.translate('download')}
 			</Button>
 		);
 	}
@@ -110,7 +111,7 @@ const ActionButton = ({
 	return (
 		<ButtonDropDown
 			items={activationKeysActionsItems}
-			label="Actions"
+			label={i18n.translate('actions')}
 			menuElementAttrs={{
 				className: 'p-0',
 			}}

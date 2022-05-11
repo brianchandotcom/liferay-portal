@@ -12,6 +12,7 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
+import i18n from '../../../../common/I18n';
 import Table from '../../../../common/components/Table';
 import {useCustomerPortal} from '../../context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';
@@ -94,9 +95,13 @@ const DeactivateKeysTable = ({productName}) => {
 		<div className="h-100 ml-auto mr-auto w-75">
 			<div className="d-flex flex-column">
 				<div className="text-left">
-					<h3>Deactivate DXP Activation Key(s)</h3>
+					<h3>{i18n.translate('deactivate-dxp-activation-key-s')}</h3>
 
-					<p>Select the activation key you wish to deactivate.</p>
+					<p>
+						{i18n.translate(
+							'select-the-activation-key-you-wish-to-deactivate'
+						)}
+					</p>
 				</div>
 			</div>
 

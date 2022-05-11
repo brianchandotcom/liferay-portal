@@ -14,8 +14,10 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
+import CodeMirrorEditor from './CodeMirrorEditor';
 
 const VIEW_TYPES = {
 	columns: 1,
@@ -24,6 +26,7 @@ const VIEW_TYPES = {
 };
 
 const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
+	const [content, setContent] = useState(initialContent);
 	const [viewType, setViewType] = useState(VIEW_TYPES.columns);
 	const [visible, setVisible] = useState(true);
 
@@ -33,8 +36,6 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 			onCloseCallback();
 		},
 	});
-
-	const [content, setContent] = useState(initialContent);
 
 	return (
 		visible && (
@@ -70,6 +71,31 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 							/>
 						</ClayButton.Group>
 					</div>
+
+					<div
+						className={classNames(
+							'd-flex page-editor__html-editor-modal__editor-container',
+							{
+								'flex-column': viewType === VIEW_TYPES.rows,
+							}
+						)}
+					>
+						<div
+							className={classNames({
+								'h-50 w-100': viewType === VIEW_TYPES.rows,
+								'h-100 w-50': viewType === VIEW_TYPES.columns,
+								'h-100 w-100':
+									viewType === VIEW_TYPES.fullscreen,
+							})}
+						>
+							<CodeMirrorEditor
+								initialContent={initialContent}
+								onChange={(nextContent) =>
+									setContent(nextContent)
+								}
+							/>
+						</div>
+
 				</ClayModal.Body>
 
 				<ClayModal.Footer

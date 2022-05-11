@@ -357,12 +357,8 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			});
 	}
 
-	private boolean _isConflictingCountry(
-		long curCountryId, Country testCountry) {
-
-		if ((testCountry != null) &&
-			(testCountry.getCountryId() != curCountryId)) {
-
+	private boolean _isConflictingCountry(Country country, long curCountryId) {
+		if ((country != null) && (country.getCountryId() != curCountryId)) {
 			return true;
 		}
 
@@ -420,25 +416,25 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			throw new CountryNumberException("Missing number");
 		}
 
-		if (_isConflictingCountry(countryId, fetchCountryByA2(companyId, a2))) {
+		if (_isConflictingCountry(fetchCountryByA2(companyId, a2), countryId)) {
 			throw new DuplicateCountryException(
 				"A2 belongs to another country");
 		}
 
-		if (_isConflictingCountry(countryId, fetchCountryByA3(companyId, a3))) {
+		if (_isConflictingCountry(fetchCountryByA3(companyId, a3), countryId)) {
 			throw new DuplicateCountryException(
 				"A3 belongs to another country");
 		}
 
 		if (_isConflictingCountry(
-				countryId, fetchCountryByName(companyId, name))) {
+				fetchCountryByName(companyId, name), countryId)) {
 
 			throw new DuplicateCountryException(
 				"Name belongs to another country");
 		}
 
 		if (_isConflictingCountry(
-				countryId, fetchCountryByNumber(companyId, number))) {
+				fetchCountryByNumber(companyId, number), countryId)) {
 
 			throw new DuplicateCountryException(
 				"Number belongs to another country");

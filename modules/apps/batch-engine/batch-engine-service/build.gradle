@@ -17,6 +17,7 @@ dependencies {
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")

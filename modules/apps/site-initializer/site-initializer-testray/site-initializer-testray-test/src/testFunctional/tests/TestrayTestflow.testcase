@@ -27,36 +27,36 @@ definition {
 		}
 	}
 
-	@description = "LPS-150256 - Verify the User can click on Current Tab."
+	@description = "This is a test for LPS-150256 - Verify the User can click on Current Tab."
 	@priority = "5"
 	test CanAcessCurrentTab {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickTestfowOnSidebar();
+		task ("Go to Testflow and verify the User can click on Current Tab") {
+			TestrayLayout.clickTestfowOnSidebar();
 
-		Click(
-			key_navTabName = "Archived",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+			Testray.projectTabNavigator(navTabName = "Archived");
 
-		Click(
-			key_navTabName = "Current",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+			Testray.projectTabNavigator(navTabName = "Current");
 
-		AssertElementPresent(
-			key_title = "Tasks",
-			locator1 = "Testray#NAME_TITLE");
+			Testray.assertNameTitle(key_name = "Tasks");
+		}
 	}
 
-	@description = "LPS-150255 - Verify the user can enter on Testflow page."
+	@description = "This is a test for LPS-150255 - Verify the user can enter on Testflow page."
 	@priority = "5"
 	test CanAcessTestflowPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickTestfowOnSidebar();
+		task ("Go to Testflow and verify the User can enter on Testflow page") {
+			TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementPresent(
-			key_title = "Tasks",
-			locator1 = "Testray#NAME_TITLE");
+			Testray.assertNameTitle(key_name = "Tasks");
+		}
 	}
 
 }

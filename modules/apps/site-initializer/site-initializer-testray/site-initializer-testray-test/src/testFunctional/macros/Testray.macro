@@ -205,4 +205,9 @@ definition {
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 
+	macro assertNameTitle {
+		AssertElementPresent(
+			key_title = "${key_name}",
+			locator1 = "Testray#NAME_TITLE");
+	}
 }

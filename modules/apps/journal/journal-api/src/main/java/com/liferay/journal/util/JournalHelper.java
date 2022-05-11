@@ -34,7 +34,7 @@ public interface JournalHelper {
 
 	public String buildURLPattern(
 			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay, Locale locale)
+			ThemeDisplay themeDisplay, Locale locale, String separator)
 		throws PortalException;
 
 	public String diffHtml(

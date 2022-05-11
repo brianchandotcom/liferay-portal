@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.journal.constants.JournalActivityKeys;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
@@ -100,7 +101,8 @@ public class JournalArticleActivityInterpreter
 
 				return _journalHelper.buildURLPattern(
 					article, layout.isPrivateLayout(), themeDisplay,
-					themeDisplay.getLocale());
+					themeDisplay.getLocale(),
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 			}
 
 			return null;

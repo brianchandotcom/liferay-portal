@@ -396,7 +396,8 @@ public class JournalArticleAssetRenderer
 
 		String friendlyURL = JournalHelperUtil.buildURLPattern(
 			_article, layout.isPrivateLayout(), themeDisplay,
-			themeDisplay.getLocale());
+			themeDisplay.getLocale(),
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 
 		if (!_article.isApproved()) {
 			friendlyURL = HttpComponentsUtil.addParameter(

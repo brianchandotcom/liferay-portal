@@ -19,7 +19,6 @@ import com.liferay.diff.exception.CompareVersionsException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
@@ -84,7 +83,7 @@ public class JournalHelperImpl implements JournalHelper {
 	@Override
 	public String buildURLPattern(
 			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay, Locale locale)
+			ThemeDisplay themeDisplay, Locale locale, String separator)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler();
@@ -94,7 +93,7 @@ public class JournalHelperImpl implements JournalHelper {
 				article.getGroupId(), privateLayout), themeDisplay, false, false
 			));
 
-		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+		sb.append(separator);
 		sb.append(article.getUrlTitle(locale));
 
 		return sb.toString();

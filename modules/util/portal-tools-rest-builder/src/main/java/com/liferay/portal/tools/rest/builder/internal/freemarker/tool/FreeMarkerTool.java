@@ -15,9 +15,11 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
@@ -39,9 +41,13 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -561,6 +567,18 @@ public class FreeMarkerTool {
 		);
 	}
 
+	public String getObjectFieldStringValue(String type, Object value) {
+		if (value instanceof Date) {
+			if (type.equals("Date")) {
+				return _dateFormat.format(value);
+			}
+
+			return _dateTimeFormat.format(value);
+		}
+
+		return value.toString();
+	}
+
 	public List<JavaMethodSignature>
 			getParentGraphQLRelationJavaMethodSignatures(
 				ConfigYAML configYAML, String graphQLType,
@@ -933,6 +951,14 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	private static DateFormat _getDateFormat(String format) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+
+		dateFormat.setTimeZone(TimeZoneUtil.GMT);
+
+		return dateFormat;
+	}
+
 	private FreeMarkerTool() {
 	}
 
@@ -1241,6 +1267,9 @@ public class FreeMarkerTool {
 		return parameterName;
 	}
 
+	private static final DateFormat _dateFormat = _getDateFormat("yyyy-MM-dd");
+	private static final DateFormat _dateTimeFormat = _getDateFormat(
+		DateUtil.ISO_8601_PATTERN);
 	private static final FreeMarkerTool _freeMarkerTool = new FreeMarkerTool();
 
 }

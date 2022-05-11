@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
 
-import java.beans.Transient;
-
 import java.util.List;
 import java.util.Map;
 
@@ -57,12 +55,7 @@ public class Schema {
 		return _enumValues;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transient
-	public String getExample() {
+	public Object getExample() {
 		return _example;
 	}
 
@@ -154,12 +147,7 @@ public class Schema {
 		_enumValues = enumValues;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transient
-	public void setExample(String example) {
+	public void setExample(Object example) {
 		_example = example;
 	}
 
@@ -228,7 +216,7 @@ public class Schema {
 	private boolean _deprecated;
 	private String _description;
 	private List<String> _enumValues;
-	private String _example;
+	private Object _example;
 	private String _format;
 	private Items _items;
 	private boolean _jsonMap;

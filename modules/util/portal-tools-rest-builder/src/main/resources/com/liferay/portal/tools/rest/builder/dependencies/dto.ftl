@@ -164,7 +164,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 					,
 				</#if>
 
-				example = "${propertySchema.example}"
+				example = "${freeMarkerTool.getObjectFieldStringValue(propertyType, propertySchema.example)}"
 			</#if>
 		)
 

@@ -14,6 +14,8 @@
 
 import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 
+import openDeleteArticleModal from './modals/openDeleteArticleModal';
+
 export default function propsTransformer({
 	additionalProps: {
 		addArticleURL,
@@ -36,29 +38,13 @@ export default function propsTransformer({
 			return;
 		}
 
-		const searchContainer = Liferay.SearchContainer.get(
-			`${portletNamespace}articles`
-		);
-
-		const selectedItems = searchContainer.select
-			.getAllSelectedElements()
-			.size();
-
-		let message = Liferay.Language.get(
-			'are-you-sure-you-want-to-delete-the-selected-entry'
-		);
-
-		if (selectedItems > 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-the-selected-entries'
-			);
-		}
-
-		if (confirm(message)) {
-			Liferay.fire(`${portletNamespace}editEntry`, {
-				action: '/journal/delete_articles_and_folders',
-			});
-		}
+		openDeleteArticleModal({
+			onDelete: () => {
+				Liferay.fire(`${portletNamespace}editEntry`, {
+					action: '/journal/delete_articles_and_folders',
+				});
+			},
+		});
 	};
 
 	const expireEntries = () => {

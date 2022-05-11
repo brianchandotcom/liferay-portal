@@ -96,6 +96,21 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 							/>
 						</div>
 
+						{viewType !== VIEW_TYPES.fullscreen && (
+							<div
+								className={classNames({
+									'page-editor__html-editor-modal__preview-columns h-100 px-3 w-50':
+										viewType === VIEW_TYPES.columns,
+									'page-editor__html-editor-modal__preview-rows h-50 py-2 w-100':
+										viewType === VIEW_TYPES.rows,
+								})}
+							>
+								<div
+									dangerouslySetInnerHTML={{__html: content}}
+								/>
+							</div>
+						)}
+					</div>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

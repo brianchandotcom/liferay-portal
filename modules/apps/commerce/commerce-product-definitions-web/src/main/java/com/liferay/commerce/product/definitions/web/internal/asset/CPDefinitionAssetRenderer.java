@@ -178,6 +178,10 @@ public class CPDefinitionAssetRenderer
 		String noSuchEntryRedirect) {
 
 		try {
+			if (!_cpDefinition.isApproved() || !_cpDefinition.isPublished()) {
+				return null;
+			}
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

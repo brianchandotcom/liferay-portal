@@ -15,31 +15,16 @@
 package com.liferay.document.library.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import org.junit.After;
 import org.junit.Before;
@@ -69,7 +54,8 @@ public class FileEntryRemoteStagedModelDataHandlerTest
 
 		stagingGroup = GroupLocalServiceUtil.updateGroup(stagingGroup);
 
-		_enableRemoteStaging(liveGroup, stagingGroup);
+		FileEntryRemoteStagingTestUtil.enableRemoteStaging(
+			liveGroup, stagingGroup);
 
 		liveGroup = _groupLocalServiceGroup.getGroup(liveGroup.getGroupId());
 
@@ -83,68 +69,6 @@ public class FileEntryRemoteStagedModelDataHandlerTest
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
-	}
-
-	private void _addStagingAttribute(
-		ServiceContext serviceContext, String key, Object value) {
-
-		serviceContext.setAttribute(
-			StagingConstants.STAGED_PREFIX + key + StringPool.DOUBLE_DASH,
-			String.valueOf(value));
-	}
-
-	private void _enableRemoteStaging(
-			Group remoteLiveGroup, Group remoteStagingGroup)
-		throws Exception {
-
-		_setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET",
-			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
-
-		_setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
-
-		_addStagingAttribute(
-			serviceContext,
-			StagingUtil.getStagedPortletId(
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
-			true);
-		_addStagingAttribute(
-			serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-		_addStagingAttribute(
-			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, false);
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
-
-		StagingLocalServiceUtil.enableRemoteStaging(
-			TestPropsValues.getUserId(), remoteStagingGroup, false, false,
-			"localhost", PortalUtil.getPortalServerPort(false),
-			PortalUtil.getPathContext(), false, remoteLiveGroup.getGroupId(),
-			serviceContext);
-
-		GroupUtil.clearCache();
-	}
-
-	private void _setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 	@Inject

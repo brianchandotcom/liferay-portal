@@ -167,7 +167,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected DDMFormField getDDMFormField(
-		DDMFormFieldOptions ddmFormFieldOptions) {
+		DDMFormFieldOptions ddmFormFieldOptions, String description) {
 
 		String ddmFormFieldLabel = LanguageUtil.get(
 			_getResourceBundle(), "radio-field-type-label");
@@ -178,14 +178,29 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 
 		ddmFormField.setDataType("string");
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-		ddmFormField.setLabel(
-			_getLocalizedValue(_defaultLocale, ddmFormFieldLabel));
+
+		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
+
+		for (String availableLanguageId :
+				LocalizationUtil.getAvailableLanguageIds(description)) {
+
+			Locale availableLocale = LocaleUtil.fromLanguageId(
+				availableLanguageId);
+
+			localizedValue.addString(
+				availableLocale,
+				LocalizationUtil.getLocalization(
+					description, LocaleUtil.toLanguageId(availableLocale)));
+		}
+
+		ddmFormField.setLabel(localizedValue);
+
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setProperty("inline", false);
 		ddmFormField.setProperty("instanceId", StringUtil.randomString(8));
 		ddmFormField.setProperty("visible", true);
 		ddmFormField.setRequired(true);
-		ddmFormField.setShowLabel(false);
+		ddmFormField.setShowLabel(true);
 
 		return ddmFormField;
 	}
@@ -221,8 +236,17 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			ddmFormFieldValue.setFieldReference(
 				ddmFormField.getFieldReference());
 			ddmFormFieldValue.setName(ddmFormField.getName());
-			ddmFormFieldValue.setValue(
-				_getSettingDefaultValue(ddmForm, ddmFormField));
+
+			if (StringUtil.equals(
+					ddmFormField.getName(), "convertedFromPolls")) {
+
+				ddmFormFieldValue.setValue(
+					new UnlocalizedValue(Boolean.TRUE.toString()));
+			}
+			else {
+				ddmFormFieldValue.setValue(
+					_getSettingDefaultValue(ddmForm, ddmFormField));
+			}
 
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
@@ -307,7 +331,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private void _addDDMFormInstance(
 			long formInstanceId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, Timestamp modifiedDate,
-			long structureId, String name, String description, String settings,
+			long structureId, String name, String settings,
 			Timestamp expirationDate, Timestamp lastPublishDate)
 		throws Exception {
 
@@ -335,7 +359,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setString(
 				12, DDMFormInstanceConstants.VERSION_DEFAULT);
 			preparedStatement.setString(13, name);
-			preparedStatement.setString(14, description);
+			preparedStatement.setString(14, StringPool.BLANK);
 			preparedStatement.setString(15, settings);
 			preparedStatement.setTimestamp(16, expirationDate);
 			preparedStatement.setTimestamp(17, lastPublishDate);
@@ -453,8 +477,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private void _addDDMFormInstanceVersion(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, long formInstanceId, long structureVersionId,
-			String name, String description, String settings,
-			Timestamp statusDate)
+			String name, String settings, Timestamp statusDate)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -476,7 +499,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(7, formInstanceId);
 			preparedStatement.setLong(8, structureVersionId);
 			preparedStatement.setString(9, name);
-			preparedStatement.setString(10, description);
+			preparedStatement.setString(10, StringPool.BLANK);
 			preparedStatement.setString(11, settings);
 			preparedStatement.setString(
 				12, DDMFormInstanceConstants.VERSION_DEFAULT);
@@ -522,7 +545,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private long _addDDMStructure(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, Timestamp modifiedDate, String name,
-			String description, String definition, Timestamp lastPublishDate)
+			String definition, Timestamp lastPublishDate)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -557,7 +580,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setString(
 				14, DDMStructureConstants.VERSION_DEFAULT);
 			preparedStatement.setString(15, name);
-			preparedStatement.setString(16, description);
+			preparedStatement.setString(16, StringPool.BLANK);
 			preparedStatement.setString(17, definition);
 			preparedStatement.setString(18, StorageType.DEFAULT.toString());
 			preparedStatement.setInt(19, DDMStructureConstants.TYPE_AUTO);
@@ -572,8 +595,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private void _addDDMStructureLayout(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, Timestamp modifiedDate,
-			long structureVersionId, String name, String description,
-			String definition)
+			long structureVersionId, String name, String definition)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -598,7 +620,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setString(10, String.valueOf(increment()));
 			preparedStatement.setLong(11, structureVersionId);
 			preparedStatement.setString(12, name);
-			preparedStatement.setString(13, description);
+			preparedStatement.setString(13, StringPool.BLANK);
 			preparedStatement.setString(14, definition);
 
 			preparedStatement.executeUpdate();
@@ -608,7 +630,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private long _addDDMStructureVersion(
 			long groupId, long companyId, long userId, String userName,
 			Timestamp createDate, long structureId, String name,
-			String description, String definition, Timestamp statusDate)
+			String definition, Timestamp statusDate)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -636,7 +658,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(
 				9, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
 			preparedStatement.setString(10, name);
-			preparedStatement.setString(11, description);
+			preparedStatement.setString(11, StringPool.BLANK);
 			preparedStatement.setString(12, definition);
 			preparedStatement.setString(13, StorageType.DEFAULT.toString());
 			preparedStatement.setInt(14, DDMStructureConstants.TYPE_AUTO);
@@ -859,36 +881,36 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 		Map<Long, String> ddmFormFieldOptionsValues =
 			_getDDMFormFieldOptionsValues(ddmFormFieldOptions, questionId);
 
-		DDMFormField ddmFormField = getDDMFormField(ddmFormFieldOptions);
+		DDMFormField ddmFormField = getDDMFormField(
+			ddmFormFieldOptions, description);
 
 		String definition = DDMFormSerializeUtil.serialize(
 			getDDMForm(ddmFormField), _ddmFormSerializer);
 
 		long structureId = _addDDMStructure(
 			groupId, companyId, userId, userName, createDate, modifiedDate,
-			name, description, definition, lastPublishDate);
+			name, definition, lastPublishDate);
 
 		long structureVersionId = _addDDMStructureVersion(
 			groupId, companyId, userId, userName, createDate, structureId, name,
-			description, definition, lastPublishDate);
+			definition, lastPublishDate);
 
 		_addDDMStructureLayout(
 			groupId, companyId, userId, userName, createDate, modifiedDate,
-			structureVersionId, name, description,
-			getDDMFormLayoutDefinition(ddmFormField));
+			structureVersionId, name, getDDMFormLayoutDefinition(ddmFormField));
 
 		String settings = getSerializedSettingsDDMFormValues();
 
 		_addDDMFormInstance(
 			questionId, groupId, companyId, userId, userName, createDate,
-			modifiedDate, structureId, name, description, settings,
-			expirationDate, lastPublishDate);
+			modifiedDate, structureId, name, settings, expirationDate,
+			lastPublishDate);
 
 		_upgradeResourcePermission(questionId);
 
 		_addDDMFormInstanceVersion(
 			groupId, companyId, userId, userName, createDate, questionId,
-			structureVersionId, name, description, settings, lastPublishDate);
+			structureVersionId, name, settings, lastPublishDate);
 
 		JSONObject dataJSONObject = getDataJSONObject(ddmFormField.getName());
 

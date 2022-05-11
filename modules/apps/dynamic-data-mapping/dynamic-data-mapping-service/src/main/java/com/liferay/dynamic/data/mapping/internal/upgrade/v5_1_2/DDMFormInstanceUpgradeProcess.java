@@ -103,6 +103,14 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 		return expirationDate.toString();
 	}
 
+	private String _getValue(boolean convertedPools, Date expirationDate) {
+		if (convertedPools) {
+			return Boolean.TRUE.toString();
+		}
+
+		return String.valueOf(expirationDate != null);
+	}
+
 	private void _upgradeDDMFormInstance(
 			boolean hasExpirationDate,
 			PreparedStatement selectPreparedStatement1,
@@ -122,9 +130,28 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 				JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
 					resultSet.getString("settings_"));
 
+				JSONArray fieldValuesJSONArray =
+					settingsJSONObject.getJSONArray("fieldValues");
+
+				boolean convertedFromPolls = false;
+
+				for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+					JSONObject fieldValueJSONObject =
+						fieldValuesJSONArray.getJSONObject(i);
+
+					if (Objects.equals(
+							fieldValueJSONObject.getString("name"),
+							"convertedFromPolls")) {
+
+						convertedFromPolls = fieldValueJSONObject.getBoolean(
+							"value");
+
+						break;
+					}
+				}
+
 				_upgradeSettings(
-					expirationDate,
-					settingsJSONObject.getJSONArray("fieldValues"));
+					convertedFromPolls, expirationDate, fieldValuesJSONArray);
 
 				updatePreparedStatement1.setString(
 					1, settingsJSONObject.toString());
@@ -136,15 +163,15 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 				updatePreparedStatement1.addBatch();
 
 				_upgradeDDMFormInstanceVersion(
-					expirationDate, formInstanceId, selectPreparedStatement2,
-					updatePreparedStatement2);
+					convertedFromPolls, expirationDate, formInstanceId,
+					selectPreparedStatement2, updatePreparedStatement2);
 			}
 		}
 	}
 
 	private void _upgradeDDMFormInstanceVersion(
-			Date expirationDate, long formInstanceId,
-			PreparedStatement selectPreparedStatement,
+			boolean convertedFromPolls, Date expirationDate,
+			long formInstanceId, PreparedStatement selectPreparedStatement,
 			PreparedStatement updatePreparedStatement)
 		throws Exception {
 
@@ -159,7 +186,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						_jsonFactory.createJSONObject(settings);
 
 					_upgradeSettings(
-						expirationDate,
+						convertedFromPolls, expirationDate,
 						settingsJSONObject.getJSONArray("fieldValues"));
 
 					updatePreparedStatement.setString(
@@ -175,7 +202,8 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSettings(
-		Date expirationDate, JSONArray fieldValuesJSONArray) {
+		boolean convertedFromPolls, Date expirationDate,
+		JSONArray fieldValuesJSONArray) {
 
 		boolean hasExpirationDate = false;
 		boolean hasLimitToOneSubmissionPerUser = false;
@@ -198,7 +226,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						"limitToOneSubmissionPerUser")) {
 
 				fieldValueJSONObject.put(
-					"value", String.valueOf(expirationDate != null));
+					"value", _getValue(convertedFromPolls, expirationDate));
 
 				hasLimitToOneSubmissionPerUser = true;
 			}
@@ -216,9 +244,15 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						"showPartialResultsToRespondents")) {
 
 				fieldValueJSONObject.put(
-					"value", String.valueOf(expirationDate != null));
+					"value", _getValue(convertedFromPolls, expirationDate));
 
 				hasShowPartialResultsToRespondents = true;
+			}
+			else if (convertedFromPolls &&
+					 Objects.equals(
+						 fieldValueJSONObject.getString("name"), "published")) {
+
+				fieldValueJSONObject.put("value", Boolean.TRUE.toString());
 			}
 		}
 
@@ -232,7 +266,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			fieldValuesJSONArray.put(
 				_createFieldValue(
 					"limitToOneSubmissionPerUser",
-					String.valueOf(expirationDate != null)));
+					_getValue(convertedFromPolls, expirationDate)));
 		}
 
 		if (!hasNeverExpire) {
@@ -245,7 +279,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			fieldValuesJSONArray.put(
 				_createFieldValue(
 					"showPartialResultsToRespondents",
-					String.valueOf(expirationDate != null)));
+					_getValue(convertedFromPolls, expirationDate)));
 		}
 	}
 

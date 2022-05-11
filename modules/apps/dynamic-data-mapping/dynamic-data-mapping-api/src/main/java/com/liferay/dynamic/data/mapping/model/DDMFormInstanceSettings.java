@@ -125,6 +125,9 @@ public interface DDMFormInstanceSettings {
 	)
 	public boolean autosaveEnabled();
 
+	@DDMFormField
+	public boolean convertedFromPolls();
+
 	@DDMFormField(
 		label = "%from-address",
 		validationErrorMessage = "%please-enter-a-valid-email-address",

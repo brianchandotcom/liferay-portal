@@ -6,6 +6,11 @@
 			"value": "true"
 		},
 		{
+			"fieldReference": "convertedFromPolls",
+			"name": "convertedFromPolls",
+			"value": "true"
+		},
+		{
 			"fieldReference": "emailFromAddress",
 			"name": "emailFromAddress",
 			"value": ""

@@ -460,14 +460,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyPortletPermissions(
-			long[] segmentsExperiencesIds, Layout sourceLayout,
-			Layout targetLayout)
+			List<String> portletIds, long[] segmentsExperiencesIds,
+			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
 		_deletePortletPermissions(targetLayout, segmentsExperiencesIds);
-
-		List<String> portletIds = _getLayoutPortletIds(
-			sourceLayout, segmentsExperiencesIds);
 
 		for (String portletId : portletIds) {
 			String resourceName = PortletIdCodec.decodePortletName(portletId);
@@ -534,17 +531,13 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyPortletPreferences(
-		long[] segmentsExperiencesIds, Layout sourceLayout,
-		Layout targetLayout) {
+		List<String> portletIds, Layout sourceLayout, Layout targetLayout) {
 
 		boolean stagingAdvicesThreadLocalEnabled =
 			StagingAdvicesThreadLocal.isEnabled();
 
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
-
-			List<String> portletIds = _getLayoutPortletIds(
-				sourceLayout, segmentsExperiencesIds);
 
 			for (String portletId : portletIds) {
 				Portlet portlet = _portletLocalService.getPortletById(
@@ -934,11 +927,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 				_copyLayoutClassedModelUsages(_sourceLayout, _targetLayout);
 
+				List<String> portletIds = _getLayoutPortletIds(
+					_sourceLayout, _segmentsExperiencesIds);
+
 				_copyPortletPermissions(
-					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
+					portletIds, _segmentsExperiencesIds, _sourceLayout,
+					_targetLayout);
 
 				_copyPortletPreferences(
-					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
+					portletIds, _sourceLayout, _targetLayout);
 			}
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);

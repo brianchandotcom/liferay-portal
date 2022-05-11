@@ -135,9 +135,9 @@ public class FragmentEntryLinkServiceImpl
 		if (!containsPermission && checkUpdateLayoutContentPermission &&
 			Objects.equals(className, Layout.class.getName())) {
 
-			containsPermission = LayoutPermissionUtil.contains(
-					getPermissionChecker(), classPK,
-					ActionKeys.UPDATE_LAYOUT_CONTENT);
+			containsPermission =
+				LayoutPermissionUtil.containsLayoutUpdatePermission(
+					getPermissionChecker(), classPK);
 		}
 
 		if (!containsPermission) {

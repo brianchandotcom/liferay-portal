@@ -8938,9 +8938,6 @@ public class JournalArticleLocalServiceImpl
 			return friendlyURLMap;
 		}
 
-		Group group = _groupLocalService.getGroup(
-			layoutDisplayPageObjectProvider.getGroupId());
-
 		Map<Locale, String> friendlyURLs = article.getFriendlyURLMap();
 
 		for (Locale locale : friendlyURLs.keySet()) {

@@ -44,14 +44,13 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -86,12 +85,13 @@ public class JournalHelperImpl implements JournalHelper {
 			ThemeDisplay themeDisplay, Locale locale, String separator)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3);
 
-		sb.append(PortalUtil.getGroupFriendlyURL(
-			LayoutSetLocalServiceUtil.getLayoutSet(
-				article.getGroupId(), privateLayout), themeDisplay, false, false
-			));
+		sb.append(
+			_portal.getGroupFriendlyURL(
+				_layoutSetLocalService.getLayoutSet(
+					article.getGroupId(), privateLayout),
+				themeDisplay, false, false));
 
 		sb.append(separator);
 		sb.append(article.getUrlTitle(locale));
@@ -409,6 +409,9 @@ public class JournalHelperImpl implements JournalHelper {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

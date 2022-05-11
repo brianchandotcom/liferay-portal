@@ -44,12 +44,19 @@ String exceptionErrorMessage = null;
 						</div>
 					</li>
 					<li class="tbar-item">
-						<div class="metadata-type-button-row tbar-section text-right">
-							<aui:button cssClass="btn-sm mr-3" href="<%= importTranslationDisplayContext.getRedirect() %>" type="cancel" />
+						<div class="tbar-section text-right">
+							<div class="btn-group">
+								<div class="btn-group-item">
+									<aui:button cssClass="btn-sm" href="<%= importTranslationDisplayContext.getRedirect() %>" type="cancel" />
+								</div>
 
-							<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
+								<div class="btn-group-item">
+									<aui:button cssClass="btn-sm" disabled="<%= true %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
+								</div>
 
-							<aui:button cssClass="btn-sm mr-3" disabled="<%= importTranslationDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
+								<div class="btn-group-item">
+									<aui:button cssClass="btn-sm" disabled="<%= true %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
+								</div>
 						</div>
 					</li>
 				</ul>

@@ -7027,18 +7027,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jaxrpc.jar</file-name>
-				<version>1.1</version>
-				<project-name>Java API for XML-based RPC</project-name>
-				<project-url>http://jax-rpc.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jaxrs-api.jar</file-name>
 				<version>2.1</version>
 				<project-name>Java API for RESTful Web Services</project-name>

@@ -114,6 +114,27 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 				</ClayModal.Body>
 
 				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={() => {
+									onClose();
+								}}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								onClick={() => {
+									onSave(content);
+									onClose();
+								}}
+							>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
 				/>
 			</ClayModal>
 		)

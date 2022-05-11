@@ -25,7 +25,7 @@ const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
 
 export default function ImportTranslation({
 	cancelURL,
-	errorMessage = '',
+	errorMessage: initialErrorMessage = '',
 	publishButtonLabel,
 	saveButtonLabel,
 	saveDraftBtnId,
@@ -34,6 +34,7 @@ export default function ImportTranslation({
 	workflowPending = false,
 }) {
 	const [importFiles, setImportFiles] = useState([]);
+	const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
 
 	const inputFileRef = useRef();
 
@@ -44,6 +45,10 @@ export default function ImportTranslation({
 			!importFiles.length || workflowPending
 		);
 	}, [importFiles, saveDraftBtnId, submitBtnId, workflowPending]);
+
+	const handleOnCloseError = () => {
+		setErrorMessage('');
+	};
 
 	return (
 		<>
@@ -61,7 +66,12 @@ export default function ImportTranslation({
 					size="lg"
 				>
 					{errorMessage && (
-						<ClayAlert displayType="danger">
+						<ClayAlert
+							displayType="danger"
+							hideCloseIcon={false}
+							onClose={handleOnCloseError}
+							title={`${Liferay.Language.get('error')}:`}
+						>
 							{errorMessage}
 						</ClayAlert>
 					)}
@@ -142,8 +152,9 @@ export default function ImportTranslation({
 	);
 }
 
-ImportTranslation.prototypes = {
+ImportTranslation.propTypes = {
 	cancelURL: PropTypes.string.isRequired,
+	errorMessage: PropTypes.string,
 	publishButtonLabel: PropTypes.string.isRequired,
 	saveButtonLabel: PropTypes.string.isRequired,
 	saveDraftBtnId: PropTypes.string.isRequired,

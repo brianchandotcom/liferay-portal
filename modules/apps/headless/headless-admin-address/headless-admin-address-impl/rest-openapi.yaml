@@ -411,3 +411,57 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Region"
             tags: ["Region"]
+        patch:
+            operationId: patchRegion
+            parameters:
+                - in: path
+                  name: regionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]
+        put:
+            operationId: putRegion
+            parameters:
+                - in: path
+                  name: regionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]

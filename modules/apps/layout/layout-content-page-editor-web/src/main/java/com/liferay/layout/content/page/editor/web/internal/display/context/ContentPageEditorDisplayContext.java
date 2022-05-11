@@ -679,10 +679,12 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"permissions",
 				HashMapBuilder.<String, Object>put(
-					ContentPageEditorActionKeys.UPDATE, _hasUpdatePermissions()
+					ContentPageEditorActionKeys.UPDATE,
+					_hasPermissions(ActionKeys.UPDATE)
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
-					_hasUpdateContentPermissions()
+					_hasPermissions(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT)
 				).build()
 			).put(
 				"segmentsExperienceId", getSegmentsExperienceId()
@@ -2126,29 +2128,11 @@ public class ContentPageEditorDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
-	private boolean _hasUpdateContentPermissions() {
+	private boolean _hasPermissions(String actionId) {
 		try {
 			if (LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
-
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasUpdatePermissions() {
-		try {
-			if (LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
-					ActionKeys.UPDATE)) {
+					actionId)) {
 
 				return true;
 			}

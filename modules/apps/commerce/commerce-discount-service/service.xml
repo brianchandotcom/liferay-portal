@@ -316,6 +316,7 @@
 		<exception>CommerceDiscountExpirationDate</exception>
 		<exception>CommerceDiscountLimitationTimes</exception>
 		<exception>CommerceDiscountLimitationType</exception>
+		<exception>CommerceDiscountMaxPriceValue</exception>
 		<exception>CommerceDiscountRuleType</exception>
 		<exception>CommerceDiscountTarget</exception>
 		<exception>CommerceDiscountTitle</exception>

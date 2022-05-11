@@ -335,6 +335,17 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
+	macro getCommonStylesClass {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		var class = selenium.getAttribute("xpath=(//div[contains(@class,'${fragmentName}')])[${index}]//ancestor::div[contains(@class,'lfr-layout-structure-item-')]@class");
+		var commonStylesClass = StringUtil.extractFirst("${class}", " lfr-layout-structure-item-");
+
+		return "${commonStylesClass}";
+	}
+
 	macro gotoPageEditor {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 

@@ -64,12 +64,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		_countryPersistence.findByPrimaryKey(countryId);
 
-		if (fetchRegion(countryId, regionCode) != null) {
-			throw new DuplicateRegionException(
-				"Region code belongs to another region");
-		}
-
-		validate(name, regionCode);
+		validate(-1, countryId, name, regionCode);
 
 		long regionId = counterLocalService.increment();
 
@@ -241,7 +236,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		Region region = regionPersistence.findByPrimaryKey(regionId);
 
-		validate(name, regionCode);
+		validate(regionId, region.getCountryId(), name, regionCode);
 
 		region.setActive(active);
 		region.setName(name);
@@ -251,7 +246,8 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		return regionPersistence.update(region);
 	}
 
-	protected void validate(String name, String regionCode)
+	protected void validate(
+			long regionId, long countryId, String name, String regionCode)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -260,6 +256,13 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		if (Validator.isNull(regionCode)) {
 			throw new RegionCodeException("Region code is null");
+		}
+
+		Region region = fetchRegion(countryId, regionCode);
+
+		if ((region != null) && (region.getRegionId() != regionId)) {
+			throw new DuplicateRegionException(
+				"Region code belongs to another region");
 		}
 	}
 

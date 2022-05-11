@@ -13,34 +13,37 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import TranslationAdminContent from './TranslationAdminContent';
+import TranslationAdminContent, {Translations} from './TranslationAdminContent';
 
-const emptyArray = [];
+interface IProps extends Translations {
+	onClose: (languageIds: string[]) => void;
+	visible?: boolean;
+}
+
 const noop = () => {};
 
-const TranslationAdminModal = ({
-	activeLanguageIds: initialActiveLanguageIds = emptyArray,
+export default function TranslationAdminModal({
+	activeLanguageIds: initialActiveLanguageIds = [],
 	ariaLabels = {
 		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
 		notTranslated: Liferay.Language.get('not-translated'),
 		translated: Liferay.Language.get('translated'),
 	},
-	availableLocales = emptyArray,
+	availableLocales = [],
 	defaultLanguageId,
 	onClose = noop,
 	translations,
 	visible: initialVisible,
-}) => {
+}: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState(
 		initialActiveLanguageIds
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
-	const handleAddLocale = (localeId) => {
+	const handleAddLocale = (localeId: string) => {
 		setActiveLanguageIds([...activeLanguageIds, localeId]);
 	};
 
@@ -55,7 +58,7 @@ const TranslationAdminModal = ({
 		onClose([...activeLanguageIds]);
 	};
 
-	const handleRemoveLocale = (localeId) => {
+	const handleRemoveLocale = (localeId: string) => {
 		const newActiveLanguageIds = [...activeLanguageIds];
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);
@@ -92,22 +95,4 @@ const TranslationAdminModal = ({
 			)}
 		</>
 	);
-};
-
-TranslationAdminModal.propTypes = {
-	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
-	arialLabels: PropTypes.shape({
-		default: PropTypes.string,
-		manageTranslations: PropTypes.string,
-		managementToolbar: PropTypes.string,
-		notTranslated: PropTypes.string,
-		tranlated: PropTypes.string,
-	}),
-	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLanguageId: PropTypes.string.isRequired,
-	onActiveLanguageIdsChange: PropTypes.func,
-	translations: PropTypes.object,
-	visible: PropTypes.bool,
-};
-
-export default TranslationAdminModal;
+}

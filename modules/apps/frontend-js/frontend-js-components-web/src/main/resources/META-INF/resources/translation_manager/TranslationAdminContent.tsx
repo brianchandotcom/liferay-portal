@@ -19,13 +19,39 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
-import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-const emptyArray = [];
+export interface Locale {
+	displayName: string;
+	id: string;
+	label: string;
+	symbol: string;
+}
+
+export interface Translations {
+	activeLanguageIds?: string[];
+	ariaLabels?: {
+		default?: string;
+		manageTranslations?: string;
+		managementToolbar?: string;
+		notTranslated?: string;
+		translated?: string;
+	};
+	availableLocales: Locale[];
+	defaultLanguageId: string;
+	translations?: {[key: string]: unknown};
+}
+
+interface IProps extends Translations {
+	onAddLocale?: (localeId: string) => void;
+	onCancel?: React.MouseEventHandler<HTMLButtonElement>;
+	onDone?: React.MouseEventHandler<HTMLButtonElement>;
+	onRemoveLocale?: (localeId: string) => void;
+}
+
 const noop = () => {};
 
-const TranslationAdminContent = ({
+export default function TranslationAdminContent({
 	ariaLabels = {
 		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
@@ -33,15 +59,15 @@ const TranslationAdminContent = ({
 		notTranslated: Liferay.Language.get('not-translated'),
 		translated: Liferay.Language.get('translated'),
 	},
-	activeLanguageIds: initialActiveLanguageIds = emptyArray,
-	availableLocales: initialAvailableLocales = emptyArray,
+	activeLanguageIds: initialActiveLanguageIds = [],
+	availableLocales: initialAvailableLocales = [],
 	defaultLanguageId,
 	onAddLocale = noop,
 	onCancel = noop,
 	onDone = noop,
 	onRemoveLocale = noop,
 	translations = {},
-}) => {
+}: IProps) {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
 	const [searchValue, setSearchValue] = useState('');
 
@@ -240,21 +266,4 @@ const TranslationAdminContent = ({
 			/>
 		</>
 	);
-};
-
-TranslationAdminContent.propTypes = {
-	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
-	ariaLabels: PropTypes.shape({
-		default: PropTypes.string,
-		manageTranslations: PropTypes.string,
-		managementToolbar: PropTypes.string,
-		notTranslated: PropTypes.string,
-		tranlated: PropTypes.string,
-	}),
-	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLanguageId: PropTypes.string.isRequired,
-	lastDeletedLocale: PropTypes.object,
-	translations: PropTypes.object,
-};
-
-export default TranslationAdminContent;
+}

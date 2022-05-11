@@ -17,19 +17,27 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
-import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {Locale, Translations} from './TranslationAdminContent';
 import TranslationAdminModal from './TranslationAdminModal';
+
+interface IProps extends Translations {
+	adminMode?: boolean;
+	onActiveLanguageIdsChange?: (languageIds: string[]) => void;
+	onSelectedLanguageIdChange?: (languageId: string) => void;
+	selectedLanguageId: string;
+	showOnlyFlags?: boolean;
+	small?: boolean;
+}
 
 // These variables are defined here, out of the component, to avoid
 // unexpected re-renders
 
-const emptyArray = [];
 const noop = () => {};
 
-const TranslationAdminSelector = ({
-	activeLanguageIds: initialActiveLanguageIds = emptyArray,
+export default function TranslationAdminSelector({
+	activeLanguageIds: initialActiveLanguageIds = [],
 	adminMode,
 	ariaLabels = {
 		default: Liferay.Language.get('default'),
@@ -37,7 +45,7 @@ const TranslationAdminSelector = ({
 		notTranslated: Liferay.Language.get('not-translated'),
 		translated: Liferay.Language.get('translated'),
 	},
-	availableLocales = emptyArray,
+	availableLocales = [],
 	defaultLanguageId,
 	onActiveLanguageIdsChange = noop,
 	onSelectedLanguageIdChange = noop,
@@ -45,7 +53,7 @@ const TranslationAdminSelector = ({
 	showOnlyFlags,
 	small = false,
 	translations = {},
-}) => {
+}: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState(
 		initialActiveLanguageIds
 	);
@@ -57,7 +65,7 @@ const TranslationAdminSelector = ({
 		false
 	);
 
-	const handleCloseTranslationModal = (activeLanguageIds) => {
+	const handleCloseTranslationModal = (activeLanguageIds: string[]) => {
 		setActiveLanguageIds(activeLanguageIds);
 
 		if (!activeLanguageIds.includes(selectedLanguageId)) {
@@ -80,7 +88,7 @@ const TranslationAdminSelector = ({
 
 		return availableLocales.find(
 			(availableLocale) => availableLocale.id === id
-		);
+		) as Locale;
 	}, [availableLocales, defaultLanguageId, selectedLanguageId]);
 
 	useEffect(() => {
@@ -219,23 +227,4 @@ const TranslationAdminSelector = ({
 			</ClayDropDown>
 		</>
 	);
-};
-
-TranslationAdminSelector.propTypes = {
-	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
-	adminMode: PropTypes.bool,
-	ariaLabels: PropTypes.shape({
-		default: PropTypes.string,
-		manageTranslations: PropTypes.string,
-		managementToolbar: PropTypes.string,
-		notTranslated: PropTypes.string,
-		tranlated: PropTypes.string,
-	}),
-	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLanguageId: PropTypes.string.isRequired,
-	showOnlyFlags: PropTypes.bool,
-	small: PropTypes.bool,
-	translations: PropTypes.object,
-};
-
-export default TranslationAdminSelector;
+}

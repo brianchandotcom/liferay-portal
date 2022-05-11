@@ -65,9 +65,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.test.rule.Inject;
@@ -147,6 +149,59 @@ public class FileEntryStagedModelDataHandlerTest
 			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 
 			exportImportStagedModel(fileEntry);
+
+			FileEntry importedFileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), liveGroup.getGroupId());
+
+			FriendlyURLEntry importedFriendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(FileEntry.class),
+					importedFileEntry.getFileEntryId());
+
+			Assert.assertNotNull(importedFriendlyURLEntry);
+			Assert.assertEquals(
+				friendlyURLEntry.getUrlTitle(),
+				importedFriendlyURLEntry.getUrlTitle());
+		}
+	}
+
+	@Test
+	public void testExportFileEntryFriendlyURLEntriesNormalizedTitle()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId());
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringPool.BLANK,
+				StringUtil.randomString(), StringUtil.randomString(),
+				new byte[0], null, null, serviceContext);
+
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(FileEntry.class),
+					fileEntry.getFileEntryId());
+
+			Assert.assertNotNull(friendlyURLEntry);
+			Assert.assertEquals(
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					fileEntry.getTitle()),
+				friendlyURLEntry.getUrlTitle());
+
+			exportImportStagedModelFromLiveToStaging(fileEntry);
 
 			FileEntry importedFileEntry =
 				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
@@ -902,6 +957,9 @@ public class FileEntryStagedModelDataHandlerTest
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Inject
 	private Portal _portal;

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -56,7 +56,7 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					new StagedModelResourcePermissionLogic(
-						_stagingPermission))),
+						_layoutPermission, _stagingPermission))),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"model.class.name", SegmentsExperience.class.getName()
 			).build());
@@ -66,6 +66,9 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference(
 		target = "(resource.name=" + SegmentsConstants.RESOURCE_NAME + ")"
@@ -90,7 +93,7 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 				SegmentsExperience segmentsExperience, String actionId)
 			throws PortalException {
 
-			if (LayoutPermissionUtil.contains(
+			if (_layoutPermission.contains(
 					permissionChecker, segmentsExperience.getClassPK(),
 					ActionKeys.UPDATE)) {
 
@@ -98,10 +101,10 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 			}
 			else if (GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-132571")) &&
-					 (LayoutPermissionUtil.contains(
+					 (_layoutPermission.contains(
 						 permissionChecker, segmentsExperience.getClassPK(),
 						 ActionKeys.UPDATE_LAYOUT_BASIC) ||
-					  LayoutPermissionUtil.contains(
+					  _layoutPermission.contains(
 						  permissionChecker, segmentsExperience.getClassPK(),
 						  ActionKeys.UPDATE_LAYOUT_LIMITED))) {
 
@@ -116,11 +119,14 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 		}
 
 		private StagedModelResourcePermissionLogic(
+			LayoutPermission layoutPermission,
 			StagingPermission stagingPermission) {
 
+			_layoutPermission = layoutPermission;
 			_stagingPermission = stagingPermission;
 		}
 
+		private final LayoutPermission _layoutPermission;
 		private final StagingPermission _stagingPermission;
 
 	}

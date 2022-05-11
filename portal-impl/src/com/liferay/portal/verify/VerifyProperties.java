@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -41,9 +42,17 @@ public class VerifyProperties extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifySystemProperties();
 
-		verifyPortalProperties();
+		List<String> keys = verifyPortalProperties();
 
 		verifyDocumentLibrary();
+
+		if (!keys.isEmpty()) {
+			_log.error(
+				"Stopping the server due to incorrect use of migrated Portal " +
+					"properties " + keys);
+
+			System.exit(1);
+		}
 	}
 
 	protected InputStream getPropertiesResourceAsStream(String resourceName)
@@ -111,7 +120,8 @@ public class VerifyProperties extends VerifyProcess {
 	}
 
 	protected void verifyMigratedPortalProperty(
-			Properties portalProperties, String oldKey, String newKey)
+			Properties portalProperties, String oldKey, String newKey,
+			List<String> unmigratedKeys)
 		throws Exception {
 
 		if (portalProperties.containsKey(oldKey)) {
@@ -119,6 +129,8 @@ public class VerifyProperties extends VerifyProcess {
 				StringBundler.concat(
 					"Portal property \"", oldKey,
 					"\" was migrated to the system property \"", newKey, "\""));
+
+			unmigratedKeys.add(oldKey);
 		}
 	}
 
@@ -178,7 +190,9 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
-	protected void verifyPortalProperties() throws Exception {
+	protected List<String> verifyPortalProperties() throws Exception {
+		List<String> unmigratedKeys = new LinkedList<>();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Properties portalProperties = loadPortalProperties();
 
@@ -186,7 +200,8 @@ public class VerifyProperties extends VerifyProcess {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 
-				verifyMigratedPortalProperty(portalProperties, oldKey, newKey);
+				verifyMigratedPortalProperty(
+					portalProperties, oldKey, newKey, unmigratedKeys);
 			}
 
 			for (String[] keys : _RENAMED_PORTAL_KEYS) {
@@ -209,6 +224,8 @@ public class VerifyProperties extends VerifyProcess {
 					portalProperties, oldKey, newKey, moduleName);
 			}
 		}
+
+		return unmigratedKeys;
 	}
 
 	protected void verifyRenamedPortalProperty(

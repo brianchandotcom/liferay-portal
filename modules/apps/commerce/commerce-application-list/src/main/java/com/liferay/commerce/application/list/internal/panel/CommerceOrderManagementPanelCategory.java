@@ -17,11 +17,12 @@ package com.liferay.commerce.application.list.internal.panel;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,7 +44,10 @@ public class CommerceOrderManagementPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "order-management");
+		return _language.get(locale, "order-management");
 	}
+
+	@Reference
+	private Language _language;
 
 }

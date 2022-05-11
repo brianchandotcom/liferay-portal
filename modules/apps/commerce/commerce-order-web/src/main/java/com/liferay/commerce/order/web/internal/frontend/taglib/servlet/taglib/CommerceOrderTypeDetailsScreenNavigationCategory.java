@@ -21,7 +21,7 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -73,7 +73,7 @@ public class CommerceOrderTypeDetailsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceOrderTypeScreenNavigationConstants.CATEGORY_KEY_DETAILS);
 	}
@@ -139,6 +139,9 @@ public class CommerceOrderTypeDetailsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

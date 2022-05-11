@@ -34,7 +34,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -107,7 +107,7 @@ public class CommerceChannelHealthCheckTableFDSView
 
 				dropdownItem.setHref(portletURL.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(
+					_language.get(
 						httpServletRequest, resourceBundle, "fix-issue"));
 			}
 		).build();
@@ -205,6 +205,9 @@ public class CommerceChannelHealthCheckTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

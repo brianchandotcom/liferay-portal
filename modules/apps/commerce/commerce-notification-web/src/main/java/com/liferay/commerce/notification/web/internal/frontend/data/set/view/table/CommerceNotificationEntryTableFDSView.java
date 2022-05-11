@@ -39,7 +39,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -104,7 +104,7 @@ public class CommerceNotificationEntryTableFDSView
 			dropdownItem -> {
 				dropdownItem.setHref(portletURL.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "resend"));
+					_language.get(httpServletRequest, "resend"));
 			}
 		).add(
 			dropdownItem -> {
@@ -112,7 +112,7 @@ public class CommerceNotificationEntryTableFDSView
 
 				dropdownItem.setHref(portletURL.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -213,11 +213,11 @@ public class CommerceNotificationEntryTableFDSView
 
 		if (commerceNotificationQueueEntry.isSent()) {
 			return new LabelField(
-				"success", LanguageUtil.get(httpServletRequest, "sent"));
+				"success", _language.get(httpServletRequest, "sent"));
 		}
 
 		return new LabelField(
-			"danger", LanguageUtil.get(httpServletRequest, "unsent"));
+			"danger", _language.get(httpServletRequest, "unsent"));
 	}
 
 	@Reference
@@ -236,6 +236,9 @@ public class CommerceNotificationEntryTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

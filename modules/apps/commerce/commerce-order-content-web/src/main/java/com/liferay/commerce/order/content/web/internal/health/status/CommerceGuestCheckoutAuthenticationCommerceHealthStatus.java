@@ -31,7 +31,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -206,7 +206,7 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				COMMERCE_GUEST_CHECKOUT_AUTHENTICATION_COMMERCE_HEALTH_STATUS_DESCRIPTION);
@@ -223,7 +223,7 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle,
 			CommerceHealthStatusConstants.
 				COMMERCE_GUEST_CHECKOUT_AUTHENTICATION_COMMERCE_HEALTH_STATUS_KEY);
@@ -296,6 +296,9 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

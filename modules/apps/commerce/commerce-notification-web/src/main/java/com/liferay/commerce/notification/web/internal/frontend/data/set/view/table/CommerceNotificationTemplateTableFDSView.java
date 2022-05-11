@@ -38,7 +38,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -105,7 +105,7 @@ public class CommerceNotificationTemplateTableFDSView
 						notificationTemplate.getNotificationTemplateId()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
@@ -128,7 +128,7 @@ public class CommerceNotificationTemplateTableFDSView
 						notificationTemplate.getNotificationTemplateId()
 					).buildPortletURL());
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -215,11 +215,11 @@ public class CommerceNotificationTemplateTableFDSView
 
 		if (commerceNotificationTemplate.isEnabled()) {
 			return new LabelField(
-				"success", LanguageUtil.get(httpServletRequest, "enabled"));
+				"success", _language.get(httpServletRequest, "enabled"));
 		}
 
 		return new LabelField(
-			"danger", LanguageUtil.get(httpServletRequest, "disabled"));
+			"danger", _language.get(httpServletRequest, "disabled"));
 	}
 
 	private String _getType(
@@ -249,6 +249,9 @@ public class CommerceNotificationTemplateTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

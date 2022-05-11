@@ -18,7 +18,7 @@ import com.liferay.commerce.address.web.internal.servlet.taglib.ui.constants.Com
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 
 import java.io.IOException;
@@ -60,7 +60,7 @@ public class CommerceCountryDetailsScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return _language.get(locale, "details");
 	}
 
 	@Override
@@ -82,6 +82,9 @@ public class CommerceCountryDetailsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.address.web)"

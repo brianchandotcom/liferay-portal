@@ -21,7 +21,7 @@ import com.liferay.commerce.item.selector.web.internal.display.context.CommerceI
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,7 +71,7 @@ public class CommerceInventoryWarehouseItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "warehouses");
+		return _language.get(locale, "warehouses");
 	}
 
 	@Override
@@ -117,6 +117,9 @@ public class CommerceInventoryWarehouseItemSelectorView
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.item.selector.web)"

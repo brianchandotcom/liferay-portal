@@ -22,7 +22,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -67,7 +67,7 @@ public class CommerceOpenOrderContentPortletDisplayTemplateHandler
 				resourceBundle));
 
 		sb.append(StringPool.SPACE);
-		sb.append(LanguageUtil.get(locale, "template"));
+		sb.append(_language.get(locale, "template"));
 
 		return sb.toString();
 	}
@@ -115,6 +115,9 @@ public class CommerceOpenOrderContentPortletDisplayTemplateHandler
 
 		return templateVariableGroups;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

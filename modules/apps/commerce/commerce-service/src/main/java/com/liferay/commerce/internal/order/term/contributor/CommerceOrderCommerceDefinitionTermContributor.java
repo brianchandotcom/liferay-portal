@@ -39,7 +39,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -225,7 +225,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		return LanguageUtil.get(locale, _languageKeys.get(term));
+		return _language.get(locale, _languageKeys.get(term));
 	}
 
 	@Override
@@ -340,7 +340,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 		if (prefixId > 0) {
 			ListType listType = _listTypeService.getListType(prefixId);
 
-			return LanguageUtil.get(locale, listType.getName());
+			return _language.get(locale, listType.getName());
 		}
 
 		return "";
@@ -397,13 +397,13 @@ public class CommerceOrderCommerceDefinitionTermContributor
 			"<table style=\"border: 1px solid black;\">");
 
 		orderItemsTableSB.append("<tr><th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append(LanguageUtil.get(locale, "product-name"));
+		orderItemsTableSB.append(_language.get(locale, "product-name"));
 		orderItemsTableSB.append("</th>");
 		orderItemsTableSB.append("<th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append(LanguageUtil.get(locale, "sku"));
+		orderItemsTableSB.append(_language.get(locale, "sku"));
 		orderItemsTableSB.append("</th>");
 		orderItemsTableSB.append("<th style=\"border: 1px solid black;\">");
-		orderItemsTableSB.append(LanguageUtil.get(locale, "quantity"));
+		orderItemsTableSB.append(_language.get(locale, "quantity"));
 		orderItemsTableSB.append("</th></tr>");
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
@@ -680,6 +680,9 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

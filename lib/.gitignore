@@ -114,7 +114,6 @@
 /portal/jaxb-api.jar
 /portal/jaxb-runtime.jar
 /portal/jaxen.jar
-/portal/jaxrpc.jar
 /portal/jaxrs-api.jar
 /portal/jaxws-api.jar
 /portal/jcl-over-slf4j.jar

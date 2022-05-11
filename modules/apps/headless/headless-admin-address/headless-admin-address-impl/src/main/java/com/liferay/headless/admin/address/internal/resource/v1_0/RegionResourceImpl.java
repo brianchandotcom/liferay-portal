@@ -122,6 +122,16 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 		return _toRegion(serviceBuilderRegion);
 	}
 
+	@Override
+	public Region putRegion(Long regionId, Region region) throws Exception {
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
+			_regionService.updateRegion(
+				regionId, GetterUtil.get(region.getActive(), true),
+				region.getName(), region.getPosition(), region.getRegionCode());
+
+		return _toRegion(serviceBuilderRegion);
+	}
+
 	private OrderByComparator<com.liferay.portal.kernel.model.Region>
 		_toOrderByComparator(Sort[] sorts) {
 

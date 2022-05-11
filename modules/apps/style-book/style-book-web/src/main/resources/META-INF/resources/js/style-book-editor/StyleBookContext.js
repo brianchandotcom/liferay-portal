@@ -17,7 +17,7 @@ import React, {useContext, useReducer} from 'react';
 import reducer from './reducer';
 
 const StyleBookDispatchContext = React.createContext(() => {});
-export const StyleBookContext = React.createContext({
+export const StyleBookStoreContext = React.createContext({
 	draftStatus: null,
 	frontendTokensValues: {},
 	loading: true,
@@ -25,14 +25,14 @@ export const StyleBookContext = React.createContext({
 	previewLayoutType: null,
 });
 
-export function StyleBookContextProvider({children, value}) {
-	const [state, dispatch] = useReducer(reducer, value);
+export function StyleBookContextProvider({children, initialState}) {
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
 		<StyleBookDispatchContext.Provider value={dispatch}>
-			<StyleBookContext.Provider value={state}>
+			<StyleBookStoreContext.Provider value={state}>
 				{children}
-			</StyleBookContext.Provider>
+			</StyleBookStoreContext.Provider>
 		</StyleBookDispatchContext.Provider>
 	);
 }
@@ -42,21 +42,21 @@ export function useDispatch() {
 }
 
 export function useDraftStatus() {
-	return useContext(StyleBookContext).draftStatus;
+	return useContext(StyleBookStoreContext).draftStatus;
 }
 
 export function useFrontendTokensValues() {
-	return useContext(StyleBookContext).frontendTokensValues;
+	return useContext(StyleBookStoreContext).frontendTokensValues;
 }
 
 export function useLoading() {
-	return useContext(StyleBookContext).loading;
+	return useContext(StyleBookStoreContext).loading;
 }
 
 export function usePreviewLayout() {
-	return useContext(StyleBookContext).previewLayout;
+	return useContext(StyleBookStoreContext).previewLayout;
 }
 
 export function usePreviewLayoutType() {
-	return useContext(StyleBookContext).previewLayoutType;
+	return useContext(StyleBookStoreContext).previewLayoutType;
 }

@@ -114,7 +114,7 @@ export default function ({
 
 	return (
 		<StyleBookContextProvider
-			value={{
+			initialState={{
 				draftStatus: DRAFT_STATUS.notSaved,
 				frontendTokensValues,
 				previewLayout: getMostRecentLayout(config.previewOptions),

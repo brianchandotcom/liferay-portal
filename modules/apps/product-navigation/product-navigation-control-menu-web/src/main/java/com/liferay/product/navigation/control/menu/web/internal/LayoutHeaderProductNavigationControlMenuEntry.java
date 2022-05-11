@@ -217,12 +217,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			if (_layoutContentModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), layout.getPlid(),
 					ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout)) {
 
 				return true;
 			}

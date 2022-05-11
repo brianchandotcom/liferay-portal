@@ -630,12 +630,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					(_layoutContentModelResourcePermission.contains(
 						themeDisplay.getPermissionChecker(), layout.getPlid(),
 						ActionKeys.UPDATE) ||
-					 _layoutPermission.contains(
-						 themeDisplay.getPermissionChecker(), layout,
-						 ActionKeys.UPDATE) ||
-					 _layoutPermission.contains(
-						 themeDisplay.getPermissionChecker(), layout,
-						 ActionKeys.UPDATE_LAYOUT_CONTENT))) {
+					 _layoutPermission.containsLayoutUpdatePermission(
+						 themeDisplay.getPermissionChecker(), layout))) {
 
 					layoutName = layoutName + StringPool.STAR;
 				}

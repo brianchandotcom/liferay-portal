@@ -320,11 +320,8 @@ public class DisplayPageLayoutTypeController
 		PermissionChecker permissionChecker, Layout layout) {
 
 		try {
-			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE) ||
-				LayoutPermissionUtil.contains(
-					permissionChecker, layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+			if (LayoutPermissionUtil.containsLayoutUpdatePermission(
+					permissionChecker, layout)) {
 
 				return true;
 			}

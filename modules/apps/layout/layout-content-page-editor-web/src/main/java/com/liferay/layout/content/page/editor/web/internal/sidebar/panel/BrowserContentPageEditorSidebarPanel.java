@@ -63,11 +63,8 @@ public class BrowserContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (_layoutPermission.contains(
-					permissionChecker, plid, ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					permissionChecker, plid,
-					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+			if (_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, plid) ||
 				_modelResourcePermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 

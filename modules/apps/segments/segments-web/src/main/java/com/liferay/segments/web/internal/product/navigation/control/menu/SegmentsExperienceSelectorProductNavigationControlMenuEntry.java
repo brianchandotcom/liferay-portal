@@ -125,12 +125,8 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 				layout = _layoutLocalService.getLayout(layout.getClassPK());
 			}
 
-			if (_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+			if (_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout) ||
 				_modelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), layout.getPlid(),
 					ActionKeys.UPDATE)) {

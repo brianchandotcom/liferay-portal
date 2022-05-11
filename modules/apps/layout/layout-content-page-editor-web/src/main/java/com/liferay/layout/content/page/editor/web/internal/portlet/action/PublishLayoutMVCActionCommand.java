@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -94,22 +92,11 @@ public class PublishLayoutMVCActionCommand
 
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
-		try {
-			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), draftLayout,
-				ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			themeDisplay.getPermissionChecker(), draftLayout);
 
-			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
-		}
-		catch (PrincipalException principalException) {
-			if (!LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
-
-				throw principalException;
-			}
-		}
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			themeDisplay.getPermissionChecker(), layout);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);

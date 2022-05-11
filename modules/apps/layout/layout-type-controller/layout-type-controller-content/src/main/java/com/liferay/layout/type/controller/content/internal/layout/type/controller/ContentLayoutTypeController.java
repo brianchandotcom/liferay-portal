@@ -321,11 +321,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		PermissionChecker permissionChecker, Layout layout) {
 
 		try {
-			if (_layoutPermission.contains(
-					permissionChecker, layout, ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					permissionChecker, layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+			if (_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, layout) ||
 				_modelResourcePermission.contains(
 					permissionChecker, layout.getPlid(), ActionKeys.UPDATE)) {
 

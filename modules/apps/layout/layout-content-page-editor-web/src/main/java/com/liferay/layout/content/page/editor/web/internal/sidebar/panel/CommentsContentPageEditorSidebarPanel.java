@@ -18,7 +18,6 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -62,11 +61,8 @@ public class CommentsContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (_layoutPermission.contains(
-					permissionChecker, plid, ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					permissionChecker, plid,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+			if (_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, plid)) {
 
 				return true;
 			}

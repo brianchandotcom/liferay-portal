@@ -691,7 +691,6 @@ definition {
 	@description = "LPS-144472 - Verify it is possible to search columns to Default Sort"
 	@priority = "4"
 	test CanSearchColumns {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152062",
 			objectName = "CustomObject152062",
@@ -724,14 +723,12 @@ definition {
 		}
 
 		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
-
 			ObjectCustomViews.searchOnDefaultSort(colunmName = "${columnName}");
 
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
 				colunmName = "${columnName}",
 				sortingLabel = "Ascending");
 		}
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a View"

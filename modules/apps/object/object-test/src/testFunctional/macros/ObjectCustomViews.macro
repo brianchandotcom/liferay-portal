@@ -208,19 +208,19 @@ definition {
 			value1 = "${colunmName}");
 	}
 
-	macro searchOnViewBuilder {
-		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
-
-		Type(
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
-			value1 = "${colunmName}");
-	}
-
 	macro searchOnDefaultSort {
 		Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_BAR");
 
 		Type(
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_BAR",
+			value1 = "${colunmName}");
+	}
+
+	macro searchOnViewBuilder {
+		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
+
+		Type(
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
 			value1 = "${colunmName}");
 	}
 

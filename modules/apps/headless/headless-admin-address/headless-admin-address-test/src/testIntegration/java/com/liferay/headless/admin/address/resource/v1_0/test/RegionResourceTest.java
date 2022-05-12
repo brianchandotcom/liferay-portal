@@ -218,16 +218,6 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
-	protected Region testGetCountryRegionsPage_addRegion(
-			Long countryId, Region region)
-		throws Exception {
-
-		region.setCountryId(countryId);
-
-		return _addRegion(region);
-	}
-
-	@Override
 	protected Long testGetCountryRegionsPage_getCountryId() throws Exception {
 		return _country.getCountryId();
 	}
@@ -320,13 +310,6 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	@Override
 	protected Region testPatchRegion_addRegion() throws Exception {
 		return _addRegion(randomRegion());
-	}
-
-	@Override
-	protected Region testPostCountryRegion_addRegion(Region region)
-		throws Exception {
-
-		return _addRegion(region);
 	}
 
 	@Override

@@ -220,7 +220,7 @@ const ActivationKeysInputs = ({
 										accountSubscription.accountSubscriptionId
 									}
 									label={i18n.translate(
-										accountSubscription.name
+										getKebabCase(accountSubscription.name)
 									)}
 									value={accountSubscription.name}
 								/>

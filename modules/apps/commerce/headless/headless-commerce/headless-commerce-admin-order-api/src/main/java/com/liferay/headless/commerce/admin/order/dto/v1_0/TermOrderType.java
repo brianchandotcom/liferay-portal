@@ -120,7 +120,7 @@ public class TermOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -153,7 +153,7 @@ public class TermOrderType implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -182,7 +182,7 @@ public class TermOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getTermExternalReferenceCode() {
 		return termExternalReferenceCode;
 	}
@@ -213,7 +213,7 @@ public class TermOrderType implements Serializable {
 	protected String termExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getTermId() {
 		return termId;
 	}
@@ -243,7 +243,7 @@ public class TermOrderType implements Serializable {
 	protected Long termId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getTermOrderTypeId() {
 		return termOrderTypeId;
 	}

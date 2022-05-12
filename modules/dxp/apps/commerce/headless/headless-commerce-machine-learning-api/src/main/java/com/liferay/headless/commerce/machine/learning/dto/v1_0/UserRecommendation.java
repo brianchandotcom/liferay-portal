@@ -90,7 +90,7 @@ public class UserRecommendation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] assetCategoryIds;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}

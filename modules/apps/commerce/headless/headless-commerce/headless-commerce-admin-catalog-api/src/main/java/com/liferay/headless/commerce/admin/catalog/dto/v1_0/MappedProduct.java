@@ -121,7 +121,7 @@ public class MappedProduct implements Serializable {
 	protected CustomField[] customFields;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33130")
 	public Long getId() {
 		return id;
 	}
@@ -147,7 +147,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "exampleERC")
 	public String getProductExternalReferenceCode() {
 		return productExternalReferenceCode;
 	}
@@ -180,7 +180,7 @@ public class MappedProduct implements Serializable {
 	protected String productExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33131")
 	public Long getProductId() {
 		return productId;
 	}
@@ -208,7 +208,9 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+	)
 	@Valid
 	public Map<String, String> getProductName() {
 		return productName;
@@ -239,7 +241,7 @@ public class MappedProduct implements Serializable {
 	protected Map<String, String> productName;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -267,7 +269,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
-	@Schema
+	@Schema(example = "1")
 	public String getSequence() {
 		return sequence;
 	}
@@ -295,7 +297,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
-	@Schema
+	@Schema(example = "SKU01")
 	public String getSku() {
 		return sku;
 	}
@@ -321,7 +323,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
-	@Schema
+	@Schema(example = "SKU0111")
 	public String getSkuExternalReferenceCode() {
 		return skuExternalReferenceCode;
 	}
@@ -352,7 +354,7 @@ public class MappedProduct implements Serializable {
 	protected String skuExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33135")
 	public Long getSkuId() {
 		return skuId;
 	}
@@ -378,7 +380,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
-	@Schema
+	@Schema(example = "sku")
 	@Valid
 	public Type getType() {
 		return type;

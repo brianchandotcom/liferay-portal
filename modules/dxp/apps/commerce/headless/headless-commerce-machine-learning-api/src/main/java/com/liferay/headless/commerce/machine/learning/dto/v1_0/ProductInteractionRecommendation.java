@@ -64,7 +64,7 @@ public class ProductInteractionRecommendation implements Serializable {
 			ProductInteractionRecommendation.class, json);
 	}
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}

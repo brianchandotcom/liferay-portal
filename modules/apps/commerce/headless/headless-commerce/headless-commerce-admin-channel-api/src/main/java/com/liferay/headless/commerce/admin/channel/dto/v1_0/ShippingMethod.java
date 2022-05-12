@@ -59,7 +59,7 @@ public class ShippingMethod implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ShippingMethod.class, json);
 	}
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -87,7 +87,9 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema
+	@Schema(
+		example = "{hu_HU=Product Description HU, hr_HR=Product Description HR, en_US=Professional hand stainless steel saw for wood. Made to last and saw forever. Made of best steel}"
+	)
 	@Valid
 	public Map<String, String> getDescription() {
 		return description;
@@ -117,7 +119,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getEngineKey() {
 		return engineKey;
 	}
@@ -146,7 +148,7 @@ public class ShippingMethod implements Serializable {
 	protected String engineKey;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getId() {
 		return id;
 	}
@@ -172,7 +174,9 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Professional hand stainless steel saw for wood. Made to last and saw forever. Made of best steel, hr_HR=Product Description HR, hu_HU=Product Description HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		return name;
@@ -201,7 +205,7 @@ public class ShippingMethod implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}

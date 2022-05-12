@@ -120,7 +120,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -148,7 +148,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -176,7 +176,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -205,7 +205,7 @@ public class AttachmentUrl implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -231,7 +231,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -259,7 +259,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
-	@Schema
+	@Schema(example = "{color=yellow, optionKey=optionValueKey, size=xs}")
 	@Valid
 	public Map<String, String> getOptions() {
 		return options;
@@ -288,7 +288,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> options;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -342,7 +342,9 @@ public class AttachmentUrl implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String src;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Hand Saw, hr_HR=Attachment Title HR, hu_HU=Attachment Title HU}"
+	)
 	@Valid
 	public Map<String, String> getTitle() {
 		return title;

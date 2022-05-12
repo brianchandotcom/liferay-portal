@@ -58,7 +58,7 @@ public class Channel implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Channel.class, json);
 	}
 
-	@Schema
+	@Schema(example = "USD")
 	public String getCurrencyCode() {
 		return currencyCode;
 	}
@@ -86,7 +86,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyCode;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -115,7 +115,7 @@ public class Channel implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getId() {
 		return id;
 	}
@@ -141,7 +141,7 @@ public class Channel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "Alessio Antonio Rendina")
 	public String getName() {
 		return name;
 	}

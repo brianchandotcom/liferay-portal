@@ -91,7 +91,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AccountGroup accountGroup;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getAccountGroupExternalReferenceCode() {
 		return accountGroupExternalReferenceCode;
 	}
@@ -125,7 +125,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	protected String accountGroupExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getAccountGroupId() {
 		return accountGroupId;
 	}
@@ -185,7 +185,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getOrderRuleAccountGroupId() {
 		return orderRuleAccountGroupId;
 	}
@@ -214,7 +214,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderRuleAccountGroupId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getOrderRuleExternalReferenceCode() {
 		return orderRuleExternalReferenceCode;
 	}
@@ -247,7 +247,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	protected String orderRuleExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderRuleId() {
 		return orderRuleId;
 	}

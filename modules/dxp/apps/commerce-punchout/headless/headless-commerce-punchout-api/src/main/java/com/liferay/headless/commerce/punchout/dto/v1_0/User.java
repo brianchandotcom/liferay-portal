@@ -60,7 +60,7 @@ public class User implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(User.class, json);
 	}
 
-	@Schema
+	@Schema(example = "joe.1@commerce.com")
 	public String getEmail() {
 		return email;
 	}
@@ -89,7 +89,7 @@ public class User implements Serializable {
 	@NotEmpty
 	protected String email;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -146,7 +146,7 @@ public class User implements Serializable {
 	protected String firstName;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -228,7 +228,7 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lastName;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getMale() {
 		return male;
 	}

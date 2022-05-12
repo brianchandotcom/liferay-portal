@@ -120,7 +120,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -153,7 +153,7 @@ public class PriceListOrderType implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -182,7 +182,7 @@ public class PriceListOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;
 	}
@@ -215,7 +215,7 @@ public class PriceListOrderType implements Serializable {
 	protected String priceListExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceListId() {
 		return priceListId;
 	}
@@ -245,7 +245,7 @@ public class PriceListOrderType implements Serializable {
 	protected Long priceListId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPriceListOrderTypeId() {
 		return priceListOrderTypeId;
 	}
@@ -274,7 +274,7 @@ public class PriceListOrderType implements Serializable {
 	protected Long priceListOrderTypeId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getPriority() {
 		return priority;
 	}

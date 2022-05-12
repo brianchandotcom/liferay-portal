@@ -120,7 +120,7 @@ public class PriceListChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getChannelExternalReferenceCode() {
 		return channelExternalReferenceCode;
 	}
@@ -153,7 +153,7 @@ public class PriceListChannel implements Serializable {
 	protected String channelExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getChannelId() {
 		return channelId;
 	}
@@ -183,7 +183,7 @@ public class PriceListChannel implements Serializable {
 	protected Long channelId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getOrder() {
 		return order;
 	}
@@ -212,7 +212,7 @@ public class PriceListChannel implements Serializable {
 	protected Integer order;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPriceListChannelId() {
 		return priceListChannelId;
 	}
@@ -240,7 +240,7 @@ public class PriceListChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListChannelId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;
 	}
@@ -273,7 +273,7 @@ public class PriceListChannel implements Serializable {
 	protected String priceListExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceListId() {
 		return priceListId;
 	}

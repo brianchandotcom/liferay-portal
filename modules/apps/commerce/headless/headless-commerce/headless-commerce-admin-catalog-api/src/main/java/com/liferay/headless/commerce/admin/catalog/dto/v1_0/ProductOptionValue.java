@@ -63,7 +63,7 @@ public class ProductOptionValue implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -89,7 +89,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "black")
 	public String getKey() {
 		return key;
 	}
@@ -116,7 +116,7 @@ public class ProductOptionValue implements Serializable {
 	@NotEmpty
 	protected String key;
 
-	@Schema
+	@Schema(example = "{en_US=Black, hr_HR=Black HR, hu_HU=Black HU}")
 	@Valid
 	public Map<String, String> getName() {
 		return name;
@@ -146,7 +146,7 @@ public class ProductOptionValue implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}

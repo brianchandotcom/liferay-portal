@@ -68,7 +68,7 @@ public class Sku implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "101")
 	@Valid
 	public BigDecimal getCost() {
 		return cost;
@@ -125,7 +125,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean discontinued;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -153,7 +153,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -181,7 +181,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -209,7 +209,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
-	@Schema
+	@Schema(example = "12341234")
 	public String getGtin() {
 		return gtin;
 	}
@@ -236,7 +236,7 @@ public class Sku implements Serializable {
 	protected String gtin;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -262,7 +262,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "12341234")
 	public String getManufacturerPartNumber() {
 		return manufacturerPartNumber;
 	}
@@ -291,7 +291,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String manufacturerPartNumber;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getPublished() {
 		return published;
 	}
@@ -319,7 +319,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean published;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getPurchasable() {
 		return purchasable;
 	}
@@ -347,7 +347,7 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean purchasable;
 
-	@Schema
+	@Schema(example = "12341234")
 	public String getSku() {
 		return sku;
 	}

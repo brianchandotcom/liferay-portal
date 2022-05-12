@@ -56,7 +56,7 @@ public class Availability implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Availability.class, json);
 	}
 
-	@Schema
+	@Schema(example = "available")
 	public String getLabel() {
 		return label;
 	}
@@ -84,7 +84,7 @@ public class Availability implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
-	@Schema
+	@Schema(example = "Available")
 	public String getLabel_i18n() {
 		return label_i18n;
 	}

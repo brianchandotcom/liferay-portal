@@ -60,7 +60,7 @@ public class ProductGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -87,7 +87,7 @@ public class ProductGroup implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "20")
 	public Integer getProductsCount() {
 		return productsCount;
 	}
@@ -115,7 +115,7 @@ public class ProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer productsCount;
 
-	@Schema
+	@Schema(example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}")
 	@Valid
 	public Map<String, String> getTitle() {
 		return title;

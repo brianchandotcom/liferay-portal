@@ -69,7 +69,7 @@ public class Order implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -98,7 +98,7 @@ public class Order implements Serializable {
 	protected Long accountId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getChannelId() {
 		return channelId;
 	}
@@ -127,7 +127,7 @@ public class Order implements Serializable {
 	@NotNull
 	protected Long channelId;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -155,7 +155,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
-	@Schema
+	@Schema(example = "USD")
 	public String getCurrencyCode() {
 		return currencyCode;
 	}
@@ -213,7 +213,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -242,7 +242,7 @@ public class Order implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -268,7 +268,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
@@ -296,7 +296,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getOrderDate() {
 		return orderDate;
 	}
@@ -354,7 +354,7 @@ public class Order implements Serializable {
 	protected OrderItem[] orderItems;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "0")
 	public Integer getOrderStatus() {
 		return orderStatus;
 	}
@@ -382,7 +382,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer orderStatus;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -415,7 +415,7 @@ public class Order implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -443,7 +443,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderTypeId;
 
-	@Schema
+	@Schema(example = "paypal")
 	public String getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -472,7 +472,7 @@ public class Order implements Serializable {
 	protected String paymentMethod;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "0")
 	public Integer getPaymentStatus() {
 		return paymentStatus;
 	}
@@ -529,7 +529,7 @@ public class Order implements Serializable {
 	protected Integer status;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "113")
 	@Valid
 	public BigDecimal getTotal() {
 		return total;

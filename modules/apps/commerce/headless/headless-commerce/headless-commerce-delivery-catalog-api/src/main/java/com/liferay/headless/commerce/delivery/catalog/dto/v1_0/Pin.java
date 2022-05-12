@@ -60,7 +60,7 @@ public class Pin implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33130")
 	public Long getId() {
 		return id;
 	}
@@ -115,7 +115,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MappedProduct mappedProduct;
 
-	@Schema
+	@Schema(example = "33.54")
 	public Double getPositionX() {
 		return positionX;
 	}
@@ -143,7 +143,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionX;
 
-	@Schema
+	@Schema(example = "33.54")
 	public Double getPositionY() {
 		return positionY;
 	}
@@ -171,7 +171,7 @@ public class Pin implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionY;
 
-	@Schema
+	@Schema(example = "1")
 	public String getSequence() {
 		return sequence;
 	}

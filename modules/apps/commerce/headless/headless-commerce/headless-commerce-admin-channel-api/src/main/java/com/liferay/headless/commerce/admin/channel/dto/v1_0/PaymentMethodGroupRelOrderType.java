@@ -122,7 +122,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -155,7 +155,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -185,7 +185,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	protected Long orderTypeId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPaymentMethodGroupRelId() {
 		return paymentMethodGroupRelId;
 	}
@@ -216,7 +216,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	protected Long paymentMethodGroupRelId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPaymentMethodGroupRelOrderTypeId() {
 		return paymentMethodGroupRelOrderTypeId;
 	}
@@ -250,7 +250,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	protected Long paymentMethodGroupRelOrderTypeId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getPriority() {
 		return priority;
 	}

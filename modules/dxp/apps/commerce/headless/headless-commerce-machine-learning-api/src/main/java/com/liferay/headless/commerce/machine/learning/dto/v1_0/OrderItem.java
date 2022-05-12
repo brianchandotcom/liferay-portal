@@ -93,7 +93,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long cpDefinitionId;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -150,7 +150,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -179,7 +179,7 @@ public class OrderItem implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "200")
 	@Valid
 	public BigDecimal getFinalPrice() {
 		return finalPrice;
@@ -209,7 +209,7 @@ public class OrderItem implements Serializable {
 	protected BigDecimal finalPrice;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -235,7 +235,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
@@ -263,7 +263,9 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		return name;
@@ -321,7 +323,7 @@ public class OrderItem implements Serializable {
 	protected String options;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30128")
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -350,7 +352,7 @@ public class OrderItem implements Serializable {
 	protected Long orderId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30128")
 	public Long getParentOrderItemId() {
 		return parentOrderItemId;
 	}
@@ -379,7 +381,7 @@ public class OrderItem implements Serializable {
 	protected Long parentOrderItemId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "2")
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -407,7 +409,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
-	@Schema
+	@Schema(example = "12341234")
 	public String getSku() {
 		return sku;
 	}
@@ -433,7 +435,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getSubscription() {
 		return subscription;
 	}
@@ -461,7 +463,7 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscription;
 
-	@Schema
+	@Schema(example = "pc")
 	public String getUnitOfMeasure() {
 		return unitOfMeasure;
 	}
@@ -490,7 +492,7 @@ public class OrderItem implements Serializable {
 	protected String unitOfMeasure;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "101")
 	@Valid
 	public BigDecimal getUnitPrice() {
 		return unitPrice;

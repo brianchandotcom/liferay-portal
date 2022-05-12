@@ -97,7 +97,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -154,7 +154,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getDiscountDiscovery() {
 		return discountDiscovery;
 	}
@@ -183,7 +183,7 @@ public class TierPrice implements Serializable {
 	protected Boolean discountDiscovery;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel1() {
 		return discountLevel1;
@@ -213,7 +213,7 @@ public class TierPrice implements Serializable {
 	protected BigDecimal discountLevel1;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel2() {
 		return discountLevel2;
@@ -243,7 +243,7 @@ public class TierPrice implements Serializable {
 	protected BigDecimal discountLevel2;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel3() {
 		return discountLevel3;
@@ -273,7 +273,7 @@ public class TierPrice implements Serializable {
 	protected BigDecimal discountLevel3;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel4() {
 		return discountLevel4;
@@ -302,7 +302,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel4;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -330,7 +330,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -358,7 +358,7 @@ public class TierPrice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -387,7 +387,7 @@ public class TierPrice implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getId() {
 		return id;
 	}
@@ -414,7 +414,7 @@ public class TierPrice implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "5")
 	public Integer getMinimumQuantity() {
 		return minimumQuantity;
 	}
@@ -443,7 +443,7 @@ public class TierPrice implements Serializable {
 	@NotNull
 	protected Integer minimumQuantity;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -500,7 +500,7 @@ public class TierPrice implements Serializable {
 	@NotNull
 	protected Double price;
 
-	@Schema
+	@Schema(example = "CAB-34098-789-N")
 	public String getPriceEntryExternalReferenceCode() {
 		return priceEntryExternalReferenceCode;
 	}
@@ -533,7 +533,7 @@ public class TierPrice implements Serializable {
 	protected String priceEntryExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceEntryId() {
 		return priceEntryId;
 	}

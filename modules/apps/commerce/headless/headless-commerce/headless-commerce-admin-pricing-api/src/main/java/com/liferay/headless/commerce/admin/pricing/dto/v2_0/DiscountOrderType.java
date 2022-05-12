@@ -91,7 +91,7 @@ public class DiscountOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -124,7 +124,7 @@ public class DiscountOrderType implements Serializable {
 	protected String discountExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getDiscountId() {
 		return discountId;
 	}
@@ -154,7 +154,7 @@ public class DiscountOrderType implements Serializable {
 	protected Long discountId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getDiscountOrderTypeId() {
 		return discountOrderTypeId;
 	}
@@ -211,7 +211,7 @@ public class DiscountOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -244,7 +244,7 @@ public class DiscountOrderType implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -274,7 +274,7 @@ public class DiscountOrderType implements Serializable {
 	protected Long orderTypeId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getPriority() {
 		return priority;
 	}

@@ -84,7 +84,7 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	@Schema
+	@Schema(example = "option-key")
 	public String getOptionKey() {
 		return optionKey;
 	}

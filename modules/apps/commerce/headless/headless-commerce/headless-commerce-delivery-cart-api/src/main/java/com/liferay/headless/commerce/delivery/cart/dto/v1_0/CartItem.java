@@ -337,7 +337,9 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
-	@Schema
+	@Schema(
+		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
+	)
 	@Valid
 	public Map<String, String> getProductURLs() {
 		return productURLs;
@@ -476,7 +478,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getSubscription() {
 		return subscription;
 	}

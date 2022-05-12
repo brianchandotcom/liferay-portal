@@ -95,7 +95,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -123,7 +123,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema
+	@Schema(example = "admin")
 	public String getAuthor() {
 		return author;
 	}
@@ -151,7 +151,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -179,7 +179,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
-	@Schema
+	@Schema(example = "Laptops, Beverages")
 	public String getDescription() {
 		return description;
 	}
@@ -207,7 +207,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -235,7 +235,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -263,7 +263,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -292,7 +292,7 @@ public class OrderRule implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -318,7 +318,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "Laptops, Beverages")
 	public String getName() {
 		return name;
 	}
@@ -345,7 +345,7 @@ public class OrderRule implements Serializable {
 	@NotEmpty
 	protected String name;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -495,7 +495,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderRuleOrderType[] orderRuleOrderType;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -523,7 +523,7 @@ public class OrderRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
-	@Schema
+	@Schema(example = "order-limit")
 	public String getType() {
 		return type;
 	}
@@ -550,7 +550,7 @@ public class OrderRule implements Serializable {
 	@NotEmpty
 	protected String type;
 
-	@Schema
+	@Schema(example = "22.50")
 	public String getTypeSettings() {
 		return typeSettings;
 	}

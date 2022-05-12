@@ -121,7 +121,7 @@ public class PriceModifierCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Category category;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getCategoryExternalReferenceCode() {
 		return categoryExternalReferenceCode;
 	}
@@ -154,7 +154,7 @@ public class PriceModifierCategory implements Serializable {
 	protected String categoryExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getCategoryId() {
 		return categoryId;
 	}
@@ -184,7 +184,7 @@ public class PriceModifierCategory implements Serializable {
 	protected Long categoryId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPriceModifierCategoryId() {
 		return priceModifierCategoryId;
 	}
@@ -213,7 +213,7 @@ public class PriceModifierCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceModifierCategoryId;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getPriceModifierExternalReferenceCode() {
 		return priceModifierExternalReferenceCode;
 	}
@@ -247,7 +247,7 @@ public class PriceModifierCategory implements Serializable {
 	protected String priceModifierExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getPriceModifierId() {
 		return priceModifierId;
 	}

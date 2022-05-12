@@ -90,7 +90,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
 		return accountExternalReferenceCode;
 	}
@@ -123,7 +123,7 @@ public class PriceListAccount implements Serializable {
 	protected String accountExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -183,7 +183,7 @@ public class PriceListAccount implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getOrder() {
 		return order;
 	}
@@ -212,7 +212,7 @@ public class PriceListAccount implements Serializable {
 	protected Integer order;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPriceListAccountId() {
 		return priceListAccountId;
 	}
@@ -240,7 +240,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListAccountId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;
 	}
@@ -273,7 +273,7 @@ public class PriceListAccount implements Serializable {
 	protected String priceListExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceListId() {
 		return priceListId;
 	}

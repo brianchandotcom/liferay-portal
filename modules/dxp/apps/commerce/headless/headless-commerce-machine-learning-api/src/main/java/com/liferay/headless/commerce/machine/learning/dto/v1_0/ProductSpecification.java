@@ -64,7 +64,7 @@ public class ProductSpecification implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getId() {
 		return id;
 	}
@@ -91,7 +91,7 @@ public class ProductSpecification implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30129")
 	public Long getOptionCategoryId() {
 		return optionCategoryId;
 	}
@@ -119,7 +119,7 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionCategoryId;
 
-	@Schema
+	@Schema(example = "specification-key")
 	public String getSpecificationKey() {
 		return specificationKey;
 	}

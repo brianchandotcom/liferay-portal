@@ -62,7 +62,7 @@ public class OptionCategory implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OptionCategory.class, json);
 	}
 
-	@Schema
+	@Schema(example = "{hu_HU=Horvatorszag, hr_HR=Hrvatska, en_US=Croatia}")
 	@Valid
 	public Map<String, String> getDescription() {
 		return description;
@@ -93,7 +93,7 @@ public class OptionCategory implements Serializable {
 	protected Map<String, String> description;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getId() {
 		return id;
 	}
@@ -119,7 +119,7 @@ public class OptionCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "oprion-category-key")
 	public String getKey() {
 		return key;
 	}
@@ -147,7 +147,7 @@ public class OptionCategory implements Serializable {
 	protected String key;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -175,7 +175,7 @@ public class OptionCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
-	@Schema
+	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
 	@Valid
 	public Map<String, String> getTitle() {
 		return title;

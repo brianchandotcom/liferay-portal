@@ -62,7 +62,7 @@ public class RelatedProduct implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -88,7 +88,7 @@ public class RelatedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -116,7 +116,7 @@ public class RelatedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getProductExternalReferenceCode() {
 		return productExternalReferenceCode;
 	}
@@ -149,7 +149,7 @@ public class RelatedProduct implements Serializable {
 	protected String productExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30129")
 	public Long getProductId() {
 		return productId;
 	}
@@ -178,7 +178,7 @@ public class RelatedProduct implements Serializable {
 	@NotNull
 	protected Long productId;
 
-	@Schema
+	@Schema(example = "cross-sell")
 	public String getType() {
 		return type;
 	}

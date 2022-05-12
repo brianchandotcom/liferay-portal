@@ -95,7 +95,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -123,7 +123,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -151,7 +151,9 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Term Description US, hr_HR=Term Description HR, hu_HU=Term Description HU}"
+	)
 	@Valid
 	public Map<String, String> getDescription() {
 		return description;
@@ -181,7 +183,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -209,7 +211,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -237,7 +239,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -266,7 +268,7 @@ public class Term implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -292,7 +294,9 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Term Label US, hr_HR=Term Label HR, hu_HU=Term Label HU}"
+	)
 	@Valid
 	public Map<String, String> getLabel() {
 		return label;
@@ -321,7 +325,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> label;
 
-	@Schema
+	@Schema(example = "Laptops, Beverages")
 	public String getName() {
 		return name;
 	}
@@ -348,7 +352,7 @@ public class Term implements Serializable {
 	@NotEmpty
 	protected String name;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -376,7 +380,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -434,7 +438,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TermOrderType[] termOrderType;
 
-	@Schema
+	@Schema(example = "payment-terms")
 	public String getType() {
 		return type;
 	}
@@ -461,7 +465,7 @@ public class Term implements Serializable {
 	@NotEmpty
 	protected String type;
 
-	@Schema
+	@Schema(example = "Payment Terms")
 	public String getTypeLocalized() {
 		return typeLocalized;
 	}

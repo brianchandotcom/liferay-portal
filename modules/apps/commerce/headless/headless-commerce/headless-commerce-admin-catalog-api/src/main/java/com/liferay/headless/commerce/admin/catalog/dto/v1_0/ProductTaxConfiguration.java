@@ -60,7 +60,7 @@ public class ProductTaxConfiguration implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -86,7 +86,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "taxCategoryName")
 	public String getTaxCategory() {
 		return taxCategory;
 	}
@@ -114,7 +114,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxCategory;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getTaxable() {
 		return taxable;
 	}

@@ -57,7 +57,7 @@ public class ProductConfiguration implements Serializable {
 			ProductConfiguration.class, json);
 	}
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getAllowBackOrder() {
 		return allowBackOrder;
 	}
@@ -85,7 +85,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean allowBackOrder;
 
-	@Schema
+	@Schema(example = "[10, 20, 30, 40]")
 	public Integer[] getAllowedOrderQuantities() {
 		return allowedOrderQuantities;
 	}
@@ -114,7 +114,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer[] allowedOrderQuantities;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getDisplayAvailability() {
 		return displayAvailability;
 	}
@@ -142,7 +142,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAvailability;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getDisplayStockQuantity() {
 		return displayStockQuantity;
 	}

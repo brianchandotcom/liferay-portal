@@ -64,7 +64,7 @@ public class MeasurementUnit implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "23130")
 	public Long getGroupId() {
 		return groupId;
 	}
@@ -93,7 +93,7 @@ public class MeasurementUnit implements Serializable {
 	protected Long groupId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -119,7 +119,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "kg")
 	public String getKey() {
 		return key;
 	}
@@ -146,7 +146,7 @@ public class MeasurementUnit implements Serializable {
 	@NotEmpty
 	protected String key;
 
-	@Schema
+	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
 	@Valid
 	public Map<String, String> getName() {
 		return name;
@@ -176,7 +176,7 @@ public class MeasurementUnit implements Serializable {
 	@NotNull
 	protected Map<String, String> name;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getPrimary() {
 		return primary;
 	}
@@ -205,7 +205,7 @@ public class MeasurementUnit implements Serializable {
 	protected Boolean primary;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1.1")
 	public Double getPriority() {
 		return priority;
 	}
@@ -234,7 +234,7 @@ public class MeasurementUnit implements Serializable {
 	protected Double priority;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Double getRate() {
 		return rate;
 	}
@@ -262,7 +262,7 @@ public class MeasurementUnit implements Serializable {
 
 	@DecimalMax("1")
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "0")
 	public Integer getType() {
 		return type;
 	}

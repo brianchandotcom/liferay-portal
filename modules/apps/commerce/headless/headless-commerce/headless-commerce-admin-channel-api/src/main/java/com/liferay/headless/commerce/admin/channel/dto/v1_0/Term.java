@@ -59,7 +59,7 @@ public class Term implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -85,7 +85,7 @@ public class Term implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "simple")
 	public String getName() {
 		return name;
 	}

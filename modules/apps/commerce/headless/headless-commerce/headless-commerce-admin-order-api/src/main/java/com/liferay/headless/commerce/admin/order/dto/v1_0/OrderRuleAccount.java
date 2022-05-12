@@ -90,7 +90,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
 		return accountExternalReferenceCode;
 	}
@@ -123,7 +123,7 @@ public class OrderRuleAccount implements Serializable {
 	protected String accountExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -183,7 +183,7 @@ public class OrderRuleAccount implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getOrderRuleAccountId() {
 		return orderRuleAccountId;
 	}
@@ -211,7 +211,7 @@ public class OrderRuleAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderRuleAccountId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getOrderRuleExternalReferenceCode() {
 		return orderRuleExternalReferenceCode;
 	}
@@ -244,7 +244,7 @@ public class OrderRuleAccount implements Serializable {
 	protected String orderRuleExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderRuleId() {
 		return orderRuleId;
 	}

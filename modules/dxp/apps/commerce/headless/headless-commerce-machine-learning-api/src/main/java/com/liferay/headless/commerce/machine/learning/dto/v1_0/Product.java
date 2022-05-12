@@ -67,7 +67,7 @@ public class Product implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30054")
 	public Long getCatalogId() {
 		return catalogId;
 	}
@@ -124,7 +124,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] categoryIds;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -181,7 +181,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(
+		example = "{hu_HU=Product Description HU, hr_HR=Product Description HR, en_US=Professional hand stainless steel saw for wood. Made to last and saw forever. Made of best steel}"
+	)
 	@Valid
 	public Map<String, String> getDescription() {
 		return description;
@@ -211,7 +213,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -239,7 +241,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -267,7 +269,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -296,7 +298,7 @@ public class Product implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -322,7 +324,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Meta description HU, hr_HR=Meta description HU, hu_HU=Meta description HU}"
+	)
 	@Valid
 	public Map<String, String> getMetaDescription() {
 		return metaDescription;
@@ -352,7 +356,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaDescription;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Meta keyword HU, hr_HR=Meta keyword HU, hu_HU=Meta keyword HU}"
+	)
 	@Valid
 	public Map<String, String> getMetaKeyword() {
 		return metaKeyword;
@@ -382,7 +388,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaKeyword;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Meta title HU, hr_HR=Meta title HU, hu_HU=Meta title HU}"
+	)
 	@Valid
 	public Map<String, String> getMetaTitle() {
 		return metaTitle;
@@ -412,7 +420,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> metaTitle;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
@@ -440,7 +448,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		return name;
@@ -588,7 +598,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductSpecification[] productSpecifications;
 
-	@Schema
+	@Schema(example = "simple")
 	public String getProductType() {
 		return productType;
 	}
@@ -700,7 +710,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscriptionEnabled;
 
-	@Schema
+	@Schema(example = "[tag1, tag2, tag3]")
 	public String[] getTags() {
 		return tags;
 	}
@@ -728,7 +738,9 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] tags;
 
-	@Schema
+	@Schema(
+		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
+	)
 	@Valid
 	public Map<String, String> getUrls() {
 		return urls;

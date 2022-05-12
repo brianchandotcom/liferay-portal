@@ -60,7 +60,7 @@ public class PriceListDiscount implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceListDiscount.class, json);
 	}
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -93,7 +93,7 @@ public class PriceListDiscount implements Serializable {
 	protected String discountExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getDiscountId() {
 		return discountId;
 	}
@@ -151,7 +151,7 @@ public class PriceListDiscount implements Serializable {
 	protected String discountName;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getOrder() {
 		return order;
 	}
@@ -180,7 +180,7 @@ public class PriceListDiscount implements Serializable {
 	protected Integer order;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getPriceListDiscountId() {
 		return priceListDiscountId;
 	}
@@ -208,7 +208,7 @@ public class PriceListDiscount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long priceListDiscountId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;
 	}
@@ -241,7 +241,7 @@ public class PriceListDiscount implements Serializable {
 	protected String priceListExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceListId() {
 		return priceListId;
 	}

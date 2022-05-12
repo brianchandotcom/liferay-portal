@@ -122,7 +122,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		return orderTypeExternalReferenceCode;
 	}
@@ -155,7 +155,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	protected String orderTypeExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -185,7 +185,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	protected Long orderTypeId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getPriority() {
 		return priority;
 	}
@@ -214,7 +214,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	protected Integer priority;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getShippingFixedOptionId() {
 		return shippingFixedOptionId;
 	}
@@ -244,7 +244,7 @@ public class ShippingFixedOptionOrderType implements Serializable {
 	protected Long shippingFixedOptionId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getShippingFixedOptionOrderTypeId() {
 		return shippingFixedOptionOrderTypeId;
 	}

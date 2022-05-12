@@ -309,7 +309,7 @@ public class CartItem implements Serializable {
 	protected Settings settings;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getShippedQuantity() {
 		return shippedQuantity;
 	}
@@ -389,7 +389,7 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getSubscription() {
 		return subscription;
 	}

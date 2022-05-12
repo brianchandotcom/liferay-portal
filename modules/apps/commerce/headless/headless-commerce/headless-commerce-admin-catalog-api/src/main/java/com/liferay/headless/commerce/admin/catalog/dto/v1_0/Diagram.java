@@ -89,7 +89,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AttachmentBase64 attachmentBase64;
 
-	@Schema
+	@Schema(example = "black")
 	public String getColor() {
 		return color;
 	}
@@ -118,7 +118,7 @@ public class Diagram implements Serializable {
 	protected String color;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getId() {
 		return id;
 	}
@@ -145,7 +145,7 @@ public class Diagram implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33132")
 	public Long getImageId() {
 		return imageId;
 	}
@@ -173,7 +173,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 
-	@Schema
+	@Schema(example = "Name 1")
 	public String getImageURL() {
 		return imageURL;
 	}
@@ -201,7 +201,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String imageURL;
 
-	@Schema
+	@Schema(example = "exampleERC")
 	public String getProductExternalReferenceCode() {
 		return productExternalReferenceCode;
 	}
@@ -234,7 +234,7 @@ public class Diagram implements Serializable {
 	protected String productExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33131")
 	public Long getProductId() {
 		return productId;
 	}
@@ -262,7 +262,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
-	@Schema
+	@Schema(example = "33.54")
 	public Double getRadius() {
 		return radius;
 	}
@@ -290,7 +290,7 @@ public class Diagram implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double radius;
 
-	@Schema
+	@Schema(example = "default")
 	public String getType() {
 		return type;
 	}

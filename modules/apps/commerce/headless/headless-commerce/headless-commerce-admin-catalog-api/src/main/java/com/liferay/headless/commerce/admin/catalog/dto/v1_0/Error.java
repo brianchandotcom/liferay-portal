@@ -62,7 +62,7 @@ public class Error implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Error.class, json);
 	}
 
-	@Schema(description = "Internal error code mapping")
+	@Schema(description = "Internal error code mapping", example = "996")
 	public Integer getErrorCode() {
 		return errorCode;
 	}
@@ -91,7 +91,9 @@ public class Error implements Serializable {
 	@NotNull
 	protected Integer errorCode;
 
-	@Schema
+	@Schema(
+		example = "Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format."
+	)
 	public String getErrorDescription() {
 		return errorDescription;
 	}
@@ -120,7 +122,9 @@ public class Error implements Serializable {
 	@NotEmpty
 	protected String errorDescription;
 
-	@Schema
+	@Schema(
+		example = "No CommerceCurrency exists with the key {catalogId=41811, code=US Dollar}"
+	)
 	public String getMessage() {
 		return message;
 	}
@@ -149,7 +153,7 @@ public class Error implements Serializable {
 	@NotEmpty
 	protected String message;
 
-	@Schema(description = "HTTP Status code")
+	@Schema(description = "HTTP Status code", example = "404")
 	public Integer getStatus() {
 		return status;
 	}

@@ -92,7 +92,7 @@ public class DiscountProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getDiscountExternalReferenceCode() {
 		return discountExternalReferenceCode;
 	}
@@ -125,7 +125,7 @@ public class DiscountProductGroup implements Serializable {
 	protected String discountExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getDiscountId() {
 		return discountId;
 	}
@@ -155,7 +155,7 @@ public class DiscountProductGroup implements Serializable {
 	protected Long discountId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getDiscountProductGroupId() {
 		return discountProductGroupId;
 	}
@@ -212,7 +212,7 @@ public class DiscountProductGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ProductGroup productGroup;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getProductGroupExternalReferenceCode() {
 		return productGroupExternalReferenceCode;
 	}
@@ -246,7 +246,7 @@ public class DiscountProductGroup implements Serializable {
 	protected String productGroupExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getProductGroupId() {
 		return productGroupId;
 	}

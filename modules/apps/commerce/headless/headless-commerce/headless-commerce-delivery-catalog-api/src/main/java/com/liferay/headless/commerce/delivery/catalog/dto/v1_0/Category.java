@@ -59,7 +59,7 @@ public class Category implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -139,7 +139,7 @@ public class Category implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
-	@Schema
+	@Schema(example = "Default Vocabulary")
 	public String getVocabulary() {
 		return vocabulary;
 	}

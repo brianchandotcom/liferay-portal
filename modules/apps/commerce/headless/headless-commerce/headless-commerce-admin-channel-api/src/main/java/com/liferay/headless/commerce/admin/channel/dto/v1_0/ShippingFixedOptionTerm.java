@@ -93,7 +93,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getShippingFixedOptionId() {
 		return shippingFixedOptionId;
 	}
@@ -123,7 +123,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	protected Long shippingFixedOptionId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getShippingFixedOptionTermId() {
 		return shippingFixedOptionTermId;
 	}
@@ -180,7 +180,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Term term;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getTermExternalReferenceCode() {
 		return termExternalReferenceCode;
 	}
@@ -211,7 +211,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	protected String termExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getTermId() {
 		return termId;
 	}

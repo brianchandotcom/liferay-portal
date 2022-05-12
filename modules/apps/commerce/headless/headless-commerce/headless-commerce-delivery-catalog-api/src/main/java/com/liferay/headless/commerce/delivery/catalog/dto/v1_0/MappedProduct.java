@@ -155,7 +155,7 @@ public class MappedProduct implements Serializable {
 	protected MappedProduct firstAvailableReplacementMappedProduct;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33130")
 	public Long getId() {
 		return id;
 	}
@@ -240,7 +240,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductConfiguration productConfiguration;
 
-	@Schema
+	@Schema(example = "exampleERC")
 	public String getProductExternalReferenceCode() {
 		return productExternalReferenceCode;
 	}
@@ -273,7 +273,7 @@ public class MappedProduct implements Serializable {
 	protected String productExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33131")
 	public Long getProductId() {
 		return productId;
 	}
@@ -301,7 +301,9 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
-	@Schema
+	@Schema(
+		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+	)
 	@Valid
 	public Map<String, String> getProductName() {
 		return productName;
@@ -361,7 +363,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOption[] productOptions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getPurchasable() {
 		return purchasable;
 	}
@@ -390,7 +392,7 @@ public class MappedProduct implements Serializable {
 	protected Boolean purchasable;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -451,7 +453,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected MappedProduct replacementMappedProduct;
 
-	@Schema
+	@Schema(example = "MIN3123 has been replaced by MIN1289")
 	public String getReplacementMessage() {
 		return replacementMessage;
 	}
@@ -479,7 +481,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String replacementMessage;
 
-	@Schema
+	@Schema(example = "1")
 	public String getSequence() {
 		return sequence;
 	}
@@ -507,7 +509,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
-	@Schema
+	@Schema(example = "SKU01")
 	public String getSku() {
 		return sku;
 	}
@@ -533,7 +535,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
-	@Schema
+	@Schema(example = "SKU0111")
 	public String getSkuExternalReferenceCode() {
 		return skuExternalReferenceCode;
 	}
@@ -564,7 +566,7 @@ public class MappedProduct implements Serializable {
 	protected String skuExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "33135")
 	public Long getSkuId() {
 		return skuId;
 	}
@@ -619,7 +621,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuOption[] skuOptions;
 
-	@Schema
+	@Schema(example = "simple")
 	public String getThumbnail() {
 		return thumbnail;
 	}
@@ -647,7 +649,7 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
 
-	@Schema
+	@Schema(example = "sku")
 	@Valid
 	public Type getType() {
 		return type;
@@ -683,7 +685,9 @@ public class MappedProduct implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
-	@Schema
+	@Schema(
+		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
+	)
 	@Valid
 	public Map<String, String> getUrls() {
 		return urls;

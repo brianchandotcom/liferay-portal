@@ -120,7 +120,7 @@ public class OrderRuleChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
-	@Schema
+	@Schema(example = "DAB-34098-789-N")
 	public String getChannelExternalReferenceCode() {
 		return channelExternalReferenceCode;
 	}
@@ -153,7 +153,7 @@ public class OrderRuleChannel implements Serializable {
 	protected String channelExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30324")
 	public Long getChannelId() {
 		return channelId;
 	}
@@ -183,7 +183,7 @@ public class OrderRuleChannel implements Serializable {
 	protected Long channelId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30643")
 	public Long getOrderRuleChannelId() {
 		return orderRuleChannelId;
 	}
@@ -211,7 +211,7 @@ public class OrderRuleChannel implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderRuleChannelId;
 
-	@Schema
+	@Schema(example = "PAB-34098-789-N")
 	public String getOrderRuleExternalReferenceCode() {
 		return orderRuleExternalReferenceCode;
 	}
@@ -244,7 +244,7 @@ public class OrderRuleChannel implements Serializable {
 	protected String orderRuleExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderRuleId() {
 		return orderRuleId;
 	}

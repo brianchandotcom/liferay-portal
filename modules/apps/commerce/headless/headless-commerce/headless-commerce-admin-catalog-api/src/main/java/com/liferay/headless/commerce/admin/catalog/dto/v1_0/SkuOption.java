@@ -59,7 +59,7 @@ public class SkuOption implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getKey() {
 		return key;
 	}
@@ -86,7 +86,7 @@ public class SkuOption implements Serializable {
 	protected Long key;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getValue() {
 		return value;
 	}

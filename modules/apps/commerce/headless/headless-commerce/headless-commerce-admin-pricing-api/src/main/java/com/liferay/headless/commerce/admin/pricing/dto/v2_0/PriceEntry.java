@@ -97,7 +97,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -125,7 +125,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getBulkPricing() {
 		return bulkPricing;
 	}
@@ -182,7 +182,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getDiscountDiscovery() {
 		return discountDiscovery;
 	}
@@ -211,7 +211,7 @@ public class PriceEntry implements Serializable {
 	protected Boolean discountDiscovery;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel1() {
 		return discountLevel1;
@@ -241,7 +241,7 @@ public class PriceEntry implements Serializable {
 	protected BigDecimal discountLevel1;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel2() {
 		return discountLevel2;
@@ -271,7 +271,7 @@ public class PriceEntry implements Serializable {
 	protected BigDecimal discountLevel2;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel3() {
 		return discountLevel3;
@@ -301,7 +301,7 @@ public class PriceEntry implements Serializable {
 	protected BigDecimal discountLevel3;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel4() {
 		return discountLevel4;
@@ -330,7 +330,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountLevel4;
 
-	@Schema
+	@Schema(example = "10 | 10 | 10 | 10")
 	public String getDiscountLevelsFormatted() {
 		return discountLevelsFormatted;
 	}
@@ -360,7 +360,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String discountLevelsFormatted;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -388,7 +388,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -416,7 +416,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -444,7 +444,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getHasTierPrice() {
 		return hasTierPrice;
 	}
@@ -472,7 +472,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasTierPrice;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -530,7 +530,7 @@ public class PriceEntry implements Serializable {
 	protected Double price;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getPriceEntryId() {
 		return priceEntryId;
 	}
@@ -586,7 +586,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceFormatted;
 
-	@Schema
+	@Schema(example = "PLAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		return priceListExternalReferenceCode;
 	}
@@ -619,7 +619,7 @@ public class PriceEntry implements Serializable {
 	protected String priceListExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "20078")
 	public Long getPriceListId() {
 		return priceListId;
 	}
@@ -704,7 +704,7 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Sku sku;
 
-	@Schema
+	@Schema(example = "CAB-34098-789-N")
 	public String getSkuExternalReferenceCode() {
 		return skuExternalReferenceCode;
 	}
@@ -735,7 +735,7 @@ public class PriceEntry implements Serializable {
 	protected String skuExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getSkuId() {
 		return skuId;
 	}

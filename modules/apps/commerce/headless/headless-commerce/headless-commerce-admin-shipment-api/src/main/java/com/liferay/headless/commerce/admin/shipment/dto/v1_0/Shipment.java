@@ -64,7 +64,7 @@ public class Shipment implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -122,7 +122,7 @@ public class Shipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "FedEx")
 	public String getCarrier() {
 		return carrier;
 	}
@@ -235,7 +235,7 @@ public class Shipment implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -290,7 +290,7 @@ public class Shipment implements Serializable {
 	protected Date modifiedDate;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -378,7 +378,7 @@ public class Shipment implements Serializable {
 	protected ShippingAddress shippingAddress;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "31130")
 	public Long getShippingAddressId() {
 		return shippingAddressId;
 	}
@@ -435,7 +435,7 @@ public class Shipment implements Serializable {
 	protected Date shippingDate;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getShippingMethodId() {
 		return shippingMethodId;
 	}
@@ -463,7 +463,7 @@ public class Shipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shippingMethodId;
 
-	@Schema
+	@Schema(example = "Standard Delivery")
 	public String getShippingOptionName() {
 		return shippingOptionName;
 	}
@@ -520,7 +520,7 @@ public class Shipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
-	@Schema
+	@Schema(example = "123AD-asd")
 	public String getTrackingNumber() {
 		return trackingNumber;
 	}
@@ -548,7 +548,7 @@ public class Shipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String trackingNumber;
 
-	@Schema
+	@Schema(example = "John")
 	public String getUserName() {
 		return userName;
 	}

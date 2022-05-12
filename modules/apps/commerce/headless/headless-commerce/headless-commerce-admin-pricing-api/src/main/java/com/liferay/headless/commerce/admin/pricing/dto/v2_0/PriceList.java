@@ -98,7 +98,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getActive() {
 		return active;
 	}
@@ -126,7 +126,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema
+	@Schema(example = "admin")
 	public String getAuthor() {
 		return author;
 	}
@@ -154,7 +154,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String author;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getCatalogBasePriceList() {
 		return catalogBasePriceList;
 	}
@@ -183,7 +183,7 @@ public class PriceList implements Serializable {
 	protected Boolean catalogBasePriceList;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "23130")
 	public Long getCatalogId() {
 		return catalogId;
 	}
@@ -212,7 +212,7 @@ public class PriceList implements Serializable {
 	@NotNull
 	protected Long catalogId;
 
-	@Schema
+	@Schema(example = "catalog")
 	public String getCatalogName() {
 		return catalogName;
 	}
@@ -240,7 +240,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String catalogName;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -268,7 +268,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
-	@Schema
+	@Schema(example = "EUR")
 	public String getCurrencyCode() {
 		return currencyCode;
 	}
@@ -326,7 +326,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema
+	@Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -354,7 +354,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
-	@Schema
+	@Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -382,7 +382,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
-	@Schema
+	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -411,7 +411,7 @@ public class PriceList implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -437,7 +437,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
+	@Schema(example = "Laptops, Beverages")
 	public String getName() {
 		return name;
 	}
@@ -464,7 +464,7 @@ public class PriceList implements Serializable {
 	@NotEmpty
 	protected String name;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNetPrice() {
 		return netPrice;
 	}
@@ -492,7 +492,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean netPrice;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
 	}
@@ -521,7 +521,7 @@ public class PriceList implements Serializable {
 	protected Boolean neverExpire;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getParentPriceListId() {
 		return parentPriceListId;
 	}
@@ -762,7 +762,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifier[] priceModifiers;
 
-	@Schema
+	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
 	}
@@ -790,7 +790,7 @@ public class PriceList implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
-	@Schema
+	@Schema(example = "price-list, promotion, contract")
 	@Valid
 	public Type getType() {
 		return type;

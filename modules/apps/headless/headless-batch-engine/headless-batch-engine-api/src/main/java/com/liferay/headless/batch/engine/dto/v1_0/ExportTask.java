@@ -66,7 +66,8 @@ public class ExportTask implements Serializable {
 	}
 
 	@Schema(
-		description = "The item class name for which data will be exported in batch."
+		description = "The item class name for which data will be exported in batch.",
+		example = "com.liferay.headless.delivery.dto.v1_0.BlogPosting"
 	)
 	public String getClassName() {
 		return className;
@@ -97,7 +98,7 @@ public class ExportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
-	@Schema(description = "The file content type.")
+	@Schema(description = "The file content type.", example = "JSON")
 	public String getContentType() {
 		return contentType;
 	}
@@ -125,7 +126,10 @@ public class ExportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
-	@Schema(description = "The end time of export task operation.")
+	@Schema(
+		description = "The end time of export task operation.",
+		example = "2019-27-09'T'08:33:33'Z'"
+	)
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -154,7 +158,8 @@ public class ExportTask implements Serializable {
 	protected Date endTime;
 
 	@Schema(
-		description = "The error message in case of export task's failed execution."
+		description = "The error message in case of export task's failed execution.",
+		example = "File import failed"
 	)
 	public String getErrorMessage() {
 		return errorMessage;
@@ -185,7 +190,10 @@ public class ExportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
-	@Schema(description = "The status of export task's execution.")
+	@Schema(
+		description = "The status of export task's execution.",
+		example = "INITIALIZED"
+	)
 	@Valid
 	public ExecuteStatus getExecuteStatus() {
 		return executeStatus;
@@ -252,7 +260,7 @@ public class ExportTask implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema(description = "The task's ID.")
+	@Schema(description = "The task's ID.", example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -279,7 +287,10 @@ public class ExportTask implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema(description = "Number of items processed by export task opeartion.")
+	@Schema(
+		description = "Number of items processed by export task opeartion.",
+		example = "100"
+	)
 	public Integer getProcessedItemsCount() {
 		return processedItemsCount;
 	}
@@ -309,7 +320,10 @@ public class ExportTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer processedItemsCount;
 
-	@Schema(description = "The start time of export task operation.")
+	@Schema(
+		description = "The start time of export task operation.",
+		example = "2019-27-09'T'08:23:33'Z'"
+	)
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -339,7 +353,8 @@ public class ExportTask implements Serializable {
 
 	@DecimalMin("0")
 	@Schema(
-		description = "Total number of items that will be processed by export task operation."
+		description = "Total number of items that will be processed by export task operation.",
+		example = "1000"
 	)
 	public Integer getTotalItemsCount() {
 		return totalItemsCount;

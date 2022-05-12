@@ -152,7 +152,7 @@ public class ShipmentItem implements Serializable {
 	protected String externalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -207,7 +207,7 @@ public class ShipmentItem implements Serializable {
 	protected Date modifiedDate;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getOrderItemId() {
 		return orderItemId;
 	}
@@ -237,7 +237,7 @@ public class ShipmentItem implements Serializable {
 	protected Long orderItemId;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "1")
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -299,7 +299,7 @@ public class ShipmentItem implements Serializable {
 	protected String shipmentExternalReferenceCode;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getShipmentId() {
 		return shipmentId;
 	}
@@ -327,7 +327,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shipmentId;
 
-	@Schema
+	@Schema(example = "John")
 	public String getUserName() {
 		return userName;
 	}
@@ -355,7 +355,7 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String userName;
 
-	@Schema
+	@Schema(example = "true")
 	public Boolean getValidateInventory() {
 		return validateInventory;
 	}
@@ -384,7 +384,7 @@ public class ShipmentItem implements Serializable {
 	protected Boolean validateInventory;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(example = "30130")
 	public Long getWarehouseId() {
 		return warehouseId;
 	}

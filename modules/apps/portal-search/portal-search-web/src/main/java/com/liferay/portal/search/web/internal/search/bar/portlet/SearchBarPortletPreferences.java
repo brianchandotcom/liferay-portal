@@ -41,6 +41,16 @@ public interface SearchBarPortletPreferences {
 	public static final String PREFERENCE_KEY_SHOW_STAGED_RESULTS =
 		"showStagedResults";
 
+	public static final String
+		PREFERENCE_KEY_SUGGESTIONS_CONTRIBUTOR_CONFIGURATION =
+			"suggestionsContributorConfiguration";
+
+	public static final String PREFERENCE_KEY_SUGGESTIONS_DISPLAY_THRESHOLD =
+		"suggestionsDisplayThreshold";
+
+	public static final String PREFERENCE_KEY_SUGGESTIONS_ENABLED =
+		"suggestionsEnabled";
+
 	public static final String PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX =
 		"useAdvancedSearchSyntax";
 
@@ -63,6 +73,8 @@ public interface SearchBarPortletPreferences {
 	public boolean isInvisible();
 
 	public boolean isShowStagedResults();
+
+	public boolean isSuggestionsEnabled();
 
 	public boolean isUseAdvancedSearchSyntax();
 

@@ -107,6 +107,13 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
+	public boolean isSuggestionsEnabled() {
+		return _portletPreferencesHelper.getBoolean(
+			SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_ENABLED,
+			true);
+	}
+
+	@Override
 	public boolean isUseAdvancedSearchSyntax() {
 		return _portletPreferencesHelper.getBoolean(
 			SearchBarPortletPreferences.

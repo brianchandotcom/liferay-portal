@@ -9,6 +9,8 @@
 /development/aspectj-rt.jar
 /development/aspectj-weaver.jar
 /development/bnd-repository.jar
+/development/byte-buddy.jar
+/development/byte-buddy-agent.jar
 /development/catalina.jar
 /development/com.liferay.ant.get.file.set.jar
 /development/com.liferay.ant.manifest.helper.jar
@@ -51,7 +53,8 @@
 /development/mail.jar
 /development/mariadb.jar
 /development/maven-ant-tasks.jar
-/development/mockito.jar
+/development/mockito-core.jar
+/development/mockito-inline.jar
 /development/mysql.jar
 /development/objenesis.jar
 /development/ojdbc14.jar
@@ -65,12 +68,6 @@
 /development/p6spy.jar
 /development/portletmvc4spring-test.jar
 /development/postgresql.jar
-/development/powermock-api-mockito.jar
-/development/powermock-api-support.jar
-/development/powermock-core.jar
-/development/powermock-module-junit4-common.jar
-/development/powermock-module-junit4.jar
-/development/powermock-reflect.jar
 /development/qdox.jar
 /development/reflections.jar
 /development/saxpath.jar

@@ -24,7 +24,7 @@
 <%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
-<%@ page import="com.liferay.portal.kernel.icons.IconsUtil" %>
+<%@ page import="com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 

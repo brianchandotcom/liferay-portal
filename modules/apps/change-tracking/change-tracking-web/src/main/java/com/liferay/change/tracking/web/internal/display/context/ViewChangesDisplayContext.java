@@ -44,7 +44,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.icons.IconsUtil;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -677,7 +677,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"sitesFromURL", ParamUtil.getString(_renderRequest, "sites")
 		).put(
-			"spritemap", IconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
 		).put(
 			"statusLabel",
 			_language.get(

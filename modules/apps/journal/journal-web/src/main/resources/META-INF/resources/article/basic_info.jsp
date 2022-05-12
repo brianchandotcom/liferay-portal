@@ -66,7 +66,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 				).buildString()
 			).build()
 		%>'
-		module="js/SelectFolderButton.es"
+		module="js/SelectFolderButton"
 	/>
 </c:if>
 

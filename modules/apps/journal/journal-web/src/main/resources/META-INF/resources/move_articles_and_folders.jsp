@@ -190,5 +190,5 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 			"selectFolderURL", selectFolderURL
 		).build()
 	%>'
-	module="js/SelectFolderButton.es"
+	module="js/SelectFolderButton"
 />

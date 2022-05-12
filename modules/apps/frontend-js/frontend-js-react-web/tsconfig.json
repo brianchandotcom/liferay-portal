@@ -1,5 +1,5 @@
 {
-	"@generated": "01dabe8f2c355d89dfbc735dfcecc0f3d528256a",
+	"@generated": "d2bae16bb1abb40b56e916e1c8f0373c2845f535",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,9 +13,6 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/frontend-icons-web": [
-				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
-			],
 			"@liferay/frontend-js-state-web": [
 				"../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
 			]
@@ -35,9 +32,6 @@
 		"../../../global.d.ts"
 	],
 	"references": [
-		{
-			"path": "../../frontend-icons/frontend-icons-web"
-		},
 		{
 			"path": "../frontend-js-state-web"
 		}

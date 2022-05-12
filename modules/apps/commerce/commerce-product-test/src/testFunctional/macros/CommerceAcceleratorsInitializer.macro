@@ -214,6 +214,7 @@ definition {
 			value1 = "${productSku}");
 
 		AssertTextEquals(
+			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_NAME",
 			value1 = "${productName}");
 

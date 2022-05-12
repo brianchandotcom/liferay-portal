@@ -854,7 +854,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "${channel2}",
+			key_toggleSwitchLabel = "${commerceChannel2}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();
@@ -870,7 +870,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "${channel1}",
+			key_toggleSwitchLabel = "${commerceChannel1}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();

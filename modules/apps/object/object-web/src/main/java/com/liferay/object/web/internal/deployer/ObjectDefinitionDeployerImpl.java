@@ -37,7 +37,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -199,7 +199,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryItemSelectorView(
 					_itemSelectorViewDescriptorRenderer, objectDefinition,
 					_objectDefinitionLocalService, _objectEntryLocalService,
-					_objectEntryManager, _objectScopeProviderRegistry, _portal),
+					_objectEntryManagerServicesTracker.getObjectEntryManager(
+						objectDefinition.getStorageType()),
+					_objectScopeProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build()),
@@ -381,7 +383,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
-	private ObjectEntryManager _objectEntryManager;
+	private ObjectEntryManagerServicesTracker
+		_objectEntryManagerServicesTracker;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

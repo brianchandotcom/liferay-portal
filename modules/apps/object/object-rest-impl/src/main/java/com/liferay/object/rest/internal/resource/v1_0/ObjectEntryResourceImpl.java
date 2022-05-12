@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -94,14 +95,22 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public void deleteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
 
-		_objectEntryManager.deleteObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		objectEntryManager.deleteObjectEntry(
 			externalReferenceCode, contextCompany.getCompanyId(),
 			_objectDefinition, null);
 	}
 
 	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
-		_objectEntryManager.deleteObjectEntry(_objectDefinition, objectEntryId);
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		objectEntryManager.deleteObjectEntry(_objectDefinition, objectEntryId);
 	}
 
 	@Override
@@ -109,7 +118,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		_objectEntryManager.deleteObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		objectEntryManager.deleteObjectEntry(
 			externalReferenceCode, contextCompany.getCompanyId(),
 			_objectDefinition, scopeKey);
 	}
@@ -118,7 +131,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
 			contextCompany.getCompanyId(), _objectDefinition, null);
 	}
@@ -136,14 +153,22 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntries(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
 			_getDTOConverterContext(null), filter, pagination, search, sorts);
 	}
 
 	@Override
 	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception {
-		return _objectEntryManager.getObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
 			objectEntryId);
 	}
@@ -153,7 +178,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey);
 	}
@@ -165,7 +194,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntries(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
 			aggregation, _getDTOConverterContext(null), filter, pagination,
 			search, sorts);
@@ -175,7 +208,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
-		return _objectEntryManager.addObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.addObjectEntry(
 			_getDTOConverterContext(null), _objectDefinition, objectEntry,
 			null);
 	}
@@ -185,7 +222,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _objectEntryManager.addObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.addObjectEntry(
 			_getDTOConverterContext(null), _objectDefinition, objectEntry,
 			scopeKey);
 	}
@@ -195,7 +236,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _objectEntryManager.addOrUpdateObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, objectEntry, null);
 	}
@@ -206,7 +251,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long relatedObjectEntryId)
 		throws Exception {
 
-		return _objectEntryManager.addObjectRelationshipMappingTableValues(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.addObjectRelationshipMappingTableValues(
 			_getDTOConverterContext(currentObjectEntryId), _objectDefinition,
 			objectRelationshipName, currentObjectEntryId, relatedObjectEntryId);
 	}
@@ -216,7 +265,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _objectEntryManager.updateObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.updateObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
 			objectEntryId, objectEntry);
 	}
@@ -227,7 +280,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		return _objectEntryManager.addOrUpdateObjectEntry(
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		return objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, objectEntry, scopeKey);
 	}
@@ -318,7 +375,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryManager _objectEntryManager;
+	private ObjectEntryManagerServicesTracker
+		_objectEntryManagerServicesTracker;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

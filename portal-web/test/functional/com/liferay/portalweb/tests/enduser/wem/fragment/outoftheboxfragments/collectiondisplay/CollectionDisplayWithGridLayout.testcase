@@ -31,8 +31,6 @@ definition {
 	@description = "This is a test for LPS-111561. The user could configure grid layout of Collection Display."
 	@priority = "5"
 	test ConfigureGridLayoutOfCollectionDisplay {
-		property custom.properties = "feature.flag.LPS-119551=true";
-
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
 				for (var i : list "1,2,3,4,5") {
@@ -92,8 +90,6 @@ definition {
 	@description = "This is a test for LPS-111561. The user could customize grid layout of Collection Display in non-desktop viewport."
 	@priority = "4"
 	test CustomizeGridLayoutOfCollectionDisplayInNonDesktopViewport {
-		property custom.properties = "feature.flag.LPS-119551=true";
-
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
 				for (var i : list "1,2,3,4,5") {
@@ -190,8 +186,6 @@ definition {
 	@description = "This is a test for LPS-111561. The grid layout of Collection Display defined in Desktop viewport should be propagated to other viewports."
 	@priority = "4"
 	test PropagateGridLayoutDefinedInDesktopToOtherViewports {
-		property custom.properties = "feature.flag.LPS-119551=true";
-
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
 				for (var i : list "1,2,3,4,5") {

@@ -151,6 +151,17 @@ definition {
 				locator1 = "FormFields#CHECKBOX");
 		}
 
+		if (isSet(noMultiplePageExperiencesSelector)) {
+			AssertElementNotPresent(
+				key_fieldLabel = "Export Experiences",
+				locator1 = "FormFields#LABEL");
+
+			AssertElementNotPresent(
+				key_fieldName = "exportExperience",
+				key_radioOption = "Default Experience",
+				locator1 = "FormFields#RADIO_OPTION_LABEL");
+		}
+
 		if (isSet(exportFileFormat)) {
 			Select(
 				locator1 = "Select#EXPORT_FILE_FORMAT",

@@ -184,7 +184,8 @@ definition {
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",
-			languageList = "Arabic (Saudi Arabia),Chinese (China),Japanese (Japan),Spanish (Spain)");
+			languageList = "Arabic (Saudi Arabia),Chinese (China),Japanese (Japan),Spanish (Spain)",
+			noMultiplePageExperiencesSelector = "true");
 
 		Translations.assertFileNameFromTempFolder(pageName = "Page Translations-en_US");
 	}

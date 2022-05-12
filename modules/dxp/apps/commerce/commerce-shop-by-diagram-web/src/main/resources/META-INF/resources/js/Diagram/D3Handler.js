@@ -128,7 +128,7 @@ class D3Handler extends DiagramZoomHandler {
 		const x = -pinPositionX * k + width / 2;
 		const y = -pinPositionY * k + height / 2;
 
-		return super._recenterViewport(x, y, duration);
+		return super._recenterViewport(x, y, duration, k);
 	}
 
 	resetActivePinsState() {

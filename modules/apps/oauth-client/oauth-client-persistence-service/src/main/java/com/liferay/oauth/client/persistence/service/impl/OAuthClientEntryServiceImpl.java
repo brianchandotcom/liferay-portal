@@ -74,12 +74,12 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientID)
+			long companyId, String authServerIssuer, String clientId)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryLocalService.getOAuthClientEntry(
-				companyId, authServerIssuer, clientID);
+				companyId, authServerIssuer, clientId);
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntry, ActionKeys.DELETE);
@@ -128,12 +128,12 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientID)
+			long companyId, String authServerIssuer, String clientId)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryLocalService.getOAuthClientEntry(
-				companyId, authServerIssuer, clientID);
+				companyId, authServerIssuer, clientId);
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntry, ActionKeys.VIEW);

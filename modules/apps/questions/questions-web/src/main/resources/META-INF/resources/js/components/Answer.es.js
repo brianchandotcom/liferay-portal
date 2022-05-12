@@ -41,6 +41,7 @@ export default withRouter(
 		editable = true,
 		match: {url},
 		onSubscription,
+		question,
 	}) => {
 		const [comments, setComments] = useState(
 			answer.messageBoardMessages.items
@@ -276,6 +277,7 @@ export default withRouter(
 							editable={editable}
 							entityId={answer.id}
 							onSubscription={onSubscription}
+							question={question}
 							showNewComment={showNewComment}
 							showNewCommentChange={(value) =>
 								setShowNewComment(value)

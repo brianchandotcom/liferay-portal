@@ -23,6 +23,7 @@ import {createCommentQuery} from '../utils/client.es';
 import {getContextLink} from '../utils/utils.es';
 import Comment from './Comment.es';
 import DefaultQuestionsEditor from './DefaultQuestionsEditor.es';
+import SubscritionCheckbox from './SubscribeCheckbox.es';
 
 export default withRouter(
 	({
@@ -34,6 +35,7 @@ export default withRouter(
 			params: {questionId, sectionTitle},
 		},
 		onSubscription,
+		question,
 		showNewComment,
 		showNewCommentChange,
 	}) => {
@@ -41,6 +43,7 @@ export default withRouter(
 
 		const editorRef = useRef('');
 
+		const [allowSubscription, setAllowSubscription] = useState(false);
 		const [isReplyButtonDisable, setIsReplyButtonDisable] = useState(false);
 
 		const [createComment] = useMutation(createCommentQuery);
@@ -78,7 +81,7 @@ export default withRouter(
 				data.createMessageBoardMessageMessageBoardMessage,
 			]);
 
-			onSubscription();
+			onSubscription({allowSubscription});
 		};
 
 		return (
@@ -100,6 +103,13 @@ export default withRouter(
 								onContentLengthValid={setIsReplyButtonDisable}
 								ref={editorRef}
 							/>
+
+							{!question.subscribed && (
+								<SubscritionCheckbox
+									checked={allowSubscription}
+									setChecked={setAllowSubscription}
+								/>
+							)}
 
 							<ClayButton.Group className="c-mt-3" spaced>
 								<ClayButton

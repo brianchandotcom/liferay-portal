@@ -29,70 +29,15 @@ String exceptionErrorMessage = null;
 
 <div class="translation">
 	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
-		<nav class="component-tbar subnav-tbar-light tbar">
-			<clay:container-fluid>
-				<ul class="tbar-nav">
-					<li class="tbar-item tbar-item-expand">
-						<div class="pl-2 tbar-section text-left">
-							<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(importTranslationDisplayContext.getTitle()) %>">
-								<span class="text-truncate"><%= HtmlUtil.escape(importTranslationDisplayContext.getTitle()) %></span>
-							</h2>
-						</div>
-					</li>
-					<li class="tbar-item">
-						<div class="tbar-section text-right">
-							<div class="btn-group">
-								<div class="btn-group-item">
-									<aui:button cssClass="btn-sm" href="<%= importTranslationDisplayContext.getRedirect() %>" type="cancel" />
-								</div>
+		<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>">
 
-								<div class="btn-group-item">
-									<aui:button cssClass="btn-sm" disabled="<%= true %>" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
-								</div>
+			<%
+			exceptionErrorMessage = LanguageUtil.get(request, "please-enter-a-file-with-a-valid-xliff-file-extension");
+			%>
 
-								<div class="btn-group-item">
-									<aui:button cssClass="btn-sm" disabled="<%= true %>" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
-								</div>
-						</div>
-					</li>
-				</ul>
-			</clay:container-fluid>
-		</nav>
+		</liferay-ui:error>
 
-		<clay:container-fluid
-			cssClass="container-view"
-		>
-			<clay:sheet
-				cssClass="translation-import-body-form"
-			>
-				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="please-enter-a-file-with-a-valid-xliff-file-extension">
-
-					<%
-					exceptionErrorMessage = LanguageUtil.get(request, "please-enter-a-file-with-a-valid-xliff-file-extension");
-					%>
-
-				</liferay-ui:error>
-
-				<div>
-					<p class="h3"><liferay-ui:message key="import-files" /></p>
-
-					<p class="text-secondary">
-						<liferay-ui:message key="please-upload-your-translation-files" />
-					</p>
-
-					<div class="mt-4">
-						<p class="h5"><liferay-ui:message key="file-upload" /></p>
-
-						<clay:button
-							disabled="<%= true %>"
-							displayType="secondary"
-							label="select-files"
-							small="<%= true %>"
-						/>
-					</div>
-				</div>
-			</clay:sheet>
-		</clay:container-fluid>
+		<span aria-hidden="true" class="loading-animation"></span>
 
 		<react:component
 			module="js/import-translation/ImportTranslation"

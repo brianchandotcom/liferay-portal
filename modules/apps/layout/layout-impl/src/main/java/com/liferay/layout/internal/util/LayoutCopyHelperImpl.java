@@ -460,11 +460,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyPortletPermissions(
-			List<String> portletIds, long[] segmentsExperiencesIds,
-			Layout sourceLayout, Layout targetLayout)
+			List<String> portletIds, Layout sourceLayout, Layout targetLayout)
 		throws Exception {
-
-		_deletePortletPermissions(targetLayout, segmentsExperiencesIds);
 
 		for (String portletId : portletIds) {
 			String resourceName = PortletIdCodec.decodePortletName(portletId);
@@ -918,6 +915,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
 			}
 			else {
+				_deletePortletPermissions(
+					_targetLayout, _segmentsExperiencesIds);
 
 				// LPS-108378 Copy structure before permissions and preferences
 
@@ -931,8 +930,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_sourceLayout, _segmentsExperiencesIds);
 
 				_copyPortletPermissions(
-					portletIds, _segmentsExperiencesIds, _sourceLayout,
-					_targetLayout);
+					portletIds, _sourceLayout, _targetLayout);
 
 				_copyPortletPreferences(
 					portletIds, _sourceLayout, _targetLayout);

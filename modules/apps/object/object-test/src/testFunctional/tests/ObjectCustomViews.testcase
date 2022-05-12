@@ -689,11 +689,48 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to Default Sort"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchColumns {
 
-		// TODO LPS-152062 CanSearchColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152062",
+			objectName = "CustomObject152062",
+			pluralLabelName = "Custom Objects 152062");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152062");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
+		}
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			ObjectCustomViews.addDefaultSort(
+				columnOption = "${columnName}",
+				sortOption = "Ascending");
+		}
+
+		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+
+			ObjectCustomViews.searchOnDefaultSort(colunmName = "${columnName}");
+
+			ObjectCustomViews.assertColumnPresentOnDefaultSort(
+				colunmName = "${columnName}",
+				sortingLabel = "Ascending");
+		}
 
 	}
 

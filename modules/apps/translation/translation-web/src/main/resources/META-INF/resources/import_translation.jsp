@@ -29,10 +29,6 @@ String exceptionErrorMessage = null;
 
 <div class="translation">
 	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= importTranslationDisplayContext.getRedirect() %>" />
-		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
-
 		<nav class="component-tbar subnav-tbar-light tbar">
 			<clay:container-fluid>
 				<ul class="tbar-nav">
@@ -51,7 +47,7 @@ String exceptionErrorMessage = null;
 								</div>
 
 								<div class="btn-group-item">
-									<aui:button cssClass="btn-sm" disabled="<%= true %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
+									<aui:button cssClass="btn-sm" disabled="<%= true %>" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
 								</div>
 
 								<div class="btn-group-item">
@@ -102,15 +98,21 @@ String exceptionErrorMessage = null;
 			module="js/import-translation/ImportTranslation"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"cancelURL", importTranslationDisplayContext.getRedirect()
-				).put(
 					"errorMessage", exceptionErrorMessage
 				).put(
+					"portletResource", ParamUtil.getString(request, "portletResource")
+				).put(
 					"publishButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getPublishButtonLabel())
+				).put(
+					"redirect", importTranslationDisplayContext.getRedirect()
 				).put(
 					"saveButtonLabel", LanguageUtil.get(resourceBundle, importTranslationDisplayContext.getSaveButtonLabel())
 				).put(
 					"title", HtmlUtil.escape(importTranslationDisplayContext.getTitle())
+				).put(
+					"workflowActionPublish", WorkflowConstants.ACTION_PUBLISH
+				).put(
+					"workflowActionSaveDraft", WorkflowConstants.ACTION_SAVE_DRAFT
 				).put(
 					"workflowPending", importTranslationDisplayContext.isPending()
 				).build()
@@ -118,15 +120,3 @@ String exceptionErrorMessage = null;
 		/>
 	</aui:form>
 </div>
-
-<script>
-	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
-
-	saveDraftBtn.addEventListener('click', () => {
-		var workflowActionInput = document.getElementById(
-			'<portlet:namespace />workflowAction'
-		);
-
-		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
-	});
-</script>

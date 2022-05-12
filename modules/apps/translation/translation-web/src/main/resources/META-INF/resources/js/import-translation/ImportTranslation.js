@@ -24,11 +24,15 @@ import Toolbar from './Toolbar';
 const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
 
 export default function ImportTranslation({
-	cancelURL,
 	errorMessage: initialErrorMessage = '',
+	portletNamespace,
+	portletResource,
 	publishButtonLabel,
+	redirect,
 	saveButtonLabel,
 	title,
+	workflowActionPublish,
+	workflowActionSaveDraft,
 	workflowPending = false,
 }) {
 	const [importFiles, setImportFiles] = useState([]);
@@ -37,6 +41,7 @@ export default function ImportTranslation({
 		workflowPending
 	);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState();
+	const [workflowAction, setWorkflowAction] = useState(workflowActionPublish);
 
 	const inputFileRef = useRef();
 
@@ -49,10 +54,15 @@ export default function ImportTranslation({
 		setErrorMessage('');
 	};
 
+	const handleOnSave = () => {
+		setWorkflowAction(workflowActionSaveDraft);
+	};
+
 	return (
 		<>
 			<Toolbar
-				cancelURL={cancelURL}
+				cancelURL={redirect}
+				onSave={handleOnSave}
 				publishButtonDisabled={publishButtonDisabled}
 				publishButtonLabel={publishButtonLabel}
 				saveButtonDisabled={saveButtonDisabled}
@@ -65,6 +75,24 @@ export default function ImportTranslation({
 					className="translation-import-body-form"
 					size="lg"
 				>
+					<input
+						defaultValue={redirect}
+						name={`${portletNamespace}redirect`}
+						type="hidden"
+					/>
+
+					<input
+						defaultValue={portletResource}
+						name={`${portletNamespace}portletResource`}
+						type="hidden"
+					/>
+
+					<input
+						name={`${portletNamespace}workflowAction`}
+						type="hidden"
+						value={workflowAction}
+					/>
+
 					{errorMessage && (
 						<ClayAlert
 							displayType="danger"
@@ -153,12 +181,14 @@ export default function ImportTranslation({
 }
 
 ImportTranslation.propTypes = {
-	cancelURL: PropTypes.string.isRequired,
 	errorMessage: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
+	portletResource: PropTypes.string.isRequired,
 	publishButtonLabel: PropTypes.string.isRequired,
+	redirect: PropTypes.string.isRequired,
 	saveButtonLabel: PropTypes.string.isRequired,
-	saveDraftBtnId: PropTypes.string.isRequired,
-	submitBtnId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
+	workflowActionPublish: PropTypes.number.isRequired,
+	workflowActionSaveDraft: PropTypes.number.isRequired,
 	workflowPending: PropTypes.bool,
 };

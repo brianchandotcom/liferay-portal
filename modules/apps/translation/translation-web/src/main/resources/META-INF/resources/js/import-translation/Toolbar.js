@@ -18,8 +18,11 @@ import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import React from 'react';
 
+const noop = () => {};
+
 export default function Toolbar({
 	cancelURL,
+	onSave = noop,
 	publishButtonDisabled,
 	publishButtonLabel,
 	saveButtonDisabled,
@@ -56,6 +59,7 @@ export default function Toolbar({
 								<ClayButton
 									disabled={saveButtonDisabled}
 									displayType="secondary"
+									onClick={onSave}
 									small
 									type="submit"
 								>

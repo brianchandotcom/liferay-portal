@@ -13,7 +13,6 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import {getSpritemapPath} from '@liferay/frontend-icons-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -50,7 +49,11 @@ export default function render(
 ) {
 	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
-		const spritemap = getSpritemapPath();
+
+		// Temporary workaround until frontend-icons-web is converted to ESM.
+		// We will replace with an import from frontend-icons-web later.
+
+		const spritemap = (Liferay as any)._ICONS_.spritemap;
 
 		let {componentId} = renderData;
 

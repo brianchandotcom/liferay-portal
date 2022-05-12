@@ -21,6 +21,39 @@ definition {
 		}
 	}
 
+	test AssertAliasCaseInsensitivity {
+		JSONWebcontent.addWebContent(
+			content = "WC WC",
+			groupName = "Guest",
+			title = "WC Title");
+
+		SearchTuning.openResultRankingsAdmin();
+
+		SearchTuning.addResultRanking(searchQuery = "Title");
+
+		SearchTuning.pinResult(assetTitle = "WC Title");
+
+		SearchTuning.configureAliases(addAlias = "abc");
+
+		SearchTuning.configureAliases(addAlias = "ABC");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "abc");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "ABC");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article");
+	}
+
 	@priority = "3"
 	test AssertCannotAddDuplicateQueriesAndAliases {
 		SearchTuning.openResultRankingsAdmin();

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	category = "cookies", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	description = "cookie-banner-configuration-description",
 	id = "com.liferay.cookies.configuration.CookiesBannerConfiguration",
 	localization = "content/Language", name = "cookie-banner-configuration-name"
 )

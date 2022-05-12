@@ -28,7 +28,7 @@ interface IProps {
 	errorMessage: string;
 	observer: Observer;
 	onClose: () => void;
-	onDelete: () => void;
+	onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title: string;
 	token: string;
 }

@@ -34,29 +34,33 @@ function ModalDeleteObjectDefinition({
 		status: {code},
 	} = objectDefinition;
 
-	return hasObjectRelationship ? (
-		<WarningModal
-			observer={observer}
-			onClose={onClose}
-			title={Liferay.Language.get('deletion-not-allowed')}
-		>
-			<div>
-				{Liferay.Language.get(
-					'this-object-cannot-be-deleted-because-it-is-related-to-others'
-				)}
-			</div>
+	if (hasObjectRelationship) {
+		return (
+			<WarningModal
+				observer={observer}
+				onClose={onClose}
+				title={Liferay.Language.get('deletion-not-allowed')}
+			>
+				<div>
+					{Liferay.Language.get(
+						'this-object-cannot-be-deleted-because-it-is-related-to-others'
+					)}
+				</div>
 
-			<div>
-				{Liferay.Language.get(
-					'to-delete-this-object-you-need-first-delete-its-relationships'
-				)}
-			</div>
+				<div>
+					{Liferay.Language.get(
+						'to-delete-this-object-you-need-first-delete-its-relationships'
+					)}
+				</div>
 
-			<div>
-				{Liferay.Language.get('go-to-object-details-relationships')}
-			</div>
-		</WarningModal>
-	) : code === 0 ? (
+				<div>
+					{Liferay.Language.get('go-to-object-details-relationships')}
+				</div>
+			</WarningModal>
+		);
+	}
+
+	return code === 0 ? (
 		<DangerModal
 			errorMessage={Liferay.Language.get(
 				'input-and-object-name-does-not-match'
@@ -112,16 +116,41 @@ function ModalDeleteObjectDefinition({
 }
 
 interface IProps {
-	objectDefinition: any;
+	objectDefinition: {
+		hasObjectRelationship: boolean;
+		id: string;
+		name: string;
+		objectEntriesCount: number;
+		status: {code: number};
+	};
 	observer: Observer;
 	onClose: () => void;
 	onDelete: any;
 }
 
-export default function ModalWithProvider({baseResourceURL}: any) {
-	const [objectDefinition, setObjectDefinition] = useState<any>(null);
+export default function ModalWithProvider({
+	baseResourceURL,
+}: {
+	baseResourceURL: string;
+}) {
+	const [objectDefinition, setObjectDefinition] = useState<{
+		hasObjectRelationship: boolean;
+		id: string;
+		name: string;
+		objectEntriesCount: number;
+		status: {code: number};
+	} | null>(null);
 
-	const getDeleteObjectDefinition = async ({itemData}: any) => {
+	const getDeleteObjectDefinition = async ({
+		itemData,
+	}: {
+		itemData: {
+			id: string;
+			name: string;
+			objectEntriesCount: number;
+			status: {code: number};
+		};
+	}) => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
 				objectDefinitionId: itemData.id,
@@ -130,15 +159,17 @@ export default function ModalWithProvider({baseResourceURL}: any) {
 			})
 		);
 
-		const data = (await response.json()) as {
+		const {
+			hasObjectRelationship,
+			objectEntriesCount,
+		} = (await response.json()) as {
 			hasObjectRelationship: boolean;
 			objectEntriesCount: number;
 		};
-
 		setObjectDefinition({
 			...itemData,
-			hasObjectRelationship: data?.hasObjectRelationship,
-			objectEntriesCount: data?.objectEntriesCount,
+			hasObjectRelationship,
+			objectEntriesCount,
 		});
 	};
 

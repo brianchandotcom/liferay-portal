@@ -29,44 +29,56 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
+
+Map data = editAssetListDisplayContext.getData();
 %>
 
-<clay:container-fluid
-	cssClass="container-view"
->
 
-	<%
-	AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-	%>
+<c:if test='<%= !(boolean)data.get("isSegmentationEnabled") %>'>
+	<clay:stripe
+		displayType="warning"
+		elementClasses="segmentation-is-disabled-warning"
+		message="segmentation-is-disabled.to-enable,-go-to-system-settings-segments-segments-service"
+		title="Warning"
+	/>
+</c:if>
 
-	<clay:row>
-		<clay:col
-			lg="3"
-		>
-			<div>
-				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+	<clay:container-fluid
+		cssClass="container-view"
+	>
 
-				<react:component
-					module="js/components/VariationsNav/index"
-					props="<%= editAssetListDisplayContext.getData() %>"
-				/>
-			</div>
-		</clay:col>
+		<%
+		AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
+		%>
 
-		<clay:col
-			lg="9"
-		>
-			<c:choose>
-				<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
-					<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
-		</clay:col>
-	</clay:row>
-</clay:container-fluid>
+		<clay:row>
+			<clay:col
+				lg="3"
+			>
+				<div>
+					<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+
+					<react:component
+						module="js/components/VariationsNav/index"
+						props="<%= editAssetListDisplayContext.getData() %>"
+					/>
+				</div>
+			</clay:col>
+
+			<clay:col
+				lg="9"
+			>
+				<c:choose>
+					<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
+						<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
+			</clay:col>
+		</clay:row>
+	</clay:container-fluid>
 
 <script>
 	<portlet:actionURL name="/asset_list/add_asset_list_entry_variation" var="addAssetListEntryVariationURL">

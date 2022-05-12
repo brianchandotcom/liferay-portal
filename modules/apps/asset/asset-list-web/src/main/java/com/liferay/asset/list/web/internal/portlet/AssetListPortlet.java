@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 
 import java.io.IOException;
 
@@ -99,7 +100,7 @@ public class AssetListPortlet extends MVCPortlet {
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider, _itemSelector,
-				renderRequest, renderResponse,
+				renderRequest, renderResponse, _segmentsConfigurationProvider,
 				_getUnicodeProperties(assetListDisplayContext)));
 		renderRequest.setAttribute(
 			AssetListWebKeys.INFO_COLLECTION_PROVIDER_DISPLAY_CONTEXT,
@@ -182,5 +183,8 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
 }

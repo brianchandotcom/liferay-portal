@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -82,6 +83,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
@@ -116,12 +118,15 @@ public class EditAssetListDisplayContext {
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		ItemSelector itemSelector, PortletRequest portletRequest,
-		PortletResponse portletResponse, UnicodeProperties unicodeProperties) {
+		PortletResponse portletResponse,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
+		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
+		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 		_unicodeProperties = unicodeProperties;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
@@ -591,6 +596,9 @@ public class EditAssetListDisplayContext {
 
 				return Validator.isNotNull(assetListEntry.getAssetEntryType());
 			}
+		).put(
+			"isSegmentationEnabled",
+			_isSegmentationEnabled(_themeDisplay.getCompanyId())
 		).put(
 			"openSelectSegmentsEntryDialogMethod",
 			() -> {
@@ -1312,6 +1320,16 @@ public class EditAssetListDisplayContext {
 		return typeSettings;
 	}
 
+	private boolean _isSegmentationEnabled(long companyId) {
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			return false;
+		}
+	}
+
 	private void _setDDMStructure() throws Exception {
 		_ddmStructureDisplayFieldValue = StringPool.BLANK;
 		_ddmStructureFieldLabel = StringPool.BLANK;
@@ -1390,6 +1408,7 @@ public class EditAssetListDisplayContext {
 	private final PortletResponse _portletResponse;
 	private long[] _referencedModelsGroupIds;
 	private SearchContainer<AssetListEntryAssetEntryRel> _searchContainer;
+	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private Long _segmentsEntryId;
 	private long[] _selectedSegmentsEntryIds;
 	private String _selectSegmentsEntryURL;

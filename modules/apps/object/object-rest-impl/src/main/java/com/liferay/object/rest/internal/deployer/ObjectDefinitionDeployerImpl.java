@@ -21,7 +21,7 @@ import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionC
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectFieldExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -163,7 +163,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					objectDefinition, _objectEntryManager,
+					objectDefinition,
+					_objectEntryManagerServicesTracker.getObjectEntryManager(
+						objectDefinition.getStorageType()),
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
 					objectScopeProvider),
@@ -298,7 +300,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ComponentFactory _objectEntryApplicationComponentFactory;
 
 	@Reference
-	private ObjectEntryManager _objectEntryManager;
+	private ObjectEntryManagerServicesTracker
+		_objectEntryManagerServicesTracker;
 
 	@Reference(
 		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource)"

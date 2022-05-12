@@ -1,0 +1,181 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+    @description = "LPS-151765 - Verify if is possible to create Relationship one to many on System Object Account and to relate with the Custom Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateRelationshipRelatedWithCustomObject {
+
+		// TODO LPS-153518 CanCreateRelationshipRelatedWithCustomObject pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to edit Title Field the System Object Account"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EditTitleFieldOnSystemAccount {
+
+		// TODO LPS-153519 EditTitleFieldOnSystemAccount pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if there are the fields Name, Description and Type as default on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewFieldsLabelByDefault {
+
+		// TODO LPS-153520 CanViewFieldsLabelByDefault pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is not possible to edit default fields on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotEditDefaultFields {
+
+		// TODO LPS-153521 CannotEditDefaultFields pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is not possible to delete the fields on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotDeleteDefaultFields {
+
+		// TODO LPS-153522 CannotDeleteDefaultFields pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if the fields Name and Type are mandatory on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewNameAndTypeAsMandatoryFields {
+
+		// TODO LPS-153523 CanViewNameAndTypeAsMandatoryFields pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to create Custom Action on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateActionOnSystemAccount {
+
+		// TODO LPS-153524 CanCreateActionOnSystemAccount pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to choose by Type Field on entries, when Title Field is Type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewTypeOnFieldEntry {
+
+		// TODO LPS-153526 CanViewTypeOnFieldEntry pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to choose by Name Field on entries, when Title Field is Name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewNameOnFieldEntry {
+
+		// TODO LPS-153527 CanViewNameOnFieldEntry pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to choose by Description Field on entries, when Title Field is Description"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDescriptionOnFieldEntry {
+
+		// TODO LPS-153528 CanViewDescriptionOnFieldEntry pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible a Custom User to view the System Object Account, if it to have permission"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUserViewSystemAccountWhenAllowed {
+
+		// TODO LPS-153529 CanUserViewSystemAccountWhenAllowed pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if is possible to view the Relationship by Account on Custom Object Entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewRelationshipOnCustomObjectEntries {
+
+		// TODO LPS-153530 CanViewRelationshipOnCustomObjectEntries pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WidgetButtonDisabledByDefault {
+
+		// TODO LPS-153531 WidgetButtonDisabledByDefault pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if Prevent deletion type of Relationship One to Many can’t delete that is related to another one"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteRelationshipWhenDeletionTypeIsPrevent {
+
+		// TODO LPS-153532 CannotDeleteRelationshipWhenDeletionTypeIsPrevent pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
+
+		// TODO LPS-153533 CannotDeleteRelationshipWhenDeletionTypeIsDisassociate pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
+
+		// TODO LPS-153534 CanDeleteRelationshipWhenDeletionTypeIsCascade pending implementation
+
+	}
+
+    @description = "LPS-151765 - Verify is possible to associate each types of Accounts with Custom Object (Bussiness, Guest and Person)"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssociateAnyTypeOfAccount {
+
+		// TODO LPS-153535 CanAssociateAnyTypeOfAccount pending implementation
+
+	}
+
+
+
+}

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AddChannelMVCRenderCommand extends BaseAnalyticsMVCRenderCommand {
 
 	@Override
-	protected String getJspPath() {
+	protected String getDefaultJspPath() {
 		return "/add_channel.jsp";
 	}
 

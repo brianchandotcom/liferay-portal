@@ -1,0 +1,72 @@
+@component-name = "portal-security"
+definition {
+
+	property custom.properties = "feature.flag.LPS-142518=true";
+	property portal.release = "quarantine";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Cookies";
+
+	setUp {
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-9 Verify that Accept All at the Cookie Banner could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookiesBannerAcceptAllSelected {
+		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerAcceptAllSelected";
+
+		task ("Given: User click on Accept all") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBanner.cookiesBannerAcceptAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-152844. Combined AC-1, AC-2, AC-3, AC-4. Verify that Cookie Banner could be enabled, and customized."
+	test CookiesBannerCouldBeEnabledAndCustomized {
+		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerCouldBeEnabledAndCustomized";
+
+		task ("Given: a site configured to show the Banner") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBannerAdmin.setCustomTextForAllFields(text = "CUSTOM");
+		}
+
+		task ("When: the End User first visits the site") {
+			CookieHelper.siteVisit();
+		}
+
+		task ("Then: they see the Banner text as the Description is configured for the Banner in the site administration.") {
+			CookieBanner.verifyCustomTextsArePresent(key_text = "CUSTOM");
+		}
+
+		task ("And: they see the 'Decline All' button on the right side of the Banner, next to the 'Accept All' button.") {
+			CookieBanner.verifyDeclineAllButtonIsPresent();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-10 Verify that Decline All at the Cookie Banner could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookiesBannerDeclineAllSelected {
+		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerDeclineAllSelected";
+
+		task ("Given: User click on Decline all") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBanner.cookiesBannerDeclineAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
+			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+	}
+
+}

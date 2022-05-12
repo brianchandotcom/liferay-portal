@@ -1,0 +1,62 @@
+@component-name = "portal-security"
+definition {
+
+	property custom.properties = "feature.flag.LPS-142518=true";
+	property portal.release = "quarantine";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Cookies";
+
+	setUp {
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-1, TC-2 and TC-3: Verify that Cookie Banner is visible with the options configured by the site admin."
+	@priority = "5"
+	test CookieBannerAndCookieConsentPanelElementsAreVisible {
+		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerAndCookieConsentPanelElementsAreVisible";
+
+		task ("Given: Cookie banner and Cookie Consent portlet are present") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBanner.verifyAllElementsArePresent();
+		}
+
+		task ("When: User accept all cookies at the Cookie Consent portlet.") {
+			CookieConsentPanel.cookiesAcceptAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("And: Cookie Consent portlet in the popup is closed.") {
+			CookieBanner.checkCookieConsentPanelIsNotVisible();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-8 Verify that cookies will have 6 months of lifetime when they are accepted or declined. Blocked by LRCI-2917."
+	@ignore = "true"
+	@priority = "5"
+	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
+		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+
+		task ("Given: Cookie Banner is present on the Site.") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBanner.cookiesBannerAcceptAll();
+		}
+
+		task ("When: User accepts all cookie categories") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("Then: Cookie category related cookies are saved with 6 months as expiration time.") {
+			CookieBanner.checkIfCookiesHasSixMonthsAsExpirationDate();
+		}
+	}
+
+}

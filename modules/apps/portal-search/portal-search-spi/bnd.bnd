@@ -13,4 +13,5 @@ Export-Package:\
 	com.liferay.portal.search.spi.model.result.contributor,\
 	com.liferay.portal.search.spi.reindexer,\
 	com.liferay.portal.search.spi.searcher,\
-	com.liferay.portal.search.spi.settings
+	com.liferay.portal.search.spi.settings,\
+	com.liferay.portal.search.spi.suggestions

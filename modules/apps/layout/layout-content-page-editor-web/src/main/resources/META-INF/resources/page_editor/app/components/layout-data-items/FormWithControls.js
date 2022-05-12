@@ -31,11 +31,7 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 
 	return (
 		<form onSubmit={(event) => event.preventDefault()} ref={ref}>
-			<ContainerWithControls
-				{...rest}
-				isDropTarget={isMapped}
-				item={item}
-			>
+			<ContainerWithControls {...rest} item={item}>
 				{isEmpty || !isMapped ? (
 					<FormEmptyState isMapped={isMapped} />
 				) : (

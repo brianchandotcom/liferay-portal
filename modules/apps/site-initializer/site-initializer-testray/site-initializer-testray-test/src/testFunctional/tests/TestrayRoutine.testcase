@@ -27,30 +27,42 @@ definition {
 		}
 	}
 
-	@description = "LPS-150166 - Verify the user can enter a Routine."
+	@description = "This is a test for LPS-150166 - Verify the user can enter a Routine."
 	@priority = "5"
 	test CanEnterARoutine {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and assert if the Routine was created") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		Testray.assertCreatedRoutine(key_name = "Routine Test");
+			Testray.assertCreatedRoutine(key_name = "Routine Test");
+		}
 	}
 
-	@description = "LPS-150165 - Verify the user can access a project on Project Directory."
+	@description = "This is a test for LPS-150165 - Verify the user can access a project on Project Directory."
 	@priority = "5"
 	test CanEnterOnRoutineTab {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+		}
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Routines");
+		task ("Verify the user can access a project on Project Directory") {
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Routines");
+		}
 	}
 
 }

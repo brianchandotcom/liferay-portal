@@ -400,6 +400,21 @@ paths:
                                 type: array
             tags: ["Region"]
     "/regions/{regionId}":
+        delete:
+            operationId: deleteRegion
+            parameters:
+                - in: path
+                  name: regionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Region"]
         get:
             operationId: getRegion
             parameters:

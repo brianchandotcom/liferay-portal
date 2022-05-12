@@ -20,6 +20,7 @@ import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {REQUIRED_FIELD_DATA} from '../../config/constants/formModalData';
+import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
@@ -51,12 +52,18 @@ export default function TopperItemActions({item}) {
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
+	const isInputFragment =
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+		fragmentEntryLinks[item.config.fragmentEntryLinkId]
+			.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
+
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
 		if (
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
-			!hasDropZoneChild(item, layoutData)
+			!hasDropZoneChild(item, layoutData) &&
+			!isInputFragment
 		) {
 			items.push({
 				action: () => {
@@ -138,6 +145,7 @@ export default function TopperItemActions({item}) {
 		dispatch,
 		fragmentEntryLinks,
 		hasInputChild,
+		isInputFragment,
 		item,
 		layoutData,
 		segmentsExperienceId,

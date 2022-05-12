@@ -46,7 +46,7 @@ definition {
 				value1 = "Include \&quot;Decline All\&quot; Button");
 		}
 
-		AssertClick(
+		AssertClick.assertTextClickNoMouseOver(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
@@ -80,23 +80,29 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@description = "Verify all element is present at Cookie Banner"
-	macro verifyAllConfigurationElementsArePresent {
+	@description = "Verify all elements are present and configured at Cookie Banner"
+	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_DESCRIPTION");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#ENABLED");
+		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#ENABLED");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");
+		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#CONTENT");
+		AssertTextEquals(
+			locator1 = "CookieBannerAdmin#CONTENT",
+			value1 = "${text}");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK");
+		AssertTextEquals(
+			locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",
+			value1 = "${text}");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT");
+		AssertTextEquals(
+			locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT",
+			value1 = "${text}");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON");
+		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON");
 	}
 
 }

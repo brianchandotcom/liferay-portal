@@ -12,6 +12,7 @@
 import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Liferay} from '../../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
@@ -68,7 +69,9 @@ const DXPCloud = () => {
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
-					downloadTextHelper="To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version."
+					downloadTextHelper={i18n.translate(
+						'to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version'
+					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}
 					productName="DXP"

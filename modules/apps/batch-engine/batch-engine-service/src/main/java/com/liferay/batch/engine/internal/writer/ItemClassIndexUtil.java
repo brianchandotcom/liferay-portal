@@ -46,9 +46,8 @@ public class ItemClassIndexUtil {
 					for (Field field : clazz.getDeclaredFields()) {
 						Class<?> valueClass = field.getType();
 
-						if (!valueClass.isPrimitive() &&
-							!_objectTypes.contains(valueClass) &&
-							!Enum.class.isAssignableFrom(valueClass)) {
+						if (!_isExportableValue(valueClass) &&
+							!isExportableArray(valueClass)) {
 
 							continue;
 						}
@@ -69,6 +68,46 @@ public class ItemClassIndexUtil {
 
 				return fieldMap;
 			});
+	}
+
+	public static boolean isExportableArray(Class<?> valueClass) {
+		if (!valueClass.isArray()) {
+			return false;
+		}
+
+		ClassLoader classLoader = _getClassLoader(valueClass);
+
+		String className = valueClass.getName();
+
+		try {
+			classLoader.loadClass(
+				className.substring(2, className.length() - 1));
+
+			return true;
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			return false;
+		}
+	}
+
+	private static ClassLoader _getClassLoader(Class<?> clazz) {
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		if (classLoader != null) {
+			return classLoader;
+		}
+
+		return ItemClassIndexUtil.class.getClassLoader();
+	}
+
+	private static boolean _isExportableValue(Class<?> valueClass) {
+		if (!valueClass.isPrimitive() && !_objectTypes.contains(valueClass) &&
+			!Enum.class.isAssignableFrom(valueClass)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =

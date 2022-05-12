@@ -41,13 +41,14 @@ public class ColumnValuesExtractor {
 			if (field != null) {
 				unsafeFunctions.add(
 					item -> {
-						Object value = field.get(item);
+						if (ItemClassIndexUtil.isExportableArray(
+								field.getType()) ||
+							(field.get(item) == null)) {
 
-						if (value == null) {
 							return StringPool.BLANK;
 						}
 
-						return value;
+						return field.get(item);
 					});
 
 				continue;

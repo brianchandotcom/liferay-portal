@@ -68,11 +68,10 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 
 	const nodeByName = (items, name) => {
 		return items.reduce(function reducer(acc, item) {
-			if (item.name.match(new RegExp(name, 'i'))) {
+			if (item.name?.toLowerCase().includes(name.toLowerCase())) {
 				acc.push(item);
 			}
-
-			if (item.children) {
+			else if (item.children) {
 				acc.concat(item.children.reduce(reducer, acc));
 			}
 

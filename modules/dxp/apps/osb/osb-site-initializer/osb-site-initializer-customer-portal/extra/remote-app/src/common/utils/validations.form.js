@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import i18n from '../../common/I18n';
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const LOWCASE_NUMBERS_REGEX = /^[0-9a-z]+$/;
@@ -15,55 +16,55 @@ const FRIENDLY_URL_REGEX = /^\/[^. "]+[0-9a-z]+[^A-Z]$/;
 
 const required = (value) => {
 	if (!value) {
-		return 'This field is required.';
+		return i18n.translate('this-field-is-required');
 	}
 };
 
 const maxLength = (value, max) => {
 	if (value.length > max) {
-		return `This field exceeded ${max} characters.`;
+		return i18n.sub('this-field-exceeded-x-characters', [max]);
 	}
 };
 
 const isValidEmail = (value, bannedEmailDomains) => {
 	if (value && !EMAIL_REGEX.test(value)) {
-		return 'Please insert a valid e-mail.';
+		return i18n.translate('please-insert-a-valid-e-mail');
 	}
 
 	if (bannedEmailDomains.length) {
-		return 'E-mail domain not allowed.';
+		return i18n.translate('e-mail-domain-not-allowed');
 	}
 };
 
 const isValidEmailDomain = (bannedEmailDomains) => {
 	if (bannedEmailDomains.length) {
-		return 'Domain not allowed.';
+		return i18n.translate('domain-not-allowed');
 	}
 };
 
 const isLowercaseAndNumbers = (value) => {
 	if (value && !LOWCASE_NUMBERS_REGEX.test(value)) {
-		return 'Lowercase letters and numbers only.';
+		return i18n.translate('lowercase-letters-and-numbers-only');
 	}
 };
 
 const isValidFriendlyURL = (value) => {
 	if (value && value[0] !== '/') {
-		return 'The Workspace URL should start with "/".';
+		return i18n.translate('the-workspace-url-should-start-with-/');
 	}
 
 	if (value && value.indexOf(' ') > 0) {
-		return 'The Workspace URL most not have spaces.';
+		return i18n.translate('the-workspace-url-most-not-have-spaces');
 	}
 
 	if (value && !FRIENDLY_URL_REGEX.test(value)) {
-		return 'Lowercase letters, numbers and dashes only.';
+		return i18n.translate('lowercase-letters-numbers-and-dashes-only');
 	}
 };
 
 const isValidHost = (value) => {
 	if (value.indexOf(' ') > 0) {
-		return 'The Workspace Host most not have spaces.';
+		return i18n.translate('the-workspace-host-most-not-have-spaces');
 	}
 };
 
@@ -76,13 +77,13 @@ const isValidIp = (value) => {
 
 	for (let i = 0; i < ipArray.length; i++) {
 		if (ipArray[i].indexOf(' ') > 0) {
-			return 'The Ip most not have spaces.';
+			return i18n.translate('the-ip-most-not-have-spaces');
 		}
 
 		if (
 			!/^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$/.test(ipArray[i])
 		) {
-			return 'Invalid IP.';
+			return i18n.translate('invalid-ip');
 		}
 	}
 };
@@ -96,11 +97,11 @@ const isValidMac = (value) => {
 
 	for (let i = 0; i < macArray.length; i++) {
 		if (macArray[i].indexOf(' ') > 0) {
-			return 'The Mac most not have spaces.';
+			return i18n.translate('the-mac-most-not-have-spaces');
 		}
 
 		if (!/^([0-9A-F]{2}[.:-]){5}[0-9A-F]{2}$/i.test(macArray[i])) {
-			return 'Invalid Mac.';
+			return i18n.translate('invalid-mac');
 		}
 	}
 };

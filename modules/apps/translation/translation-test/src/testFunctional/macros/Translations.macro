@@ -654,6 +654,16 @@ definition {
 			locator1 = "Button#ANY_TITLE");
 	}
 
+	macro unzipTranslationFile {
+		if (contains("${fileName}", " ")) {
+			var fileName = StringUtil.replace("${fileName}", " ", "*");
+		}
+
+		AntCommand(
+			locator1 = "build-test-translation.xml",
+			value1 = "unzip-translation-file -DfileName=${fileName}");
+	}
+
 	macro updateTranslateFileID {
 		if (contains("${translationZipFileName}", " ")) {
 			var translationZipFileName = StringUtil.replace("${translationZipFileName}", " ", "*");

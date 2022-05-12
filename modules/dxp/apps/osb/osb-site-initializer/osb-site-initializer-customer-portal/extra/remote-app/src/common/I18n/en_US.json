@@ -273,5 +273,19 @@
 	"your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.",
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
-	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details."
+	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"there-was-an-unexpected-error-while-attempting-to-deactivate-keys-please-try-again-in-a-few-moments": "There was an unexpected error while attempting to deactivate keys. Please try again in a few moments",
+	"to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size": "To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size",
+	"virtual-cluster-x-nodes": "Virtual Cluster ({0} nodes)",
+	"x-copied-to-clipboard": "{0} copied to clipboard",
+	"x-keys-selected": "{0} Keys Selected",
+	"instance-size-x": "Instance Size: {0}",
+	"key-activation-available-x-of-x": "Key activation available: {0} of {1}",
+	"next": "Next",
+	"activation-key-s-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated": "Activation Key(s) will be valid indefinitely starting {0} or until manually deactivated.",
+	"activation-key-s-will-be-valid-x-x": "Activation Key(s) will be valid {0} - {1}",
+	"maximum-number-of-activation-keys-reached-for-this-subscription": "Maximum number of Activation Keys reached for this subscription.",
+	"previous": "Previous",
+	"generate-cluster-x-keys": "Generate Cluster ({0} Keys)",
+	"set-up-dxp-cloud": "Set up DXP Cloud"
 }

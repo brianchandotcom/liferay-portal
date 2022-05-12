@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.CountryNumberException;
 import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.CountryConstants;
 import com.liferay.portal.kernel.model.CountryLocalizationTable;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.model.Organization;
@@ -66,9 +65,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(
-			CountryConstants.DEFAULT_COUNTRY_ID, serviceContext.getCompanyId(),
-			a2, a3, name, number);
+		_validate(-1, serviceContext.getCompanyId(), a2, a3, name, number);
 
 		long countryId = counterLocalService.increment();
 

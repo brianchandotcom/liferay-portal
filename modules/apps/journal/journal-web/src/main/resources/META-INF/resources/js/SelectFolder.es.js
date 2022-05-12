@@ -16,7 +16,6 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {Treeview} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
@@ -55,19 +54,11 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			{Liferay.FeatureFlags['LPS-144630'] ? (
-				<FolderTree
-					filterQuery={filterQuery}
-					handleSelectionChange={handleSelectionChange}
-					items={nodes}
-				/>
-			) : (
-				<OldFolderTree
-					filterQuery={filterQuery}
-					handleSelectionChange={handleSelectionChange}
-					nodes={nodes}
-				/>
-			)}
+			<FolderTree
+				filterQuery={filterQuery}
+				handleSelectionChange={handleSelectionChange}
+				items={nodes}
+			/>
 		</ClayLayout.ContainerFluid>
 	);
 };
@@ -135,41 +126,6 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 				</ClayTreeView.Item>
 			)}
 		</ClayTreeView>
-	);
-}
-
-function OldFolderTree({filterQuery, handleSelectionChange, nodes}) {
-	const nodesById = useMemo(() => {
-		const result = {};
-
-		function visit(node) {
-			result[node.id] = node;
-
-			if (node.children) {
-				node.children.forEach(visit);
-			}
-		}
-
-		nodes.forEach(visit);
-
-		return result;
-	}, [nodes]);
-
-	const onSelectedNodesChange = (selectedNodeIds) => {
-		const node = nodesById[[...selectedNodeIds][0]];
-
-		if (node) {
-			handleSelectionChange({id: node.id, name: node.name});
-		}
-	};
-
-	return (
-		<Treeview
-			NodeComponent={Treeview.Card}
-			filter={filterQuery}
-			nodes={nodes}
-			onSelectedNodesChange={onSelectedNodesChange}
-		/>
 	);
 }
 

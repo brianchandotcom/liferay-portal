@@ -53,6 +53,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Override
+	public void deleteRegion(Long regionId) throws Exception {
+		_regionService.deleteRegion(regionId);
+	}
+
+	@Override
 	public Region getCountryRegionByRegionCode(
 			Long countryId, String regionCode)
 		throws Exception {

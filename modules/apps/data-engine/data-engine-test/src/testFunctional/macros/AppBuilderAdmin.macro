@@ -506,7 +506,7 @@ definition {
 	macro validateIfSearchItemIsFound {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "1 Results for ${itemName}");
+			value1 = "1 Result for ${itemName}");
 	}
 
 	macro validateIfSearchItemIsNotFound {

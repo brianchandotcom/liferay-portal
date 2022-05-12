@@ -89,7 +89,7 @@ definition {
 		task ("Then user can only view Overridden keys") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for");
+				value1 = "1 Result for");
 
 			AssertElementPresent(locator1 = "LanguageOverride#FILTER_BY_ANY_LANGUAGE_FILTER_LABEL");
 
@@ -182,7 +182,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for &quot;2-synced-contact-data&quot;");
+				value1 = "1 Result for &quot;2-synced-contact-data&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "2-synced-contact-data",
@@ -219,7 +219,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message and search for translations") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for &quot;O texto contÃƒÂ©m erro&quot;");
+				value1 = "1 Result for &quot;O texto contÃƒÂ©m erro&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "text-contains-error",
@@ -239,7 +239,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for &quot;Le texte contient une erreur&quot;");
+				value1 = "1 Result for &quot;Le texte contient une erreur&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "text-contains-error",

@@ -1168,7 +1168,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "1 Results for &quot;Depot&quot;");
+			value1 = "1 Result for &quot;Depot&quot;");
 
 		Search.searchCP(searchTerm = "No View Permissions");
 

@@ -395,7 +395,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for &quot;${imageFileName}&quot;");
+			value1 = "1 Result for &quot;${imageFileName}&quot;");
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
@@ -432,7 +432,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for &quot;${imageFileName}&quot;");
+			value1 = "1 Result for &quot;${imageFileName}&quot;");
 
 		LexiconCard.viewCardPresent(card = "${imageFileName}");
 

@@ -76,7 +76,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Results for &quot;Guest&quot;");
+		CalendarPermissions.viewSearchResult(searchResults = "1 Result for &quot;Guest&quot;");
 
 		CalendarPermissions.cleanSearchResult();
 
@@ -90,7 +90,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Results for &quot;Guest&quot;");
+		CalendarPermissions.viewSearchResult(searchResults = "1 Result for &quot;Guest&quot;");
 
 		CalendarPermissions.viewPermissionsRoleName(roleName = "Guest");
 

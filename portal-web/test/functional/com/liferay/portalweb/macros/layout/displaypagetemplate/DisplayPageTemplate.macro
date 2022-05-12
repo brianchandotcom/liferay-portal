@@ -111,7 +111,7 @@ definition {
 
 						AssertTextEquals(
 							locator1 = "Search#SEARCH_INFO",
-							value1 = "1 Results for &quot;${searchTerm}&quot;");
+							value1 = "1 Result for &quot;${searchTerm}&quot;");
 					}
 
 					Click(

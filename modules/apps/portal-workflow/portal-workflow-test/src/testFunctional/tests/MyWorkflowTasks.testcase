@@ -861,7 +861,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry Title");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;Blogs Entry Title&quot;",
+			key_resultBarMessage = "1 Result for &quot;Blogs Entry Title&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -879,7 +879,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;Blogs Entry&quot;",
+			key_resultBarMessage = "1 Result for &quot;Blogs Entry&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -897,7 +897,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;Review&quot;",
+			key_resultBarMessage = "1 Result for &quot;Review&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -918,7 +918,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;Review&quot;",
+			key_resultBarMessage = "1 Result for &quot;Review&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -936,7 +936,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "New Blog Title");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;New Blog Title&quot;",
+			key_resultBarMessage = "1 Result for &quot;New Blog Title&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -957,7 +957,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Results for &quot;Blogs Entry&quot;",
+			key_resultBarMessage = "1 Result for &quot;Blogs Entry&quot;",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 

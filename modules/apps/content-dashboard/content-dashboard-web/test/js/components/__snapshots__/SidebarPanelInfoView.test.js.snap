@@ -52,7 +52,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
           <p
             class="c-mb-1 text-secondary"
           >
-            Basic Web Content
+            Web Content Article - Basic Web Content
           </p>
           <div
             class="c-mt-2"

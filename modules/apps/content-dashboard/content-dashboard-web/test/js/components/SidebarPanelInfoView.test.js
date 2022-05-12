@@ -53,7 +53,9 @@ describe('SidebarPanelInfoView', () => {
 		);
 
 		expect(getByText('Basic Web Content Title')).toBeInTheDocument();
-		expect(getByText('Basic Web Content')).toBeInTheDocument();
+		expect(
+			getByText('Web Content Article - Basic Web Content')
+		).toBeInTheDocument();
 		expect(getByText('version 1.6')).toBeInTheDocument();
 		expect(getByText('Approved')).toBeInTheDocument();
 		expect(getByText('version 1.7')).toBeInTheDocument();
@@ -230,7 +232,7 @@ describe('SidebarPanelInfoView', () => {
 			previewFigureTag.classList.contains('document-preview-figure')
 		).toBe(true);
 
-		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('Mocked description')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
 		expect(getByText('Size')).toBeInTheDocument();
@@ -254,7 +256,9 @@ describe('SidebarPanelInfoView', () => {
 		).toBe(true);
 
 		expect(getByText('Mocked description')).toBeInTheDocument();
-		expect(getByText('External Video Shortcut')).toBeInTheDocument();
+		expect(
+			getByText('Document - External Video Shortcut')
+		).toBeInTheDocument();
 
 		expect(queryByText('download')).not.toBeInTheDocument();
 		expect(queryByText('size')).not.toBeInTheDocument();
@@ -280,7 +284,7 @@ describe('SidebarPanelInfoView', () => {
 			container.getElementsByClassName('lexicon-icon-copy').length
 		).toBe(1);
 
-		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
 
 		expect(

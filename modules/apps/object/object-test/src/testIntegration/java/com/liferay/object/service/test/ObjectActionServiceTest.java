@@ -236,6 +236,7 @@ public class ObjectActionServiceTest {
 			objectAction = _objectActionService.updateObjectAction(
 				objectAction.getObjectActionId(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), new UnicodeProperties());
 		}
 		finally {

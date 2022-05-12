@@ -86,7 +86,8 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 	@Override
 	public ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name,
+			String description, String name, String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
@@ -99,6 +100,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 
 		return objectActionLocalService.updateObjectAction(
 			objectActionId, active, conditionExpression, description, name,
+			objectActionExecutorKey, objectActionTriggerKey,
 			parametersUnicodeProperties);
 	}
 

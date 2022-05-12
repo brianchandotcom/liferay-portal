@@ -24,6 +24,18 @@ definition {
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
+	macro assertProjectDescription {
+		AssertElementPresent(
+			key_value = "${value}",
+			locator1 = "Testray#DESCRIPTION_PROJECT");
+	}
+
+	macro assertProjectName {
+		AssertElementPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
 	macro assertProjectTitleHeader {
 		AssertElementPresent(
 			key_projectName = "${projectName}",
@@ -203,18 +215,6 @@ definition {
 		AssertElementPresent(
 			key_rowValue = "${rowValue}",
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
-	}
-
-	macro assertProjectName {
-		AssertElementPresent(
-			key_projectName = "${key_name}",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
-	}
-
-	macro assertProjectDescription {
-		AssertElementPresent(
-			key_value = "${value}",
-			locator1 = "Testray#DESCRIPTION_PROJECT");
 	}
 
 }

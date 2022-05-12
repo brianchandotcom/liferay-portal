@@ -35,26 +35,47 @@ public class MeasurementUnit implements Cloneable, Serializable {
 		return MeasurementUnitSerDes.toDTO(json);
 	}
 
-	public Long getGroupId() {
-		return groupId;
+	public Long getCompanyId() {
+		return companyId;
 	}
 
-	public void setGroupId(Long groupId) {
-		this.groupId = groupId;
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
-	public void setGroupId(
-		UnsafeSupplier<Long, Exception> groupIdUnsafeSupplier) {
+	public void setCompanyId(
+		UnsafeSupplier<Long, Exception> companyIdUnsafeSupplier) {
 
 		try {
-			groupId = groupIdUnsafeSupplier.get();
+			companyId = companyIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long groupId;
+	protected Long companyId;
+
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
 
 	public Long getId() {
 		return id;
@@ -176,15 +197,15 @@ public class MeasurementUnit implements Cloneable, Serializable {
 
 	protected Double rate;
 
-	public Integer getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Integer type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<Integer, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -193,7 +214,7 @@ public class MeasurementUnit implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer type;
+	protected String type;
 
 	@Override
 	public MeasurementUnit clone() throws CloneNotSupportedException {

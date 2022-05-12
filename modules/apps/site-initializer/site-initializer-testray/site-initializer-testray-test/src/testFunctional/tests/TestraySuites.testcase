@@ -45,7 +45,7 @@ definition {
 	@priority = "5"
 	test CanEnterASuite {
 		property portal.upstream = "quarantine";
-		
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");

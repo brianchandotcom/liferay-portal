@@ -34,7 +34,6 @@ definition {
 		}
 
 		task ("Create Project and verify if is possible to go the Overview tab") {
-
 			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
 			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");

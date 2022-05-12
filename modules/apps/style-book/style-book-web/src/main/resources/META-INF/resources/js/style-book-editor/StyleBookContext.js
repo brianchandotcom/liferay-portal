@@ -12,9 +12,19 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
 import React, {useContext, useReducer} from 'react';
 
+import {
+	LOADING,
+	SET_DRAFT_STATUS,
+	SET_PREVIEW_LAYOUT,
+	SET_PREVIEW_LAYOUT_TYPE,
+	SET_TOKEN_VALUE,
+} from './constants/actionTypes';
+import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import reducer from './reducer';
+import saveDraft from './saveDraft';
 
 const StyleBookDispatchContext = React.createContext(() => {});
 export const StyleBookStoreContext = React.createContext({
@@ -59,4 +69,59 @@ export function usePreviewLayout() {
 
 export function usePreviewLayoutType() {
 	return useContext(StyleBookStoreContext).previewLayoutType;
+}
+
+export function useSaveTokenValue() {
+	const dispatch = useDispatch();
+	const frontendTokensValues = useFrontendTokensValues();
+
+	return (name, value) => {
+		dispatch({
+			name,
+			type: SET_TOKEN_VALUE,
+			value,
+		});
+
+		saveDraft({...frontendTokensValues, [name]: value})
+			.then(() => {
+				dispatch({
+					type: SET_DRAFT_STATUS,
+					value: DRAFT_STATUS.draftSaved,
+				});
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				dispatch({
+					type: SET_DRAFT_STATUS,
+					value: DRAFT_STATUS.notSaved,
+				});
+
+				openToast({
+					message: error.message,
+					type: 'danger',
+				});
+			});
+	};
+}
+
+export function useSetLoading() {
+	const dispatch = useDispatch();
+
+	return (value) => dispatch({type: LOADING, value});
+}
+
+export function useSetPreviewLayout() {
+	const dispatch = useDispatch();
+
+	return (layout) => dispatch({layout, type: SET_PREVIEW_LAYOUT});
+}
+
+export function useSetPreviewLayoutType() {
+	const dispatch = useDispatch();
+
+	return (layoutType) =>
+		dispatch({layoutType, type: SET_PREVIEW_LAYOUT_TYPE});
 }

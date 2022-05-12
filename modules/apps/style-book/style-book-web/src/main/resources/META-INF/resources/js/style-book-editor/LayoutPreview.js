@@ -18,21 +18,20 @@ import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
-	useDispatch,
 	useFrontendTokensValues,
 	useLoading,
 	usePreviewLayout,
 	usePreviewLayoutType,
+	useSetLoading,
 } from './StyleBookContext';
-import {LOADING} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {
-	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 	const loading = useLoading();
 	const previewLayout = usePreviewLayout();
 	const previewLayoutType = usePreviewLayoutType();
+	const setLoading = useSetLoading();
 
 	const iframeRef = useRef();
 	const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -51,10 +50,11 @@ export default function LayoutPreview() {
 					}
 				);
 
-				dispatch({type: LOADING, value: false});
+				setLoading(false);
 			}
 		}
-	}, [dispatch, frontendTokensValues, iframeLoaded]);
+		/* eslint-disable react-hooks/exhaustive-deps */
+	}, [frontendTokensValues, iframeLoaded]);
 
 	useEffect(() => {
 		loadFrontendTokenValues();

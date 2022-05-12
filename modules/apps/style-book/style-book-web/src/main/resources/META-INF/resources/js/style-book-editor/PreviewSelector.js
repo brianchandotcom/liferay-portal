@@ -22,13 +22,11 @@ import {
 	useDispatch,
 	usePreviewLayout,
 	usePreviewLayoutType,
+	useSetLoading,
+	useSetPreviewLayout,
+	useSetPreviewLayoutType,
 } from './StyleBookContext';
 import {config} from './config';
-import {
-	LOADING,
-	SET_PREVIEW_LAYOUT,
-	SET_PREVIEW_LAYOUT_TYPE,
-} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
 import {itemSelectorValueFromLayout} from './item_selector_value/itemSelectorValueFromLayout';
@@ -71,7 +69,7 @@ export default function PreviewSelector() {
 
 export function LayoutTypeSelector({layoutType}) {
 	const [active, setActive] = useState(false);
-	const dispatch = useDispatch();
+	const setPreviewLayoutType = useSetPreviewLayoutType();
 
 	return (
 		<ClayDropDown
@@ -113,10 +111,7 @@ export function LayoutTypeSelector({layoutType}) {
 							key={type}
 							onClick={() => {
 								setActive(false);
-								dispatch({
-									layoutType: type,
-									type: SET_PREVIEW_LAYOUT_TYPE,
-								});
+								setPreviewLayoutType(type);
 							}}
 						>
 							{label}
@@ -133,10 +128,11 @@ LayoutTypeSelector.propTypes = {
 };
 
 export function LayoutSelector({layoutType}) {
-	const dispatch = useDispatch();
-
 	const [active, setActive] = useState(false);
+	const dispatch = useDispatch();
 	const previewLayout = usePreviewLayout();
+	const setLoading = useSetLoading();
+	const setPreviewLayout = useSetPreviewLayout();
 
 	const previewData = config.previewOptions.find(
 		(option) => option.type === layoutType
@@ -149,12 +145,10 @@ export function LayoutSelector({layoutType}) {
 	const {itemSelectorURL, totalLayouts} = previewData;
 
 	useEffect(() => {
-		dispatch({type: LOADING, value: true});
-		dispatch({
-			layout: previewData.recentLayouts[0],
-			type: SET_PREVIEW_LAYOUT,
-		});
+		setLoading(true);
+		setPreviewLayout(previewData.recentLayouts[0]);
 		setRecentLayouts(previewData.recentLayouts);
+		/* eslint-disable react-hooks/exhaustive-deps */
 	}, [previewData, dispatch]);
 
 	const selectPreviewLayout = (layout) => {
@@ -165,8 +159,8 @@ export function LayoutSelector({layoutType}) {
 			return;
 		}
 
-		dispatch({type: LOADING, value: true});
-		dispatch({layout, type: SET_PREVIEW_LAYOUT});
+		setLoading(true);
+		setPreviewLayout(layout);
 		setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
 	};
 

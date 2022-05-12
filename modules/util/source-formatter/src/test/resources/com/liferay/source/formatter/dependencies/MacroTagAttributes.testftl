@@ -1,16 +1,15 @@
-<#macro getPermissionParameter
-	javaMethodParameter javaMethodSignature properties
+<#macro macro1
+	parameter1 parameter2 parameter3
 >
 </#macro>
 
-<#macro getGetterParameters javaMethodSignature>
+<#macro macro2 parameter>
 </#macro>
 
-<#macro getTestGetterMethods
-		javaMethodSignature
+<#macro macro3
+		parameter
 >
 </#macro>
 
-<#macro macroTest parameter1 parameter2 = "a b c"
->
+<#macro macro4 parameter1 parameter2 = "a b c">
 </#macro>

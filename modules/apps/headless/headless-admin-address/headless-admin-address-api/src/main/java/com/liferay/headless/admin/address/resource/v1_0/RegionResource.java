@@ -79,6 +79,11 @@ public interface RegionResource {
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public void deleteRegion(Long regionId) throws Exception;
+
+	public Response deleteRegionBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Region getRegion(Long regionId) throws Exception;
 
 	public Region patchRegion(Long regionId, Region region) throws Exception;

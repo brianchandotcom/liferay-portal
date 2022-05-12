@@ -31,6 +31,7 @@ import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -236,6 +237,10 @@ public abstract class BaseRegionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(region1, region2), (List<Region>)page.getItems());
 		assertValid(page);
+
+		regionResource.deleteRegion(region1.getId());
+
+		regionResource.deleteRegion(region2.getId());
 	}
 
 	@Test
@@ -530,6 +535,10 @@ public abstract class BaseRegionResourceTestCase {
 		assertContains(region1, (List<Region>)page.getItems());
 		assertContains(region2, (List<Region>)page.getItems());
 		assertValid(page);
+
+		regionResource.deleteRegion(region1.getId());
+
+		regionResource.deleteRegion(region2.getId());
 	}
 
 	@Test
@@ -741,6 +750,60 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	protected Region testGraphQLGetRegionsPage_addRegion() throws Exception {
+		return testGraphQLRegion_addRegion();
+	}
+
+	@Test
+	public void testDeleteRegion() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Region region = testDeleteRegion_addRegion();
+
+		assertHttpResponseStatusCode(
+			204, regionResource.deleteRegionHttpResponse(region.getId()));
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region.getId()));
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(0L));
+	}
+
+	protected Region testDeleteRegion_addRegion() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteRegion() throws Exception {
+		Region region = testGraphQLDeleteRegion_addRegion();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteRegion",
+						new HashMap<String, Object>() {
+							{
+								put("regionId", region.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteRegion"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"region",
+					new HashMap<String, Object>() {
+						{
+							put("regionId", region.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Region testGraphQLDeleteRegion_addRegion() throws Exception {
 		return testGraphQLRegion_addRegion();
 	}
 

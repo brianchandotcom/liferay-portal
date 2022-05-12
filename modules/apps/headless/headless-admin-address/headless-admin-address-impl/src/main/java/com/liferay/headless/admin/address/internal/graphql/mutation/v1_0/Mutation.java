@@ -139,6 +139,31 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteRegion(@GraphQLName("regionId") Long regionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.deleteRegion(regionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteRegionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.deleteRegionBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
 	public Region patchRegion(
 			@GraphQLName("regionId") Long regionId,
 			@GraphQLName("region") Region region)

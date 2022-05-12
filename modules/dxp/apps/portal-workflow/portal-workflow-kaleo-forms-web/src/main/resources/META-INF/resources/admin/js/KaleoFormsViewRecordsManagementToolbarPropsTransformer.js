@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteDDLRecordURL},
@@ -38,7 +38,7 @@ export default function propsTransformer({
 					if (form && searchContainer) {
 						postForm(form, {
 							data: {
-								ddlRecordIds: Liferay.Util.getCheckedCheckboxes(
+								ddlRecordIds: getCheckedCheckboxes(
 									searchContainer,
 									`${portletNamespace}allRowIds`
 								),

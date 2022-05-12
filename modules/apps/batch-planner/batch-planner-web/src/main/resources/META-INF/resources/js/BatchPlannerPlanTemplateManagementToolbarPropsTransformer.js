@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteBatchPlannerPlanTemplates = (itemData) => {
@@ -32,7 +32,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (form && searchContainer) {
 				postForm(form, {
 					data: {
-						batchPlannerPlanIds: Liferay.Util.getCheckedCheckboxes(
+						batchPlannerPlanIds: getCheckedCheckboxes(
 							searchContainer,
 							`${portletNamespace}allRowIds`
 						),

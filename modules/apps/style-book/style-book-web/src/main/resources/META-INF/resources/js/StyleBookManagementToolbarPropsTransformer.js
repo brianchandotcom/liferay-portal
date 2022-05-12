@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSimpleInputModal} from 'frontend-js-web';
+import {getCheckedCheckboxes, openSimpleInputModal} from 'frontend-js-web';
 
 import openDeleteStyleBookModal from './openDeleteStyleBookModal';
 
@@ -34,10 +34,7 @@ export default function propsTransformer({
 
 		styleBookEntryIds.setAttribute(
 			'value',
-			Liferay.Util.getCheckedCheckboxes(
-				form,
-				`${portletNamespace}allRowIds`
-			)
+			getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
 		);
 
 		const styleBookEntryFm = document.getElementById(

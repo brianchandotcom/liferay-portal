@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {
@@ -30,7 +30,7 @@ export default function propsTransformer({
 		if (form && searchContainer) {
 			postForm(form, {
 				data: {
-					actionFormInstanceIds: Liferay.Util.getCheckedCheckboxes(
+					actionFormInstanceIds: getCheckedCheckboxes(
 						searchContainer,
 						`${portletNamespace}allRowIds`
 					),
@@ -50,7 +50,7 @@ export default function propsTransformer({
 		if (form && searchContainer) {
 			postForm(form, {
 				data: {
-					actionFormInstanceIds: Liferay.Util.getCheckedCheckboxes(
+					actionFormInstanceIds: getCheckedCheckboxes(
 						searchContainer,
 						`${portletNamespace}allRowIds`
 					),
@@ -75,7 +75,7 @@ export default function propsTransformer({
 			if (form && searchContainer) {
 				postForm(form, {
 					data: {
-						actionFormInstanceIds: Liferay.Util.getCheckedCheckboxes(
+						actionFormInstanceIds: getCheckedCheckboxes(
 							searchContainer,
 							`${portletNamespace}allRowIds`
 						),

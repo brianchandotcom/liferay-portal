@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getCheckedCheckboxes} from 'frontend-js-web';
+
 export default function propsTransformer({
 	additionalProps: {deleteRecordSetsURL},
 	portletNamespace,
@@ -50,7 +52,7 @@ export default function propsTransformer({
 						if (recordSetIds) {
 							recordSetIds.setAttribute(
 								'value',
-								Liferay.Util.getCheckedCheckboxes(
+								getCheckedCheckboxes(
 									searchContainer,
 									`${portletNamespace}allRowIds`
 								)

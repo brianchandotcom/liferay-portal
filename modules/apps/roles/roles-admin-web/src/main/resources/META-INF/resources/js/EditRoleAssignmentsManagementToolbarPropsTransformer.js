@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 import addAssignees from './add_assignees';
 
@@ -34,10 +34,7 @@ export default function propsTransformer({
 			return;
 		}
 
-		const ids = Liferay.Util.getCheckedCheckboxes(
-			form,
-			`${portletNamespace}allRowIds`
-		);
+		const ids = getCheckedCheckboxes(form, `${portletNamespace}allRowIds`);
 
 		const data = {
 			assignmentsRedirect: portletURL,

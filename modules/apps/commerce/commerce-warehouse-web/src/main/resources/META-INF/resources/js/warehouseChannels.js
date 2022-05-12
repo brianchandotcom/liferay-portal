@@ -12,14 +12,13 @@
  * details.
  */
 
+import {getCheckedCheckboxes} from 'frontend-js-web';
+
 export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	function fulfillCommerceChannelIds() {
-		const values = Liferay.Util.getCheckedCheckboxes(
-			form,
-			`${namespace}allRowIds`
-		);
+		const values = getCheckedCheckboxes(form, `${namespace}allRowIds`);
 
 		form[`${namespace}commerceChannelIds`].value = values;
 	}

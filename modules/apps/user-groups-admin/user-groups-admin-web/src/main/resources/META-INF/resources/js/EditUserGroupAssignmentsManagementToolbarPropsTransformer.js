@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openSelectionModal, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openSelectionModal,
+	postForm,
+} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {
@@ -55,7 +59,7 @@ export default function propsTransformer({
 			postForm(form, {
 				data: {
 					redirect: portletURL,
-					removeUserIds: Liferay.Util.getCheckedCheckboxes(
+					removeUserIds: getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`
 					),

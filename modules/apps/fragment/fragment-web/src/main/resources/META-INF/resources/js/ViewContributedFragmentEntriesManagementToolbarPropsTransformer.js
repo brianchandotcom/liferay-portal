@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {copyContributedEntryURL, selectFragmentCollectionURL},
@@ -26,7 +26,7 @@ export default function propsTransformer({
 			return;
 		}
 
-		const contributedEntryKeys = Liferay.Util.getCheckedCheckboxes(
+		const contributedEntryKeys = getCheckedCheckboxes(
 			form,
 			`${portletNamespace}allRowIds`
 		);

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteRedirectEntriesURL},
@@ -28,7 +28,7 @@ export default function propsTransformer({
 				if (form) {
 					postForm(form, {
 						data: {
-							deleteEntryIds: Liferay.Util.getCheckedCheckboxes(
+							deleteEntryIds: getCheckedCheckboxes(
 								form,
 								`${portletNamespace}allRowIds`
 							),

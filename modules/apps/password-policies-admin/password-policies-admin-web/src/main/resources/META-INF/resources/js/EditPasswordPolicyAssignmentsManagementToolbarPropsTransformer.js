@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
 
 function addEntity(portletNamespace, inputName, entity) {
 	const addUserIdsInput = document.getElementById(
@@ -41,10 +41,7 @@ function deleteEntities(portletNamespace, inputName) {
 		if (form && input) {
 			input.setAttribute(
 				'value',
-				Liferay.Util.getCheckedCheckboxes(
-					form,
-					`${portletNamespace}allRowIds`
-				)
+				getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
 			);
 
 			submitForm(form);

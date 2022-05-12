@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getCheckedCheckboxes} from 'frontend-js-web';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
@@ -45,7 +47,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					if (deleteFileEntryIds) {
 						deleteFileEntryIds.setAttribute(
 							'value',
-							Liferay.Util.getCheckedCheckboxes(
+							getCheckedCheckboxes(
 								form,
 								`${portletNamespace}allRowIds`
 							)

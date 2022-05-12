@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 const updateAccountEntries = (portletNamespace, url) => {
 	const form = document.getElementById(`${portletNamespace}fm`);
@@ -20,7 +20,7 @@ const updateAccountEntries = (portletNamespace, url) => {
 	if (form) {
 		postForm(form, {
 			data: {
-				accountEntryIds: Liferay.Util.getCheckedCheckboxes(
+				accountEntryIds: getCheckedCheckboxes(
 					form,
 					`${portletNamespace}allRowIds`
 				),

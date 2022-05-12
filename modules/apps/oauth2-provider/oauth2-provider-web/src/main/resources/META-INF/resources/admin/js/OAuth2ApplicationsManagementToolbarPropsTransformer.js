@@ -12,7 +12,7 @@
  * details.
  */
 
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteOAuth2ApplicationsURL},
@@ -37,7 +37,7 @@ export default function propsTransformer({
 					if (form) {
 						postForm(form, {
 							data: {
-								oAuth2ApplicationIds: Liferay.Util.getCheckedCheckboxes(
+								oAuth2ApplicationIds: getCheckedCheckboxes(
 									form,
 									`${portletNamespace}allRowIds`
 								),

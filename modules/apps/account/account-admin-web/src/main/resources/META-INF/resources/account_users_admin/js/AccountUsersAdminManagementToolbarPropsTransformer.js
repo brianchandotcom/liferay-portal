@@ -14,6 +14,7 @@
 
 import {
 	createPortletURL,
+	getCheckedCheckboxes,
 	navigate,
 	openSelectionModal,
 	postForm,
@@ -25,7 +26,7 @@ const updateAccountUsers = (portletNamespace, url) => {
 	if (form) {
 		postForm(form, {
 			data: {
-				accountUserIds: Liferay.Util.getCheckedCheckboxes(
+				accountUserIds: getCheckedCheckboxes(
 					form,
 					`${portletNamespace}allRowIds`
 				),

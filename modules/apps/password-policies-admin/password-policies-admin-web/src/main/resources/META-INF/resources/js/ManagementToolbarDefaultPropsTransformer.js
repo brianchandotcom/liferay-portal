@@ -12,7 +12,7 @@
  * details.
  */
 
-import {createActionURL} from 'frontend-js-web';
+import {createActionURL, getCheckedCheckboxes} from 'frontend-js-web';
 
 const ACTIONS = {
 	deletePasswordPolicies(portletNamespace, basePortletURL) {
@@ -36,10 +36,7 @@ const ACTIONS = {
 			if (passwordPolicyIdsInput) {
 				passwordPolicyIdsInput.setAttribute(
 					'value',
-					Liferay.Util.getCheckedCheckboxes(
-						form,
-						`${portletNamespace}allRowIds`
-					)
+					getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
 				);
 			}
 

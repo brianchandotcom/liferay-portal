@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {getCheckedCheckboxes} from 'frontend-js-web';
+
 export default function propsTransformer({
 	additionalProps: {deleteKaleoProcessURL},
 	portletNamespace,
@@ -43,7 +45,7 @@ export default function propsTransformer({
 
 					form.setAttribute('method', 'post');
 
-					kaleoProcessIdsElement.value = Liferay.Util.getCheckedCheckboxes(
+					kaleoProcessIdsElement.value = getCheckedCheckboxes(
 						searchContainer,
 						`${portletNamespace}allRowIds`
 					);

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openSimpleInputModal, postForm} from 'frontend-js-web';
+import {
+	getCheckedCheckboxes,
+	openSimpleInputModal,
+	postForm,
+} from 'frontend-js-web';
 
 import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
 
@@ -28,7 +32,7 @@ export default function propsTransformer({
 			if (form) {
 				postForm(form, {
 					data: {
-						deleteEntryIds: Liferay.Util.getCheckedCheckboxes(
+						deleteEntryIds: getCheckedCheckboxes(
 							form,
 							`${portletNamespace}allRowIds`
 						),

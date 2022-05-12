@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getCheckedCheckboxes} from 'frontend-js-web';
+
 import openDeleteTagModal from './openDeleteTagModal';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
@@ -34,10 +36,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		if (form) {
 			location.href = itemData?.mergeTagsURL.replace(
 				escape('[$MERGE_TAGS_IDS$]'),
-				Liferay.Util.getCheckedCheckboxes(
-					form,
-					`${portletNamespace}allRowIds`
-				)
+				getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
 			);
 		}
 	};

@@ -13,6 +13,9 @@ import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
+
+import getKebabCase from '../../../../../src/routes/customer-portal/utils/getKebabCase';
+
 import client from '../../../../apolloClient';
 import {
 	addAdminDXPCloud,
@@ -23,6 +26,7 @@ import {
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
+import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import Layout from '../Layout';
@@ -53,8 +57,8 @@ const SetupDXPCloudPage = ({
 	const dXPCDataCenterRegions = useMemo(
 		() =>
 			data?.c?.dXPCDataCenterRegions?.items.map(({name}) => ({
-				label: name,
-				value: name,
+				label: getKebabCase(name),
+				value: getKebabCase(name),
 			})) || [],
 		[data]
 	);
@@ -179,14 +183,15 @@ const SetupDXPCloudPage = ({
 						displayType="primary"
 						onClick={() => sendEmail()}
 					>
-						Submit
+						{i18n.translate('submit')}
 					</Button>
 				),
 			}}
 			headerProps={{
-				helper:
-					'We’ll need a few details to finish building your DXP environment(s).',
-				title: 'Set up DXP Cloud',
+				helper: i18n.translate(
+					'we-ll-need-a-few-details-to-finish-building-your-dxp-environment'
+				),
+				title: i18n.translate('set-up-dxp-cloud'),
 			}}
 		>
 			<FieldArray
@@ -195,7 +200,7 @@ const SetupDXPCloudPage = ({
 					<>
 						<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
 							<div className="mr-4 pr-2">
-								<label>Project Name</label>
+								<label>{i18n.translate('project-name')}</label>
 
 								<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
 									<strong>
@@ -211,7 +216,9 @@ const SetupDXPCloudPage = ({
 							</div>
 
 							<div className="flex-fill">
-								<label>Liferay DXP Version</label>
+								<label>
+									{i18n.translate('liferay-dxp-version')}
+								</label>
 
 								<p className="text-neutral-6 text-paragraph-lg">
 									<strong>{project.dxpVersion}</strong>
@@ -222,8 +229,10 @@ const SetupDXPCloudPage = ({
 							<ClayForm.Group className="mb-0 pb-1">
 								<Input
 									groupStyle="pb-1"
-									helper="Lowercase letters and numbers only. The Project ID cannot be changed."
-									label="Project ID"
+									helper={i18n.translate(
+										'lowercase-letters-and-numbers-only-the-project-id-cannot-be-changed'
+									)}
+									label={i18n.translate('project-id')}
 									name="dxp.projectId"
 									required
 									type="text"
@@ -234,9 +243,13 @@ const SetupDXPCloudPage = ({
 
 								<Select
 									groupStyle="mb-0"
-									label="Primary Data Center Region"
+									label={i18n.translate(
+										'primary-data-center-region'
+									)}
 									name="dxp.dataCenterRegion"
-									options={dXPCDataCenterRegions}
+									options={i18n.translate(
+										dXPCDataCenterRegions
+									)}
 									required
 								/>
 

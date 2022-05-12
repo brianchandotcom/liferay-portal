@@ -81,8 +81,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		for (String portalBranchSHA : _getPortalBranchSHAs()) {
 			for (int i = 0; i < retestAmount; i++) {
-				BatchBuildData batchBuildData = BuildDataFactory.newBatchBuildData(
-					null, downstreamJobName, null);
+				BatchBuildData batchBuildData =
+					BuildDataFactory.newBatchBuildData(
+						null, downstreamJobName, null);
 
 				if (!(batchBuildData instanceof PortalBatchBuildData)) {
 					throw new RuntimeException("Invalid build data");
@@ -500,13 +501,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		Integer retestAmount = _getRetestAmount();
 
-		if (retestAmount != 1 || portalBranchSHACount > 1) {
-			String failureMessage = JenkinsResultsParserUtil.combine(
-					"Invalid parameter input, When retesting jobs there must only be one portal SHA provided.\n",
-					"Portal SHAs provided: ",
-					portalBranchSHAs, "\n");
+		if ((retestAmount != 1) || (portalBranchSHACount > 1)) {
+			StringBuilder sb = new StringBuilder();
 
-			failBuildRunner(failureMessage);
+			sb.append("Invalid parameter input, ");
+			sb.append(
+				"when retesting there must only be one portal SHA provided.\n");
+			sb.append("Portal SHAs provided: ");
+			sb.append(portalBranchSHAs);
+
+			failBuildRunner(sb.toString());
 		}
 
 		if (portalBranchSHACount > allowedPortalBranchSHAs) {
@@ -651,21 +655,24 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 	private void _validateBuildParameterRetestCherryPickSHA() {
 		String cherryPickSHAs = getBuildParameter(
-				_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
+			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
 		int retestAmount = _getRetestAmount();
 
 		Integer portalCherryPickSHACount =
-				StringUtils.countMatches(cherryPickSHAs, ",") + 1;
+			StringUtils.countMatches(cherryPickSHAs, ",") + 1;
 
-		if (retestAmount != 1 || portalCherryPickSHACount > 1) {
-			String failureMessage = JenkinsResultsParserUtil.combine(
-					"Invalid parameter input, When retesting there must be no cherry-picked SHAs.\n",
-					"Cherry-picked SHAs provided: ",
-					cherryPickSHAs, "\n");
+		if ((retestAmount != 1) || (portalCherryPickSHACount > 1)) {
+			StringBuilder sb = new StringBuilder();
 
-			failBuildRunner(failureMessage);
+			sb.append("Invalid parameter input, ");
+			sb.append("when retesting there must be no cherry-picked SHAs.\n");
+			sb.append("Cherry-picked SHAs provided: ");
+			sb.append(cherryPickSHAs);
+
+			failBuildRunner(sb.toString());
 		}
 	}
+
 	private static final Integer _COMMITS_GROUP_SIZE_MAX_DEFAULT = 5;
 
 	private static final String _NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL =

@@ -10,3 +10,7 @@
 		javaMethodSignature
 >
 </#macro>
+
+<#macro macroTest parameter1 parameter2 = "a b c"
+>
+</#macro>

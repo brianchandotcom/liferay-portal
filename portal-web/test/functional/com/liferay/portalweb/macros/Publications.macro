@@ -403,7 +403,7 @@ definition {
 			key_menuItem = "Work on Production",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-		AssertConfirm(value1 = "Any changes made in Production will immediately be live. Continue to Production?");
+		AssertConfirm(value1 = "Any changes made in production will immediately be live. Continue to production?");
 	}
 
 }

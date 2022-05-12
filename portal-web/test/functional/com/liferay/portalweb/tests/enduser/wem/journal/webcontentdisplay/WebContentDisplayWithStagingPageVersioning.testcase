@@ -1,0 +1,131 @@
+@component-name = "portal-wcd"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Display";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Web Content Display widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Activate local live staging with page versioning enabled") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-127658. Verified that the last portlet configuration can be restorable after deleting portlet."
+	@priority = "3"
+	test RollBackToPreviousConfigurationViaHistoryAfterDeletingPortlet {
+		task ("Add a web content via Web Content Display") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.add(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Add a custom styles in the Web Content Display") {
+			Portlet.gotoPortletOptions(
+				portletName = "Web Content Display",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureBorderStylesViaLookAndFeelPG(
+				borderColorAttributeList = "Right-FF0D0D,Left-2BA676",
+				borderStyleAttributeList = "StyleRight-Solid,StyleLeft-Solid",
+				borderWidthAttributeList = "WidthRight-100,WidthLeft-100",
+				borderWidthUnitList = "WidthRight-px,WidthLeft-px");
+
+			Refresh();
+		}
+
+		task ("Delete the Web Content Display then view it is not shown") {
+			Portlet.deletePG(portletName = "Web Content Display");
+
+			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
+		}
+
+		task ("Undo the last action deleting the history") {
+			Staging.deleteHistory();
+		}
+
+		task ("View Web Content Display widget is back with the same custom configuration") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			for (var borderType : list "right,left") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "border-${borderType}-width",
+					value1 = "100px");
+			}
+
+			for (var borderType : list "right,left") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "border-${borderType}-style",
+					value1 = "solid");
+			}
+
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "border-right-color",
+				value1 = "rgba(255, 13, 13, 1)");
+
+			AssertCssValue(
+				locator1 = "Portlet#PORTLET_CONTENT",
+				locator2 = "border-left-color",
+				value1 = "rgba(43, 166, 118, 1)");
+		}
+	}
+
+}

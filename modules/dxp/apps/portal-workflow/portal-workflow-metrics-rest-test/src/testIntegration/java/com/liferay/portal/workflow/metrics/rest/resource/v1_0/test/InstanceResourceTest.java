@@ -58,7 +58,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -295,7 +294,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 					);
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						instance1, entityField.getName(),
 						DateUtils.addMinutes(
 							DateUtils.truncate(new Date(), Calendar.SECOND),
@@ -367,12 +366,12 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 						});
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						instance1, entityFieldName,
 						"aaa".concat(
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString())));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						instance2, entityFieldName,
 						"bbb".concat(
 							StringUtil.toLowerCase(

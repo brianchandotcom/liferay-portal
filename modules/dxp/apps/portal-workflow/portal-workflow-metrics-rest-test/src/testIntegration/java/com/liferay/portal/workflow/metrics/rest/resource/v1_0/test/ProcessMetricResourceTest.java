@@ -41,8 +41,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -165,10 +163,10 @@ public class ProcessMetricResourceTest
 						).build());
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						processMetric1, entityField.getName(),
 						"Aaa" + RandomTestUtil.randomString());
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						processMetric2, entityField.getName(),
 						"Bbb" + RandomTestUtil.randomString());
 				}

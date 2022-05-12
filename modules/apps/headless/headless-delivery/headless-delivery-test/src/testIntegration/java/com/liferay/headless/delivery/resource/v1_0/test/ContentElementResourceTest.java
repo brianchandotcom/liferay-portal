@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -163,9 +161,7 @@ public class ContentElementResourceTest
 			_getUnsafeTriConsumer() {
 
 		return (entityField, contentElement1, contentElement2) -> {
-			BeanUtils.setProperty(contentElement1, entityField.getName(), 0.1);
 			_put(contentElement1, entityField.getName(), 0.1);
-			BeanUtils.setProperty(contentElement2, entityField.getName(), 0.5);
 			_put(contentElement2, entityField.getName(), 0.5);
 		};
 	}

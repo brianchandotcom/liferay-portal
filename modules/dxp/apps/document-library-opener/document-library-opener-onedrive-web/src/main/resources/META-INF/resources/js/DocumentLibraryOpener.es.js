@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 import {
 	fetch,
 	navigate,
 	openSimpleInputModal,
 	openToast,
 } from 'frontend-js-web';
-import {getSpritemapPath} from '@liferay/frontend-icons-web';
 
 const TIME_POLLING = 500;
 const TIME_SHOW_MSG = 2000;

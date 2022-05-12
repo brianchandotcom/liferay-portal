@@ -12,8 +12,8 @@
  * details.
  */
 
-import {fetch, objectToFormData} from 'frontend-js-web';
 import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
 
 /**
  * Observes anchorElement position and updates overlayElement to match until

@@ -148,7 +148,7 @@ public class IconTag extends BaseIconTag {
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					src =  FrontendIconsUtil.getSpritemapPath(
+					src = FrontendIconsUtil.getSpritemapPath(
 						themeDisplay.getSiteGroupId());
 				}
 

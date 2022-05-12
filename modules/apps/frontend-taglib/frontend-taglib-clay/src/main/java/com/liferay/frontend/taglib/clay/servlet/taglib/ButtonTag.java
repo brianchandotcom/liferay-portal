@@ -241,7 +241,8 @@ public class ButtonTag extends BaseContainerTag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String spritemap = FrontendIconsUtil.getSpritemapPath(themeDisplay);
+				String spritemap = FrontendIconsUtil.getSpritemapPath(
+					themeDisplay);
 
 				jspWriter.write(spritemap);
 

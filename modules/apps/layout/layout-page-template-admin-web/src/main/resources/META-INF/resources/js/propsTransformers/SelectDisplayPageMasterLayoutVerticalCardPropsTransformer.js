@@ -12,8 +12,9 @@
  * details.
  */
 
-import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 import {getSpritemapPath} from '@liferay/frontend-icons-web';
+
+import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 
 export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransformer({
 	additionalProps: {addDisplayPageUrl, mappingTypes, title},

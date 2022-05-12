@@ -1,7 +1,8 @@
 {
 	"containerId": "efbLk8Ep",
 	"currentPage": "1",
-	"dataProviderSettings": {},
+	"dataProviderSettings": {
+	},
 	"evaluatorURL": "/o/dynamic-data-mapping-form-context-provider/",
 	"groupId": "20126",
 	"pages": [
@@ -131,7 +132,8 @@
 		"contentDirection": null,
 		"contentKind": "HTML"
 	},
-	"rules": [],
+	"rules": [
+	],
 	"showRequiredFieldsWarning": true,
 	"showSubmitButton": true,
 	"strings": {

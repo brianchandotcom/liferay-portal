@@ -12,8 +12,8 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
 import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {openModal} from 'frontend-js-web';
 
 import {openShareFormModal} from './components/share-form/openShareFormModal.es';
 

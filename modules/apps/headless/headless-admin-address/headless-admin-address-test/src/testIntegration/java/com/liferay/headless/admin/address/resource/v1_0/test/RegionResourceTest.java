@@ -211,6 +211,11 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Region testDeleteRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
+	}
+
+	@Override
 	protected Region testGetCountryRegionByRegionCode_addRegion()
 		throws Exception {
 

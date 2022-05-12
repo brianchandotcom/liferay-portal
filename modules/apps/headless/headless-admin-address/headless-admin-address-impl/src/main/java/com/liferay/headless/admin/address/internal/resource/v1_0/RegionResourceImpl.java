@@ -111,10 +111,12 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 	}
 
 	@Override
-	public Region postRegion(Region region) throws Exception {
+	public Region postCountryRegion(Long countryId, Region region)
+		throws Exception {
+
 		return _toRegion(
 			_regionService.addRegion(
-				region.getCountryId(), GetterUtil.get(region.getActive(), true),
+				countryId, GetterUtil.get(region.getActive(), true),
 				region.getName(), region.getPosition(), region.getRegionCode(),
 				ServiceContextFactory.getInstance(
 					Region.class.getName(), contextHttpServletRequest)));

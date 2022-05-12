@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../common/I18n';
 import Button from '../../../../../common/components/Button';
 
 const AlreadySubmittedFormModal = ({onClose, submittedModalTexts}) => {
@@ -40,7 +41,7 @@ const AlreadySubmittedFormModal = ({onClose, submittedModalTexts}) => {
 					displayType="primary"
 					onClick={() => onClose(true)}
 				>
-					Done
+					{i18n.translate('done')}
 				</Button>
 			</div>
 		</div>

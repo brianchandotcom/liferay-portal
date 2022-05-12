@@ -14,56 +14,63 @@
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
-const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
-	[LAYOUT_DATA_ITEM_TYPES.root]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.dropZone,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.form,
-	],
-	[LAYOUT_DATA_ITEM_TYPES.collection]: [],
-	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-	],
-	[LAYOUT_DATA_ITEM_TYPES.dropZone]: [],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.dropZone,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.form,
-	],
-	[LAYOUT_DATA_ITEM_TYPES.form]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.dropZone,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-	],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_ITEM_TYPES.column],
-	[LAYOUT_DATA_ITEM_TYPES.column]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.dropZone,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.form,
-	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [],
-	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: [
-		LAYOUT_DATA_ITEM_TYPES.collection,
-		LAYOUT_DATA_ITEM_TYPES.dropZone,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.form,
-	],
+const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
+	[LAYOUT_DATA_ITEM_TYPES.root]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.form,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.collection]: () => false,
+	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: () => false,
+	[LAYOUT_DATA_ITEM_TYPES.container]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.form,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.form]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.row]: (child) =>
+		[LAYOUT_DATA_ITEM_TYPES.column].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.column]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.form,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: () => false,
+	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.form,
+		].includes(child.type),
 };
 
 /**
@@ -74,5 +81,5 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
  * @return {boolean}
  */
 export default function checkAllowedChild(child, parent) {
-	return LAYOUT_DATA_ALLOWED_CHILDREN_TYPES[parent.type].includes(child.type);
+	return LAYOUT_DATA_CHECK_ALLOWED_CHILDREN[parent.type](child, parent);
 }

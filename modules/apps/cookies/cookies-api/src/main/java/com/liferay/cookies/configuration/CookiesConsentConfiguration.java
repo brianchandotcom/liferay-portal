@@ -62,8 +62,8 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap functionalCookiesDescription();
 
-	@Meta.AD(deflt = "false", name = "pre-checked", required = false)
-	public boolean functionalCookiesPreChecked();
+	@Meta.AD(deflt = "false", name = "prechecked", required = false)
+	public boolean functionalCookiesPrechecked();
 
 	@Meta.AD(
 		deflt = "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.",
@@ -71,8 +71,8 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap performanceCookiesDescription();
 
-	@Meta.AD(deflt = "false", name = "pre-checked", required = false)
-	public boolean performanceCookiesPreChecked();
+	@Meta.AD(deflt = "false", name = "prechecked", required = false)
+	public boolean performanceCookiesPrechecked();
 
 	@Meta.AD(
 		deflt = "These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and Internet device. If you do not allow these cookies, you will experience less targeted advertising.",
@@ -80,7 +80,7 @@ public interface CookiesConsentConfiguration {
 	)
 	public LocalizedValuesMap personalizationCookiesDescription();
 
-	@Meta.AD(deflt = "false", name = "pre-checked", required = false)
-	public boolean personalizationCookiesPreChecked();
+	@Meta.AD(deflt = "false", name = "prechecked", required = false)
+	public boolean personalizationCookiesPrechecked();
 
 }

@@ -1626,13 +1626,13 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "Article";
 
-		_assertSearch("[Article 1, Article 2, Staged Article]");
+		_assertSearchIgnoreRelevance("[Article 1, Article 2, Staged Article]");
 
 		_updateElementInstancesJSON(
 			new Object[] {textMatchOverMultipleFields, null},
 			new String[] {"Text Match Over Multiple Fields", "Staging Aware"});
 
-		_assertSearch("[Article 1, Article 2]");
+		_assertSearchIgnoreRelevance("[Article 1, Article 2]");
 	}
 
 	@Test

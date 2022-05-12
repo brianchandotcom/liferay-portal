@@ -36,10 +36,9 @@ import java.util.Properties;
 /**
  * @author Brian Wing Shun Chan
  */
-public class VerifyProperties extends VerifyProcess {
+public class VerifyProperties {
 
-	@Override
-	protected void doVerify() throws Exception {
+	public void verify() throws Exception {
 		verifySystemProperties();
 
 		List<String> keys = verifyPortalProperties();

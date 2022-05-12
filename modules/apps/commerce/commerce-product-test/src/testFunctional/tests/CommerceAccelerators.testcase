@@ -239,6 +239,7 @@ definition {
 		Click(locator1 = "//a[contains(text(),'View')]");
 
 		AssertTextEquals(
+			key_productName = "Brake Pads",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 			value1 = "$ 18.90");
 	}

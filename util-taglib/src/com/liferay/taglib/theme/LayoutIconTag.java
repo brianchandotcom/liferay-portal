@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
-import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.ServletRequest;
@@ -45,13 +44,7 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		try {
-			jspWriter.write("<img alt=\"");
-
-			MessageTag.doTag(
-				null, false, true, "page-icon", false, false, false,
-				pageContext);
-
-			jspWriter.write("\" class=\"layout-logo layout-logo-");
+			jspWriter.write("<img class=\"layout-logo layout-logo-");
 			jspWriter.write(String.valueOf(layout.getPlid()));
 			jspWriter.write("\" src=\"");
 

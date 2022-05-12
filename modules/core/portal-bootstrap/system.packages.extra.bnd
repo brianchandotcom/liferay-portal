@@ -161,12 +161,6 @@ Export-Package:\
 	org.apache.commons.beanutils.expression;version='1.9.4',\
 	org.apache.commons.beanutils.locale;version='1.9.4',\
 	org.apache.commons.beanutils.locale.converters;version='1.9.4',\
-	org.apache.commons.codec;version='1.9',\
-	org.apache.commons.codec.binary;version='1.9',\
-	org.apache.commons.codec.digest;version='1.9',\
-	org.apache.commons.codec.language;version='1.9',\
-	org.apache.commons.codec.language.bm;version='1.9',\
-	org.apache.commons.codec.net;version='1.9',\
 	org.apache.commons.collections;version='3.2.1',\
 	org.apache.commons.collections.bag;version='3.2.1',\
 	org.apache.commons.collections.bidimap;version='3.2.1',\
@@ -275,7 +269,6 @@ Provide-Capability:\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\
 	@../../../lib/portal/commons-beanutils.jar,\
-	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-compress.jar,\
 	@../../../lib/portal/commons-lang.jar,\

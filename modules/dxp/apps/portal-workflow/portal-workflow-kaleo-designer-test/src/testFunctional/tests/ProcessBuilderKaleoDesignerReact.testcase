@@ -2285,11 +2285,23 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DefinitionRequiresStartNodeToPublish {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresStartNodeToPublish";
 
-		// TODO DefinitionRequiresStartNodeToPublish pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Start Node");
+
+		Button.clickPublish();
+
+        Alert.viewErrorMessage(errorMessage = "You must define a start node");
+
+		
 
 	}
 

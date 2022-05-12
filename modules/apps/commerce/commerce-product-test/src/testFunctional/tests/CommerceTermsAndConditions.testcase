@@ -679,7 +679,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2",
 			productUnitPrice = "50",
-			shippingMethod = "Standard");\
+			shippingMethod = "Standard");
 
 		User.logoutPG();
 

@@ -1,1 +1,15 @@
-{"hidden":false,"name_i18n":{"en_US":"Sales Courses"},"private":false,"system":false,"type":"content","typeSettings":[{"key":"published","value":"true"}]}
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Sales Courses"
+	},
+	"private": false,
+	"system": false,
+	"type": "content",
+	"typeSettings": [
+		{
+			"key": "published",
+			"value": "true"
+		}
+	]
+}

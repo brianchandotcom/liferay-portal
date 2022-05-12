@@ -1,1 +1,48 @@
-{"pageElement":{"pageElements":[{"definition":{"fragment":{"key":"BASIC_COMPONENT-image"},"fragmentConfig":{"imageSize":"w-100"},"fragmentFields":[{"id":"image-square","value":{"fragmentImage":{"description":{"value_i18n":{"en_US":""}},"url":{"value_i18n":{"en_US":"[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing.png$]"}}},"fragmentLink":{}}}],"indexed":true},"type":"Fragment"}],"type":"Root"},"settings":{"colorSchemeName":"01","masterPage":{"key":"prm"},"themeName":"Classic"},"version":1.1}
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-image"
+					},
+					"fragmentConfig": {
+						"imageSize": "w-100"
+					},
+					"fragmentFields": [
+						{
+							"id": "image-square",
+							"value": {
+								"fragmentImage": {
+									"description": {
+										"value_i18n": {
+											"en_US": ""
+										}
+									},
+									"url": {
+										"value_i18n": {
+											"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing.png$]"
+										}
+									}
+								},
+								"fragmentLink": {
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "prm"
+		},
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

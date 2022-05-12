@@ -1,1 +1,42 @@
-{"pageElement":{"pageElements":[{"definition":{"widgetInstance":{"widgetConfig":{"displaySchedulerHeader":"true","showMonthView":"true","showAgendaView":"false","timeZoneId":"","showWeekView":"true","defaultDuration":"60","rssTimeInterval":"604800000","eventsPerPage":"4","showDayView":"false","defaultView":"month","displaySchedulerOnly":"false","enableRss":"true","timeFormat":"locale","rssFeedType":"atom_1.0","maxDaysDisplayed":"1","rssDelta":"20","weekStartsOn":"1","rssDisplayStyle":"full-content","showUserEvents":"false","usePortalTimeZone":"true"},"widgetName":"com_liferay_calendar_web_portlet_CalendarPortlet"}},"type":"Widget"}],"type":"Root"},"settings":{"colorSchemeName":"01","themeName":"Classic"},"version":1.1}
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"defaultDuration": "60",
+							"defaultView": "month",
+							"displaySchedulerHeader": "true",
+							"displaySchedulerOnly": "false",
+							"enableRss": "true",
+							"eventsPerPage": "4",
+							"maxDaysDisplayed": "1",
+							"rssDelta": "20",
+							"rssDisplayStyle": "full-content",
+							"rssFeedType": "atom_1.0",
+							"rssTimeInterval": "604800000",
+							"showAgendaView": "false",
+							"showDayView": "false",
+							"showMonthView": "true",
+							"showUserEvents": "false",
+							"showWeekView": "true",
+							"timeFormat": "locale",
+							"timeZoneId": "",
+							"usePortalTimeZone": "true",
+							"weekStartsOn": "1"
+						},
+						"widgetName": "com_liferay_calendar_web_portlet_CalendarPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

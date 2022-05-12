@@ -62,6 +62,7 @@ components:
                     type: boolean
                 countryId:
                     format: int64
+                    readOnly: true
                     type: integer
                 id:
                     format: int64

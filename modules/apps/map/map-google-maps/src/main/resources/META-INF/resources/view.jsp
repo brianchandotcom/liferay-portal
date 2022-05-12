@@ -38,17 +38,25 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 
 			Liferay.fire('gmapsReady');
 		};
+
+		if (!Liferay.Maps.gmapsReady) {
+			var apiURL =
+				'<%= protocol %>' +
+				'://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady';
+
+			<c:if test="<%= Validator.isNotNull(googleMapDisplayContext.getGoogleMapsAPIKey()) %>">
+				apiURL += '&key=' + '<%= googleMapDisplayContext.getGoogleMapsAPIKey() %>';
+			</c:if>
+
+			var script = document.createElement('script');
+
+			script.setAttribute('src', apiURL);
+
+			document.head.appendChild(script);
+
+			script = null;
+		}
 	</script>
-
-	<%
-	String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
-
-	if (Validator.isNotNull(googleMapDisplayContext.getGoogleMapsAPIKey())) {
-		apiURL += "&key=" + googleMapDisplayContext.getGoogleMapsAPIKey();
-	}
-	%>
-
-	<script src="<%= apiURL %>" type="text/javascript"></script>
 </liferay-util:html-top>
 
 <aui:script require="<%= bootstrapRequire %>">

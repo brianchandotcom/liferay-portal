@@ -27,6 +27,7 @@ import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
+import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 import com.liferay.gradle.util.OSGiUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -140,6 +141,7 @@ public class NodePlugin implements Plugin<Project> {
 					_configureTasksExecutePackageManagerArgs(
 						project, nodeExtension);
 					_configureTasksNpmInstall(project, nodeExtension);
+					_configureTasksYarnInstall(project);
 				}
 
 			});
@@ -669,9 +671,10 @@ public class NodePlugin implements Plugin<Project> {
 			Project curProject = npmInstallTask.getProject();
 
 			do {
-				TaskProvider<Task> yarnInstallTaskProvider =
+				TaskProvider<YarnInstallTask> yarnInstallTaskProvider =
 					GradleUtil.fetchTaskProvider(
-						curProject, YarnPlugin.YARN_INSTALL_TASK_NAME);
+						curProject, YarnPlugin.YARN_INSTALL_TASK_NAME,
+						YarnInstallTask.class);
 
 				if (yarnInstallTaskProvider != null) {
 					npmInstallTask.finalizedBy(yarnInstallTaskProvider);
@@ -967,6 +970,35 @@ public class NodePlugin implements Plugin<Project> {
 					PublishNodeModuleTask publishNodeModuleTask) {
 
 					_configureTaskPublishNodeModule(publishNodeModuleTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksYarnInstall(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			YarnInstallTask.class,
+			new Action<YarnInstallTask>() {
+
+				@Override
+				public void execute(YarnInstallTask yarnInstallTask) {
+					_configureTaskYarnInstall(yarnInstallTask);
+				}
+
+			});
+	}
+
+	private void _configureTaskYarnInstall(YarnInstallTask yarnInstallTask) {
+		TaskOutputs taskOutputs = yarnInstallTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
 				}
 
 			});

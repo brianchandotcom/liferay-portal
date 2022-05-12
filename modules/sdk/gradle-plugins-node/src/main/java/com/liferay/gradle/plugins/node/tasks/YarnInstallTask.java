@@ -22,13 +22,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.tasks.CacheableTask;
-
 /**
  * @author Peter Shin
  * @author David Truong
  */
-@CacheableTask
 public class YarnInstallTask extends ExecutePackageManagerTask {
 
 	@Override

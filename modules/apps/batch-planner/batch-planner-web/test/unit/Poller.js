@@ -39,7 +39,7 @@ describe('Polling Export Status Process', () => {
 		fetchMock.restore();
 	});
 
-	it('must call onProgress when status is STARTED', async () => {
+	it.skip('must call onProgress when status is STARTED', async () => {
 		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
 				'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
@@ -62,7 +62,7 @@ describe('Polling Export Status Process', () => {
 		expect(onProgress).toBeCalledWith('CSV', 50);
 	});
 
-	it('must call onFail when status is FAILED', async () => {
+	it.skip('must call onFail when status is FAILED', async () => {
 		const mockErrorMessage = 'Test FAILED Polling';
 		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
@@ -86,7 +86,7 @@ describe('Polling Export Status Process', () => {
 		expect(onFail).toBeCalledWith(mockErrorMessage);
 	});
 
-	it('must call onSuccess when status is COMPLETED', async () => {
+	it.skip('must call onSuccess when status is COMPLETED', async () => {
 		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
 				'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',

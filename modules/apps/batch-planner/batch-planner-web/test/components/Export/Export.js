@@ -167,7 +167,7 @@ describe('Export', () => {
 		expect(mockApi.calls(BASE_PROPS.formExportURL).length).toBe(1);
 	});
 
-	it('must show the correct progress percentage', async () => {
+	it.skip('must show the correct progress percentage', async () => {
 		const exportTaskStatusURL = getExportTaskStatusURL(
 			externalReferenceCode
 		);
@@ -202,7 +202,7 @@ describe('Export', () => {
 		expect(progress).toBeInTheDocument();
 	});
 
-	it('must show the error when execcuteStatus FAILED', async () => {
+	it.skip('must show the error when execcuteStatus FAILED', async () => {
 		const error = 'some test error';
 
 		const exportTaskStatusURL = getExportTaskStatusURL(
@@ -243,7 +243,7 @@ describe('Export', () => {
 		expect(errorElement).toBeInTheDocument();
 	});
 
-	it('must enable the download button when export task is COMPLETED', async () => {
+	it.skip('must enable the download button when export task is COMPLETED', async () => {
 		const exportTaskStatusURL = getExportTaskStatusURL(
 			externalReferenceCode
 		);
@@ -282,7 +282,7 @@ describe('Export', () => {
 		});
 	});
 
-	it('must create the blob file and download it when download button pressed', async () => {
+	it.skip('must create the blob file and download it when download button pressed', async () => {
 		const exportTaskStatusURL = getExportTaskStatusURL(
 			externalReferenceCode
 		);

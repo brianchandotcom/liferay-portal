@@ -131,8 +131,8 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostRegion() throws Exception {
-		super.testPostRegion();
+	public void testPostCountryRegion() throws Exception {
+		super.testPostCountryRegion();
 
 		Region existingRegion = _addRegion(randomRegion());
 
@@ -140,25 +140,25 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		region.setName((String)null);
 
-		_testPostRegionProblem(region, null);
+		_testPostCountryRegionProblem(region, null);
 
 		region.setName("");
 
-		_testPostRegionProblem(region, null);
+		_testPostCountryRegionProblem(region, null);
 
 		region = randomRegion();
 
 		region.setRegionCode((String)null);
 
-		_testPostRegionProblem(region, null);
+		_testPostCountryRegionProblem(region, null);
 
 		region.setRegionCode("");
 
-		_testPostRegionProblem(region, null);
+		_testPostCountryRegionProblem(region, null);
 
 		region.setRegionCode(existingRegion.getRegionCode());
 
-		_testPostRegionProblem(region, DuplicateRegionException.class);
+		_testPostCountryRegionProblem(region, DuplicateRegionException.class);
 	}
 
 	@Override
@@ -323,7 +323,9 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
-	protected Region testPostRegion_addRegion(Region region) throws Exception {
+	protected Region testPostCountryRegion_addRegion(Region region)
+		throws Exception {
+
 		return _addRegion(region);
 	}
 
@@ -333,7 +335,8 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	private Region _addRegion(Region region) throws Exception {
-		return regionResource.postRegion(region);
+		return regionResource.postCountryRegion(
+			_country.getCountryId(), region);
 	}
 
 	private Region _addRegion(String keyword) throws Exception {
@@ -344,12 +347,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		return _addRegion(region);
 	}
 
-	private <T extends Exception> void _testPostRegionProblem(
+	private <T extends Exception> void _testPostCountryRegionProblem(
 			Region region, Class<T> exceptionClass)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
-			regionResource.postRegionHttpResponse(region);
+			regionResource.postCountryRegionHttpResponse(
+				_country.getCountryId(), region);
 
 		Assert.assertEquals(
 			Response.Status.BAD_REQUEST.getStatusCode(),

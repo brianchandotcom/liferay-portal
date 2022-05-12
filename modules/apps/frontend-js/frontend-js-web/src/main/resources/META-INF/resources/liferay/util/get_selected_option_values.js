@@ -15,10 +15,6 @@
 export default function getSelectedOptionValues(select, delimiter = ',') {
 	const optionsArray = Array.from(select.getElementsByTagName('option'));
 
-	if (!optionsArray.length) {
-		return;
-	}
-
 	return optionsArray
 		.reduce((previous, item) => {
 			const {value} = item;

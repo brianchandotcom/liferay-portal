@@ -12,8 +12,8 @@
  * details.
  */
 
-import {render} from '@liferay/frontend-js-react-web';
 import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {render} from '@liferay/frontend-js-react-web';
 import {ClayAlert} from 'clay-alert';
 import {
 	EventHandler,

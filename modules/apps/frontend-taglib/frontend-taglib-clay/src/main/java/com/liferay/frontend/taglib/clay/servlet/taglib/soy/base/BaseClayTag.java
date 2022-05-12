@@ -53,7 +53,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			putValue("spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay));
+			putValue(
+				"spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay));
 		}
 
 		String namespace = getNamespace();

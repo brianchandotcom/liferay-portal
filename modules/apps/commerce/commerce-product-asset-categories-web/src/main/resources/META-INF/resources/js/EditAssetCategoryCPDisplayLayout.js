@@ -12,8 +12,8 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
 import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 export default function ({
 	assetCategory,

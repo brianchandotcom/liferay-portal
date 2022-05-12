@@ -2280,20 +2280,17 @@ definition {
 	test DefinitionRequiresEndNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete End Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete End Node");
 
-        Button.clickPublish();
+		Button.clickPublish();
 
-        Alert.viewErrorMessage(errorMessage = "The item_0 node must have an outgoing transition");
-		
-
-
+		Alert.viewErrorMessage(errorMessage = "The item_0 node must have an outgoing transition");
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"

@@ -1,4 +1,4 @@
-# Checks for 
+# Checks for .tf
 
 Check | Category | Description
 ----- | -------- | -----------

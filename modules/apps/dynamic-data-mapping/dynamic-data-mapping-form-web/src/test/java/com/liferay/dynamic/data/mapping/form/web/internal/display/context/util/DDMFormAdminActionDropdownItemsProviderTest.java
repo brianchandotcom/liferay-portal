@@ -279,24 +279,24 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			(Map<String, Object>)dropdownItem.get("data"),
 			IsMapContaining.hasKey("deleteFormInstanceURL"));
 		Assert.assertNull(dropdownItem.get("disabled"));
+		Assert.assertEquals("times-circle", dropdownItem.get("icon"));
 		Assert.assertEquals("delete", dropdownItem.get("label"));
-		Assert.assertEquals("times-circle", dropdownItem.get("symbolLeft"));
 	}
 
 	private void _assertActionDropdownItemDuplicate(DropdownItem dropdownItem) {
 		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
 		Assert.assertTrue(Validator.isNotNull(dropdownItem.get("href")));
+		Assert.assertEquals("copy", dropdownItem.get("icon"));
 		Assert.assertEquals("duplicate", dropdownItem.get("label"));
-		Assert.assertEquals("copy", dropdownItem.get("symbolLeft"));
 	}
 
 	private void _assertActionDropdownItemEdit(DropdownItem dropdownItem) {
 		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
 		Assert.assertTrue(Validator.isNotNull(dropdownItem.get("href")));
+		Assert.assertEquals("pencil", dropdownItem.get("icon"));
 		Assert.assertEquals("edit", dropdownItem.get("label"));
-		Assert.assertEquals("pencil", dropdownItem.get("symbolLeft"));
 	}
 
 	private void _assertActionDropdownItemExport(DropdownItem dropdownItem) {
@@ -347,8 +347,8 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			String.valueOf(dropdownItem.get("data")));
 		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
+		Assert.assertEquals("share", dropdownItem.get("icon"));
 		Assert.assertEquals("share", dropdownItem.get("label"));
-		Assert.assertEquals("share", dropdownItem.get("symbolLeft"));
 	}
 
 	private void _assertActionDropdownItemViewEntries(
@@ -357,8 +357,8 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
 		Assert.assertTrue(Validator.isNotNull(dropdownItem.get("href")));
+		Assert.assertEquals("list-ul", dropdownItem.get("icon"));
 		Assert.assertEquals("view-entries", dropdownItem.get("label"));
-		Assert.assertEquals("list-ul", dropdownItem.get("symbolLeft"));
 	}
 
 	private List<DropdownItem> _getDropdownGroupItems(

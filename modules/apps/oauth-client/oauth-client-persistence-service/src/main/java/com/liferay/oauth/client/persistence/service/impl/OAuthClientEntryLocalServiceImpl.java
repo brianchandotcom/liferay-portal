@@ -140,7 +140,7 @@ public class OAuthClientEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getOAuthClientEntries(
+	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
 		long companyId, String authServerIssuer) {
 
 		return oAuthClientEntryPersistence.findByC_A(
@@ -148,7 +148,7 @@ public class OAuthClientEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getOAuthClientEntriesByAuthServerType(
+	public List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
 		long companyId, String authServerType) {
 
 		List<OAuthClientAuthServer> oAuthClientAuthServers =

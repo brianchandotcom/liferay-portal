@@ -102,7 +102,7 @@ public class OAuthClientEntryServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getOAuthClientEntries(
+	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
 		long companyId, String authServerIssuer) {
 
 		return oAuthClientEntryPersistence.filterFindByC_A(
@@ -110,12 +110,12 @@ public class OAuthClientEntryServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getOAuthClientEntriesByAuthServerType(
+	public List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
 			long companyId, String authServerType)
 		throws PortalException {
 
 		List<OAuthClientEntry> oAuthClientEntries =
-			oAuthClientEntryLocalService.getOAuthClientEntriesByAuthServerType(
+			oAuthClientEntryLocalService.getAuthServerTypeOAuthClientEntries(
 				companyId, authServerType);
 
 		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {

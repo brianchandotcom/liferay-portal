@@ -20,10 +20,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -69,39 +67,70 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 					String tagLine = tagString.replaceAll(
 						"\n\t*", StringPool.SPACE);
 
-					int nameEndIndex = Math.max(
-						tagLine.indexOf(StringPool.SPACE, 8), 8);
+					int tagNameEndIndex = tagLine.indexOf(StringPool.SPACE, 8);
 
-					if (nameEndIndex == 8) {
+					if (tagNameEndIndex == -1) {
 						continue;
 					}
 
-					Matcher matcher = _closeTagPattern.matcher(tagLine);
+					String tagName = tagLine.substring(0, tagNameEndIndex);
 
-					String closeTag;
+					String tagParameters = StringUtil.trim(
+						tagLine.substring(tagNameEndIndex));
 
-					if (matcher.find()) {
-						closeTag = matcher.group(1);
-					}
-					else {
+					if (!tagParameters.contains(StringPool.SPACE)) {
 						continue;
 					}
 
-					String indent = SourceUtil.getIndent(line);
+					String indent = SourceUtil.getIndent(line) + StringPool.TAB;
 
-					String name = tagLine.substring(1, nameEndIndex);
+					String newTagParameters = StringPool.BLANK;
 
-					String attributesString = StringUtil.trim(
-						tagLine.substring(
-							nameEndIndex + 1,
-							tagLine.length() - closeTag.length()));
+					int x = -1;
 
-					String formatTag = _tagToString(
-						indent, name, closeTag, attributesString);
+					while (true) {
+						x = tagParameters.indexOf(StringPool.SPACE, x + 1);
 
-					if (!StringUtil.equals(tagString, formatTag)) {
+						if (x == -1) {
+							break;
+						}
+
+						if (ToolsUtil.isInsideQuotes(tagParameters, x)) {
+							continue;
+						}
+
+						if (x > 0) {
+							char previousChar = tagParameters.charAt(x - 1);
+
+							if (previousChar == CharPool.EQUAL) {
+								continue;
+							}
+						}
+
+						if (x < (tagParameters.length() - 1)) {
+							char nextChar = tagParameters.charAt(x + 1);
+
+							if (nextChar == CharPool.EQUAL) {
+								continue;
+							}
+						}
+
+						newTagParameters +=
+							StringPool.NEW_LINE + indent +
+								tagParameters.substring(0, x);
+
+						tagParameters = tagParameters.substring(x + 1);
+
+						x = -1;
+					}
+
+					String newTagString = StringBundler.concat(
+						tagName, newTagParameters, StringPool.NEW_LINE,
+						tagParameters);
+
+					if (!tagString.equals(newTagString)) {
 						return StringUtil.replaceFirst(
-							content, tagString, formatTag, startPos);
+							content, tagString, newTagString, startPos);
 					}
 				}
 			}
@@ -144,64 +173,5 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 		return content;
 	}
-
-	private String _tagToString(
-		String indent, String fullName, String closeTag,
-		String attributesString) {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(indent);
-		sb.append(StringPool.LESS_THAN);
-		sb.append(fullName);
-
-		int x = -1;
-		int nextQuoteIndex = -1;
-
-		String replacement = StringPool.NEW_LINE + indent + StringPool.TAB;
-
-		while (true) {
-			x = attributesString.indexOf(StringPool.SPACE, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			char frontChar = attributesString.charAt(x - 1);
-			char nextChar = attributesString.charAt(x + 1);
-
-			if ((nextChar != CharPool.EQUAL) && (frontChar != CharPool.EQUAL) &&
-				(x > nextQuoteIndex)) {
-
-				attributesString = StringUtil.replaceFirst(
-					attributesString, StringPool.SPACE, replacement, x);
-
-				x = -1;
-				nextQuoteIndex = -1;
-
-				continue;
-			}
-
-			if (nextChar == CharPool.QUOTE) {
-				nextQuoteIndex = attributesString.indexOf(
-					StringPool.QUOTE, x + 2);
-			}
-
-			x++;
-		}
-
-		sb.append(StringPool.NEW_LINE);
-		sb.append(indent);
-		sb.append(StringPool.TAB);
-		sb.append(attributesString);
-
-		sb.append(StringPool.NEW_LINE);
-		sb.append(indent);
-		sb.append(closeTag);
-
-		return sb.toString();
-	}
-
-	private static final Pattern _closeTagPattern = Pattern.compile(".+(/?>)");
 
 }

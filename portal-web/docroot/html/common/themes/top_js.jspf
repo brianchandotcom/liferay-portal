@@ -534,6 +534,31 @@ for (String analyticsType : analyticsTypes) {
 				</script>
 			</c:if>
 		</c:when>
+		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "googleAnalytics4") %>'>
+
+			<%
+			String googleAnalytics4Id = groupTypeSettings.getProperty("googleAnalytics4Id");
+			%>
+
+			<c:if test="<%= Validator.isNotNull(googleAnalytics4Id) %>">
+				<script async src="https://www.googletagmanager.com/gtag/js?id=<%= HtmlUtil.escapeJS(googleAnalytics4Id) %>"></script>
+
+				<script>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', '<%= HtmlUtil.escapeJS(googleAnalytics4Id) %>');
+
+					<%
+					String googleAnalytics4CustomConfiguration = groupTypeSettings.getProperty("googleAnalytics4CustomConfiguration");
+					%>
+
+					<c:if test="<%= Validator.isNotNull(googleAnalytics4CustomConfiguration) %>">
+						<%= googleAnalytics4CustomConfiguration %>
+					</c:if>
+				</script>
+			</c:if>
+		</c:when>
 		<c:otherwise>
 
 			<%

@@ -921,7 +921,6 @@ SideNavigation.prototype = {
 			const target =
 				toggler.dataset.target || toggler.getAttribute('href');
 
-
 			instance._emit('closedStart.lexicon.sidenav');
 
 			dispatchCustomEvent(

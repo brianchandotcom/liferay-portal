@@ -1,0 +1,144 @@
+definition {
+
+	macro _deleteJobSchedulerTrigger {
+		Variables.assertDefined(parameterList = "${triggerName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var triggerId = JSONJobScheduler._getJobSchedulerTriggerIdByName(triggerName = "${triggerName}");
+
+		var curl = '''
+			${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
+			-u test@liferay.com:test \
+			-d dispatchTriggerId=${triggerId}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	macro _deleteJobSchedulerTriggers {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var triggerIds = JSONJobScheduler._getJobSchedulerTriggerIds();
+
+		if ("${triggerIds}" != "") {
+			for (var triggerId : list "${triggerIds}") {
+				echo("Deleting Job Scheduler Trigger with ID: ${triggerId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
+					-u test@liferay.com:test \
+					-d dispatchTriggerId=${triggerId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Job Scheduler Triggers to be deleted");
+		}
+	}
+
+	macro _deleteJobSchedulerTriggersByType {
+		Variables.assertDefined(parameterList = "${taskExecutorType}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(triggerCount)) {
+			var triggerCount = "${triggerCount}";
+		}
+		else {
+			var triggerCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
+			-u test@liferay.com:test \
+			-d start=0 \
+			-d end=${triggerCount}
+		''';
+		var triggerIds = JSONCurlUtil.post("${curl}", "$.[?(@['dispatchTaskExecutorType'] == '${taskExecutorType}')].['dispatchTriggerId']");
+
+		if ("${triggerIds}" != "") {
+			for (var triggerId : list "${triggerIds}") {
+				echo("Deleting Job Scheduler Trigger with ID: ${triggerId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
+					-u test@liferay.com:test \
+					-d dispatchTriggerId=${triggerId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Job Scheduler Triggers to be deleted");
+		}
+	}
+
+	macro _getJobSchedulerTriggerIdByName {
+		Variables.assertDefined(parameterList = "${triggerName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(triggerCount)) {
+			var triggerCount = "${triggerCount}";
+		}
+		else {
+			var triggerCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
+			-u test@liferay.com:test \
+			-d start=0 \
+			-d end=${triggerCount}
+		''';
+		var triggerId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${triggerName}')]['dispatchTriggerId']");
+
+		return "${triggerId}";
+	}
+
+	macro _getJobSchedulerTriggerIds {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(triggerCount)) {
+			var triggerCount = "${triggerCount}";
+		}
+		else {
+			var triggerCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/dispatch.dispatchtrigger/get-dispatch-triggers \
+			-u test@liferay.com:test \
+			-d start=0 \
+			-d end=${triggerCount}
+		''';
+		var triggerIds = JSONCurlUtil.post("${curl}", "$..['dispatchTriggerId']");
+
+		return "${triggerIds}";
+	}
+
+}

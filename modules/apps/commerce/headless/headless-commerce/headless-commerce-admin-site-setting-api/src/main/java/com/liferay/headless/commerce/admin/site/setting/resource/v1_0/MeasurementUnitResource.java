@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.site.setting.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -58,16 +59,41 @@ public interface MeasurementUnitResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<MeasurementUnit>
-			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-				Long groupId, Integer type, Pagination pagination)
+	public Page<MeasurementUnit> getMeasurementUnitsPage(
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-			Long groupId, MeasurementUnit measurementUnit)
+	public MeasurementUnit postMeasurementUnit(MeasurementUnit measurementUnit)
 		throws Exception;
 
-	public Response deleteMeasurementUnit(Long id) throws Exception;
+	public Response postMeasurementUnitBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public MeasurementUnit getMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public void deleteMeasurementUnitByKey(String key) throws Exception;
+
+	public MeasurementUnit getMeasurementUnitByKey(String key) throws Exception;
+
+	public Response patchMeasurementUnitByKey(
+			String key, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public Page<MeasurementUnit> getMeasurementUnitsByType(
+			String measurementUnitType, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public void deleteMeasurementUnit(Long id) throws Exception;
 
 	public Response deleteMeasurementUnitBatch(
 			Long id, String callbackURL, Object object)
@@ -75,11 +101,8 @@ public interface MeasurementUnitResource {
 
 	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
 
-	public Response putMeasurementUnit(Long id, MeasurementUnit measurementUnit)
-		throws Exception;
-
-	public Response putMeasurementUnitBatch(
-			Long id, String callbackURL, Object object)
+	public Response patchMeasurementUnit(
+			Long id, MeasurementUnit measurementUnit)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

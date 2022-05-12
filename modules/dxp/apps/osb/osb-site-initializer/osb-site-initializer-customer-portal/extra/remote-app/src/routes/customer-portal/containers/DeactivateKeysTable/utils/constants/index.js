@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
 import i18n from '../../../../../../common/I18n';
 
 export const DEACTIVATE_COLUMNS = [
@@ -56,16 +55,6 @@ export const DEACTIVATE_COLUMNS = [
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			name: i18n.translate('status'),
-			styles: 'bg-transparent text-neutral-10 font-weight-bold',
-		},
-	},
-	{
-		accessor: 'download',
-		align: 'center',
-		bodyClass: 'border-0',
-		disableCustomClickOnRow: true,
-		header: {
-			name: <ClayIcon symbol="download" />,
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
 		},
 	},

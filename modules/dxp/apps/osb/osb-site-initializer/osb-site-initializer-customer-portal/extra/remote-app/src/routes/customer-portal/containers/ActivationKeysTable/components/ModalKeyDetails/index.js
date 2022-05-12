@@ -109,9 +109,9 @@ const ModalKeyDetails = ({
 						displayType="success"
 						onClose={() => setValueToCopyToClipboard(false)}
 					>
-						{valueToCopyToClipboard}
-
-						{i18n.translate('copied-to-clipboard')}
+						{i18n.sub('x-copied-to-clipboard', [
+							valueToCopyToClipboard,
+						])}
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
 			)}

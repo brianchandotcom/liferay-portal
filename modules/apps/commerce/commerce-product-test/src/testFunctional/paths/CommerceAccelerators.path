@@ -501,32 +501,32 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_DISCOUNT</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']/../../../div[6]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[6]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_NAME</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']/../../../div[8]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[8]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_QUANTITY</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']/../../../div[7]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SKU</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']/../../../div[3]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_UNIT_PRICE</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_productName}']/../../../div[4]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[4]</td>
 	<td></td>
 </tr>
 <tr>

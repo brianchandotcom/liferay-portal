@@ -1,0 +1,57 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up virtual instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-151867. The page editor could add Form Container fragment from Form Components set to page."
+	@priority = "5"
+	test AddFormContainerToContentPage {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator add a Form Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could see the Form Container on page") {
+			PageEditor.viewFragment(fragmentName = "Form Container");
+		}
+	}
+
+}

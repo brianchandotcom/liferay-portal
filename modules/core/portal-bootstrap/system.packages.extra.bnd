@@ -155,11 +155,6 @@ Export-Package:\
 	jodd.util.*;version='6.0.1',\
 	\
 	org.apache.bcel.*;version='2.7.1',\
-	org.apache.commons.beanutils;version='1.9.4',\
-	org.apache.commons.beanutils.converters;version='1.9.4',\
-	org.apache.commons.beanutils.expression;version='1.9.4',\
-	org.apache.commons.beanutils.locale;version='1.9.4',\
-	org.apache.commons.beanutils.locale.converters;version='1.9.4',\
 	org.apache.commons.collections;version='3.2.1',\
 	org.apache.commons.collections.bag;version='3.2.1',\
 	org.apache.commons.collections.bidimap;version='3.2.1',\
@@ -265,7 +260,6 @@ Provide-Capability:\
 	@../../../lib/development/activation.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\
-	@../../../lib/portal/commons-beanutils.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-lang.jar,\
 	@../../../lib/portal/commons-logging.jar,\

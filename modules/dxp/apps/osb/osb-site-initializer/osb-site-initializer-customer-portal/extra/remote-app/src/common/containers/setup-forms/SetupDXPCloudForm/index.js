@@ -284,7 +284,7 @@ const SetupDXPCloudPage = ({
 								prependIcon="hr"
 								small
 							>
-								Remove this Admin
+								{i18n.translate('remove-this-admin')}
 							</Button>
 						)}
 						<Button
@@ -297,7 +297,7 @@ const SetupDXPCloudPage = ({
 							prependIcon="plus"
 							small
 						>
-							Add Another Admin
+							{i18n.translate('add-another-admin')}
 						</Button>
 					</>
 				)}

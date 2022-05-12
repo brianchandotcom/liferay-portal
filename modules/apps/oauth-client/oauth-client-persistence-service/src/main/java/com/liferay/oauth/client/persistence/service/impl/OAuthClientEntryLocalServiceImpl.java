@@ -62,9 +62,9 @@ public class OAuthClientEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		oAuthClientEntry.setCompanyId(user.getCompanyId());
-
-		oAuthClientEntry.setUserId(userId);
+		oAuthClientEntry.setUserId(user.getUserId());
 		oAuthClientEntry.setUserName(user.getFullName());
+
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
 		oAuthClientEntry.setClientId(
 			_validateAndGetClientId(
@@ -73,13 +73,15 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setRequestParametersJSON(requestParametersJSON);
 
+		oAuthClientEntry = oAuthClientEntryPersistence.update(oAuthClientEntry);
+
 		_resourceLocalService.addResources(
 			oAuthClientEntry.getCompanyId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, oAuthClientEntry.getUserId(),
 			OAuthClientEntry.class.getName(),
 			oAuthClientEntry.getOAuthClientEntryId(), false, false, false);
 
-		return oAuthClientEntryPersistence.update(oAuthClientEntry);
+		return oAuthClientEntry;
 	}
 
 	@Override

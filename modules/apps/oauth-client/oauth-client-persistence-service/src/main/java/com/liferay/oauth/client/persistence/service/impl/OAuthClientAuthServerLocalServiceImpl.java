@@ -61,12 +61,17 @@ public class OAuthClientAuthServerLocalServiceImpl
 
 		oAuthClientAuthServer.setCompanyId(user.getCompanyId());
 
-		oAuthClientAuthServer.setUserId(userId);
+		oAuthClientAuthServer.setUserId(user.getUserId());
+		oAuthClientAuthServer.setUserName(user.getFullName());
+
 		oAuthClientAuthServer.setDiscoveryEndpoint(discoveryEndpoint);
 		oAuthClientAuthServer.setIssuer(
 			_validateAndGetIssuer(user.getCompanyId(), metadataJSON, type));
 		oAuthClientAuthServer.setMetadataJSON(metadataJSON);
 		oAuthClientAuthServer.setType(type);
+
+		oAuthClientAuthServer = oAuthClientAuthServerPersistence.update(
+			oAuthClientAuthServer);
 
 		_resourceLocalService.addResources(
 			oAuthClientAuthServer.getCompanyId(),
@@ -76,7 +81,7 @@ public class OAuthClientAuthServerLocalServiceImpl
 			oAuthClientAuthServer.getOAuthClientAuthServerId(), false, false,
 			false);
 
-		return oAuthClientAuthServerPersistence.update(oAuthClientAuthServer);
+		return oAuthClientAuthServer;
 	}
 
 	@Override

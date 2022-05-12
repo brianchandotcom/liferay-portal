@@ -37,7 +37,7 @@ public interface CookiesConsentConfiguration {
 	public LocalizedValuesMap title();
 
 	@Meta.AD(
-		deflt = "When you visit any web site, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.\n\nBecause we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.",
+		deflt = "When you visit any web site, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences, or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience. You can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.",
 		name = "description", required = false
 	)
 	public LocalizedValuesMap description();
@@ -52,13 +52,13 @@ public interface CookiesConsentConfiguration {
 	public LocalizedValuesMap linkDisplayText();
 
 	@Meta.AD(
-		deflt = "These cookies are essential for you to browse the website and use its features, such as accessing secure areas of the site. Cookies that allow web shops to hold your items in your cart while you are shopping online are an example of strictly necessary cookies. These cookies will generally be first-party session cookies. While it is not required to obtain consent for these cookies, what they do and why they are necessary should be explained to the user.",
+		deflt = "These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will then not work. These cookies do not store any personally identifiable information.",
 		name = "strictly-necessary-cookies-description-field", required = false
 	)
 	public LocalizedValuesMap strictlyNecessaryCookiesDescription();
 
 	@Meta.AD(
-		deflt = "These cookies allow a website to remember choices you have made in the past, like what language you prefer, what region you would like weather reports for, or what your user name and password are so you can automatically log in.",
+		deflt = "These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies, then some or all of these services may not function properly.",
 		name = "functional-cookies-description-field", required = false
 	)
 	public LocalizedValuesMap functionalCookiesDescription();
@@ -67,7 +67,7 @@ public interface CookiesConsentConfiguration {
 	public boolean functionalCookiesPreChecked();
 
 	@Meta.AD(
-		deflt = "These cookies collect information about how you use a website, like which pages you visited and which links you clicked on. None of this information can be used to identify you. It is all aggregated and, therefore, anonymized. Their sole purpose is to improve website functions. This includes cookies from third-party analytics services as long as the cookies are for the exclusive use of the owner of the website visited.",
+		deflt = "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.",
 		name = "performance-cookies-description-field", required = false
 	)
 	public LocalizedValuesMap performanceCookiesDescription();
@@ -76,7 +76,7 @@ public interface CookiesConsentConfiguration {
 	public boolean performanceCookiesPreChecked();
 
 	@Meta.AD(
-		deflt = "These cookies track your online activity to help advertisers deliver more relevant advertising or to limit how many times you see an ad. These cookies can share that information with other organizations or advertisers. These are persistent cookies and almost always of third-party provenance.",
+		deflt = "These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and Internet device. If you do not allow these cookies, you will experience less targeted advertising.",
 		name = "personalization-cookies-description-field", required = false
 	)
 	public LocalizedValuesMap personalizationCookiesDescription();

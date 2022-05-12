@@ -37,7 +37,7 @@ definition {
 		Click(locator1 = "TestrayUser#MANAGE_ACCOUNT");
 
 		AssertElementPresent(
-			key_projectName = "Project Directory",
+			key_projectName = "Project",
 			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 	}
 

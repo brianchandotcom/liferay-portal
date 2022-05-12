@@ -26,60 +26,77 @@ definition {
 		}
 	}
 
-	@description = "LPS-150230 - Verify if it is possible to go the Overview tab."
+	@description = "This is a test for LPS-150230 - Verify if it is possible to go the Overview tab."
 	@priority = "4"
 	test CanAcessOverviewTab {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and verify if is possible to go the Overview tab") {
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.projectTabNavigator(navTabName = "Overview");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Overview");
+			Testray.projectTabNavigator(navTabName = "Overview");
+
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Overview");
+		}
 	}
 
-	@description = "LPS-150231 - Verify if the user can see the creation date."
+	@description = "This is a test for LPS-150231 - Verify if the user can see the creation date."
 	@priority = "3"
 	test CanSeeCreationDate {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and verify if the user can see the creation date") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Testray.projectTabNavigator(navTabName = "Overview");
+			Testray.projectTabNavigator(navTabName = "Overview");
 
-		Testray.viewOverviewTab(rowValue = "Date");
+			Testray.viewOverviewTab(rowValue = "Date");
+		}
 	}
 
-	@description = "LPS-150232 - Verify if the user can see the creation user."
+	@description = "This is a test for LPS-150232 - Verify if the user can see the creation user."
 	@priority = "3"
 	test CanSeeCreationUser {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and verify if the user can see the creation User") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Testray.projectTabNavigator(navTabName = "Overview");
+			Testray.projectTabNavigator(navTabName = "Overview");
 
-		Testray.viewOverviewTab(rowValue = "Created By");
+			Testray.viewOverviewTab(rowValue = "Created By");
+		}
 	}
 
-	@description = "LPS-150232 - Verify if the user can see the descripion."
+	@description = "This is a test for LPS-150233 - Verify if the user can see the descripion."
 	@priority = "3"
 	test CanSeeProjectDescription {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+		task ("Create Project and verify if the user can see the descripion") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Testray.projectTabNavigator(navTabName = "Overview");
+			Testray.projectTabNavigator(navTabName = "Overview");
 
-		Testray.viewOverviewTab(rowValue = "Description");
+			Testray.viewOverviewTab(rowValue = "Description");
+		}
 	}
 
 }

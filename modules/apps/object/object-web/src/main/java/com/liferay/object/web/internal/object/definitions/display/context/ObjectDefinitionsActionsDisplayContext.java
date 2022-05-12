@@ -24,6 +24,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
+import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,6 +94,11 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		return (ObjectAction)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_ACTION);
+	}
+
+	public List<Map<String, Object>> getObjectActionCodeEditorElements() {
+		return ObjectCodeEditorUtil.getCodeEditorElements(
+			true, objectRequestHelper.getLocale(), getObjectDefinitionId());
 	}
 
 	public ObjectActionExecutor getObjectActionExecutor() {

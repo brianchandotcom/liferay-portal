@@ -17,6 +17,7 @@ import {openSelectionModal} from 'frontend-js-web';
 export default function ({inputName, namespace, selectFolderURL}) {
 	const handleSelectFolderButtonClick = () =>
 		openSelectionModal({
+			height: '70vh',
 			iframeBodyCssClass: '',
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -31,6 +32,7 @@ export default function ({inputName, namespace, selectFolderURL}) {
 				}
 			},
 			selectEventName: `${namespace}selectFolder`,
+			size: 'md',
 			title: Liferay.Language.get('select-folder'),
 			url: selectFolderURL,
 		});

@@ -2,6 +2,7 @@
 
 <Configuration strict="true">
 	<Loggers>
+		<Logger level="ERROR" name="org.apache.commons.beanutils" />
 		<Logger level="ERROR" name="org.apache.commons.digester" />
 		<Logger level="ERROR" name="org.apache.commons.validator" />
 	</Loggers>

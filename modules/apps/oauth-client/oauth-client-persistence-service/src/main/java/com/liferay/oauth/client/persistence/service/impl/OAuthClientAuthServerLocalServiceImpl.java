@@ -53,10 +53,9 @@ public class OAuthClientAuthServerLocalServiceImpl
 			String type)
 		throws PortalException {
 
-		long oAuthClientAuthServerId = counterLocalService.increment();
-
 		OAuthClientAuthServer oAuthClientAuthServer =
-			oAuthClientAuthServerPersistence.create(oAuthClientAuthServerId);
+			oAuthClientAuthServerPersistence.create(
+				counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
 

@@ -230,30 +230,6 @@ public class JSONUtil {
 		return false;
 	}
 
-	public static boolean isValid(String json) {
-		json = json.trim();
-
-		if ((json.length() < 2) ||
-			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
-			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
-
-			return false;
-		}
-
-		try {
-			_createJSONObject(json);
-
-			return true;
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return false;
-		}
-	}
-
 	public static JSONObject merge(
 			JSONObject jsonObject1, JSONObject jsonObject2)
 		throws JSONException {

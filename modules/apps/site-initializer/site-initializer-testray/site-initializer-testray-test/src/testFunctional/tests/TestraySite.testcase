@@ -57,9 +57,11 @@ definition {
 	@description = "This is a test for LPS-152873. Verify if when Testray is created, Remote Apps will be created for it as well"
 	@priority = "5"
 	test RemoteAppsAreCreatedForTestray {
-		Testray.createTestraySite(siteName = "Testray 2");
+		task ("Create Testray") {
+			Testray.createTestraySite(siteName = "Testray 2");
 
-		Refresh();
+			Refresh();
+		}
 
 		task ("Go to Remote Apps Portlet") {
 			RemoteApps.goToRemoteAppsPortlet();

@@ -27,28 +27,32 @@ definition {
 		}
 	}
 
-	@description = "LPS-150823 - Verify if the user can see the Description Column."
+	@description = "This is a test for LPS-150823 - Verify if the user can see the Description Column."
 	@priority = "3"
 	test CanSeeDecriptionColumn {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and Verify if the user can see the Description Column") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		AssertElementPresent(
-			key_value = "ci:test",
-			locator1 = "Testray#DESCRIPTION_PROJECT");
+			Testray.assertProjectDescription(value = "ci:test");
+		}
 	}
 
-	@description = "LPS-150822 - Verify if the user can see the Project Name Column."
+	@description = "This is a test for LPS-150822 - Verify if the user can see the Project Name Column."
 	@priority = "3"
 	test CanSeeProjectNameColumn {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and Verify if the user can see the Project Name Column") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		AssertElementPresent(
-			key_projectName = "Liferay Portal 7.4",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+			Testray.assertProjectName(key_name = "Liferay Portal 7.4");
+		}
 	}
 
 }

@@ -590,8 +590,6 @@ public class JournalDisplayContext {
 					_themeDisplay.getScopeGroupId(),
 					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
 			).put(
-				"icon", "folder"
-			).put(
 				"id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
 			).put(
 				"name", LanguageUtil.get(_themeDisplay.getLocale(), "home")
@@ -1401,8 +1399,6 @@ public class JournalDisplayContext {
 			}
 
 			jsonObject.put(
-				"icon", "folder"
-			).put(
 				"id", folder.getFolderId()
 			).put(
 				"name", folder.getName()

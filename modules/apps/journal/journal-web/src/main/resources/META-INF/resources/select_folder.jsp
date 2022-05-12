@@ -26,11 +26,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		HashMapBuilder.<String, Object>put(
 			"itemSelectorSaveEvent", eventName
 		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).put(
 			"nodes", journalDisplayContext.getFoldersJSONArray()
-		).put(
-			"pathThemeImages", themeDisplay.getPathThemeImages()
 		).build()
 	%>'
 />

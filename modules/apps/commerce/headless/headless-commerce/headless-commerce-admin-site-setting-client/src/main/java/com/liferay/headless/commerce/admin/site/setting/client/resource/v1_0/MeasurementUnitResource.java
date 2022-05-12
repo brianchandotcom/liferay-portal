@@ -40,23 +40,83 @@ public interface MeasurementUnitResource {
 		return new Builder();
 	}
 
-	public Page<MeasurementUnit>
-			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-				Long groupId, Integer type, Pagination pagination)
+	public Page<MeasurementUnit> getMeasurementUnitsPage(
+			String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getMeasurementUnitsPageHttpResponse(
+			String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public MeasurementUnit postMeasurementUnit(MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postMeasurementUnitHttpResponse(
+			MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public void postMeasurementUnitBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postMeasurementUnitBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-				Long groupId, Integer type, Pagination pagination)
+			deleteMeasurementUnitByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode)
 		throws Exception;
 
-	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-			Long groupId, MeasurementUnit measurementUnit)
+	public MeasurementUnit getMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-				Long groupId, MeasurementUnit measurementUnit)
+			getMeasurementUnitByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode)
+		throws Exception;
+
+	public void patchMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			patchMeasurementUnitByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public void deleteMeasurementUnitByKey(String key) throws Exception;
+
+	public HttpInvoker.HttpResponse deleteMeasurementUnitByKeyHttpResponse(
+			String key)
+		throws Exception;
+
+	public MeasurementUnit getMeasurementUnitByKey(String key) throws Exception;
+
+	public HttpInvoker.HttpResponse getMeasurementUnitByKeyHttpResponse(
+			String key)
+		throws Exception;
+
+	public void patchMeasurementUnitByKey(
+			String key, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchMeasurementUnitByKeyHttpResponse(
+			String key, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public Page<MeasurementUnit> getMeasurementUnitsByType(
+			String measurementUnitType, Pagination pagination,
+			String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getMeasurementUnitsByTypeHttpResponse(
+			String measurementUnitType, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public void deleteMeasurementUnit(Long id) throws Exception;
@@ -77,19 +137,11 @@ public interface MeasurementUnitResource {
 	public HttpInvoker.HttpResponse getMeasurementUnitHttpResponse(Long id)
 		throws Exception;
 
-	public void putMeasurementUnit(Long id, MeasurementUnit measurementUnit)
+	public void patchMeasurementUnit(Long id, MeasurementUnit measurementUnit)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putMeasurementUnitHttpResponse(
+	public HttpInvoker.HttpResponse patchMeasurementUnitHttpResponse(
 			Long id, MeasurementUnit measurementUnit)
-		throws Exception;
-
-	public void putMeasurementUnitBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putMeasurementUnitBatchHttpResponse(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -164,14 +216,13 @@ public interface MeasurementUnitResource {
 	public static class MeasurementUnitResourceImpl
 		implements MeasurementUnitResource {
 
-		public Page<MeasurementUnit>
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					Long groupId, Integer type, Pagination pagination)
+		public Page<MeasurementUnit> getMeasurementUnitsPage(
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-					groupId, type, pagination);
+				getMeasurementUnitsPageHttpResponse(
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -210,9 +261,8 @@ public interface MeasurementUnitResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-					Long groupId, Integer type, Pagination pagination)
+		public HttpInvoker.HttpResponse getMeasurementUnitsPageHttpResponse(
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -236,8 +286,8 @@ public interface MeasurementUnitResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (type != null) {
-				httpInvoker.parameter("type", String.valueOf(type));
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -247,12 +297,14 @@ public interface MeasurementUnitResource {
 					"pageSize", String.valueOf(pagination.getPageSize()));
 			}
 
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
-
-			httpInvoker.path("groupId", groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -260,13 +312,254 @@ public interface MeasurementUnitResource {
 			return httpInvoker.invoke();
 		}
 
-		public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-				Long groupId, MeasurementUnit measurementUnit)
+		public MeasurementUnit postMeasurementUnit(
+				MeasurementUnit measurementUnit)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-					groupId, measurementUnit);
+				postMeasurementUnitHttpResponse(measurementUnit);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MeasurementUnitSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postMeasurementUnitHttpResponse(
+				MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(measurementUnit.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postMeasurementUnitBatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postMeasurementUnitBatchHttpResponse(callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse postMeasurementUnitBatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteMeasurementUnitByExternalReferenceCode(
+				String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteMeasurementUnitByExternalReferenceCodeHttpResponse(
+					externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteMeasurementUnitByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public MeasurementUnit getMeasurementUnitByExternalReferenceCode(
+				String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getMeasurementUnitByExternalReferenceCodeHttpResponse(
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -306,8 +599,82 @@ public interface MeasurementUnitResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-					Long groupId, MeasurementUnit measurementUnit)
+				getMeasurementUnitByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchMeasurementUnitByExternalReferenceCode(
+				String externalReferenceCode, MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchMeasurementUnitByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, measurementUnit);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				patchMeasurementUnitByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode,
+					MeasurementUnit measurementUnit)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -331,14 +698,343 @@ public interface MeasurementUnitResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}");
 
-			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteMeasurementUnitByKey(String key) throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				deleteMeasurementUnitByKeyHttpResponse(key);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteMeasurementUnitByKeyHttpResponse(
+				String key)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}");
+
+			httpInvoker.path("key", key);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public MeasurementUnit getMeasurementUnitByKey(String key)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getMeasurementUnitByKeyHttpResponse(key);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MeasurementUnitSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getMeasurementUnitByKeyHttpResponse(
+				String key)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}");
+
+			httpInvoker.path("key", key);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchMeasurementUnitByKey(
+				String key, MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchMeasurementUnitByKeyHttpResponse(key, measurementUnit);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchMeasurementUnitByKeyHttpResponse(
+				String key, MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(measurementUnit.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}");
+
+			httpInvoker.path("key", key);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<MeasurementUnit> getMeasurementUnitsByType(
+				String measurementUnitType, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getMeasurementUnitsByTypeHttpResponse(
+					measurementUnitType, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, MeasurementUnitSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getMeasurementUnitsByTypeHttpResponse(
+				String measurementUnitType, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-type/{measurementUnitType}");
+
+			httpInvoker.path("measurementUnitType", measurementUnitType);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -374,6 +1070,17 @@ public interface MeasurementUnitResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse deleteMeasurementUnitHttpResponse(
@@ -404,7 +1111,7 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}");
 
 			httpInvoker.path("id", id);
 
@@ -482,7 +1189,7 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/batch");
 
 			httpInvoker.path("id", id);
 
@@ -560,7 +1267,7 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}");
 
 			httpInvoker.path("id", id);
 
@@ -570,11 +1277,12 @@ public interface MeasurementUnitResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putMeasurementUnit(Long id, MeasurementUnit measurementUnit)
+		public void patchMeasurementUnit(
+				Long id, MeasurementUnit measurementUnit)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putMeasurementUnitHttpResponse(id, measurementUnit);
+				patchMeasurementUnitHttpResponse(id, measurementUnit);
 
 			String content = httpResponse.getContent();
 
@@ -602,7 +1310,7 @@ public interface MeasurementUnitResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putMeasurementUnitHttpResponse(
+		public HttpInvoker.HttpResponse patchMeasurementUnitHttpResponse(
 				Long id, MeasurementUnit measurementUnit)
 			throws Exception {
 
@@ -627,90 +1335,12 @@ public interface MeasurementUnitResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
-
-			httpInvoker.path("id", id);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void putMeasurementUnitBatch(
-				Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putMeasurementUnitBatchHttpResponse(id, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse putMeasurementUnitBatchHttpResponse(
-				Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/batch");
+						"/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}");
 
 			httpInvoker.path("id", id);
 

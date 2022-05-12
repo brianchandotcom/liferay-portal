@@ -40,6 +40,7 @@ import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import Rating from '../../components/Rating.es';
 import SectionLabel from '../../components/SectionLabel.es';
+import SubscritionCheckbox from '../../components/SubscribeCheckbox.es';
 import SubscriptionButton from '../../components/SubscriptionButton.es';
 import TagList from '../../components/TagList.es';
 import {
@@ -88,6 +89,7 @@ export default withRouter(
 		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
 		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 
+		const [allowSubscription, setAllowSubscription] = useState(false);
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
 
@@ -124,8 +126,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -162,19 +163,24 @@ export default withRouter(
 		const [createAnswer] = useMutation(createAnswerQuery);
 		const [subscribe] = useMutation(subscribeQuery);
 
-		const onSubscription = useCallback(async () => {
-			if (question.subscribed) {
-				return;
-			}
+		const onSubscription = useCallback(
+			async ({
+				allowSubscription: _allowSubscription = allowSubscription,
+			} = {}) => {
+				if (question.subscribed || !_allowSubscription) {
+					return;
+				}
 
-			await subscribe({
-				variables: {
-					messageBoardThreadId: question.id,
-				},
-			});
+				await subscribe({
+					variables: {
+						messageBoardThreadId: question.id,
+					},
+				});
 
-			setQuestion({...question, subscribed: true});
-		}, [question, subscribe, setQuestion]);
+				setQuestion({...question, subscribed: true});
+			},
+			[allowSubscription, question, subscribe, setQuestion]
+		);
 
 		const onCreateAnswer = async () => {
 			try {
@@ -193,8 +199,7 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			}
-			catch (error) {}
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(
@@ -202,7 +207,7 @@ export default withRouter(
 				setAnswers({
 					...answers,
 					items: [
-						...answers.items.filter(
+						...answers.items?.filter(
 							(otherAnswer) => answer.id !== otherAnswer.id
 						),
 					],
@@ -218,7 +223,7 @@ export default withRouter(
 
 		const answerChange = useCallback(
 			(answerId) => {
-				const answer = answers.items.find(
+				const answer = answers.items?.find(
 					(answer) => answer.showAsAnswer && answer.id !== answerId
 				);
 
@@ -301,8 +306,8 @@ export default withRouter(
 							</div>
 
 							<div className="col-md-10">
-								<div className="align-items-end flex-column-reverse flex-md-row row">
-									<div className="c-mt-4 c-mt-md-0 col-md-8">
+								<div className="align-items-top flex-column-reverse flex-md-row row">
+									<div className="c-mt-4 c-mt-md-0 col-md-7">
 										{!!question.messageBoardSection &&
 											!!question.messageBoardSection
 												.numberOfMessageBoardSections && (
@@ -371,7 +376,7 @@ export default withRouter(
 									</div>
 
 									{!question.locked && (
-										<div className="col-md-4 text-right">
+										<div className="col-md-5 text-right">
 											<ClayButton.Group
 												className="questions-actions"
 												spaced={true}
@@ -486,9 +491,13 @@ export default withRouter(
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
-									{answers.totalCount + ' '}
-
-									{Liferay.Language.get('answers')}
+									{loading
+										? Liferay.Language.get(
+												'loading-answers'
+										  )
+										: `${
+												answers.totalCount
+										  } ${Liferay.Language.get('answers')}`}
 								</h3>
 
 								<div className="c-mt-3">
@@ -511,6 +520,7 @@ export default withRouter(
 												editable={!question.locked}
 												key={answer.id}
 												onSubscription={onSubscription}
+												question={question}
 											/>
 										)}
 									</PaginatedList>
@@ -531,6 +541,15 @@ export default withRouter(
 												question={question}
 												ref={editorRef}
 											/>
+
+											{!question.subscribed && (
+												<SubscritionCheckbox
+													checked={allowSubscription}
+													setChecked={
+														setAllowSubscription
+													}
+												/>
+											)}
 
 											{!question.locked && (
 												<ClayButton

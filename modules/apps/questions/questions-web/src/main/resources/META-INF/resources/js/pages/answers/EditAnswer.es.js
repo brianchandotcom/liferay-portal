@@ -76,7 +76,8 @@ export default withRouter(
 				history.goBack();
 			});
 		};
-		const isAReplyMessage = answerId.includes('re-re-ask');
+
+		const isAReplyMessage = answerId.includes('re-re-');
 
 		return (
 			<section className="c-mt-5 questions-section questions-sections-answer">

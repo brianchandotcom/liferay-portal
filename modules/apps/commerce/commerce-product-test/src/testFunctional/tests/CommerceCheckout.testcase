@@ -15,6 +15,182 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
+	@priority = "4"
+	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a two buyer users") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User 2",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Given buyer user 1 logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given an empty order created from Pending Orders") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click.mouseDownMouseUp(
+				key_text = "Add Order",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When buyer user 2 logs in navigating in Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer2@liferay.com");
+		}
+
+		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then by clicking Submit button from minicart, comletes the checkout process") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
+	@priority = "4"
+	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a two buyer users") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User 2",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Given buyer user 1 logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given an empty order created from Pending Orders") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click.mouseDownMouseUp(
+				key_text = "Add Order",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When buyer user 2 logs in navigating in Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer2@liferay.com");
+		}
+
+		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then by clicking View Details from minicart, comletes the checkout process") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
 	@priority = "5"
 	test AddOrderFromAUserAndCheckoutFromAdminUser {
@@ -81,6 +257,97 @@ definition {
 			productQuantity = "1",
 			productUnitPrice = "24",
 			shippingMethod = "Standard");
+	}
+
+	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
+	@priority = "4"
+	test AddOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a two buyer users") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User 2",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Given buyer user 1 logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a product is added to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+		}
+
+		task ("When buyer user 2 logs in navigating in Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer2@liferay.com");
+		}
+
+		task ("And opens the mini cart to see the active order of buyer user 1") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
+				value1 = "${activeOrderId}");
+		}
+
+		task ("Then by clicking Submit button, comletes the checkout process") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
 	}
 
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
@@ -157,277 +424,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
 			value1 = "Success! Your order has been processed.");
-	}
-
-	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
-	test AddOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site with a two buyer users") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "false",
-				requireReset = "false",
-				userEmailAddress = "buyer2@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User 2",
-				userRole = "Buyer",
-				userScreenName = "buyeruser2",
-				userSiteMembership = "Minium");
-		}
-
-		task ("Given buyer user 1 logs in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a product is added to the cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-
-			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
-
-			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
-		}
-
-		task ("When buyer user 2 logs in navigating in Minium site") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer2@liferay.com");
-		}
-
-		task ("And opens the mini cart to see the active order of buyer user 1") {
-			AssertTextEquals(
-				locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
-				value1 = "${activeOrderId}");
-		}
-
-		task ("Then by clicking Submit button, comletes the checkout process") {
-			CommerceNavigator.gotoMiniCart();
-
-       		Button.click(button = "Submit");
-			
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-
-		}
-	}
-
-	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
-	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site with a two buyer users") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "false",
-				requireReset = "false",
-				userEmailAddress = "buyer2@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User 2",
-				userRole = "Buyer",
-				userScreenName = "buyeruser2",
-				userSiteMembership = "Minium");
-		}
-
-		task ("Given buyer user 1 logs in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given an empty order created from Pending Orders") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Click.mouseDownMouseUp(
-				key_text = "Add Order",
-				locator1 = "Button#ANY");
-		}
-
-		task ("When buyer user 2 logs in navigating in Minium site") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer2@liferay.com");
-		}
-
-		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-		}
-
-		task ("Then by clicking Submit button from minicart, comletes the checkout process") {
-			CommerceNavigator.gotoMiniCart();
-
-       		Button.click(button = "Submit");
-			
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-
-		}		
-
-	}
-
-	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
-	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site with a two buyer users") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "false",
-				requireReset = "false",
-				userEmailAddress = "buyer2@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User 2",
-				userRole = "Buyer",
-				userScreenName = "buyeruser2",
-				userSiteMembership = "Minium");
-		}
-
-		task ("Given buyer user 1 logs in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given an empty order created from Pending Orders") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Click.mouseDownMouseUp(
-				key_text = "Add Order",
-				locator1 = "Button#ANY");
-		}
-
-		task ("When buyer user 2 logs in navigating in Minium site") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer2@liferay.com");
-		}
-
-		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-		}
-
-		task ("Then by clicking View Details from minicart, comletes the checkout process") {
-			CommerceCheckout.gotoCheckout();
-			
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-
-		}		
 	}
 
 	@description = "COMMERCE-8168. This is a use case for COMMERCE-8127"

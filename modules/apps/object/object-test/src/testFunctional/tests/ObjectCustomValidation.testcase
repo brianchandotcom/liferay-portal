@@ -23,97 +23,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-144474 - Verify that the Validation tab is available"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanViewValidationTab {
-
-		// TODO LPS-153546 CanViewValidationTab pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewDefaultViewWhenEmptyValidation {
-
-		// TODO LPS-153547 CanViewDefaultViewWhenEmptyValidation pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test LabelFieldIsRequiredWhenThereIsValidation {
-
-		// TODO LPS-153548 LabelFieldIsRequiredWhenThereIsValidation pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewLocalizedInputChanged {
-
-		// TODO LPS-153549 CanViewLocalizedInputChanged pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUserAddValidationsGroovy {
-
-		// TODO LPS-153550 CanUserAddValidationsGroovy pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotActiveByDefaultWhenAddValidationsGroovy {
-
-		// TODO LPS-153551 CannotActiveByDefaultWhenAddValidationsGroovy pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUserDefineValidationActiveOrInactive {
-
-		// TODO LPS-153552 CanUserDefineValidationActiveOrInactive pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUserSeeBasicInfoTab {
-
-		// TODO LPS-153553 CanUserSeeBasicInfoTab pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Conditions tab"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUserSeeConditionsTab {
-
-		// TODO LPS-153554 CanUserSeeConditionsTab pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when managing an Object validation, the Error Message field is required"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewErrorMessageWhenFieldIsRequired {
-
-		// TODO LPS-153555 CanViewErrorMessageWhenFieldIsRequired pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
+	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddEntryWhenPassesForAllValidations {
@@ -122,25 +32,7 @@ definition {
 
 	}
 
-    @description = "LPS-144474 - Verify that, when adding a new entry in the Object, if it do not passes all validations from that Object, an alert is displayed in the lower left corner of the screen"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewMessageErrorWhenDontPassesForAllValidations {
-
-		// TODO LPS-153557 CanViewMessageErrorWhenDontPassesForAllValidations pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateWhenPassesForAllValidations {
-
-		// TODO LPS-153558 CanUpdateWhenPassesForAllValidations pending implementation
-
-	}
-
-    @description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
+	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries {
@@ -149,7 +41,7 @@ definition {
 
 	}
 
-    @description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
+	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
@@ -158,12 +50,120 @@ definition {
 
 	}
 
-    @description = "LPS-144474 - Verify that the message 'There was an unexpected error in fields validation. Please contact support' is displayed when the goovy sintax is incorrect"
+	@description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotActiveByDefaultWhenAddValidationsGroovy {
+
+		// TODO LPS-153551 CannotActiveByDefaultWhenAddValidationsGroovy pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateWhenPassesForAllValidations {
+
+		// TODO LPS-153558 CanUpdateWhenPassesForAllValidations pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUserAddValidationsGroovy {
+
+		// TODO LPS-153550 CanUserAddValidationsGroovy pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUserDefineValidationActiveOrInactive {
+
+		// TODO LPS-153552 CanUserDefineValidationActiveOrInactive pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUserSeeBasicInfoTab {
+
+		// TODO LPS-153553 CanUserSeeBasicInfoTab pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Conditions tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUserSeeConditionsTab {
+
+		// TODO LPS-153554 CanUserSeeConditionsTab pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDefaultViewWhenEmptyValidation {
+
+		// TODO LPS-153547 CanViewDefaultViewWhenEmptyValidation pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when managing an Object validation, the Error Message field is required"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageWhenFieldIsRequired {
+
+		// TODO LPS-153555 CanViewErrorMessageWhenFieldIsRequired pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewLocalizedInputChanged {
+
+		// TODO LPS-153549 CanViewLocalizedInputChanged pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, if it do not passes all validations from that Object, an alert is displayed in the lower left corner of the screen"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewMessageErrorWhenDontPassesForAllValidations {
+
+		// TODO LPS-153557 CanViewMessageErrorWhenDontPassesForAllValidations pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that the message 'There was an unexpected error in fields validation. Please contact support' is displayed when the goovy sintax is incorrect"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewSpecificErrorWhenGroovySintaxIsIncorrect {
 
 		// TODO LPS-153561 CanViewSpecificErrorWhenGroovySintaxIsIncorrect pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that the Validation tab is available"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewValidationTab {
+
+		// TODO LPS-153546 CanViewValidationTab pending implementation
+
+	}
+
+	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test LabelFieldIsRequiredWhenThereIsValidation {
+
+		// TODO LPS-153548 LabelFieldIsRequiredWhenThereIsValidation pending implementation
 
 	}
 

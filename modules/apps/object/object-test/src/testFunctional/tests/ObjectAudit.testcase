@@ -1,0 +1,359 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is add when a layout block is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationRelatedBlockLayout {
+
+		// TODO LPS-153597 CanViewAdditionalInformationRelatedBlockLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is add when a layout field is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationRelatedFieldLayout {
+
+		// TODO LPS-153598 CanViewAdditionalInformationRelatedFieldLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information of the field created of the a relation is deleted, updated or created when a relationship is deleted, updated or created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationRelatedRelationship {
+
+		// TODO LPS-153592 CanViewAdditionalInformationRelatedRelationship pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is add when a relationship tab on layout is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationRelatedRelationshipTabOnLayout {
+
+		// TODO LPS-153599 CanViewAdditionalInformationRelatedRelationshipTabOnLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is add when a layout tab is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationRelatedTabLayout {
+
+		// TODO LPS-153596 CanViewAdditionalInformationRelatedTabLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information of the custom view is add when of the custom view is duplicated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationWhenDuplicateView {
+
+		// TODO LPS-153603 CanViewAdditionalInformationWhenDuplicateView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is added, updated or deleted when modified the columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationWhenModifyColumnsView {
+
+		// TODO LPS-153604 CanViewAdditionalInformationWhenModifyColumnsView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional information is add, updated or deleted when set a default sort"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdditionalInformationWhenSetDefaultSortView {
+
+		// TODO LPS-153605 CanViewAdditionalInformationWhenSetDefaultSortView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when one field is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAddOnResourceActionWhenAddField {
+
+		// TODO LPS-153584 CanViewAddOnResourceActionWhenAddField pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a layout is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAddOnResourceActionWhenAddLayout {
+
+		// TODO LPS-153593 CanViewAddOnResourceActionWhenAddLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a relationship is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAddOnResourceActionWhenAddRelationship {
+
+		// TODO LPS-153589 CanViewAddOnResourceActionWhenAddRelationship pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAddOnResourceActionWhenAddView {
+
+		// TODO LPS-153600 CanViewAddOnResourceActionWhenAddView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAddValueWhenCreatedCustomObject {
+
+		// TODO LPS-153569 CanViewAddValueWhenCreatedCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's when creating a custom object the user can see the User ID, User Name, Resource ID, Resource Name, Resource Action, Client IP, Create Date of the custom object when created, updated or deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAllValuesOnColumnsOnCustomObject {
+
+		// TODO LPS-153572 CanViewAllValuesOnColumnsOnCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDefaultResourcesOnSystemObjects {
+
+		// TODO LPS-153581 CanViewDefaultResourcesOnSystemObjects pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when one field is deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDeleteOnResourceActionWhenDeleteField {
+
+		// TODO LPS-153585 CanViewDeleteOnResourceActionWhenDeleteField pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a layout is deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDeleteOnResourceActionWhenDeleteLayout {
+
+		// TODO LPS-153594 CanViewDeleteOnResourceActionWhenDeleteLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a relationship is deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDeleteOnResourceActionWhenDeleteRelationship {
+
+		// TODO LPS-153590 CanViewDeleteOnResourceActionWhenDeleteRelationship pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDeleteOnResourceActionWhenDeleteView {
+
+		// TODO LPS-153601 CanViewDeleteOnResourceActionWhenDeleteView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDeleteValueWhenRemoveCustomObject {
+
+		// TODO LPS-153570 CanViewDeleteValueWhenRemoveCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEmptyValuesDefaultOnColumnsOnSystemObjects {
+
+		// TODO LPS-153582 CanViewEmptyValuesDefaultOnColumnsOnSystemObjects pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's the Additional Information of the custom object created is validated (for example: scope, name, active and labelMap)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInformationAreCorrectCustomObject {
+
+		// TODO LPS-153573 CanViewInformationAreCorrectCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is updated when the name, label or plural label of the object is modified"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInformationAreCorrectWhenUpdateCustomObject {
+
+		// TODO LPS-153574 CanViewInformationAreCorrectWhenUpdateCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's when add, delete or update a field the user can view two Resource Name (ObjectField and ObjectFieldSetting) created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewTwoAddsWhenAddOneField {
+
+		// TODO LPS-153587 CanViewTwoAddsWhenAddOneField pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a layout is updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateOnResourceActionWhenEditLayout {
+
+		// TODO LPS-153595 CanViewUpdateOnResourceActionWhenEditLayout pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a relationship is updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateOnResourceActionWhenEditRelationship {
+
+		// TODO LPS-153591 CanViewUpdateOnResourceActionWhenEditRelationship pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateOnResourceActionWhenEditView {
+
+		// TODO LPS-153602 CanViewUpdateOnResourceActionWhenEditView pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when one field is  updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateOnResourceActionWhenUpdateField {
+
+		// TODO LPS-153586 CanViewUpdateOnResourceActionWhenUpdateField pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateValueWhenEditCustomObject {
+
+		// TODO LPS-153571 CanViewUpdateValueWhenEditCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information of the Panel Category Key is updated when set on the object details"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenChangeCategoryKey {
+
+		// TODO LPS-153579 CanViewUpdateWhenChangeCategoryKey pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information of the portlet of the object is updated display toggle on the object details"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenChangeDisplayToggle {
+
+		// TODO LPS-153580 CanViewUpdateWhenChangeDisplayToggle pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's  Additional Information of the scope is updated when is modified on the object details"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenChangeScope {
+
+		// TODO LPS-153578 CanViewUpdateWhenChangeScope pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's when updated the basic info or the Searchable of the field, the Additional Information is updated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenEditSearchableOnField {
+
+		// TODO LPS-153588 CanViewUpdateWhenEditSearchableOnField pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenEditSystemObjects {
+
+		// TODO LPS-153583 CanViewUpdateWhenEditSystemObjects pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information is updated when the object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenPublishCustomObject {
+
+		// TODO LPS-153576 CanViewUpdateWhenPublishCustomObject pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify it's Additional Information of the toggle active and inactive of the object is updated when set on the object details"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewUpdateWhenToggleIsActiveOrInactive {
+
+		// TODO LPS-153577 CanViewUpdateWhenToggleIsActiveOrInactive pending implementation
+
+	}
+
+	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UserCanViewUpdateOnAdditionalInformation {
+
+		// TODO LPS-153575 UserCanViewUpdateOnAdditionalInformation pending implementation
+
+	}
+
+}

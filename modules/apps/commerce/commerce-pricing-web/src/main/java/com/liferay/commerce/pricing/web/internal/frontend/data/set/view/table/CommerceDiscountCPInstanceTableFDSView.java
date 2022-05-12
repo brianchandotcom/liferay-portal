@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -42,15 +41,13 @@ public class CommerceDiscountCPInstanceTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField skuFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("sku.name", "sku");
-
-		skuFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"productName.LANG", "product");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"sku.name", "sku",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"productName.LANG", "product"
+		).build();
 	}
 
 	@Reference

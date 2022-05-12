@@ -20,8 +20,12 @@
 										}
 									},
 									"url": {
-										"value_i18n": {
-											"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/development.png$]"
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/development.png$]"
+											}
 										}
 									}
 								},

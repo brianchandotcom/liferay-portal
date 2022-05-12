@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
@@ -79,14 +80,13 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 				String tagName = tagLine.substring(0, tagNameEndIndex);
 
 				String tagAttributes = StringUtil.trim(
-					tagLine.substring(tagNameEndIndex));
+					tagLine.substring(tagNameEndIndex, tagLine.length() - 1));
 
-				if (!tagAttributes.contains(StringPool.SPACE)) {
+				if (Validator.isNull(tagAttributes)) {
 					continue;
 				}
 
 				String indent = SourceUtil.getIndent(line) + StringPool.TAB;
-
 				String newTagAttributes = StringPool.BLANK;
 
 				int x = -1;
@@ -127,9 +127,14 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 					x = -1;
 				}
 
+				if (Validator.isNotNull(tagAttributes)) {
+					newTagAttributes +=
+						StringPool.NEW_LINE + indent + tagAttributes;
+				}
+
 				String newTagString = StringBundler.concat(
 					tagName, newTagAttributes, StringPool.NEW_LINE,
-					tagAttributes);
+					StringPool.GREATER_THAN);
 
 				if (!tagString.equals(newTagString)) {
 					return StringUtil.replaceFirst(

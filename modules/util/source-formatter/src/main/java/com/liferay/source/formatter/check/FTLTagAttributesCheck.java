@@ -87,7 +87,7 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 				String indent = SourceUtil.getIndent(line) + StringPool.TAB;
 
-				String newTagParameters = StringPool.BLANK;
+				String newTagAttributes = StringPool.BLANK;
 
 				int x = -1;
 
@@ -118,7 +118,7 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 						}
 					}
 
-					newTagParameters +=
+					newTagAttributes +=
 						StringPool.NEW_LINE + indent +
 							tagAttributes.substring(0, x);
 
@@ -128,7 +128,7 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 				}
 
 				String newTagString = StringBundler.concat(
-					tagName, newTagParameters, StringPool.NEW_LINE,
+					tagName, newTagAttributes, StringPool.NEW_LINE,
 					tagAttributes);
 
 				if (!tagString.equals(newTagString)) {

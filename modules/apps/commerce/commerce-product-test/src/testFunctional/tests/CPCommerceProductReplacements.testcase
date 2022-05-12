@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("Then the new SKU is created") {
-			CommerceEntry.publishEntry();
+			Button.clickPublish();
 
 			Click(locator1 = "Icon#CLOSE");
 

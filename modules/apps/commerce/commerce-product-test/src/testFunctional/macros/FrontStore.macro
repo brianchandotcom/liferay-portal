@@ -174,7 +174,7 @@ definition {
 		}
 		else {
 			if ("${quantityConfiguration}" == "max") {
-				var quantityConfigurationText = "Max quantity per order is ";
+				var quantityConfigurationText = "Maximum quantity per order is ";
 			}
 			else {
 				if ("${quantityConfiguration}" == "multiple") {

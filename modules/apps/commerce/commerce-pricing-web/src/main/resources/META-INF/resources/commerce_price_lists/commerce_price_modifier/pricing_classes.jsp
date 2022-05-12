@@ -84,7 +84,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					fieldName: ['title', 'LANG'],
 				},
 			],
-			spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
+			spritemap: '<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>',
 			titleLabel:
 				'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
 		});

@@ -74,7 +74,7 @@
 							fieldName: 'sku',
 						},
 					],
-					spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
+					spritemap: '<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>',
 					titleLabel: '<%= LanguageUtil.get(request, "add-existing-sku") %>',
 				});
 			</aui:script>

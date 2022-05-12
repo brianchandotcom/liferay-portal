@@ -28,7 +28,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.icons.IconsUtil;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -93,7 +93,7 @@ public class AccountSelectorTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			if (Validator.isNull(_spritemap)) {
-				_spritemap = IconsUtil.getSpritemapPath(themeDisplay);
+				_spritemap = FrontendIconsUtil.getSpritemapPath(themeDisplay);
 			}
 
 			HttpServletRequest parentHttpServletRequest = getRequest();

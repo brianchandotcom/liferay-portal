@@ -18,7 +18,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.icons.IconsUtil;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,7 +73,7 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return IconsUtil.getSpritemapPath(themeDisplay) + "#apps";
+		return FrontendIconsUtil.getSpritemapPath(themeDisplay) + "#apps";
 	}
 
 	@Override

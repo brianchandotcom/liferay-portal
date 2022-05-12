@@ -51,10 +51,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				exportFields = "name,type,currencyCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				exportFileFormat = "CSV");
 		}
 
 		task ("Then only those fields should be imported") {
@@ -76,9 +75,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
 
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("When the user maps only specific fields and imports the file") {
@@ -141,10 +138,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				exportFields = "name,type,currencyCode",
-				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				exportFileFormat = "JSON");
 		}
 
 		task ("Then only those fields should be imported") {
@@ -183,10 +179,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 		}
 
 		task ("Then a CSV file should be generated for download which contains account data") {
@@ -226,10 +221,9 @@ definition {
 
 			ImportExport.exportFile(
 				containsHeaders = "false",
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 		}
 
 		task ("Then the generated CSV file should contains account data with no headers") {
@@ -268,10 +262,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "JSON");
 		}
 
 		task ("Then a JSON file should be generated for download which contains account data") {
@@ -310,10 +303,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "JSONL",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "JSONL");
 		}
 
 		task ("Then a JSONL file should be generated for download which contains account data") {
@@ -332,18 +324,16 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 		}
 
 		task ("When I go to the Import/Export Center and filter action by all") {
@@ -414,10 +404,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Import Template");
 
 			ImportExport.openImportExportAdmin();
@@ -425,10 +414,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Export Template");
 		}
 
@@ -478,10 +466,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 		}
 
 		task ("When the user imports the file") {
@@ -537,9 +524,7 @@ definition {
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("Then the user should be able to map account fields to columns in the CSV file") {
@@ -592,10 +577,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
-				fileName = "json_account_import.json",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "json_account_import.json");
 		}
 
 		task ("When the user imports the file") {
@@ -644,10 +628,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
-				fileName = "jsonl_account_import.jsonl",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "jsonl_account_import.jsonl");
 		}
 
 		task ("When the user imports the file") {
@@ -696,10 +679,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				fieldMappings = "name:Channel Name,type:Channel Type",
-				fileName = "csv_channel_import.csv",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				fileName = "csv_channel_import.csv");
 		}
 
 		task ("When the user tries to import a file without mapping all the required fields") {
@@ -760,18 +742,16 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 		}
 
 		task ("When I go to the Import/Export Center and order by create date") {
@@ -820,10 +800,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Export Template");
 		}
 
@@ -840,10 +819,9 @@ definition {
 
 		task ("Then the export should be configured according to the template") {
 			ImportExport.assertExportTemplate(
-				entityType = "Account",
+				entityType = "Account (v1_0)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Export Template");
 		}
 	}
@@ -859,10 +837,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Import Template");
 		}
 
@@ -879,8 +856,7 @@ definition {
 
 		task ("Then the import should be configured according to the template") {
 			ImportExport.assertImportTemplate(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user",
+				entityType = "Account (v1_0)",
 				templateName = "Test Account Import Template");
 		}
 	}
@@ -896,10 +872,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "JSON");
 		}
 
 		task ("When the user saves the configuration as a template") {
@@ -926,10 +901,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 		}
 
 		task ("When the user saves the configuration as a template") {
@@ -954,36 +928,32 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 		}
 
 		task ("And given a channel import and export") {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				fieldMappings = "name:Channel Name,type:Channel Type,currencyCode:Currency Code",
-				fileName = "csv_channel_import.csv",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				fileName = "csv_channel_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				exportFields = "name,type,currencyCode",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				exportFileFormat = "CSV");
 		}
 
 		task ("When I go to the Import/Export center and search executions by name") {
@@ -1092,10 +1062,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Import Template");
 
 			ImportExport.openImportExportAdmin();
@@ -1103,10 +1072,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Export Template");
 		}
 
@@ -1116,10 +1084,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				fieldMappings = "name:Channel Name,type:Channel Type,currencyCode:Currency Code",
 				fileName = "csv_channel_import.csv",
-				headlessEndpoint = "/headless-commerce-admin-channel",
 				templateName = "Test Channel Import Template");
 
 			ImportExport.openImportExportAdmin();
@@ -1127,10 +1094,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-commerce-admin-channel",
 				templateName = "Test Channel Export Template");
 		}
 
@@ -1186,23 +1152,16 @@ definition {
 	@description = "Verify certain users can be granted permission to view specific templates."
 	@priority = "3"
 	test CanShareTemplates {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
 
 		task ("Given a power user") {
-			JSONUser.addUser(
+			JSONUser.addUserWithRole(
+				roleTitle = "Power User",
 				userEmailAddress = "test1@liferay.com",
 				userFirstName = "test1",
 				userLastName = "test1",
 				userScreenName = "test1test");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "test1@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Power User",
-				userEmailAddress = "test1@liferay.com");
 		}
 
 		task ("And given the power user can view the templates list") {
@@ -1223,10 +1182,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
 				templateName = "Test Account Export Template");
 		}
 
@@ -1287,10 +1245,9 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				exportFields = "accountUserAccounts",
-				exportFileFormat = "CSV",
-				headlessEndpoint = "/headless-admin-user");
+				exportFileFormat = "CSV");
 
 			Button.click(button = "Export");
 
@@ -1355,10 +1312,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
-				headlessEndpoint = "/headless-admin-user",
 				stopImportOnError = "true");
 
 			Button.click(button = "Next");
@@ -1372,10 +1328,9 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 		}
 
 		task ("When the imports are finished") {
@@ -1426,10 +1381,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
-				headlessEndpoint = "/headless-admin-user",
 				stopImportOnError = "true");
 		}
 
@@ -1482,9 +1436,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1506,9 +1458,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1530,9 +1480,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1551,10 +1499,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
-				headlessEndpoint = "/headless-admin-user",
 				stopImportOnError = "true");
 		}
 
@@ -1593,9 +1540,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
 
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1618,10 +1563,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Account",
+				entityType = "admin.user.dto.v1_0.Account",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fileName = "csv_account_import.csv");
 		}
 
 		task ("When the user clicks Next") {
@@ -1657,9 +1601,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
 
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1682,10 +1624,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
-				fileName = "json_channel_import.json",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				fileName = "json_channel_import.json");
 		}
 
 		task ("When the user clicks Next") {
@@ -1717,9 +1658,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "jsonl_account_import.jsonl");
 
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
+			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1742,10 +1681,9 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "Channel",
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
 				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
-				fileName = "jsonl_channel_import.jsonl",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+				fileName = "jsonl_channel_import.jsonl");
 		}
 
 		task ("When the user clicks Next") {
@@ -1777,9 +1715,7 @@ definition {
 		}
 
 		task ("When the user selects the import entity") {
-			ImportExport.selectEntity(
-				entityType = "Channel",
-				headlessEndpoint = "/headless-commerce-admin-channel");
+			ImportExport.selectEntity(entityType = "commerce.admin.channel.dto.v1_0.Channel");
 		}
 
 		task ("Then the required and optional fields should be shown for that entity.") {

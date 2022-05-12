@@ -30,11 +30,6 @@ definition {
 			value1 = "${templateName}");
 
 		AssertSelectedLabel(
-			key_selectFieldLabel = "Headless Endpoint",
-			locator1 = "ImportExport#SELECT",
-			value1 = "${headlessEndpoint}");
-
-		AssertSelectedLabel(
 			locator1 = "ImportExport#ENTITY_TYPE",
 			value1 = "${entityType}");
 
@@ -93,11 +88,6 @@ definition {
 			value1 = "${templateName}");
 
 		AssertSelectedLabel(
-			key_selectFieldLabel = "Headless Endpoint",
-			locator1 = "ImportExport#SELECT",
-			value1 = "${headlessEndpoint}");
-
-		AssertSelectedLabel(
 			locator1 = "ImportExport#ENTITY_TYPE",
 			value1 = "${entityType}");
 	}
@@ -148,9 +138,7 @@ definition {
 	}
 
 	macro configureExport {
-		ImportExport.selectEntity(
-			entityType = "${entityType}",
-			headlessEndpoint = "${headlessEndpoint}");
+		ImportExport.selectEntity(entityType = "${entityType}");
 
 		Select(
 			key_selectFieldLabel = "Export File Format",
@@ -192,9 +180,7 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.selectEntity(
-			entityType = "${entityType}",
-			headlessEndpoint = "${headlessEndpoint}");
+		ImportExport.selectEntity(entityType = "${entityType}");
 
 		if ("${stopImportOnError}" == "false") {
 			Uncheck.uncheckNotVisible(
@@ -214,9 +200,7 @@ definition {
 
 		MenuItem.click(menuItem = "Export File");
 
-		ImportExport.selectEntity(
-			entityType = "${entityType}",
-			headlessEndpoint = "${headlessEndpoint}");
+		ImportExport.selectEntity(entityType = "${entityType}");
 
 		Select(
 			key_selectFieldLabel = "Export File Format",
@@ -284,9 +268,7 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.selectEntity(
-			entityType = "${entityType}",
-			headlessEndpoint = "${headlessEndpoint}");
+		ImportExport.selectEntity(entityType = "${entityType}");
 
 		if ("${stopImportOnError}" == "false") {
 			Uncheck.uncheckNotVisible(
@@ -361,16 +343,11 @@ definition {
 	}
 
 	macro selectEntity {
-		Select(
-			key_selectFieldLabel = "Headless Endpoint",
-			locator1 = "ImportExport#SELECT",
-			value1 = "${headlessEndpoint}");
-
 		WaitForElementPresent(locator1 = "ImportExport#ENTITY_TYPE");
 
 		Select(
 			locator1 = "ImportExport#ENTITY_TYPE",
-			value1 = "${entityType}");
+			value1 = "value=com.liferay.headless.${entityType}");
 	}
 
 }

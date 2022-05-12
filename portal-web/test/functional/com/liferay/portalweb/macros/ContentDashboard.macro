@@ -17,14 +17,14 @@ definition {
 	macro checkMimeExtensionDisplayed {
 		if (isSet(typeName)) {
 			AssertVisible(
-				optionName = "${typeName}",
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW");
+				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+				optionName = "${typeName}");
 		}
 		else {
 			for (var typeName : list "${typeNameList}") {
 				AssertVisible(
-					optionName = "${typeName}",
-					locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW");
+					locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+					optionName = "${typeName}");
 			}
 		}
 
@@ -253,26 +253,6 @@ definition {
 		ContentDashboard.openFilterModal(filterOption = "Extension");
 
 		ContentDashboard.useTreeviewFilter(optionsList = "${parentExtension}");
-	}
-
-	macro useTreeviewFilter {
-		Portlet.expandTree();
-
-		for (var optionName : list "${optionsList}") {
-			Click.javaScriptClick(
-				key_optionName = "${optionName}",
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
-		}
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClickNoError(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro filterBySite {
@@ -614,6 +594,26 @@ definition {
 		Click.javaScriptClick(
 			checkboxName = "Stage 1",
 			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
+	macro useTreeviewFilter {
+		Portlet.expandTree();
+
+		for (var optionName : list "${optionsList}") {
+			Click.javaScriptClick(
+				key_optionName = "${optionName}",
+				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+
+		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 	}
 
 	macro viewAppliedFilters {

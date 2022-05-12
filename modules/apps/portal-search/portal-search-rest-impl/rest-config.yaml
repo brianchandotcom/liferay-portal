@@ -1,0 +1,10 @@
+apiDir: "../portal-search-rest-api/src/main/java"
+apiPackagePath: "com.liferay.portal.search.rest"
+application:
+    baseURI: "/portal-search-rest"
+    className: "PortalSearchRESTApplication"
+    name: "Liferay.Portal.Search.REST"
+author: "Petteri Karttunen"
+clientDir: "../portal-search-rest-client/src/main/java"
+forcePredictableOperationId: true
+testDir: "../portal-search-rest-test/src/testIntegration/java"

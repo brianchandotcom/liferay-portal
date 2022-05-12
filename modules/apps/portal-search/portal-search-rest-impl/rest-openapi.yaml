@@ -1,0 +1,102 @@
+components:
+    schemas:
+        Suggestion:
+            properties:
+                attributes:
+                    type: object
+                score:
+                    format: float
+                    type: number
+                text:
+                    type: string
+            type: object
+        SuggestionsContributorConfiguration:
+            properties:
+                attributes:
+                    type: object
+                contributorName:
+                    type: string
+                displayGroupName:
+                    type: string
+                size:
+                    type: integer
+            type: object
+        SuggestionsContributorResults:
+            properties:
+                attributes:
+                    type: object
+                displayGroupName:
+                    type: string
+                suggestions:
+                    items:
+                        $ref: "#/components/schemas/Suggestion"
+                    type: array
+            type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.portal.search.rest.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "PortalSearchRest"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /suggestions:
+        post:
+            operationId: postSuggestionsPage
+            parameters:
+                - in: query
+                  name: currentURL
+                  schema:
+                      type: string
+                - in: query
+                  name: destinationFriendlyURL
+                  schema:
+                      type: string
+                - in: query
+                  name: groupId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: plid
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: scope
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/SuggestionsContributorConfiguration"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/SuggestionsContributorConfiguration"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SuggestionsContributorResults"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SuggestionsContributorResults"
+                                type: array
+            tags: ["Suggestion"]

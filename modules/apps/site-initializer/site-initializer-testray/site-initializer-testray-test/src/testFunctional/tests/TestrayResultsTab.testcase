@@ -27,46 +27,64 @@ definition {
 		}
 	}
 
-	@description = "LPS-150343 - Verify if when you click on the Cases tab, the Cases page is shown."
+	@description = "This is a test for LPS-150343 - Verify if when you click on the Cases tab, the Cases page is shown."
 	@priority = "5"
 	test CanAcessCasesPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		Testray.projectTabNavigator(navTabName = "Cases");
+		task ("Click on cases tab and assert if Case tab is show") {
+			Testray.projectTabNavigator(navTabName = "Cases");
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Cases");
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Cases");
+		}
 	}
 
-	@description = "LPS-150344 - Verify if when you click on the Requirements tab, the Requirements page is shown."
+	@description = "This is a test for LPS-150344 - Verify if when you click on the Requirements tab, the Requirements page is shown."
 	@priority = "5"
 	test CanAcessRequirementsPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		Testray.projectTabNavigator(navTabName = "Requirements");
+		task ("Click on Requirements tab and assert if Requirements tab is show") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Requirements");
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Requirements");
+		}
 	}
 
-	@description = "LPS-150342 - Verify if when you click on the Suites tab, the Suites page is shown."
+	@description = "This is a test for LPS-150342 - Verify if when you click on the Suites tab, the Suites page is shown."
 	@priority = "5"
 	test CanAcessSuitesPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		Testray.projectTabNavigator(navTabName = "Suites");
+		task ("Click on Suites tab and assert if Suites tab is show") {
+			Testray.projectTabNavigator(navTabName = "Suites");
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Suites");
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Suites");
+		}
 	}
 
 }

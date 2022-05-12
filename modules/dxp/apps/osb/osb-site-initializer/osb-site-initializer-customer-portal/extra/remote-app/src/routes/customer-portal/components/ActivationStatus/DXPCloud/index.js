@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import SetupDXPCloud from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
 import {
@@ -36,12 +37,16 @@ import AlreadySubmittedFormModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
 
 const submittedModalTexts = {
-	paragraph:
-		'Return to the product activation page to view the current Activation Status',
-	subtitle: `We'll need a few details to finish building your DXP
-	environment(s).`,
-	text: 'Another user already submitted the DXP Cloud activation request.',
-	title: 'Set up DXP Cloud',
+	paragraph: i18n.translate(
+		'return-to-the-product-activation-page-to-view-the-current-activation-status'
+	),
+	subtitle: i18n.translate(
+		'we-ll-need-a-few-details-to-finish-building-your-dxp-environment'
+	),
+	text: i18n.translate(
+		'another-user-already-submitted-the-dxp-cloud-activation-request'
+	),
+	title: i18n.translate('set-up-dxp-cloud'),
 };
 
 const SetupDXPCloudModal = ({
@@ -138,14 +143,16 @@ const ActivationStatusDXPCloud = ({
 					rel="noopener noreferrer"
 					target="_blank"
 				>
-					Go to Product Console
+					{i18n.translate('go-to-product-console')}
+
 					<ClayIcon className="ml-1" symbol="order-arrow-right" />
 				</a>
 			),
 			id: STATUS_TAG_TYPES.active,
-			subtitle:
-				'Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.',
-			title: 'Activation Status',
+			subtitle: i18n.translate(
+				'your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details'
+			),
+			title: i18n.translate('activation-status'),
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			dropdownIcon: userAccount.isStaff && userAccount.isProvisioning && (
@@ -160,7 +167,7 @@ const ActivationStatusDXPCloud = ({
 					}
 					items={[
 						{
-							label: 'Set to Active',
+							label: i18n.translate('set-to-active'),
 							onClick: () => setVisibleStatus(true),
 						},
 					]}
@@ -170,9 +177,10 @@ const ActivationStatusDXPCloud = ({
 				/>
 			),
 			id: STATUS_TAG_TYPES.inProgress,
-			subtitle:
-				'Your DXP Cloud environments are being set up and will be available soon.',
-			title: 'Activation Status',
+			subtitle: i18n.translate(
+				'your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon'
+			),
+			title: i18n.translate('activation-status'),
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: (userAccount.isAdmin || userAccount.isStaff) && (
@@ -182,13 +190,14 @@ const ActivationStatusDXPCloud = ({
 					displayType="link"
 					onClick={() => setVisibleSetup(true)}
 				>
-					Finish Activation
+					{i18n.translate('finish-activation')}
 				</Button>
 			),
 			id: STATUS_TAG_TYPES.notActivated,
-			subtitle:
-				'Almost there! Setup DXP Cloud by finishing the activation form.',
-			title: 'Activation Status',
+			subtitle: i18n.translate(
+				'almost-there-setup-dxp-cloud-by-finishing-the-activation-form'
+			),
+			title: i18n.translate('activation-status'),
 		},
 	};
 

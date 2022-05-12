@@ -14,4 +14,8 @@
 
 /// <reference types="react" />
 
-export default function ModalWithProvider({baseResourceURL}: any): JSX.Element;
+export default function ModalWithProvider({
+	baseResourceURL,
+}: {
+	baseResourceURL: string;
+}): JSX.Element;

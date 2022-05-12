@@ -19,8 +19,8 @@ export default function propsTransformer({...otherProps}) {
 			action,
 			itemData,
 		}: {
-			action: any;
-			itemData: any;
+			action: {data: {id: string}};
+			itemData: {id: string};
 		}) {
 			if (action.data.id === 'deleteObjectDefinition') {
 				Liferay.fire('deleteObjectDefinition', {itemData});

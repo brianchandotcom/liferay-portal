@@ -151,6 +151,20 @@ definition {
 				locator1 = "FormFields#CHECKBOX");
 		}
 
+		if (isSet(MultiplePageExperiencesSelector)) {
+			AssertElementPresent(
+				key_fieldLabel = "Export Experiences",
+				locator1 = "FormFields#LABEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Default Experience");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "All Experiences");
+		}
+
 		if (isSet(noMultiplePageExperiencesSelector)) {
 			AssertElementNotPresent(
 				key_fieldLabel = "Export Experiences",
@@ -172,6 +186,16 @@ definition {
 			Check.checkNotVisible(
 				checkboxName = "${languageList}",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${MultiplePageExperiencesSelector}" == "All Experiences") {
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "All Experiences");
+
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "All Experience");
 		}
 
 		if (isSet(experienceList)) {

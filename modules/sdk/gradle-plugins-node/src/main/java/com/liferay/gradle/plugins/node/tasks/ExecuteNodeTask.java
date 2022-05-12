@@ -148,8 +148,7 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _result;
 	}
 
-	@InputDirectory
-	@Optional
+	@Internal
 	public File getWorkingDir() {
 		return _nodeExecutor.getWorkingDir();
 	}

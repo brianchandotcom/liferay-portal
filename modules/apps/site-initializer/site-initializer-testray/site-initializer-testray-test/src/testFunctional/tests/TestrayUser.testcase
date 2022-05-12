@@ -30,6 +30,8 @@ definition {
 	@description = "LPS-149615 - Verify that user can can go to the 'Manage Users' page."
 	@priority = "5"
 	test CanAcessManageUser {
+		property portal.upstream = "quarantine";
+		
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		TestrayLayout.clickUserOnSidebar();

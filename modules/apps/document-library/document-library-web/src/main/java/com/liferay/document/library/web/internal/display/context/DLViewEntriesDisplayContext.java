@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -81,10 +82,17 @@ public class DLViewEntriesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_dlRequestHelper);
 	}
 
 	public List<String> getAvailableActions(FileEntry fileEntry)
 		throws PortalException {
+
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
+			return Collections.emptyList();
+		}
 
 		List<String> availableActions = new ArrayList<>();
 
@@ -137,6 +145,10 @@ public class DLViewEntriesDisplayContext {
 
 	public List<String> getAvailableActions(Folder folder)
 		throws PortalException {
+
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
+			return Collections.emptyList();
+		}
 
 		List<String> availableActions = new ArrayList<>();
 
@@ -388,6 +400,8 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
 	private final HttpServletRequest _httpServletRequest;

@@ -2299,10 +2299,7 @@ definition {
 
 		Button.clickPublish();
 
-        Alert.viewErrorMessage(errorMessage = "You must define a start node");
-
-		
-
+		Alert.viewErrorMessage(errorMessage = "You must define a start node");
 	}
 
 	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"

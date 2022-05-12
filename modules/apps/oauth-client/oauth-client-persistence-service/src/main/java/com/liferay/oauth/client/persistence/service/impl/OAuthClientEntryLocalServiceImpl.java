@@ -56,10 +56,8 @@ public class OAuthClientEntryLocalServiceImpl
 			String requestParametersJSON)
 		throws PortalException {
 
-		long oAuthClientEntryId = counterLocalService.increment();
-
 		OAuthClientEntry oAuthClientEntry = oAuthClientEntryPersistence.create(
-			oAuthClientEntryId);
+			counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
 

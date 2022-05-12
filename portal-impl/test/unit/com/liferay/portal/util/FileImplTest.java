@@ -15,10 +15,22 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -321,6 +333,87 @@ public class FileImplTest {
 		Assert.assertEquals(
 			"()test.jsp", _fileImpl.stripParentheticalSuffix("()test.jsp"));
 	}
+
+	@Test
+	public void testUnzip() throws Exception {
+		Path testPath = Files.createTempDirectory("testUnzip");
+
+		File zipFile = _createZipFile(
+			testPath, "test.zip", "zip/test/entry/entry.txt");
+
+		try {
+			_fileImpl.unzip(zipFile, testPath.toFile());
+
+			Assert.assertTrue(
+				"The file should be extracted",
+				Files.exists(testPath.resolve("zip/test/entry/entry.txt")));
+		}
+		finally {
+			_fileImpl.deltree(testPath.toFile());
+		}
+	}
+
+	@Test
+	public void testUnzipZipSlipVulnerable() throws Exception {
+		Path testPath = Files.createTempDirectory(
+			"testUnzipZipSlipVulnerable-testPath");
+
+		Path testSubPath = Files.createTempDirectory(
+			testPath, "testUnzipZipSlipVulnerable-testSubPath");
+
+		File zipFile = _createZipFile(
+			testSubPath, "test_slip.zip", "../bad.txt", "good.txt");
+
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FileImpl.class.getName(), Level.WARNING)) {
+
+			_fileImpl.unzip(zipFile, testSubPath.toFile());
+
+			Assert.assertTrue(
+				"The good file should be extracted",
+				Files.exists(testSubPath.resolve("good.txt")));
+			Assert.assertFalse(
+				"The bad zip slip file should not be extracted",
+				Files.exists(testPath.resolve("bad.txt")));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Entry Name: ../bad.txt is not valid", logEntry.getMessage());
+		}
+		finally {
+			_fileImpl.deltree(testPath.toFile());
+		}
+	}
+
+	private File _createZipFile(
+			Path destinationPath, String fileName, String... entries)
+		throws Exception {
+
+		File zipFile = new File(destinationPath.toFile(), fileName);
+
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+				new FileOutputStream(zipFile))) {
+
+			for (String entry : entries) {
+				ZipEntry zipEntry = new ZipEntry(entry);
+
+				zipOutputStream.putNextEntry(zipEntry);
+
+				zipOutputStream.write(_ENTRY_CONTENT, 0, _ENTRY_CONTENT.length);
+
+				zipOutputStream.closeEntry();
+			}
+		}
+
+		return zipFile;
+	}
+
+	private static final byte[] _ENTRY_CONTENT = StringPool.CONTENT.getBytes();
 
 	private final FileImpl _fileImpl = new FileImpl();
 

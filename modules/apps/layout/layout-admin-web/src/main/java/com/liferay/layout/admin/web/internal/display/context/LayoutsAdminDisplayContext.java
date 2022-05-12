@@ -870,6 +870,14 @@ public class LayoutsAdminDisplayContext {
 
 				breadcrumbEntry.setTitle(
 					ancestorLayout.getName(themeDisplay.getLocale()));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"privateLayout", ancestorLayout.isPrivateLayout()
+					).setParameter(
+						"selPlid", ancestorLayout.getPlid()
+					).buildString());
 			}
 			else {
 				breadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);

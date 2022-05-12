@@ -117,7 +117,7 @@ public class Mutation {
 	<#list schemaNames as schemaName>
 		<#assign
 			javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
-			generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName))
+			generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName), schemaName)
 		/>
 
 		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {

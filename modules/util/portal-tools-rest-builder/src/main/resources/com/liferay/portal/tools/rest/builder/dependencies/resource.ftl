@@ -59,7 +59,7 @@ public interface ${schemaName}Resource {
 	<#assign
 		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
-		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures)
+		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>

@@ -98,10 +98,14 @@ public class FreeMarkerTool {
 
 	public boolean generateBatch(
 		ConfigYAML configYAML, String javaDataType,
-		List<JavaMethodSignature> javaMethodSignatures) {
+		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
 
-		if (!configYAML.isGenerateBatch() || (javaDataType == null) ||
-			javaDataType.isEmpty()) {
+		List<String> disabledBatchSchemaNames =
+			configYAML.getDisabledBatchSchemaNames();
+
+		if (!configYAML.isGenerateBatch() ||
+			disabledBatchSchemaNames.contains(schemaName) ||
+			(javaDataType == null) || javaDataType.isEmpty()) {
 
 			return false;
 		}

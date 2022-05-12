@@ -34,7 +34,7 @@ public class AnalyticsSyncedSitesConfigurationScreen
 	}
 
 	@Override
-	protected String getJspPath() {
+	protected String getDefaultJspPath() {
 		return "/edit_synced_sites.jsp";
 	}
 

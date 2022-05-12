@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -78,7 +80,15 @@ public abstract class BaseAnalyticsConfigurationScreen
 		}
 	}
 
-	protected abstract String getJspPath();
+	protected abstract String getDefaultJspPath();
+
+	protected String getJspPath() {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10757"))) {
+			return "/LRAC-10757" + getDefaultJspPath();
+		}
+
+		return getDefaultJspPath();
+	}
 
 	protected abstract ServletContext getServletContext();
 

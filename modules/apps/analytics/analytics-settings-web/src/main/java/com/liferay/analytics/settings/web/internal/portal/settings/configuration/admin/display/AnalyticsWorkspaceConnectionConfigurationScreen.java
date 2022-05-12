@@ -34,7 +34,7 @@ public class AnalyticsWorkspaceConnectionConfigurationScreen
 	}
 
 	@Override
-	protected String getJspPath() {
+	protected String getDefaultJspPath() {
 		return "/edit_workspace_connection.jsp";
 	}
 

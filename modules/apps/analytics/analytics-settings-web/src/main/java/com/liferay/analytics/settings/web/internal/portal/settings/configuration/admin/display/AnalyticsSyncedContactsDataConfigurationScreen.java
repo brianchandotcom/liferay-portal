@@ -34,7 +34,7 @@ public class AnalyticsSyncedContactsDataConfigurationScreen
 	}
 
 	@Override
-	protected String getJspPath() {
+	protected String getDefaultJspPath() {
 		return "/edit_synced_contacts_data.jsp";
 	}
 

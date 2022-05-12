@@ -67,7 +67,7 @@ const SetupDXPCloudModal = ({
 			) : (
 				<SetupDXPCloud
 					handlePage={onClose}
-					leftButton="Cancel"
+					leftButton={i18n.translate('cancel')}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
 					subscriptionGroupId={subscriptionGroupId}

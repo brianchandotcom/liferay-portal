@@ -74,6 +74,11 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 			scaledImageFile = _scaleAndConvertToPNG(
 				amImageConfigurationEntry, imageFile);
 
+			if (!scaledImageFile.exists()) {
+				throw new AMRuntimeException.IOException(
+					"Failed to scale image using ImageMagick");
+			}
+
 			ImageBag imageBag = _imageTool.read(scaledImageFile);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();

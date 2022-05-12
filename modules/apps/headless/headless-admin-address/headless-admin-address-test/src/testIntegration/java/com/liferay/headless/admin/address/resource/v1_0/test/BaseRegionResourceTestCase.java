@@ -405,8 +405,7 @@ public abstract class BaseRegionResourceTestCase {
 			Long countryId, Region region)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return regionResource.postCountryRegion(countryId, region);
 	}
 
 	protected Long testGetCountryRegionsPage_getCountryId() throws Exception {
@@ -418,6 +417,23 @@ public abstract class BaseRegionResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostCountryRegion() throws Exception {
+		Region randomRegion = randomRegion();
+
+		Region postRegion = testPostCountryRegion_addRegion(randomRegion);
+
+		assertEquals(randomRegion, postRegion);
+		assertValid(postRegion);
+	}
+
+	protected Region testPostCountryRegion_addRegion(Region region)
+		throws Exception {
+
+		return regionResource.postCountryRegion(
+			testGetCountryRegionsPage_getCountryId(), region);
 	}
 
 	@Test
@@ -729,21 +745,6 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
-	public void testPostRegion() throws Exception {
-		Region randomRegion = randomRegion();
-
-		Region postRegion = testPostRegion_addRegion(randomRegion);
-
-		assertEquals(randomRegion, postRegion);
-		assertValid(postRegion);
-	}
-
-	protected Region testPostRegion_addRegion(Region region) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetRegion() throws Exception {
 		Region postRegion = testGetRegion_addRegion();
 
@@ -815,7 +816,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		Region expectedPatchRegion = postRegion.clone();
 
-		_beanUtilsBean.copyProperties(expectedPatchRegion, randomPatchRegion);
+		BeanTestUtil.copyProperties(randomPatchRegion, expectedPatchRegion);
 
 		Region getRegion = regionResource.getRegion(patchRegion.getId());
 

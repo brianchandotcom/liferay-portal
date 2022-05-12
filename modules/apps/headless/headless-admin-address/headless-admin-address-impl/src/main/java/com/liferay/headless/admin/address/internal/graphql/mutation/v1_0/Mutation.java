@@ -112,17 +112,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Region createRegion(@GraphQLName("region") Region region)
+	public Region createCountryRegion(
+			@GraphQLName("countryId") Long countryId,
+			@GraphQLName("region") Region region)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			regionResource -> regionResource.postRegion(region));
+			regionResource -> regionResource.postCountryRegion(
+				countryId, region));
 	}
 
 	@GraphQLField
-	public Response createRegionBatch(
+	public Response createCountryRegionBatch(
+			@GraphQLName("countryId") Long countryId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -130,8 +134,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			regionResource -> regionResource.postRegionBatch(
-				callbackURL, object));
+			regionResource -> regionResource.postCountryRegionBatch(
+				countryId, callbackURL, object));
 	}
 
 	@GraphQLField

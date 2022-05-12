@@ -64,17 +64,19 @@ public interface RegionResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Region postCountryRegion(Long countryId, Region region)
+		throws Exception;
+
+	public Response postCountryRegionBatch(
+			Long countryId, String callbackURL, Object object)
+		throws Exception;
+
 	public Region getCountryRegionByRegionCode(
 			Long countryId, String regionCode)
 		throws Exception;
 
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Region postRegion(Region region) throws Exception;
-
-	public Response postRegionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Region getRegion(Long regionId) throws Exception;

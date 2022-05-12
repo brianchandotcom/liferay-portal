@@ -2276,11 +2276,23 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no End Node And View Error Message"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DefinitionRequiresEndNodeToPublish {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
 
-		// TODO DefinitionRequiresEndNodeToPublish pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete End Node");
+
+        Button.clickPublish();
+
+        Alert.viewErrorMessage(errorMessage = "The item_0 node must have an outgoing transition");
+		
+
 
 	}
 

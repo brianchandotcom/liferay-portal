@@ -9,8 +9,11 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../../common/I18n';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 
 export const ALERT_UPDATE_DXP_CLOUD_STATUS = {
-	[ALERT_DOWNLOAD_TYPE.success]: `Your DXP Cloud environments are ready.`,
+	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
+		'your-dxp-cloud-environments-are-ready'
+	),
 };

@@ -146,9 +146,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		long firstLayoutPageTemplateCollectionId =
-			_layoutsAdminDisplayContext.
-				getFirstLayoutPageTemplateCollectionId();
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 		long selPlid = _layoutsAdminDisplayContext.getSelPlid();
 
@@ -163,9 +160,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							firstLayoutPageTemplateCollectionId, selPlid,
-							false));
+						getSelectLayoutPageTemplateEntryURL(0, selPlid, false));
 				dropdownItem.setLabel(_getLabel(false));
 			}
 		).addPrimaryDropdownItem(
@@ -193,9 +188,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							firstLayoutPageTemplateCollectionId, selPlid,
-							true));
+						getSelectLayoutPageTemplateEntryURL(0, selPlid, true));
 				dropdownItem.setLabel(_getLabel(true));
 			}
 		).addPrimaryDropdownItem(

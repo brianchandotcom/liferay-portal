@@ -275,9 +275,7 @@ public class MillerColumnsDisplayContext {
 		).put(
 			"url",
 			_layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(
-				_layoutsAdminDisplayContext.
-					getFirstLayoutPageTemplateCollectionId(),
-				layout.getPlid(), layout.isPrivateLayout())
+				0, layout.getPlid(), layout.isPrivateLayout())
 		);
 	}
 

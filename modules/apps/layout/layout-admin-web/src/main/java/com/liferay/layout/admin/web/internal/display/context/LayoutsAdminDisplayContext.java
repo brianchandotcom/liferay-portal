@@ -23,12 +23,8 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
@@ -37,7 +33,6 @@ import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -477,41 +472,6 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"selPlid", LayoutConstants.DEFAULT_PLID
 		).buildString();
-	}
-
-	public long getFirstLayoutPageTemplateCollectionId() {
-		LayoutPageTemplateCollectionNameComparator
-			layoutPageTemplateCollectionNameComparator =
-				new LayoutPageTemplateCollectionNameComparator(true);
-
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				getLayoutPageTemplateCollections(
-					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					layoutPageTemplateCollectionNameComparator);
-
-		if (layoutPageTemplateCollections.isEmpty()) {
-			return 0;
-		}
-
-		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
-				layoutPageTemplateCollections) {
-
-			int layoutPageTemplateEntriesCount =
-				LayoutPageTemplateEntryServiceUtil.
-					getLayoutPageTemplateEntriesCount(
-						themeDisplay.getScopeGroupId(),
-						layoutPageTemplateCollection.
-							getLayoutPageTemplateCollectionId(),
-						WorkflowConstants.STATUS_APPROVED);
-
-			if (layoutPageTemplateEntriesCount > 0) {
-				return layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId();
-			}
-		}
-
-		return 0;
 	}
 
 	public String getFriendlyURLBase() {
@@ -991,8 +951,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout) {
-		return getSelectLayoutPageTemplateEntryURL(
-			getFirstLayoutPageTemplateCollectionId(), privateLayout);
+		return getSelectLayoutPageTemplateEntryURL(0, privateLayout);
 	}
 
 	public String getSelectLayoutPageTemplateEntryURL(

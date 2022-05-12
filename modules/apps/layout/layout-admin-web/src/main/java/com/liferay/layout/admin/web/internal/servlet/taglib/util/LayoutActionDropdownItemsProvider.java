@@ -188,9 +188,7 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.setHref(
 								_layoutsAdminDisplayContext.
 									getSelectLayoutPageTemplateEntryURL(
-										_layoutsAdminDisplayContext.
-											getFirstLayoutPageTemplateCollectionId(),
-										layout.getPlid(),
+										0, layout.getPlid(),
 										layout.isPrivateLayout()));
 							dropdownItem.setLabel(
 								LanguageUtil.get(

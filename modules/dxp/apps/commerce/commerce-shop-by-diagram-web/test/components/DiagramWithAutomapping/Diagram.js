@@ -57,6 +57,11 @@ describe('Diagram', () => {
 		let pinsNodes;
 
 		beforeEach(async () => {
+			window.Liferay.ThemeDisplay = {
+				...window.Liferay.ThemeDisplay,
+				getPathContext: () => '',
+			};
+
 			await act(async () => {
 				diagram = await render(
 					<Diagram {...defaultDiagramProps} isAdmin={true} />

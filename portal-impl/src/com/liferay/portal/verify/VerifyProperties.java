@@ -38,7 +38,7 @@ import java.util.Properties;
  */
 public class VerifyProperties {
 
-	public void verify() throws Exception {
+	public static void verify() throws Exception {
 		verifySystemProperties();
 
 		List<String> keys = verifyPortalProperties();
@@ -54,7 +54,8 @@ public class VerifyProperties {
 		}
 	}
 
-	protected InputStream getPropertiesResourceAsStream(String resourceName)
+	protected static InputStream getPropertiesResourceAsStream(
+			String resourceName)
 		throws FileNotFoundException {
 
 		File propertyFile = new File(resourceName);
@@ -78,7 +79,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected Properties loadPortalProperties() {
+	protected static Properties loadPortalProperties() {
 		Properties properties = new Properties();
 
 		List<String> propertiesResourceNames = ListUtil.fromArray(
@@ -110,7 +111,7 @@ public class VerifyProperties {
 		return properties;
 	}
 
-	protected void verifyDocumentLibrary() {
+	protected static void verifyDocumentLibrary() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StoreFactory storeFactory = StoreFactory.getInstance();
 
@@ -118,7 +119,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyMigratedPortalProperty(
+	protected static void verifyMigratedPortalProperty(
 			Properties portalProperties, String oldKey, String newKey,
 			List<String> unmigratedKeys)
 		throws Exception {
@@ -133,7 +134,8 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyMigratedSystemProperty(String oldKey, String newKey)
+	protected static void verifyMigratedSystemProperty(
+			String oldKey, String newKey)
 		throws Exception {
 
 		String value = SystemProperties.get(oldKey);
@@ -146,7 +148,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyModularizedPortalProperty(
+	protected static void verifyModularizedPortalProperty(
 			Properties portalProperties, String oldKey, String newKey,
 			String moduleName)
 		throws Exception {
@@ -159,7 +161,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyModularizedSystemProperty(
+	protected static void verifyModularizedSystemProperty(
 			Properties systemProperties, String oldKey, String newKey,
 			String moduleName)
 		throws Exception {
@@ -172,7 +174,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyObsoletePortalProperty(
+	protected static void verifyObsoletePortalProperty(
 			Properties portalProperties, String key)
 		throws Exception {
 
@@ -181,7 +183,9 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyObsoleteSystemProperty(String key) throws Exception {
+	protected static void verifyObsoleteSystemProperty(String key)
+		throws Exception {
+
 		String value = SystemProperties.get(key);
 
 		if (value != null) {
@@ -189,7 +193,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected List<String> verifyPortalProperties() throws Exception {
+	protected static List<String> verifyPortalProperties() throws Exception {
 		List<String> unmigratedKeys = new LinkedList<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -227,7 +231,7 @@ public class VerifyProperties {
 		return unmigratedKeys;
 	}
 
-	protected void verifyRenamedPortalProperty(
+	protected static void verifyRenamedPortalProperty(
 			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
@@ -239,7 +243,8 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifyRenamedSystemProperty(String oldKey, String newKey)
+	protected static void verifyRenamedSystemProperty(
+			String oldKey, String newKey)
 		throws Exception {
 
 		String value = SystemProperties.get(oldKey);
@@ -252,7 +257,7 @@ public class VerifyProperties {
 		}
 	}
 
-	protected void verifySystemProperties() throws Exception {
+	protected static void verifySystemProperties() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			for (String[] keys : _MIGRATED_SYSTEM_KEYS) {
 				String oldKey = keys[0];

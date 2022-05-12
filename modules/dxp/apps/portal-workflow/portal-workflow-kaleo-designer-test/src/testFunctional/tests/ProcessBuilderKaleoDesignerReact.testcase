@@ -673,12 +673,38 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Fork"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteForkNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteForkNode";
 
-		// TODO CanDeleteForkNode pending implementation
 
+		Workflow.openWorkflowListView();
+
+
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "20,-500",
+			nodeType = "fork");
+
+
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected fork node?",
+			nodeType = "fork",
+			title = "Delete Fork Node");
+
+
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "fork");
+
+
+
+		
 	}
 
 	@description = "Verify that the user can delete Nodes of Join"

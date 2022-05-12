@@ -57,7 +57,7 @@ const SetupDXPCloudPage = ({
 	const dXPCDataCenterRegions = useMemo(
 		() =>
 			data?.c?.dXPCDataCenterRegions?.items.map(({name}) => ({
-				label: getKebabCase(name),
+				label: i18n.translate(getKebabCase(name)),
 				value: getKebabCase(name),
 			})) || [],
 		[data]
@@ -247,9 +247,7 @@ const SetupDXPCloudPage = ({
 										'primary-data-center-region'
 									)}
 									name="dxp.dataCenterRegion"
-									options={i18n.translate(
-										dXPCDataCenterRegions
-									)}
+									options={dXPCDataCenterRegions}
 									required
 								/>
 

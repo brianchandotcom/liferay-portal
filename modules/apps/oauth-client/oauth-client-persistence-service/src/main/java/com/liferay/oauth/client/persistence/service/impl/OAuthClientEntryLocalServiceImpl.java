@@ -53,7 +53,7 @@ public class OAuthClientEntryLocalServiceImpl
 	@Override
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authServerIssuer, String infoJSON,
-			String requestParamsJSON)
+			String requestParametersJSON)
 		throws PortalException {
 
 		long oAuthClientEntryId = counterLocalService.increment(
@@ -72,9 +72,9 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setClientId(
 			_validateAndGetClientId(
 				user.getCompanyId(), authServerIssuer, infoJSON,
-				requestParamsJSON, true));
+				requestParametersJSON, true));
 		oAuthClientEntry.setInfoJSON(infoJSON);
-		oAuthClientEntry.setRequestParamsJSON(requestParamsJSON);
+		oAuthClientEntry.setRequestParametersJSON(requestParametersJSON);
 
 		_resourceLocalService.addResources(
 			oAuthClientEntry.getCompanyId(),
@@ -186,7 +186,7 @@ public class OAuthClientEntryLocalServiceImpl
 	@Override
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authServerIssuer, String infoJSON,
-			String requestParamsJSON)
+			String requestParametersJSON)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
@@ -195,19 +195,19 @@ public class OAuthClientEntryLocalServiceImpl
 
 		String clientID = _validateAndGetClientId(
 			oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
-			requestParamsJSON, false);
+			requestParametersJSON, false);
 
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
 		oAuthClientEntry.setClientId(clientID);
 		oAuthClientEntry.setInfoJSON(infoJSON);
-		oAuthClientEntry.setRequestParamsJSON(requestParamsJSON);
+		oAuthClientEntry.setRequestParamsJSON(requestParametersJSON);
 
 		return oAuthClientEntryPersistence.update(oAuthClientEntry);
 	}
 
 	private String _validateAndGetClientId(
 			long companyId, String authServerIssuer, String infoJSON,
-			String requestParamsJSON, boolean add)
+			String requestParametersJSON, boolean add)
 		throws PortalException {
 
 		OAuthClientAuthServer oAuthClientAuthServer =
@@ -221,7 +221,7 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 
 		try {
-			JSONObjectUtils.parse(requestParamsJSON);
+			JSONObjectUtils.parse(requestParametersJSON);
 		}
 		catch (ParseException parseException) {
 			throw new PortalException(parseException);

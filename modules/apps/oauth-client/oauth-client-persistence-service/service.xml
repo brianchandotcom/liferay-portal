@@ -60,7 +60,7 @@
 		<column name="authServerIssuer" type="String" />
 		<column name="clientId" type="String" />
 		<column name="infoJSON" type="String" />
-		<column name="requestParamsJSON" type="String" />
+		<column name="requestParametersJSON" type="String" />
 
 		<!-- Finder methods -->
 

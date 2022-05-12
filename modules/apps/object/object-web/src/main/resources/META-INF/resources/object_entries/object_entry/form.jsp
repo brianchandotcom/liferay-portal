@@ -118,9 +118,12 @@ portletDisplay.setURLBack(backURL);
 								shouldSubmitForm = false;
 
 								Liferay.Util.openToast({
-									message:
-										'<liferay-ui:message key="the-maximum-length-is-280-characters-for-text-fields" />',
-									type: 'warning',
+									message: Liferay.Util.sub(
+										'<liferay-ui:message key="the-entry-value-exceeds-the-maximum-length-of-x-characters-for-object-field-x" />',
+										'280',
+										'"' + field.fieldName + '"'
+									),
+									type: 'danger',
 								});
 
 								return false;

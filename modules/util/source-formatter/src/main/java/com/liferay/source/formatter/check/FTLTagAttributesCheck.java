@@ -59,79 +59,81 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 				lineNumber++;
 
-				if (trimmedLine.startsWith("<#macro")) {
-					int startPos = getLineStartPos(content, lineNumber);
+				if (!trimmedLine.startsWith("<#macro")) {
+					continue;
+				}
 
-					String tagString = getTag(content, startPos);
+				int startPos = getLineStartPos(content, lineNumber);
 
-					String tagLine = tagString.replaceAll(
-						"\n\t*", StringPool.SPACE);
+				String tagString = getTag(content, startPos);
 
-					int tagNameEndIndex = tagLine.indexOf(StringPool.SPACE, 8);
+				String tagLine = tagString.replaceAll(
+					"\n\t*", StringPool.SPACE);
 
-					if (tagNameEndIndex == -1) {
+				int tagNameEndIndex = tagLine.indexOf(StringPool.SPACE, 8);
+
+				if (tagNameEndIndex == -1) {
+					continue;
+				}
+
+				String tagName = tagLine.substring(0, tagNameEndIndex);
+
+				String tagAttributes = StringUtil.trim(
+					tagLine.substring(tagNameEndIndex));
+
+				if (!tagAttributes.contains(StringPool.SPACE)) {
+					continue;
+				}
+
+				String indent = SourceUtil.getIndent(line) + StringPool.TAB;
+
+				String newTagParameters = StringPool.BLANK;
+
+				int x = -1;
+
+				while (true) {
+					x = tagAttributes.indexOf(StringPool.SPACE, x + 1);
+
+					if (x == -1) {
+						break;
+					}
+
+					if (ToolsUtil.isInsideQuotes(tagAttributes, x)) {
 						continue;
 					}
 
-					String tagName = tagLine.substring(0, tagNameEndIndex);
+					if (x > 0) {
+						char previousChar = tagAttributes.charAt(x - 1);
 
-					String tagParameters = StringUtil.trim(
-						tagLine.substring(tagNameEndIndex));
-
-					if (!tagParameters.contains(StringPool.SPACE)) {
-						continue;
-					}
-
-					String indent = SourceUtil.getIndent(line) + StringPool.TAB;
-
-					String newTagParameters = StringPool.BLANK;
-
-					int x = -1;
-
-					while (true) {
-						x = tagParameters.indexOf(StringPool.SPACE, x + 1);
-
-						if (x == -1) {
-							break;
-						}
-
-						if (ToolsUtil.isInsideQuotes(tagParameters, x)) {
+						if (previousChar == CharPool.EQUAL) {
 							continue;
 						}
-
-						if (x > 0) {
-							char previousChar = tagParameters.charAt(x - 1);
-
-							if (previousChar == CharPool.EQUAL) {
-								continue;
-							}
-						}
-
-						if (x < (tagParameters.length() - 1)) {
-							char nextChar = tagParameters.charAt(x + 1);
-
-							if (nextChar == CharPool.EQUAL) {
-								continue;
-							}
-						}
-
-						newTagParameters +=
-							StringPool.NEW_LINE + indent +
-								tagParameters.substring(0, x);
-
-						tagParameters = tagParameters.substring(x + 1);
-
-						x = -1;
 					}
 
-					String newTagString = StringBundler.concat(
-						tagName, newTagParameters, StringPool.NEW_LINE,
-						tagParameters);
+					if (x < (tagAttributes.length() - 1)) {
+						char nextChar = tagAttributes.charAt(x + 1);
 
-					if (!tagString.equals(newTagString)) {
-						return StringUtil.replaceFirst(
-							content, tagString, newTagString, startPos);
+						if (nextChar == CharPool.EQUAL) {
+							continue;
+						}
 					}
+
+					newTagParameters +=
+						StringPool.NEW_LINE + indent +
+							tagAttributes.substring(0, x);
+
+					tagAttributes = tagAttributes.substring(x + 1);
+
+					x = -1;
+				}
+
+				String newTagString = StringBundler.concat(
+					tagName, newTagParameters, StringPool.NEW_LINE,
+					tagAttributes);
+
+				if (!tagString.equals(newTagString)) {
+					return StringUtil.replaceFirst(
+						content, tagString, newTagString, startPos);
 				}
 			}
 		}

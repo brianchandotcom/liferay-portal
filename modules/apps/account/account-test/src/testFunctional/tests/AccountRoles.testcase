@@ -17,9 +17,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Accounts.tearDownCP();
-		}
 	}
 
 	@description = "This is a use case for LPS-151552. This asserts saving edits in one permissions tab in Account Roles does not clear related permissions from the other tab."

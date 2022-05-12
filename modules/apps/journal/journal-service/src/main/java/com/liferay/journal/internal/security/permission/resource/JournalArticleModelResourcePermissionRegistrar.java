@@ -15,7 +15,6 @@
 package com.liferay.journal.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -25,16 +24,12 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
@@ -107,8 +102,6 @@ public class JournalArticleModelResourcePermissionRegistrar {
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
 							_groupLocalService, JournalArticle::getId));
-					consumer.accept(
-						new JournalArticleConfigurationModelResourcePermissionLogic());
 
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 						consumer.accept(
@@ -143,9 +136,6 @@ public class JournalArticleModelResourcePermissionRegistrar {
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleModelResourcePermissionRegistrar.class);
-
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
@@ -177,44 +167,5 @@ public class JournalArticleModelResourcePermissionRegistrar {
 
 	@Reference
 	private WorkflowPermission _workflowPermission;
-
-	private class JournalArticleConfigurationModelResourcePermissionLogic
-		implements ModelResourcePermissionLogic<JournalArticle> {
-
-		@Override
-		public Boolean contains(
-				PermissionChecker permissionChecker, String name,
-				JournalArticle article, String actionId)
-			throws PortalException {
-
-			if (!actionId.equals(ActionKeys.VIEW)) {
-				return null;
-			}
-
-			try {
-				JournalServiceConfiguration journalServiceConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						JournalServiceConfiguration.class,
-						permissionChecker.getCompanyId());
-
-				if (!journalServiceConfiguration.
-						articleViewPermissionsCheckEnabled()) {
-
-					return true;
-				}
-			}
-			catch (ConfigurationException configurationException) {
-				_log.error(
-					"Unable to get journal service configuration for company " +
-						permissionChecker.getCompanyId(),
-					configurationException);
-
-				return false;
-			}
-
-			return null;
-		}
-
-	}
 
 }

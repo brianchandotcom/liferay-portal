@@ -5327,8 +5327,6 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "expireAllArticleVersionsEnabled");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "articleViewPermissionsCheckEnabled");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

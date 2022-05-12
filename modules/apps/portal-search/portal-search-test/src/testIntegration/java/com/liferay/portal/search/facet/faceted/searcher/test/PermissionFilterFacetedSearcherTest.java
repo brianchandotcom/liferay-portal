@@ -16,7 +16,6 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
@@ -58,7 +56,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -78,8 +75,6 @@ public class PermissionFilterFacetedSearcherTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpJournalServiceConfiguration();
-
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 	}
@@ -88,8 +83,6 @@ public class PermissionFilterFacetedSearcherTest
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		tearDownJournalServiceConfiguration();
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
@@ -178,20 +171,6 @@ public class PermissionFilterFacetedSearcherTest
 		return serviceContext;
 	}
 
-	protected void setUpJournalServiceConfiguration() throws Exception {
-		_configuration = configurationAdmin.getConfiguration(
-			JournalServiceConfiguration.class.getName(), StringPool.QUESTION);
-
-		_configuration.update(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"articleViewPermissionsCheckEnabled", true
-			).build());
-	}
-
-	protected void tearDownJournalServiceConfiguration() throws Exception {
-		_configuration.delete();
-	}
-
 	@Inject
 	protected static AssetEntriesFacetFactory assetEntriesFacetFactory;
 
@@ -209,8 +188,6 @@ public class PermissionFilterFacetedSearcherTest
 
 	@DeleteAfterTestRun
 	private final List<JournalArticle> _articles = new ArrayList<>();
-
-	private Configuration _configuration;
 
 	@DeleteAfterTestRun
 	private final List<JournalFolder> _folders = new ArrayList<>();

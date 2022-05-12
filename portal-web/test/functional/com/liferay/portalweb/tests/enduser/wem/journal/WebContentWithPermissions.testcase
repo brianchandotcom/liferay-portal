@@ -377,8 +377,6 @@ definition {
 			configurationName = "Web Content",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.enableCheckbox(fieldName = "articleViewPermissionsCheckEnabled");
-
 		SystemSettings.saveConfiguration();
 
 		JSONWebcontent.addWebContent(

@@ -708,29 +708,21 @@ definition {
 	test CanDeleteJoinXORNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinXORNode";
 
+		Workflow.openWorkflowListView();
 
-        Workflow.openWorkflowListView();
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join XOR",
 			nodePosition = "-40,-200",
 			nodeType = "join-xor");
 
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected join xor node?",
+			nodeType = "join-xor",
+			title = "Delete Join Xor Node");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected join xor node?",
-            nodeType = "join-xor",
-            title = "Delete Join Xor Node");
-			
-
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "join-xor");
-
-		
-
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "join-xor");
 	}
 
 	@description = "Verify that the user can delete all notifications configurations"

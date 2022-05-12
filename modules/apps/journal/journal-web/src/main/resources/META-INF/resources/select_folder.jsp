@@ -21,7 +21,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 %>
 
 <react:component
-	module="js/SelectFolder.es"
+	module="js/SelectFolder"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"itemSelectorSaveEvent", eventName

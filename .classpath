@@ -47,6 +47,8 @@
 	<classpathentry kind="lib" path="lib/development/aspectj-weaver.jar"/>
 	<classpathentry kind="lib" path="lib/development/bnd-repository.jar"/>
 	<classpathentry kind="lib" path="lib/development/bsh.jar"/>
+	<classpathentry kind="lib" path="lib/development/byte-buddy.jar"/>
+	<classpathentry kind="lib" path="lib/development/byte-buddy-agent.jar"/>
 	<classpathentry kind="lib" path="lib/development/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.beanshell.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.build.logger.jar"/>
@@ -89,7 +91,8 @@
 	<classpathentry kind="lib" path="lib/development/mail.jar"/>
 	<classpathentry kind="lib" path="lib/development/mariadb.jar"/>
 	<classpathentry kind="lib" path="lib/development/maven-ant-tasks.jar"/>
-	<classpathentry kind="lib" path="lib/development/mockito.jar"/>
+	<classpathentry kind="lib" path="lib/development/mockito-core.jar"/>
+	<classpathentry kind="lib" path="lib/development/mockito-inline.jar"/>
 	<classpathentry kind="lib" path="lib/development/mysql.jar"/>
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/osgi-annotation-versioning.jar"/>
@@ -100,12 +103,6 @@
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/portletmvc4spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-api-mockito.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-api-support.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-core.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-module-junit4-common.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-module-junit4.jar"/>
-	<classpathentry kind="lib" path="lib/development/powermock-reflect.jar"/>
 	<classpathentry kind="lib" path="lib/development/qdox.jar"/>
 	<classpathentry kind="lib" path="lib/development/reflections.jar"/>
 	<classpathentry kind="lib" path="lib/development/saxpath.jar"/>

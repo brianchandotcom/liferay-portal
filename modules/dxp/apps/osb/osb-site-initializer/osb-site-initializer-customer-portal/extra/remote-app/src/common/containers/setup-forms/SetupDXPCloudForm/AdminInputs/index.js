@@ -10,6 +10,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import i18n from '../../../../I18n';
 import {Input} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {isValidEmail} from '../../../../utils/validations.form';
@@ -23,7 +24,7 @@ const AdminInputs = ({admin, id}) => {
 
 			<Input
 				groupStyle="pt-1"
-				label="DXP Cloud System Admin's Email Address"
+				label={i18n.translate('dxp-cloud-system-admin-s-email-address')}
 				name={`dxp.admins[${id}].email`}
 				placeholder="email@example.com"
 				required
@@ -34,7 +35,7 @@ const AdminInputs = ({admin, id}) => {
 			<ClayInput.Group className="mb-0">
 				<ClayInput.GroupItem className="m-0">
 					<Input
-						label="System Admin’s First Name"
+						label={i18n.translate('system-admin-s-first-name')}
 						name={`dxp.admins[${id}].firstName`}
 						required
 						type="text"
@@ -43,7 +44,7 @@ const AdminInputs = ({admin, id}) => {
 
 				<ClayInput.GroupItem className="m-0">
 					<Input
-						label="System Admin’s Last Name"
+						label={i18n.translate('system-admin-s-last-name')}
 						name={`dxp.admins[${id}].lastName`}
 						required
 						type="text"
@@ -53,7 +54,7 @@ const AdminInputs = ({admin, id}) => {
 
 			<Input
 				groupStyle="mb-0"
-				label="System Admin’s Github Username"
+				label={i18n.translate('system-admin-s-github-username')}
 				name={`dxp.admins[${id}].github`}
 				required
 				type="text"

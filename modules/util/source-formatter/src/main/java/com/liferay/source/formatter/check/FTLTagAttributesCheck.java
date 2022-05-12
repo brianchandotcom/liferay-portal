@@ -14,16 +14,14 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,7 +56,6 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 			String line = null;
 			int lineNumber = 0;
 
-			outLoop:
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				String trimmedLine = StringUtil.trimLeading(line);
 
@@ -94,44 +91,13 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 					String name = tagLine.substring(1, nameEndIndex);
 
-					String attributesString = tagLine.substring(
-						nameEndIndex + 1, tagLine.length() - closeTag.length());
-
-					String[] attributeArray = attributesString.split(
-						StringPool.SPACE);
-
-					Map<String, String> attributeMap = new LinkedHashMap<>();
-
-					for (int i = 0; i < attributeArray.length;) {
-						if (StringUtil.equals(
-								StringPool.GREATER_THAN, attributeArray[i])) {
-
-							i++;
-
-							continue;
-						}
-
-						if (((i + 1) < attributeArray.length) &&
-							StringUtil.equals(
-								StringPool.EQUAL, attributeArray[i + 1])) {
-
-							if ((i + 2) == attributeArray.length) {
-								continue outLoop;
-							}
-
-							attributeMap.put(
-								attributeArray[i], attributeArray[i + 2]);
-
-							i += 3;
-						}
-						else {
-							attributeMap.put(attributeArray[i], null);
-							i++;
-						}
-					}
+					String attributesString = StringUtil.trim(
+						tagLine.substring(
+							nameEndIndex + 1,
+							tagLine.length() - closeTag.length()));
 
 					String formatTag = _tagToString(
-						indent, name, attributeMap, closeTag);
+						indent, name, closeTag, attributesString);
 
 					if (!StringUtil.equals(tagString, formatTag)) {
 						return StringUtil.replaceFirst(
@@ -180,31 +146,54 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _tagToString(
-		String indent, String fullName, Map<String, String> attributeMap,
-		String closeTag) {
+		String indent, String fullName, String closeTag,
+		String attributesString) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(indent);
 		sb.append(StringPool.LESS_THAN);
 		sb.append(fullName);
 
-		for (Map.Entry<String, String> entry : attributeMap.entrySet()) {
-			sb.append(StringPool.NEW_LINE);
-			sb.append(indent);
-			sb.append(StringPool.TAB);
+		int x = -1;
+		int nextQuoteIndex = -1;
 
-			sb.append(entry.getKey());
+		String replacement = StringPool.NEW_LINE + indent + StringPool.TAB;
 
-			String attributeValue = entry.getValue();
+		while (true) {
+			x = attributesString.indexOf(StringPool.SPACE, x);
 
-			if (Validator.isNotNull(attributeValue)) {
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.EQUAL);
-				sb.append(StringPool.SPACE);
-				sb.append(attributeValue);
+			if (x == -1) {
+				break;
 			}
+
+			char frontChar = attributesString.charAt(x - 1);
+			char nextChar = attributesString.charAt(x + 1);
+
+			if ((nextChar != CharPool.EQUAL) && (frontChar != CharPool.EQUAL) &&
+				(x > nextQuoteIndex)) {
+
+				attributesString = StringUtil.replaceFirst(
+					attributesString, StringPool.SPACE, replacement, x);
+
+				x = -1;
+				nextQuoteIndex = -1;
+
+				continue;
+			}
+
+			if (nextChar == CharPool.QUOTE) {
+				nextQuoteIndex = attributesString.indexOf(
+					StringPool.QUOTE, x + 2);
+			}
+
+			x++;
 		}
+
+		sb.append(StringPool.NEW_LINE);
+		sb.append(indent);
+		sb.append(StringPool.TAB);
+		sb.append(attributesString);
 
 		sb.append(StringPool.NEW_LINE);
 		sb.append(indent);

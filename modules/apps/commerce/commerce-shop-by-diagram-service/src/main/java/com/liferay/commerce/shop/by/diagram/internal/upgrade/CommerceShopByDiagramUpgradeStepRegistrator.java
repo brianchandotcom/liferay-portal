@@ -36,6 +36,16 @@ public class CommerceShopByDiagramUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
+				protected void doUpgrade() throws Exception {
+					if (hasTable("CSDiagramEntry") &&
+						hasTable("CSDiagramPin") &&
+						hasTable("CSDiagramSetting")) {
+
+						upgradeModuleTableMVCCVersions();
+					}
+				}
+
+				@Override
 				protected String[] getModuleTableNames() {
 					return new String[] {
 						"CSDiagramEntry", "CSDiagramPin", "CSDiagramSetting"
@@ -47,7 +57,19 @@ public class CommerceShopByDiagramUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "1.2.0",
 			new CTModelUpgradeProcess(
-				"CSDiagramEntry", "CSDiagramPin", "CSDiagramSetting"));
+				"CSDiagramEntry", "CSDiagramPin", "CSDiagramSetting") {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					if (hasTable("CSDiagramEntry") &&
+						hasTable("CSDiagramPin") &&
+						hasTable("CSDiagramSetting")) {
+
+						super.doUpgrade();
+					}
+				}
+
+			});
 	}
 
 }

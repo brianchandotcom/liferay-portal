@@ -29,11 +29,7 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 					HashMapBuilder.<String, Object>put(
 						"itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName()
 					).put(
-						"namespace", liferayPortletResponse.getNamespace()
-					).put(
 						"nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray()
-					).put(
-						"pathThemeImages", themeDisplay.getPathThemeImages()
 					).build()
 				%>'
 			/>

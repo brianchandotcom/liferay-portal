@@ -40,4 +40,9 @@ public class BatchEngineImportTaskImpl extends BatchEngineImportTaskBaseImpl {
 			getBatchEngineImportTaskErrors(getBatchEngineImportTaskId());
 	}
 
+	public int getBatchEngineImportTaskErrorsCount() {
+		return BatchEngineImportTaskErrorLocalServiceUtil.
+			getBatchEngineImportTaskErrorsCount(getBatchEngineImportTaskId());
+	}
+
 }

@@ -28,11 +28,12 @@ import {
 	maxLength,
 } from '../../../../common/utils/validations.form';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
+import getKebabCase from '../../../../routes/customer-portal/utils/getKebabCase';
+import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import Layout from '../Layout';
-
 import IncidentReportInput from './IncidentReportInput';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
@@ -73,7 +74,7 @@ const SetupAnalyticsCloudPage = ({
 	const analyticsDataCenterLocations = useMemo(
 		() =>
 			data?.c?.analyticsCloudDataCenterLocations?.items.map(({name}) => ({
-				label: name,
+				label: i18n.translate(getKebabCase(name)),
 				value: name,
 			})) || [],
 		[data]
@@ -200,14 +201,15 @@ const SetupAnalyticsCloudPage = ({
 						displayType="primary"
 						onClick={handleSubmit}
 					>
-						Submit
+						{i18n.translate('submit')}
 					</Button>
 				),
 			}}
 			headerProps={{
-				helper:
-					'We’ll need a few details to finish creating your Analytics Cloud Workspace',
-				title: 'Set up Analytics Cloud',
+				helper: i18n.translate(
+					'we-ll-need-a-few-details-to-finish-creating-your-analytics-cloud-workspace'
+				),
+				title: i18n.translate('set-up-analytics-cloud'),
 			}}
 		>
 			<FieldArray
@@ -217,8 +219,10 @@ const SetupAnalyticsCloudPage = ({
 						<ClayForm.Group className="pb-1">
 							<Input
 								groupStyle="pb-1"
-								helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
-								label="Owner Email"
+								helper={i18n.translate(
+									'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-vis-support-ticket-if-needed'
+								)}
+								label={i18n.translate('owner-email')}
 								name="activations.ownerEmailAddress"
 								placeholder="user@company.com"
 								required
@@ -234,8 +238,10 @@ const SetupAnalyticsCloudPage = ({
 
 							<Input
 								groupStyle="pb-1"
-								helper="Lowercase letters and numbers only. Project IDs cannot be changed."
-								label="Workspace Name"
+								helper={i18n.translate(
+									'lowercase-letters-and-numbers-only-projec-ids-cannot-be-changed'
+								)}
+								label="workspace-name"
 								name="activations.workspaceName"
 								placeholder="superbank1"
 								required
@@ -248,9 +254,11 @@ const SetupAnalyticsCloudPage = ({
 
 							<Select
 								groupStyle="pb-1"
-								helper="Select a server location for your data to be stored."
+								helper={i18n.translate(
+									'select-a-server-location-for-your-data-to-be-stored'
+								)}
 								key={analyticsDataCenterLocations}
-								label="Data Center Location"
+								label={i18n.translate('data-center-location')}
 								name="activations.dataCenterLocation"
 								options={analyticsDataCenterLocations}
 								required
@@ -259,7 +267,9 @@ const SetupAnalyticsCloudPage = ({
 							{hasDisasterRecovery && (
 								<Select
 									groupStyle="mb-0 pt-2"
-									label="Disaster Recovery Data Center Location"
+									label={i18n.translate(
+										'Disaster Recovery Data Center Location'
+									)}
 									name="activations.disasterDataCenterLocation"
 									options={analyticsDataCenterLocations}
 									required
@@ -268,8 +278,10 @@ const SetupAnalyticsCloudPage = ({
 
 							<Input
 								groupStyle="pb-1"
-								helper="Please note that the friendly URL cannot be changed once added."
-								label="Workspace Friendly URL"
+								helper={i18n.translate(
+									'please-note-that-the-friendly-url-cannot-be-changed-once-added'
+								)}
+								label={i18n.translate('workspace-friendly-url')}
 								name="activations.workspaceURL"
 								placeholder="/myurl"
 								type="text"
@@ -280,8 +292,10 @@ const SetupAnalyticsCloudPage = ({
 
 							<Input
 								groupStyle="pb-1"
-								helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
-								label="Allowed Email Domains"
+								helper={i18n.translate(
+									'anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas'
+								)}
+								label={i18n.translate('allowed-email-domains')}
 								name="activations.allowedEmailDomains"
 								placeholder="@mycompany.com"
 								type="text"
@@ -295,8 +309,10 @@ const SetupAnalyticsCloudPage = ({
 
 							<Input
 								groupStyle="pb-1"
-								helper="Enter the timezone to be used for all data reporting in your Workspace."
-								label="Time Zone"
+								helper={i18n.translate(
+									'enter-the-timezone-to-be-used-for-all-data-reporting-in-your-workspace'
+								)}
+								label={i18n.translate('time-zone')}
 								name="activations.timeZone"
 								placeholder="UTC-04:00"
 								type="text"
@@ -324,7 +340,9 @@ const SetupAnalyticsCloudPage = ({
 								prependIcon="hr"
 								small
 							>
-								Remove Incident Report Contact
+								{i18n.translate(
+									'remove-incident-report-contact'
+								)}
 							</Button>
 						)}
 
@@ -341,7 +359,7 @@ const SetupAnalyticsCloudPage = ({
 							prependIcon="plus"
 							small
 						>
-							Add Incident Report Contact
+							{i18n.translate('add-incident-report-contact')}
 						</Button>
 					</>
 				)}

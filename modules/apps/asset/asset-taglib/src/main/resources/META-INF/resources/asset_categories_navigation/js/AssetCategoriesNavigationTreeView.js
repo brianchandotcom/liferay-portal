@@ -14,25 +14,7 @@
 
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
-
-function findCategory(categoryId, categories = []) {
-	// eslint-disable-next-line no-for-of-loops/no-for-of-loops
-	for (const category of categories) {
-		if (category.id === categoryId) {
-			return category;
-		}
-
-		const childrenCategory = findCategory(categoryId, category.children);
-
-		if (childrenCategory) {
-			return childrenCategory;
-		}
-	}
-
-	return null;
-}
 
 const AssetCategoriesNavigationTreeView = ({
 	selectedCategoryId,
@@ -54,11 +36,16 @@ const AssetCategoriesNavigationTreeView = ({
 			defaultSelectedKeys={
 				new Set(selectedCategoryId ? [selectedCategoryId] : [])
 			}
+			showExpanderOnHover={false}
 		>
 			{(item) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => handleSelectionChange(event, item)}
+						onClick={(event) => {
+							event.preventDefault();
+
+							handleSelectionChange(event, item);
+						}}
 					>
 						<ClayIcon symbol={item.icon} />
 
@@ -68,9 +55,11 @@ const AssetCategoriesNavigationTreeView = ({
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
 							<ClayTreeView.Item
-								onClick={(event) =>
-									handleSelectionChange(event, item)
-								}
+								onClick={(event) => {
+									event.preventDefault();
+
+									handleSelectionChange(event, item);
+								}}
 							>
 								<ClayIcon symbol={item.icon} />
 
@@ -84,33 +73,4 @@ const AssetCategoriesNavigationTreeView = ({
 	);
 };
 
-const OldAssetCategoriesNavigationTreeView = ({
-	selectedCategoryId,
-	vocabularies,
-}) => {
-	const handleSelectionChange = ([selectedNodeId]) => {
-		if (selectedNodeId && selectedCategoryId !== selectedNodeId) {
-			const category = findCategory(selectedNodeId, vocabularies);
-
-			if (category) {
-				Liferay.Util.navigate(category.url);
-			}
-		}
-	};
-
-	return (
-		<Treeview
-			NodeComponent={Treeview.Card}
-			initialSelectedNodeIds={
-				selectedCategoryId ? [selectedCategoryId] : []
-			}
-			multiSelection={false}
-			nodes={vocabularies}
-			onSelectedNodesChange={handleSelectionChange}
-		/>
-	);
-};
-
-export default Liferay.FeatureFlags['LPS-144630']
-	? AssetCategoriesNavigationTreeView
-	: OldAssetCategoriesNavigationTreeView;
+export default AssetCategoriesNavigationTreeView;

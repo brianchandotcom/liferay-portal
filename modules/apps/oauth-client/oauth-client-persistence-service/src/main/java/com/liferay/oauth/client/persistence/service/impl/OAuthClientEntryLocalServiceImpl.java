@@ -15,9 +15,12 @@
 package com.liferay.oauth.client.persistence.service.impl;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
+import com.liferay.oauth.client.persistence.model.OAuthClientAuthServerTable;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.oauth.client.persistence.model.OAuthClientEntryTable;
 import com.liferay.oauth.client.persistence.service.OAuthClientAuthServerLocalService;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientEntryLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +37,6 @@ import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -146,21 +148,26 @@ public class OAuthClientEntryLocalServiceImpl
 	public List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
 		long companyId, String authServerType) {
 
-		List<OAuthClientAuthServer> oAuthClientAuthServers =
-			_oAuthClientAuthServerLocalService.getOAuthClientAuthServers(
-				companyId, authServerType);
-
-		List<OAuthClientEntry> oAuthClientEntries = new ArrayList<>();
-
-		for (OAuthClientAuthServer oAuthClientAuthServer :
-				oAuthClientAuthServers) {
-
-			oAuthClientEntries.addAll(
-				oAuthClientEntryLocalService.getOAuthClientEntries(
-					companyId, oAuthClientAuthServer.getIssuer()));
-		}
-
-		return oAuthClientEntries;
+		return oAuthClientEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				OAuthClientEntryTable.INSTANCE
+			).from(
+				OAuthClientEntryTable.INSTANCE
+			).where(
+				OAuthClientEntryTable.INSTANCE.authServerIssuer.in(
+					DSLQueryFactoryUtil.select(
+						OAuthClientAuthServerTable.INSTANCE.issuer
+					).from(
+						OAuthClientAuthServerTable.INSTANCE
+					).where(
+						OAuthClientAuthServerTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							OAuthClientAuthServerTable.INSTANCE.type.eq(
+								authServerType)
+						)
+					))
+			));
 	}
 
 	@Override

@@ -122,7 +122,7 @@ public class OAuthClientAuthServerServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientAuthServer> getOAuthClientAuthServers(
+	public List<OAuthClientAuthServer> getTypeOAuthClientAuthServers(
 		long companyId, String type) {
 
 		return oAuthClientAuthServerPersistence.filterFindByC_T(

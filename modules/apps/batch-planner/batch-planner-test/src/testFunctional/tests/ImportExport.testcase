@@ -57,9 +57,9 @@ definition {
 		}
 
 		task ("Then only those fields should be imported") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "csv_channel_import_auto_map.csv",
-				exportFileName = "export.csv");
+				fileName = "export.csv");
 		}
 	}
 
@@ -144,9 +144,9 @@ definition {
 		}
 
 		task ("Then only those fields should be imported") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "json_channel_import.txt",
-				exportFileName = "export.json");
+				fileName = "export.json");
 		}
 	}
 
@@ -185,9 +185,9 @@ definition {
 		}
 
 		task ("Then a CSV file should be generated for download which contains account data") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "csv_account_import_auto_map.csv",
-				exportFileName = "export.csv");
+				fileName = "export.csv");
 		}
 	}
 
@@ -227,9 +227,9 @@ definition {
 		}
 
 		task ("Then the generated CSV file should contains account data with no headers") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "csv_account_import_no_headers.csv",
-				exportFileName = "export.csv");
+				fileName = "export.csv");
 		}
 	}
 
@@ -268,9 +268,9 @@ definition {
 		}
 
 		task ("Then a JSON file should be generated for download which contains account data") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "json_account_export.txt",
-				exportFileName = "export.json");
+				fileName = "export.json");
 		}
 	}
 
@@ -309,9 +309,9 @@ definition {
 		}
 
 		task ("Then a JSONL file should be generated for download which contains account data") {
-			ImportExport.assertExportFileContent(
+			ImportExport.assertFileContent(
 				comparisonFileName = "jsonl_account_import.jsonl",
-				exportFileName = "export.jsonl");
+				fileName = "export.jsonl");
 		}
 	}
 

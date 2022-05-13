@@ -9,16 +9,6 @@ definition {
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
-	macro assertExportFileContent {
-		var exportFileContent = TestCase.getTempFileContent(fileName = "${exportFileName}");
-
-		var expectedFileContent = TestCase.getFileContent(fileName = "${comparisonFileName}");
-
-		if ("${exportFileContent}" != "${expectedFileContent}") {
-			fail("The exported file content does not match the expected file content.");
-		}
-	}
-
 	macro assertExportTemplate {
 		WaitForElementPresent(
 			key_title = "Field Mapping",
@@ -46,6 +36,16 @@ definition {
 			AssertChecked.assertCheckedNotVisible(
 				key_checkboxOption = "${exportField}",
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+	}
+
+	macro assertFileContent {
+		var fileContent = TestCase.getTempFileContent(fileName = "${fileName}");
+
+		var expectedFileContent = TestCase.getFileContent(fileName = "${comparisonFileName}");
+
+		if ("${fileContent}" != "${expectedFileContent}") {
+			fail("The file content does not match the expected file content.");
 		}
 	}
 

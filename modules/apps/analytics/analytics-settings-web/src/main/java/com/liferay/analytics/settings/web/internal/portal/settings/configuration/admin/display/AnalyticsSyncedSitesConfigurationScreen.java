@@ -15,6 +15,7 @@
 package com.liferay.analytics.settings.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.analytics.settings.web.internal.display.context.DisplayContext;
+import com.liferay.analytics.settings.web.internal.display.context.QADisplayContext;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -48,7 +49,7 @@ public class AnalyticsSyncedSitesConfigurationScreen
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		return null;
+		return new QADisplayContext(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

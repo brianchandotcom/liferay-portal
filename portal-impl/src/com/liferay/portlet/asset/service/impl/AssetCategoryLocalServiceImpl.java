@@ -81,24 +81,6 @@ import java.util.Map;
 public class AssetCategoryLocalServiceImpl
 	extends AssetCategoryLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #addCategory(String, long, long, long, Map, Map, long, String[], ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetCategory addCategory(
-			long userId, long groupId, long parentCategoryId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			long vocabularyId, String[] categoryProperties,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCategory(
-			null, userId, groupId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
-	}
-
 	@Override
 	public AssetCategory addCategory(
 			long userId, long groupId, String title, long vocabularyId,

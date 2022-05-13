@@ -100,8 +100,9 @@ public class AssetTestUtil {
 				groupId, TestPropsValues.getUserId());
 
 		return AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), groupId, parentCategoryId, titleMap,
-			descriptionMap, vocabularyId, categoryProperties, serviceContext);
+			null, TestPropsValues.getUserId(), groupId, parentCategoryId,
+			titleMap, descriptionMap, vocabularyId, categoryProperties,
+			serviceContext);
 	}
 
 	public static AssetTag addTag(long groupId) throws Exception {

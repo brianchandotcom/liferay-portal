@@ -293,8 +293,9 @@ public class StagingImplTest {
 				titleMap, descriptionMap, null, serviceContext);
 
 		return AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), groupId, 0, titleMap, descriptionMap,
-			assetVocabulary.getVocabularyId(), new String[0], serviceContext);
+			null, TestPropsValues.getUserId(), groupId, 0, titleMap,
+			descriptionMap, assetVocabulary.getVocabularyId(), new String[0],
+			serviceContext);
 	}
 
 	protected void doTestInitialPublication() throws Exception {

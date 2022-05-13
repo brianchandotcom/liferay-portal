@@ -61,6 +61,14 @@ definition {
 		Button.click(button = "Checkout");
 	}
 
+	macro gotoCheckoutViaMiniCart {
+		ScrollBy(value1 = "0, 1000");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+	}
+
 	macro initializersCheckout {
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 

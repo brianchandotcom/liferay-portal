@@ -18,7 +18,6 @@ definition {
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
 	@priority = "4"
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a two buyer users") {
@@ -60,11 +59,7 @@ definition {
 		}
 
 		task ("And given an empty order created from Pending Orders") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Click.mouseDownMouseUp(
-				key_text = "Add Order",
-				locator1 = "Button#ANY");
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 		}
 
 		task ("When buyer user 2 logs in navigating in Minium site") {
@@ -82,10 +77,8 @@ definition {
 				productQuantity = "1");
 		}
 
-		task ("Then by clicking Submit button from minicart, comletes the checkout process") {
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Submit");
+		task ("Then by clicking Submit button from minicart, completes the checkout process") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
 
 			CommerceCheckout.initializersCheckout(
 				newAddressAddress = "Test Address",
@@ -107,7 +100,6 @@ definition {
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
 	@priority = "4"
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a two buyer users") {
@@ -149,11 +141,8 @@ definition {
 		}
 
 		task ("And given an empty order created from Pending Orders") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Click.mouseDownMouseUp(
-				key_text = "Add Order",
-				locator1 = "Button#ANY");
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+			
 		}
 
 		task ("When buyer user 2 logs in navigating in Minium site") {
@@ -171,7 +160,7 @@ definition {
 				productQuantity = "1");
 		}
 
-		task ("Then by clicking View Details from minicart, comletes the checkout process") {
+		task ("Then by clicking View Details from minicart, completes the checkout process") {
 			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.initializersCheckout(
@@ -262,7 +251,6 @@ definition {
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
 	@priority = "4"
 	test AddOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a two buyer users") {
@@ -328,10 +316,8 @@ definition {
 				value1 = "${activeOrderId}");
 		}
 
-		task ("Then by clicking Submit button, comletes the checkout process") {
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Submit");
+		task ("Then by clicking Submit button, completes the checkout process") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
 
 			CommerceCheckout.initializersCheckout(
 				newAddressAddress = "Test Address",

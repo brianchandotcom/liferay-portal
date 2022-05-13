@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -147,6 +148,12 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 			_layoutPageTemplateAdminWebConfiguration);
 		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		if ((scopeGroup != null) && scopeGroup.isCompany()) {
+			renderResponse.setTitle(
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "widget-page-templates"));
+		}
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

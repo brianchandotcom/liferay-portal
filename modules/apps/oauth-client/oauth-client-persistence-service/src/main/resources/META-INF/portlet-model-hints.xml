@@ -37,7 +37,7 @@
 		<field name="infoJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="requestParametersJSON" type="String">
+		<field name="parametersJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 	</model>

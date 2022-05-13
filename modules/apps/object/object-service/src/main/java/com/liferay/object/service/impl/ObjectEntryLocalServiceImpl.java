@@ -347,18 +347,19 @@ public class ObjectEntryLocalServiceImpl
 			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipPersistence.findByObjectDefinitionId1(
 				objectDefinitionId);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
 			ObjectRelatedModelsProvider objectRelatedModelsProvider =
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
+						objectDefinition2.getClassName(),
 						objectRelationship.getType());
 
 			objectRelatedModelsProvider.deleteRelatedModel(

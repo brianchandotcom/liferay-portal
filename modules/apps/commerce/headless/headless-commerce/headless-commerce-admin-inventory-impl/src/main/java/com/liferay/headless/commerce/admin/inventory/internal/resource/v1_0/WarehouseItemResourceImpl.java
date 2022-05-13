@@ -218,11 +218,11 @@ public class WarehouseItemResourceImpl
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				id);
+				warehouseItem.getWarehouseId());
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				id,
 				GetterUtil.getInteger(warehouseItem.getQuantity()),
 				commerceInventoryWarehouse.getMvccVersion());
 

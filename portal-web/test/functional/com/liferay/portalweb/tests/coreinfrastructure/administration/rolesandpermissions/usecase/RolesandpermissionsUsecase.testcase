@@ -171,6 +171,63 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NumberFormatException");
 	}
 
+	@description = "This is a test for LPS-148855. The default site role shouldn't be inherited by Guest."
+	@priority = "5"
+	test DefaultSiteRoleIsNotInheritedByGuestUser {
+		task ("Assign default site to a new regular Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Document Viewer",
+				roleTitle = "Document Viewer");
+
+			JSONRole.assignRoleToGroup(
+				groupName = "Guest",
+				roleTitle = "Document Viewer");
+		}
+
+		task ("Add the DM portlet with a file to a public page on a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Public Widget Page");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "For Document Viewers Eyes Only",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_4.jpg");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Public Widget Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Define view permission for Guest and Document Viewer Roles on the DM portlet") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Site Name");
+
+			DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Add",
+				roleList = "Document Viewer");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Remove",
+				roleList = "Guest");
+		}
+
+		task ("Assert guest user cannot view the file") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "Public Widget Page",
+				siteName = "Site Name");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+		}
+	}
+
 	@priority = "4"
 	test EditTeamPermissions {
 		Permissions.definePermissionViaJSONAPI(

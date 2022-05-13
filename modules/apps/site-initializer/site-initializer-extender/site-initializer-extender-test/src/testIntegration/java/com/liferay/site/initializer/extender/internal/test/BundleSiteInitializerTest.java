@@ -802,6 +802,16 @@ public class BundleSiteInitializerTest {
 			privateLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", privateLayout.getType());
 
+		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
+
+		Assert.assertTrue(privateChildLayouts.size() == 1);
+
+		Layout privateChildLayout = privateChildLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Private Child Layout",
+			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+
 		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -815,6 +825,16 @@ public class BundleSiteInitializerTest {
 			"Test Public Layout",
 			publicLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", publicLayout.getType());
+
+		List<Layout> publicChildLayouts = publicLayout.getAllChildren();
+
+		Assert.assertTrue(publicChildLayouts.size() == 1);
+
+		Layout publicChildLayout = publicChildLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Public Child Layout",
+			publicChildLayout.getName(LocaleUtil.getSiteDefault()));
 	}
 
 	private void _assertLayoutSets(Group group) throws Exception {

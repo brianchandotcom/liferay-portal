@@ -233,21 +233,21 @@ public class OAuthClientEntryLocalServiceImpl
 				ClientInformation clientInformation = ClientInformation.parse(
 					JSONObjectUtils.parse(infoJSON));
 
-				ClientID clientId = clientInformation.getID();
+				ClientID clientID = clientInformation.getID();
 
 				if (add) {
 					OAuthClientEntry oAuthClientEntry =
 						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientId.getValue());
+							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
 						throw new PortalException(
 							"There is an existing OAuth Client Entry: " +
-								clientId.getValue());
+								clientID.getValue());
 					}
 				}
 
-				return clientId.getValue();
+				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
 				throw new PortalException(parseException);
@@ -259,21 +259,21 @@ public class OAuthClientEntryLocalServiceImpl
 					OIDCClientInformation.parse(
 						JSONObjectUtils.parse(infoJSON));
 
-				ClientID clientId = oidcClientInformation.getID();
+				ClientID clientID = oidcClientInformation.getID();
 
 				if (add) {
 					OAuthClientEntry oAuthClientEntry =
 						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientId.getValue());
+							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
 						throw new PortalException(
 							"There is an existing OAuth Client Entry: " +
-								clientId.getValue());
+								clientID.getValue());
 					}
 				}
 
-				return clientId.getValue();
+				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
 				throw new PortalException(parseException);

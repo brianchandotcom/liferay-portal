@@ -193,9 +193,7 @@ public class RoleCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -215,7 +213,7 @@ public class RoleCacheModel
 		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
-		description = (String)objectInput.readObject();
+		description = objectInput.readUTF();
 
 		type = objectInput.readInt();
 		subtype = objectInput.readUTF();
@@ -269,10 +267,10 @@ public class RoleCacheModel
 		}
 
 		if (description == null) {
-			objectOutput.writeObject("");
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(description);
+			objectOutput.writeUTF(description);
 		}
 
 		objectOutput.writeInt(type);

@@ -48,7 +48,9 @@ public class SamlSpIdpConnectionImpl extends SamlSpIdpConnectionBaseImpl {
 	}
 
 	private String _removeDefaultPrefix(String userFieldExpression) {
-		if (userFieldExpression.charAt(0) == CharPool.COLON) {
+		if (Validator.isNotNull(userFieldExpression) &&
+			(userFieldExpression.charAt(0) == CharPool.COLON)) {
+
 			return userFieldExpression.substring(1);
 		}
 

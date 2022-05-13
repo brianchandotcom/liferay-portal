@@ -240,6 +240,8 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 		String secondSHA = null;
 
+		PortalBuildData portalBuildData = null;
+
 		if (historicalLocalGitCommits.get(1) != null) {
 			retestLocalGitCommit = historicalLocalGitCommits.get(1);
 
@@ -263,22 +265,25 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 						if (sha.equals(
 								currentPortalBuildData.getPortalBranchSHA())) {
 
-							if (currentPortalBuildData != null) {
-								gitCommitGroup = new GitCommitGroup(
-									currentPortalBuildData);
+							portalBuildData = currentPortalBuildData;
 
-								gitCommitGroups.add(gitCommitGroup);
-							}
-							else if (i == 0) {
-								gitCommitGroup = new GitCommitGroup(null);
-
-								gitCommitGroups.add(gitCommitGroup);
-							}
-
-							gitCommitGroup.add(localGitCommit);
+							break;
 						}
 					}
 				}
+
+				if (portalBuildData != null) {
+					gitCommitGroup = new GitCommitGroup(portalBuildData);
+
+					gitCommitGroups.add(gitCommitGroup);
+				}
+				else if (i == 0) {
+					gitCommitGroup = new GitCommitGroup(null);
+
+					gitCommitGroups.add(gitCommitGroup);
+				}
+
+				gitCommitGroup.add(localGitCommit);
 			}
 
 			return gitCommitGroups;
@@ -288,8 +293,6 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 			LocalGitCommit localGitCommit = historicalLocalGitCommits.get(i);
 
 			String sha = localGitCommit.getSHA();
-
-			PortalBuildData portalBuildData = null;
 
 			for (BuildData buildData : buildDataList) {
 				if (buildData instanceof PortalBuildData) {

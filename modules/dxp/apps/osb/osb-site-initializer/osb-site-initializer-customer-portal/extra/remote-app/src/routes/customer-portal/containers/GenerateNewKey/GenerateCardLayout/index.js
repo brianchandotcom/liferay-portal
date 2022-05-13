@@ -10,40 +10,54 @@
  */
 
 import ClayCard from '@clayui/card';
-import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import i18n from '../../../../../common/I18n';
+import getDateCustomFormat from '../../../utils/getDateCustomFormat';
+
+const dateFormat = {
+	day: '2-digit',
+	month: 'short',
+	year: 'numeric',
+};
+
 const GenerateCardLayout = ({infoSelectedKey}) => {
-	const currentDate = `${getCurrentEndDate(
-		infoSelectedKey?.selectedSubscription?.startDate
-	)} - ${getCurrentEndDate(infoSelectedKey?.selectedSubscription?.endDate)}`;
+	const currentDate = `${getDateCustomFormat(
+		infoSelectedKey?.selectedSubscription?.startDate,
+		dateFormat
+	)} - ${getDateCustomFormat(
+		infoSelectedKey?.selectedSubscription?.endDate,
+		dateFormat
+	)}`;
 
 	return (
 		<ClayCard className="mr-5 position-absolute rounded-xl shadow-none">
 			<ClayCard.Body className="bg-brand-primary-lighten-6 cp-info-new-key-card p-4 rounded-xl">
 				<ClayCard.Description displayType="title" tag="div">
 					<div className="p-2">
-						<p className="m-0">Product</p>
+						<p className="m-0">{i18n.translate('product')}</p>
 
 						<p className="font-weight-normal">
 							{infoSelectedKey?.productType}
 						</p>
 
-						<p className="m-0">Version</p>
+						<p className="m-0">{i18n.translate('version')}</p>
 
 						<p className="font-weight-normal">
 							{infoSelectedKey?.productVersion}
 						</p>
 
-						<p className="m-0">License Type</p>
+						<p className="m-0">{i18n.translate('license-type')}</p>
 
 						<p className="font-weight-normal">
 							{infoSelectedKey?.licenseEntryType}{' '}
 						</p>
 
-						<p className="m-0">Subscription</p>
+						<p className="m-0">{i18n.translate('subscription')}</p>
 
 						<p className="font-weight-normal">{currentDate}</p>
 
-						<p className="m-0">Key Activations Available</p>
+						<p className="m-0">
+							{i18n.translate('key-activations-available')}
+						</p>
 
 						<p className="font-weight-normal">
 							{infoSelectedKey?.selectedSubscription?.quantity -
@@ -55,7 +69,7 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 							{infoSelectedKey?.selectedSubscription?.quantity}
 						</p>
 
-						<p className="m-0">Instance Size</p>
+						<p className="m-0">{i18n.translate('instance-size')}</p>
 
 						<p className="font-weight-normal m-0">
 							{infoSelectedKey?.selectedSubscription

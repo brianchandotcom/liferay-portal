@@ -381,10 +381,10 @@ const InviteTeamMembersPage = ({
 														'administrator-roles'
 												  )
 										}
-										}  ${i18n.sub('available-x-of-x', [
-											availableAdminsRoles,
-											project.maxRequestors,
-										])}`}
+										  ${i18n.sub('available-x-of-x', [
+												availableAdminsRoles,
+												project.maxRequestors,
+											])}`}
 									</h5>
 
 									<p className="mb-0 text-neutral-7 text-paragraph-sm">

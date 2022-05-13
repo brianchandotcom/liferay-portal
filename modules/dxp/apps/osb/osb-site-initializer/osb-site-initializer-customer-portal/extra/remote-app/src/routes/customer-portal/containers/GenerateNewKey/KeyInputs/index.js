@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../common/I18n';
 import {Input} from '../../../../../common/components';
 import {
 	isValidHost,
@@ -21,7 +22,7 @@ const KeyInputs = ({id}) => {
 		<>
 			<div className="cp-input-generate-label mb-3">
 				<Input
-					label="Host Name"
+					label={i18n.translate('host-name')}
 					name={`keys[${id}].hostName`}
 					type="text"
 					validations={[(value) => isValidHost(value)]}
@@ -32,7 +33,7 @@ const KeyInputs = ({id}) => {
 				<Input
 					className="cp-input-generate-placeholder w-100"
 					component="textarea"
-					label="IP Addresses"
+					label={i18n.translate('ip-address')}
 					name={`keys[${id}].ipAddresses`}
 					placeholder="1.1.1.1&#10;2.2.2.2"
 					type="text"
@@ -40,15 +41,16 @@ const KeyInputs = ({id}) => {
 				/>
 
 				<h6 className="font-weight-normal mb-3 mx-3">
-					Add one IP addresses per line. IPv6 addresses are not
-					supported.
+					{i18n.translate(
+						'add-one-ip-addresses-per-line-ipv6-addresses-are-not-supported'
+					)}
 				</h6>
 
 				<div className="cp-input-generate-label">
 					<Input
 						className="cp-input-generate-placeholder"
 						component="textarea"
-						label="MAC Addresses"
+						label={i18n.translate('mac-address')}
 						name={`keys[${id}].macAddresses`}
 						placeholder="XX-XX-XX-XX-XX-XX&#10;XX-XX-XX-XX-XX-XX"
 						type="text"
@@ -56,7 +58,7 @@ const KeyInputs = ({id}) => {
 					/>
 
 					<h6 className="font-weight-normal mb-3 mx-3">
-						Add one MAC addresses per line
+						{i18n.translate('add-one-mac-addresses-per-line')}
 					</h6>
 				</div>
 			</div>

@@ -14,6 +14,7 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
+import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {Radio} from '../../../../../common/components/Radio';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
@@ -151,28 +152,19 @@ const SelectSubscription = ({
 		hasNotPermanentLicence ? (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
-					Activation Key(s) will be valid{' '}
+					{i18n.sub('activation-key-s-will-be-valid-x-x', [
+						getCurrentEndDate(subscriptionTerm.startDate),
+						getCurrentEndDate(subscriptionTerm.endDate),
+					])}
 				</span>
-
-				<b className="text-paragraph">
-					{`${getCurrentEndDate(
-						subscriptionTerm.startDate
-					)} - ${getCurrentEndDate(subscriptionTerm.endDate)}`}
-				</b>
 			</ClayAlert>
 		) : (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
-					Activation Key(s) will be valid{' '}
-				</span>
-
-				<b className="text-paragraph">
-					indefinitely starting
-					{` ${getCurrentEndDate(subscriptionTerm.startDate)}, `}
-				</b>
-
-				<span className="text-paragraph">
-					or until manually deactivated.
+					{i18n.sub(
+						'activation-key-s-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
+						[getCurrentEndDate(subscriptionTerm.startDate)]
+					)}
 				</span>
 			</ClayAlert>
 		);
@@ -192,7 +184,7 @@ const SelectSubscription = ({
 							className="btn btn-borderless btn-style-neutral"
 							displayType="secondary"
 						>
-							Cancel
+							{i18n.translate('cancel')}
 						</Button>
 					</Link>
 				),
@@ -212,22 +204,25 @@ const SelectSubscription = ({
 							setStep(1);
 						}}
 					>
-						Next
+						{i18n.translate('next')}
 					</Button>
 				),
 			}}
 			headerProps={{
 				headerClass: 'ml-5 mt-4 mb-3',
-				helper:
-					'Select the subscription and key type you would like to generate.',
-				title: 'Generate Activation Key(s)',
+				helper: i18n.translate(
+					'select-the-subscription-and-key-type-you-would-like-to-generate'
+				),
+				title: i18n.translate('generate-activation-key-s'),
 			}}
 			layoutType="cp-generateKey"
 		>
 			<div className="px-6">
 				<div className="d-flex justify-content-between mb-2">
 					<div className="mr-3 w-100">
-						<label htmlFor="basicInput">Product</label>
+						<label htmlFor="basicInput">
+							{i18n.translate('product')}
+						</label>
 
 						<div className="cp-select-card position-relative">
 							<ClaySelect
@@ -250,7 +245,9 @@ const SelectSubscription = ({
 					</div>
 
 					<div className="ml-3 w-100">
-						<label htmlFor="basicInput">Version</label>
+						<label htmlFor="basicInput">
+							{i18n.translate('version')}
+						</label>
 
 						<div className="position-relative">
 							<ClaySelect
@@ -277,7 +274,9 @@ const SelectSubscription = ({
 				</div>
 
 				<div className="mt-4 w-100">
-					<label htmlFor="basicInput">Key Type</label>
+					<label htmlFor="basicInput">
+						{i18n.translate('key-type')}
+					</label>
 
 					<div className="position-relative">
 						<ClaySelect
@@ -307,7 +306,7 @@ const SelectSubscription = ({
 
 				<div>
 					<div className="mb-3 mt-4">
-						<h5>Subscription</h5>
+						<h5>{i18n.translate('subscription')}</h5>
 					</div>
 
 					<div>
@@ -337,10 +336,14 @@ const SelectSubscription = ({
 
 							return (
 								<Radio
-									description={`Key activation available: ${
-										subscriptionTerm.quantity -
-										subscriptionTerm.provisionedCount
-									} of ${subscriptionTerm.quantity}`}
+									description={i18n.sub(
+										'key-activation-available-x-of-x',
+										[
+											subscriptionTerm.quantity -
+												subscriptionTerm.provisionedCount,
+											subscriptionTerm.quantity,
+										]
+									)}
 									hasCustomAlert={
 										selected && displayAlertType
 									}
@@ -360,9 +363,9 @@ const SelectSubscription = ({
 										setInfoSelectedKey(infoSelectedKey);
 									}}
 									selected={selected}
-									subtitle={`Instance size: ${
-										subscriptionTerm?.instanceSize || 1
-									}`}
+									subtitle={i18n.sub('instance-size-x', [
+										subscriptionTerm?.instanceSize || 1,
+									])}
 									value={subscriptionTerm}
 								/>
 							);

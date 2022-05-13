@@ -10,6 +10,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import i18n from '../../../../../common/I18n';
 import {Select} from '../../../../../common/components';
 
 const KeySelect = ({
@@ -19,7 +20,7 @@ const KeySelect = ({
 }) => {
 	const emptyOption = {
 		disabled: true,
-		label: 'Select the option',
+		label: i18n.translate('select-the-option'),
 		value: '',
 	};
 
@@ -32,19 +33,21 @@ const KeySelect = ({
 		<ClayInput.Group className="m-0">
 			<ClayInput.GroupItem className="m-0">
 				<Select
-					label={`Cluster Nodes${
+					label={
 						+selectedClusterNodes === +avaliableKeysMaximumCount
-							? ' (Maximum)'
-							: ''
-					}`}
+							? i18n.translate('cluster-nodes-maxium')
+							: i18n.translate('cluster-nodes')
+					}
 					name="maxClusterNodes"
 					options={[emptyOption, ...options]}
 					required
 				/>
 
 				<h6 className="font-weight-normal ml-3 mt-1">
-					Cluster nodes may not exceed the maximum number of
-					Activation Keys available ({avaliableKeysMaximumCount})
+					{i18n.sub(
+						'cluster-nodes-may-not-exceed-the-maximum-number-of-x',
+						[avaliableKeysMaximumCount]
+					)}
 				</h6>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>

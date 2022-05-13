@@ -13,6 +13,7 @@
  */
 
 import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -79,48 +80,62 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<ClayTreeView
-				items={items}
-				onItemsChange={setItems}
-				showExpanderOnHover={false}
-			>
-				{(item) => (
-					<ClayTreeView.Item>
-						<ClayTreeView.ItemStack
-							onClick={(event) => {
-								event.preventDefault();
+			{items.length > 0 ? (
+				<ClayTreeView
+					items={items}
+					onItemsChange={setItems}
+					showExpanderOnHover={false}
+				>
+					{(item) => (
+						<ClayTreeView.Item>
+							<ClayTreeView.ItemStack
+								onClick={(event) => {
+									event.preventDefault();
 
-								if (!item.disabled) {
-									handleTreeViewSelectionChange(event, item);
-								}
-							}}
-						>
-							<ClayIcon symbol={item.icon} />
-
-							{item.name}
-						</ClayTreeView.ItemStack>
-
-						<ClayTreeView.Group items={item.children}>
-							{(item) => (
-								<ClayTreeView.Item
-									onClick={(event) => {
-										event.preventDefault();
-
+									if (!item.disabled) {
 										handleTreeViewSelectionChange(
 											event,
 											item
 										);
-									}}
-								>
-									<ClayIcon symbol={item.icon} />
+									}
+								}}
+							>
+								<ClayIcon symbol={item.icon} />
 
-									{item.name}
-								</ClayTreeView.Item>
-							)}
-						</ClayTreeView.Group>
-					</ClayTreeView.Item>
-				)}
-			</ClayTreeView>
+								{item.name}
+							</ClayTreeView.ItemStack>
+
+							<ClayTreeView.Group items={item.children}>
+								{(item) => (
+									<ClayTreeView.Item
+										onClick={(event) => {
+											event.preventDefault();
+
+											handleTreeViewSelectionChange(
+												event,
+												item
+											);
+										}}
+									>
+										<ClayIcon symbol={item.icon} />
+
+										{item.name}
+									</ClayTreeView.Item>
+								)}
+							</ClayTreeView.Group>
+						</ClayTreeView.Item>
+					)}
+				</ClayTreeView>
+			) : (
+				<ClayEmptyState
+					description={Liferay.Language.get(
+						'try-again-with-a-different-search'
+					)}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+					small
+					title={Liferay.Language.get('no-results-found')}
+				/>
+			)}
 		</ClayLayout.ContainerFluid>
 	);
 };

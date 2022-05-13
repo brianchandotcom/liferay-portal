@@ -322,7 +322,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_HTML_FRAGMENT_FIELD</td>
-	<td>//div[contains(@class,'source-panel')]//div[contains(@class,'lfr-source-editor-code')]//textarea</td>
+	<td>//div[contains(@class,'html-editor-modal')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>
 </tr>
 <tr>

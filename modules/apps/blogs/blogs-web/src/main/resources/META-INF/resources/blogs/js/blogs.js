@@ -468,15 +468,15 @@ export default class Blogs {
 							saveStatus.classList.add('hide');
 							saveStatus.hidden = true;
 						}
-
-						Liferay.Util.toggleDisabled(
-							this._getElementById('publishButton'),
-							false
-						);
 					})
 					.catch(() => {
 						this._updateStatus(strings.saveDraftError);
 					});
+
+				Liferay.Util.toggleDisabled(
+					this._getElementById('publishButton'),
+					false
+				);
 			}
 		}
 		else {

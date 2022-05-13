@@ -9,7 +9,13 @@
  * distribution rights of the Software.
  */
 
-import getCurrentEndDate from './getCurrentEndDate';
+import getDateCustomFormat from '../../routes/customer-portal/utils/getDateCustomFormat';
+
+const dateFormat = {
+	day: '2-digit',
+	month: 'short',
+	year: 'numeric',
+};
 
 export default function getActivationStatusDateRange(accountSubscriptionTerms) {
 	const dates = accountSubscriptionTerms.reduce(
@@ -33,9 +39,10 @@ export default function getActivationStatusDateRange(accountSubscriptionTerms) {
 	const farthestEndDate = new Date(
 		Math.max(...dates.endDates.map((date) => new Date(date)))
 	);
-	const activationStatusDateRange = `${getCurrentEndDate(
-		earliestStartDate
-	)} - ${getCurrentEndDate(farthestEndDate)}`;
+	const activationStatusDateRange = `${getDateCustomFormat(
+		earliestStartDate,
+		dateFormat
+	)} - ${getDateCustomFormat(farthestEndDate, dateFormat)}`;
 
 	return activationStatusDateRange;
 }

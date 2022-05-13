@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
@@ -44,20 +43,17 @@ public class CommercePricingClassCPDefinitionRelTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField imageField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"image", StringPool.BLANK);
-
-		imageField.setContentRenderer("image");
-
-		FDSTableSchemaField nameFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("name", "name");
-
-		nameFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("sku", "sku");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"image", StringPool.BLANK,
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"image")
+		).add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"sku", "sku"
+		).build();
 	}
 
 	@Reference

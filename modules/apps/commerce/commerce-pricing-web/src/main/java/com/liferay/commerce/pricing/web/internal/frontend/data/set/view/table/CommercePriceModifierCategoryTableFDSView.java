@@ -42,14 +42,13 @@ public class CommercePriceModifierCategoryTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("category.name", "name");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"category.vocabulary", "vocabulary");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("category.path", "path");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"category.name", "name"
+		).add(
+			"category.vocabulary", "vocabulary"
+		).add(
+			"category.path", "path"
+		).build();
 	}
 
 	@Reference

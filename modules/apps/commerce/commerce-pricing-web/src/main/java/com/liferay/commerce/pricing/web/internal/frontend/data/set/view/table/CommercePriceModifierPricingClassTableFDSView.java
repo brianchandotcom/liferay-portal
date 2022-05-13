@@ -42,13 +42,11 @@ public class CommercePriceModifierPricingClassTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"productGroup.title.LANG", "title");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"productGroup.productsCount", "number-of-products");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"productGroup.title.LANG", "title"
+		).add(
+			"productGroup.productsCount", "number-of-products"
+		).build();
 	}
 
 	@Reference

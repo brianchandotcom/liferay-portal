@@ -1418,13 +1418,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Layout _addLayout(
-			String resourcePath, ServiceContext serviceContext)
+	private Map<String, Layout> _addLayout(
+			long parentLayoutId, String parentResourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			SiteInitializerUtil.read(
-				resourcePath + "page.json", _servletContext));
+				parentResourcePath + "page.json", _servletContext));
 
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
@@ -1432,10 +1433,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			type = LayoutConstants.TYPE_PORTLET;
 		}
 
-		return _layoutLocalService.addLayout(
+		Layout layout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			jsonObject.getBoolean("private"),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			jsonObject.getBoolean("private"), parentLayoutId,
 			SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
 			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
 			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
@@ -1445,6 +1445,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.getBoolean("system"),
 			SiteInitializerUtil.toMap(jsonObject.getString("friendlyURL_i18n")),
 			serviceContext);
+
+		Map<String, Layout> layouts = HashMapBuilder.put(
+			parentResourcePath, layout
+		).build();
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return layouts;
+		}
+
+		Set<String> sortedResourcePaths = new TreeSet<>(
+			new NaturalOrderStringComparator());
+
+		sortedResourcePaths.addAll(resourcePaths);
+
+		resourcePaths = sortedResourcePaths;
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("/")) {
+				layouts.putAll(
+					_addLayout(
+						layout.getLayoutId(), resourcePath, serviceContext));
+			}
+		}
+
+		return layouts;
 	}
 
 	private void _addLayoutContent(
@@ -1678,9 +1706,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				Layout layout = _addLayout(resourcePath, serviceContext);
-
-				layouts.put(resourcePath, layout);
+				layouts.putAll(
+					_addLayout(
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, resourcePath,
+						serviceContext));
 			}
 		}
 

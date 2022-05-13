@@ -51,6 +51,9 @@ public class BatchPlannerPlanConstants {
 
 	public static final String LABEL_INACTIVE = "inactive";
 
+	public static final String LABEL_PARTIALLY_COMPLETED =
+		"partially-completed";
+
 	public static final String LABEL_QUEUED = "queued";
 
 	public static final String LABEL_RUNNING = "running";
@@ -60,6 +63,8 @@ public class BatchPlannerPlanConstants {
 	public static final int STATUS_FAILED = 4;
 
 	public static final int STATUS_INACTIVE = 0;
+
+	public static final int STATUS_PARTIALLY_COMPLETED = 5;
 
 	public static final int STATUS_QUEUED = 1;
 
@@ -116,6 +121,9 @@ public class BatchPlannerPlanConstants {
 		}
 		else if (status == STATUS_FAILED) {
 			return LABEL_FAILED;
+		}
+		else if (status == STATUS_PARTIALLY_COMPLETED) {
+			return LABEL_PARTIALLY_COMPLETED;
 		}
 		else if (status == STATUS_QUEUED) {
 			return LABEL_QUEUED;

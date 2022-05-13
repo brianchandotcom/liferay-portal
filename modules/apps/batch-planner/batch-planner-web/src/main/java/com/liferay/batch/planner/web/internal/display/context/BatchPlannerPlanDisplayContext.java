@@ -14,12 +14,10 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
-import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
-import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
@@ -207,6 +205,8 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			return builder.build();
 		}
 
+		builder.status(batchPlannerPlan.getStatus());
+
 		if (batchPlannerPlan.isExport()) {
 			BatchEngineExportTask batchEngineExportTask =
 				BatchEngineExportTaskLocalServiceUtil.
@@ -217,10 +217,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 
 			builder.processedItemsCount(
 				batchEngineExportTask.getProcessedItemsCount()
-			).status(
-				BatchPlannerPlanConstants.getStatus(
-					BatchEngineTaskExecuteStatus.valueOf(
-						batchEngineExportTask.getExecuteStatus()))
 			).totalItemsCount(
 				batchEngineExportTask.getTotalItemsCount()
 			);
@@ -234,19 +230,13 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 							batchPlannerPlan.getBatchPlannerPlanId()));
 
 			int batchEngineImportTaskErrorsCount =
-				BatchEngineImportTaskErrorLocalServiceUtil.
-					getBatchEngineImportTaskErrorsCount(
-						batchEngineImportTask.getBatchEngineImportTaskId());
+				batchEngineImportTask.getBatchEngineImportTaskErrorsCount();
 
 			builder.failedItemsCount(
 				batchEngineImportTaskErrorsCount
 			).processedItemsCount(
 				_getProcessedItemsCount(
 					batchEngineImportTask, batchEngineImportTaskErrorsCount)
-			).status(
-				BatchPlannerPlanConstants.getStatus(
-					BatchEngineTaskExecuteStatus.valueOf(
-						batchEngineImportTask.getExecuteStatus()))
 			).totalItemsCount(
 				batchEngineImportTask.getTotalItemsCount()
 			);

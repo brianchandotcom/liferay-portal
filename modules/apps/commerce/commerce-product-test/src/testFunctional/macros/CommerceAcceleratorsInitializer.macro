@@ -208,6 +208,10 @@ definition {
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 		}
 
+		WaitForElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU");
+
 		AssertTextEquals(
 			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",

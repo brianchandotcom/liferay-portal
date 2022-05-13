@@ -153,6 +153,8 @@ definition {
 	@description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = "4"
 	test CanViewSavedProgressModal {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -175,6 +177,8 @@ definition {
 	@description = "LPS-143614 - Verify if, after filling in all the mandatory fields from Basics - Contact Info page, user can click on Save and Exit Button, close the Save and Exit modal and Continue button is enabled"
 	@priority = "2"
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
+		property portal.upstream = "quarantine";
+		
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -197,6 +201,8 @@ definition {
 	@description = "LPS-143608 - Check that the email (from a 'Progress is Saved' modal) is equal to the Business Email from the Basics - Contact Info page"
 	@priority = "4"
 	test IsModalEmailEqualsToBusinessEmail {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -231,6 +237,8 @@ definition {
 	@description = "LPS-143604 -  Check save and exit button is enabled in the Business section"
 	@priority = "4"
 	test IsSaveAndExitButtonEnabledOnBusiness {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -251,6 +259,8 @@ definition {
 	@description = "LPS-143600 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = "5"
 	test IsSaveAndExitButtonEnabledOnContactInfo {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();

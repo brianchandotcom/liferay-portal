@@ -10,6 +10,7 @@
  */
 
 import ClayForm from '@clayui/form';
+import i18n from '../../../../I18n';
 import {Input} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {isValidEmail} from '../../../../utils/validations.form';
@@ -21,8 +22,10 @@ const IncidentReportInput = ({activation, id}) => {
 		<ClayForm>
 			<Input
 				groupStyle="pb-1"
-				helper="This user will be the recepient of any high priority communications."
-				label="Incident Report Contact"
+				helper={i18n.translate(
+					'this-user-will-be-the-recepient-of-any-high-priority-communications'
+				)}
+				label={i18n.translate('incident-report-contact')}
 				name={`activations.incidentReportContact[${id}].email`}
 				placeholder="user@company.com"
 				required

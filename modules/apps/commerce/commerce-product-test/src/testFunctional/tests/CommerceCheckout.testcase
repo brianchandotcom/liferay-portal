@@ -142,7 +142,6 @@ definition {
 
 		task ("And given an empty order created from Pending Orders") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-			
 		}
 
 		task ("When buyer user 2 logs in navigating in Minium site") {

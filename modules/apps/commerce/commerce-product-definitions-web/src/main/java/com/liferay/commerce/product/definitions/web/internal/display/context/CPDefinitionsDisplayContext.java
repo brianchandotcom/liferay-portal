@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -337,7 +338,37 @@ public class CPDefinitionsDisplayContext
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		List<DropdownItem> dropdownItems = new ArrayList<>();
 
-		DropdownItem dropdownItem = DropdownItemBuilder.setHref(
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if ((cpDefinition != null) && !cpDefinition.isDraft()) {
+			DropdownItem convertToDraftDropdownItem =
+				DropdownItemBuilder.setData(
+					HashMapBuilder.<String, Object>put(
+						"confirmationMessage",
+						LanguageUtil.get(
+							httpServletRequest,
+							"converting-the-product-status-to-draft-will-" +
+								"remove-the-product-from-the-product-" +
+									"catalog.-do-you-wish-to-proceed")
+					).put(
+						"formId", liferayPortletResponse.getNamespace() + "fm"
+					).build()
+				).setHref(
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/cp_definitions/edit_cp_definition"
+					).buildString()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "convert-to-draft")
+				).setTarget(
+					"submitWithConfirmation"
+				).build();
+
+			dropdownItems.add(convertToDraftDropdownItem);
+		}
+
+		DropdownItem duplicateDropdownItem = DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					cpRequestHelper.getRenderRequest(),
@@ -356,7 +387,7 @@ public class CPDefinitionsDisplayContext
 			"modal"
 		).build();
 
-		dropdownItems.add(dropdownItem);
+		dropdownItems.add(duplicateDropdownItem);
 
 		return dropdownItems;
 	}
@@ -366,27 +397,21 @@ public class CPDefinitionsDisplayContext
 
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
-		String saveButtonLabel = "save";
-
 		CPDefinition cpDefinition = getCPDefinition();
 
-		if ((cpDefinition == null) || cpDefinition.isDraft() ||
-			cpDefinition.isApproved() || cpDefinition.isExpired() ||
-			cpDefinition.isScheduled()) {
+		if ((cpDefinition != null) && cpDefinition.isDraft()) {
+			HeaderActionModel saveAsDraftHeaderActionModel =
+				new HeaderActionModel(
+					null, liferayPortletResponse.getNamespace() + "fm",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/cp_definitions/edit_cp_definition"
+					).buildString(),
+					null, "save-as-draft");
 
-			saveButtonLabel = "save-as-draft";
+			headerActionModels.add(saveAsDraftHeaderActionModel);
 		}
-
-		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
-			null, liferayPortletResponse.getNamespace() + "fm",
-			PortletURLBuilder.createActionURL(
-				liferayPortletResponse
-			).setActionName(
-				"/cp_definitions/edit_cp_definition"
-			).buildString(),
-			null, saveButtonLabel);
-
-		headerActionModels.add(saveAsDraftHeaderActionModel);
 
 		String publishButtonLabel = "publish";
 

@@ -217,7 +217,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			"testray.testcase.name");
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Case#", testrayCaseName, "#testrayProjectId#", testrayProjectId);
+			"Case#", testrayCaseName, "#ProjectId#", testrayProjectId);
 
 		long testrayCaseId = _getObjectEntryId(
 			companyId,
@@ -530,7 +530,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Build#", testrayBuildName, "#testrayProjectId#", testrayProjectId);
+			"Build#", testrayBuildName, "#ProjectId#", testrayProjectId);
 
 		long testrayBuildId = _getObjectEntryId(
 			companyId,
@@ -730,7 +730,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Component#", testrayComponentName, "#testrayProjectId#",
+			"Component#", testrayComponentName, "#ProjectId#",
 			testrayProjectId);
 
 		long testrayComponentId = _getObjectEntryId(
@@ -795,8 +795,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"FactorOption#", testrayFactorOptionName,
-			"#testrayFactorCategoryId#", testrayFactorCategoryId);
+			"FactorOption#", testrayFactorOptionName, "#FactorCategoryId#",
+			testrayFactorCategoryId);
 
 		long testrayFactorOptionId = _getObjectEntryId(
 			companyId,
@@ -887,8 +887,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Routine#", testrayRoutineName, "#testrayProjectId#",
-			testrayProjectId);
+			"Routine#", testrayRoutineName, "#ProjectId#", testrayProjectId);
 
 		long testrayRoutineId = _getObjectEntryId(
 			companyId,
@@ -961,7 +960,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Run#", testrayRunName, "#testrayBuildId#", testrayBuildId);
+			"Run#", testrayRunName, "#BuildId#", testrayBuildId);
 
 		long testrayRunId = _getObjectEntryId(
 			companyId,
@@ -1015,7 +1014,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		String objectEntryMapKey = StringBundler.concat(
-			"Team#", testrayTeamName, "#testrayProjectId#", testrayProjectId);
+			"Team#", testrayTeamName, "#ProjectId#", testrayProjectId);
 
 		long testrayTeamId = _getObjectEntryId(
 			companyId,

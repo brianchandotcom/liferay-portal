@@ -94,7 +94,6 @@
 /portal/activation.jar
 /portal/commons-beanutils.jar
 /portal/commons-collections.jar
-/portal/commons-compress.jar
 /portal/commons-configuration.jar
 /portal/commons-lang.jar
 /portal/commons-logging.jar
@@ -145,4 +144,3 @@
 /portal/xercesImpl.jar
 /portal/xml-apis.jar
 /portal/xmlsec.jar
-/portal/xz.jar

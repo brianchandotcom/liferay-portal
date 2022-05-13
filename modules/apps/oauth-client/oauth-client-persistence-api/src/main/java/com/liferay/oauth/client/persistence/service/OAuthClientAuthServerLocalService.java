@@ -263,10 +263,6 @@ public interface OAuthClientAuthServerLocalService
 	public List<OAuthClientAuthServer> getOAuthClientAuthServers(
 		int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthClientAuthServer> getOAuthClientAuthServers(
-		long companyId, String type);
-
 	/**
 	 * Returns the number of o auth client auth servers.
 	 *
@@ -289,6 +285,10 @@ public interface OAuthClientAuthServerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuthClientAuthServer> getTypeOAuthClientAuthServers(
+		long companyId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthClientAuthServer> getUserOAuthClientAuthServers(

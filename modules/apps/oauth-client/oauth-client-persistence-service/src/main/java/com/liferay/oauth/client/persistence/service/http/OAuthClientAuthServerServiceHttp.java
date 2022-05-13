@@ -304,14 +304,14 @@ public class OAuthClientAuthServerServiceHttp {
 
 	public static java.util.List
 		<com.liferay.oauth.client.persistence.model.OAuthClientAuthServer>
-			getOAuthClientAuthServers(
+			getTypeOAuthClientAuthServers(
 				HttpPrincipal httpPrincipal, long companyId, String type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientAuthServerServiceUtil.class,
-				"getOAuthClientAuthServers",
-				_getOAuthClientAuthServersParameterTypes6);
+				"getTypeOAuthClientAuthServers",
+				_getTypeOAuthClientAuthServersParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, type);
@@ -479,8 +479,10 @@ public class OAuthClientAuthServerServiceHttp {
 		};
 	private static final Class<?>[] _getOAuthClientAuthServerParameterTypes5 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getOAuthClientAuthServersParameterTypes6 =
-		new Class[] {long.class, String.class};
+	private static final Class<?>[]
+		_getTypeOAuthClientAuthServersParameterTypes6 = new Class[] {
+			long.class, String.class
+		};
 	private static final Class<?>[]
 		_getUserOAuthClientAuthServersParameterTypes7 = new Class[] {
 			long.class

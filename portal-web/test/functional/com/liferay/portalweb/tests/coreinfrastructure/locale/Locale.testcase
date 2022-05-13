@@ -317,6 +317,8 @@ definition {
 
 	@priority = "3"
 	test LocaleNotAppendedToAlternateDefaultLocaleURL {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(

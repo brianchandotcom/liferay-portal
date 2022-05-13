@@ -14,6 +14,11 @@
 <!--LANGUAGE_MENU-->
 
 <tr>
+	<td>ANY</td>
+	<td>//a[contains(@id,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN</td>
 	<td>//button[contains(@id,'${key_portletName}') and contains(@id,'_menu')]</td>
 	<td></td>

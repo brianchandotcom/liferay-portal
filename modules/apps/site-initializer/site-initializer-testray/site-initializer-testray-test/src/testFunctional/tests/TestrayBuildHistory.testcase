@@ -27,110 +27,158 @@ definition {
 		}
 	}
 
-	@description = "LPS-151098 - Verify that clicking on Block*d in the subtitle makes it disabled"
+	@description = "This is a test for LPS-151098 - Verify that clicking on Blocked in the subtitle makes it disabled"
 	@priority = "3"
 	test CanBlockedStatusBeDisabled {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayRoutines.clickStatusBuildHistory(key_item = "BLOCKED");
+		task ("Verify that clicking on Blocked in the subtitle makes it disabled") {
+			TestrayRoutines.clickStatusBuildHistory(key_item = "BLOCKED");
 
-		TestrayRoutines.assertStatusBuildDisabled(key_item = "BLOCKED");
+			TestrayRoutines.assertStatusBuildDisabled(key_item = "BLOCKED");
+		}
 	}
 
-	@description = "LPS-151099 - Verify that clicking on Failed in the subtitle makes it disabled"
+	@description = "This is a test for LPS-151099 - Verify that clicking on Failed in the subtitle makes it disabled"
 	@priority = "3"
 	test CanFailedStatusBeDisabled {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayRoutines.clickStatusBuildHistory(key_item = "FAILED");
+		task ("Verify that clicking on Failed in the subtitle makes it disabled") {
+			TestrayRoutines.clickStatusBuildHistory(key_item = "FAILED");
 
-		TestrayRoutines.assertStatusBuildDisabled(key_item = "FAILED");
+			TestrayRoutines.assertStatusBuildDisabled(key_item = "FAILED");
+		}
 	}
 
-	@description = "LPS-150428 - Verify that clicking on the table redirects to a results history page."
+	@description = "This is a test for LPS-150428 - Verify that clicking on the table redirects to a results history page."
 	@priority = "5"
 	test CanGoToResultsPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayHeader.assertTabPageTitle(pageTabTitle = "Build History");
+		task ("Verify that clicking on the table redirects to a results history page") {
+			TestrayHeader.assertTabPageTitle(pageTabTitle = "Build History");
+		}
 	}
 
-	@description = "LPS-151095 - Verify that clicking on Incomplete in the subtitle makes it disabled"
+	@description = "This is a test for LPS-151095 - Verify that clicking on Incomplete in the subtitle makes it disabled"
 	@priority = "3"
 	test CanIncompleteStatusBeDisabled {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayRoutines.clickStatusBuildHistory(key_item = "INCOMPLETE");
+		task ("Verify that clicking on Incomplete in the subtitle makes it disabled") {
+			TestrayRoutines.clickStatusBuildHistory(key_item = "INCOMPLETE");
 
-		TestrayRoutines.assertStatusBuildDisabled(key_item = "INCOMPLETE");
+			TestrayRoutines.assertStatusBuildDisabled(key_item = "INCOMPLETE");
+		}
 	}
 
-	@description = "LPS-151100 - Verify that clicking on Passed in the subtitle makes it disabled"
+	@description = "This is a test for LPS-151100 - Verify that clicking on Passed in the subtitle makes it disabled"
 	@priority = "3"
 	test CanPassedStatusBeDisabled {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayRoutines.clickStatusBuildHistory(key_item = "PASSED");
+		task ("Verify that clicking on Passed in the subtitle makes it disabled") {
+			TestrayRoutines.clickStatusBuildHistory(key_item = "PASSED");
 
-		TestrayRoutines.assertStatusBuildDisabled(key_item = "PASSED");
+			TestrayRoutines.assertStatusBuildDisabled(key_item = "PASSED");
+		}
 	}
 
-	@description = "LPS-151097 - Verify that clicking on Test Fix in the subtitle makes it disabled"
+	@description = "This is a test for LPS-151097 - Verify that clicking on Test Fix in the subtitle makes it disabled"
 	@priority = "3"
 	test CanTestFixStatusBeDisabled {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project Page") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		task ("Create Routine and go to Routine Page") {
+			TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+			TestrayRoutines.goToRoutine(key_projectName = "Routine Test");
+		}
 
-		TestrayRoutines.clickStatusBuildHistory(key_item = "TEST FIX");
+		task ("Verify that clicking on Test Fix in the subtitle makes it disabled") {
+			TestrayRoutines.clickStatusBuildHistory(key_item = "TEST FIX");
 
-		TestrayRoutines.assertStatusBuildDisabled(key_item = "TEST FIX");
+			TestrayRoutines.assertStatusBuildDisabled(key_item = "TEST FIX");
+		}
 	}
 
 }

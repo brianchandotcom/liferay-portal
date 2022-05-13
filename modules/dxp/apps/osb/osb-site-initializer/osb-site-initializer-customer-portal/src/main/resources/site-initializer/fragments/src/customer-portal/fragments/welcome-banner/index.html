@@ -1,35 +1,21 @@
 <div class="customer-portal-welcome-banner d-flex flex-column rounded-xl-left">
-	<div
-		class="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-0"
-	>
-		<div
-			class="display-4 font-weight-normal rounded-lg skeleton"
-			id="welcome-user"
-		>
+	<div class="d-flex flex-column h-100 justify-content-between m-3 p-5 text-neutral-0">
+		<div class="display-4 font-weight-normal rounded-lg skeleton" id="welcome-user">
 			${languageUtil.get(locale, "welcome")},
 
-			<span
-				class="font-weight-bold"
-				id="customer-portal-user-name"
-			></span>
+			<span class="font-weight-bold" id="customer-portal-user-name"></span>
 		</div>
 
 		<div>
-			<h2 id="project-title" class="skeleton rounded-lg">
+			<h2 class="rounded-lg skeleton" id="project-title">
 				${languageUtil.get(locale, "projects")}
 			</h2>
 
-			<div
-				class="font-weight-normal rounded-lg skeleton text-paragraph"
-				id="welcome-description"
-			>
-			${languageUtil.get(locale, "select-a-project-to-see-your-subscriptions-activate-your-products-and-view-team-members")}
+			<div class="font-weight-normal rounded-lg skeleton text-paragraph" id="welcome-description">
+				${languageUtil.get(locale, "select-a-project-to-see-your-subscriptions-activate-your-products-and-view-team-members")}
 			</div>
 		</div>
 	</div>
 
-	<img
-		class="position-absolute"
-		src="[resources:banner_background_customer_portal.svg]"
-	/>
+	<img class="position-absolute" src="[resources:banner_background_customer_portal.svg]" />
 </div>

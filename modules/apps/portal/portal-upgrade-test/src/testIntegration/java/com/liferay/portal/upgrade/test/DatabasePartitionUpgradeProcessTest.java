@@ -68,8 +68,6 @@ public class DatabasePartitionUpgradeProcessTest {
 		PropsTestUtil.setProps(
 			HashMapBuilder.<String, Object>put(
 				"database.partition.enabled", "false"
-			).put(
-				"database.partition.thread.pool.enabled", "true"
 			).build());
 
 		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
@@ -84,8 +82,6 @@ public class DatabasePartitionUpgradeProcessTest {
 		PropsTestUtil.setProps(
 			HashMapBuilder.<String, Object>put(
 				"database.partition.enabled", "true"
-			).put(
-				"database.partition.thread.pool.enabled", "true"
 			).build());
 
 		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();

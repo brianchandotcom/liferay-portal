@@ -31,25 +31,6 @@ import getLayoutDataItemClassName from '../../../../../src/main/resources/META-I
 import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemTopperUniqueClassName';
 import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			commonStyles: [
-				{
-					styles: [
-						{
-							defaultValue: 'left',
-							name: 'textAlign',
-						},
-					],
-				},
-			],
-			frontendTokens: {},
-		},
-	})
-);
-
 const ROW_ID = 'ROW_ID';
 
 const renderRow = ({

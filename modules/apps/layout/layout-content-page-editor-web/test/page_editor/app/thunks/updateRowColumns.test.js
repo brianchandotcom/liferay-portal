@@ -17,11 +17,6 @@ import LayoutService from '../../../../src/main/resources/META-INF/resources/pag
 import updateRowColumnsThunk from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
-);
-
-jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateRowColumns',
 	() => jest.fn()
 );

@@ -30,23 +30,6 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableLanguages: {
-				en_US: {
-					default: false,
-					displayName: 'English (United States)',
-					languageIcon: 'en-us',
-					languageId: 'en_US',
-					w3cLanguageId: 'en-US',
-				},
-			},
-		},
-	})
-);
-
-jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
 	() => jest.fn()
 );

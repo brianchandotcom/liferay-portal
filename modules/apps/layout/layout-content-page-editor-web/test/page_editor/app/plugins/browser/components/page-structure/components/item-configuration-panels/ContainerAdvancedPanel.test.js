@@ -22,24 +22,6 @@ import updateItemConfig from '../../../../../../../../../src/main/resources/META
 import ContainerAdvancedPanel from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/ContainerAdvancedPanel';
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableLanguages: {
-				en_US: {
-					default: false,
-					displayName: 'English (United States)',
-					languageIcon: 'en-us',
-					languageId: 'en_US',
-					w3cLanguageId: 'en-US',
-				},
-			},
-			commonStyles: [],
-		},
-	})
-);
-
-jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );

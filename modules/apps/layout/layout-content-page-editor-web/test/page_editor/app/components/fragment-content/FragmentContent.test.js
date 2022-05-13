@@ -40,25 +40,6 @@ jest.mock(
 	() => jest.fn(() => Promise.resolve(['Default content']))
 );
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			commonStyles: [
-				{
-					styles: [
-						{
-							defaultValue: 'left',
-							name: 'textAlign',
-						},
-					],
-				},
-			],
-			frontendTokens: {},
-		},
-	})
-);
-
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
 const getFragmentEntryLink = ({

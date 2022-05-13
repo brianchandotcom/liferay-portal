@@ -104,15 +104,6 @@ const renderComponent = ({fragmentEntryLink = {}} = {}) =>
 		</StoreAPIContextProvider>
 	);
 
-jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			defaultLanguageId: 'es_ES',
-		},
-	})
-);
-
 describe('FragmentAdvancedPanel', () => {
 	it('renders fields that are included in fieldsets marked as advanced', () => {
 		renderComponent({

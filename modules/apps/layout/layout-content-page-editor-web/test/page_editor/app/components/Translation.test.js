@@ -24,11 +24,6 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resource
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
-);
-
-jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLanguageId',
 	() => jest.fn(() => () => {})
 );

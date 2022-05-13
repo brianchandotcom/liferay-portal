@@ -21,25 +21,6 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			commonStyles: [
-				{
-					styles: [
-						{
-							defaultValue: 'left',
-							name: 'textAlign',
-						},
-					],
-				},
-			],
-			frontendTokens: {},
-		},
-	})
-);
-
 const renderContainer = (config) => {
 	return render(
 		<StoreAPIContextProvider

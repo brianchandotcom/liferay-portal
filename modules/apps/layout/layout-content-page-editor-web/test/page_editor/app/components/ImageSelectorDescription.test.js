@@ -19,23 +19,6 @@ import React from 'react';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {ImageSelectorDescription} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelectorDescription';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableLanguages: {
-				en_US: {
-					default: false,
-					displayName: 'English (United States)',
-					languageIcon: 'en-us',
-					languageId: 'en_US',
-					w3cLanguageId: 'en-US',
-				},
-			},
-		},
-	})
-);
-
 describe('ImageSelectorDescription', () => {
 	it('synchronizes imageDescription prop with input value', () => {
 		const {getByLabelText} = render(

@@ -32,25 +32,6 @@ import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/reso
 import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			commonStyles: [
-				{
-					styles: [
-						{
-							defaultValue: 'left',
-							name: 'textAlign',
-						},
-					],
-				},
-			],
-			frontendTokens: {},
-		},
-	})
-);
-
-jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({}))
 );

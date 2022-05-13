@@ -36,11 +36,6 @@ const MOCK_UPDATE_PRIORITY_URL = 'update-experience-priority-test-url';
 const MOCK_UPDATE_URL = 'update-experience-test-url';
 
 jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
-);
-
-jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => {})
 );

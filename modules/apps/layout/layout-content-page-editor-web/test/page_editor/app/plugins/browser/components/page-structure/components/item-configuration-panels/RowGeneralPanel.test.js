@@ -84,19 +84,6 @@ const renderComponent = ({
 	);
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableViewportSizes: {
-				desktop: {label: 'Desktop'},
-				landscapeMobile: {label: 'landscapeMobile'},
-			},
-			commonStyles: [],
-		},
-	})
-);
-
-jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );

@@ -27,19 +27,6 @@ import {ControlsProvider} from '../../../../../../../../src/main/resources/META-
 import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import PageStructureSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/PageStructureSidebar';
 
-jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableViewportSizes: {
-				desktop: {label: 'Desktop'},
-			},
-			commonStyles: [],
-			layoutType: 'content',
-		},
-	})
-);
-
 const renderComponent = ({
 	activeItemId = null,
 	hasUpdatePermissions = true,

@@ -15,15 +15,6 @@
 
 import resolveEditableValue from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/editable-value/resolveEditableValue';
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			defaultLanguageId: 'en_US',
-		},
-	})
-);
-
 describe('resolveEditableValue', () => {
 	it('returns the editable value for the given language id', async () => {
 		const result = resolveEditableValue(

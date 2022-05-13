@@ -25,25 +25,6 @@ import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resourc
 import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			commonStyles: [
-				{
-					styles: [
-						{
-							defaultValue: 'left',
-							name: 'textAlign',
-						},
-					],
-				},
-			],
-			frontendTokens: {},
-		},
-	})
-);
-
 const renderTopperEmpty = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,

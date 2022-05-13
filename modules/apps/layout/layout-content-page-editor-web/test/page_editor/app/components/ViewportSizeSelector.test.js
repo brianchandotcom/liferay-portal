@@ -19,19 +19,6 @@ import React from 'react';
 
 import ViewportSizeSelector from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ViewportSizeSelector';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			availableViewportSizes: {
-				desktop: {label: 'Desktop', sizeId: 'desktop'},
-				mobile: {label: 'Mobile', sizeId: 'mobile'},
-				tablet: {label: 'Tablet', sizeId: 'tablet'},
-			},
-		},
-	})
-);
-
 const defaultState = {
 	selectedViewportSize: 'desktop',
 };

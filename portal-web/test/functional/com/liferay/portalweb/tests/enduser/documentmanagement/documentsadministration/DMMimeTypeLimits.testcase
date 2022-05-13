@@ -192,8 +192,8 @@ definition {
 		DMDocument.addCP(
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Site Name",
-			siteURLKey = "site-name",
+			groupName = "Guest",
+			siteURLKey = "guest",
 			validationError = "Please enter a file with a valid file size no larger than 20 KB");
 
 		LexiconCard.viewNoCardThumbnail(card = "Document_2.jpg");

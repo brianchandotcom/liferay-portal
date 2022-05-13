@@ -63,12 +63,13 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	const [userActionStatus, setUserActionStatus] = useState();
 	const [accountRolesOptions, setAccountRolesOptions] = useState([]);
 
-	const hasOnlyOneAdmin = useMemo(() => {
+	const hasOnlyOneAdminOrPartnerManager = useMemo(() => {
 		return (
 			userAccounts.filter(
 				(user) =>
 					user?.roles[0] === ROLE_TYPES.admin.key ||
-					user?.roles[0] === ROLE_TYPES.requester.key
+					user?.roles[0] === ROLE_TYPES.requester.key ||
+					user?.roles[0] === ROLE_TYPES.partnerManager.key
 			).length === 1
 		);
 	}, [userAccounts]);
@@ -96,7 +97,8 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 							(!isSupportSeatRole &&
 								isAdministratorOrRequestor &&
 								administratorsAvailable === 0) ||
-							(hasOnlyOneAdmin && isSupportSeatRole),
+							(hasOnlyOneAdminOrPartnerManager &&
+								isSupportSeatRole),
 					};
 				});
 				setAccountRolesOptions(filteredRoles);
@@ -105,7 +107,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	}, [
 		accountRoles,
 		administratorsAvailable,
-		hasOnlyOneAdmin,
+		hasOnlyOneAdminOrPartnerManager,
 		userAccounts,
 		userAction?.userId,
 	]);

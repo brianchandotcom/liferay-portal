@@ -23,7 +23,6 @@ import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -104,16 +104,15 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			parentFolder.getFolderId(), folderName,
 			RandomTestUtil.randomString(), serviceContext);
 
-		Document document = dlSearchFixture.searchOnlyOne(
-			folderName, LocaleUtil.US);
-
-		indexedFieldsFixture.postProcessDocument(document);
+		SearchResponse searchResponse =
+			dlSearchFixture.searchOnlyOneSearchResponse(
+				folderName, LocaleUtil.US);
 
 		Map<String, String> map = new HashMap<>();
 
 		populateExpectedFieldValues(childFolder, map);
 
-		FieldValuesAssert.assertFieldValues(map, document, folderName);
+		FieldValuesAssert.assertFieldValues(map, searchResponse);
 	}
 
 	protected ServiceContext getServiceContext() {

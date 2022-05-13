@@ -15,33 +15,43 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {OPEN_MODAL} from '../../utilities/eventsDefinitions';
-import {getRandomId, sortByKey} from '../../utilities/index';
+import {getRandomId, liferayNavigate, sortByKey} from '../../utilities/index';
 import {resolveModalSize} from '../../utilities/modals/index';
 import Modal from '../modal/Modal';
 
 function Dropdown(props) {
 	const [active, setActive] = useState(false);
-
 	const [dropdownSupportModalId] = useState('support-modal-' + getRandomId());
 
-	function handleAction({onClick, target = 'link', title, url}) {
-		if (target.includes('modal')) {
+	function handleAction({data, label, target, url}) {
+		if (target === 'submitWithConfirmation') {
+			openConfirmModal({
+				message: data?.confirmationMessage || '',
+				onConfirm: (confirmed) => {
+					if (confirmed) {
+						if (data?.formId) {
+							submitForm(document.getElementById(data.formId));
+						}
+						else {
+							liferayNavigate(url);
+						}
+					}
+				},
+				title: label,
+			});
+		}
+		else if (target.includes('modal')) {
 			Liferay.fire(OPEN_MODAL, {
 				closeOnSubmit: true,
 				id: dropdownSupportModalId,
 				size: resolveModalSize(target),
-				title,
 				url,
 			});
-		}
-
-		if (onClick) {
-			/* eslint-disable-next-line no-eval */
-			eval(onClick);
 		}
 	}
 
@@ -70,16 +80,17 @@ function Dropdown(props) {
 				<ClayDropDown.Group>
 					{sortedItems.map((item, i) => {
 						const dropdownProps =
-							item.target === 'modal' || item.onClick
+							item.target === 'modal' ||
+							item.target === 'submitWithConfirmation'
 								? {
 										onClick: (event) => {
 											event.preventDefault();
 											setActive(false);
 
 											return handleAction({
-												onClick: item.onClick,
+												data: item.data,
+												label: item.label,
 												target: item.target,
-												title: item.title,
 												url: item.href,
 											});
 										},
@@ -114,7 +125,11 @@ Dropdown.propTypes = {
 			icon: PropTypes.string,
 			label: PropTypes.string.isRequired,
 			order: PropTypes.number,
-			target: PropTypes.oneOf(['link', 'modal']),
+			target: PropTypes.oneOf([
+				'link',
+				'modal',
+				'submitWithConfirmation',
+			]),
 		})
 	),
 };

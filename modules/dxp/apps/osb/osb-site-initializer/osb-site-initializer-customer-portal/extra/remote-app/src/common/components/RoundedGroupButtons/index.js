@@ -24,7 +24,7 @@ const RoundedGroupButtons = ({groupButtons, handleOnChange, id, ...props}) => {
 			id={id}
 			role="group"
 		>
-			{groupButtons?.map(({label, value}) => (
+			{groupButtons?.map(({label, value}, index) => (
 				<Button
 					className={classNames('btn px-4 py-1 rounded-pill', {
 						'bg-transparent text-neutral-4':
@@ -32,7 +32,7 @@ const RoundedGroupButtons = ({groupButtons, handleOnChange, id, ...props}) => {
 						'bg-white border border-primary label-primary text-brand-primary':
 							selectedButton === value,
 					})}
-					key={value}
+					key={`${index}-${value}`}
 					onClick={(event) => {
 						setSelectedButton(event.target.value);
 						handleOnChange(event.target.value);

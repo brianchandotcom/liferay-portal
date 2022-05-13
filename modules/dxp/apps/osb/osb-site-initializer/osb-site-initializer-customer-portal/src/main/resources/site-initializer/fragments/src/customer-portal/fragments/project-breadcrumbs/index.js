@@ -198,8 +198,9 @@ const DropDown = memo(
 							active={isSelected}
 							className="align-items-center d-flex font-weight-semi-bold pl-3 pr-5 py-1 text-paragraph-sm"
 							href={
-								!isSelected &&
-								getHref(koroneikiAccount.accountKey)
+								!isSelected
+									? getHref(koroneikiAccount.accountKey)
+									: ''
 							}
 							key={`${koroneikiAccount.code}-${index}`}
 							spritemap={spritemap}
@@ -243,7 +244,7 @@ const DropDown = memo(
 					</div>
 				)}
 
-				{!koroneikiAccounts.length && (
+				{!koroneikiAccounts.length && initialTotalCount > 1 && (
 					<div className="dropdown-section px-3">
 						<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
 							No projects match that name.

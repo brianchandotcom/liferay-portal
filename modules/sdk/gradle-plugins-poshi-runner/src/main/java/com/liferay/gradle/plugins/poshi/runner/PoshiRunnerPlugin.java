@@ -702,20 +702,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private boolean _isDownloadChromeDriver(Properties poshiProperties) {
-		String browserType = poshiProperties.getProperty("browser.type");
-
-		if (Validator.isNull(browserType)) {
-			return true;
-		}
-
-		if (!browserType.equals("chrome")) {
-			return false;
-		}
-
 		String webDriverChromeDriver = System.getProperty(
 			"webdriver.chrome.driver");
 
-		return Validator.isNull(webDriverChromeDriver);
+		if (Validator.isNotNull(webDriverChromeDriver)) {
+			return false;
+		}
+
+		String browserType = poshiProperties.getProperty("browser.type");
+
+		if (Validator.isNull(browserType) || browserType.equals("chrome")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _populateSystemProperties(
@@ -782,26 +782,28 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private void _populateWebDriverSystemProperties(
 		Test test, Properties poshiProperties) {
 
-		Map<String, Object> systemProperties = test.getSystemProperties();
+		String webDriverBinaryPropertyName = "webdriver.chrome.driver";
 
-		if (_isDownloadChromeDriver(poshiProperties)) {
+		String webDriverBinaryPropertyValue = System.getProperty(
+			webDriverBinaryPropertyName);
+
+		if (Validator.isNull(webDriverBinaryPropertyValue) &&
+			_isDownloadChromeDriver(poshiProperties)) {
+
+			webDriverBinaryPropertyValue =
+				_getWebDriverDir(test.getProject()) + "/chromedriver";
+
 			if (OSDetector.isWindows()) {
-				systemProperties.put(
-					"webdriver.chrome.driver",
-					_getWebDriverDir(test.getProject()) + "/chromedriver.exe");
-			}
-			else {
-				systemProperties.put(
-					"webdriver.chrome.driver",
-					_getWebDriverDir(test.getProject()) + "/chromedriver");
+				webDriverBinaryPropertyValue =
+					webDriverBinaryPropertyValue + ".exe";
 			}
 		}
-		else if (Validator.isNotNull(
-					System.getProperty("webdriver.chrome.driver"))) {
+
+		if (Validator.isNotNull(webDriverBinaryPropertyValue)) {
+			Map<String, Object> systemProperties = test.getSystemProperties();
 
 			systemProperties.put(
-				"webdriver.chrome.driver",
-				System.getProperty("webdriver.chrome.driver"));
+				webDriverBinaryPropertyName, webDriverBinaryPropertyValue);
 		}
 	}
 

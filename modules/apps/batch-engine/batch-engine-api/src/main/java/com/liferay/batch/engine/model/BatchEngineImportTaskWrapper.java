@@ -242,6 +242,11 @@ public class BatchEngineImportTaskWrapper
 		return model.getBatchEngineImportTaskErrors();
 	}
 
+	@Override
+	public int getBatchEngineImportTaskErrorsCount() {
+		return model.getBatchEngineImportTaskErrorsCount();
+	}
+
 	/**
 	 * Returns the batch engine import task ID of this batch engine import task.
 	 *

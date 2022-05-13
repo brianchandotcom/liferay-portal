@@ -63,4 +63,6 @@ public interface BatchEngineImportTask
 	public java.util.List<BatchEngineImportTaskError>
 		getBatchEngineImportTaskErrors();
 
+	public int getBatchEngineImportTaskErrorsCount();
+
 }

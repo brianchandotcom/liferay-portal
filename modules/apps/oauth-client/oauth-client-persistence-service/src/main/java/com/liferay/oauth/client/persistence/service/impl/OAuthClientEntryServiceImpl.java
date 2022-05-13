@@ -45,7 +45,7 @@ public class OAuthClientEntryServiceImpl
 	@Override
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authServerIssuer, String infoJSON,
-			String requestParametersJSON)
+			String parametersJSON)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -54,7 +54,7 @@ public class OAuthClientEntryServiceImpl
 			OAuthClientPersistenceActionKeys.ACTION_ADD_OAUTH_CLIENT_ENTRY);
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
-			userId, authServerIssuer, infoJSON, requestParametersJSON);
+			userId, authServerIssuer, infoJSON, parametersJSON);
 	}
 
 	@Override
@@ -157,14 +157,14 @@ public class OAuthClientEntryServiceImpl
 	@Override
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authServerIssuer, String infoJSON,
-			String requestParametersJSON)
+			String parametersJSON)
 		throws PortalException {
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntryId, ActionKeys.UPDATE);
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
-			oAuthClientEntryId, authServerIssuer, infoJSON, requestParametersJSON);
+			oAuthClientEntryId, authServerIssuer, infoJSON, parametersJSON);
 	}
 
 	@Reference(

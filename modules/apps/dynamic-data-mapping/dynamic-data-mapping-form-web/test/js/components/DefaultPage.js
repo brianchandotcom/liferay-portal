@@ -54,7 +54,9 @@ describe('DefaultPage', () => {
 			<DefaultPage showPartialResultsToRespondents />
 		);
 
-		expect(queryByText('see-partial-results')).not.toBeInTheDocument();
+		expect(
+			queryByText('preview-existing-submissions')
+		).not.toBeInTheDocument();
 	});
 
 	it('shows partial results button when Show partial results to respondents is enabled', () => {
@@ -65,12 +67,14 @@ describe('DefaultPage', () => {
 			/>
 		);
 
-		expect(queryByText('see-partial-results')).toBeInTheDocument();
+		expect(queryByText('preview-existing-submissions')).toBeInTheDocument();
 	});
 
 	it('hides partial results button when Show partial results to respondents is disabled', () => {
 		const {queryByText} = render(<DefaultPage />);
 
-		expect(queryByText('see-partial-results')).not.toBeInTheDocument();
+		expect(
+			queryByText('preview-existing-submissions')
+		).not.toBeInTheDocument();
 	});
 });

@@ -41,7 +41,7 @@ describe('Pagination Controls', () => {
 		);
 
 		expect(
-			queryByRole('button', {name: /see-partial-results/i})
+			queryByRole('button', {name: /preview-existing-submissions/i})
 		).toBeInTheDocument();
 	});
 
@@ -58,7 +58,7 @@ describe('Pagination Controls', () => {
 		);
 
 		expect(
-			queryByRole('button', {name: /see-partial-results/i})
+			queryByRole('button', {name: /preview-existing-submissions/i})
 		).not.toBeInTheDocument();
 	});
 });

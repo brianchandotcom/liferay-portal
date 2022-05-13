@@ -24,9 +24,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DL;
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
-import com.liferay.document.library.kernel.util.PDFProcessorUtil;
-import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
@@ -79,7 +76,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -413,58 +409,6 @@ public class DLImpl implements DL {
 		}
 
 		return genericName;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	@Override
-	public String getImagePreviewURL(
-		FileEntry fileEntry, FileVersion fileVersion,
-		ThemeDisplay themeDisplay) {
-
-		return getImagePreviewURL(
-			fileEntry, fileVersion, themeDisplay, null, true, true);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String getImagePreviewURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL) {
-
-		String previewQueryString = queryString;
-
-		if (Validator.isNull(previewQueryString)) {
-			previewQueryString = StringPool.BLANK;
-		}
-
-		if (ImageProcessorUtil.isSupported(fileVersion.getMimeType())) {
-			previewQueryString = previewQueryString.concat("&imagePreview=1");
-		}
-		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
-			if (PDFProcessorUtil.hasImages(fileVersion)) {
-				previewQueryString = previewQueryString.concat(
-					"&previewFileIndex=1");
-			}
-			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				previewQueryString = previewQueryString.concat(
-					"&videoThumbnail=1");
-			}
-		}
-
-		return getImageSrc(
-			fileEntry, fileVersion, themeDisplay, previewQueryString,
-			appendVersion, absoluteURL);
 	}
 
 	/**

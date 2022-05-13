@@ -118,38 +118,6 @@ public class DLUtil {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	public static String getImagePreviewURL(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return _dl.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public static String getImagePreviewURL(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay, String queryString,
-			boolean appendVersion, boolean absoluteURL)
-		throws PortalException {
-
-		return _dl.getImagePreviewURL(
-			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
-			absoluteURL);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getPreviewURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String)}
 	 */

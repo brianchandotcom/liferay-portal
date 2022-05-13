@@ -102,13 +102,12 @@
 		Liferay.delegateClick(
 			'<%= namespace + name %>',
 			function(event) {
-				Liferay.Util.openInDialog(
-					event,
-					{
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						}
-					}
+				event.preventDefault();
+
+				Liferay.Util.openWindow({
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					}}
 				);
 			}
 		);

@@ -109,7 +109,9 @@
 
 <aui:script>
 	function <portlet:namespace />openViewMembersDialog(event) {
-		Liferay.Util.openInDialog(event, {
+		event.preventDefault();
+
+		Liferay.Util.openWindow({
 			dialog: {
 				constrain: true,
 				destroyOnHide: true,

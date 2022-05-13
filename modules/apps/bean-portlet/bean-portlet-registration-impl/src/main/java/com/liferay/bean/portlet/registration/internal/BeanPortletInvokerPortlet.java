@@ -55,10 +55,12 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 	public BeanPortletInvokerPortlet(
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethods,
-		BeanPortletMethodInvoker beanPortletMethodInvoker) {
+		BeanPortletMethodInvoker beanPortletMethodInvoker,
+		ClassLoader portletClassLoader) {
 
 		_beanMethods = beanMethods;
 		_beanPortletMethodInvoker = beanPortletMethodInvoker;
+		_portletClassLoader = portletClassLoader;
 
 		boolean facesPortlet = false;
 
@@ -105,9 +107,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 	@Override
 	public ClassLoader getPortletClassLoader() {
-		Class<? extends BeanPortletInvokerPortlet> portletClass = getClass();
-
-		return portletClass.getClassLoader();
+		return _portletClassLoader;
 	}
 
 	@Override
@@ -265,6 +265,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 		_beanMethods;
 	private final BeanPortletMethodInvoker _beanPortletMethodInvoker;
 	private final boolean _facesPortlet;
+	private final ClassLoader _portletClassLoader;
 	private PortletConfig _portletConfig;
 
 }

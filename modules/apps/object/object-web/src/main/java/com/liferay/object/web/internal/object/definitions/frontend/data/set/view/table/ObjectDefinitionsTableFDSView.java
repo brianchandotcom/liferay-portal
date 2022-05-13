@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
 
 import java.util.Locale;
@@ -42,30 +41,25 @@ public class ObjectDefinitionsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField labelFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("label.LANG", "label");
-
-		labelFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("scope", "scope");
-
-		FDSTableSchemaField systemFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("system", "system");
-
-		systemFDSTableSchemaField.setContentRenderer("boolean");
-
-		FDSTableSchemaField dateFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"dateModified", "modified-date");
-
-		dateFDSTableSchemaField.setContentRenderer("dateTime");
-
-		FDSTableSchemaField statusFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
-
-		statusFDSTableSchemaField.setContentRenderer("status");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"label.LANG", "label",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"scope", "scope"
+		).add(
+			"system", "system",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).add(
+			"dateModified", "modified-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime")
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
+		).build();
 	}
 
 	@Reference

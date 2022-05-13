@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
 
 import java.util.Locale;
@@ -41,25 +40,21 @@ public class ObjectValidationsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField labelFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("name.LANG", "label");
-
-		labelFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("engineLabel", "type");
-
-		FDSTableSchemaField activeFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("active", "active");
-
-		activeFDSTableSchemaField.setContentRenderer("boolean");
-
-		FDSTableSchemaField modifiedDateFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"dateModified", "modified-date");
-
-		modifiedDateFDSTableSchemaField.setContentRenderer("dateTime");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"name.LANG", "label",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"engineLabel", "type"
+		).add(
+			"active", "active",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).add(
+			"dateModified", "modified-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime")
+		).build();
 	}
 
 	@Reference

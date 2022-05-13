@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
 
 import java.util.Locale;
@@ -41,18 +40,15 @@ public class ObjectViewsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField nameFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("name.LANG", "name");
-
-		nameFDSTableSchemaField.setContentRenderer("actionLink");
-
-		FDSTableSchemaField defaultObjectViewFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"defaultObjectView", "default");
-
-		defaultObjectViewFDSTableSchemaField.setContentRenderer("boolean");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"name.LANG", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"defaultObjectView", "default",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).build();
 	}
 
 	@Reference

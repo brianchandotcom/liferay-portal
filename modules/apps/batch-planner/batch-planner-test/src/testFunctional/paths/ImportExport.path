@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_FILE_DOWNLOAD_BUTTON</td>
+	<td>//a[contains(@id,'BatchPlannerPlanTemplate')][contains(text(),'Download')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select[not(@disabled)]</td>
 	<td></td>

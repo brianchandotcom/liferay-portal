@@ -60,13 +60,13 @@ definition {
 		}
 	}
 
-	@description = "Add a web content with a title with an espaced character."
+	@description = "Add a web content with a title with escape characters."
 	@priority = "4"
 	@uitest
 	test AddWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
 
-		task ("Add a web content with an escaped character") {
+		task ("Add a web content with escape characters") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
@@ -78,13 +78,13 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("View escaped title in web content admin") {
+		task ("View escape title in web content admin") {
 			WebContent.viewTitle(
 				webContentTitle = '''<!-- -->''',
 				webContentTitleEscapeCharacter = '''&lt;!-- --&gt;''');
 		}
 
-		task ("View scaped title when edit web content") {
+		task ("View escape title when edit web content") {
 			WebContentNavigator.gotoEditCP(
 				webContentTitle = '''<!-- -->''',
 				webContentTitleEscapeCharacter = '''&lt;!-- --&gt;''');
@@ -96,12 +96,12 @@ definition {
 		}
 	}
 
-	@description = "Delete a web content with an espaced character in web content admin."
+	@description = "Delete a web content with escape characters in web content admin."
 	@priority = "3"
 	test DeleteWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
 
-		task ("Add a web content with an escaped character") {
+		task ("Add a web content with escape characters") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
@@ -113,13 +113,13 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("View escaped title in web content admin") {
+		task ("View escape title in web content admin") {
 			WebContent.viewTitle(
 				webContentTitle = '''<!-- -->''',
 				webContentTitleEscapeCharacter = '''&lt;!-- --&gt;''');
 		}
 
-		task ("Delete web content with escpaped character in web content admin and recycle bin") {
+		task ("Delete web content with escape title in web content admin and recycle bin") {
 			WebContent.deleteCP(
 				siteURLKey = "test-site-name",
 				webContentTitle = '''<!-- -->''',

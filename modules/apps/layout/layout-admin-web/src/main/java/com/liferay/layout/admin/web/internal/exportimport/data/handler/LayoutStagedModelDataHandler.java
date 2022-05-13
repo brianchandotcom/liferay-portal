@@ -1882,6 +1882,29 @@ public class LayoutStagedModelDataHandler
 			String scopeLayoutUuid = portletInstanceSettings.getValue(
 				"lfrScopeLayoutUuid", null);
 
+			if (Validator.isNotNull(scopeType)) {
+				Group scopeGroup = null;
+
+				if (scopeType.equals("company")) {
+					scopeGroup = _groupLocalService.getCompanyGroup(
+						layout.getCompanyId());
+				}
+				else if (scopeType.equals("layout")) {
+					Layout scopeLayout =
+						_layoutLocalService.fetchLayoutByUuidAndGroupId(
+							scopeLayoutUuid, portletDataContext.getGroupId(),
+							portletDataContext.isPrivateLayout());
+
+					if (scopeLayout != null) {
+						scopeGroup = scopeLayout.getScopeGroup();
+					}
+				}
+
+				if (scopeGroup != null) {
+					scopeGroupId = scopeGroup.getGroupId();
+				}
+			}
+
 			portletIds.put(
 				key,
 				new Object[] {

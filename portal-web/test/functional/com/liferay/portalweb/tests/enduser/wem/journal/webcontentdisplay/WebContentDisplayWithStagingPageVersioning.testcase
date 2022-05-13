@@ -89,7 +89,7 @@ definition {
 			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 		}
 
-		task ("Undo the last action deleting the history") {
+		task ("Delete the latest modification via History") {
 			Staging.deleteHistory();
 		}
 

@@ -28,6 +28,47 @@ definition {
 		}
 	}
 
+	@description = "Verify users can download the original import file in the executions list after a completed import"
+	@priority = "3"
+	test CanDownloadOriginalImportFile {
+		property portal.acceptance = "true";
+
+		task ("Given a completed import") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "admin.user.dto.v1_0.Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv");
+		}
+
+		task ("When the user goes to the Import/Export Center and clicks on the ellipses for the import execution") {
+			ImportExport.openImportExportAdmin();
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("And the user clicks on the Download Original File menu item") {
+			MenuItem.click(menuItem = "Download Original File");
+		}
+
+		task ("Then the original import file is downloaded") {
+			DownloadTempFile();
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+
+			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "csv_account_import-*.csv");
+
+			ImportExport.assertFileContent(
+				comparisonFileName = "csv_account_import.csv",
+				fileName = "${originalFileDownloadName}");
+		}
+	}
+
 	@description = "Verify users can exclude fields from being exported in CSV format"
 	@priority = "3"
 	test CanExcludeCSVFieldsFromExport {

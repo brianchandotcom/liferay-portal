@@ -159,3 +159,14 @@
 	color: #ffffff !important;
 	font-weight: 700;
 }
+
+@media screen and (max-width: 1625px) {
+	.layout-container .raylife-agent-portal-content {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}
+
+.raylife-agent-portal-content .container-fluid {
+	padding: 0;
+}

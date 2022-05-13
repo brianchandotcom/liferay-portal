@@ -15,7 +15,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "200px",
+					"defaultValue": "257px",
 					"description": "container-text",
 					"label": "Height",
 					"name": "height",

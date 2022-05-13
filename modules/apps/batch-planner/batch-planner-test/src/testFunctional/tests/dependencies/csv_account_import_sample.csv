@@ -1,0 +1,2 @@
+parentAccountId, organizationIds, numberOfUsers, name, description, domains, id, type, actions, accountUserAccounts, externalReferenceCode, status
+integer, array, integer, string, string, array, integer, string, object, array, string, integer

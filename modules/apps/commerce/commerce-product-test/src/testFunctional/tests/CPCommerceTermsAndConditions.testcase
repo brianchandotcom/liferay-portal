@@ -112,7 +112,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-8319. Assert default payment term can be added"
 	@priority = "4"
-	test AddADefaultPaymentTerm {
+	test CanAddADefaultPaymentTerm {
 		property portal.acceptance = "false";
 
 		task ("Given I create two accounts") {

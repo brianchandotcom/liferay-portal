@@ -48,6 +48,10 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	};
 
 	const handleTreeViewSelectionChange = (event, item) => {
+		if (item.disabled) {
+			return;
+		}
+
 		event.preventDefault();
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
@@ -92,12 +96,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 								onClick={(event) => {
 									event.preventDefault();
 
-									if (!item.disabled) {
-										handleTreeViewSelectionChange(
-											event,
-											item
-										);
-									}
+									handleTreeViewSelectionChange(event, item);
 								}}
 							>
 								<ClayIcon symbol={item.icon} />

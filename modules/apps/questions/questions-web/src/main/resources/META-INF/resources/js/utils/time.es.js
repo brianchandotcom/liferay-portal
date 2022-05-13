@@ -28,7 +28,8 @@ const getDateFormatted = (date, language = getLanguage()) => {
 			dateStyle: 'short',
 			timeStyle: 'short',
 		}).format(new Date(date));
-	} catch (error) {
+	}
+	catch (error) {
 		return date;
 	}
 };

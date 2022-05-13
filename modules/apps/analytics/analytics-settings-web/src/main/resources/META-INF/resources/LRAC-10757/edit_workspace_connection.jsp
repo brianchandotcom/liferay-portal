@@ -20,76 +20,108 @@
 WorkspaceConnectionDisplayContext workspaceConnectionDisplayContext = (WorkspaceConnectionDisplayContext)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= workspaceConnectionDisplayContext.isWizardMode() %>">
-	<h1> Wizard Mode</h1>
-</c:if>
+<div class="wizard-mode">
+	<portlet:actionURL name="/analytics_settings/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
-<c:if test='<%= SessionErrors.contains(renderRequest, "unableToNotifyAnalyticsCloud") %>'>
-	<aui:script>
-		Liferay.Util.openToast({
-			message: '<liferay-ui:message key="unable-to-notify-analytics-cloud" />',
-			title: Liferay.Language.get('warning'),
-			toastProps: {
-				autoClose: 5000,
-			},
-			type: 'warning',
-		});
-	</aui:script>
-</c:if>
-
-<portlet:actionURL name="/analytics_settings/edit_workspace_connection" var="editWorkspaceConnectionURL" />
-
-<clay:sheet>
-	<h2>
-		<liferay-ui:message key="connect-analytics-cloud" />
-	</h2>
-
-	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event);" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-		<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="disconnect" />
-		</c:if>
-
-		<aui:fieldset>
-			<c:if test="<%= !workspaceConnectionDisplayContext.isConnected() %>">
-				<aui:input autocomplete="off" label="analytics-cloud-token" name="token" oninput='<%= liferayPortletResponse.getNamespace() + "validateTokenButton();" %>' placeholder="paste-token-here" value="<%= workspaceConnectionDisplayContext.getToken() %>" wrapperCssClass="mb-1" />
-
-				<div class="form-text">
-					<liferay-ui:message key="analytics-cloud-token-help" />
+	<ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm sheet-lg">
+		<li class="active multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="connect-ac" />
 				</div>
-			</c:if>
+
+				<a class="multi-step-icon" data-multi-step-icon="1" href="#1"></a>
+			</div>
+		</li>
+		<li class="multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="property" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="2" href="#1"></a>
+			</div>
+		</li>
+		<li class="multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="people" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="3" href="#1"></a>
+			</div>
+		</li>
+		<li class="multi-step-item">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="people-data" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="4" href="#1"></a>
+			</div>
+		</li>
+	</ol>
+
+	<clay:sheet>
+		<h2 class="m-0">
+			<liferay-ui:message key="connect-analytics-cloud" />
+		</h2>
+
+		<p class="mb-2 mt-3 small text-secondary">
+			<liferay-ui:message key="use-the-token-genereted-in-your-analytics-cloud-to-connect-this-workspace" />
+		</p>
+
+		<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event);" %>'>
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
-				<label class="control-label d-block mb-2">
-					<liferay-ui:message key="analytics-cloud-token" />
-				</label>
-
-				<label class="control-label d-block">
-					<liferay-ui:message key="your-dxp-instance-is-connected-to-analytics-cloud" />
-				</label>
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="disconnect" />
 			</c:if>
 
-			<aui:button-row cssClass="mt-2">
-				<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
-					<a class="btn btn-primary mr-2" href="<%= workspaceConnectionDisplayContext.getLiferayAnalyticsURL() %>" rel="noopener noreferrer" target="_blank">
-						<liferay-ui:message key="go-to-workspace" />
+			<aui:fieldset>
+				<c:if test="<%= !workspaceConnectionDisplayContext.isConnected() %>">
+					<aui:input autocomplete="off" label="analytics-cloud-token" name="token" oninput='<%= liferayPortletResponse.getNamespace() + "validateTokenButton();" %>' placeholder="paste-token-here" value="<%= workspaceConnectionDisplayContext.getToken() %>" wrapperCssClass="mb-1" />
 
-						<span class="inline-item inline-item-after">
-							<clay:icon
-								symbol="shortcut"
-							/>
-						</span>
-					</a>
+					<div class="small text-secondary">
+						<liferay-ui:message key="analytics-cloud-token-help" />
+					</div>
 				</c:if>
 
-				<aui:button id="tokenButton" primary="<%= workspaceConnectionDisplayContext.isConnected() ? false : true %>" type="submit" value='<%= workspaceConnectionDisplayContext.isConnected() ? "disconnect" : "connect" %>' />
-			</aui:button-row>
-		</aui:fieldset>
-	</aui:form>
-</clay:sheet>
+				<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
+					<label class="control-label d-block mb-2">
+						<liferay-ui:message key="analytics-cloud-token" />
+					</label>
 
-<script>
+					<label class="control-label d-block">
+						<liferay-ui:message key="your-dxp-instance-is-connected-to-analytics-cloud" />
+					</label>
+				</c:if>
+
+				<aui:button-row cssClass="mt-3">
+					<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
+						<a class="btn btn-primary mr-2" href="<%= workspaceConnectionDisplayContext.getLiferayAnalyticsURL() %>" rel="noopener noreferrer" target="_blank">
+							<liferay-ui:message key="go-to-workspace" />
+
+							<span class="inline-item inline-item-after">
+								<clay:icon
+									symbol="shortcut"
+								/>
+							</span>
+						</a>
+					</c:if>
+
+					<aui:button id="tokenButton" primary="<%= workspaceConnectionDisplayContext.isConnected() ? false : true %>" type="submit" value='<%= workspaceConnectionDisplayContext.isConnected() ? "disconnect" : "connect" %>' />
+				</aui:button-row>
+			</aui:fieldset>
+		</aui:form>
+	</clay:sheet>
+</div>
+
+<aui:script>
 	function <portlet:namespace />confirmation(event) {
 		<c:if test="<%= workspaceConnectionDisplayContext.isConnected() %>">
 			if (
@@ -116,4 +148,15 @@ WorkspaceConnectionDisplayContext workspaceConnectionDisplayContext = (Workspace
 	<c:if test="<%= !workspaceConnectionDisplayContext.isConnected() %>">
 		<portlet:namespace />validateTokenButton();
 	</c:if>
-</script>
+
+	<c:if test='<%= SessionErrors.contains(renderRequest, "unableToNotifyAnalyticsCloud") %>'>
+		Liferay.Util.openToast({
+			message: '<liferay-ui:message key="unable-to-notify-analytics-cloud" />',
+			title: Liferay.Language.get('warning'),
+			toastProps: {
+				autoClose: 5000,
+			},
+			type: 'warning',
+		});
+	</c:if>
+</aui:script>

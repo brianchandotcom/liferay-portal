@@ -1,0 +1,9 @@
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Private Child Layout"
+	},
+	"private": true,
+	"system": false,
+	"type": "Content"
+}

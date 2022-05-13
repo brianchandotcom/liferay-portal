@@ -550,6 +550,8 @@ definition {
 	@description = "LPS-146523 - Verify if the default folder will be the Documents and Media Home Folder of that specific site"
 	@priority = "4"
 	test DocumentsAndMediaHomeFolderIsDefaultWhenScopedBySite {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151568",
 			objectName = "CustomObject151568",
@@ -582,7 +584,7 @@ definition {
 
 		ObjectField.assertDocumentsAndMediaHomeFolder(
 			infoText = "There are no documents or media files in this folder.",
-			viewHomeFolder = "Liferay DXP");
+			viewHomeFolder = "${siteName}");
 	}
 
 	@description = "LPS-146523 - Verify if the default folder will be the Global Documents and Media Home Folder"

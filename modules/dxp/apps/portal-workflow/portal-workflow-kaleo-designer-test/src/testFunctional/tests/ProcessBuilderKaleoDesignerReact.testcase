@@ -96,6 +96,8 @@ definition {
 			nodeLabel = "Condition",
 			nodePosition = "20,-100",
 			nodeType = "condition");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
@@ -111,6 +113,8 @@ definition {
 			nodeLabel = "End",
 			nodePosition = "90,-300",
 			nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "end");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
@@ -126,6 +130,8 @@ definition {
 			nodeLabel = "Fork",
 			nodePosition = "-20,-40",
 			nodeType = "fork");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "fork");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
@@ -141,12 +147,14 @@ definition {
 			nodeLabel = "Join",
 			nodePosition = "-20,-40",
 			nodeType = "join");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
 	@priority = "5"
 	test CanAddJoinXorNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNotification";
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinXorNode";
 
 		Workflow.openWorkflowListView();
 
@@ -156,6 +164,8 @@ definition {
 			nodeLabel = "Join XOR",
 			nodePosition = "-40,-200",
 			nodeType = "join-xor");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join-xor");
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"
@@ -243,6 +253,8 @@ definition {
 			nodeLabel = "Start",
 			nodePosition = "70,-200",
 			nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "start");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
@@ -258,6 +270,8 @@ definition {
 			nodeLabel = "State",
 			nodePosition = "50,-420",
 			nodeType = "state");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "state");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
@@ -273,6 +287,8 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40",
 			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
 	}
 
 	@description = "Verify that Timers can be added"

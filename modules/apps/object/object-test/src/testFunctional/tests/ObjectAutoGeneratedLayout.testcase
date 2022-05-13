@@ -363,6 +363,8 @@ definition {
 	@description = "LPS-143065 - Verify that when the user click on the file name, the file can be viewed"
 	@priority = "4"
 	test CanViewFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",
 			objectName = "CustomObject151576",

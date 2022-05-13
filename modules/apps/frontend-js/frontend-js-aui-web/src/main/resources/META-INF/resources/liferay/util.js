@@ -509,6 +509,9 @@
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `Liferay.Util.openWindow()`
+		 */
 		openInDialog(event, config) {
 			event.preventDefault();
 

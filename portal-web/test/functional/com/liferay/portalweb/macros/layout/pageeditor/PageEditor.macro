@@ -2206,7 +2206,7 @@ definition {
 			var content = TestCase.getFileContent(fileName = "${fileName}");
 		}
 
-		Type.typeAceEditorNoError(
+		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Fragment#EDITABLE_HTML_FRAGMENT_FIELD",
 			value1 = "${content}");
 

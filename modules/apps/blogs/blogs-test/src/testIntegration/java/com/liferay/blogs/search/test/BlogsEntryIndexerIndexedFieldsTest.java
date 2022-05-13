@@ -128,6 +128,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 					MODEL_INDEXER_CLASS
 				).queryString(
 					searchTerm
+				).fetchSource(
+					true
 				).build()));
 	}
 

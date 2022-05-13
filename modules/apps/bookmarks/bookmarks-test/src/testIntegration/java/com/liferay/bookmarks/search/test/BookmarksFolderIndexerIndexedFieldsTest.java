@@ -136,6 +136,8 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 					BookmarksFolder.class
 				).queryString(
 					searchTerm
+				).fetchSource(
+					true
 				).build()));
 	}
 

@@ -89,19 +89,6 @@ public class OAuthClientEntryServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId) {
-		return oAuthClientEntryPersistence.filterFindByCompanyId(companyId);
-	}
-
-	@Override
-	public List<OAuthClientEntry> getCompanyOAuthClientEntries(
-		long companyId, int start, int end) {
-
-		return oAuthClientEntryPersistence.filterFindByCompanyId(
-			companyId, start, end);
-	}
-
-	@Override
 	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
 		long companyId, String authServerIssuer) {
 
@@ -124,6 +111,19 @@ public class OAuthClientEntryServiceImpl
 		}
 
 		return oAuthClientEntries;
+	}
+
+	@Override
+	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId) {
+		return oAuthClientEntryPersistence.filterFindByCompanyId(companyId);
+	}
+
+	@Override
+	public List<OAuthClientEntry> getCompanyOAuthClientEntries(
+		long companyId, int start, int end) {
+
+		return oAuthClientEntryPersistence.filterFindByCompanyId(
+			companyId, start, end);
 	}
 
 	@Override

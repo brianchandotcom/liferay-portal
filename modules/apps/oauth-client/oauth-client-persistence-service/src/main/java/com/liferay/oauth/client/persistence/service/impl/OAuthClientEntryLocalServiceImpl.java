@@ -68,8 +68,8 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
 		oAuthClientEntry.setClientId(
 			_validateAndGetClientId(
-				user.getCompanyId(), authServerIssuer, infoJSON,
-				parametersJSON, true));
+				user.getCompanyId(), authServerIssuer, infoJSON, parametersJSON,
+				true));
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
@@ -135,11 +135,6 @@ public class OAuthClientEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId) {
-		return oAuthClientEntryPersistence.findByCompanyId(companyId);
-	}
-
-	@Override
 	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
 		long companyId, String authServerIssuer) {
 
@@ -166,6 +161,11 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 
 		return oAuthClientEntries;
+	}
+
+	@Override
+	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId) {
+		return oAuthClientEntryPersistence.findByCompanyId(companyId);
 	}
 
 	@Override

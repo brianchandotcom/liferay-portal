@@ -148,8 +148,7 @@ export function LayoutSelector({layoutType}) {
 		setLoading(true);
 		setPreviewLayout(previewData.recentLayouts[0]);
 		setRecentLayouts(previewData.recentLayouts);
-		/* eslint-disable react-hooks/exhaustive-deps */
-	}, [previewData, dispatch]);
+	}, [dispatch, previewData, setLoading, setPreviewLayout]);
 
 	const selectPreviewLayout = (layout) => {
 		if (

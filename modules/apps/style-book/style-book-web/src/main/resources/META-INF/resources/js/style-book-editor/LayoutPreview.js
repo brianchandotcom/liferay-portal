@@ -53,8 +53,7 @@ export default function LayoutPreview() {
 				setLoading(false);
 			}
 		}
-		/* eslint-disable react-hooks/exhaustive-deps */
-	}, [frontendTokensValues, iframeLoaded]);
+	}, [frontendTokensValues, iframeLoaded, setLoading]);
 
 	useEffect(() => {
 		loadFrontendTokenValues();

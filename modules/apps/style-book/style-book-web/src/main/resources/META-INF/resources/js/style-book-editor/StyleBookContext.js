@@ -13,7 +13,7 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import React, {useContext, useReducer} from 'react';
+import React, {useCallback, useContext, useReducer} from 'react';
 
 import {
 	LOADING,
@@ -110,13 +110,16 @@ export function useSaveTokenValue() {
 export function useSetLoading() {
 	const dispatch = useDispatch();
 
-	return (value) => dispatch({type: LOADING, value});
+	return useCallback((value) => dispatch({type: LOADING, value}), [dispatch]);
 }
 
 export function useSetPreviewLayout() {
 	const dispatch = useDispatch();
 
-	return (layout) => dispatch({layout, type: SET_PREVIEW_LAYOUT});
+	return useCallback(
+		(layout) => dispatch({layout, type: SET_PREVIEW_LAYOUT}),
+		[dispatch]
+	);
 }
 
 export function useSetPreviewLayoutType() {

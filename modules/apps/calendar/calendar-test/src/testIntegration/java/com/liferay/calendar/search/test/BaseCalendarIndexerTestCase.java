@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -169,6 +171,27 @@ public abstract class BaseCalendarIndexerTestCase {
 			search(getSearchContext(keywords, locale)));
 	}
 
+	protected SearchResponse searchOnlyOneSearchResponse(
+		String keywords, Locale locale) {
+
+		SearchContext searchContext = getSearchContext(keywords, locale);
+
+		searchRequestBuilderFactory.builder(
+			searchContext
+		).fetchSource(
+			true
+		).build();
+
+		search(searchContext);
+
+		SearchResponse searchResponse =
+			(SearchResponse)searchContext.getAttribute("search.response");
+
+		HitsAssert.assertOnlyOne(searchResponse.getSearchHits());
+
+		return searchResponse;
+	}
+
 	protected void setIndexerClass(Class<?> clazz) {
 		_indexer = indexerRegistry.getIndexer(clazz);
 	}
@@ -187,6 +210,9 @@ public abstract class BaseCalendarIndexerTestCase {
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Inject
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	protected User user;
 

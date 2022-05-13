@@ -16,28 +16,22 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {useMutation} from 'graphql-hooks';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {deleteMessageQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
+import {getDateFormatted} from '../utils/time.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Modal from './Modal.es';
 
 export default withRouter(
 	({comment, commentChange, editable = true, match: {url}}) => {
-		const [dateModified, setDateModified] = useState('');
 		const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(
 			false
 		);
 
 		const [deleteMessage] = useMutation(deleteMessageQuery);
-
-		useEffect(() => {
-			setDateModified(
-				new Date(comment.dateModified).toLocaleDateString()
-			);
-		}, [comment.dateModified]);
 
 		return (
 			<div className="c-my-3 questions-reply row">
@@ -51,7 +45,7 @@ export default withRouter(
 				<div className="col-10 col-lg-11">
 					<span className="text-secondary">
 						{lang.sub(Liferay.Language.get('replied-x'), [
-							dateModified,
+							getDateFormatted(comment.dateCreated),
 						])}
 					</span>
 

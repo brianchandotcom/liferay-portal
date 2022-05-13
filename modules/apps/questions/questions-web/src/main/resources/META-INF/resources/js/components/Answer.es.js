@@ -25,6 +25,7 @@ import {
 	markAsAnswerMessageBoardMessageQuery,
 } from '../utils/client.es';
 import lang from '../utils/lang.es';
+import {getDateFormatted} from '../utils/time.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
 import Link from './Link.es';
@@ -46,7 +47,6 @@ export default withRouter(
 		const [comments, setComments] = useState(
 			answer.messageBoardMessages.items
 		);
-		const [dateModified, setDateModified] = useState('');
 		const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 		const [showNewComment, setShowNewComment] = useState(false);
 		const [showDeleteAnswerModal, setShowDeleteAnswerModal] = useState(
@@ -66,10 +66,6 @@ export default withRouter(
 		useEffect(() => {
 			setShowAsAnswer(answer.showAsAnswer);
 		}, [answer.showAsAnswer]);
-
-		useEffect(() => {
-			setDateModified(new Date(answer.dateModified).toLocaleDateString());
-		}, [answer.dateModified]);
 
 		return (
 			<>
@@ -109,7 +105,7 @@ export default withRouter(
 
 							<span className="text-secondary">
 								{lang.sub(Liferay.Language.get('answered-x'), [
-									dateModified,
+									getDateFormatted(answer.dateCreated),
 								])}
 							</span>
 

@@ -46,7 +46,7 @@ const AnalyticsCloudStatusModal = ({
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
 							{i18n
 								.translate('analytics-cloud-setup')
-								.toupperCase()}
+								.toUpperCase()}
 						</h4>
 
 						<div className="mr-4 mt-3">

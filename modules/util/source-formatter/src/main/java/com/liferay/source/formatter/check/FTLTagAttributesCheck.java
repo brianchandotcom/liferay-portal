@@ -41,9 +41,8 @@ public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 		content = formatIncorrectLineBreak(fileName, content);
 
-		content = _formatTagAttributes(absolutePath, content);
-
 		content = _formatMacroTagAttributes(content);
+		content = _formatTagAttributes(absolutePath, content);
 
 		return content;
 	}

@@ -12,20 +12,10 @@
  * details.
  */
 
-package com.liferay.analytics.settings.web.internal.constants;
+package com.liferay.analytics.settings.web.internal.display.context;
 
 /**
- * @author Marcellus Tavares
+ * @author Riccardo Ferrari
  */
-public class AnalyticsSettingsWebKeys {
-
-	public static final String ANALYTICS_CONFIGURATION =
-		"ANALYTICS_CONFIGURATION";
-
-	public static final String ANALYTICS_DISPLAY_CONTEXT =
-		"ANALYTICS_DISPLAY_CONTEXT";
-
-	public static final String ANALYTICS_USERS_MANAGER =
-		"ANALYTICS_USERS_MANAGER";
-
+public interface DisplayContext {
 }

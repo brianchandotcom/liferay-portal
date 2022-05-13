@@ -14,9 +14,13 @@
 
 package com.liferay.analytics.settings.web.internal.portal.settings.configuration.admin.display;
 
+import com.liferay.analytics.settings.web.internal.display.context.DisplayContext;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +40,15 @@ public class AnalyticsSyncedContactsDataConfigurationScreen
 	@Override
 	protected String getDefaultJspPath() {
 		return "/edit_synced_contacts_data.jsp";
+	}
+
+	@Override
+	protected DisplayContext getDisplayContext(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
+
+		return null;
 	}
 
 	@Override

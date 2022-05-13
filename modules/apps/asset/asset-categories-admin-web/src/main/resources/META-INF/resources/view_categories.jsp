@@ -64,6 +64,8 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 				HashMapBuilder.<String, Object>put(
 					"actions", assetCategoriesManagementToolbarDisplayContext.getAvailableActions(curCategory)
 				).build());
+
+			int fullCategoriesCount = AssetEntryAssetCategoryRelLocalServiceUtil.getAssetEntryAssetCategoryRelsCountByAssetCategoryId(curCategory.getCategoryId());
 			%>
 
 			<c:choose>
@@ -90,6 +92,9 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 						<span class="text-default">
 							<liferay-ui:message arguments="<%= subcategoriesCount %>" key="x-subcategories" />
 						</span>
+						<span class="text-default">
+							<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(fullCategoriesCount) %></span>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
@@ -114,6 +119,12 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 							>
 								<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %> > <strong><%= HtmlUtil.escape(curCategory.getTitle(locale)) %></strong>
 							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-column-text-center"
+								name="usages"
+								value="<%= String.valueOf(fullCategoriesCount) %>"
+							/>
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
@@ -127,6 +138,12 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 								cssClass="table-cell-expand table-cell-minw-200"
 								name="description"
 								value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smaller table-column-text-center"
+								name="usages"
+								value="<%= String.valueOf(fullCategoriesCount) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

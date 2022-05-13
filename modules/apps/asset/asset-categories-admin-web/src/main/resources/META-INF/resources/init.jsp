@@ -42,6 +42,7 @@ page import="com.liferay.asset.category.property.exception.DuplicateCategoryProp
 page import="com.liferay.asset.category.property.model.AssetCategoryProperty" %><%@
 page import="com.liferay.asset.category.property.service.AssetCategoryPropertyLocalServiceUtil" %><%@
 page import="com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil" %><%@
+page import="com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.NoSuchClassTypeException" %><%@
 page import="com.liferay.asset.kernel.exception.AssetCategoryLimitException" %><%@

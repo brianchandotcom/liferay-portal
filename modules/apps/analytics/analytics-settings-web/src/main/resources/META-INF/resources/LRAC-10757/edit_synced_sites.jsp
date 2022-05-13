@@ -20,15 +20,64 @@
 QADisplayContext qaDisplayContext = (QADisplayContext)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= qaDisplayContext.isWizardMode() %>">
-	<h1> Wizard Mode</h1>
-</c:if>
+<div class="wizard-mode">
+	<portlet:actionURL name="/analytics_settings/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
-<c:choose>
-	<c:when test="<%= qaDisplayContext.isWizardMode() %>">
-		<p>Test success, we are in Wizard Mode.</p>
-	</c:when>
-	<c:otherwise>
-		<p>Test FAIL, we are NOT in Wizard Mode.</p>
-	</c:otherwise>
-</c:choose>
+	<ol class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm sheet-lg">
+		<li class="complete multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="connect-ac" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="1" href="#1"></a>
+			</div>
+		</li>
+		<li class="active multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="property" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="2" href="#1"></a>
+			</div>
+		</li>
+		<li class="multi-step-item multi-step-item-expand">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="people" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="3" href="#1"></a>
+			</div>
+		</li>
+		<li class="multi-step-item">
+			<div class="multi-step-divider"></div>
+			<div class="multi-step-indicator">
+				<div class="multi-step-indicator-label">
+					<liferay-ui:message key="people-data" />
+				</div>
+
+				<a class="multi-step-icon" data-multi-step-icon="4" href="#1"></a>
+			</div>
+		</li>
+	</ol>
+
+	<clay:sheet>
+		<h2 class="m-0">
+			<liferay-ui:message key="property-assignment" />
+		</h2>
+
+		<c:choose>
+			<c:when test="<%= qaDisplayContext.isWizardMode() %>">
+				<p class="mb-2 mt-3">Test success, we are in Wizard Mode.</p>
+			</c:when>
+			<c:otherwise>
+				<p class="mb-2 mt-3">Test FAIL, we are NOT in Wizard Mode.</p>
+			</c:otherwise>
+		</c:choose>
+	</clay:sheet>
+</div>

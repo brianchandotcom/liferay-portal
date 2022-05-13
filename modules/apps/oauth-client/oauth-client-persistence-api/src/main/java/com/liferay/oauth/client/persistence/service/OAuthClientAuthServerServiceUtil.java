@@ -82,12 +82,6 @@ public class OAuthClientAuthServerServiceUtil {
 		return getService().getOAuthClientAuthServer(companyId, issuer);
 	}
 
-	public static List<OAuthClientAuthServer> getOAuthClientAuthServers(
-		long companyId, String type) {
-
-		return getService().getOAuthClientAuthServers(companyId, type);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -95,6 +89,12 @@ public class OAuthClientAuthServerServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<OAuthClientAuthServer> getTypeOAuthClientAuthServers(
+		long companyId, String type) {
+
+		return getService().getTypeOAuthClientAuthServers(companyId, type);
 	}
 
 	public static List<OAuthClientAuthServer> getUserOAuthClientAuthServers(

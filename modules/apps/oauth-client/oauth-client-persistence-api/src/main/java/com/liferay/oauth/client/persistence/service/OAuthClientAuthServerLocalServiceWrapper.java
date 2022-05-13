@@ -354,15 +354,6 @@ public class OAuthClientAuthServerLocalServiceWrapper
 			start, end);
 	}
 
-	@Override
-	public java.util.List
-		<com.liferay.oauth.client.persistence.model.OAuthClientAuthServer>
-			getOAuthClientAuthServers(long companyId, String type) {
-
-		return _oAuthClientAuthServerLocalService.getOAuthClientAuthServers(
-			companyId, type);
-	}
-
 	/**
 	 * Returns the number of o auth client auth servers.
 	 *
@@ -394,6 +385,15 @@ public class OAuthClientAuthServerLocalServiceWrapper
 
 		return _oAuthClientAuthServerLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.oauth.client.persistence.model.OAuthClientAuthServer>
+			getTypeOAuthClientAuthServers(long companyId, String type) {
+
+		return _oAuthClientAuthServerLocalService.getTypeOAuthClientAuthServers(
+			companyId, type);
 	}
 
 	@Override

@@ -77,16 +77,16 @@ public interface OAuthClientAuthServerService extends BaseService {
 			long companyId, String issuer)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthClientAuthServer> getOAuthClientAuthServers(
-		long companyId, String type);
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OAuthClientAuthServer> getTypeOAuthClientAuthServers(
+		long companyId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthClientAuthServer> getUserOAuthClientAuthServers(

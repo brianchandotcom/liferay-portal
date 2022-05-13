@@ -94,15 +94,6 @@ public class OAuthClientAuthServerServiceWrapper
 			companyId, issuer);
 	}
 
-	@Override
-	public java.util.List
-		<com.liferay.oauth.client.persistence.model.OAuthClientAuthServer>
-			getOAuthClientAuthServers(long companyId, String type) {
-
-		return _oAuthClientAuthServerService.getOAuthClientAuthServers(
-			companyId, type);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -111,6 +102,15 @@ public class OAuthClientAuthServerServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _oAuthClientAuthServerService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.oauth.client.persistence.model.OAuthClientAuthServer>
+			getTypeOAuthClientAuthServers(long companyId, String type) {
+
+		return _oAuthClientAuthServerService.getTypeOAuthClientAuthServers(
+			companyId, type);
 	}
 
 	@Override

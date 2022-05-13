@@ -305,12 +305,6 @@ public class OAuthClientAuthServerLocalServiceUtil {
 		return getService().getOAuthClientAuthServers(start, end);
 	}
 
-	public static List<OAuthClientAuthServer> getOAuthClientAuthServers(
-		long companyId, String type) {
-
-		return getService().getOAuthClientAuthServers(companyId, type);
-	}
-
 	/**
 	 * Returns the number of o auth client auth servers.
 	 *
@@ -336,6 +330,12 @@ public class OAuthClientAuthServerLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static List<OAuthClientAuthServer> getTypeOAuthClientAuthServers(
+		long companyId, String type) {
+
+		return getService().getTypeOAuthClientAuthServers(companyId, type);
 	}
 
 	public static List<OAuthClientAuthServer> getUserOAuthClientAuthServers(

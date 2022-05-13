@@ -87,8 +87,6 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(13, 3, 3), new UpgradeGroup());
 
 		upgradeProcesses.put(new Version(13, 3, 4), new UpgradeExpandoColumn());
-
-		upgradeProcesses.put(new Version(13, 3, 5), new UpgradeRole());
 	}
 
 }

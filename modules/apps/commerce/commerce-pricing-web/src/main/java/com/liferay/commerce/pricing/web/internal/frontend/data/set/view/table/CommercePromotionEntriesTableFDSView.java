@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
@@ -43,36 +42,27 @@ public class CommercePromotionEntriesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField imageField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"product.thumbnail", StringPool.BLANK);
-
-		imageField.setContentRenderer("image");
-
-		FDSTableSchemaField skuField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("sku.name", "sku");
-
-		skuField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"product.name.LANG", "name");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"sku.basePromoPriceFormatted", "base-promotion-price");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"priceFormatted", "promotion-price");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"discountLevelsFormatted", "unit-discount");
-
-		FDSTableSchemaField tieredPrice =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"hasTierPrice", "tiered-price");
-
-		tieredPrice.setContentRenderer("boolean");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"product.thumbnail", StringPool.BLANK,
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"image")
+		).add(
+			"sku.name", "sku",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"product.name.LANG", "name"
+		).add(
+			"sku.basePromoPriceFormatted", "base-promotion-price"
+		).add(
+			"priceFormatted", "promotion-price"
+		).add(
+			"discountLevelsFormatted", "unit-discount"
+		).add(
+			"hasTierPrice", "tiered-price",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).build();
 	}
 
 	@Reference

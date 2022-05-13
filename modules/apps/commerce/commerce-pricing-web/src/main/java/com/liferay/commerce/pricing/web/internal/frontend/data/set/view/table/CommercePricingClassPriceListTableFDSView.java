@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -43,22 +42,19 @@ public class CommercePricingClassPriceListTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField nameFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("name", "name");
-
-		nameFDSTableSchemaField.setContentRenderer("actionLink");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField("catalogName", "catalog");
-
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"createDate", "create-date");
-
-		FDSTableSchemaField statusField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
-
-		statusField.setContentRenderer("label");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"catalogName", "catalog"
+		).add(
+			"createDate", "create-date"
+		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).build();
 	}
 
 	@Reference

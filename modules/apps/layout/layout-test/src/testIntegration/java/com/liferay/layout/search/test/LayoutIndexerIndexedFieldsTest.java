@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -124,7 +125,8 @@ public class LayoutIndexerIndexedFieldsTest {
 	}
 
 	protected void setUpLayoutIndexerFixture() {
-		layoutIndexerFixture = new IndexerFixture<>(Layout.class);
+		layoutIndexerFixture = new IndexerFixture<>(
+			Layout.class, _searchRequestBuilderFactory);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -245,6 +247,9 @@ public class LayoutIndexerIndexedFieldsTest {
 
 	@DeleteAfterTestRun
 	private List<Layout> _layouts;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

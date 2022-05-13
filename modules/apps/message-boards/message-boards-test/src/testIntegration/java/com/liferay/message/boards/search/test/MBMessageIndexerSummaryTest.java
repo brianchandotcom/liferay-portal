@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.test.util.SummaryFixture;
@@ -55,7 +56,8 @@ public class MBMessageIndexerSummaryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		indexerFixture = new IndexerFixture<>(MBMessage.class);
+		indexerFixture = new IndexerFixture<>(
+			MBMessage.class, _searchRequestBuilderFactory);
 
 		summaryFixture = new SummaryFixture<>(
 			MBMessage.class,
@@ -130,5 +132,8 @@ public class MBMessageIndexerSummaryTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

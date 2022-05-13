@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
@@ -145,7 +147,8 @@ public class UserMultiLanguageSearchTest {
 	}
 
 	protected void setUpIndexerFixture() {
-		indexerFixture = new IndexerFixture<>(User.class);
+		indexerFixture = new IndexerFixture<>(
+			User.class, _searchRequestBuilderFactory);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -178,6 +181,9 @@ public class UserMultiLanguageSearchTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

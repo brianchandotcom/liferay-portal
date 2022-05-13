@@ -96,12 +96,12 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerIssuer, String clientID)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryPersistence.findByC_A_C(
-				companyId, authServerIssuer, clientId);
+				companyId, authServerIssuer, clientID);
 
 		return deleteOAuthClientEntry(oAuthClientEntry);
 	}
@@ -128,10 +128,10 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry fetchOAuthClientEntry(
-		long companyId, String authServerIssuer, String clientId) {
+		long companyId, String authServerIssuer, String clientID) {
 
 		return oAuthClientEntryPersistence.fetchByC_A_C(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerIssuer, clientID);
 	}
 
 	@Override
@@ -170,11 +170,11 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerIssuer, String clientID)
 		throws PortalException {
 
 		return oAuthClientEntryPersistence.findByC_A_C(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerIssuer, clientID);
 	}
 
 	@Override
@@ -192,12 +192,12 @@ public class OAuthClientEntryLocalServiceImpl
 			oAuthClientEntryLocalService.getOAuthClientEntry(
 				oAuthClientEntryId);
 
-		String clientId = _validateAndGetClientId(
+		String clientID = _validateAndGetClientId(
 			oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
 			parametersJSON, false);
 
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
-		oAuthClientEntry.setClientId(clientId);
+		oAuthClientEntry.setClientId(clientID);
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
@@ -233,21 +233,21 @@ public class OAuthClientEntryLocalServiceImpl
 				ClientInformation clientInformation = ClientInformation.parse(
 					JSONObjectUtils.parse(infoJSON));
 
-				ClientID clientId = clientInformation.getID();
+				ClientID clientID = clientInformation.getID();
 
 				if (add) {
 					OAuthClientEntry oAuthClientEntry =
 						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientId.getValue());
+							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
 						throw new PortalException(
 							"There is an existing OAuth Client Entry: " +
-								clientId.getValue());
+								clientID.getValue());
 					}
 				}
 
-				return clientId.getValue();
+				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
 				throw new PortalException(parseException);
@@ -259,21 +259,21 @@ public class OAuthClientEntryLocalServiceImpl
 					OIDCClientInformation.parse(
 						JSONObjectUtils.parse(infoJSON));
 
-				ClientID clientId = oidcClientInformation.getID();
+				ClientID clientID = oidcClientInformation.getID();
 
 				if (add) {
 					OAuthClientEntry oAuthClientEntry =
 						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientId.getValue());
+							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
 						throw new PortalException(
 							"There is an existing OAuth Client Entry: " +
-								clientId.getValue());
+								clientID.getValue());
 					}
 				}
 
-				return clientId.getValue();
+				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
 				throw new PortalException(parseException);

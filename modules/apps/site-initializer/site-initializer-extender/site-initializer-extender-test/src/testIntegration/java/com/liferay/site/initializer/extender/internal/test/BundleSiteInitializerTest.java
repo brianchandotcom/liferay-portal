@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -789,7 +790,7 @@ public class BundleSiteInitializerTest {
 
 	private void _assertLayouts(Group group) throws Exception {
 		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), true);
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertTrue(privateLayouts.size() == 1);
 
@@ -802,7 +803,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("content", privateLayout.getType());
 
 		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), false);
+			group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertTrue(publicLayouts.size() == 1);
 

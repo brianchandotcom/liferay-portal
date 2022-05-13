@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.search.experiences.exception.SXPBlueprintConfigurationJSONException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
+import com.liferay.search.experiences.internal.util.KeyUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
-import com.liferay.search.experiences.service.impl.util.KeyUtil;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
 import java.util.List;
@@ -79,8 +79,8 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
 		sxpBlueprint.setKey(KeyUtil.getKey(counterLocalService, null));
-		sxpBlueprint.setTitleMap(titleMap);
 		sxpBlueprint.setSchemaVersion(schemaVersion);
+		sxpBlueprint.setTitleMap(titleMap);
 		sxpBlueprint.setVersion(
 			String.format(
 				"%.1f",

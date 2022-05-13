@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
+import com.liferay.search.experiences.internal.util.KeyUtil;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.base.SXPElementLocalServiceBaseImpl;
-import com.liferay.search.experiences.service.impl.util.KeyUtil;
 import com.liferay.search.experiences.validator.SXPElementValidator;
 
 import java.util.List;

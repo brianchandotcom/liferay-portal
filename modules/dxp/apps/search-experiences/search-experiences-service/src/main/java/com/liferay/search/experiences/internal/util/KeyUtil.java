@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.service.impl.util;
+package com.liferay.search.experiences.internal.util;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.util.StringUtil;

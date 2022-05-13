@@ -14,12 +14,22 @@
 
 package com.liferay.notification.rest.internal.resource.v1_0;
 
+import com.liferay.notification.constants.NotificationActionKeys;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateService;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +61,44 @@ public class NotificationTemplateResourceImpl
 		return _toNotificationTemplate(
 			_notificationTemplateService.getNotificationTemplate(
 				notificationTemplateId));
+	}
+
+	@Override
+	public Page<NotificationTemplate> getNotificationTemplatesPage(
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE,
+					"postNotificationTemplate",
+					NotificationConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getNotificationTemplatesPage",
+					NotificationConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).build(),
+			booleanQuery -> {
+			},
+			filter,
+			com.liferay.notification.model.NotificationTemplate.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toNotificationTemplate(
+				_notificationTemplateService.getNotificationTemplate(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

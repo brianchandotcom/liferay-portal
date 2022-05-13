@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -48,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class NotificationTemplateLocalServiceImpl
 	extends NotificationTemplateLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate addNotificationTemplate(
 			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
@@ -105,6 +108,7 @@ public class NotificationTemplateLocalServiceImpl
 			notificationTemplate);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationTemplate deleteNotificationTemplate(
@@ -132,6 +136,7 @@ public class NotificationTemplateLocalServiceImpl
 		return notificationTemplate;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate updateNotificationTemplate(
 			long notificationTemplateId, String bcc,

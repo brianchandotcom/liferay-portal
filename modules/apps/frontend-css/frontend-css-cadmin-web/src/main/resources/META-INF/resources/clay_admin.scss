@@ -102,6 +102,10 @@ html#{$cadmin-selector} {
 			width: 1em;
 		}
 
+		&.modal-open .modal {
+			display: block;
+		}
+
 		.user-icon-color-0 {
 			color: $user-icon-color-0;
 		}

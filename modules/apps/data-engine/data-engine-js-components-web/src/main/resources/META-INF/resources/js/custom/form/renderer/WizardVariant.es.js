@@ -53,7 +53,12 @@ export function Container({
 	const [showReport, setShowReport] = useState(false);
 	const [alertDismissed, setAlertDismissed] = useState(false);
 
-	const {formReportDataURL, showSubmitButton, submitLabel} = useConfig();
+	const {
+		formReportDataURL,
+		showPartialResultsToRespondents,
+		showSubmitButton,
+		submitLabel,
+	} = useConfig();
 
 	const onClick = () => {
 		setShowReport(true);
@@ -88,12 +93,14 @@ export function Container({
 		}
 
 		return () => {
-			backButton?.classList.add('hide');
-			alertElement?.classList.remove(
-				'lfr-ddm__show-partial-results-alert--hidden'
-			);
+			if (showPartialResultsToRespondents) {
+				backButton?.classList.add('hide');
+				alertElement?.classList.remove(
+					'lfr-ddm__show-partial-results-alert--hidden'
+				);
+			}
 		};
-	}, [alertDismissed, showReport]);
+	}, [alertDismissed, showPartialResultsToRespondents, showReport]);
 
 	return (
 		<>

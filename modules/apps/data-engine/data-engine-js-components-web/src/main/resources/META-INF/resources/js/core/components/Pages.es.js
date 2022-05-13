@@ -43,6 +43,7 @@ const Pages = React.forwardRef(
 			paginationMode,
 			persistDefaultValues,
 			readOnly,
+			showPartialResultsToRespondents,
 			viewMode,
 		} = useFormState();
 
@@ -101,6 +102,9 @@ const Pages = React.forwardRef(
 								paginationMode={paginationMode}
 								portletNamespace={portletNamespace}
 								readOnly={readOnly}
+								showPartialResultsToRespondents={
+									showPartialResultsToRespondents
+								}
 								total={pages.length}
 								view={view}
 								viewMode={viewMode}

@@ -44,7 +44,10 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -140,6 +143,10 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryProcessorContext.getFragmentElementId()
 			).put(
 				"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace()
+			).put(
+				"layoutMode",
+				_getLayoutMode(
+					fragmentEntryProcessorContext.getHttpServletRequest())
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
@@ -262,6 +269,8 @@ public class FreeMarkerFragmentEntryProcessor
 						"fragmentElementId", StringPool.BLANK
 					).put(
 						"fragmentEntryLinkNamespace", StringPool.BLANK
+					).put(
+						"layoutMode", Constants.VIEW
 					).putAll(
 						_fragmentEntryConfigurationParser.getContextObjects(
 							configurationDefaultValuesJSONObject, configuration,
@@ -279,6 +288,12 @@ public class FreeMarkerFragmentEntryProcessor
 			throw new FragmentEntryContentException(
 				_getMessage(templateException), templateException);
 		}
+	}
+
+	private String _getLayoutMode(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(
+			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
+			Constants.VIEW);
 	}
 
 	private String _getMessage(TemplateException templateException) {
@@ -347,5 +362,8 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

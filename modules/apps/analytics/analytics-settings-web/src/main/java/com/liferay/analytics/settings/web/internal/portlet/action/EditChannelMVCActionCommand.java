@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -96,6 +97,11 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 		configurationProperties.put(
 			"syncedGroupIds", liferayAnalyticsGroupIds.toArray(new String[0]));
+	}
+
+	@Override
+	protected void updateWizardMode(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 	}
 
 	private JSONObject _buildGroupJSONObject(

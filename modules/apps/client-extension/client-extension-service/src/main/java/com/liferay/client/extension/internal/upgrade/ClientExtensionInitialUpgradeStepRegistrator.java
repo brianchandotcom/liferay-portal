@@ -42,7 +42,10 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 						return;
 					}
 
-					for (UpgradeProcess upgradeProcess : _upgradeProcesses) {
+					for (Class<?> upgradeProcessClass : _upgradeProcesses) {
+						UpgradeProcess upgradeProcess =
+							(UpgradeProcess)upgradeProcessClass.newInstance();
+
 						upgradeProcess.upgrade();
 					}
 				}
@@ -50,25 +53,25 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 			});
 	}
 
-	private final UpgradeProcess[] _upgradeProcesses = {
-		new com.liferay.client.extension.internal.upgrade.v1_0_1.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_0_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_1_0.
-			ResourcePermissionsUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_2_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_3_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_4_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_5_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v3_0_0.
-			ClassNamesUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v3_0_0.
-			ClientExtensionEntryUpgradeProcess()
+	private final Class<?>[] _upgradeProcesses = {
+		com.liferay.client.extension.internal.upgrade.v1_0_1.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_0_0.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_1_0.
+			ResourcePermissionsUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_2_0.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_3_0.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_4_0.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v2_5_0.
+			RemoteAppEntryUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v3_0_0.
+			ClassNamesUpgradeProcess.class,
+		com.liferay.client.extension.internal.upgrade.v3_0_0.
+			ClientExtensionEntryUpgradeProcess.class
 	};
 
 }

@@ -4748,7 +4748,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/ant-gc.log</echo>
+					<echo>Unable to read /tmp/ant-gc.log.</echo>
 				</else>
 			</if>
 
@@ -4788,7 +4788,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/tomcat-gc.log</echo>
+					<echo>Unable to read /tmp/tomcat-gc.log.</echo>
 				</else>
 			</if>
 
@@ -4828,7 +4828,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/tsant-gc.log</echo>
+					<echo>Unable to read /tmp/tsant-gc.log.</echo>
 				</else>
 			</if>
 		</sequential>
@@ -12488,7 +12488,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	<target name="print-jstack-logs">
 		<fail message="Please set the property ${process.name}." unless="process.name" />
 
-		<print-jstack-logs process.name="${process.name}" />
+		<trycatch property="exception.message">
+			<try>
+				<print-jstack-logs process.name="${process.name}" />
+			</try>
+			<catch>
+				<echo>Unable to print JStack log.</echo>
+
+				<echo>${exception.message}</echo>
+			</catch>
+		</trycatch>
 	</target>
 
 	<target name="print-scm-revision">

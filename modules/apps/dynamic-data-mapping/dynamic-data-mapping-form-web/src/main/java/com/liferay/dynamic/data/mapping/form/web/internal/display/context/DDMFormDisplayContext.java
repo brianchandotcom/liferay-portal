@@ -276,7 +276,7 @@ public class DDMFormDisplayContext {
 
 		if (ddmFormInstanceRecordVersion != null) {
 			DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
-				ddmFormInstanceRecordVersion.getDDMFormValues(),
+				ddmForm, ddmFormInstanceRecordVersion.getDDMFormValues(),
 				ddmFormRenderingContext.getDDMFormValues());
 
 			ddmFormRenderingContext.setDDMFormValues(mergedDDMFormValues);
@@ -337,6 +337,13 @@ public class DDMFormDisplayContext {
 
 					_ddmFormInstance.setSettings(
 						latestApprovedDDMFormInstanceVersion.getSettings());
+
+					DDMStructureVersion ddmStructureVersion =
+						latestApprovedDDMFormInstanceVersion.
+							getStructureVersion();
+
+					_ddmFormInstance.setStructureId(
+						ddmStructureVersion.getStructureId());
 				}
 			}
 		}
@@ -815,13 +822,13 @@ public class DDMFormDisplayContext {
 			ddmForm = latestStructureVersion.getDDMForm();
 		}
 		else {
-			DDMFormInstanceVersion latestFormInstanceVersion =
+			DDMFormInstanceVersion latestDDMFormInstanceVersion =
 				_getLatestApprovedDDMFormInstanceVersion();
 
-			DDMStructureVersion structureVersion =
-				latestFormInstanceVersion.getStructureVersion();
+			DDMStructureVersion ddmStructureVersion =
+				latestDDMFormInstanceVersion.getStructureVersion();
 
-			ddmForm = structureVersion.getDDMForm();
+			ddmForm = ddmStructureVersion.getDDMForm();
 		}
 
 		if (requireCaptcha) {
@@ -852,13 +859,13 @@ public class DDMFormDisplayContext {
 			ddmFormLayout = latestStructureVersion.getDDMFormLayout();
 		}
 		else {
-			DDMFormInstanceVersion latestFormInstanceVersion =
+			DDMFormInstanceVersion latestDDMFormInstanceVersion =
 				_getLatestApprovedDDMFormInstanceVersion();
 
-			DDMStructureVersion structureVersion =
-				latestFormInstanceVersion.getStructureVersion();
+			DDMStructureVersion ddmStructureVersion =
+				latestDDMFormInstanceVersion.getStructureVersion();
 
-			ddmFormLayout = structureVersion.getDDMFormLayout();
+			ddmFormLayout = ddmStructureVersion.getDDMFormLayout();
 		}
 
 		if (requireCaptcha) {

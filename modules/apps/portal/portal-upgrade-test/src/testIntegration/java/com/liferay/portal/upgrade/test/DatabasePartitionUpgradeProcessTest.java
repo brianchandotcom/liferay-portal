@@ -102,7 +102,9 @@ public class DatabasePartitionUpgradeProcessTest {
 			throws Exception {
 
 			if (GetterUtil.getBoolean(
-					PropsUtil.get("database.partition.enabled"))) {
+					PropsUtil.get("database.partition.enabled")) &&
+				GetterUtil.getBoolean(
+					PropsUtil.get("database.partition.thread.pool.enabled"))) {
 
 				Assert.assertNotSame(_getConnection(), _getConnection());
 			}

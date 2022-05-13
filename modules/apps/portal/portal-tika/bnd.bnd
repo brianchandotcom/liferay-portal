@@ -11,6 +11,7 @@ Import-Package:\
 	\
 	com.rometools.*,\
 	\
+	org.apache.commons.compress.*,\
 	org.apache.pdfbox.*,\
 	\
 	org.jdom2.*,\

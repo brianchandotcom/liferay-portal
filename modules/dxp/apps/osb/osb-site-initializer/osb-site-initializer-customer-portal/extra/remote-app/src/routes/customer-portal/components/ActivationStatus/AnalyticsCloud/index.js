@@ -15,6 +15,7 @@ import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {
 	getAccountSubscriptionGroups,
@@ -104,14 +105,16 @@ const ActivationStatusAnalyticsCloud = ({
 					rel="noopener noreferrer"
 					target="_blank"
 				>
-					Go to Workspace
+					{i18n.translate('go-to-workspace')}
+
 					<ClayIcon className="ml-1" symbol="order-arrow-right" />
 				</a>
 			),
 			id: STATUS_TAG_TYPES.active,
-			subtitle:
-				'Your Analytics Cloud environments are ready. Visit the workspace to view Analytics Cloud details.',
-			title: 'Analytics Cloud Activation',
+			subtitle: i18n.translate(
+				'your-analytics-cloud-environments-are-ready-visit-the-workspace-to-view-analytics-cloud-details'
+			),
+			title: i18n.translate('analytics-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			dropdownIcon: userAccount.isStaff && userAccount.isProvisioning && (
@@ -126,7 +129,7 @@ const ActivationStatusAnalyticsCloud = ({
 					}
 					items={[
 						{
-							label: 'Set to Active',
+							label: i18n.translate('set-to-active'),
 							onClick: () => setVisible(true),
 						},
 					]}
@@ -136,9 +139,10 @@ const ActivationStatusAnalyticsCloud = ({
 				/>
 			),
 			id: STATUS_TAG_TYPES.inProgress,
-			subtitle:
-				'Your Analytics Cloud workspace is being set up and will be available soon',
-			title: 'Analytics Cloud Activation',
+			subtitle: i18n.translate(
+				'your-analytics-cloud-workspace-is-being-set-up-and-will-be-available-soon'
+			),
+			title: i18n.translate('analytics-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: (userAccount.isAdmin || userAccount.isStaff) && (
@@ -148,13 +152,14 @@ const ActivationStatusAnalyticsCloud = ({
 					displayType="link"
 					onClick={() => setIsVisible(true)}
 				>
-					Finish Activation
+					{i18n.translate('finish-activation')}
 				</Button>
 			),
 			id: STATUS_TAG_TYPES.notActivated,
-			subtitle:
-				'Almost there! Setup Analytics Cloud by finishing the activation form',
-			title: 'Analytics Cloud Activation',
+			subtitle: i18n.translate(
+				'almost-there-setup-analytics-cloud-by-finishing-the-activation-form'
+			),
+			title: i18n.translate('analytics-cloud-activation'),
 		},
 	};
 

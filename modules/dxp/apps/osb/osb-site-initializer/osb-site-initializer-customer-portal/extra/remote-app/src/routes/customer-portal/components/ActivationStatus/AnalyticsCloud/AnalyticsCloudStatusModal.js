@@ -13,6 +13,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useState} from 'react';
+import i18n from '../../../../../common/I18n';
 import {Badge, Button} from '../../../../../common/components';
 import {isLowercaseAndNumbers} from '../../../../../common/utils/validations.form';
 
@@ -43,7 +44,9 @@ const AnalyticsCloudStatusModal = ({
 				<div className="bg-neutral-1 cp-analytics-cloud-status-modal">
 					<div className="d-flex justify-content-between">
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
-							ANALYTICS CLOUD SETUP
+							{i18n
+								.translate('analytics-cloud-setup')
+								.toupperCase()}
 						</h4>
 
 						<div className="mr-4 mt-3">
@@ -57,12 +60,13 @@ const AnalyticsCloudStatusModal = ({
 					</div>
 
 					<h2 className="ml-4 text-neutral-10">
-						Group ID Confirmation
+						{i18n.translate('group-id-confirmation')}
 					</h2>
 
 					<p className="mb-2 ml-4 mt-4">
-						Confirm the final Group ID used to create the
-						customer&apos;s Analytics Cloud environments.
+						{i18n.translate(
+							'confirm-the-final-group-id-used-to-create-the-customer-s-analytics-cloud-environments'
+						)}
 					</p>
 
 					<div className="mx-2">
@@ -87,8 +91,9 @@ const AnalyticsCloudStatusModal = ({
 								</Badge>
 							) : (
 								<p className="ml-3 pl-3 pr-2 text-neutral-7 text-paragraph-sm">
-									Please enter here the workspace&apos;s Group
-									ID.
+									{i18n.translate(
+										'please-enter-here-the-workspace-s-group-id'
+									)}
 								</p>
 							)}
 						</ClayForm.Group>
@@ -99,7 +104,7 @@ const AnalyticsCloudStatusModal = ({
 							displayType="secondary ml-auto mt-2"
 							onClick={onClose}
 						>
-							Cancel
+							{i18n.translate('cancel')}
 						</Button>
 
 						<Button
@@ -107,7 +112,7 @@ const AnalyticsCloudStatusModal = ({
 							displayType="primary ml-3 mt-2"
 							onClick={handleOnConfirm}
 						>
-							Confirm
+							{i18n.translate('confirm')}
 						</Button>
 					</div>
 				</div>

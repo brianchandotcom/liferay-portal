@@ -501,7 +501,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		Integer retestAmount = _getRetestAmount();
 
-		if ((retestAmount != 1) || (portalBranchSHACount > 1)) {
+		if ((retestAmount != 1) && (portalBranchSHACount > 1)) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Invalid parameter input, ");
@@ -656,12 +656,14 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	private void _validateBuildParameterRetestCherryPickSHA() {
 		String cherryPickSHAs = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
+
+		if ((cherryPickSHAs == null) || cherryPickSHAs.isEmpty()) {
+			return;
+		}
+
 		int retestAmount = _getRetestAmount();
 
-		Integer portalCherryPickSHACount =
-			StringUtils.countMatches(cherryPickSHAs, ",") + 1;
-
-		if ((retestAmount != 1) || (portalCherryPickSHACount > 1)) {
+		if (retestAmount != 1) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Invalid parameter input, ");

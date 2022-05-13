@@ -5208,6 +5208,96 @@ definition {
 		}
 	}
 
+	@description = "LPS-113248: When there are more than one experience(not default experience) with fragments mapped to different web contents, each experience will maintain its own mapping, even if the mapping is modified in any experience"
+	@priority = "4"
+	test MapFragmentsWithExperiences {
+		task ("Create two Web Contents") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
+
+		task ("Go to Page Editor and map a fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 1",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Create a new Experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience Name",
+				segmentName = "Anyone");
+
+			Refresh();
+
+			PageEditor.changeExperience(newExperience = "New Experience Name");
+		}
+
+		task ("Map fragment to new experience") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 2",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Chech the mapped value at first experience") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			ContentPages.changeExperience(experienceName = "Default");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "WC Title 1");
+		}
+
+		task ("Chech the mapped value at second experience") {
+			ContentPages.changeExperience(experienceName = "New Experience Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "WC Title 2");
+		}
+	}
+
 	@description = "LPS-86292: Validate if, on simulate view, is possible to have no segment selected, in this case, the page shown is the default
 	Create a segment;
 	Create an experience based on that segment;

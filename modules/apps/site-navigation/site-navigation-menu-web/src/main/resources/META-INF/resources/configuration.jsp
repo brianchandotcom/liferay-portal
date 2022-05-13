@@ -351,6 +351,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 			);
 
 			Liferay.Util.openSelectionModal({
+				height: '70vh',
 				onSelect: function (selectedItem) {
 					if (selectedItem) {
 						rootMenuItemIdInput.value =
@@ -363,6 +364,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 				},
 				selectEventName:
 					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
+				size: 'md',
 				title:
 					'<liferay-ui:message key="select-site-navigation-menu-item" />',
 				url: uri,

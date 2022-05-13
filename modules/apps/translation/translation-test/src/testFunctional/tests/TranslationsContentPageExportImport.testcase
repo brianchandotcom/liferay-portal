@@ -154,9 +154,157 @@ definition {
 		}
 	}
 
+	@description = "This ensures that user can choose to export all experiences when exporting translation for multiple content pages."
+	@priority = "5"
+	test CanExportMultiplePagesAllWithNewExperiences {
+		property custom.properties = "feature.flag.LPS-142736=true";
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Translation Content Page${i}",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Translation Content Page${i}",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			PageEditor.clickPublish();
+		}
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "Translation Content Page1,Translation Content Page2");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan)",
+			multiplePageExperiencesSelector = "All Experiences");
+
+		Translations.assertFileNameFromTempFolder(pageName = "Segments Experience Translations-en_US");
+
+		Translations.unzipTranslationFile(fileName = "Segments Experience Translations-en_US.zip");
+
+		for (var fileName : list "Translation Content Page1 (Default)-en_US-ja_JP.xlf,Translation Content Page2 (Default)-en_US-ja_JP.xlf,Translation Content Page1 (NewAnyoneExperience)-en_US-ja_JP.xlf,Translation Content Page2 (NewAnyoneExperience)-en_US-ja_JP.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
+		}
+	}
+
+	@description = "This ensures that experiences selector shows up when exporting translation for multiple content pages which is at least one page with new experiences."
+	@priority = "5"
+	test CanExportMultiplePagesNotAllWithNewExperiences {
+		property custom.properties = "feature.flag.LPS-142736=true";
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Translation Content Page${i}",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Translation Content Page${i}",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.clickPublish();
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Translation Content Page1",
+			siteName = "Guest");
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "Translation Content Page1,Translation Content Page2");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan)",
+			multiplePageExperiencesSelector = "All Experiences");
+
+		Translations.assertFileNameFromTempFolder(pageName = "Segments Experience Translations-en_US");
+
+		Translations.unzipTranslationFile(fileName = "Segments Experience Translations-en_US.zip");
+
+		for (var fileName : list "Translation Content Page1 (Default)-en_US-ja_JP.xlf,Translation Content Page1 (NewAnyoneExperience)-en_US-ja_JP.xlf,Translation Content Page2 (Default)-en_US-ja_JP.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
+		}
+	}
+
+	@description = "This ensures that user can choose to export only the default experience when exporting translation for multiple content pages."
+	@priority = "5"
+	test CanExportMultiplePagesWithDefaultExperiences {
+		property custom.properties = "feature.flag.LPS-142736=true";
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Translation Content Page${i}",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Translation Content Page${i}",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			PageEditor.clickPublish();
+		}
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "Translation Content Page1,Translation Content Page2");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan),Spanish (Spain)",
+			multiplePageExperiencesSelector = "true");
+
+		Translations.assertFileNameFromTempFolder(pageName = "Page Translations-en_US");
+
+		Translations.unzipTranslationFile(fileName = "Page Translations-en_US.zip");
+
+		for (var fileName : list "Translation Content Page1-en_US-es_ES.xlf,Translation Content Page2-en_US-es_ES.xlf,Translation Content Page1-en_US-ja_JP.xlf,Translation Content Page2-en_US-ja_JP.xlf") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
+		}
+	}
+
 	@description = "This ensures that Users can select multiple available languages when exporting multiple content pages for translation."
 	@priority = "5"
 	test CanExportMultiplePagesWithMultipleLanguages {
+		property custom.properties = "feature.flag.LPS-142736=true";
 		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";

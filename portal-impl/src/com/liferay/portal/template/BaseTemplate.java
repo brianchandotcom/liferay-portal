@@ -203,7 +203,7 @@ public abstract class BaseTemplate implements Template {
 
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> map) {
-		context.putAll(map);
+		map.forEach(this::put);
 	}
 
 	@Override

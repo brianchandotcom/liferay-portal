@@ -23,6 +23,7 @@ import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpAuthRequestUpg
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpMessageUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v2_1_0.SamlIdpSpConnectionUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v2_4_0.util.SamlPeerBindingTable;
+import com.liferay.saml.persistence.internal.upgrade.v3_0_1.SamlSpIdpConnectionDataUpgradeProcess;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -136,6 +137,9 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 				"SamlSpSession", "nameIdSPNameQualifier"),
 			UpgradeStepFactory.dropColumns("SamlSpSession", "nameIdValue"),
 			UpgradeStepFactory.dropColumns("SamlSpSession", "samlIdpEntityId"));
+
+		registry.register(
+			"3.0.0", "3.0.1", new SamlSpIdpConnectionDataUpgradeProcess());
 	}
 
 	@Reference

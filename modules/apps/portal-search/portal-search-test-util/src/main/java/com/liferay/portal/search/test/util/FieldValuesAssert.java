@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.util.ArrayList;
@@ -72,6 +74,15 @@ public class FieldValuesAssert {
 
 			Map<String, String> filteredFieldValuesMap = _filterOnKey(
 				actualFieldValuesMap, keysPredicate);
+
+			Map<String, Object> sourcesMap = _getSourcesMap(searchResponse);
+
+			for (String key : filteredFieldValuesMap.keySet()) {
+				if (sourcesMap.containsKey(key)) {
+					filteredFieldValuesMap.put(
+						key, _toObjectString(sourcesMap.get(key)));
+				}
+			}
 
 			AssertUtils.assertEquals(
 				() -> StringBundler.concat(
@@ -165,6 +176,18 @@ public class FieldValuesAssert {
 		).collect(
 			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);
+	}
+
+	private static Map<String, Object> _getSourcesMap(
+		SearchResponse searchResponse) {
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		return searchHit.getSourcesMap();
 	}
 
 	private static <E> List<E> _sort(List<E> list) {

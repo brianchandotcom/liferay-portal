@@ -178,7 +178,7 @@ definition {
 	@priority = "2"
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
 		property portal.upstream = "quarantine";
-		
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();

@@ -23,7 +23,6 @@ import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfigurati
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorResults;
 import com.liferay.portal.search.rest.resource.v1_0.SuggestionResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -130,9 +129,6 @@ public class Mutation {
 		suggestionResource.setContextUser(_user);
 		suggestionResource.setGroupLocalService(_groupLocalService);
 		suggestionResource.setRoleLocalService(_roleLocalService);
-
-		suggestionResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<SuggestionResource>
@@ -147,7 +143,5 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }

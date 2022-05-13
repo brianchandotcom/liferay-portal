@@ -10,18 +10,23 @@
  */
 import ClayModal from '@clayui/modal';
 import {useMemo, useState} from 'react';
+import i18n from '../../../../common/I18n';
 import SetupAnalyticsCloud from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
 import ConfirmationMessageModal from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm/ConfirmationMessageModal';
 import {ANALYTICS_STEPS_TYPES} from '../../utils/constants';
 import AlreadySubmittedFormModal from '../ActivationStatus/AlreadySubmittedModal';
 
 const submittedModalTexts = {
-	paragraph:
-		'Return to the product activation page to view the current Activation Status',
-	subtitle: `We'll need a few details to finish building your Analytics Cloud workspace(s).`,
-	text:
-		'Another user already submitted the Analytics Cloud activation request.',
-	title: 'Set up Analytics Cloud',
+	paragraph: i18n.translate(
+		'return-to-the-product-activation-page-to-view-the-current-activation-status'
+	),
+	subtitle: i18n.translate(
+		'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace-s'
+	),
+	text: i18n.translate(
+		'another-user-already-submitted-the-analytics-cloud-activation-request'
+	),
+	title: i18n.translate('set-up-analytics-cloud'),
 };
 
 const AnalyticsCloudModal = ({
@@ -50,7 +55,7 @@ const AnalyticsCloudModal = ({
 			[ANALYTICS_STEPS_TYPES.setupForm]: (
 				<SetupAnalyticsCloud
 					handlePage={handleChangeForm}
-					leftButton="Cancel"
+					leftButton={i18n.translate('cancel')}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
 					subscriptionGroupId={subscriptionGroupId}

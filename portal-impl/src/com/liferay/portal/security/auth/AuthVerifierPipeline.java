@@ -179,10 +179,9 @@ public class AuthVerifierPipeline {
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			PortalUtil.getCompanyId(httpServletRequest));
-
-		authVerifierResult.setUserId(defaultUserId);
+		authVerifierResult.setUserId(
+			UserLocalServiceUtil.getDefaultUserId(
+				PortalUtil.getCompanyId(httpServletRequest)));
 
 		return authVerifierResult;
 	}

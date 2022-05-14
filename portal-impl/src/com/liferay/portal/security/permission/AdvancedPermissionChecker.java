@@ -816,13 +816,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			while (!parentGroup.isRoot()) {
 				parentGroup = parentGroup.getParentGroup();
 
-				long[] roleIds = getRoleIds(
-					getUserId(), parentGroup.getGroupId());
-
 				if (doCheckPermission(
 						parentGroup.getCompanyId(), parentGroup.getGroupId(),
 						Group.class.getName(),
-						String.valueOf(parentGroup.getGroupId()), roleIds,
+						String.valueOf(parentGroup.getGroupId()),
+						getRoleIds(getUserId(), parentGroup.getGroupId()),
 						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
 
 					return true;
@@ -894,15 +892,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				Group parentGroup = parentOrganization.getGroup();
 
-				long[] roleIds = getRoleIds(
-					getUserId(), parentGroup.getGroupId());
-
 				if (doCheckPermission(
 						parentGroup.getCompanyId(), parentGroup.getGroupId(),
 						Organization.class.getName(),
 						String.valueOf(parentOrganization.getOrganizationId()),
-						roleIds, ActionKeys.MANAGE_SUBORGANIZATIONS,
-						stopWatch)) {
+						getRoleIds(getUserId(), parentGroup.getGroupId()),
+						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
 
 					return true;
 				}

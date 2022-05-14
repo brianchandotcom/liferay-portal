@@ -102,10 +102,7 @@ public class ThemeAutoDeployer
 
 		StringBundler sb = new StringBundler(3);
 
-		String extraFiltersContent = super.getExtraFiltersContent(
-			webXmlVersion, srcFile);
-
-		sb.append(extraFiltersContent);
+		sb.append(super.getExtraFiltersContent(webXmlVersion, srcFile));
 
 		// Ignore filters
 

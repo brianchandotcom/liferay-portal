@@ -117,11 +117,7 @@ public class PortletAutoDeployer
 		updatePortletXML(portletXML);
 
 		sb.append(getServletContent(portletXML, webXML));
-
-		String extraContent = super.getExtraContent(
-			webXmlVersion, srcFile, displayName);
-
-		sb.append(extraContent);
+		sb.append(super.getExtraContent(webXmlVersion, srcFile, displayName));
 
 		return sb.toString();
 	}
@@ -132,10 +128,7 @@ public class PortletAutoDeployer
 
 		StringBundler sb = new StringBundler(4);
 
-		String extraFiltersContent = super.getExtraFiltersContent(
-			webXmlVersion, srcFile);
-
-		sb.append(extraFiltersContent);
+		sb.append(super.getExtraFiltersContent(webXmlVersion, srcFile));
 
 		// Ignore filters
 

@@ -107,22 +107,6 @@ public class UserNotificationEventLocalServiceImpl
 		return userNotificationEventPersistence.update(userNotificationEvent);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, String type, long timestamp, int deliveryType,
-			long deliverBy, String payload, boolean actionRequired,
-			boolean archived, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUserNotificationEvent(
-			userId, type, timestamp, deliveryType, deliverBy, true, payload,
-			actionRequired, archived, serviceContext);
-	}
-
 	@Override
 	public UserNotificationEvent addUserNotificationEvent(
 			long userId, String type, long timestamp, int deliveryType,
@@ -131,8 +115,8 @@ public class UserNotificationEventLocalServiceImpl
 		throws PortalException {
 
 		return addUserNotificationEvent(
-			userId, type, timestamp, deliveryType, deliverBy, payload, false,
-			archived, serviceContext);
+			userId, type, timestamp, deliveryType, deliverBy, true, payload,
+			false, archived, serviceContext);
 	}
 
 	@Override

@@ -229,11 +229,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				layout, hasIconImage, iconBytes, "iconImageId", 0, 0, 0);
 		}
 
-		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-			serviceContext, "layoutPrototypeLinkEnabled");
-
-		layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
-
+		layout.setLayoutPrototypeLinkEnabled(
+			ParamUtil.getBoolean(serviceContext, "layoutPrototypeLinkEnabled"));
 		layout.setExpandoBridgeAttributes(serviceContext);
 
 		LayoutUtil.update(layout);

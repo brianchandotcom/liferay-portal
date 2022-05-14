@@ -38,7 +38,6 @@ import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -886,12 +885,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					group.getGroupId());
 			}
 
-			List<BackgroundTask> backgroundTasks =
-				BackgroundTaskManagerUtil.getBackgroundTasks(
-					group.getGroupId(),
-					BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			if (ListUtil.isNotNull(
+					BackgroundTaskManagerUtil.getBackgroundTasks(
+						group.getGroupId(),
+						BackgroundTaskConstants.STATUS_IN_PROGRESS))) {
 
-			if (ListUtil.isNotNull(backgroundTasks)) {
 				throw new PendingBackgroundTaskException(
 					"Unable to delete group with pending background tasks");
 			}
@@ -1434,11 +1432,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group fetchUserPersonalSiteGroup(long companyId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			UserPersonalSite.class);
-
 		return groupPersistence.fetchByC_C_C(
-			companyId, classNameId,
+			companyId,
+			_classNameLocalService.getClassNameId(UserPersonalSite.class),
 			_userLocalService.getDefaultUserId(companyId));
 	}
 
@@ -1876,11 +1872,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getLayoutPrototypeGroup(long companyId, long layoutPrototypeId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			LayoutPrototype.class);
-
 		return groupPersistence.findByC_C_C(
-			companyId, classNameId, layoutPrototypeId);
+			companyId,
+			_classNameLocalService.getClassNameId(LayoutPrototype.class),
+			layoutPrototypeId);
 	}
 
 	/**
@@ -1896,11 +1891,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long companyId, long layoutSetPrototypeId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			LayoutSetPrototype.class);
-
 		return groupPersistence.findByC_C_C(
-			companyId, classNameId, layoutSetPrototypeId);
+			companyId,
+			_classNameLocalService.getClassNameId(LayoutSetPrototype.class),
+			layoutSetPrototypeId);
 	}
 
 	/**
@@ -2030,11 +2024,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getOrganizationGroup(long companyId, long organizationId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Organization.class);
-
 		return groupPersistence.findByC_C_C(
-			companyId, classNameId, organizationId);
+			companyId,
+			_classNameLocalService.getClassNameId(Organization.class),
+			organizationId);
 	}
 
 	/**
@@ -2069,10 +2062,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> organizationGroups = new ArrayList<>();
 
 		for (Organization organization : organizations) {
-			List<Group> groups = _organizationPersistence.getGroups(
-				organization.getOrganizationId());
-
-			organizationGroups.addAll(groups);
+			organizationGroups.addAll(
+				_organizationPersistence.getGroups(
+					organization.getOrganizationId()));
 		}
 
 		return organizationGroups;
@@ -2145,11 +2137,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getUserGroupGroup(long companyId, long userGroupId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			UserGroup.class);
-
 		return groupPersistence.findByC_C_C(
-			companyId, classNameId, userGroupId);
+			companyId, _classNameLocalService.getClassNameId(UserGroup.class),
+			userGroupId);
 	}
 
 	/**
@@ -2246,10 +2236,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> userGroupGroups = new ArrayList<>();
 
 		for (UserGroup userGroup : userGroups) {
-			List<Group> groups = _userGroupPersistence.getGroups(
-				userGroup.getUserGroupId());
-
-			userGroupGroups.addAll(groups);
+			userGroupGroups.addAll(
+				_userGroupPersistence.getGroups(userGroup.getUserGroupId()));
 		}
 
 		return userGroupGroups;
@@ -2314,11 +2302,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getUserPersonalSiteGroup(long companyId)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			UserPersonalSite.class);
-
 		return groupPersistence.findByC_C_C(
-			companyId, classNameId,
+			companyId,
+			_classNameLocalService.getClassNameId(UserPersonalSite.class),
 			_userLocalService.getDefaultUserId(companyId));
 	}
 

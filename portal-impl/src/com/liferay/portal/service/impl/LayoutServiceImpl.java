@@ -728,10 +728,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, boolean privateLayout, long parentLayoutId)
 		throws PortalException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId);
-
-		return filterLayouts(layouts);
+		return filterLayouts(
+			layoutLocalService.getLayouts(
+				groupId, privateLayout, parentLayoutId));
 	}
 
 	@Override
@@ -740,10 +739,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			boolean incomplete, int start, int end)
 		throws PortalException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
-
-		return filterLayouts(layouts);
+		return filterLayouts(
+			layoutLocalService.getLayouts(
+				groupId, privateLayout, parentLayoutId, incomplete, start,
+				end));
 	}
 
 	@Override
@@ -751,10 +750,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, boolean privateLayout, String type)
 		throws PortalException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, type);
-
-		return filterLayouts(layouts);
+		return filterLayouts(
+			layoutLocalService.getLayouts(groupId, privateLayout, type));
 	}
 
 	@Override

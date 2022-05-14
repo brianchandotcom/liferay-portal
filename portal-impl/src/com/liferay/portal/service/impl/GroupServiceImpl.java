@@ -298,10 +298,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.UPDATE);
 
-		String portletId = PortletProviderUtil.getPortletId(
-			Layout.class.getName(), PortletProvider.Action.EDIT);
-
-		return PortalUtil.getControlPanelFullURL(groupId, portletId, null);
+		return PortalUtil.getControlPanelFullURL(
+			groupId,
+			PortletProviderUtil.getPortletId(
+				Layout.class.getName(), PortletProvider.Action.EDIT),
+			null);
 	}
 
 	/**

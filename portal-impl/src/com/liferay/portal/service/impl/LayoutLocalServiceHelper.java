@@ -171,10 +171,10 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		if (newFriendlyURLMap.isEmpty() ||
 			Validator.isNull(newFriendlyURLMap.get(siteDefaultLocale))) {
 
-			String friendlyURL = getFriendlyURL(
-				groupId, privateLayout, layoutId, name, StringPool.BLANK);
-
-			newFriendlyURLMap.put(siteDefaultLocale, friendlyURL);
+			newFriendlyURLMap.put(
+				siteDefaultLocale,
+				getFriendlyURL(
+					groupId, privateLayout, layoutId, name, StringPool.BLANK));
 		}
 
 		return newFriendlyURLMap;

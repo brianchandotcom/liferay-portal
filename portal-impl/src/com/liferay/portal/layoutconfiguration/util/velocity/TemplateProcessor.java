@@ -302,10 +302,9 @@ public class TemplateProcessor implements ColumnProcessor {
 			PortletProvider.Action portletProviderAction)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			portletProviderClassName, portletProviderAction);
-
-		return processPortlet(portletId);
+		return processPortlet(
+			PortletProviderUtil.getPortletId(
+				portletProviderClassName, portletProviderAction));
 	}
 
 	private String _processColumn(

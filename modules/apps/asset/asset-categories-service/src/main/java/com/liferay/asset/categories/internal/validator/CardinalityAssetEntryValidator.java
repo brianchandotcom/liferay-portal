@@ -44,7 +44,7 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	@Override
 	public void validate(
 			long groupId, String className, long classPK, long classTypePK,
-			long[] categoryIds, String[] entryNames)
+			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
 		long classNameId = _classNameLocalService.getClassNameId(className);

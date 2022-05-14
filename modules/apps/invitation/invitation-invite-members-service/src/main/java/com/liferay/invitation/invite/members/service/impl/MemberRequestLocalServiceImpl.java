@@ -460,7 +460,8 @@ public class MemberRequestLocalServiceImpl
 				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
 			_userNotificationEventLocalService.addUserNotificationEvent(
-				memberRequest.getReceiverUserId(), true, notificationEvent);
+				memberRequest.getReceiverUserId(), true, true,
+				notificationEvent);
 		}
 	}
 

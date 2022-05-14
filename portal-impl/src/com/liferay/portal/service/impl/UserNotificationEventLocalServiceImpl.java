@@ -69,26 +69,12 @@ public class UserNotificationEventLocalServiceImpl
 			notificationEvent.isArchived(), serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, boolean actionRequired,
-			NotificationEvent notificationEvent)
-		throws PortalException {
-
-		return addUserNotificationEvent(
-			userId, true, actionRequired, notificationEvent);
-	}
-
 	@Override
 	public UserNotificationEvent addUserNotificationEvent(
 			long userId, NotificationEvent notificationEvent)
 		throws PortalException {
 
-		return addUserNotificationEvent(userId, false, notificationEvent);
+		return addUserNotificationEvent(userId, true, false, notificationEvent);
 	}
 
 	@Override

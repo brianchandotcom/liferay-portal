@@ -35,7 +35,7 @@ public class AtLeastOneTagAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long classTypePK,
+			long groupId, String className, long classPK, long classTypePK,
 			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 

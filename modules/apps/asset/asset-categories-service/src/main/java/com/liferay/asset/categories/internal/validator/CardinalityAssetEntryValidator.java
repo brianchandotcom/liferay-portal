@@ -65,19 +65,6 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void validate(
-			long groupId, String className, long classTypePK,
-			long[] categoryIds, String[] entryNames)
-		throws PortalException {
-
-		validate(groupId, className, 0L, classTypePK, categoryIds, entryNames);
-	}
-
 	protected void validate(
 			long classNameId, long classTypePK, long[] categoryIds,
 			AssetVocabulary assetVocabulary)

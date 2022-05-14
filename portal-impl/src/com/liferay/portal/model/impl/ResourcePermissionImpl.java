@@ -114,11 +114,9 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 
 	@Override
 	public boolean hasActionId(String actionId) {
-		ResourceAction resourceAction =
+		return hasAction(
 			ResourceActionLocalServiceUtil.fetchResourceAction(
-				getName(), actionId);
-
-		return hasAction(resourceAction);
+				getName(), actionId));
 	}
 
 	@Override

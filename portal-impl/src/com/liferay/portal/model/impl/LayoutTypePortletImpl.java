@@ -269,11 +269,9 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets() {
-		List<Portlet> staticPortlets = getStaticPortlets(
-			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
-
 		return addStaticPortlets(
-			getExplicitlyAddedPortlets(), staticPortlets,
+			getExplicitlyAddedPortlets(),
+			getStaticPortlets(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL),
 			getEmbeddedPortlets());
 	}
 

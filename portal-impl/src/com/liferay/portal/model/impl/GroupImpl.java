@@ -188,10 +188,7 @@ public class GroupImpl extends GroupBaseImpl {
 		String name = getName(locale);
 
 		if (Validator.isNull(name)) {
-			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
-				getGroupId());
-
-			name = getName(siteDefaultLocale);
+			name = getName(PortalUtil.getSiteDefaultLocale(getGroupId()));
 		}
 
 		if (isCompany() && !isCompanyStagingGroup()) {

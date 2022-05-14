@@ -175,10 +175,8 @@ public class CustomJspBagRegistryUtil {
 		Set<String> customJsps = new HashSet<>();
 
 		for (String customJsp : customJspBag.getCustomJsps()) {
-			String portalJsp = getPortalJsp(
-				customJsp, customJspBag.getCustomJspDir());
-
-			customJsps.add(portalJsp);
+			customJsps.add(
+				getPortalJsp(customJsp, customJspBag.getCustomJspDir()));
 		}
 
 		Map<String, String> conflictingCustomJsps = new HashMap<>();

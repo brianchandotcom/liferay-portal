@@ -42,8 +42,9 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
 
 		return addressLocalService.addAddress(
-			getUserId(), className, classPK, street1, street2, street3, city,
-			zip, regionId, countryId, typeId, mailing, primary, serviceContext);
+			null, getUserId(), className, classPK, null, null, street1, street2,
+			street3, city, zip, regionId, countryId, typeId, mailing, primary,
+			null, serviceContext);
 	}
 
 	@Override

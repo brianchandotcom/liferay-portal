@@ -108,12 +108,12 @@ public class AddressStagedModelDataHandler
 			serviceContext.setUuid(address.getUuid());
 
 			importedAddress = _addressLocalService.addAddress(
-				userId, address.getClassName(), address.getClassPK(),
-				address.getStreet1(), address.getStreet2(),
+				null, userId, address.getClassName(), address.getClassPK(),
+				null, null, address.getStreet1(), address.getStreet2(),
 				address.getStreet3(), address.getCity(), address.getZip(),
 				address.getRegionId(), address.getCountryId(),
 				address.getTypeId(), address.isMailing(), address.isPrimary(),
-				serviceContext);
+				null, serviceContext);
 		}
 		else {
 			importedAddress = _addressLocalService.updateAddress(

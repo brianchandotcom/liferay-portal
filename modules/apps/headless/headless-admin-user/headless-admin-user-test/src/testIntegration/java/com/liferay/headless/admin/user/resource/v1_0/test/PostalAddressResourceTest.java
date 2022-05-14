@@ -134,13 +134,13 @@ public class PostalAddressResourceTest
 
 		return _toPostalAddress(
 			AddressLocalServiceUtil.addAddress(
-				_user.getUserId(), className, classPK,
+				null, _user.getUserId(), className, classPK, null, null,
 				postalAddress.getStreetAddressLine1(),
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getStreetAddressLine3(),
 				postalAddress.getAddressLocality(),
 				postalAddress.getPostalCode(), 0, 0, _getListTypeId(listTypeId),
-				false, postalAddress.getPrimary(), new ServiceContext()));
+				false, postalAddress.getPrimary(), null, new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {

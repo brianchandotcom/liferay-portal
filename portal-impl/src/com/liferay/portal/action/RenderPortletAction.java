@@ -29,8 +29,6 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 
-import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -102,11 +100,11 @@ public class RenderPortletAction implements Action {
 			httpServletResponse.setHeader("Ajax-ID", ajaxId);
 		}
 
-		WindowState windowState = WindowStateFactory.getWindowState(
-			ParamUtil.getString(httpServletRequest, "p_p_state"));
-
 		PortalUtil.updateWindowState(
-			portletId, user, layout, windowState, httpServletRequest);
+			portletId, user, layout,
+			WindowStateFactory.getWindowState(
+				ParamUtil.getString(httpServletRequest, "p_p_state")),
+			httpServletRequest);
 
 		httpServletRequest = PortletContainerUtil.setupOptionalRenderParameters(
 			httpServletRequest, null, columnId, columnPos, columnCount,

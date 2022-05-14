@@ -56,13 +56,11 @@ public class SQLServerLimitStringUtil {
 		String innerOrderBy = splitOrderBy[0];
 		String outerOrderBy = splitOrderBy[1];
 
-		String innerSelectFrom = _getInnerSelectFrom(
-			selectFrom, innerOrderBy, limit);
-
 		return StringBundler.concat(
 			"select * from (select *, row_number() over (", outerOrderBy,
-			") as _page_row_num from (", innerSelectFrom, selectFromWhere,
-			innerOrderBy,
+			") as _page_row_num from (",
+			_getInnerSelectFrom(selectFrom, innerOrderBy, limit),
+			selectFromWhere, innerOrderBy,
 			" ) _temp_table_1 ) _temp_table_2 where _page_row_num between ",
 			offset + 1, " and ", limit, " order by _page_row_num");
 	}

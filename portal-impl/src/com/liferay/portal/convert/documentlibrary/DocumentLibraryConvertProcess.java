@@ -119,11 +119,9 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 	}
 
 	protected List<FileVersion> getFileVersions(FileEntry fileEntry) {
-		List<FileVersion> fileVersions = fileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
-
 		return ListUtil.sort(
-			fileVersions, new FileVersionVersionComparator(true));
+			fileEntry.getFileVersions(WorkflowConstants.STATUS_ANY),
+			new FileVersionVersionComparator(true));
 	}
 
 	protected String getTargetStoreClassName() {

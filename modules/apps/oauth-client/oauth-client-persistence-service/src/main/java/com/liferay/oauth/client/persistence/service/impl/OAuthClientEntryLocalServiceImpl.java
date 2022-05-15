@@ -14,6 +14,9 @@
 
 package com.liferay.oauth.client.persistence.service.impl;
 
+import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientEntryException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientAuthServerTypeException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientEntryParametersJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServerTable;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
@@ -208,16 +211,16 @@ public class OAuthClientEntryLocalServiceImpl
 			String parametersJSON, boolean add)
 		throws PortalException {
 
-		OAuthClientAuthServer oAuthClientAuthServer =
-			_oAuthClientAuthServerPersistence.findByC_I(
-				companyId, authServerIssuer);
-
 		try {
 			JSONObjectUtils.parse(parametersJSON);
 		}
 		catch (ParseException parseException) {
-			throw new PortalException(parseException);
+			throw new OAuthClientEntryParametersJSONException(parseException);
 		}
+
+		OAuthClientAuthServer oAuthClientAuthServer =
+			_oAuthClientAuthServerPersistence.findByC_I(
+				companyId, authServerIssuer);
 
 		String type = oAuthClientAuthServer.getType();
 
@@ -234,16 +237,16 @@ public class OAuthClientEntryLocalServiceImpl
 							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
-						throw new PortalException(
-							"There is an existing OAuth Client Entry: " +
-								clientID.getValue());
+						throw new DuplicateOAuthClientEntryException(
+							"Client ID " + clientID.getValue());
 					}
 				}
 
 				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
-				throw new PortalException(parseException);
+				throw new OAuthClientAuthServerTypeException(
+					"Unable to parse type: " + type, parseException);
 			}
 		}
 		else if (type.equals("openid-configuration")) {
@@ -260,20 +263,21 @@ public class OAuthClientEntryLocalServiceImpl
 							companyId, authServerIssuer, clientID.getValue());
 
 					if (oAuthClientEntry != null) {
-						throw new PortalException(
-							"There is an existing OAuth Client Entry: " +
-								clientID.getValue());
+						throw new DuplicateOAuthClientEntryException(
+							"Client ID " + clientID.getValue());
 					}
 				}
 
 				return clientID.getValue();
 			}
 			catch (ParseException parseException) {
-				throw new PortalException(parseException);
+				throw new OAuthClientAuthServerTypeException(
+					"Unable to parse type: " + type, parseException);
 			}
 		}
 		else {
-			throw new PortalException("Unrecognized Metadata Type");
+			throw new OAuthClientAuthServerTypeException(
+				"Invalid type: " + type);
 		}
 	}
 

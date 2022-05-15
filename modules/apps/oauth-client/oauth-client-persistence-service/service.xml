@@ -82,6 +82,8 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateOAuthClientAuthServer</exception>
+		<exception>DuplicateOAuthClientEntry</exception>
 		<exception>OAuthClientAuthServerType</exception>
+		<exception>OAuthClientEntryParametersJSON</exception>
 	</exceptions>
 </service-builder>

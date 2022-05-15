@@ -14,6 +14,8 @@
 
 package com.liferay.oauth.client.persistence.service.impl;
 
+import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientAuthServerException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientAuthServerTypeException;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientAuthServerLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -202,9 +204,8 @@ public class OAuthClientAuthServerLocalServiceImpl
 		if (oAuthClientAuthServerPersistence.fetchByC_I(companyId, issuer) !=
 				null) {
 
-			throw new PortalException(
-				"There is an existing authorization server with issuer: " +
-					issuer);
+			throw new DuplicateOAuthClientAuthServerException(
+				"Issuer: " + issuer);
 		}
 
 		return issuer;
@@ -214,7 +215,7 @@ public class OAuthClientAuthServerLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(type)) {
-			throw new PortalException("Unspecified Metadata Type");
+			throw new OAuthClientAuthServerTypeException("Type is null");
 		}
 
 		if (type.equals("oauth-authorization-server")) {
@@ -227,7 +228,8 @@ public class OAuthClientAuthServerLocalServiceImpl
 				return issuer.getValue();
 			}
 			catch (ParseException parseException) {
-				throw new PortalException(parseException);
+				throw new OAuthClientAuthServerTypeException(
+					"Unable to parse type: " + type, parseException);
 			}
 		}
 		else if (type.equals("openid-configuration")) {
@@ -240,11 +242,13 @@ public class OAuthClientAuthServerLocalServiceImpl
 				return issuer.getValue();
 			}
 			catch (ParseException parseException) {
-				throw new PortalException(parseException);
+				throw new OAuthClientAuthServerTypeException(
+					"Unable to parse type: " + type, parseException);
 			}
 		}
 		else {
-			throw new PortalException("Unrecognized Metadata Type");
+			throw new OAuthClientAuthServerTypeException(
+				"Invalid type: " + type);
 		}
 	}
 

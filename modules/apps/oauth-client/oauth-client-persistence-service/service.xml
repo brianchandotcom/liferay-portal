@@ -80,4 +80,8 @@
 			<finder-column name="clientId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateOAuthClientAuthServer</exception>
+		<exception>OAuthClientAuthServerType</exception>
+	</exceptions>
 </service-builder>

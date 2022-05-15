@@ -109,23 +109,17 @@ public class OAuthClientAuthServerLocalServiceImpl
 
 	@Override
 	public OAuthClientAuthServer deleteOAuthClientAuthServer(
-		OAuthClientAuthServer oAuthClientAuthServer) {
+			OAuthClientAuthServer oAuthClientAuthServer)
+		throws PortalException {
 
-		try {
-			_resourceLocalService.deleteResource(
-				oAuthClientAuthServer.getCompanyId(),
-				OAuthClientAuthServer.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				oAuthClientAuthServer.getOAuthClientAuthServerId());
+		_resourceLocalService.deleteResource(
+			oAuthClientAuthServer.getCompanyId(),
+			OAuthClientAuthServer.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			oAuthClientAuthServer.getOAuthClientAuthServerId());
 
-			return oAuthClientAuthServerPersistence.remove(
-				oAuthClientAuthServer);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return null;
-		}
+		return oAuthClientAuthServerPersistence.remove(
+			oAuthClientAuthServer);
 	}
 
 	@Override

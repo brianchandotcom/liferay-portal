@@ -110,22 +110,16 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry deleteOAuthClientEntry(
-		OAuthClientEntry oAuthClientEntry) {
+			OAuthClientEntry oAuthClientEntry)
+		throws PortalException {
 
-		try {
-			_resourceLocalService.deleteResource(
-				oAuthClientEntry.getCompanyId(),
-				OAuthClientEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				oAuthClientEntry.getOAuthClientEntryId());
+		_resourceLocalService.deleteResource(
+			oAuthClientEntry.getCompanyId(),
+			OAuthClientEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			oAuthClientEntry.getOAuthClientEntryId());
 
-			return oAuthClientEntryPersistence.remove(oAuthClientEntry);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return null;
-		}
+		return oAuthClientEntryPersistence.remove(oAuthClientEntry);
 	}
 
 	@Override

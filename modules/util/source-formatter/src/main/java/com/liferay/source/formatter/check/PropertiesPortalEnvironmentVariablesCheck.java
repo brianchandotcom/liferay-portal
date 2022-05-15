@@ -36,8 +36,9 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (!isPortalSource() ||
-			!absolutePath.matches(
-				".*/portal-impl/src/portal(_.*)?\\.properties")) {
+			(!absolutePath.matches(
+				".*/portal-impl/src/portal(_.*)?\\.properties") &&
+			 !absolutePath.matches(".*/portal-impl/src/system.properties"))) {
 
 			return content;
 		}

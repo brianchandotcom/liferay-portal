@@ -18,8 +18,8 @@ import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServerTable;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntryTable;
-import com.liferay.oauth.client.persistence.service.OAuthClientAuthServerLocalService;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientEntryLocalServiceBaseImpl;
+import com.liferay.oauth.client.persistence.service.persistence.OAuthClientAuthServerPersistence;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -209,14 +209,8 @@ public class OAuthClientEntryLocalServiceImpl
 		throws PortalException {
 
 		OAuthClientAuthServer oAuthClientAuthServer =
-			_oAuthClientAuthServerLocalService.fetchOAuthClientAuthServer(
+			_oAuthClientAuthServerPersistence.findByC_I(
 				companyId, authServerIssuer);
-
-		if (oAuthClientAuthServer == null) {
-			throw new PortalException(
-				"No such OAuth Client Authorization server issuer: " +
-					authServerIssuer);
-		}
 
 		try {
 			JSONObjectUtils.parse(parametersJSON);
@@ -284,8 +278,7 @@ public class OAuthClientEntryLocalServiceImpl
 	}
 
 	@Reference
-	private OAuthClientAuthServerLocalService
-		_oAuthClientAuthServerLocalService;
+	private OAuthClientAuthServerPersistence _oAuthClientAuthServerPersistence;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

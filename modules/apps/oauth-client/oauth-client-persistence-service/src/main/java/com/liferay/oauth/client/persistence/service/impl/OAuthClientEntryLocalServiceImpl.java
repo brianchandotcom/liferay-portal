@@ -192,12 +192,11 @@ public class OAuthClientEntryLocalServiceImpl
 			oAuthClientEntryLocalService.getOAuthClientEntry(
 				oAuthClientEntryId);
 
-		String clientId = _validateAndGetClientId(
-			oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
-			parametersJSON, false);
-
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
-		oAuthClientEntry.setClientId(clientId);
+		oAuthClientEntry.setClientId(
+			_validateAndGetClientId(
+				oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
+				parametersJSON, false));
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 

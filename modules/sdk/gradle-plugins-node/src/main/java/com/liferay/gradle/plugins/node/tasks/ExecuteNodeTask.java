@@ -128,13 +128,13 @@ public class ExecuteNodeTask extends DefaultTask {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	@Optional
 	public File getNodeDir() {
 		return _nodeExecutor.getNodeDir();
 	}
 
 	@Input
-	@Optional
 	public int getNpmInstallRetries() {
 		return _npmInstallRetries;
 	}
@@ -154,13 +154,11 @@ public class ExecuteNodeTask extends DefaultTask {
 	}
 
 	@Input
-	@Optional
 	public boolean isInheritProxy() {
 		return _nodeExecutor.isInheritProxy();
 	}
 
 	@Input
-	@Optional
 	public boolean isUseGradleExec() {
 		return _nodeExecutor.isUseGradleExec();
 	}

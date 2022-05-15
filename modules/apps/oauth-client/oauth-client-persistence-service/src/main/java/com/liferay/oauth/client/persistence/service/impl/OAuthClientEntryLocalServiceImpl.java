@@ -23,8 +23,6 @@ import com.liferay.oauth.client.persistence.service.base.OAuthClientEntryLocalSe
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -113,13 +111,14 @@ public class OAuthClientEntryLocalServiceImpl
 			OAuthClientEntry oAuthClientEntry)
 		throws PortalException {
 
+		oAuthClientEntry = oAuthClientEntryPersistence.remove(oAuthClientEntry);
+
 		_resourceLocalService.deleteResource(
-			oAuthClientEntry.getCompanyId(),
-			OAuthClientEntry.class.getName(),
+			oAuthClientEntry.getCompanyId(), OAuthClientEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			oAuthClientEntry.getOAuthClientEntryId());
 
-		return oAuthClientEntryPersistence.remove(oAuthClientEntry);
+		return oAuthClientEntry;
 	}
 
 	@Override
@@ -284,9 +283,6 @@ public class OAuthClientEntryLocalServiceImpl
 			throw new PortalException("Unrecognized Metadata Type");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthClientEntryLocalServiceImpl.class);
 
 	@Reference
 	private OAuthClientAuthServerLocalService

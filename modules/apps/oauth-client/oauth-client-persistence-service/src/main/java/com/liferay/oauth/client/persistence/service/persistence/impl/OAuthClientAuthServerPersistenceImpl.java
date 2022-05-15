@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.client.persistence.service.persistence.impl;
 
-import com.liferay.oauth.client.persistence.exception.NoSuchAuthServerException;
+import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientAuthServerException;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServerTable;
 import com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerImpl;
@@ -274,13 +274,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByCompanyId_First(
 			long companyId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByCompanyId_First(
 			companyId, orderByComparator);
@@ -298,7 +298,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -329,13 +329,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByCompanyId_Last(
 			companyId, orderByComparator);
@@ -353,7 +353,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -391,13 +391,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] findByCompanyId_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = findByPrimaryKey(
 			oAuthClientAuthServerId);
@@ -679,13 +679,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] filterFindByCompanyId_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(
@@ -1163,13 +1163,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByUserId_First(
 			long userId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByUserId_First(
 			userId, orderByComparator);
@@ -1187,7 +1187,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -1218,13 +1218,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByUserId_Last(
 			long userId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByUserId_Last(
 			userId, orderByComparator);
@@ -1242,7 +1242,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -1280,13 +1280,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] findByUserId_PrevAndNext(
 			long oAuthClientAuthServerId, long userId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = findByPrimaryKey(
 			oAuthClientAuthServerId);
@@ -1567,13 +1567,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] filterFindByUserId_PrevAndNext(
 			long oAuthClientAuthServerId, long userId,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUserId_PrevAndNext(
@@ -1884,16 +1884,16 @@ public class OAuthClientAuthServerPersistenceImpl
 	private FinderPath _finderPathCountByC_I;
 
 	/**
-	 * Returns the o auth client auth server where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchAuthServerException</code> if it could not be found.
+	 * Returns the o auth client auth server where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchOAuthClientAuthServerException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param issuer the issuer
 	 * @return the matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByC_I(long companyId, String issuer)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByC_I(
 			companyId, issuer);
@@ -1915,7 +1915,7 @@ public class OAuthClientAuthServerPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchAuthServerException(sb.toString());
+			throw new NoSuchOAuthClientAuthServerException(sb.toString());
 		}
 
 		return oAuthClientAuthServer;
@@ -2046,7 +2046,7 @@ public class OAuthClientAuthServerPersistenceImpl
 	 */
 	@Override
 	public OAuthClientAuthServer removeByC_I(long companyId, String issuer)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = findByC_I(
 			companyId, issuer);
@@ -2327,13 +2327,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByC_T_First(
 			long companyId, String type,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByC_T_First(
 			companyId, type, orderByComparator);
@@ -2354,7 +2354,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -2387,13 +2387,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByC_T_Last(
 			long companyId, String type,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByC_T_Last(
 			companyId, type, orderByComparator);
@@ -2414,7 +2414,7 @@ public class OAuthClientAuthServerPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchAuthServerException(sb.toString());
+		throw new NoSuchOAuthClientAuthServerException(sb.toString());
 	}
 
 	/**
@@ -2454,13 +2454,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] findByC_T_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId, String type,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		type = Objects.toString(type, "");
 
@@ -2782,13 +2782,13 @@ public class OAuthClientAuthServerPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer[] filterFindByC_T_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId, String type,
 			OrderByComparator<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_T_PrevAndNext(
@@ -3313,11 +3313,11 @@ public class OAuthClientAuthServerPersistenceImpl
 	 *
 	 * @param oAuthClientAuthServerId the primary key of the o auth client auth server
 	 * @return the o auth client auth server that was removed
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer remove(long oAuthClientAuthServerId)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		return remove((Serializable)oAuthClientAuthServerId);
 	}
@@ -3327,11 +3327,11 @@ public class OAuthClientAuthServerPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the o auth client auth server
 	 * @return the o auth client auth server that was removed
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer remove(Serializable primaryKey)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		Session session = null;
 
@@ -3347,13 +3347,13 @@ public class OAuthClientAuthServerPersistenceImpl
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchAuthServerException(
+				throw new NoSuchOAuthClientAuthServerException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(oAuthClientAuthServer);
 		}
-		catch (NoSuchAuthServerException noSuchEntityException) {
+		catch (NoSuchOAuthClientAuthServerException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -3490,11 +3490,11 @@ public class OAuthClientAuthServerPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the o auth client auth server
 	 * @return the o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		OAuthClientAuthServer oAuthClientAuthServer = fetchByPrimaryKey(
 			primaryKey);
@@ -3504,7 +3504,7 @@ public class OAuthClientAuthServerPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchAuthServerException(
+			throw new NoSuchOAuthClientAuthServerException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -3512,15 +3512,15 @@ public class OAuthClientAuthServerPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth client auth server with the primary key or throws a <code>NoSuchAuthServerException</code> if it could not be found.
+	 * Returns the o auth client auth server with the primary key or throws a <code>NoSuchOAuthClientAuthServerException</code> if it could not be found.
 	 *
 	 * @param oAuthClientAuthServerId the primary key of the o auth client auth server
 	 * @return the o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientAuthServer findByPrimaryKey(long oAuthClientAuthServerId)
-		throws NoSuchAuthServerException {
+		throws NoSuchOAuthClientAuthServerException {
 
 		return findByPrimaryKey((Serializable)oAuthClientAuthServerId);
 	}

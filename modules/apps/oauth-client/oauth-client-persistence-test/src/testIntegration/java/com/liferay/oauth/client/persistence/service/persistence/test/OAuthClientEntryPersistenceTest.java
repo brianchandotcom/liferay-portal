@@ -15,7 +15,7 @@
 package com.liferay.oauth.client.persistence.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth.client.persistence.exception.NoSuchEntryException;
+import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientEntryException;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalServiceUtil;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientEntryPersistence;
@@ -227,7 +227,7 @@ public class OAuthClientEntryPersistenceTest {
 		Assert.assertEquals(existingOAuthClientEntry, newOAuthClientEntry);
 	}
 
-	@Test(expected = NoSuchEntryException.class)
+	@Test(expected = NoSuchOAuthClientEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

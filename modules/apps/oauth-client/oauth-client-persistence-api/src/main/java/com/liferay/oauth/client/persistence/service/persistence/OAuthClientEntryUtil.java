@@ -197,13 +197,13 @@ public class OAuthClientEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByCompanyId_First(
 			long companyId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByCompanyId_First(
 			companyId, orderByComparator);
@@ -229,13 +229,13 @@ public class OAuthClientEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByCompanyId_Last(
 			companyId, orderByComparator);
@@ -262,13 +262,13 @@ public class OAuthClientEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] findByCompanyId_PrevAndNext(
 			long oAuthClientEntryId, long companyId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByCompanyId_PrevAndNext(
 			oAuthClientEntryId, companyId, orderByComparator);
@@ -330,13 +330,13 @@ public class OAuthClientEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] filterFindByCompanyId_PrevAndNext(
 			long oAuthClientEntryId, long companyId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().filterFindByCompanyId_PrevAndNext(
 			oAuthClientEntryId, companyId, orderByComparator);
@@ -449,12 +449,12 @@ public class OAuthClientEntryUtil {
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByUserId_First(
 			long userId, OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -478,12 +478,12 @@ public class OAuthClientEntryUtil {
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByUserId_Last(
 			long userId, OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -508,13 +508,13 @@ public class OAuthClientEntryUtil {
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] findByUserId_PrevAndNext(
 			long oAuthClientEntryId, long userId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByUserId_PrevAndNext(
 			oAuthClientEntryId, userId, orderByComparator);
@@ -576,13 +576,13 @@ public class OAuthClientEntryUtil {
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] filterFindByUserId_PrevAndNext(
 			long oAuthClientEntryId, long userId,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().filterFindByUserId_PrevAndNext(
 			oAuthClientEntryId, userId, orderByComparator);
@@ -704,13 +704,13 @@ public class OAuthClientEntryUtil {
 	 * @param authServerIssuer the auth server issuer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByC_A_First(
 			long companyId, String authServerIssuer,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByC_A_First(
 			companyId, authServerIssuer, orderByComparator);
@@ -739,13 +739,13 @@ public class OAuthClientEntryUtil {
 	 * @param authServerIssuer the auth server issuer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByC_A_Last(
 			long companyId, String authServerIssuer,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByC_A_Last(
 			companyId, authServerIssuer, orderByComparator);
@@ -775,13 +775,13 @@ public class OAuthClientEntryUtil {
 	 * @param authServerIssuer the auth server issuer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] findByC_A_PrevAndNext(
 			long oAuthClientEntryId, long companyId, String authServerIssuer,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByC_A_PrevAndNext(
 			oAuthClientEntryId, companyId, authServerIssuer, orderByComparator);
@@ -850,13 +850,13 @@ public class OAuthClientEntryUtil {
 	 * @param authServerIssuer the auth server issuer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry[] filterFindByC_A_PrevAndNext(
 			long oAuthClientEntryId, long companyId, String authServerIssuer,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().filterFindByC_A_PrevAndNext(
 			oAuthClientEntryId, companyId, authServerIssuer, orderByComparator);
@@ -897,18 +897,18 @@ public class OAuthClientEntryUtil {
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param authServerIssuer the auth server issuer
 	 * @param clientId the client ID
 	 * @return the matching o auth client entry
-	 * @throws NoSuchEntryException if a matching o auth client entry could not be found
+	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public static OAuthClientEntry findByC_A_C(
 			long companyId, String authServerIssuer, String clientId)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByC_A_C(
 			companyId, authServerIssuer, clientId);
@@ -957,7 +957,7 @@ public class OAuthClientEntryUtil {
 	public static OAuthClientEntry removeByC_A_C(
 			long companyId, String authServerIssuer, String clientId)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().removeByC_A_C(
 			companyId, authServerIssuer, clientId);
@@ -1011,11 +1011,11 @@ public class OAuthClientEntryUtil {
 	 *
 	 * @param oAuthClientEntryId the primary key of the o auth client entry
 	 * @return the o auth client entry that was removed
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry remove(long oAuthClientEntryId)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().remove(oAuthClientEntryId);
 	}
@@ -1027,15 +1027,15 @@ public class OAuthClientEntryUtil {
 	}
 
 	/**
-	 * Returns the o auth client entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the o auth client entry with the primary key or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param oAuthClientEntryId the primary key of the o auth client entry
 	 * @return the o auth client entry
-	 * @throws NoSuchEntryException if a o auth client entry with the primary key could not be found
+	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public static OAuthClientEntry findByPrimaryKey(long oAuthClientEntryId)
 		throws com.liferay.oauth.client.persistence.exception.
-			NoSuchEntryException {
+			NoSuchOAuthClientEntryException {
 
 		return getPersistence().findByPrimaryKey(oAuthClientEntryId);
 	}

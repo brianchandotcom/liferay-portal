@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.client.persistence.service.persistence;
 
-import com.liferay.oauth.client.persistence.exception.NoSuchAuthServerException;
+import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientAuthServerException;
 import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -109,13 +109,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByCompanyId_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the first o auth client auth server in the ordered set where companyId = &#63;.
@@ -135,13 +135,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByCompanyId_Last(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the last o auth client auth server in the ordered set where companyId = &#63;.
@@ -162,13 +162,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] findByCompanyId_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns all the o auth client auth servers that the user has permission to view where companyId = &#63;.
@@ -219,13 +219,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] filterFindByCompanyId_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Removes all the o auth client auth servers where companyId = &#63; from the database.
@@ -317,13 +317,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByUserId_First(
 			long userId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the first o auth client auth server in the ordered set where userId = &#63;.
@@ -343,13 +343,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByUserId_Last(
 			long userId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the last o auth client auth server in the ordered set where userId = &#63;.
@@ -370,13 +370,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] findByUserId_PrevAndNext(
 			long oAuthClientAuthServerId, long userId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns all the o auth client auth servers that the user has permission to view where userId = &#63;.
@@ -427,13 +427,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] filterFindByUserId_PrevAndNext(
 			long oAuthClientAuthServerId, long userId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Removes all the o auth client auth servers where userId = &#63; from the database.
@@ -459,15 +459,15 @@ public interface OAuthClientAuthServerPersistence
 	public int filterCountByUserId(long userId);
 
 	/**
-	 * Returns the o auth client auth server where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchAuthServerException</code> if it could not be found.
+	 * Returns the o auth client auth server where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchOAuthClientAuthServerException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param issuer the issuer
 	 * @return the matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByC_I(long companyId, String issuer)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the o auth client auth server where companyId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -497,7 +497,7 @@ public interface OAuthClientAuthServerPersistence
 	 * @return the o auth client auth server that was removed
 	 */
 	public OAuthClientAuthServer removeByC_I(long companyId, String issuer)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the number of o auth client auth servers where companyId = &#63; and issuer = &#63;.
@@ -581,13 +581,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByC_T_First(
 			long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the first o auth client auth server in the ordered set where companyId = &#63; and type = &#63;.
@@ -609,13 +609,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client auth server
-	 * @throws NoSuchAuthServerException if a matching o auth client auth server could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a matching o auth client auth server could not be found
 	 */
 	public OAuthClientAuthServer findByC_T_Last(
 			long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the last o auth client auth server in the ordered set where companyId = &#63; and type = &#63;.
@@ -638,13 +638,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] findByC_T_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns all the o auth client auth servers that the user has permission to view where companyId = &#63; and type = &#63;.
@@ -699,13 +699,13 @@ public interface OAuthClientAuthServerPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer[] filterFindByC_T_PrevAndNext(
 			long oAuthClientAuthServerId, long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuthClientAuthServer> orderByComparator)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Removes all the o auth client auth servers where companyId = &#63; and type = &#63; from the database.
@@ -761,23 +761,23 @@ public interface OAuthClientAuthServerPersistence
 	 *
 	 * @param oAuthClientAuthServerId the primary key of the o auth client auth server
 	 * @return the o auth client auth server that was removed
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer remove(long oAuthClientAuthServerId)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	public OAuthClientAuthServer updateImpl(
 		OAuthClientAuthServer oAuthClientAuthServer);
 
 	/**
-	 * Returns the o auth client auth server with the primary key or throws a <code>NoSuchAuthServerException</code> if it could not be found.
+	 * Returns the o auth client auth server with the primary key or throws a <code>NoSuchOAuthClientAuthServerException</code> if it could not be found.
 	 *
 	 * @param oAuthClientAuthServerId the primary key of the o auth client auth server
 	 * @return the o auth client auth server
-	 * @throws NoSuchAuthServerException if a o auth client auth server with the primary key could not be found
+	 * @throws NoSuchOAuthClientAuthServerException if a o auth client auth server with the primary key could not be found
 	 */
 	public OAuthClientAuthServer findByPrimaryKey(long oAuthClientAuthServerId)
-		throws NoSuchAuthServerException;
+		throws NoSuchOAuthClientAuthServerException;
 
 	/**
 	 * Returns the o auth client auth server with the primary key or returns <code>null</code> if it could not be found.

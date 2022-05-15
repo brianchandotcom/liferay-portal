@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.oauth.client.persistence.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -19,20 +18,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchEntryException extends NoSuchModelException {
+public class NoSuchOAuthClientEntryException extends NoSuchModelException {
 
-	public NoSuchEntryException() {
+	public NoSuchOAuthClientEntryException() {
 	}
 
-	public NoSuchEntryException(String msg) {
+	public NoSuchOAuthClientEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEntryException(String msg, Throwable throwable) {
+	public NoSuchOAuthClientEntryException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchEntryException(Throwable throwable) {
+	public NoSuchOAuthClientEntryException(Throwable throwable) {
 		super(throwable);
 	}
 

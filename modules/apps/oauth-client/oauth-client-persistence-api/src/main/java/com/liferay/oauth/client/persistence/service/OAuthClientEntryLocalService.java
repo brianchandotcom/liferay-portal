@@ -123,10 +123,12 @@ public interface OAuthClientEntryLocalService
 	 *
 	 * @param oAuthClientEntry the o auth client entry
 	 * @return the o auth client entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthClientEntry deleteOAuthClientEntry(
-		OAuthClientEntry oAuthClientEntry);
+			OAuthClientEntry oAuthClientEntry)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

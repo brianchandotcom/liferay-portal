@@ -136,11 +136,13 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 	 *
 	 * @param oAuthClientEntry the o auth client entry
 	 * @return the o auth client entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public OAuthClientEntry deleteOAuthClientEntry(
-		OAuthClientEntry oAuthClientEntry) {
+			OAuthClientEntry oAuthClientEntry)
+		throws PortalException {
 
 		return oAuthClientEntryPersistence.remove(oAuthClientEntry);
 	}

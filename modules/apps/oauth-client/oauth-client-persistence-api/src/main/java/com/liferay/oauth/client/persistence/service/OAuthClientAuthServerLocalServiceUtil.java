@@ -127,9 +127,11 @@ public class OAuthClientAuthServerLocalServiceUtil {
 	 *
 	 * @param oAuthClientAuthServer the o auth client auth server
 	 * @return the o auth client auth server that was removed
+	 * @throws PortalException
 	 */
 	public static OAuthClientAuthServer deleteOAuthClientAuthServer(
-		OAuthClientAuthServer oAuthClientAuthServer) {
+			OAuthClientAuthServer oAuthClientAuthServer)
+		throws PortalException {
 
 		return getService().deleteOAuthClientAuthServer(oAuthClientAuthServer);
 	}

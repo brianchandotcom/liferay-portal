@@ -126,9 +126,11 @@ public class OAuthClientEntryLocalServiceUtil {
 	 *
 	 * @param oAuthClientEntry the o auth client entry
 	 * @return the o auth client entry that was removed
+	 * @throws PortalException
 	 */
 	public static OAuthClientEntry deleteOAuthClientEntry(
-		OAuthClientEntry oAuthClientEntry) {
+			OAuthClientEntry oAuthClientEntry)
+		throws PortalException {
 
 		return getService().deleteOAuthClientEntry(oAuthClientEntry);
 	}

@@ -133,12 +133,14 @@ public class OAuthClientEntryLocalServiceWrapper
 	 *
 	 * @param oAuthClientEntry the o auth client entry
 	 * @return the o auth client entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
-		deleteOAuthClientEntry(
-			com.liferay.oauth.client.persistence.model.OAuthClientEntry
-				oAuthClientEntry) {
+			deleteOAuthClientEntry(
+				com.liferay.oauth.client.persistence.model.OAuthClientEntry
+					oAuthClientEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryLocalService.deleteOAuthClientEntry(
 			oAuthClientEntry);

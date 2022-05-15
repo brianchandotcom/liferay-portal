@@ -139,11 +139,13 @@ public abstract class OAuthClientAuthServerLocalServiceBaseImpl
 	 *
 	 * @param oAuthClientAuthServer the o auth client auth server
 	 * @return the o auth client auth server that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public OAuthClientAuthServer deleteOAuthClientAuthServer(
-		OAuthClientAuthServer oAuthClientAuthServer) {
+			OAuthClientAuthServer oAuthClientAuthServer)
+		throws PortalException {
 
 		return oAuthClientAuthServerPersistence.remove(oAuthClientAuthServer);
 	}

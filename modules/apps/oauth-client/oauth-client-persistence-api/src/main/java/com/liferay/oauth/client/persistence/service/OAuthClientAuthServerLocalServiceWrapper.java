@@ -132,12 +132,14 @@ public class OAuthClientAuthServerLocalServiceWrapper
 	 *
 	 * @param oAuthClientAuthServer the o auth client auth server
 	 * @return the o auth client auth server that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientAuthServer
-		deleteOAuthClientAuthServer(
-			com.liferay.oauth.client.persistence.model.OAuthClientAuthServer
-				oAuthClientAuthServer) {
+			deleteOAuthClientAuthServer(
+				com.liferay.oauth.client.persistence.model.OAuthClientAuthServer
+					oAuthClientAuthServer)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientAuthServerLocalService.deleteOAuthClientAuthServer(
 			oAuthClientAuthServer);

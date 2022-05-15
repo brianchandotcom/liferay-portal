@@ -20,20 +20,20 @@
 
 		<!-- Other fields -->
 
+		<column name="notificationTemplateId" type="long" />
+		<column name="bcc" type="String" />
+		<column name="body" type="String" />
+		<column name="cc" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="notificationTemplateId" type="long" />
 		<column name="from" type="String" />
 		<column name="fromName" type="String" />
-		<column name="to" type="String" />
-		<column name="toName" type="String" />
-		<column name="cc" type="String" />
-		<column name="bcc" type="String" />
-		<column name="subject" type="String" />
-		<column name="body" type="String" />
 		<column name="priority" type="double" />
 		<column name="sent" type="boolean" />
 		<column name="sentDate" type="Date" />
+		<column name="subject" type="String" />
+		<column name="to" type="String" />
+		<column name="toName" type="String" />
 
 		<!-- Finder methods -->
 
@@ -57,16 +57,16 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="name" type="String" />
+		<column name="bcc" type="String" />
+		<column localized="true" name="body" type="String" />
+		<column name="cc" type="String" />
 		<column name="description" type="String" />
+		<column name="enabled" type="boolean" />
 		<column name="from" type="String" />
 		<column localized="true" name="fromName" type="String" />
-		<column name="to" type="String" />
-		<column name="cc" type="String" />
-		<column name="bcc" type="String" />
-		<column name="enabled" type="boolean" />
+		<column localized="true" name="name" type="String" />
 		<column localized="true" name="subject" type="String" />
-		<column localized="true" name="body" type="String" />
+		<column name="to" type="String" />
 	</entity>
 	<exceptions>
 		<exception>NotificationTemplateFrom</exception>

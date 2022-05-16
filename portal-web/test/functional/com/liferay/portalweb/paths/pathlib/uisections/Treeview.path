@@ -32,12 +32,12 @@
 </tr>
 <tr>
 	<td>NODE_SELECTED</td>
-	<td>//div[contains(@class,'card-type-directory') and contains(@class,'selected')]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')]</td>
+	<td>//div[contains(@class,'card-type-directory') and contains(@class,'selected')]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')] | //div[contains(@role,'treeitem') and contains(@class,'active')]//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_UNSELECTED</td>
-	<td>//div[contains(@class,'card-type-directory') and not(contains(@class,'selected'))]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')]</td>
+	<td>//div[contains(@class,'card-type-directory') and not(contains(@class,'selected'))]/div[contains(@class,'card-horizontal')]//span[contains(.,'${key_nodeName}')] | //div[contains(@role,'treeitem') and not(contains(@class,'active'))]//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
 	<td></td>
 </tr>
 <tr>

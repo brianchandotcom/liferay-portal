@@ -8,6 +8,7 @@ Import-Package:\
 	\
 	*
 -exportcontents:\
+	org.apache.commons.beanutils.*,\
 	org.apache.commons.codec.*,\
 	org.apache.commons.compress.*,\
 	org.apache.commons.csv,\

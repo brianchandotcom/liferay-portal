@@ -1,4 +1,5 @@
 dependencies {
+	compileInclude group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.13"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "1.8.1"
 	compileInclude group: "commons-validator", name: "commons-validator", version: "1.5.1"

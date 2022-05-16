@@ -20,7 +20,7 @@
 DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLViewFileEntryTypesDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
+<%@ include file="/document_library/navigation.jspf" %>
 
 <clay:management-toolbar
 	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"

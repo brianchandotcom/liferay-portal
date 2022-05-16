@@ -45,24 +45,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matija Petanjek
  */
 public abstract class BaseCommerceProductPriceCalculation
 	implements CommerceProductPriceCalculation {
-
-	public BaseCommerceProductPriceCalculation(
-		CommerceMoneyFactory commerceMoneyFactory,
-		CommerceTaxCalculation commerceTaxCalculation,
-		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService,
-		CPInstanceLocalService cpInstanceLocalService) {
-
-		this.commerceMoneyFactory = commerceMoneyFactory;
-		this.commerceTaxCalculation = commerceTaxCalculation;
-		this.cpDefinitionOptionRelLocalService =
-			cpDefinitionOptionRelLocalService;
-		this.cpInstanceLocalService = cpInstanceLocalService;
-	}
 
 	@Override
 	public CommerceMoney getCPDefinitionMinimumPrice(
@@ -381,11 +370,18 @@ public abstract class BaseCommerceProductPriceCalculation
 				finalPriceWithTaxAmount));
 	}
 
-	protected final CommerceMoneyFactory commerceMoneyFactory;
-	protected final CommerceTaxCalculation commerceTaxCalculation;
-	protected final CPDefinitionOptionRelLocalService
+	@Reference
+	protected CommerceMoneyFactory commerceMoneyFactory;
+
+	@Reference
+	protected CommerceTaxCalculation commerceTaxCalculation;
+
+	@Reference
+	protected CPDefinitionOptionRelLocalService
 		cpDefinitionOptionRelLocalService;
-	protected final CPInstanceLocalService cpInstanceLocalService;
+
+	@Reference
+	protected CPInstanceLocalService cpInstanceLocalService;
 
 	private BigDecimal _getCPDefinitionOptionMinDynamicPrice(
 			CPDefinitionOptionRel cpDefinitionOptionRel,

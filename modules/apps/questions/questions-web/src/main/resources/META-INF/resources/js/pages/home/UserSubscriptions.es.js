@@ -148,7 +148,9 @@ export default withRouter(({history, location}) => {
 		<section className="questions-section questions-section-list">
 			<div className="c-p-5 questions-container row">
 				<div className="col-xl-8 offset-xl-2">
-					<h2 className="sheet-subtitle">Tags</h2>
+					<h2 className="sheet-subtitle">
+						{Liferay.Language.get('tags')}
+					</h2>
 
 					{tagsFiltredSelected && (
 						<div className="c-mt-3 row">
@@ -189,7 +191,9 @@ export default withRouter(({history, location}) => {
 						</div>
 					)}
 
-					<h2 className="sheet-subtitle">Topics</h2>
+					<h2 className="sheet-subtitle">
+						{Liferay.Language.get('topics')}
+					</h2>
 
 					{topics &&
 						topics.myUserAccountSubscriptions.items &&
@@ -265,7 +269,9 @@ export default withRouter(({history, location}) => {
 							)}
 					</div>
 
-					<h2 className="mt-5 sheet-subtitle">Questions</h2>
+					<h2 className="mt-5 sheet-subtitle">
+						{Liferay.Language.get('questions')}
+					</h2>
 
 					<div>
 						{threads &&

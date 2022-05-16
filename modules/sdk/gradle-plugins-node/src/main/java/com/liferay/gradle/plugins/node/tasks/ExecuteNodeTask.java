@@ -31,6 +31,8 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -128,8 +130,8 @@ public class ExecuteNodeTask extends DefaultTask {
 	}
 
 	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getNodeDir() {
 		return _nodeExecutor.getNodeDir();
 	}

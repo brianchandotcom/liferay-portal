@@ -30,6 +30,8 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
@@ -106,8 +108,8 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 	}
 
 	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getCacheDir() {
 		return GradleUtil.toFile(getProject(), _cacheDir);
 	}

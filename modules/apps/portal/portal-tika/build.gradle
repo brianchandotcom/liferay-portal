@@ -5,6 +5,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
 	compileInclude group: "com.liferay", name: "org.mp4parser", version: "1.9.41.2.LIFERAY-PATCHED-2"
 	compileInclude group: "com.pff", name: "java-libpst", version: "0.8.1"
+	compileInclude group: "com.sun.istack", name: "istack-commons-runtime", version: "3.0.7"
 	compileInclude group: "com.uwyn", name: "jhighlight", version: "1.0"
 	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "edu.ucar", name: "netcdf", version: "4.3.23"
@@ -24,6 +25,7 @@ dependencies {
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.0.2"
 	compileInclude group: "org.ccil.cowan.tagsoup", name: "tagsoup", version: "1.2.1"
 	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
+	compileInclude group: "org.glassfish.jaxb", name: "jaxb-runtime", version: "2.3.1"
 	compileInclude group: "org.tallison", name: "jmatio", version: "1.2"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

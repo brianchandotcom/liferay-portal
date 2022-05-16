@@ -222,8 +222,7 @@ public class WarehouseItemResourceImpl
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				id,
-				GetterUtil.getInteger(warehouseItem.getQuantity()),
+				id, GetterUtil.getInteger(warehouseItem.getQuantity()),
 				commerceInventoryWarehouse.getMvccVersion());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

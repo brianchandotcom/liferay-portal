@@ -776,6 +776,7 @@
 		<check name="JavaUpgradeDropTableCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeIndexCheck">
 			<category name="Bug Prevention" />

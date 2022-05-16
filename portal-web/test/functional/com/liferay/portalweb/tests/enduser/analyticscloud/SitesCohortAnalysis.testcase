@@ -88,6 +88,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8326 | Test Summary: Site overview cohort analysis card shows which individuals are returning after their first views"
 	@priority = "5"
 	test ShowsIndividualsReturningAfterFirstViews {
+		property analytics.cloud.upstream = "false";
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

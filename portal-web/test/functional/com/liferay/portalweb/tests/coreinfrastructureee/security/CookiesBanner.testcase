@@ -53,6 +53,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-148320. Combined AC-1, AC-3. Verify that Cookie Banner could be enabled and customized via OSGI file."
+	test CookiesBannerCouldBeEnabledAndCustomizedViaOSGIFile {
+		property test.name.skip.portal.instance = "CookiesBanner#CookiesBannerCouldBeEnabledAndCustomizedViaOSGIFile";
+
+		task ("Given: a site configured to show the Banner via OSGI file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config");
+
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+
+			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
+		}
+
+		task ("When: modify configuration entries and click cancel button") {
+			CookieBannerAdmin.setCustomTextForAllFields(
+				cancel = "true",
+				text = "Modify CUSTOM");
+		}
+
+		task ("Then: all the configuration value changes are not saved.") {
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+
+			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
+		}
+	}
+
 	@description = "This is a use case for LPS-142518. TC-10 Verify that Decline All at the Cookie Banner could be set and cookies are stored with declined values."
 	@priority = "5"
 	test CookiesBannerDeclineAllSelected {

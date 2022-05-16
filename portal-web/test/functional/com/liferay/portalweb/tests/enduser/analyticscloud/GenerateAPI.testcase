@@ -77,5 +77,64 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11104 | Test Summary: There is an export scheduled but not started"
+	@priority = "3"
+	test ExportScheduledButNotStarted {
+		var startDate = "2000-11-06";
+		var startTime = "11:00:00.000";
+        var endDate = "2001-09-06";
+        var endTime = "20:30:00.000";
+        var type = "segment";
+        var upperCaseType = StringUtil.upperCase("${type}");
+        var status = "PENDING";
+		var message1 = "A new data export file for this date range and type will be created. Please come back later.";
+        var message2 = "A data export for this date range and type has already been scheduled. Please come back later.";
+
+        task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a new export schedule via API") {
+			ACApi.createNewExportSchedule(
+				token = "${token}",
+				type = "${type}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}");
+		}
+
+		task ("Check if the API response is correct for a new export schedule") {
+			ACApi.viewApiResponseForExportProcess(
+				upperCaseType = "${upperCaseType}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
+				message = "${message1}",
+				status = "${status}");
+		}
+
+		task ("Run the same curl command again") {
+			ACApi.createNewExportSchedule(
+				token = "${token}",
+				type = "${type}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}");
+		}
+
+		task ("Check if API response is correct when run same curl twice and export process not started") {
+			ACApi.viewApiResponseForExportProcess(
+				upperCaseType = "${upperCaseType}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
+				message = "${message2}",
+				status = "${status}");
+		}
+	}
 
 }

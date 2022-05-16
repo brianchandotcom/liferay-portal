@@ -47,8 +47,8 @@ export default function App(props) {
 	}
 
 	return (
-		<AppContextProvider {...props}>
-			<ClientContext.Provider value={client}>
+		<ClientContext.Provider value={client}>
+			<AppContextProvider {...props}>
 				<Router basename={path}>
 					<ErrorBoundary>
 						<div>
@@ -59,7 +59,7 @@ export default function App(props) {
 									component={(props) => (
 										<Component
 											module={`${packageName}/js/pages/home/Home`}
-											props={props}
+											props={{...props, isHomePath: true}}
 										/>
 									)}
 									exact
@@ -221,8 +221,8 @@ export default function App(props) {
 						</div>
 					</ErrorBoundary>
 				</Router>
-			</ClientContext.Provider>
-		</AppContextProvider>
+			</AppContextProvider>
+		</ClientContext.Provider>
 	);
 
 	function redirectForNotifications(props) {

@@ -10,6 +10,53 @@ definition {
 
         return "${apiResponse}";
 	}
+
+    macro viewApiResponseForExportProcess {
+        // Checks if the API response message is correct
+
+		if(contains("${apiResponse}", "${message}")) {
+			echo("Correct message - PASSED");
+		}
+        else {
+			fail("New export schedule was not created: Wrong message");
+		}
+
+        // Checks if the fromDate value is the same as the one used to create the schedule
+
+        if(contains("${apiResponse}", "fromDate=${startDate}T${startTime}Z")) {
+			echo("Correct fromDate - PASSED");
+		}
+        else {
+			fail("New export schedule was not created: Wrong fromDate");
+		}
+
+        // Checks if the toDate value is the same as the one used to create the schedule
+
+        if(contains("${apiResponse}", "toDate=${endDate}T${endTime}Z")) {
+			echo("Correct toDate - PASSED");
+		}
+        else {
+			fail("New export schedule was not created: Wrong toDate");
+		}
+
+        // Checks if the type value is the same as the one used to create the schedule
+
+        if(contains("${apiResponse}", "type=${upperCaseType}")) {
+			echo("Correct type - PASSED");
+		}
+        else {
+			fail("New export schedule was not created: Wrong type");
+		}
+
+        // Checks if the status value is the same as the one used to create the schedule
+
+        if(contains("${apiResponse}", "status=${status}")) {
+			echo("Correct status - PASSED");
+		}
+        else {
+			fail("New export schedule was not created: Wrong status");
+		}
+	}
 	macro getTokenValue {
 		ACUtils.clickAnyButton(button = "Generate Token");
 

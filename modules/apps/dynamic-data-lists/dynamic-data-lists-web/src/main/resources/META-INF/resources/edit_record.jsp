@@ -110,10 +110,7 @@ else {
 	/>
 </c:if>
 
-<clay:container-fluid
-	cssClass="closed sidenav-container sidenav-right"
-	id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
->
+<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= recordVersion != null %>">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-light sidenav-menu">
@@ -168,7 +165,9 @@ else {
 		</div>
 	</c:if>
 
-	<div class="sidenav-content">
+	<clay:container-fluid
+		cssClass="container-form-lg sidenav-content"
+	>
 		<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="container-fluid container-fluid-max-xl" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -286,8 +285,8 @@ else {
 				</c:if>
 			</aui:button-row>
 		</aui:form>
-	</div>
-</clay:container-fluid>
+	</clay:container-fluid>
+</div>
 
 <aui:script>
 	function <portlet:namespace />setWorkflowAction(draft) {

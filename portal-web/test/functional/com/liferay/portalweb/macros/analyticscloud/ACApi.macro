@@ -8,84 +8,88 @@ definition {
 
 		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
 
-        return "${apiResponse}";
-	}
-
-    macro viewApiResponseForExportProcess {
-        // Checks if the API response message is correct
-
-		if(contains("${apiResponse}", "${message}")) {
-			echo("Correct message - PASSED");
-		}
-        else {
-			fail("New export schedule was not created: Wrong message");
-		}
-
-        // Checks if the fromDate value is the same as the one used to create the schedule
-
-        if(contains("${apiResponse}", "fromDate=${startDate}T${startTime}Z")) {
-			echo("Correct fromDate - PASSED");
-		}
-        else {
-			fail("New export schedule was not created: Wrong fromDate");
-		}
-
-        // Checks if the toDate value is the same as the one used to create the schedule
-
-        if(contains("${apiResponse}", "toDate=${endDate}T${endTime}Z")) {
-			echo("Correct toDate - PASSED");
-		}
-        else {
-			fail("New export schedule was not created: Wrong toDate");
-		}
-
-        // Checks if the type value is the same as the one used to create the schedule
-
-        if(contains("${apiResponse}", "type=${upperCaseType}")) {
-			echo("Correct type - PASSED");
-		}
-        else {
-			fail("New export schedule was not created: Wrong type");
-		}
-
-        // Checks if the status value is the same as the one used to create the schedule
-
-        if(contains("${apiResponse}", "status=${status}")) {
-			echo("Correct status - PASSED");
-		}
-        else {
-			fail("New export schedule was not created: Wrong status");
-		}
-	}
-
-    macro viewApiResponseForError {
-        // Checks if the API response message explains the reason for the error
-
-		if(contains("${apiResponse}", "${message}")) {
-			echo("Correct error message - PASSED");
-		}
-        else {
-			fail("Wrong error message");
-		}
-
-        // Checks if the status value is ERROR
-
-        if(contains("${apiResponse}", "status=ERROR")) {
-			echo("Correct status - PASSED");
-		}
-        else {
-			fail("Wrong status");
-		}
+		return "${apiResponse}";
 	}
 
 	macro getTokenValue {
 		ACUtils.clickAnyButton(button = "Generate Token");
 
+		WaitForElementPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
+
 		// Use getAttribute to get the token value from the page's HTML
 
-        var token = selenium.getAttribute("//button[@aria-label='Click to Copy']@data-clipboard-text");
+		var token = selenium.getAttribute("//button[@aria-label='Click to Copy']@data-clipboard-text");
 
 		return "${token}";
+	}
+
+	macro viewApiResponseForError {
+
+		// Checks if the API response message explains the reason for the error
+
+		if (contains("${apiResponse}", "${message}")) {
+			echo("Correct error message - PASSED");
+		}
+		else {
+			fail("Wrong error message");
+		}
+
+		// Checks if the status value is ERROR
+
+		if (contains("${apiResponse}", "status=ERROR")) {
+			echo("Correct status - PASSED");
+		}
+		else {
+			fail("Wrong status");
+		}
+	}
+
+	macro viewApiResponseForExportProcess {
+
+		// Checks if the API response message is correct
+
+		if (contains("${apiResponse}", "${message}")) {
+			echo("Correct message - PASSED");
+		}
+		else {
+			fail("New export schedule was not created: Wrong message");
+		}
+
+		// Checks if the fromDate value is the same as the one used to create the schedule
+
+		if (contains("${apiResponse}", "fromDate=${startDate}T${startTime}Z")) {
+			echo("Correct fromDate - PASSED");
+		}
+		else {
+			fail("New export schedule was not created: Wrong fromDate");
+		}
+
+		// Checks if the toDate value is the same as the one used to create the schedule
+
+		if (contains("${apiResponse}", "toDate=${endDate}T${endTime}Z")) {
+			echo("Correct toDate - PASSED");
+		}
+		else {
+			fail("New export schedule was not created: Wrong toDate");
+		}
+
+		// Checks if the type value is the same as the one used to create the schedule
+
+		if (contains("${apiResponse}", "type=${upperCaseType}")) {
+			echo("Correct type - PASSED");
+		}
+		else {
+			fail("New export schedule was not created: Wrong type");
+		}
+
+		// Checks if the status value is the same as the one used to create the schedule
+
+		if (contains("${apiResponse}", "status=${status}")) {
+			echo("Correct status - PASSED");
+		}
+		else {
+			fail("New export schedule was not created: Wrong status");
+		}
 	}
 
 }

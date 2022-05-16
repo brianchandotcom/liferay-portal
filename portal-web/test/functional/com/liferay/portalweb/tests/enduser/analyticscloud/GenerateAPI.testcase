@@ -14,7 +14,7 @@ definition {
 			ACUtils.launchAC();
 		}
 
-        task ("Navigation to custom events tab") {
+		task ("Navigation to custom events tab") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToApis();
@@ -44,36 +44,37 @@ definition {
 	test CreateNewScheduledExportProcess {
 		var startDate = "1905-05-13";
 		var startTime = "11:45:00.000";
-        var endDate = "2022-05-13";
-        var endTime = "09:20:00.000";
-        var type = "page";
-        var upperCaseType = StringUtil.upperCase("${type}");
-        var status = "PENDING";
-        var message = "A new data export file for this date range and type will be created. Please come back later.";
+		var endDate = "2022-05-13";
+		var endTime = "09:20:00.000";
+		var type = "page";
 
-        task ("Get the token value to create the schedule") {
+		var upperCaseType = StringUtil.upperCase("${type}");
+		var status = "PENDING";
+		var message = "A new data export file for this date range and type will be created. Please come back later.";
+
+		task ("Get the token value to create the schedule") {
 			var token = ACApi.getTokenValue();
 		}
 
 		task ("Create a new export schedule via API") {
 			ACApi.createNewExportSchedule(
-				token = "${token}",
-				type = "${type}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
 				startDate = "${startDate}",
 				startTime = "${startTime}",
-				endDate = "${endDate}",
-				endTime = "${endTime}");
+				token = "${token}",
+				type = "${type}");
 		}
 
 		task ("Check if the API response is correct for a new export schedule") {
 			ACApi.viewApiResponseForExportProcess(
-				upperCaseType = "${upperCaseType}",
-				startDate = "${startDate}",
-				startTime = "${startTime}",
 				endDate = "${endDate}",
 				endTime = "${endTime}",
 				message = "${message}",
-				status = "${status}");
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				status = "${status}",
+				upperCaseType = "${upperCaseType}");
 		}
 	}
 
@@ -82,58 +83,116 @@ definition {
 	test ExportScheduledButNotStarted {
 		var startDate = "2000-11-06";
 		var startTime = "11:00:00.000";
-        var endDate = "2001-09-06";
-        var endTime = "20:30:00.000";
-        var type = "segment";
-        var upperCaseType = StringUtil.upperCase("${type}");
-        var status = "PENDING";
-		var message1 = "A new data export file for this date range and type will be created. Please come back later.";
-        var message2 = "A data export for this date range and type has already been scheduled. Please come back later.";
+		var endDate = "2001-09-06";
+		var endTime = "20:30:00.000";
+		var type = "segment";
 
-        task ("Get the token value to create the schedule") {
+		var upperCaseType = StringUtil.upperCase("${type}");
+		var status = "PENDING";
+		var message1 = "A new data export file for this date range and type will be created. Please come back later.";
+		var message2 = "A data export for this date range and type has already been scheduled. Please come back later.";
+
+		task ("Get the token value to create the schedule") {
 			var token = ACApi.getTokenValue();
 		}
 
 		task ("Create a new export schedule via API") {
 			ACApi.createNewExportSchedule(
-				token = "${token}",
-				type = "${type}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
 				startDate = "${startDate}",
 				startTime = "${startTime}",
-				endDate = "${endDate}",
-				endTime = "${endTime}");
+				token = "${token}",
+				type = "${type}");
 		}
 
 		task ("Check if the API response is correct for a new export schedule") {
 			ACApi.viewApiResponseForExportProcess(
-				upperCaseType = "${upperCaseType}",
-				startDate = "${startDate}",
-				startTime = "${startTime}",
 				endDate = "${endDate}",
 				endTime = "${endTime}",
 				message = "${message1}",
-				status = "${status}");
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				status = "${status}",
+				upperCaseType = "${upperCaseType}");
 		}
 
 		task ("Run the same curl command again") {
 			ACApi.createNewExportSchedule(
-				token = "${token}",
-				type = "${type}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
 				startDate = "${startDate}",
 				startTime = "${startTime}",
-				endDate = "${endDate}",
-				endTime = "${endTime}");
+				token = "${token}",
+				type = "${type}");
 		}
 
 		task ("Check if API response is correct when run same curl twice and export process not started") {
 			ACApi.viewApiResponseForExportProcess(
-				upperCaseType = "${upperCaseType}",
-				startDate = "${startDate}",
-				startTime = "${startTime}",
 				endDate = "${endDate}",
 				endTime = "${endTime}",
 				message = "${message2}",
-				status = "${status}");
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				status = "${status}",
+				upperCaseType = "${upperCaseType}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11107 | Test Summary: The request command has 'fromDate' after 'toDate'"
+	@priority = "3"
+	test RequestCommandHasFromDateAfterToDate {
+		var startDate = "2021-01-04";
+		var startTime = "12:00:00.000";
+		var endDate = "2019-08-13";
+		var endTime = "20:50:00.000";
+		var type = "individual";
+		var message = "Wrong range date. &quot;fromDate&quot; cannot be after &quot;toDate&quot;";
+
+		task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a new export schedule via API") {
+			ACApi.createNewExportSchedule(
+				endDate = "${endDate}",
+				endTime = "${endTime}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				token = "${token}",
+				type = "${type}");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(message = "${message}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11106 | Test Summary: The request command has the wrong date format"
+	@priority = "3"
+	test RequestCommandHasWrongDateFormat {
+		var startDate = "2022-02-01";
+		var endDate = "2022-05-16";
+		var type = "page";
+		var message = "Both dates in range must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
+
+		task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Run curl command with wrong date format") {
+			var curl = '''
+				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}\&toDate=${endDate}
+				-H "Authorization: Bearer ${token}"
+				''';
+
+			var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(
+				apiResponse = "${apiResponse}",
+				message = "${message}");
 		}
 	}
 
@@ -142,12 +201,12 @@ definition {
 	test RequestCommandNotContainFromDateOrToDate {
 		var startDate = "1964-07-09";
 		var startTime = "15:36:00.000";
-        var endDate = "2017-06-15";
-        var endTime = "10:20:00.000";
-        var type = "account";
-        var message = ""fromDate" and "toDate" query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
+		var endDate = "2017-06-15";
+		var endTime = "10:20:00.000";
+		var type = "account";
+		var message = "&quot;fromDate&quot; and &quot;toDate&quot; query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
 
-        task ("Get the token value to create the schedule") {
+		task ("Get the token value to create the schedule") {
 			var token = ACApi.getTokenValue();
 		}
 
@@ -194,63 +253,6 @@ definition {
 			ACApi.viewApiResponseForError(
 				apiResponse = "${apiResponse}",
 				message = "${message}");
-		}
-	}
-
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11106 | Test Summary: The request command has the wrong date format"
-	@priority = "3"
-	test RequestCommandHasWrongDateFormat {
-		var startDate = "2022-02-01";
-        var endDate = "2022-05-16";
-        var type = "page";
-        var message = "Both dates in range must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
-
-        task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Run curl command with wrong date format") {
-			var curl = '''
-				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}\&toDate=${endDate}
-				-H "Authorization: Bearer ${token}"
-				''';
-
-			var apiResponse = JSONCurlUtil.get("${curl}", "$");
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(
-				apiResponse = "${apiResponse}",
-				message = "${message}");
-		}
-	}
-
-	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11107 | Test Summary: The request command has 'fromDate' after 'toDate'"
-	@priority = "3"
-	test RequestCommandHasFromDateAfterToDate {
-		var startDate = "2021-01-04";
-		var startTime = "12:00:00.000";
-        var endDate = "2019-08-13";
-        var endTime = "20:50:00.000";
-        var type = "individual";
-        var message = "Wrong range date. "fromDate" cannot be after "toDate"";
-
-        task ("Get the token value to create the schedule") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Create a new export schedule via API") {
-			ACApi.createNewExportSchedule(
-				token = "${token}",
-				type = "${type}",
-				startDate = "${startDate}",
-				startTime = "${startTime}",
-				endDate = "${endDate}",
-				endTime = "${endTime}");
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(message = "${message}");
 		}
 	}
 

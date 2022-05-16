@@ -48,10 +48,10 @@ public class NotificationTemplateServiceImpl
 
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String name, String description, String from,
-			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap)
+			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
+			String description, boolean enabled, String from,
+			Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -59,8 +59,8 @@ public class NotificationTemplateServiceImpl
 			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
-			subjectMap, bodyMap);
+			userId, bcc, bodyMap, cc, description, enabled, from, fromNameMap,
+			name, subjectMap, to);
 	}
 
 	@Override
@@ -117,18 +117,18 @@ public class NotificationTemplateServiceImpl
 
 	@Override
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String name, String description,
-			String from, Map<Locale, String> fromNameMap, String to, String cc,
-			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap)
+			long notificationTemplateId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			boolean enabled, String from, Map<Locale, String> fromNameMap,
+			String name, Map<Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		_notificationTemplateModelResourcePermission.check(
 			getPermissionChecker(), notificationTemplateId, ActionKeys.UPDATE);
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
-			notificationTemplateId, name, description, from, fromNameMap, to,
-			cc, bcc, enabled, subjectMap, bodyMap);
+			notificationTemplateId, bcc, bodyMap, cc, description, enabled,
+			from, fromNameMap, name, subjectMap, to);
 	}
 
 	@Reference

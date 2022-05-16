@@ -730,12 +730,12 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		String webDriverBrowserBinaryPropertyName =
 			_getWebDriverBrowserBinaryPropertyName(poshiProperties);
 
-		if (Validator.isNotNull(webDriverBrowserBinaryPropertyName)) {
-			return Validator.isNull(
-				System.getProperty(webDriverBrowserBinaryPropertyName));
+		if (poshiProperties.containsKey(webDriverBrowserBinaryPropertyName)) {
+			return false;
 		}
 
-		return false;
+		return Validator.isNull(
+			System.getProperty(webDriverBrowserBinaryPropertyName));
 	}
 
 	private void _populateSystemProperties(
@@ -805,12 +805,14 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		String webDriverBrowserBinaryPropertyName =
 			_getWebDriverBrowserBinaryPropertyName(poshiProperties);
 
+		if (poshiProperties.containsKey(webDriverBrowserBinaryPropertyName)) {
+			return;
+		}
+
 		String webDriverBrowserBinaryPropertyValue = System.getProperty(
 			webDriverBrowserBinaryPropertyName);
 
-		if (Validator.isNull(webDriverBrowserBinaryPropertyValue) &&
-			_isDownloadWebDriverBrowserBinary(poshiProperties)) {
-
+		if (Validator.isNull(webDriverBrowserBinaryPropertyValue)) {
 			webDriverBrowserBinaryPropertyValue =
 				_getWebDriverDir(test.getProject()) + "/" +
 					_getWebDriverBrowserBinaryName(poshiProperties);

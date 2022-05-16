@@ -23,7 +23,8 @@ public class UpgradeDropTable extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop table if exists(LayoutVersion)");
+		runSQL("drop table if exists(Table1)");
+		runSQL("drop table if exists(Table2)");
 	}
 
 }

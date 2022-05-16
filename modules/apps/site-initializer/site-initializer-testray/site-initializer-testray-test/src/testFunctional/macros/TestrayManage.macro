@@ -22,6 +22,12 @@ definition {
 			value = "${key_value}");
 	}
 
+	macro assertNameCaseTypes {
+		AssertElementPresent(
+			locator1 = "TestrayManage#OPTIONS_NAME",
+			value = "${key_value}");
+	}
+
 	macro assertTitleModal {
 		AssertElementPresent(
 			key_title = "${key_itemvalue}",
@@ -58,10 +64,10 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro assertNameCaseTypes {
-		AssertElementPresent(
-			locator1 = "TestrayManage#OPTIONS_NAME",
-			value = "${key_value}");
+	macro selectOptionsManage {
+		Click(
+			key_itemvalue = "${key_itemvalue}",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 	}
 
 }

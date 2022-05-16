@@ -16,6 +16,15 @@ definition {
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_NECESSARY");
 	}
 
+	@description = "Click on Policy link shown on the Cookie Consent Panel"
+	macro clickOnPrivacyPolicyLink {
+		SelectFrame.selectFrameTop();
+
+		Click(
+			key_text = "${privacyPolicyLink}",
+			locator1 = "CookieBanner#VISIT_OUR_PRIVACY_POLICY");
+	}
+
 	@description = "Press Accept All button"
 	macro cookiesBannerAcceptAll {
 		Click(locator1 = "CookieBanner#ACCEPT_ALL_BUTTON");

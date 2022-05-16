@@ -163,7 +163,7 @@ definition {
 
 	@description = "Verify if Policy Page is visible"
 	macro verifyPolicyPageIsVisible {
-		Variables.assertDefined(parameterList = "${cookiePolicyLink}");
+		Variables.assertDefined(parameterList = "${policyLink}");
 
 		AssertElementPresent(locator1 = "//h2[contains(.,'Type Facet')]");
 	}

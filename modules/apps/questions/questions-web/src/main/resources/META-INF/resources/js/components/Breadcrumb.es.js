@@ -190,6 +190,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 								hasDropdown={true}
 								key={i}
 								section={section}
+								showDropdownSections={i === 0}
 								ui={section.title}
 							/>
 						);

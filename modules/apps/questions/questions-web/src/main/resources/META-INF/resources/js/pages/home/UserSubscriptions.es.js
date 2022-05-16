@@ -23,16 +23,34 @@ import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
+import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
+import TagsLayout from '../../components/TagsLayout.es';
+import useTags from '../../hooks/useTags.es';
 import {
 	getSubscriptionsQuery,
 	unsubscribeMyUserAccountQuery,
 } from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 
-export default withRouter(({history}) => {
+export default withRouter(({history, location}) => {
 	const [info, setInfo] = useState({});
 	const [questionToDelete, setQuestionToDelete] = useState({});
+
+	const {
+		changePage,
+		error,
+		loading,
+		orderBy,
+		page,
+		pageSize,
+		search,
+		tagsItemsSelected,
+	} = useTags({history, location});
+
+	const tagsFiltredSelected = tagsItemsSelected();
+
+	const linkSubscriptionPage = location.pathname.split('/')[2];
 
 	const context = useContext(AppContext);
 
@@ -130,6 +148,47 @@ export default withRouter(({history}) => {
 		<section className="questions-section questions-section-list">
 			<div className="c-p-5 questions-container row">
 				<div className="col-xl-8 offset-xl-2">
+					<h2 className="sheet-subtitle">Tags</h2>
+
+					{tagsFiltredSelected && (
+						<div className="c-mt-3 row">
+							<PaginatedList
+								activeDelta={pageSize}
+								activePage={page}
+								changeDelta={(pageSize) =>
+									changePage(search, page, pageSize)
+								}
+								changePage={(page) =>
+									changePage(search, page, pageSize)
+								}
+								data={tagsFiltredSelected}
+								emptyState={
+									<ClayEmptyState
+										className="empty-state-icon"
+										title={Liferay.Language.get(
+											'there-are-no-results'
+										)}
+									/>
+								}
+								loading={loading}
+							>
+								{(tag) => (
+									<TagsLayout
+										context={context.siteKey}
+										linkPage={linkSubscriptionPage}
+										orderBy={orderBy}
+										page={page}
+										pageSize={pageSize}
+										search={search}
+										tag={tag}
+									/>
+								)}
+							</PaginatedList>
+
+							<Alert info={error} />
+						</div>
+					)}
+
 					<h2 className="sheet-subtitle">Topics</h2>
 
 					{topics &&

@@ -21,10 +21,14 @@ import com.liferay.batch.engine.internal.upgrade.v4_2_0.BatchEngineImportTaskUpg
 import com.liferay.batch.engine.internal.upgrade.v4_3_0.BatchEngineExportTaskUpgradeProcess;
 import com.liferay.batch.engine.internal.upgrade.v4_3_1.BatchEngineTaskUpgradeProcess;
 import com.liferay.batch.engine.internal.upgrade.v4_5_0.util.BatchEngineImportTaskErrorTable;
+import com.liferay.batch.engine.internal.upgrade.v4_6_1.BatchEngineTaskConfigurationUpgradeProcess;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -70,7 +74,22 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 				BatchEngineExportTaskUpgradeProcess(),
 			new com.liferay.batch.engine.internal.upgrade.v4_6_0.
 				BatchEngineImportTaskUpgradeProcess());
+
+		registry.register(
+			"4.6.0", "4.6.1",
+			new BatchEngineTaskConfigurationUpgradeProcess(
+				_companyLocalService, _configurationAdmin,
+				_configurationProvider));
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

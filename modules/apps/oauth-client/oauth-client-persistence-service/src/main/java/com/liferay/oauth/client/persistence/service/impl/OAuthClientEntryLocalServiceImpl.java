@@ -71,8 +71,8 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
 		oAuthClientEntry.setClientId(
 			_validateAndGetClientId(
-				user.getCompanyId(), authServerIssuer, infoJSON, parametersJSON,
-				true));
+				user.getCompanyId(), authServerIssuer, infoJSON,
+				parametersJSON));
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
@@ -199,7 +199,7 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setClientId(
 			_validateAndGetClientId(
 				oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
-				parametersJSON, false));
+				parametersJSON));
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
@@ -208,7 +208,7 @@ public class OAuthClientEntryLocalServiceImpl
 
 	private String _validateAndGetClientId(
 			long companyId, String authServerIssuer, String infoJSON,
-			String parametersJSON, boolean add)
+			String parametersJSON)
 		throws PortalException {
 
 		try {
@@ -231,15 +231,13 @@ public class OAuthClientEntryLocalServiceImpl
 
 				ClientID clientID = clientInformation.getID();
 
-				if (add) {
-					OAuthClientEntry oAuthClientEntry =
-						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientID.getValue());
+				OAuthClientEntry oAuthClientEntry =
+					oAuthClientEntryPersistence.fetchByC_A_C(
+						companyId, authServerIssuer, clientID.getValue());
 
-					if (oAuthClientEntry != null) {
-						throw new DuplicateOAuthClientEntryException(
-							"Client ID " + clientID.getValue());
-					}
+				if (oAuthClientEntry != null) {
+					throw new DuplicateOAuthClientEntryException(
+						"Client ID " + clientID.getValue());
 				}
 
 				return clientID.getValue();
@@ -257,15 +255,13 @@ public class OAuthClientEntryLocalServiceImpl
 
 				ClientID clientID = oidcClientInformation.getID();
 
-				if (add) {
-					OAuthClientEntry oAuthClientEntry =
-						oAuthClientEntryPersistence.fetchByC_A_C(
-							companyId, authServerIssuer, clientID.getValue());
+				OAuthClientEntry oAuthClientEntry =
+					oAuthClientEntryPersistence.fetchByC_A_C(
+						companyId, authServerIssuer, clientID.getValue());
 
-					if (oAuthClientEntry != null) {
-						throw new DuplicateOAuthClientEntryException(
-							"Client ID " + clientID.getValue());
-					}
+				if (oAuthClientEntry != null) {
+					throw new DuplicateOAuthClientEntryException(
+						"Client ID " + clientID.getValue());
 				}
 
 				return clientID.getValue();

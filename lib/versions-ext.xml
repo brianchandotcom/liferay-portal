@@ -93,18 +93,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/istack-commons-runtime.jar</file-name>
-				<version>3.0.7</version>
-				<project-name>Jaxb Istack Commons</project-name>
-				<project-url>https://javaee.github.io/jaxb-istack-commons</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/appium.jar</file-name>
 				<version>1.6.2</version>
 				<project-name>Appium</project-name>
@@ -1231,18 +1219,6 @@
 						<license-name>Jaxen License</license-name>
 						<license-url>http://jaxen.codehaus.org/license.html</license-url>
 						<copyright-notice>Copyright (c) 2003 The Werken Company. All Rights Reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jaxb-runtime.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>Java Architecture for XML Binding</project-name>
-				<project-url>https://javaee.github.io/jaxb-v2/</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
 					</license>
 				</licenses>
 			</library>

@@ -502,7 +502,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147705. A warning message appears when users try to delete a style book."
-	@priority = "3"
+	@priority = "4"
 	test DeleteStyleBook {
 		task ("Given a site designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(

@@ -1050,6 +1050,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152949. View widget type pages' name and navigate to the page in search widget."
+	@priority = "5"
+	test SearchWidgetTypePages {
+		task ("Given a page creator has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("When the page creator searches it in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Widget");
+		}
+
+		task ("Then the page creator could see the wiget page in the results and be able to navigate to it") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Test Widget Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Widget Page Name");
+		}
+
+		task ("Given a page creator has a Full Page Application type page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Full Page Application Page Name",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Full Page Application");
+		}
+
+		task ("When the page creator searches it in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Full");
+		}
+
+		task ("Then the page creator could see the Full Page Application type page in the results and be able to navigate to it") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Test Full Page Application Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Full Page Application Page Name");
+		}
+
+		task ("Given a page creator has a Link to URL type page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Link to URL Page Name",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Link to URL");
+		}
+
+		task ("When the page creator searches it in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Link");
+		}
+
+		task ("Then the page creator could see the Link to URL type page in the results and be able to navigate to it") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Test Link to URL Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+		}
+
+		task ("Given a page creator has a Panel type page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Panel Page Name",
+				type = "panel");
+		}
+
+		task ("When the page creator searches it in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Panel");
+		}
+
+		task ("Then the page creator could see the Panel type page in the results and be able to navigate to it") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Test Panel Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Panel Page Name");
+		}
+
+		task ("Given a page creator has an embedded type page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Embedded Page Name",
+				pageTypeURL = "http://www.liferay.com",
+				sitePageType = "Embedded");
+		}
+
+		task ("When the page creator searches it in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Embedded");
+		}
+
+		task ("Then the page creator could see the embedded type page in the results and be able to navigate to it") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Test Embedded Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Embedded Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
 	@priority = "4"
 	test ViewChildPage {

@@ -951,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/core@3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.56.0.tgz#e1f3c8707e28b519dfb67f07d8f81540cd2112d7"
-  integrity sha512-okpLZ7hUVe5jd0CUjUHRrYifrmPIg/NA7tMBxtY3Z1CJsMRXlx0BgG5dPTE7ktO58kvVqi/xR1c8s7wE6lRYjw==
+"@clayui/core@3.57.0":
+  version "3.57.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.57.0.tgz#3e70f11312ce4f98fe860399b0d6d79874515280"
+  integrity sha512-G9MySGlOeu3yTB2FsNsqVYl9CtqX0++e6h6HVJZY0ZorZiPWDmMxGswBK2jz5a/FtsWS9jIuvS32VvUo0m9fmA==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.56.0"
@@ -969,10 +969,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.56.0.tgz#2dde3b338f58c2df5734783f5aac08280e75403f"
-  integrity sha512-Klciv1iAUPT8ySx17Gxe+/j36aZE5XoDClGORxvEF1loaLPLPW06ecxTLHB0w2vjdSe++0BK8m7hjKDzeBeZpQ==
+"@clayui/css@3.57.0":
+  version "3.57.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.57.0.tgz#4f25be0718892c15fd569135b4a813a59722e09c"
+  integrity sha512-fvpJFxpJ6qrd9zr3SHeRg4k9Q8HavTWBNzJG85CYtNQvzoHcjO5/ZW5HVi+XUancdFHelmnZ9ylIdubjpOtoLA==
 
 "@clayui/data-provider@3.56.0":
   version "3.56.0"
@@ -983,10 +983,10 @@
     fast-json-stable-stringify "^2.1.0"
     warning "^4.0.3"
 
-"@clayui/date-picker@3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.56.0.tgz#97c0f270d021dfc52ed01da607a6c98c5b920988"
-  integrity sha512-bn75Qe7cJPKVzvEweBqXDmh+/dEWD8ybz6GXgYOcESlH3bj4X7HqhNRHp57AQTm4RPvvkO0zdb5/X/LgtlJwMw==
+"@clayui/date-picker@3.57.0":
+  version "3.57.0"
+  resolved "https://registry.yarnpkg.com/@clayui/date-picker/-/date-picker-3.57.0.tgz#8a63110fe8a1362ac5fb29075b4ba8ecb1bcf646"
+  integrity sha512-AGuF6CAhU2ck+YOhlTGRK5gwOUHerXmUZxRLmeW/3cjUbBolYtD8KnfDy2BDF9HG2y888VlrMRUy15vZlRlv+A==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.56.0"
@@ -6065,7 +6065,7 @@ dom-align@1.10.4:
   resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.10.4.tgz#862ae4de0d11d6495c1c8ee1b195427e7caa727d"
   integrity sha512-wytDzaru67AmqFOY4B9GUb/hrwWagezoYYK97D/vpK+ezg+cnuZO0Q2gltUPa7KfNmIqfRIYVCF8UhRDEHAmgQ==
 
-dom-align@^1.12.2:
+dom-align@1.12.2, dom-align@^1.12.2:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.12.2.tgz#0f8164ebd0c9c21b0c790310493cd855892acd4b"
   integrity sha512-pHuazgqrsTFrGU2WLDdXxCFabkdQDx72ddkraZNih1KsMcN5qsRSTR9O4VJRlwTPCPb5COYg3LOfiMHHcPInHg==

@@ -77,6 +77,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-152844. Combined AC-5, AC-6, AC-7. Verify that Cookie Consent pangel could be enabled and customized."
+	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomized {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomized";
 
@@ -98,6 +99,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-152844. AC-8. Verify that Cookie Consent panel could be enabled and customized on a Site page."
+	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedOnASitePage {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomizedOnASitePage";
 
@@ -126,6 +128,55 @@ definition {
 
 		task ("Then: they go to the 'Cookie Policy Link' page.") {
 			CookieHelper.verifyPolicyPageIsVisible(cookiePolicyLink = "/web/guest/policypage");
+		}
+	}
+
+	@description = "This is a use case for LPS-148320. Combined AC-1, AC-2, AC-3. Verify that Cookie Consent Panel could be enabled and customized via OSGI file. Blocked by LPS-153615."
+	@ignore = "true"
+	@priority = "5"
+	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
+		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "CookiesConsentPanel#CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile";
+
+		task ("Given: a site configured to show the Consent Panel via OSGI file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.config");
+
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+
+			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
+		}
+
+		task ("When: modify configuration entries and click cancel button") {
+			CookieConsentAdmin.setCustomTextForAllFields(
+				cancel = "true",
+				text = "Modify SITE");
+		}
+
+		task ("Then: all the configuration value changes are not saved.") {
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+
+			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
+		}
+
+		task ("When: remove all the title and description values and click save button") {
+			Type(
+				locator1 = "CookieConsentAdmin#TITLE",
+				value1 = "");
+
+			Type(
+				locator1 = "CookieConsentAdmin#DESCRIPTION",
+				value1 = "");
+
+			CookieBannerAdmin.saveConfiguration();
+		}
+
+		task ("Then: the configuration value changes cannot be saved because all the Title and Description must have a value.") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR",
+				value1 = "Please enter a valid title.");
 		}
 	}
 

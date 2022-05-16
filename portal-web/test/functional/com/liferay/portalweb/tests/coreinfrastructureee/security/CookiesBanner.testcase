@@ -31,6 +31,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-152844. Combined AC-1, AC-2, AC-3, AC-4. Verify that Cookie Banner could be enabled, and customized."
+	@priority = "5"
 	test CookiesBannerCouldBeEnabledAndCustomized {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerCouldBeEnabledAndCustomized";
 
@@ -54,6 +55,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-148320. Combined AC-1, AC-3. Verify that Cookie Banner could be enabled and customized via OSGI file."
+	@priority = "5"
 	test CookiesBannerCouldBeEnabledAndCustomizedViaOSGIFile {
 		property test.name.skip.portal.instance = "CookiesBanner#CookiesBannerCouldBeEnabledAndCustomizedViaOSGIFile";
 

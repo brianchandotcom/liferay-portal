@@ -34,9 +34,7 @@ definition {
 			CookieConsentAdmin.precheckAll();
 		}
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		CookieBannerAdmin.saveConfiguration();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
@@ -94,13 +92,18 @@ definition {
 			locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION",
 			value1 = "${text}_8");
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		if (isSet(cancel)) {
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else {
+			CookieBannerAdmin.saveConfiguration();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
 	}
 
 	@description = "Verify all elements are present and configured"

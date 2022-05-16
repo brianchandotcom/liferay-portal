@@ -224,4 +224,34 @@ definition {
 				message = "${message}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11107 | Test Summary: The request command has 'fromDate' after 'toDate'"
+	@priority = "3"
+	test RequestCommandHasFromDateAfterToDate {
+		var startDate = "2021-01-04";
+		var startTime = "12:00:00.000";
+        var endDate = "2019-08-13";
+        var endTime = "20:50:00.000";
+        var type = "individual";
+        var message = "Wrong range date. "fromDate" cannot be after "toDate"";
+
+        task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a new export schedule via API") {
+			ACApi.createNewExportSchedule(
+				token = "${token}",
+				type = "${type}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(message = "${message}");
+		}
+	}
+
 }

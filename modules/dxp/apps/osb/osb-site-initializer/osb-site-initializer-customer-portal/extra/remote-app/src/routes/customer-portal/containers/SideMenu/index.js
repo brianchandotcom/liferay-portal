@@ -59,6 +59,8 @@ const SideMenu = () => {
 						];
 						menuItemStatus[index] = isActive;
 
+						setIsOpenedProductsMenu(menuItemStatus.some(Boolean));
+
 						return menuItemStatus;
 					});
 

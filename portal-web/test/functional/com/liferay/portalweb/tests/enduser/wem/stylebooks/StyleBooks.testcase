@@ -501,6 +501,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147705. A warning message appears when users try to delete a style book."
+	@priority = "3"
+	test DeleteStyleBook {
+		task ("Given a site designer has a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("When the site designer delete the style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Delete",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("Then the site designer could see a warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Deleting a style book is an action impossible to revert. All Style Book tokens and values will be removed and it will not be possible to recover it. Watch out for critical impact on the site's look & feel.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "This is a test for LPS-142078. The user could mark a new style book as default."
 	@priority = "4"
 	test MarkNewStyleBookAsDefault {

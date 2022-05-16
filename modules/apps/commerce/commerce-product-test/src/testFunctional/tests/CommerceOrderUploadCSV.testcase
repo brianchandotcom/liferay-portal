@@ -32,9 +32,9 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "Verify user can download CSV template"
+	@description = "COMMERCE-7697 Verify user can download CSV template"
 	@priority = "3"
-	test DownloadCSVTemplate {
+	test CanDownloadCSVTemplate {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -52,7 +52,7 @@ definition {
 			CommerceOrders.importOrderFromType(orderType = "CSV");
 		}
 
-		task ("And when the user want to get the CSV template and click on Download") {
+		task ("And when the user downloads the CSV template file") {
 			Button.click(button = "Download Template");
 		}
 
@@ -61,9 +61,95 @@ definition {
 		}
 	}
 
-	@description = "Verify user can not upload non CSV files"
+	@description = "COMMERCE-7706 Verify user can not upload a CSV with invalid quantity"
 	@priority = "3"
-	test UploadNonCSVOrderFile {
+	test CannotUploadInvalidCSVOrderFile {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the user is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a CSV file with missing field") {
+			UploadDependencyFile.uploadFile(fileName = "missing_field.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the file is not a valid CSV file") {
+			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the user start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a CSV file with invalid fields") {
+			UploadDependencyFile.uploadFile(fileName = "invalid_fields.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the file is not a valid CSV file") {
+			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
+
+			IFrame.closeFrame();
+		}
+	}
+
+	@description = "COMMERCE-7705 Verify user can not upload a CSV with invalid quantity"
+	@priority = "3"
+	test CannotUploadInvalidQuantityCSVOrderFile {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the user is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user go to start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a file with invalid quantity") {
+			UploadDependencyFile.uploadFile(fileName = "invalid_quantity.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the quantity is invalid") {
+			Button.clickImport();
+
+			SelectFrameTop();
+
+			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
+
+			IFrame.closeFrame();
+		}
+	}
+
+	@description = "COMMERCE-7707 Verify user can not upload non CSV files"
+	@priority = "3"
+	test CannotUploadNonCSVOrderFile {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -137,92 +223,6 @@ definition {
 
 		task ("Then an error message is displayed because the file is not a CSV file") {
 			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
-
-			IFrame.closeFrame();
-		}
-	}
-
-	@description = "Verify user can not upload a CSV with invalid quantity"
-	@priority = "3"
-	test UploadNotValidCSVOrderFile {
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given the user is creating a new order") {
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-		}
-
-		task ("When the user start a new order by Import from CSV") {
-			CommerceOrders.importOrderFromType(orderType = "CSV");
-		}
-
-		task ("And when the user try to import a CSV file with missing field") {
-			UploadDependencyFile.uploadFile(fileName = "missing_field.csv");
-
-			Button.clickImport();
-		}
-
-		task ("Then an error message is displayed because the file is not a valid CSV file") {
-			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
-
-			IFrame.closeFrame();
-		}
-
-		task ("When the user start a new order by Import from CSV") {
-			CommerceOrders.importOrderFromType(orderType = "CSV");
-		}
-
-		task ("And when the user try to import a CSV file with invalid fields") {
-			UploadDependencyFile.uploadFile(fileName = "invalid_fields.csv");
-
-			Button.clickImport();
-		}
-
-		task ("Then an error message is displayed because the file is not a valid CSV file") {
-			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
-
-			IFrame.closeFrame();
-		}
-	}
-
-	@description = "Verify user can not upload a CSV with invalid quantity"
-	@priority = "3"
-	test UploadNotValidQuantityCSVOrderFile {
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given the user is creating a new order") {
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-		}
-
-		task ("When the user go to start a new order by Import from CSV") {
-			CommerceOrders.importOrderFromType(orderType = "CSV");
-		}
-
-		task ("And when the user try to import a file with invalid quantity") {
-			UploadDependencyFile.uploadFile(fileName = "invalid_quantity.csv");
-
-			Button.clickImport();
-		}
-
-		task ("Then an error message is displayed because the quantity is invalid") {
-			Button.clickImport();
-
-			SelectFrameTop();
-
-			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
 
 			IFrame.closeFrame();
 		}

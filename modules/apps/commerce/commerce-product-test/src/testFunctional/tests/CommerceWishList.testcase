@@ -32,7 +32,90 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "Verify only one wish list can be imported from list"
+	@description = "COMMERCE-7716 Verify user can import item from wish list and see imported items"
+	@priority = "3"
+	test AssertImportedWishlistItemsPreview {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump,Brake Fluid");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
+				wishListName = "Default");
+		}
+
+		task ("When the buyer import orders from wish list") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "24.00",
+				unitPrice = "24.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "34.00",
+				unitPrice = "34.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The specified quantity is unavailable.",
+				productName = "Power Steering Pump",
+				productQuantity = "1",
+				productSku = "MIN38800",
+				totalPrice = "",
+				unitPrice = "");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The product is no longer available.",
+				productName = "Brake Fluid",
+				productQuantity = "1",
+				productSku = "",
+				totalPrice = "",
+				unitPrice = "");
+		}
+	}
+
+	@description = "COMMERCE-7715 Verify only one wish list can be imported from list"
 	@priority = "3"
 	test AssertOnlyOneWishlistCanBeChosenForTheImport {
 		task ("Given a Minium site with a buyer user") {
@@ -89,9 +172,104 @@ definition {
 		}
 	}
 
-	@description = "Verify user can import wish list order in another order and do checkout"
+	@description = "COMMERCE-7718 Verify if the wish list pagination show the right items"
 	@priority = "3"
-	test CheckoutAfterImportFromWishList {
+	test AssertPaginationOnImportFromWishlist {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the buyer add six new wish lists") {
+			CommerceNavigator.goToWishLists();
+
+			for (var wishListNumber : list "1,2,3,4,5,6") {
+				CommerceWishList.addWishList(wishListName = "Test Wish List ${wishListNumber}");
+			}
+		}
+
+		task ("When the buyer go to import a new order from wish list and change tha pagination to 4 items per page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then only four wish lists are displayed") {
+			Pagination.changePagination(itemsPerPage = "4 items");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertVisible(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then only two wish lists are displayed") {
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertElementNotPresent(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertVisible(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertVisible(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to first page") {
+			Click(locator1 = "Pagination#PREVIOUS_LINK");
+		}
+
+		task ("Then the first page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "1",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+
+		task ("And when the user go to second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then the second page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "2",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+	}
+
+	@description = "COMMERCE-7885 Verify user can import wish list order in another order and do checkout"
+	@priority = "3"
+	test CanCheckoutAfterImportFromWishList {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -255,9 +433,9 @@ definition {
 		}
 	}
 
-	@description = "Verify user can import item from wish list"
+	@description = "COMMERCE-7714 Verify user can import item from wish list"
 	@priority = "3"
-	test ImportProductsFromWishlist {
+	test CanImportProductsFromWishlist {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -357,184 +535,6 @@ definition {
 				productQuantity = "1",
 				productSku = "MIN55859",
 				productTotalPrice = "34.00");
-		}
-	}
-
-	@description = "Verify user can import item from wish list and see imported items"
-	@priority = "3"
-	test ViewImportedWishlistItemsPreview {
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given some products in wish list") {
-			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump,Brake Fluid");
-
-			CommerceNavigator.goToWishLists();
-
-			CommerceWishList.assertWishListProduct(
-				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
-				wishListName = "Default");
-		}
-
-		task ("When the buyer import orders from wish list") {
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
-
-			SelectFrameTop();
-
-			IFrame.selectModalFrame();
-
-			ClickNoError(
-				key_itemName = "Default",
-				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-
-			SelectFrameTop();
-
-			IFrame.selectModalFrame();
-		}
-
-		task ("Then all the orders are displayed") {
-			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "OK",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productSku = "MIN55861",
-				totalPrice = "24.00",
-				unitPrice = "24.00");
-
-			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "OK",
-				productName = "ABS Sensor",
-				productQuantity = "1",
-				productSku = "MIN93015",
-				totalPrice = "50.00",
-				unitPrice = "50.00");
-
-			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "OK",
-				productName = "Torque Converters",
-				productQuantity = "1",
-				productSku = "MIN55859",
-				totalPrice = "34.00",
-				unitPrice = "34.00");
-
-			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "The specified quantity is unavailable.",
-				productName = "Power Steering Pump",
-				productQuantity = "1",
-				productSku = "MIN38800",
-				totalPrice = "",
-				unitPrice = "");
-
-			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "The product is no longer available.",
-				productName = "Brake Fluid",
-				productQuantity = "1",
-				productSku = "",
-				totalPrice = "",
-				unitPrice = "");
-		}
-	}
-
-	@description = "Verify if the wish list pagination show the right items"
-	@priority = "3"
-	test ViewPaginationOnImportFromWishlist {
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given the buyer add six new wish lists") {
-			CommerceNavigator.goToWishLists();
-
-			for (var wishListNumber : list "1,2,3,4,5,6") {
-				CommerceWishList.addWishList(wishListName = "Test Wish List ${wishListNumber}");
-			}
-		}
-
-		task ("When the buyer go to import a new order from wish list and change tha pagination to 4 items per page") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
-
-			SelectFrameTop();
-
-			IFrame.selectModalFrame();
-		}
-
-		task ("Then only four wish lists are displayed") {
-			Pagination.changePagination(itemsPerPage = "4 items");
-
-			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
-
-			for (var wishListNumber : list "1,2,3,4") {
-				AssertVisible(
-					key_itemName = "Test Wish List ${wishListNumber}",
-					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-			}
-
-			AssertElementNotPresent(
-				key_itemName = "Test Wish List 5",
-				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-
-			AssertElementNotPresent(
-				key_itemName = "Test Wish List 6",
-				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-		}
-
-		task ("And when the user go to next page") {
-			Click(locator1 = "Pagination#NEXT_LINK");
-		}
-
-		task ("Then only two wish lists are displayed") {
-			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6");
-
-			for (var wishListNumber : list "1,2,3,4") {
-				AssertElementNotPresent(
-					key_itemName = "Test Wish List ${wishListNumber}",
-					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-			}
-
-			AssertVisible(
-				key_itemName = "Test Wish List 5",
-				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-
-			AssertVisible(
-				key_itemName = "Test Wish List 6",
-				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
-		}
-
-		task ("And when the user go to first page") {
-			Click(locator1 = "Pagination#PREVIOUS_LINK");
-		}
-
-		task ("Then the first page is displayed") {
-			AssertElementPresent(
-				key_pageNumber = "1",
-				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
-		}
-
-		task ("And when the user go to second page") {
-			Click(locator1 = "Pagination#NEXT_LINK");
-		}
-
-		task ("Then the first page is displayed") {
-			AssertElementPresent(
-				key_pageNumber = "2",
-				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
 		}
 	}
 

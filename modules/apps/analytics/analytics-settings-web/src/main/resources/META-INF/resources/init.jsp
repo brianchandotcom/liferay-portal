@@ -69,3 +69,17 @@ page import="java.util.Set" %>
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
+
+<aui:script>
+	function <portlet:namespace />resetPageToWizardMode() {
+		var wizardModeElement = document.querySelector('.wizard-mode');
+
+		if (wizardModeElement) {
+			wizardModeElement.parentElement.className = 'col-sm-12';
+			wizardModeElement.parentElement.previousElementSibling.style.display =
+				'none';
+		}
+	}
+
+	<portlet:namespace />resetPageToWizardMode();
+</aui:script>

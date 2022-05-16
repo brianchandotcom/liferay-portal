@@ -1,5 +1,11 @@
 definition {
 
+	macro assertBreadcrumbTitle {
+		AssertElementPresent(
+			key_breadcrumbName = "${key_value}",
+			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
+	}
+
 	macro assertTabPageTitle {
 		Click(
 			key_pageTabTitle = "${pageTabTitle}",
@@ -9,12 +15,6 @@ definition {
 	macro clickBreadcrumbTitle {
 		Click(
 			key_breadcrumbName = "${breadcrumbName}",
-			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
-	}
-
-	macro assertBreadcrumbTitle {
-		AssertElementPresent(
-			key_breadcrumbName = "${key_value}",
 			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
 	}
 

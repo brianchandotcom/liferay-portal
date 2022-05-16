@@ -1,0 +1,97 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.check;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author Alan Huang
+ */
+public class LDIFEntryOrderCheck extends BaseFileCheck {
+
+	@Override
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
+
+		List<String> ldifEntries = new ArrayList<>();
+
+		for (String ldifEntry : ListUtil.fromString(content, "\n\n")) {
+			ldifEntries.add(_sortAttributes(ldifEntry));
+		}
+
+		Collections.sort(ldifEntries);
+
+		StringBundler sb = new StringBundler(ldifEntries.size() * 2);
+
+		for (String ldifEntry : ldifEntries) {
+			sb.append(ldifEntry);
+			sb.append("\n\n");
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	private String _sortAttributes(String ldifEntry) {
+		Matcher matcher = _attributePattern.matcher(ldifEntry);
+
+		String previousAttribute = StringPool.BLANK;
+		int previousAttributeStartPosition = 0;
+
+		while (matcher.find()) {
+			String attribute = matcher.group();
+			int attributeStartPosition = matcher.start();
+
+			if (Validator.isNull(previousAttribute)) {
+				previousAttribute = attribute;
+				previousAttributeStartPosition = attributeStartPosition;
+
+				continue;
+			}
+
+			if (previousAttribute.compareTo(attribute) > 0) {
+				ldifEntry = StringUtil.replaceFirst(
+					ldifEntry, attribute, previousAttribute,
+					attributeStartPosition);
+
+				return StringUtil.replaceFirst(
+					ldifEntry, previousAttribute, attribute,
+					previousAttributeStartPosition);
+			}
+
+			previousAttribute = attribute;
+			previousAttributeStartPosition = attributeStartPosition;
+		}
+
+		return ldifEntry;
+	}
+
+	private static final Pattern _attributePattern = Pattern.compile(
+		"(?<=(\\A|\n)).+:[\\s\\S]*?(?=\n.+:|\\Z)");
+
+}

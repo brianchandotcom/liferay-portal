@@ -51,26 +51,28 @@ public class NotificationQueueEntryLocalServiceTest {
 		NotificationTemplate notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), true,
+				true, RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				RandomTestUtil.randomString());
 
 		NotificationQueueEntry notificationQueueEntry =
 			_notificationQueueEntryLocalService.addNotificationQueueEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(), 0,
+				TestPropsValues.getUserId(),
 				notificationTemplate.getNotificationTemplateId(),
+				notificationTemplate.getBcc(),
+				notificationTemplate.getBody(LocaleUtil.US),
+				notificationTemplate.getCc(), RandomTestUtil.randomString(), 0,
 				notificationTemplate.getFrom(),
-				notificationTemplate.getFromName(LocaleUtil.US),
-				notificationTemplate.getTo(), RandomTestUtil.randomString(),
-				notificationTemplate.getCc(), notificationTemplate.getBcc(),
+				notificationTemplate.getFromName(LocaleUtil.US), 0,
 				notificationTemplate.getSubject(LocaleUtil.US),
-				notificationTemplate.getBody(LocaleUtil.US), 0);
+				notificationTemplate.getTo(), RandomTestUtil.randomString());
 
 		Assert.assertNotNull(notificationQueueEntry);
 		Assert.assertNotNull(

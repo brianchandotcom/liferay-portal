@@ -41,10 +41,10 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Override
 	public NotificationQueueEntry addNotificationQueueEntry(
-			long userId, String className, long classPK,
-			long notificationTemplateId, String from, String fromName,
-			String to, String toName, String cc, String bcc, String subject,
-			String body, double priority)
+			long userId, long notificationTemplateId, String bcc, String body,
+			String cc, String className, long classPK, String from,
+			String fromName, double priority, String subject, String to,
+			String toName)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -57,19 +57,19 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry.setCompanyId(user.getCompanyId());
 		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserName(user.getFullName());
-		notificationQueueEntry.setClassName(className);
-		notificationQueueEntry.setClassPK(classPK);
 		notificationQueueEntry.setNotificationTemplateId(
 			notificationTemplateId);
+		notificationQueueEntry.setBcc(bcc);
+		notificationQueueEntry.setBody(body);
+		notificationQueueEntry.setCc(cc);
+		notificationQueueEntry.setClassName(className);
+		notificationQueueEntry.setClassPK(classPK);
 		notificationQueueEntry.setFrom(from);
 		notificationQueueEntry.setFromName(fromName);
+		notificationQueueEntry.setPriority(priority);
+		notificationQueueEntry.setSubject(subject);
 		notificationQueueEntry.setTo(to);
 		notificationQueueEntry.setToName(toName);
-		notificationQueueEntry.setCc(cc);
-		notificationQueueEntry.setBcc(bcc);
-		notificationQueueEntry.setSubject(subject);
-		notificationQueueEntry.setBody(body);
-		notificationQueueEntry.setPriority(priority);
 
 		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}

@@ -46,10 +46,10 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String name, String description, String from,
-			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap)
+			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
+			String description, boolean enabled, String from,
+			Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -63,16 +63,16 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setCompanyId(user.getCompanyId());
 		notificationTemplate.setUserId(user.getUserId());
 		notificationTemplate.setUserName(user.getFullName());
-		notificationTemplate.setName(name);
+		notificationTemplate.setBcc(bcc);
+		notificationTemplate.setBodyMap(bodyMap);
+		notificationTemplate.setCc(cc);
 		notificationTemplate.setDescription(description);
+		notificationTemplate.setEnabled(enabled);
 		notificationTemplate.setFrom(from);
 		notificationTemplate.setFromNameMap(fromNameMap);
-		notificationTemplate.setTo(to);
-		notificationTemplate.setCc(cc);
-		notificationTemplate.setBcc(bcc);
-		notificationTemplate.setEnabled(enabled);
+		notificationTemplate.setName(name);
 		notificationTemplate.setSubjectMap(subjectMap);
-		notificationTemplate.setBodyMap(bodyMap);
+		notificationTemplate.setTo(to);
 
 		return notificationTemplatePersistence.update(notificationTemplate);
 	}
@@ -105,10 +105,10 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Override
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String name, String description,
-			String from, Map<Locale, String> fromNameMap, String to, String cc,
-			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap)
+			long notificationTemplateId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			boolean enabled, String from, Map<Locale, String> fromNameMap,
+			String name, Map<Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate =
@@ -117,16 +117,16 @@ public class NotificationTemplateLocalServiceImpl
 
 		validate(name, from);
 
-		notificationTemplate.setName(name);
+		notificationTemplate.setBcc(bcc);
+		notificationTemplate.setBodyMap(bodyMap);
+		notificationTemplate.setCc(cc);
 		notificationTemplate.setDescription(description);
+		notificationTemplate.setEnabled(enabled);
 		notificationTemplate.setFrom(from);
 		notificationTemplate.setFromNameMap(fromNameMap);
-		notificationTemplate.setTo(to);
-		notificationTemplate.setCc(cc);
-		notificationTemplate.setBcc(bcc);
-		notificationTemplate.setEnabled(enabled);
+		notificationTemplate.setName(name);
 		notificationTemplate.setSubjectMap(subjectMap);
-		notificationTemplate.setBodyMap(bodyMap);
+		notificationTemplate.setTo(to);
 
 		return notificationTemplatePersistence.update(notificationTemplate);
 	}

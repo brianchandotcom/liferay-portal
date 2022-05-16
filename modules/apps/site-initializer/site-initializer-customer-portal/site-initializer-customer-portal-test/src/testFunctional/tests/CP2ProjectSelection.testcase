@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		CustomerPortal.setUpForCP20();
+		//CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
@@ -24,7 +24,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
@@ -133,6 +136,8 @@ definition {
 	@description = "LPS-143785 - Check if when the user clicks on the card he is directed to another page."
 	@priority = "5"
 	test VerifyCardDirectsToAnotherPageMoreThan5 {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Customer Portal");
 
 		Click(
@@ -215,6 +220,8 @@ definition {
 	@description = "LPS-143794 - Check if when the user clicks on the card he is directed to another page."
 	@priority = "4"
 	test VerifyWhenCardIsClickedGoesAnotherPage {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",

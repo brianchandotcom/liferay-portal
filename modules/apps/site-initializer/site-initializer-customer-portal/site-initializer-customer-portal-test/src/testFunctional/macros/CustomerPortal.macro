@@ -113,7 +113,7 @@ definition {
 	}
 
 	macro clickOnSkipForNowButton {
-		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}
 
 	macro clickOnStartProjectSetup {
@@ -154,7 +154,7 @@ definition {
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
 
-		CustomerPortal.showCPObject();
+		CustomerPortal.showCPObject(title =  "Koroneiki Account");
 	}
 
 	macro customerPortalApisTearDown {
@@ -189,10 +189,14 @@ definition {
 	}
 
 	macro enterOnProject {
-		Click(
-			key_projectName = "${projectName}",
-			locator1 = "CustomerPortalSite#PROJECT_TABLE_NAME");
-	}
+        if(!(isSet(status))) {
+            var status = "Active";
+        }
+        
+        Click(
+            title = "${title}",
+            locator1 = "CP2LiferayContact#PROJECT_CARD");
+    }
 
 	macro loginOktaToUpdateCP {
 		var userEmailAddress = "garrettz@mbopartners.com.broken";
@@ -342,7 +346,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
+		ObjectPortlet.selectObject(label = "${title}");
 
 		CreateObject.checkToggleActive();
 
@@ -415,4 +419,101 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
+	macro accountTableProject {
+		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
+	}
+
+	macro deleteEntryAccountFlag {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Flags");
+
+		ObjectPortlet.deleteEntry(entry = "${entry}");
+	}
+
+	macro clickOnSendInvitationButton {
+		Click(locator1 = "CustomerPortalSite#SEND_INVITATIONS_BUTTON");
+	}
+
+	macro clickOnSubmitButton {
+		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+	}
+	
+	macro deleteCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
+	macro viewCPObjectInfo {
+		Click(
+			key_text = "",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewCPObjectCustomInfo {
+		Click(
+			key_text = "",
+			key_index = "${index}",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "View");
+	}
+
+	macro showCPAccountFlagObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
+	macro showCPSubscriptionsObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "Account Subscription");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
+	macro viewObjectInfo {
+		Click(
+			key_text = "",
+			key_index = "4",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "View");
+	}
 }

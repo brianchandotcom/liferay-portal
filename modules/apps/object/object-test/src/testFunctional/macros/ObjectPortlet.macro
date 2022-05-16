@@ -331,6 +331,12 @@ definition {
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 	}
 
+	macro selectObject {
+		Click(
+			key_label = "${label}",
+			locator1 = "ObjectPortlet#SELECT_OBJECT");
+	}
+
 	macro selectRelationshipFieldEntry {
 		Click(
 			key_entry = "${entry}",

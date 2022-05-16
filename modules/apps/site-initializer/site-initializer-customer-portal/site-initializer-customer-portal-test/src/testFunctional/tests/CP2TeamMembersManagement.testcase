@@ -36,6 +36,8 @@ definition {
 	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
 	@priority = "4"
 	test CancelButtonIsPresent {
+		property portal.upstream = "quarantine";
+		
 		CustomerPortal.changeUserRole(
 			accountName = "Test Account 01",
 			accountRoleTitle = "Partner Manager",
@@ -61,6 +63,8 @@ definition {
 	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
 	@priority = "4"
 	test CanGoBackOnTeamMembersPage {
+		property portal.upstream = "quarantine";
+
 		CustomerPortal.changeUserRole(
 			accountName = "Test Account 01",
 			accountRoleTitle = "Partner Manager",

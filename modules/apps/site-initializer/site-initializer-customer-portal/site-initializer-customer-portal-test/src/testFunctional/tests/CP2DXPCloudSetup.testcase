@@ -1,0 +1,376 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//CustomerPortal.setUpForCP20();
+
+		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+
+		CP2DXPCloudSetup.addObjectsForDXPCloud();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CP2DXPCloudSetup.deleteObjectsForDXPCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
+	@priority = "5"
+	test CanChooseDisasterRecoveryDataCenter {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,São Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+	}
+
+	@description = "Verify if the user can choose an option at 'Primary Data Center Region"
+	@priority = "5"
+	test CanChoosePrimaryDataCenter {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.viewRegionList(regionList = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,São Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+	}
+
+	@description = "Verify if Submit button is only enabled when all the fields are filled"
+	@priority = "5"
+	test CanClickSubmitButtonWithAllFilledIn {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+	}
+
+	@description = "If the admin user selects 'Skip for Now' then the user is taken to that project's home page / subscriptions page"
+	@priority = "4"
+	test CanSkipForNowToOverview {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		AssertElementPresent(locator1 = "CP2NavigationMenu#OVERVIEW");
+	}
+
+	@description = "Verify a success message is shown after finishing setting DXP Cloud up"
+	@priority = "4"
+	test CanViewDXPCloudSetupSuccessMessage {
+		CP2DXPCloudSetup.createDXPCloudObjects();
+
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#SUCCESS_MESSAGE");
+
+		CP2DXPCloudSetup.clearDXPCloudInfo();
+
+		CP2DXPCloudSetup.deleteDXPCloudObject();
+	}
+
+	@description = "Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
+	@priority = "4"
+	test IsDXPCloudEmailRequired {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].email",
+			value = "test@liferay.com");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].email",
+			value = "");
+
+		Select(
+			locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
+			value1 = "Iowa, USA");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "This field is required.");
+	}
+
+	@description = "Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
+	@priority = "3"
+	test IsDXPCloudEmailValid {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].email",
+			value = "test.com");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.projectId",
+			value = "006");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "Please insert a valid e-mail.");
+	}
+
+	@description = "Verify message 'This field is required.' in Project ID field"
+	@priority = "4"
+	test IsProjectIDRequired {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.projectId",
+			value = "001");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.projectId",
+			value = "");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].firstName",
+			value = "FirstName");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "This field is required.");
+	}
+
+	@description = "Verify message 'This field is required.' on System Admin's First Name"
+	@priority = "4"
+	test IsSystemAdminFirstNameRequired {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].firstName",
+			value = "FirstName");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].firstName",
+			value = "");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].email",
+			value = "test@liferay.com");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "This field is required.");
+	}
+
+	@description = "Verify message 'This field is required.' on System Admin's Github Username"
+	@priority = "4"
+	test IsSystemAdminGitUserRequired {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].github",
+			value = "GitHubUser");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].github",
+			value = "");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].lastName",
+			value = "LastName");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "This field is required.");
+	}
+
+	@description = "Verify message 'This field is required.' on System Admin's Last Name"
+	@priority = "4"
+	test IsSystemAdminLastNameRequired {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].lastName",
+			value = "LastName");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].lastName",
+			value = "");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "dxp.admins[0].firstName",
+			value = "FirstName");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "This field is required.");
+	}
+
+}

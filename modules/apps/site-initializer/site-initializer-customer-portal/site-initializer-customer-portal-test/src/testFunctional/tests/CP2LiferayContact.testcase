@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		CustomerPortal.setUpForCP20();
+		//CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
@@ -24,13 +24,20 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
 		}
 	}
 
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
 	@priority = "4"
 	test IsContactEmailDisplayed {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Customer Portal");
 
 		Click(
@@ -53,6 +60,8 @@ definition {
 	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
 	@priority = "4"
 	test IsContactNameDisplayed {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		Click(
@@ -72,6 +81,8 @@ definition {
 	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
 	@priority = "3"
 	test IsContactRoleDisplayed {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		Click(

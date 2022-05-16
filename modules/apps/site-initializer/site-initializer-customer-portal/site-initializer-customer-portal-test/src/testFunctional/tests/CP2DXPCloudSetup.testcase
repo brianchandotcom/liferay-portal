@@ -14,7 +14,7 @@ definition {
 
 		//CustomerPortal.setUpForCP20();
 
-		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
 
 		CP2DXPCloudSetup.addObjectsForDXPCloud();
 	}
@@ -31,13 +31,13 @@ definition {
 
 			//CustomerPortal.tearDownForOktaAndSAML();
 
-			//CustomerPortal.customerPortalTearDown();
+			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
 	}
 
-    @description = "Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
+	@description = "Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
 	@priority = "5"
 	test CanChooseDisasterRecoveryDataCenter {
 		Accounts.openAccountsAdmin();

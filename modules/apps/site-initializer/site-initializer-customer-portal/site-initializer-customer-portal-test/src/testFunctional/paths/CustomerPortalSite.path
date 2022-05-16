@@ -16,9 +16,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ACCOUNTS_PROJECTS</td>
-    <td>//td[contains(@class, 'lfr-name-column')]//a[contains(text(), '${title}')]</td>
-    <td></td>
+	<td>ACCOUNTS_PROJECTS</td>
+	<td>//td[contains(@class, 'lfr-name-column')]//a[contains(text(), '${title}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>OBJECTS_TABLE</td>
@@ -122,13 +122,13 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-    <td>//div[contains(@class, 'alert-danger')]</td>
-    <td></td>
+	<td>//div[contains(@class, 'alert-danger')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SUCCESS_MESSAGE</td>
-    <td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
-    <td></td>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEND_INVITATIONS_BUTTON</td>

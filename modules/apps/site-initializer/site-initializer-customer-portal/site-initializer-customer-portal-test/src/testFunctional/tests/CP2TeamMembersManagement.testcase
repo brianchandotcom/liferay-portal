@@ -37,7 +37,7 @@ definition {
 	@priority = "4"
 	test CancelButtonIsPresent {
 		property portal.upstream = "quarantine";
-		
+
 		CustomerPortal.changeUserRole(
 			accountName = "Test Account 01",
 			accountRoleTitle = "Partner Manager",

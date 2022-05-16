@@ -94,6 +94,87 @@ public class NotificationTemplate implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
+	public String getBcc() {
+		return bcc;
+	}
+
+	public void setBcc(String bcc) {
+		this.bcc = bcc;
+	}
+
+	@JsonIgnore
+	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
+		try {
+			bcc = bccUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String bcc;
+
+	@Schema
+	@Valid
+	public Map<String, String> getBodyMap() {
+		return bodyMap;
+	}
+
+	public void setBodyMap(Map<String, String> bodyMap) {
+		this.bodyMap = bodyMap;
+	}
+
+	@JsonIgnore
+	public void setBodyMap(
+		UnsafeSupplier<Map<String, String>, Exception> bodyMapUnsafeSupplier) {
+
+		try {
+			bodyMap = bodyMapUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> bodyMap;
+
+	@Schema
+	public String getCc() {
+		return cc;
+	}
+
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+
+	@JsonIgnore
+	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
+		try {
+			cc = ccUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String cc;
+
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -150,6 +231,34 @@ public class NotificationTemplate implements Serializable {
 	protected Date dateModified;
 
 	@Schema
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	@Schema
 	public Boolean getEnable() {
 		return enable;
 	}
@@ -176,6 +285,62 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enable;
+
+	@Schema
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	@JsonIgnore
+	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
+		try {
+			from = fromUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String from;
+
+	@Schema
+	@Valid
+	public Map<String, String> getFromNameMap() {
+		return fromNameMap;
+	}
+
+	public void setFromNameMap(Map<String, String> fromNameMap) {
+		this.fromNameMap = fromNameMap;
+	}
+
+	@JsonIgnore
+	public void setFromNameMap(
+		UnsafeSupplier<Map<String, String>, Exception>
+			fromNameMapUnsafeSupplier) {
+
+		try {
+			fromNameMap = fromNameMapUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> fromNameMap;
 
 	@Schema
 	public Long getId() {
@@ -229,6 +394,148 @@ public class NotificationTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
+	@Valid
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> name_i18n;
+
+	@Schema
+	@Valid
+	public Map<String, String> getSubjectMap() {
+		return subjectMap;
+	}
+
+	public void setSubjectMap(Map<String, String> subjectMap) {
+		this.subjectMap = subjectMap;
+	}
+
+	@JsonIgnore
+	public void setSubjectMap(
+		UnsafeSupplier<Map<String, String>, Exception>
+			subjectMapUnsafeSupplier) {
+
+		try {
+			subjectMap = subjectMapUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> subjectMap;
+
+	@Schema
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	@JsonIgnore
+	public void setTo(UnsafeSupplier<String, Exception> toUnsafeSupplier) {
+		try {
+			to = toUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String to;
+
+	@Schema
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	@JsonIgnore
+	public void setUserId(
+		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
+
+		try {
+			userId = userIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long userId;
+
+	@Schema
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	@JsonIgnore
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
+
+		try {
+			userName = userNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String userName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -270,6 +577,44 @@ public class NotificationTemplate implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		if (bcc != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"bcc\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(bcc));
+
+			sb.append("\"");
+		}
+
+		if (bodyMap != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"bodyMap\": ");
+
+			sb.append(_toJSON(bodyMap));
+		}
+
+		if (cc != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cc\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cc));
+
+			sb.append("\"");
+		}
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -298,6 +643,20 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 		}
 
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(description));
+
+			sb.append("\"");
+		}
+
 		if (enable != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -306,6 +665,30 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"enable\": ");
 
 			sb.append(enable);
+		}
+
+		if (from != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"from\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(from));
+
+			sb.append("\"");
+		}
+
+		if (fromNameMap != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fromNameMap\": ");
+
+			sb.append(_toJSON(fromNameMap));
 		}
 
 		if (id != null) {
@@ -328,6 +711,64 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
+		}
+
+		if (subjectMap != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subjectMap\": ");
+
+			sb.append(_toJSON(subjectMap));
+		}
+
+		if (to != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"to\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(to));
+
+			sb.append("\"");
+		}
+
+		if (userId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userId\": ");
+
+			sb.append(userId);
+		}
+
+		if (userName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userName));
 
 			sb.append("\"");
 		}

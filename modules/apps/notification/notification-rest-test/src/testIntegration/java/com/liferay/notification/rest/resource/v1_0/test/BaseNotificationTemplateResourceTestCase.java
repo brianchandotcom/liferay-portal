@@ -53,7 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -62,9 +62,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,8 +74,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -191,7 +191,13 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate notificationTemplate =
 			randomNotificationTemplate();
 
+		notificationTemplate.setBcc(regex);
+		notificationTemplate.setCc(regex);
+		notificationTemplate.setDescription(regex);
+		notificationTemplate.setFrom(regex);
 		notificationTemplate.setName(regex);
+		notificationTemplate.setTo(regex);
+		notificationTemplate.setUserName(regex);
 
 		String json = NotificationTemplateSerDes.toJSON(notificationTemplate);
 
@@ -199,7 +205,13 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		notificationTemplate = NotificationTemplateSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, notificationTemplate.getBcc());
+		Assert.assertEquals(regex, notificationTemplate.getCc());
+		Assert.assertEquals(regex, notificationTemplate.getDescription());
+		Assert.assertEquals(regex, notificationTemplate.getFrom());
 		Assert.assertEquals(regex, notificationTemplate.getName());
+		Assert.assertEquals(regex, notificationTemplate.getTo());
+		Assert.assertEquals(regex, notificationTemplate.getUserName());
 	}
 
 	@Test
@@ -365,8 +377,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		NotificationTemplate expectedPatchNotificationTemplate =
 			postNotificationTemplate.clone();
 
-		_beanUtilsBean.copyProperties(
-			expectedPatchNotificationTemplate, randomPatchNotificationTemplate);
+		BeanTestUtil.copyProperties(
+			randomPatchNotificationTemplate, expectedPatchNotificationTemplate);
 
 		NotificationTemplate getNotificationTemplate =
 			notificationTemplateResource.getNotificationTemplate(
@@ -616,7 +628,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		testGetNotificationTemplatesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, notificationTemplate1, notificationTemplate2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					notificationTemplate1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
 			});
@@ -629,9 +641,9 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		testGetNotificationTemplatesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, notificationTemplate1, notificationTemplate2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					notificationTemplate1, entityField.getName(), 0.1);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					notificationTemplate2, entityField.getName(), 0.5);
 			});
 	}
@@ -643,9 +655,9 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		testGetNotificationTemplatesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, notificationTemplate1, notificationTemplate2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					notificationTemplate1, entityField.getName(), 0);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					notificationTemplate2, entityField.getName(), 1);
 			});
 	}
@@ -661,27 +673,27 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -689,12 +701,12 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						notificationTemplate2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -959,6 +971,38 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("bcc", additionalAssertFieldName)) {
+				if (notificationTemplate.getBcc() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("bodyMap", additionalAssertFieldName)) {
+				if (notificationTemplate.getBodyMap() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("cc", additionalAssertFieldName)) {
+				if (notificationTemplate.getCc() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (notificationTemplate.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("enable", additionalAssertFieldName)) {
 				if (notificationTemplate.getEnable() == null) {
 					valid = false;
@@ -967,8 +1011,64 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("from", additionalAssertFieldName)) {
+				if (notificationTemplate.getFrom() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fromNameMap", additionalAssertFieldName)) {
+				if (notificationTemplate.getFromNameMap() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (notificationTemplate.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (notificationTemplate.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subjectMap", additionalAssertFieldName)) {
+				if (notificationTemplate.getSubjectMap() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("to", additionalAssertFieldName)) {
+				if (notificationTemplate.getTo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (notificationTemplate.getUserId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (notificationTemplate.getUserName() == null) {
 					valid = false;
 				}
 
@@ -1081,6 +1181,39 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("bcc", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getBcc(),
+						notificationTemplate2.getBcc())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("bodyMap", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)notificationTemplate1.getBodyMap(),
+						(Map)notificationTemplate2.getBodyMap())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("cc", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getCc(),
+						notificationTemplate2.getCc())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getDateCreated(),
@@ -1103,10 +1236,43 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getDescription(),
+						notificationTemplate2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("enable", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getEnable(),
 						notificationTemplate2.getEnable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("from", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getFrom(),
+						notificationTemplate2.getFrom())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fromNameMap", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)notificationTemplate1.getFromNameMap(),
+						(Map)notificationTemplate2.getFromNameMap())) {
 
 					return false;
 				}
@@ -1129,6 +1295,61 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getName(),
 						notificationTemplate2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)notificationTemplate1.getName_i18n(),
+						(Map)notificationTemplate2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subjectMap", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)notificationTemplate1.getSubjectMap(),
+						(Map)notificationTemplate2.getSubjectMap())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("to", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getTo(),
+						notificationTemplate2.getTo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getUserId(),
+						notificationTemplate2.getUserId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getUserName(),
+						notificationTemplate2.getUserName())) {
 
 					return false;
 				}
@@ -1239,6 +1460,27 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("bcc")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getBcc()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("bodyMap")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("cc")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getCc()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1307,7 +1549,28 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("enable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("from")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getFrom()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fromNameMap")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1320,6 +1583,37 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationTemplate.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("subjectMap")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("to")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getTo()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("userId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("userName")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getUserName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1371,11 +1665,20 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		return new NotificationTemplate() {
 			{
+				bcc = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				cc = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				enable = RandomTestUtil.randomBoolean();
+				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				to = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				userId = RandomTestUtil.randomLong();
+				userName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1399,6 +1702,115 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
 
 	protected class GraphQLField {
 
@@ -1474,18 +1886,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseNotificationTemplateResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

@@ -58,6 +58,65 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public String getBcc() {
+		return bcc;
+	}
+
+	public void setBcc(String bcc) {
+		this.bcc = bcc;
+	}
+
+	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
+		try {
+			bcc = bccUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String bcc;
+
+	public Map<String, String> getBodyMap() {
+		return bodyMap;
+	}
+
+	public void setBodyMap(Map<String, String> bodyMap) {
+		this.bodyMap = bodyMap;
+	}
+
+	public void setBodyMap(
+		UnsafeSupplier<Map<String, String>, Exception> bodyMapUnsafeSupplier) {
+
+		try {
+			bodyMap = bodyMapUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> bodyMap;
+
+	public String getCc() {
+		return cc;
+	}
+
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+
+	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
+		try {
+			cc = ccUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String cc;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -100,6 +159,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String description;
+
 	public Boolean getEnable() {
 		return enable;
 	}
@@ -120,6 +200,47 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected Boolean enable;
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
+		try {
+			from = fromUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String from;
+
+	public Map<String, String> getFromNameMap() {
+		return fromNameMap;
+	}
+
+	public void setFromNameMap(Map<String, String> fromNameMap) {
+		this.fromNameMap = fromNameMap;
+	}
+
+	public void setFromNameMap(
+		UnsafeSupplier<Map<String, String>, Exception>
+			fromNameMapUnsafeSupplier) {
+
+		try {
+			fromNameMap = fromNameMapUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> fromNameMap;
 
 	public Long getId() {
 		return id;
@@ -158,6 +279,111 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_i18n;
+
+	public Map<String, String> getSubjectMap() {
+		return subjectMap;
+	}
+
+	public void setSubjectMap(Map<String, String> subjectMap) {
+		this.subjectMap = subjectMap;
+	}
+
+	public void setSubjectMap(
+		UnsafeSupplier<Map<String, String>, Exception>
+			subjectMapUnsafeSupplier) {
+
+		try {
+			subjectMap = subjectMapUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> subjectMap;
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	public void setTo(UnsafeSupplier<String, Exception> toUnsafeSupplier) {
+		try {
+			to = toUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String to;
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setUserId(
+		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
+
+		try {
+			userId = userIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long userId;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
+
+		try {
+			userName = userNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String userName;
 
 	@Override
 	public NotificationTemplate clone() throws CloneNotSupportedException {

@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -186,7 +187,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"enable": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -224,6 +225,19 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getActions());
 		}
 
+		if (notificationTemplate.getBcc() != null) {
+			existingNotificationTemplate.setBcc(notificationTemplate.getBcc());
+		}
+
+		if (notificationTemplate.getBodyMap() != null) {
+			existingNotificationTemplate.setBodyMap(
+				notificationTemplate.getBodyMap());
+		}
+
+		if (notificationTemplate.getCc() != null) {
+			existingNotificationTemplate.setCc(notificationTemplate.getCc());
+		}
+
 		if (notificationTemplate.getDateCreated() != null) {
 			existingNotificationTemplate.setDateCreated(
 				notificationTemplate.getDateCreated());
@@ -234,14 +248,53 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getDateModified());
 		}
 
+		if (notificationTemplate.getDescription() != null) {
+			existingNotificationTemplate.setDescription(
+				notificationTemplate.getDescription());
+		}
+
 		if (notificationTemplate.getEnable() != null) {
 			existingNotificationTemplate.setEnable(
 				notificationTemplate.getEnable());
 		}
 
+		if (notificationTemplate.getFrom() != null) {
+			existingNotificationTemplate.setFrom(
+				notificationTemplate.getFrom());
+		}
+
+		if (notificationTemplate.getFromNameMap() != null) {
+			existingNotificationTemplate.setFromNameMap(
+				notificationTemplate.getFromNameMap());
+		}
+
 		if (notificationTemplate.getName() != null) {
 			existingNotificationTemplate.setName(
 				notificationTemplate.getName());
+		}
+
+		if (notificationTemplate.getName_i18n() != null) {
+			existingNotificationTemplate.setName_i18n(
+				notificationTemplate.getName_i18n());
+		}
+
+		if (notificationTemplate.getSubjectMap() != null) {
+			existingNotificationTemplate.setSubjectMap(
+				notificationTemplate.getSubjectMap());
+		}
+
+		if (notificationTemplate.getTo() != null) {
+			existingNotificationTemplate.setTo(notificationTemplate.getTo());
+		}
+
+		if (notificationTemplate.getUserId() != null) {
+			existingNotificationTemplate.setUserId(
+				notificationTemplate.getUserId());
+		}
+
+		if (notificationTemplate.getUserName() != null) {
+			existingNotificationTemplate.setUserName(
+				notificationTemplate.getUserName());
 		}
 
 		preparePatch(notificationTemplate, existingNotificationTemplate);
@@ -253,7 +306,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"enable": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -391,7 +444,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"enable": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -468,9 +521,22 @@ public abstract class BaseNotificationTemplateResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<NotificationTemplate, Exception>
+			notificationTemplateUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			notificationTemplateUnsafeConsumer =
 				notificationTemplate -> postNotificationTemplate(
 					notificationTemplate);
+		}
+
+		if (notificationTemplateUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for NotificationTemplate");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -555,15 +621,50 @@ public abstract class BaseNotificationTemplateResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplates) {
+		UnsafeConsumer<NotificationTemplate, Exception>
+			notificationTemplateUnsafeConsumer = null;
 
-			putNotificationTemplate(
-				notificationTemplate.getId() != null ?
-					notificationTemplate.getId() :
-						Long.parseLong(
-							(String)parameters.get("notificationTemplateId")),
-				notificationTemplate);
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			notificationTemplateUnsafeConsumer =
+				notificationTemplate -> patchNotificationTemplate(
+					notificationTemplate.getId() != null ?
+						notificationTemplate.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"notificationTemplateId")),
+					notificationTemplate);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			notificationTemplateUnsafeConsumer =
+				notificationTemplate -> putNotificationTemplate(
+					notificationTemplate.getId() != null ?
+						notificationTemplate.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"notificationTemplateId")),
+					notificationTemplate);
+		}
+
+		if (notificationTemplateUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for NotificationTemplate");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				notificationTemplates, notificationTemplateUnsafeConsumer);
+		}
+		else {
+			for (NotificationTemplate notificationTemplate :
+					notificationTemplates) {
+
+				notificationTemplateUnsafeConsumer.accept(notificationTemplate);
+			}
 		}
 	}
 

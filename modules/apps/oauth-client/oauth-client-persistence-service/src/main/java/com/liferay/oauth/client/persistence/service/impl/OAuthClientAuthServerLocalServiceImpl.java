@@ -188,7 +188,8 @@ public class OAuthClientAuthServerLocalServiceImpl
 
 		oAuthClientAuthServer.setDiscoveryEndpoint(discoveryEndpoint);
 		oAuthClientAuthServer.setIssuer(
-			_validateAndGetIssuer(metadataJSON, type));
+			_validateAndGetIssuer(
+				oAuthClientAuthServer.getCompanyId(), metadataJSON, type));
 		oAuthClientAuthServer.setMetadataJSON(metadataJSON);
 		oAuthClientAuthServer.setType(type);
 

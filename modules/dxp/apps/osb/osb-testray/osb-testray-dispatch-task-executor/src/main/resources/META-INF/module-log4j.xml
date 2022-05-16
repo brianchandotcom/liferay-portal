@@ -2,6 +2,6 @@
 
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="ALL" name="com.liferay.osb.testray.internal.dispatch.executor" />
+		<Logger level="ALL" name="com.liferay.osb.testray.dispatch.task.executor.internal.dispatch.executor" />
 	</Loggers>
 </Configuration>

@@ -16,6 +16,19 @@ definition {
 		Button.clickSave();
 	}
 
+	macro saveConfiguration {
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#UPDATE",
+				value1 = "Update");
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+	}
+
 	@description = "Save Cookie Banner settings"
 	macro saveSettings {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
@@ -46,9 +59,7 @@ definition {
 				value1 = "Include \&quot;Decline All\&quot; Button");
 		}
 
-		AssertClick.assertTextClickNoMouseOver(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		CookieBannerAdmin.saveConfiguration();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
@@ -71,13 +82,18 @@ definition {
 			locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT",
 			value1 = "${text}_3");
 
-		AssertClick(
-			locator1 = "Button#UPDATE",
-			value1 = "Update");
+		if (isSet(cancel)) {
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else {
+			CookieBannerAdmin.saveConfiguration();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
 	}
 
 	@description = "Verify all elements are present and configured at Cookie Banner"

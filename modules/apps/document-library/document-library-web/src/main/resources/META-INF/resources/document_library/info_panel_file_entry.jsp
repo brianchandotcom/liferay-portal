@@ -566,12 +566,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 		<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 			<liferay-ui:section>
-
-				<%
-				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
-				%>
-
-				<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
+				<%@ include file="/document_library/file_entry_history.jspf" %>
 			</liferay-ui:section>
 		</c:if>
 	</liferay-ui:tabs>

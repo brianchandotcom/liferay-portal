@@ -279,13 +279,6 @@ public class BatchPlannerPlanServiceTest {
 
 		Assert.assertEquals(
 			batchPlannerPlans.toString(), 0, batchPlannerPlans.size());
-
-		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
-			companyId, true, false, RandomTestUtil.randomString(), 0,
-			Integer.MAX_VALUE, null);
-
-		Assert.assertEquals(
-			batchPlannerPlans.toString(), 0, batchPlannerPlans.size());
 	}
 
 	private void _testSearchImportBatchPlannerPlans(long companyId)
@@ -310,13 +303,6 @@ public class BatchPlannerPlanServiceTest {
 				BatchPlannerPlanConstants.STATUS_FAILED,
 				batchPlannerPlan.getStatus());
 		}
-
-		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
-			companyId, false, false, RandomTestUtil.randomString(), 0,
-			Integer.MAX_VALUE, null);
-
-		Assert.assertEquals(
-			batchPlannerPlans.toString(), 0, batchPlannerPlans.size());
 
 		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
 			companyId, false, false, RandomTestUtil.randomString(), 0,

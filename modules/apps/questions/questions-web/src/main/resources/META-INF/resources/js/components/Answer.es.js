@@ -224,11 +224,13 @@ export default withRouter(
 														});
 													}}
 												>
-													{Liferay.Language.get(
-														showAsAnswer
-															? 'Unmark as answer'
-															: 'Mark as answer'
-													)}
+													{showAsAnswer
+														? Liferay.Language.get(
+																'unmark-as-answer'
+														  )
+														: Liferay.Language.get(
+																'mark-as-answer'
+														  )}
 												</ClayButton>
 											)}
 

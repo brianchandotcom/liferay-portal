@@ -48,10 +48,12 @@ export default function UserPopover({creator, statistics}) {
 			}
 		>
 			<div className="text-secondary">
-				<p className="c-mb-0">Posts: {statistics?.postsNumber}</p>
+				<p className="c-mb-0">
+					{Liferay.Language.get('posts')}: {statistics?.postsNumber}
+				</p>
 
 				<p className="c-mb-0">
-					{`Join Date: ${
+					{`${Liferay.Language.get('join-date')}: ${
 						statistics
 							? dateToBriefInternationalHuman(statistics.joinDate)
 							: ''
@@ -59,7 +61,7 @@ export default function UserPopover({creator, statistics}) {
 				</p>
 
 				<p className="c-mb-0">
-					{`Last Post Date: ${
+					{`${Liferay.Language.get('last-post-date')}: ${
 						statistics
 							? dateToBriefInternationalHuman(
 									statistics.lastPostDate

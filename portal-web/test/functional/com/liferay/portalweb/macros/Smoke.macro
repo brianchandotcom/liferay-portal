@@ -26,7 +26,11 @@ definition {
 			portlet = "Pages",
 			site = "Site Name");
 
-		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
+		WaitForPageLoad();
+
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#DROPDOWN_MENU_ITEM")) {
 			PagesAdmin.addPage(pageName = "Test Page1");
 
 			PagesAdmin.addPage(pageName = "Test Page2");
@@ -81,7 +85,11 @@ definition {
 			task ("Create a Content Page") {
 				PagesAdmin.openPagesAdmin(siteURLKey = "${siteName}");
 
-				if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
+				WaitForPageLoad();
+
+				Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+				if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#DROPDOWN_MENU_ITEM")) {
 					ContentPages.addPage(pageName = "${contentPageName}");
 				}
 				else {

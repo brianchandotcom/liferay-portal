@@ -537,10 +537,12 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
-			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+		WaitForPageLoad();
 
-			MenuItem.click(menuItem = "Configuration");
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#DROPDOWN_MENU_ITEM")) {
+			DropdownMenuItem.click(menuItem = "Configuration");
 		}
 		else {
 			PagesAdmin.togglePrivacy(privacy = "${pageName}");

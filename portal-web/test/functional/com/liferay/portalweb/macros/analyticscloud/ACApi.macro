@@ -1,0 +1,12 @@
+definition {
+	macro getTokenValue {
+		ACUtils.clickAnyButton(button = "Generate Token");
+
+		// Use getAttribute to get the token value from the page's HTML
+
+        var token = selenium.getAttribute("//button[@aria-label='Click to Copy']@data-clipboard-text");
+
+		return "${token}";
+	}
+
+}

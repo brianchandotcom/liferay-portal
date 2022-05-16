@@ -37,122 +37,122 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 				<liferay-util:include page="/view_content_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 
-			<div class="sidenav-content">
-				<clay:container-fluid>
-					<liferay-site-navigation:breadcrumb
-						breadcrumbEntries="<%= trashDisplayContext.getBaseModelBreadcrumbEntries() %>"
-					/>
+			<clay:container-fluid
+				cssClass="container-view sidenav-content"
+			>
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= trashDisplayContext.getBaseModelBreadcrumbEntries() %>"
+				/>
 
-					<liferay-ui:search-container
-						id="trash"
-						searchContainer="<%= trashDisplayContext.getTrashContainerSearchContainer() %>"
+				<liferay-ui:search-container
+					id="trash"
+					searchContainer="<%= trashDisplayContext.getTrashContainerSearchContainer() %>"
+				>
+					<liferay-ui:search-container-row
+						className="com.liferay.portal.kernel.model.TrashedModel"
+						modelVar="curTrashedModel"
 					>
-						<liferay-ui:search-container-row
-							className="com.liferay.portal.kernel.model.TrashedModel"
-							modelVar="curTrashedModel"
-						>
 
-							<%
-							ClassedModel classedModel = (ClassedModel)curTrashedModel;
+						<%
+						ClassedModel classedModel = (ClassedModel)curTrashedModel;
 
-							String modelClassName = classedModel.getModelClassName();
+						String modelClassName = classedModel.getModelClassName();
 
-							TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
+						TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(modelClassName);
 
-							TrashRenderer curTrashRenderer = curTrashHandler.getTrashRenderer(curTrashedModel.getTrashEntryClassPK());
+						TrashRenderer curTrashRenderer = curTrashHandler.getTrashRenderer(curTrashedModel.getTrashEntryClassPK());
 
-							PortletURL rowURL = PortletURLBuilder.createRenderURL(
-								renderResponse
-							).setMVCPath(
-								"/view_content.jsp"
-							).setParameter(
-								"classNameId", PortalUtil.getClassNameId(curTrashRenderer.getClassName())
-							).setParameter(
-								"classPK", curTrashRenderer.getClassPK()
-							).buildPortletURL();
-							%>
+						PortletURL rowURL = PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setMVCPath(
+							"/view_content.jsp"
+						).setParameter(
+							"classNameId", PortalUtil.getClassNameId(curTrashRenderer.getClassName())
+						).setParameter(
+							"classPK", curTrashRenderer.getClassPK()
+						).buildPortletURL();
+						%>
 
-							<c:choose>
-								<c:when test="<%= trashDisplayContext.isDescriptiveView() %>">
-									<liferay-ui:search-container-column-icon
-										icon="<%= curTrashRenderer.getIconCssClass() %>"
-										toggleRowChecker="<%= false %>"
-									/>
+						<c:choose>
+							<c:when test="<%= trashDisplayContext.isDescriptiveView() %>">
+								<liferay-ui:search-container-column-icon
+									icon="<%= curTrashRenderer.getIconCssClass() %>"
+									toggleRowChecker="<%= false %>"
+								/>
 
-									<liferay-ui:search-container-column-text
-										colspan="<%= 2 %>"
-									>
-										<h5>
-											<aui:a href="<%= rowURL.toString() %>">
-												<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
-											</aui:a>
-										</h5>
-
-										<h6 class="text-default">
-											<liferay-ui:message key="type" /> <%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>
-										</h6>
-									</liferay-ui:search-container-column-text>
-
-									<liferay-ui:search-container-column-text>
-										<clay:dropdown-actions
-											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
-											propsTransformer="js/EntriesPropsTransformer"
-										/>
-									</liferay-ui:search-container-column-text>
-								</c:when>
-								<c:when test="<%= trashDisplayContext.isIconView() %>">
-									<c:choose>
-										<c:when test="<%= !curTrashHandler.isContainerModel() %>">
-											<liferay-ui:search-container-column-text>
-												<clay:vertical-card
-													propsTransformer="js/EntriesPropsTransformer"
-													verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
-												/>
-											</liferay-ui:search-container-column-text>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:search-container-column-text>
-
-												<%
-												row.setCssClass("card-page-item card-page-item-directory");
-												%>
-
-												<clay:horizontal-card
-													horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
-													propsTransformer="js/EntriesPropsTransformer"
-												/>
-											</liferay-ui:search-container-column-text>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:when test="<%= trashDisplayContext.isListView() %>">
-									<liferay-ui:search-container-column-text
-										name="name"
-										truncate="<%= true %>"
-									>
+								<liferay-ui:search-container-column-text
+									colspan="<%= 2 %>"
+								>
+									<h5>
 										<aui:a href="<%= rowURL.toString() %>">
 											<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
 										</aui:a>
-									</liferay-ui:search-container-column-text>
+									</h5>
 
-									<liferay-ui:search-container-column-text>
-										<clay:dropdown-actions
-											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
-											propsTransformer="js/EntriesPropsTransformer"
-										/>
-									</liferay-ui:search-container-column-text>
-								</c:when>
-							</c:choose>
-						</liferay-ui:search-container-row>
+									<h6 class="text-default">
+										<liferay-ui:message key="type" /> <%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>
+									</h6>
+								</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-iterator
-							displayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
-							markupView="lexicon"
-							resultRowSplitter="<%= new TrashResultRowSplitter() %>"
-						/>
-					</liferay-ui:search-container>
-				</clay:container-fluid>
-			</div>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
+										propsTransformer="js/EntriesPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
+							</c:when>
+							<c:when test="<%= trashDisplayContext.isIconView() %>">
+								<c:choose>
+									<c:when test="<%= !curTrashHandler.isContainerModel() %>">
+										<liferay-ui:search-container-column-text>
+											<clay:vertical-card
+												propsTransformer="js/EntriesPropsTransformer"
+												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
+											/>
+										</liferay-ui:search-container-column-text>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:search-container-column-text>
+
+											<%
+											row.setCssClass("card-page-item card-page-item-directory");
+											%>
+
+											<clay:horizontal-card
+												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
+												propsTransformer="js/EntriesPropsTransformer"
+											/>
+										</liferay-ui:search-container-column-text>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:when test="<%= trashDisplayContext.isListView() %>">
+								<liferay-ui:search-container-column-text
+									name="name"
+									truncate="<%= true %>"
+								>
+									<aui:a href="<%= rowURL.toString() %>">
+										<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
+									</aui:a>
+								</liferay-ui:search-container-column-text>
+
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
+										propsTransformer="js/EntriesPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
+							</c:when>
+						</c:choose>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator
+						displayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
+						markupView="lexicon"
+						resultRowSplitter="<%= new TrashResultRowSplitter() %>"
+					/>
+				</liferay-ui:search-container>
+			</clay:container-fluid>
 		</div>
 	</c:when>
 	<c:otherwise>

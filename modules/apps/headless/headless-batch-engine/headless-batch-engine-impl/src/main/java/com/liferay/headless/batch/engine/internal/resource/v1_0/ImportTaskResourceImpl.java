@@ -35,8 +35,6 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,6 +68,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -361,26 +362,20 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	private Response _getImportTaskFailedItemReport(long importTaskId) {
 		StreamingOutput streamingOutput = outputStream -> {
-			try (BufferedWriter bufferedWriter = new BufferedWriter(
-					new OutputStreamWriter(outputStream))) {
+			try (CSVPrinter csvPrinter = new CSVPrinter(
+					new BufferedWriter(new OutputStreamWriter(outputStream)),
+					CSVFormat.DEFAULT)) {
 
-				bufferedWriter.write("item, itemIndex, message");
-
-				bufferedWriter.newLine();
+				csvPrinter.printRecord("item", "itemIndex", "message");
 
 				for (BatchEngineImportTaskError batchEngineImportTaskError :
 						_batchEngineImportTaskErrorLocalService.
 							getBatchEngineImportTaskErrors(importTaskId)) {
 
-					bufferedWriter.write(
-						StringBundler.concat(
-							batchEngineImportTaskError.getItem(),
-							StringPool.COMMA_AND_SPACE,
-							batchEngineImportTaskError.getItemIndex(),
-							StringPool.COMMA_AND_SPACE,
-							batchEngineImportTaskError.getMessage()));
-
-					bufferedWriter.newLine();
+					csvPrinter.printRecord(
+						batchEngineImportTaskError.getItem(),
+						batchEngineImportTaskError.getItemIndex(),
+						batchEngineImportTaskError.getMessage());
 				}
 			}
 		};

@@ -23,8 +23,28 @@ public class UpgradeDropTable extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop table if exists(Table1)");
-		runSQL("drop table if exists(Table2)");
+		runSQL("drop table if exists(testTable1)");
+		runSQL("drop table if exists(testTable2)");
+
+		UpgradeProcess upgradeProcess = new UpgradeProcess() {
+
+			@Override
+			public void doUpgrade() throws Exception {
+				runSQL("drop table if exists(testTable3)");
+			}
+
+		};
+
+		upgradeProcess.upgrade();
+	}
+
+	private class TestUpgradeProcess extends UpgradeProcess {
+
+		@Override
+		protected void doUpgrade() throws Exception {
+			runSQL("drop table if exists(testTable4)");
+		}
+
 	}
 
 }

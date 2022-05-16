@@ -38,6 +38,18 @@ definition {
 		Upgrade.configurePageEditor();
 	}
 
+	@description = "This is a test for LPS-151110. View the button content does not appear in the results and Hide Content from Search Results configuration is checked."
+	@priority = "4"
+	test ViewContentSearchResultsOfButtonFragmentInLayoutSectionAfterUpgrade72104 {
+		property data.archive.type = "data-archive-layout-hide-content-from-search-results";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewNoSearchResults();
+
+		Upgrade.viewConfigurationChecked();
+	}
+
 	@description = "This is a use case for LPS-106776. Fragment configuration persists after upgrating."
 	@priority = "5"
 	test ViewContributedFragmentStyleAfterUpgrade721 {

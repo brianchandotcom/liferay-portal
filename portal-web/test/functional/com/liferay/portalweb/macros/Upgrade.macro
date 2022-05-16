@@ -3881,6 +3881,18 @@ definition {
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
+	macro viewConfigurationChecked {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoAdvanced(fragmentName = "Button");
+
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Hide from Site Search Results",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
 	macro viewContributedFragmentStyle {
 		task ("Navigate to page in view mode") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
@@ -4801,6 +4813,16 @@ definition {
 		NestedPortlets.viewPG(
 			nestedColumnNumber = "1",
 			portletName = "Web Content Display");
+	}
+
+	macro viewNoSearchResults {
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Awesome Button");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "Awesome Button");
 	}
 
 	macro viewNoShareOptionAfterDisabled {

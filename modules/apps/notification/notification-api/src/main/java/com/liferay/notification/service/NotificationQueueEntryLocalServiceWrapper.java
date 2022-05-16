@@ -41,15 +41,15 @@ public class NotificationQueueEntryLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationQueueEntry
 			addNotificationQueueEntry(
-				long userId, String className, long classPK,
-				long notificationTemplateId, String from, String fromName,
-				String to, String toName, String cc, String bcc, String subject,
-				String body, double priority)
+				long userId, long notificationTemplateId, String bcc,
+				String body, String cc, String className, long classPK,
+				String from, String fromName, double priority, String subject,
+				String to, String toName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
-			userId, className, classPK, notificationTemplateId, from, fromName,
-			to, toName, cc, bcc, subject, body, priority);
+			userId, notificationTemplateId, bcc, body, cc, className, classPK,
+			from, fromName, priority, subject, to, toName);
 	}
 
 	/**

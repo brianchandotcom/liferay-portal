@@ -94,34 +94,34 @@ public class NotificationQueueEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", notificationTemplateId=");
+		sb.append(notificationTemplateId);
+		sb.append(", bcc=");
+		sb.append(bcc);
+		sb.append(", body=");
+		sb.append(body);
+		sb.append(", cc=");
+		sb.append(cc);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", notificationTemplateId=");
-		sb.append(notificationTemplateId);
 		sb.append(", from=");
 		sb.append(from);
 		sb.append(", fromName=");
 		sb.append(fromName);
-		sb.append(", to=");
-		sb.append(to);
-		sb.append(", toName=");
-		sb.append(toName);
-		sb.append(", cc=");
-		sb.append(cc);
-		sb.append(", bcc=");
-		sb.append(bcc);
-		sb.append(", subject=");
-		sb.append(subject);
-		sb.append(", body=");
-		sb.append(body);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", sent=");
 		sb.append(sent);
 		sb.append(", sentDate=");
 		sb.append(sentDate);
+		sb.append(", subject=");
+		sb.append(subject);
+		sb.append(", to=");
+		sb.append(to);
+		sb.append(", toName=");
+		sb.append(toName);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,10 +159,32 @@ public class NotificationQueueEntryCacheModel
 			notificationQueueEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		notificationQueueEntryImpl.setClassNameId(classNameId);
-		notificationQueueEntryImpl.setClassPK(classPK);
 		notificationQueueEntryImpl.setNotificationTemplateId(
 			notificationTemplateId);
+
+		if (bcc == null) {
+			notificationQueueEntryImpl.setBcc("");
+		}
+		else {
+			notificationQueueEntryImpl.setBcc(bcc);
+		}
+
+		if (body == null) {
+			notificationQueueEntryImpl.setBody("");
+		}
+		else {
+			notificationQueueEntryImpl.setBody(body);
+		}
+
+		if (cc == null) {
+			notificationQueueEntryImpl.setCc("");
+		}
+		else {
+			notificationQueueEntryImpl.setCc(cc);
+		}
+
+		notificationQueueEntryImpl.setClassNameId(classNameId);
+		notificationQueueEntryImpl.setClassPK(classPK);
 
 		if (from == null) {
 			notificationQueueEntryImpl.setFrom("");
@@ -178,6 +200,23 @@ public class NotificationQueueEntryCacheModel
 			notificationQueueEntryImpl.setFromName(fromName);
 		}
 
+		notificationQueueEntryImpl.setPriority(priority);
+		notificationQueueEntryImpl.setSent(sent);
+
+		if (sentDate == Long.MIN_VALUE) {
+			notificationQueueEntryImpl.setSentDate(null);
+		}
+		else {
+			notificationQueueEntryImpl.setSentDate(new Date(sentDate));
+		}
+
+		if (subject == null) {
+			notificationQueueEntryImpl.setSubject("");
+		}
+		else {
+			notificationQueueEntryImpl.setSubject(subject);
+		}
+
 		if (to == null) {
 			notificationQueueEntryImpl.setTo("");
 		}
@@ -190,44 +229,6 @@ public class NotificationQueueEntryCacheModel
 		}
 		else {
 			notificationQueueEntryImpl.setToName(toName);
-		}
-
-		if (cc == null) {
-			notificationQueueEntryImpl.setCc("");
-		}
-		else {
-			notificationQueueEntryImpl.setCc(cc);
-		}
-
-		if (bcc == null) {
-			notificationQueueEntryImpl.setBcc("");
-		}
-		else {
-			notificationQueueEntryImpl.setBcc(bcc);
-		}
-
-		if (subject == null) {
-			notificationQueueEntryImpl.setSubject("");
-		}
-		else {
-			notificationQueueEntryImpl.setSubject(subject);
-		}
-
-		if (body == null) {
-			notificationQueueEntryImpl.setBody("");
-		}
-		else {
-			notificationQueueEntryImpl.setBody(body);
-		}
-
-		notificationQueueEntryImpl.setPriority(priority);
-		notificationQueueEntryImpl.setSent(sent);
-
-		if (sentDate == Long.MIN_VALUE) {
-			notificationQueueEntryImpl.setSentDate(null);
-		}
-		else {
-			notificationQueueEntryImpl.setSentDate(new Date(sentDate));
 		}
 
 		notificationQueueEntryImpl.resetOriginalValues();
@@ -248,24 +249,24 @@ public class NotificationQueueEntryCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		notificationTemplateId = objectInput.readLong();
+		bcc = objectInput.readUTF();
+		body = objectInput.readUTF();
+		cc = objectInput.readUTF();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-
-		notificationTemplateId = objectInput.readLong();
 		from = objectInput.readUTF();
 		fromName = objectInput.readUTF();
-		to = objectInput.readUTF();
-		toName = objectInput.readUTF();
-		cc = objectInput.readUTF();
-		bcc = objectInput.readUTF();
-		subject = objectInput.readUTF();
-		body = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 
 		sent = objectInput.readBoolean();
 		sentDate = objectInput.readLong();
+		subject = objectInput.readUTF();
+		to = objectInput.readUTF();
+		toName = objectInput.readUTF();
 	}
 
 	@Override
@@ -288,11 +289,32 @@ public class NotificationQueueEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(notificationTemplateId);
+
+		if (bcc == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(bcc);
+		}
+
+		if (body == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(body);
+		}
+
+		if (cc == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(cc);
+		}
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
-
-		objectOutput.writeLong(notificationTemplateId);
 
 		if (from == null) {
 			objectOutput.writeUTF("");
@@ -308,6 +330,18 @@ public class NotificationQueueEntryCacheModel
 			objectOutput.writeUTF(fromName);
 		}
 
+		objectOutput.writeDouble(priority);
+
+		objectOutput.writeBoolean(sent);
+		objectOutput.writeLong(sentDate);
+
+		if (subject == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(subject);
+		}
+
 		if (to == null) {
 			objectOutput.writeUTF("");
 		}
@@ -321,39 +355,6 @@ public class NotificationQueueEntryCacheModel
 		else {
 			objectOutput.writeUTF(toName);
 		}
-
-		if (cc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(cc);
-		}
-
-		if (bcc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(bcc);
-		}
-
-		if (subject == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(subject);
-		}
-
-		if (body == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(body);
-		}
-
-		objectOutput.writeDouble(priority);
-
-		objectOutput.writeBoolean(sent);
-		objectOutput.writeLong(sentDate);
 	}
 
 	public long mvccVersion;
@@ -363,19 +364,19 @@ public class NotificationQueueEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long notificationTemplateId;
+	public String bcc;
+	public String body;
+	public String cc;
 	public long classNameId;
 	public long classPK;
-	public long notificationTemplateId;
 	public String from;
 	public String fromName;
-	public String to;
-	public String toName;
-	public String cc;
-	public String bcc;
-	public String subject;
-	public String body;
 	public double priority;
 	public boolean sent;
 	public long sentDate;
+	public String subject;
+	public String to;
+	public String toName;
 
 }

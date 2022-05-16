@@ -9,20 +9,20 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="notificationTemplateId" type="long" />
+		<field name="bcc" type="String" />
+		<field name="body" type="String" />
+		<field name="cc" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="notificationTemplateId" type="long" />
 		<field name="from" type="String" />
 		<field name="fromName" type="String" />
-		<field name="to" type="String" />
-		<field name="toName" type="String" />
-		<field name="cc" type="String" />
-		<field name="bcc" type="String" />
-		<field name="subject" type="String" />
-		<field name="body" type="String" />
 		<field name="priority" type="double" />
 		<field name="sent" type="boolean" />
 		<field name="sentDate" type="Date" />
+		<field name="subject" type="String" />
+		<field name="to" type="String" />
+		<field name="toName" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplate">
 		<field name="mvccVersion" type="long" />
@@ -33,15 +33,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String" />
+		<field name="bcc" type="String" />
+		<field localized="true" name="body" type="String" />
+		<field name="cc" type="String" />
 		<field name="description" type="String" />
+		<field name="enabled" type="boolean" />
 		<field name="from" type="String" />
 		<field localized="true" name="fromName" type="String" />
-		<field name="to" type="String" />
-		<field name="cc" type="String" />
-		<field name="bcc" type="String" />
-		<field name="enabled" type="boolean" />
+		<field localized="true" name="name" type="String" />
 		<field localized="true" name="subject" type="String" />
-		<field localized="true" name="body" type="String" />
+		<field name="to" type="String" />
 	</model>
 </model-hints>

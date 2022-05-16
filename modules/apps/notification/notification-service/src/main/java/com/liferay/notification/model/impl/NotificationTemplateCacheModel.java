@@ -96,26 +96,26 @@ public class NotificationTemplateCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", bcc=");
+		sb.append(bcc);
+		sb.append(", body=");
+		sb.append(body);
+		sb.append(", cc=");
+		sb.append(cc);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", enabled=");
+		sb.append(enabled);
 		sb.append(", from=");
 		sb.append(from);
 		sb.append(", fromName=");
 		sb.append(fromName);
-		sb.append(", to=");
-		sb.append(to);
-		sb.append(", cc=");
-		sb.append(cc);
-		sb.append(", bcc=");
-		sb.append(bcc);
-		sb.append(", enabled=");
-		sb.append(enabled);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", subject=");
 		sb.append(subject);
-		sb.append(", body=");
-		sb.append(body);
+		sb.append(", to=");
+		sb.append(to);
 		sb.append("}");
 
 		return sb.toString();
@@ -161,11 +161,25 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			notificationTemplateImpl.setName("");
+		if (bcc == null) {
+			notificationTemplateImpl.setBcc("");
 		}
 		else {
-			notificationTemplateImpl.setName(name);
+			notificationTemplateImpl.setBcc(bcc);
+		}
+
+		if (body == null) {
+			notificationTemplateImpl.setBody("");
+		}
+		else {
+			notificationTemplateImpl.setBody(body);
+		}
+
+		if (cc == null) {
+			notificationTemplateImpl.setCc("");
+		}
+		else {
+			notificationTemplateImpl.setCc(cc);
 		}
 
 		if (description == null) {
@@ -174,6 +188,8 @@ public class NotificationTemplateCacheModel
 		else {
 			notificationTemplateImpl.setDescription(description);
 		}
+
+		notificationTemplateImpl.setEnabled(enabled);
 
 		if (from == null) {
 			notificationTemplateImpl.setFrom("");
@@ -189,28 +205,12 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setFromName(fromName);
 		}
 
-		if (to == null) {
-			notificationTemplateImpl.setTo("");
+		if (name == null) {
+			notificationTemplateImpl.setName("");
 		}
 		else {
-			notificationTemplateImpl.setTo(to);
+			notificationTemplateImpl.setName(name);
 		}
-
-		if (cc == null) {
-			notificationTemplateImpl.setCc("");
-		}
-		else {
-			notificationTemplateImpl.setCc(cc);
-		}
-
-		if (bcc == null) {
-			notificationTemplateImpl.setBcc("");
-		}
-		else {
-			notificationTemplateImpl.setBcc(bcc);
-		}
-
-		notificationTemplateImpl.setEnabled(enabled);
 
 		if (subject == null) {
 			notificationTemplateImpl.setSubject("");
@@ -219,11 +219,11 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setSubject(subject);
 		}
 
-		if (body == null) {
-			notificationTemplateImpl.setBody("");
+		if (to == null) {
+			notificationTemplateImpl.setTo("");
 		}
 		else {
-			notificationTemplateImpl.setBody(body);
+			notificationTemplateImpl.setTo(to);
 		}
 
 		notificationTemplateImpl.resetOriginalValues();
@@ -244,17 +244,17 @@ public class NotificationTemplateCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
-		description = objectInput.readUTF();
-		from = objectInput.readUTF();
-		fromName = objectInput.readUTF();
-		to = objectInput.readUTF();
-		cc = objectInput.readUTF();
 		bcc = objectInput.readUTF();
+		body = objectInput.readUTF();
+		cc = objectInput.readUTF();
+		description = objectInput.readUTF();
 
 		enabled = objectInput.readBoolean();
+		from = objectInput.readUTF();
+		fromName = objectInput.readUTF();
+		name = objectInput.readUTF();
 		subject = objectInput.readUTF();
-		body = objectInput.readUTF();
+		to = objectInput.readUTF();
 	}
 
 	@Override
@@ -284,11 +284,25 @@ public class NotificationTemplateCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
+		if (bcc == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeUTF(bcc);
+		}
+
+		if (body == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(body);
+		}
+
+		if (cc == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(cc);
 		}
 
 		if (description == null) {
@@ -297,6 +311,8 @@ public class NotificationTemplateCacheModel
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeBoolean(enabled);
 
 		if (from == null) {
 			objectOutput.writeUTF("");
@@ -312,28 +328,12 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(fromName);
 		}
 
-		if (to == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(to);
+			objectOutput.writeUTF(name);
 		}
-
-		if (cc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(cc);
-		}
-
-		if (bcc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(bcc);
-		}
-
-		objectOutput.writeBoolean(enabled);
 
 		if (subject == null) {
 			objectOutput.writeUTF("");
@@ -342,11 +342,11 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(subject);
 		}
 
-		if (body == null) {
+		if (to == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(body);
+			objectOutput.writeUTF(to);
 		}
 	}
 
@@ -358,15 +358,15 @@ public class NotificationTemplateCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
+	public String bcc;
+	public String body;
+	public String cc;
 	public String description;
+	public boolean enabled;
 	public String from;
 	public String fromName;
-	public String to;
-	public String cc;
-	public String bcc;
-	public boolean enabled;
+	public String name;
 	public String subject;
-	public String body;
+	public String to;
 
 }

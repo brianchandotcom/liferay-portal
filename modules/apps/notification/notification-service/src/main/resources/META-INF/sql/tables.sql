@@ -6,20 +6,20 @@ create table NotificationQueueEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	notificationTemplateId LONG,
+	bcc VARCHAR(75) null,
+	body VARCHAR(75) null,
+	cc VARCHAR(75) null,
 	classNameId LONG,
 	classPK LONG,
-	notificationTemplateId LONG,
 	from_ VARCHAR(75) null,
 	fromName VARCHAR(75) null,
-	to_ VARCHAR(75) null,
-	toName VARCHAR(75) null,
-	cc VARCHAR(75) null,
-	bcc VARCHAR(75) null,
-	subject VARCHAR(75) null,
-	body VARCHAR(75) null,
 	priority DOUBLE,
 	sent BOOLEAN,
-	sentDate DATE null
+	sentDate DATE null,
+	subject VARCHAR(75) null,
+	to_ VARCHAR(75) null,
+	toName VARCHAR(75) null
 );
 
 create table NotificationTemplate (
@@ -31,14 +31,14 @@ create table NotificationTemplate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name STRING null,
+	bcc VARCHAR(75) null,
+	body STRING null,
+	cc VARCHAR(75) null,
 	description VARCHAR(75) null,
+	enabled BOOLEAN,
 	from_ VARCHAR(75) null,
 	fromName STRING null,
-	to_ VARCHAR(75) null,
-	cc VARCHAR(75) null,
-	bcc VARCHAR(75) null,
-	enabled BOOLEAN,
+	name STRING null,
 	subject STRING null,
-	body STRING null
+	to_ VARCHAR(75) null
 );

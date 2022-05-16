@@ -53,16 +53,16 @@ public class NotificationTemplateWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("bcc", getBcc());
+		attributes.put("body", getBody());
+		attributes.put("cc", getCc());
 		attributes.put("description", getDescription());
+		attributes.put("enabled", isEnabled());
 		attributes.put("from", getFrom());
 		attributes.put("fromName", getFromName());
-		attributes.put("to", getTo());
-		attributes.put("cc", getCc());
-		attributes.put("bcc", getBcc());
-		attributes.put("enabled", isEnabled());
+		attributes.put("name", getName());
 		attributes.put("subject", getSubject());
-		attributes.put("body", getBody());
+		attributes.put("to", getTo());
 
 		return attributes;
 	}
@@ -118,16 +118,34 @@ public class NotificationTemplateWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		String bcc = (String)attributes.get("bcc");
 
-		if (name != null) {
-			setName(name);
+		if (bcc != null) {
+			setBcc(bcc);
+		}
+
+		String body = (String)attributes.get("body");
+
+		if (body != null) {
+			setBody(body);
+		}
+
+		String cc = (String)attributes.get("cc");
+
+		if (cc != null) {
+			setCc(cc);
 		}
 
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean enabled = (Boolean)attributes.get("enabled");
+
+		if (enabled != null) {
+			setEnabled(enabled);
 		}
 
 		String from = (String)attributes.get("from");
@@ -142,28 +160,10 @@ public class NotificationTemplateWrapper
 			setFromName(fromName);
 		}
 
-		String to = (String)attributes.get("to");
+		String name = (String)attributes.get("name");
 
-		if (to != null) {
-			setTo(to);
-		}
-
-		String cc = (String)attributes.get("cc");
-
-		if (cc != null) {
-			setCc(cc);
-		}
-
-		String bcc = (String)attributes.get("bcc");
-
-		if (bcc != null) {
-			setBcc(bcc);
-		}
-
-		Boolean enabled = (Boolean)attributes.get("enabled");
-
-		if (enabled != null) {
-			setEnabled(enabled);
+		if (name != null) {
+			setName(name);
 		}
 
 		String subject = (String)attributes.get("subject");
@@ -172,10 +172,10 @@ public class NotificationTemplateWrapper
 			setSubject(subject);
 		}
 
-		String body = (String)attributes.get("body");
+		String to = (String)attributes.get("to");
 
-		if (body != null) {
-			setBody(body);
+		if (to != null) {
+			setTo(to);
 		}
 	}
 

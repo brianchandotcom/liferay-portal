@@ -57,30 +57,30 @@ public class NotificationTemplateTable
 	public final Column<NotificationTemplateTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> bcc = createColumn(
+		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> body = createColumn(
+		"body", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> cc = createColumn(
+		"cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, Boolean> enabled =
+		createColumn(
+			"enabled", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> from = createColumn(
 		"from_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> fromName =
 		createColumn(
 			"fromName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, String> to = createColumn(
-		"to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, String> cc = createColumn(
-		"cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, String> bcc = createColumn(
-		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, Boolean> enabled =
-		createColumn(
-			"enabled", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> subject =
 		createColumn(
 			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationTemplateTable, String> body = createColumn(
-		"body", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> to = createColumn(
+		"to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private NotificationTemplateTable() {
 		super("NotificationTemplate", NotificationTemplateTable::new);

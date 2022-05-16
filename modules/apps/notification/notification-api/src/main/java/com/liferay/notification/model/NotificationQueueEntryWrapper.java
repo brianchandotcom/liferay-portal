@@ -52,20 +52,20 @@ public class NotificationQueueEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("notificationTemplateId", getNotificationTemplateId());
+		attributes.put("bcc", getBcc());
+		attributes.put("body", getBody());
+		attributes.put("cc", getCc());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("notificationTemplateId", getNotificationTemplateId());
 		attributes.put("from", getFrom());
 		attributes.put("fromName", getFromName());
-		attributes.put("to", getTo());
-		attributes.put("toName", getToName());
-		attributes.put("cc", getCc());
-		attributes.put("bcc", getBcc());
-		attributes.put("subject", getSubject());
-		attributes.put("body", getBody());
 		attributes.put("priority", getPriority());
 		attributes.put("sent", isSent());
 		attributes.put("sentDate", getSentDate());
+		attributes.put("subject", getSubject());
+		attributes.put("to", getTo());
+		attributes.put("toName", getToName());
 
 		return attributes;
 	}
@@ -115,6 +115,31 @@ public class NotificationQueueEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long notificationTemplateId = (Long)attributes.get(
+			"notificationTemplateId");
+
+		if (notificationTemplateId != null) {
+			setNotificationTemplateId(notificationTemplateId);
+		}
+
+		String bcc = (String)attributes.get("bcc");
+
+		if (bcc != null) {
+			setBcc(bcc);
+		}
+
+		String body = (String)attributes.get("body");
+
+		if (body != null) {
+			setBody(body);
+		}
+
+		String cc = (String)attributes.get("cc");
+
+		if (cc != null) {
+			setCc(cc);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -127,13 +152,6 @@ public class NotificationQueueEntryWrapper
 			setClassPK(classPK);
 		}
 
-		Long notificationTemplateId = (Long)attributes.get(
-			"notificationTemplateId");
-
-		if (notificationTemplateId != null) {
-			setNotificationTemplateId(notificationTemplateId);
-		}
-
 		String from = (String)attributes.get("from");
 
 		if (from != null) {
@@ -144,42 +162,6 @@ public class NotificationQueueEntryWrapper
 
 		if (fromName != null) {
 			setFromName(fromName);
-		}
-
-		String to = (String)attributes.get("to");
-
-		if (to != null) {
-			setTo(to);
-		}
-
-		String toName = (String)attributes.get("toName");
-
-		if (toName != null) {
-			setToName(toName);
-		}
-
-		String cc = (String)attributes.get("cc");
-
-		if (cc != null) {
-			setCc(cc);
-		}
-
-		String bcc = (String)attributes.get("bcc");
-
-		if (bcc != null) {
-			setBcc(bcc);
-		}
-
-		String subject = (String)attributes.get("subject");
-
-		if (subject != null) {
-			setSubject(subject);
-		}
-
-		String body = (String)attributes.get("body");
-
-		if (body != null) {
-			setBody(body);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -198,6 +180,24 @@ public class NotificationQueueEntryWrapper
 
 		if (sentDate != null) {
 			setSentDate(sentDate);
+		}
+
+		String subject = (String)attributes.get("subject");
+
+		if (subject != null) {
+			setSubject(subject);
+		}
+
+		String to = (String)attributes.get("to");
+
+		if (to != null) {
+			setTo(to);
+		}
+
+		String toName = (String)attributes.get("toName");
+
+		if (toName != null) {
+			setToName(toName);
 		}
 	}
 

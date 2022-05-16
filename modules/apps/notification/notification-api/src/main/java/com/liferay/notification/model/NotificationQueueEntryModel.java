@@ -189,6 +189,65 @@ public interface NotificationQueueEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the notification template ID of this notification queue entry.
+	 *
+	 * @return the notification template ID of this notification queue entry
+	 */
+	public long getNotificationTemplateId();
+
+	/**
+	 * Sets the notification template ID of this notification queue entry.
+	 *
+	 * @param notificationTemplateId the notification template ID of this notification queue entry
+	 */
+	public void setNotificationTemplateId(long notificationTemplateId);
+
+	/**
+	 * Returns the bcc of this notification queue entry.
+	 *
+	 * @return the bcc of this notification queue entry
+	 */
+	@AutoEscape
+	public String getBcc();
+
+	/**
+	 * Sets the bcc of this notification queue entry.
+	 *
+	 * @param bcc the bcc of this notification queue entry
+	 */
+	public void setBcc(String bcc);
+
+	/**
+	 * Returns the body of this notification queue entry.
+	 *
+	 * @return the body of this notification queue entry
+	 */
+	@AutoEscape
+	public String getBody();
+
+	/**
+	 * Sets the body of this notification queue entry.
+	 *
+	 * @param body the body of this notification queue entry
+	 */
+	public void setBody(String body);
+
+	/**
+	 * Returns the cc of this notification queue entry.
+	 *
+	 * @return the cc of this notification queue entry
+	 */
+	@AutoEscape
+	public String getCc();
+
+	/**
+	 * Sets the cc of this notification queue entry.
+	 *
+	 * @param cc the cc of this notification queue entry
+	 */
+	public void setCc(String cc);
+
+	/**
 	 * Returns the fully qualified class name of this notification queue entry.
 	 *
 	 * @return the fully qualified class name of this notification queue entry
@@ -231,20 +290,6 @@ public interface NotificationQueueEntryModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the notification template ID of this notification queue entry.
-	 *
-	 * @return the notification template ID of this notification queue entry
-	 */
-	public long getNotificationTemplateId();
-
-	/**
-	 * Sets the notification template ID of this notification queue entry.
-	 *
-	 * @param notificationTemplateId the notification template ID of this notification queue entry
-	 */
-	public void setNotificationTemplateId(long notificationTemplateId);
-
-	/**
 	 * Returns the from of this notification queue entry.
 	 *
 	 * @return the from of this notification queue entry
@@ -273,96 +318,6 @@ public interface NotificationQueueEntryModel
 	 * @param fromName the from name of this notification queue entry
 	 */
 	public void setFromName(String fromName);
-
-	/**
-	 * Returns the to of this notification queue entry.
-	 *
-	 * @return the to of this notification queue entry
-	 */
-	@AutoEscape
-	public String getTo();
-
-	/**
-	 * Sets the to of this notification queue entry.
-	 *
-	 * @param to the to of this notification queue entry
-	 */
-	public void setTo(String to);
-
-	/**
-	 * Returns the to name of this notification queue entry.
-	 *
-	 * @return the to name of this notification queue entry
-	 */
-	@AutoEscape
-	public String getToName();
-
-	/**
-	 * Sets the to name of this notification queue entry.
-	 *
-	 * @param toName the to name of this notification queue entry
-	 */
-	public void setToName(String toName);
-
-	/**
-	 * Returns the cc of this notification queue entry.
-	 *
-	 * @return the cc of this notification queue entry
-	 */
-	@AutoEscape
-	public String getCc();
-
-	/**
-	 * Sets the cc of this notification queue entry.
-	 *
-	 * @param cc the cc of this notification queue entry
-	 */
-	public void setCc(String cc);
-
-	/**
-	 * Returns the bcc of this notification queue entry.
-	 *
-	 * @return the bcc of this notification queue entry
-	 */
-	@AutoEscape
-	public String getBcc();
-
-	/**
-	 * Sets the bcc of this notification queue entry.
-	 *
-	 * @param bcc the bcc of this notification queue entry
-	 */
-	public void setBcc(String bcc);
-
-	/**
-	 * Returns the subject of this notification queue entry.
-	 *
-	 * @return the subject of this notification queue entry
-	 */
-	@AutoEscape
-	public String getSubject();
-
-	/**
-	 * Sets the subject of this notification queue entry.
-	 *
-	 * @param subject the subject of this notification queue entry
-	 */
-	public void setSubject(String subject);
-
-	/**
-	 * Returns the body of this notification queue entry.
-	 *
-	 * @return the body of this notification queue entry
-	 */
-	@AutoEscape
-	public String getBody();
-
-	/**
-	 * Sets the body of this notification queue entry.
-	 *
-	 * @param body the body of this notification queue entry
-	 */
-	public void setBody(String body);
 
 	/**
 	 * Returns the priority of this notification queue entry.
@@ -412,6 +367,51 @@ public interface NotificationQueueEntryModel
 	 * @param sentDate the sent date of this notification queue entry
 	 */
 	public void setSentDate(Date sentDate);
+
+	/**
+	 * Returns the subject of this notification queue entry.
+	 *
+	 * @return the subject of this notification queue entry
+	 */
+	@AutoEscape
+	public String getSubject();
+
+	/**
+	 * Sets the subject of this notification queue entry.
+	 *
+	 * @param subject the subject of this notification queue entry
+	 */
+	public void setSubject(String subject);
+
+	/**
+	 * Returns the to of this notification queue entry.
+	 *
+	 * @return the to of this notification queue entry
+	 */
+	@AutoEscape
+	public String getTo();
+
+	/**
+	 * Sets the to of this notification queue entry.
+	 *
+	 * @param to the to of this notification queue entry
+	 */
+	public void setTo(String to);
+
+	/**
+	 * Returns the to name of this notification queue entry.
+	 *
+	 * @return the to name of this notification queue entry
+	 */
+	@AutoEscape
+	public String getToName();
+
+	/**
+	 * Sets the to name of this notification queue entry.
+	 *
+	 * @param toName the to name of this notification queue entry
+	 */
+	public void setToName(String toName);
 
 	@Override
 	public NotificationQueueEntry cloneWithOriginalValues();

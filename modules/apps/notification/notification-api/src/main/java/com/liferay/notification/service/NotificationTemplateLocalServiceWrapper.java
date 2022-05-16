@@ -40,16 +40,17 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				long userId, String name, String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap, String to,
-				String cc, String bcc, boolean enabled,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap)
+				long userId, String bcc,
+				java.util.Map<java.util.Locale, String> bodyMap, String cc,
+				String description, boolean enabled, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap,
+				String name, java.util.Map<java.util.Locale, String> subjectMap,
+				String to)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
-			subjectMap, bodyMap);
+			userId, bcc, bodyMap, cc, description, enabled, from, fromNameMap,
+			name, subjectMap, to);
 	}
 
 	/**
@@ -392,17 +393,17 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
-				long notificationTemplateId, String name, String description,
-				String from,
-				java.util.Map<java.util.Locale, String> fromNameMap, String to,
-				String cc, String bcc, boolean enabled,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap)
+				long notificationTemplateId, String bcc,
+				java.util.Map<java.util.Locale, String> bodyMap, String cc,
+				String description, boolean enabled, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap,
+				String name, java.util.Map<java.util.Locale, String> subjectMap,
+				String to)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
-			notificationTemplateId, name, description, from, fromNameMap, to,
-			cc, bcc, enabled, subjectMap, bodyMap);
+			notificationTemplateId, bcc, bodyMap, cc, description, enabled,
+			from, fromNameMap, name, subjectMap, to);
 	}
 
 	/**

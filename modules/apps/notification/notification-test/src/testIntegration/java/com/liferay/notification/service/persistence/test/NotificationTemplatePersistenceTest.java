@@ -139,25 +139,25 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
-		newNotificationTemplate.setName(RandomTestUtil.randomString());
+		newNotificationTemplate.setBcc(RandomTestUtil.randomString());
+
+		newNotificationTemplate.setBody(RandomTestUtil.randomString());
+
+		newNotificationTemplate.setCc(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setDescription(RandomTestUtil.randomString());
+
+		newNotificationTemplate.setEnabled(RandomTestUtil.randomBoolean());
 
 		newNotificationTemplate.setFrom(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setFromName(RandomTestUtil.randomString());
 
-		newNotificationTemplate.setTo(RandomTestUtil.randomString());
-
-		newNotificationTemplate.setCc(RandomTestUtil.randomString());
-
-		newNotificationTemplate.setBcc(RandomTestUtil.randomString());
-
-		newNotificationTemplate.setEnabled(RandomTestUtil.randomBoolean());
+		newNotificationTemplate.setName(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
-		newNotificationTemplate.setBody(RandomTestUtil.randomString());
+		newNotificationTemplate.setTo(RandomTestUtil.randomString());
 
 		_notificationTemplates.add(
 			_persistence.update(newNotificationTemplate));
@@ -193,11 +193,20 @@ public class NotificationTemplatePersistenceTest {
 				existingNotificationTemplate.getModifiedDate()),
 			Time.getShortTimestamp(newNotificationTemplate.getModifiedDate()));
 		Assert.assertEquals(
-			existingNotificationTemplate.getName(),
-			newNotificationTemplate.getName());
+			existingNotificationTemplate.getBcc(),
+			newNotificationTemplate.getBcc());
+		Assert.assertEquals(
+			existingNotificationTemplate.getBody(),
+			newNotificationTemplate.getBody());
+		Assert.assertEquals(
+			existingNotificationTemplate.getCc(),
+			newNotificationTemplate.getCc());
 		Assert.assertEquals(
 			existingNotificationTemplate.getDescription(),
 			newNotificationTemplate.getDescription());
+		Assert.assertEquals(
+			existingNotificationTemplate.isEnabled(),
+			newNotificationTemplate.isEnabled());
 		Assert.assertEquals(
 			existingNotificationTemplate.getFrom(),
 			newNotificationTemplate.getFrom());
@@ -205,23 +214,14 @@ public class NotificationTemplatePersistenceTest {
 			existingNotificationTemplate.getFromName(),
 			newNotificationTemplate.getFromName());
 		Assert.assertEquals(
-			existingNotificationTemplate.getTo(),
-			newNotificationTemplate.getTo());
-		Assert.assertEquals(
-			existingNotificationTemplate.getCc(),
-			newNotificationTemplate.getCc());
-		Assert.assertEquals(
-			existingNotificationTemplate.getBcc(),
-			newNotificationTemplate.getBcc());
-		Assert.assertEquals(
-			existingNotificationTemplate.isEnabled(),
-			newNotificationTemplate.isEnabled());
+			existingNotificationTemplate.getName(),
+			newNotificationTemplate.getName());
 		Assert.assertEquals(
 			existingNotificationTemplate.getSubject(),
 			newNotificationTemplate.getSubject());
 		Assert.assertEquals(
-			existingNotificationTemplate.getBody(),
-			newNotificationTemplate.getBody());
+			existingNotificationTemplate.getTo(),
+			newNotificationTemplate.getTo());
 	}
 
 	@Test
@@ -272,10 +272,10 @@ public class NotificationTemplatePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationTemplate", "mvccVersion", true, "uuid", true,
 			"notificationTemplateId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "from", true, "fromName", true, "to",
-			true, "cc", true, "bcc", true, "enabled", true, "subject", true,
-			"body", true);
+			"userName", true, "createDate", true, "modifiedDate", true, "bcc",
+			true, "body", true, "cc", true, "description", true, "enabled",
+			true, "from", true, "fromName", true, "name", true, "subject", true,
+			"to", true);
 	}
 
 	@Test
@@ -531,25 +531,25 @@ public class NotificationTemplatePersistenceTest {
 
 		notificationTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
-		notificationTemplate.setName(RandomTestUtil.randomString());
+		notificationTemplate.setBcc(RandomTestUtil.randomString());
+
+		notificationTemplate.setBody(RandomTestUtil.randomString());
+
+		notificationTemplate.setCc(RandomTestUtil.randomString());
 
 		notificationTemplate.setDescription(RandomTestUtil.randomString());
+
+		notificationTemplate.setEnabled(RandomTestUtil.randomBoolean());
 
 		notificationTemplate.setFrom(RandomTestUtil.randomString());
 
 		notificationTemplate.setFromName(RandomTestUtil.randomString());
 
-		notificationTemplate.setTo(RandomTestUtil.randomString());
-
-		notificationTemplate.setCc(RandomTestUtil.randomString());
-
-		notificationTemplate.setBcc(RandomTestUtil.randomString());
-
-		notificationTemplate.setEnabled(RandomTestUtil.randomBoolean());
+		notificationTemplate.setName(RandomTestUtil.randomString());
 
 		notificationTemplate.setSubject(RandomTestUtil.randomString());
 
-		notificationTemplate.setBody(RandomTestUtil.randomString());
+		notificationTemplate.setTo(RandomTestUtil.randomString());
 
 		_notificationTemplates.add(_persistence.update(notificationTemplate));
 

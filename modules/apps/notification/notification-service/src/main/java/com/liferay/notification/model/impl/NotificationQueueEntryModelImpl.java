@@ -76,13 +76,13 @@ public class NotificationQueueEntryModelImpl
 		{"notificationQueueEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"notificationTemplateId", Types.BIGINT}, {"bcc", Types.VARCHAR},
+		{"body", Types.VARCHAR}, {"cc", Types.VARCHAR},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"notificationTemplateId", Types.BIGINT}, {"from_", Types.VARCHAR},
-		{"fromName", Types.VARCHAR}, {"to_", Types.VARCHAR},
-		{"toName", Types.VARCHAR}, {"cc", Types.VARCHAR},
-		{"bcc", Types.VARCHAR}, {"subject", Types.VARCHAR},
-		{"body", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"sent", Types.BOOLEAN}, {"sentDate", Types.TIMESTAMP}
+		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
+		{"priority", Types.DOUBLE}, {"sent", Types.BOOLEAN},
+		{"sentDate", Types.TIMESTAMP}, {"subject", Types.VARCHAR},
+		{"to_", Types.VARCHAR}, {"toName", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,24 +96,24 @@ public class NotificationQueueEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("bcc", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("body", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("cc", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("from_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fromName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("to_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("toName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("cc", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("bcc", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("body", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("sent", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sentDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("to_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("toName", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,notificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(75) null,bcc VARCHAR(75) null,subject VARCHAR(75) null,body VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body VARCHAR(75) null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";
@@ -302,6 +302,28 @@ public class NotificationQueueEntryModelImpl
 			(BiConsumer<NotificationQueueEntry, Date>)
 				NotificationQueueEntry::setModifiedDate);
 		attributeGetterFunctions.put(
+			"notificationTemplateId",
+			NotificationQueueEntry::getNotificationTemplateId);
+		attributeSetterBiConsumers.put(
+			"notificationTemplateId",
+			(BiConsumer<NotificationQueueEntry, Long>)
+				NotificationQueueEntry::setNotificationTemplateId);
+		attributeGetterFunctions.put("bcc", NotificationQueueEntry::getBcc);
+		attributeSetterBiConsumers.put(
+			"bcc",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setBcc);
+		attributeGetterFunctions.put("body", NotificationQueueEntry::getBody);
+		attributeSetterBiConsumers.put(
+			"body",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setBody);
+		attributeGetterFunctions.put("cc", NotificationQueueEntry::getCc);
+		attributeSetterBiConsumers.put(
+			"cc",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setCc);
+		attributeGetterFunctions.put(
 			"classNameId", NotificationQueueEntry::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
@@ -313,13 +335,6 @@ public class NotificationQueueEntryModelImpl
 			"classPK",
 			(BiConsumer<NotificationQueueEntry, Long>)
 				NotificationQueueEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"notificationTemplateId",
-			NotificationQueueEntry::getNotificationTemplateId);
-		attributeSetterBiConsumers.put(
-			"notificationTemplateId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setNotificationTemplateId);
 		attributeGetterFunctions.put("from", NotificationQueueEntry::getFrom);
 		attributeSetterBiConsumers.put(
 			"from",
@@ -331,38 +346,6 @@ public class NotificationQueueEntryModelImpl
 			"fromName",
 			(BiConsumer<NotificationQueueEntry, String>)
 				NotificationQueueEntry::setFromName);
-		attributeGetterFunctions.put("to", NotificationQueueEntry::getTo);
-		attributeSetterBiConsumers.put(
-			"to",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setTo);
-		attributeGetterFunctions.put(
-			"toName", NotificationQueueEntry::getToName);
-		attributeSetterBiConsumers.put(
-			"toName",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setToName);
-		attributeGetterFunctions.put("cc", NotificationQueueEntry::getCc);
-		attributeSetterBiConsumers.put(
-			"cc",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setCc);
-		attributeGetterFunctions.put("bcc", NotificationQueueEntry::getBcc);
-		attributeSetterBiConsumers.put(
-			"bcc",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setBcc);
-		attributeGetterFunctions.put(
-			"subject", NotificationQueueEntry::getSubject);
-		attributeSetterBiConsumers.put(
-			"subject",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setSubject);
-		attributeGetterFunctions.put("body", NotificationQueueEntry::getBody);
-		attributeSetterBiConsumers.put(
-			"body",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setBody);
 		attributeGetterFunctions.put(
 			"priority", NotificationQueueEntry::getPriority);
 		attributeSetterBiConsumers.put(
@@ -380,6 +363,23 @@ public class NotificationQueueEntryModelImpl
 			"sentDate",
 			(BiConsumer<NotificationQueueEntry, Date>)
 				NotificationQueueEntry::setSentDate);
+		attributeGetterFunctions.put(
+			"subject", NotificationQueueEntry::getSubject);
+		attributeSetterBiConsumers.put(
+			"subject",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setSubject);
+		attributeGetterFunctions.put("to", NotificationQueueEntry::getTo);
+		attributeSetterBiConsumers.put(
+			"to",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setTo);
+		attributeGetterFunctions.put(
+			"toName", NotificationQueueEntry::getToName);
+		attributeSetterBiConsumers.put(
+			"toName",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setToName);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -513,6 +513,87 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	@Override
+	public long getNotificationTemplateId() {
+		return _notificationTemplateId;
+	}
+
+	@Override
+	public void setNotificationTemplateId(long notificationTemplateId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_notificationTemplateId = notificationTemplateId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalNotificationTemplateId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("notificationTemplateId"));
+	}
+
+	@Override
+	public String getBcc() {
+		if (_bcc == null) {
+			return "";
+		}
+		else {
+			return _bcc;
+		}
+	}
+
+	@Override
+	public void setBcc(String bcc) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_bcc = bcc;
+	}
+
+	@Override
+	public String getBody() {
+		if (_body == null) {
+			return "";
+		}
+		else {
+			return _body;
+		}
+	}
+
+	@Override
+	public void setBody(String body) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_body = body;
+	}
+
+	@Override
+	public String getCc() {
+		if (_cc == null) {
+			return "";
+		}
+		else {
+			return _cc;
+		}
+	}
+
+	@Override
+	public void setCc(String cc) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_cc = cc;
+	}
+
+	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
 			return "";
@@ -561,30 +642,6 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	@Override
-	public long getNotificationTemplateId() {
-		return _notificationTemplateId;
-	}
-
-	@Override
-	public void setNotificationTemplateId(long notificationTemplateId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_notificationTemplateId = notificationTemplateId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalNotificationTemplateId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("notificationTemplateId"));
-	}
-
-	@Override
 	public String getFrom() {
 		if (_from == null) {
 			return "";
@@ -620,120 +677,6 @@ public class NotificationQueueEntryModelImpl
 		}
 
 		_fromName = fromName;
-	}
-
-	@Override
-	public String getTo() {
-		if (_to == null) {
-			return "";
-		}
-		else {
-			return _to;
-		}
-	}
-
-	@Override
-	public void setTo(String to) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_to = to;
-	}
-
-	@Override
-	public String getToName() {
-		if (_toName == null) {
-			return "";
-		}
-		else {
-			return _toName;
-		}
-	}
-
-	@Override
-	public void setToName(String toName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_toName = toName;
-	}
-
-	@Override
-	public String getCc() {
-		if (_cc == null) {
-			return "";
-		}
-		else {
-			return _cc;
-		}
-	}
-
-	@Override
-	public void setCc(String cc) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_cc = cc;
-	}
-
-	@Override
-	public String getBcc() {
-		if (_bcc == null) {
-			return "";
-		}
-		else {
-			return _bcc;
-		}
-	}
-
-	@Override
-	public void setBcc(String bcc) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_bcc = bcc;
-	}
-
-	@Override
-	public String getSubject() {
-		if (_subject == null) {
-			return "";
-		}
-		else {
-			return _subject;
-		}
-	}
-
-	@Override
-	public void setSubject(String subject) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_subject = subject;
-	}
-
-	@Override
-	public String getBody() {
-		if (_body == null) {
-			return "";
-		}
-		else {
-			return _body;
-		}
-	}
-
-	@Override
-	public void setBody(String body) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_body = body;
 	}
 
 	@Override
@@ -781,6 +724,63 @@ public class NotificationQueueEntryModelImpl
 		}
 
 		_sentDate = sentDate;
+	}
+
+	@Override
+	public String getSubject() {
+		if (_subject == null) {
+			return "";
+		}
+		else {
+			return _subject;
+		}
+	}
+
+	@Override
+	public void setSubject(String subject) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subject = subject;
+	}
+
+	@Override
+	public String getTo() {
+		if (_to == null) {
+			return "";
+		}
+		else {
+			return _to;
+		}
+	}
+
+	@Override
+	public void setTo(String to) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_to = to;
+	}
+
+	@Override
+	public String getToName() {
+		if (_toName == null) {
+			return "";
+		}
+		else {
+			return _toName;
+		}
+	}
+
+	@Override
+	public void setToName(String toName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_toName = toName;
 	}
 
 	public long getColumnBitmask() {
@@ -849,21 +849,21 @@ public class NotificationQueueEntryModelImpl
 		notificationQueueEntryImpl.setUserName(getUserName());
 		notificationQueueEntryImpl.setCreateDate(getCreateDate());
 		notificationQueueEntryImpl.setModifiedDate(getModifiedDate());
-		notificationQueueEntryImpl.setClassNameId(getClassNameId());
-		notificationQueueEntryImpl.setClassPK(getClassPK());
 		notificationQueueEntryImpl.setNotificationTemplateId(
 			getNotificationTemplateId());
+		notificationQueueEntryImpl.setBcc(getBcc());
+		notificationQueueEntryImpl.setBody(getBody());
+		notificationQueueEntryImpl.setCc(getCc());
+		notificationQueueEntryImpl.setClassNameId(getClassNameId());
+		notificationQueueEntryImpl.setClassPK(getClassPK());
 		notificationQueueEntryImpl.setFrom(getFrom());
 		notificationQueueEntryImpl.setFromName(getFromName());
-		notificationQueueEntryImpl.setTo(getTo());
-		notificationQueueEntryImpl.setToName(getToName());
-		notificationQueueEntryImpl.setCc(getCc());
-		notificationQueueEntryImpl.setBcc(getBcc());
-		notificationQueueEntryImpl.setSubject(getSubject());
-		notificationQueueEntryImpl.setBody(getBody());
 		notificationQueueEntryImpl.setPriority(getPriority());
 		notificationQueueEntryImpl.setSent(isSent());
 		notificationQueueEntryImpl.setSentDate(getSentDate());
+		notificationQueueEntryImpl.setSubject(getSubject());
+		notificationQueueEntryImpl.setTo(getTo());
+		notificationQueueEntryImpl.setToName(getToName());
 
 		notificationQueueEntryImpl.resetOriginalValues();
 
@@ -889,34 +889,34 @@ public class NotificationQueueEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		notificationQueueEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		notificationQueueEntryImpl.setNotificationTemplateId(
+			this.<Long>getColumnOriginalValue("notificationTemplateId"));
+		notificationQueueEntryImpl.setBcc(
+			this.<String>getColumnOriginalValue("bcc"));
+		notificationQueueEntryImpl.setBody(
+			this.<String>getColumnOriginalValue("body"));
+		notificationQueueEntryImpl.setCc(
+			this.<String>getColumnOriginalValue("cc"));
 		notificationQueueEntryImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
 		notificationQueueEntryImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		notificationQueueEntryImpl.setNotificationTemplateId(
-			this.<Long>getColumnOriginalValue("notificationTemplateId"));
 		notificationQueueEntryImpl.setFrom(
 			this.<String>getColumnOriginalValue("from_"));
 		notificationQueueEntryImpl.setFromName(
 			this.<String>getColumnOriginalValue("fromName"));
-		notificationQueueEntryImpl.setTo(
-			this.<String>getColumnOriginalValue("to_"));
-		notificationQueueEntryImpl.setToName(
-			this.<String>getColumnOriginalValue("toName"));
-		notificationQueueEntryImpl.setCc(
-			this.<String>getColumnOriginalValue("cc"));
-		notificationQueueEntryImpl.setBcc(
-			this.<String>getColumnOriginalValue("bcc"));
-		notificationQueueEntryImpl.setSubject(
-			this.<String>getColumnOriginalValue("subject"));
-		notificationQueueEntryImpl.setBody(
-			this.<String>getColumnOriginalValue("body"));
 		notificationQueueEntryImpl.setPriority(
 			this.<Double>getColumnOriginalValue("priority"));
 		notificationQueueEntryImpl.setSent(
 			this.<Boolean>getColumnOriginalValue("sent"));
 		notificationQueueEntryImpl.setSentDate(
 			this.<Date>getColumnOriginalValue("sentDate"));
+		notificationQueueEntryImpl.setSubject(
+			this.<String>getColumnOriginalValue("subject"));
+		notificationQueueEntryImpl.setTo(
+			this.<String>getColumnOriginalValue("to_"));
+		notificationQueueEntryImpl.setToName(
+			this.<String>getColumnOriginalValue("toName"));
 
 		return notificationQueueEntryImpl;
 	}
@@ -1032,12 +1032,36 @@ public class NotificationQueueEntryModelImpl
 			notificationQueueEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		notificationQueueEntryCacheModel.notificationTemplateId =
+			getNotificationTemplateId();
+
+		notificationQueueEntryCacheModel.bcc = getBcc();
+
+		String bcc = notificationQueueEntryCacheModel.bcc;
+
+		if ((bcc != null) && (bcc.length() == 0)) {
+			notificationQueueEntryCacheModel.bcc = null;
+		}
+
+		notificationQueueEntryCacheModel.body = getBody();
+
+		String body = notificationQueueEntryCacheModel.body;
+
+		if ((body != null) && (body.length() == 0)) {
+			notificationQueueEntryCacheModel.body = null;
+		}
+
+		notificationQueueEntryCacheModel.cc = getCc();
+
+		String cc = notificationQueueEntryCacheModel.cc;
+
+		if ((cc != null) && (cc.length() == 0)) {
+			notificationQueueEntryCacheModel.cc = null;
+		}
+
 		notificationQueueEntryCacheModel.classNameId = getClassNameId();
 
 		notificationQueueEntryCacheModel.classPK = getClassPK();
-
-		notificationQueueEntryCacheModel.notificationTemplateId =
-			getNotificationTemplateId();
 
 		notificationQueueEntryCacheModel.from = getFrom();
 
@@ -1055,6 +1079,27 @@ public class NotificationQueueEntryModelImpl
 			notificationQueueEntryCacheModel.fromName = null;
 		}
 
+		notificationQueueEntryCacheModel.priority = getPriority();
+
+		notificationQueueEntryCacheModel.sent = isSent();
+
+		Date sentDate = getSentDate();
+
+		if (sentDate != null) {
+			notificationQueueEntryCacheModel.sentDate = sentDate.getTime();
+		}
+		else {
+			notificationQueueEntryCacheModel.sentDate = Long.MIN_VALUE;
+		}
+
+		notificationQueueEntryCacheModel.subject = getSubject();
+
+		String subject = notificationQueueEntryCacheModel.subject;
+
+		if ((subject != null) && (subject.length() == 0)) {
+			notificationQueueEntryCacheModel.subject = null;
+		}
+
 		notificationQueueEntryCacheModel.to = getTo();
 
 		String to = notificationQueueEntryCacheModel.to;
@@ -1069,51 +1114,6 @@ public class NotificationQueueEntryModelImpl
 
 		if ((toName != null) && (toName.length() == 0)) {
 			notificationQueueEntryCacheModel.toName = null;
-		}
-
-		notificationQueueEntryCacheModel.cc = getCc();
-
-		String cc = notificationQueueEntryCacheModel.cc;
-
-		if ((cc != null) && (cc.length() == 0)) {
-			notificationQueueEntryCacheModel.cc = null;
-		}
-
-		notificationQueueEntryCacheModel.bcc = getBcc();
-
-		String bcc = notificationQueueEntryCacheModel.bcc;
-
-		if ((bcc != null) && (bcc.length() == 0)) {
-			notificationQueueEntryCacheModel.bcc = null;
-		}
-
-		notificationQueueEntryCacheModel.subject = getSubject();
-
-		String subject = notificationQueueEntryCacheModel.subject;
-
-		if ((subject != null) && (subject.length() == 0)) {
-			notificationQueueEntryCacheModel.subject = null;
-		}
-
-		notificationQueueEntryCacheModel.body = getBody();
-
-		String body = notificationQueueEntryCacheModel.body;
-
-		if ((body != null) && (body.length() == 0)) {
-			notificationQueueEntryCacheModel.body = null;
-		}
-
-		notificationQueueEntryCacheModel.priority = getPriority();
-
-		notificationQueueEntryCacheModel.sent = isSent();
-
-		Date sentDate = getSentDate();
-
-		if (sentDate != null) {
-			notificationQueueEntryCacheModel.sentDate = sentDate.getTime();
-		}
-		else {
-			notificationQueueEntryCacheModel.sentDate = Long.MIN_VALUE;
 		}
 
 		return notificationQueueEntryCacheModel;
@@ -1218,20 +1218,20 @@ public class NotificationQueueEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _notificationTemplateId;
+	private String _bcc;
+	private String _body;
+	private String _cc;
 	private long _classNameId;
 	private long _classPK;
-	private long _notificationTemplateId;
 	private String _from;
 	private String _fromName;
-	private String _to;
-	private String _toName;
-	private String _cc;
-	private String _bcc;
-	private String _subject;
-	private String _body;
 	private double _priority;
 	private boolean _sent;
 	private Date _sentDate;
+	private String _subject;
+	private String _to;
+	private String _toName;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1270,21 +1270,21 @@ public class NotificationQueueEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("classNameId", _classNameId);
-		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put(
 			"notificationTemplateId", _notificationTemplateId);
+		_columnOriginalValues.put("bcc", _bcc);
+		_columnOriginalValues.put("body", _body);
+		_columnOriginalValues.put("cc", _cc);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("from_", _from);
 		_columnOriginalValues.put("fromName", _fromName);
-		_columnOriginalValues.put("to_", _to);
-		_columnOriginalValues.put("toName", _toName);
-		_columnOriginalValues.put("cc", _cc);
-		_columnOriginalValues.put("bcc", _bcc);
-		_columnOriginalValues.put("subject", _subject);
-		_columnOriginalValues.put("body", _body);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("sent", _sent);
 		_columnOriginalValues.put("sentDate", _sentDate);
+		_columnOriginalValues.put("subject", _subject);
+		_columnOriginalValues.put("to_", _to);
+		_columnOriginalValues.put("toName", _toName);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1323,33 +1323,33 @@ public class NotificationQueueEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("classNameId", 128L);
+		columnBitmasks.put("notificationTemplateId", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("bcc", 256L);
 
-		columnBitmasks.put("notificationTemplateId", 512L);
+		columnBitmasks.put("body", 512L);
 
-		columnBitmasks.put("from_", 1024L);
+		columnBitmasks.put("cc", 1024L);
 
-		columnBitmasks.put("fromName", 2048L);
+		columnBitmasks.put("classNameId", 2048L);
 
-		columnBitmasks.put("to_", 4096L);
+		columnBitmasks.put("classPK", 4096L);
 
-		columnBitmasks.put("toName", 8192L);
+		columnBitmasks.put("from_", 8192L);
 
-		columnBitmasks.put("cc", 16384L);
+		columnBitmasks.put("fromName", 16384L);
 
-		columnBitmasks.put("bcc", 32768L);
+		columnBitmasks.put("priority", 32768L);
 
-		columnBitmasks.put("subject", 65536L);
+		columnBitmasks.put("sent", 65536L);
 
-		columnBitmasks.put("body", 131072L);
+		columnBitmasks.put("sentDate", 131072L);
 
-		columnBitmasks.put("priority", 262144L);
+		columnBitmasks.put("subject", 262144L);
 
-		columnBitmasks.put("sent", 524288L);
+		columnBitmasks.put("to_", 524288L);
 
-		columnBitmasks.put("sentDate", 1048576L);
+		columnBitmasks.put("toName", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

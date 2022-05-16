@@ -29,18 +29,19 @@ $productMenuWidth: 320px;
 	@import 'document_library_preview';
 
 	.bulk-status-container {
-		height: 32px;
-		margin-bottom: -32px;
-
 		.bulk-status {
 			background: #2e5aac;
 			color: #fff;
 			font-size: 0.875rem;
+			left: 0;
 			line-height: 32px;
 			max-height: 32px;
 			opacity: 1;
+			position: absolute;
+			right: 0;
 			text-align: center;
 			width: 100%;
+			z-index: $zindex-modal;
 
 			@include transition(all 0.4s ease-in-out);
 

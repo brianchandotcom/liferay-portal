@@ -118,102 +118,100 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
 				</liferay-frontend:sidebar-panel>
 
-				<div class="sidenav-content">
-					<div class="<%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-view" : StringPool.BLANK %>">
-						<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-							<c:if test="<%= !dlViewDisplayContext.isSearch() %>">
+				<div class="<%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-view sidenav-content" : StringPool.BLANK %>">
+					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+						<c:if test="<%= !dlViewDisplayContext.isSearch() %>">
 
-								<%
-								DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlViewDisplayContext.getFolder(), request, liferayPortletResponse);
-								%>
+							<%
+							DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlViewDisplayContext.getFolder(), request, liferayPortletResponse);
+							%>
 
-								<liferay-ui:breadcrumb
-									showCurrentGroup="<%= false %>"
-									showGuestGroup="<%= false %>"
-									showLayout="<%= false %>"
-									showParentGroups="<%= false %>"
-								/>
-							</c:if>
-						</div>
-
-						<c:if test="<%= dlViewDisplayContext.isOpenInMSOfficeEnabled() %>">
-							<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+							<liferay-ui:breadcrumb
+								showCurrentGroup="<%= false %>"
+								showGuestGroup="<%= false %>"
+								showLayout="<%= false %>"
+								showParentGroups="<%= false %>"
+							/>
 						</c:if>
-
-						<aui:form action="<%= dlViewDisplayContext.getEditFileEntryURL() %>" method="get" name="fm2">
-							<aui:input name="<%= Constants.CMD %>" type="hidden" />
-							<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-							<aui:input name="repositoryId" type="hidden" value="<%= dlViewDisplayContext.getRepositoryId() %>" />
-							<aui:input name="newFolderId" type="hidden" />
-							<aui:input name="folderId" type="hidden" value="<%= dlViewDisplayContext.getFolderId() %>" />
-							<aui:input name="changeLog" type="hidden" />
-							<aui:input name="versionIncrease" type="hidden" />
-							<aui:input name="selectAll" type="hidden" value="<%= false %>" />
-
-							<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#errors" />
-
-							<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
-							<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
-							<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
-							<liferay-ui:error exception="<%= FileEntryLockException.MustBeUnlocked.class %>" message="you-cannot-perform-this-operation-on-checked-out-documents-.please-check-it-in-or-cancel-the-checkout-first" />
-							<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
-							<liferay-ui:error key="externalServiceFailed" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />
-
-							<c:choose>
-								<c:when test="<%= dlViewDisplayContext.isSearch() %>">
-									<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
-								</c:when>
-								<c:otherwise>
-									<%@ include file="/document_library/view_entries.jspf" %>
-								</c:otherwise>
-							</c:choose>
-
-							<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
-								<liferay-frontend:icon-vertical-card
-									cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
-									icon="documents-and-media"
-									title="{title}"
-									url="<%= dlViewDisplayContext.getUploadURL() %>"
-								>
-									<liferay-frontend:vertical-card-sticker-bottom>
-										<clay:sticker
-											cssClass="file-icon-color-0 sticker-bottom-left sticker-document"
-											icon="document-default"
-										/>
-									</liferay-frontend:vertical-card-sticker-bottom>
-
-									<liferay-frontend:vertical-card-header>
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-									</liferay-frontend:vertical-card-header>
-								</liferay-frontend:icon-vertical-card>
-
-								<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
-									<div class="autofit-col"></div>
-
-									<div class="autofit-col">
-										<clay:sticker
-											cssClass="file-icon-color-0"
-											icon="document-default"
-										/>
-									</div>
-
-									<div class="autofit-col autofit-col-expand">
-										<h2 class="h5">
-											<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
-												{title}
-											</aui:a>
-										</h2>
-
-										<span>
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-										</span>
-									</div>
-
-									<div class="autofit-col"></div>
-								</dd>
-							</div>
-						</aui:form>
 					</div>
+
+					<c:if test="<%= dlViewDisplayContext.isOpenInMSOfficeEnabled() %>">
+						<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+					</c:if>
+
+					<aui:form action="<%= dlViewDisplayContext.getEditFileEntryURL() %>" method="get" name="fm2">
+						<aui:input name="<%= Constants.CMD %>" type="hidden" />
+						<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+						<aui:input name="repositoryId" type="hidden" value="<%= dlViewDisplayContext.getRepositoryId() %>" />
+						<aui:input name="newFolderId" type="hidden" />
+						<aui:input name="folderId" type="hidden" value="<%= dlViewDisplayContext.getFolderId() %>" />
+						<aui:input name="changeLog" type="hidden" />
+						<aui:input name="versionIncrease" type="hidden" />
+						<aui:input name="selectAll" type="hidden" value="<%= false %>" />
+
+						<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#errors" />
+
+						<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
+						<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
+						<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
+						<liferay-ui:error exception="<%= FileEntryLockException.MustBeUnlocked.class %>" message="you-cannot-perform-this-operation-on-checked-out-documents-.please-check-it-in-or-cancel-the-checkout-first" />
+						<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
+						<liferay-ui:error key="externalServiceFailed" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />
+
+						<c:choose>
+							<c:when test="<%= dlViewDisplayContext.isSearch() %>">
+								<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/document_library/view_entries.jspf" %>
+							</c:otherwise>
+						</c:choose>
+
+						<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
+							<liferay-frontend:icon-vertical-card
+								cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
+								icon="documents-and-media"
+								title="{title}"
+								url="<%= dlViewDisplayContext.getUploadURL() %>"
+							>
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<clay:sticker
+										cssClass="file-icon-color-0 sticker-bottom-left sticker-document"
+										icon="document-default"
+									/>
+								</liferay-frontend:vertical-card-sticker-bottom>
+
+								<liferay-frontend:vertical-card-header>
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+								</liferay-frontend:vertical-card-header>
+							</liferay-frontend:icon-vertical-card>
+
+							<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
+								<div class="autofit-col"></div>
+
+								<div class="autofit-col">
+									<clay:sticker
+										cssClass="file-icon-color-0"
+										icon="document-default"
+									/>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h2 class="h5">
+										<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
+											{title}
+										</aui:a>
+									</h2>
+
+									<span>
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+									</span>
+								</div>
+
+								<div class="autofit-col"></div>
+							</dd>
+						</div>
+					</aui:form>
 				</div>
 			</div>
 

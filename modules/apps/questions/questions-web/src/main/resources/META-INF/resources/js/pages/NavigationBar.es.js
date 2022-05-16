@@ -42,7 +42,7 @@ export default withRouter(({history, location}) => {
 
 	const isActive = (value) => location.pathname === value;
 
-	const label = () => {
+	const getLabel = () => {
 		if (location.pathname.includes('tags')) {
 			return Liferay.Language.get('tags');
 		}
@@ -64,10 +64,11 @@ export default withRouter(({history, location}) => {
 				<div className="align-items-center col d-flex justify-content-between">
 					<ClayNavigationBar
 						className="border-0 navigation-bar"
-						triggerLabel={label()}
+						triggerLabel={getLabel()}
 					>
 						<ClayNavigationBar.Item
 							active={
+								isActive(`/questions`) ||
 								isActive(`/questions/${sectionTitle}`) ||
 								isActive('/')
 							}

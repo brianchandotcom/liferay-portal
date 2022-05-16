@@ -1,0 +1,81 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+		}
+
+        task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToApis();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToApis();
+
+		ACUtils.clickAnyButton(button = "Revoke");
+
+		ACUtils.clickAnyButton(button = "Continue");
+	}
+
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11103 | Test Summary: There is no previous export process for the same type and date range"
+	@priority = "4"
+	test CreateNewScheduledExportProcess {
+		var startDate = "1905-05-13";
+		var startTime = "11:45:00.000";
+        var endDate = "2022-05-13";
+        var endTime = "09:20:00.000";
+        var type = "page";
+        var upperCaseType = StringUtil.upperCase("${type}");
+        var status = "PENDING";
+        var message = "A new data export file for this date range and type will be created. Please come back later.";
+
+        task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a new export schedule via API") {
+			ACApi.createNewExportSchedule(
+				token = "${token}",
+				type = "${type}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}");
+		}
+
+		task ("Check if the API response is correct for a new export schedule") {
+			ACApi.viewApiResponseForExportProcess(
+				upperCaseType = "${upperCaseType}",
+				startDate = "${startDate}",
+				startTime = "${startTime}",
+				endDate = "${endDate}",
+				endTime = "${endTime}",
+				message = "${message}",
+				status = "${status}");
+		}
+	}
+
+
+}

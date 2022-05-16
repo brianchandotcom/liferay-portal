@@ -137,4 +137,63 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11105 | Test Summary: The request command does not contain 'fromDate' or 'toDate'"
+	@priority = "3"
+	test RequestCommandNotContainFromDateOrToDate {
+		var startDate = "1964-07-09";
+		var startTime = "15:36:00.000";
+        var endDate = "2017-06-15";
+        var endTime = "10:20:00.000";
+        var type = "account";
+        var message = ""fromDate" and "toDate" query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
+
+        task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Run curl command without 'fromData' and 'toData'") {
+			var curl = '''
+				http://localhost:8080/api/reports/export/${type}
+				-H "Authorization: Bearer ${token}"
+				''';
+
+			var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(
+				apiResponse = "${apiResponse}",
+				message = "${message}");
+		}
+
+		task ("Run curl command without 'fromDate'") {
+			var curl = '''
+				http://localhost:8080/api/reports/export/${type}\?toDate=${endDate}T${endTime}Z
+				-H "Authorization: Bearer ${token}"
+				''';
+
+			var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(
+				apiResponse = "${apiResponse}",
+				message = "${message}");
+		}
+
+		task ("Run curl command without 'toData'") {
+			var curl = '''
+				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z
+				-H "Authorization: Bearer ${token}"
+				''';
+
+			var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(
+				apiResponse = "${apiResponse}",
+				message = "${message}");
+		}
+	}
 }

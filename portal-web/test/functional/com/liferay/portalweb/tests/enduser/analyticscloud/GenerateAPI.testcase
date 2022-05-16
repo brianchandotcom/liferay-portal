@@ -196,4 +196,32 @@ definition {
 				message = "${message}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11106 | Test Summary: The request command has the wrong date format"
+	@priority = "3"
+	test RequestCommandHasWrongDateFormat {
+		var startDate = "2022-02-01";
+        var endDate = "2022-05-16";
+        var type = "page";
+        var message = "Both dates in range must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
+
+        task ("Get the token value to create the schedule") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Run curl command with wrong date format") {
+			var curl = '''
+				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}\&toDate=${endDate}
+				-H "Authorization: Bearer ${token}"
+				''';
+
+			var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(
+				apiResponse = "${apiResponse}",
+				message = "${message}");
+		}
+	}
 }

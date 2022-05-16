@@ -19,14 +19,20 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionConvert;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
@@ -44,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -56,9 +63,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 	implements GraphQLDTOContributor<Map<String, Object>, Map<String, Object>> {
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
+		FilterParserProvider filterParserProvider,
 		ObjectDefinition objectDefinition,
-		ObjectEntryManager objectEntryManager, List<ObjectField> objectFields,
-		ObjectScopeProvider objectScopeProvider) {
+		ObjectEntryManager objectEntryManager,
+		ObjectFieldLocalService objectFieldLocalService,
+		List<ObjectField> objectFields, ObjectScopeProvider objectScopeProvider,
+		PredicateExpressionConvert predicateExpressionConvert) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
 
@@ -113,10 +123,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
-			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
+			new ObjectEntryEntityModel(objectFields), filterParserProvider,
+			graphQLDTOProperties,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
-			objectDefinition, objectEntryManager, objectScopeProvider,
+			objectDefinition, objectEntryManager, objectFieldLocalService,
+			objectScopeProvider, predicateExpressionConvert,
 			relationshipGraphQLDTOProperties, objectDefinition.getShortName(),
 			objectDefinition.getName());
 	}
@@ -164,7 +176,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 			(Long)dtoConverterContext.getAttribute("companyId"),
 			_objectDefinition,
 			(String)dtoConverterContext.getAttribute("scopeKey"), aggregation,
-			dtoConverterContext, filter, pagination, search, sorts);
+			dtoConverterContext,
+			toPredicate(
+				ParamUtil.getString(
+					dtoConverterContext.getHttpServletRequest(), "filter"),
+				dtoConverterContext.getLocale()),
+			pagination, search, sorts);
 
 		Collection<ObjectEntry> items = page.getItems();
 
@@ -244,6 +261,30 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return _objectScopeProvider.isGroupAware();
 	}
 
+	public Predicate toPredicate(String filterString, Locale locale) {
+		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId()));
+
+			FilterParser filterParser = _filterParserProvider.provide(
+				entityModel);
+
+			com.liferay.portal.odata.filter.Filter oDataFilter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
+
+			return _predicateExpressionConvert.convert(
+				oDataFilter.getExpression(), locale, entityModel,
+				_objectDefinition.getObjectDefinitionId());
+		}
+		catch (Exception exception) {
+			System.out.println(exception.getMessage());
+		}
+
+		return null;
+	}
+
 	@Override
 	public Map<String, Object> updateDTO(
 			Map<String, Object> dto, DTOConverterContext dtoConverterContext,
@@ -258,20 +299,26 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private ObjectDefinitionGraphQLDTOContributor(
 		long companyId, EntityModel entityModel,
+		FilterParserProvider filterParserProvider,
 		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
+		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
+		PredicateExpressionConvert predicateExpressionConvert,
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties,
 		String resourceName, String typeName) {
 
 		_companyId = companyId;
 		_entityModel = entityModel;
+		_filterParserProvider = filterParserProvider;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
 		_objectDefinition = objectDefinition;
 		_objectEntryManager = objectEntryManager;
+		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProvider = objectScopeProvider;
+		_predicateExpressionConvert = predicateExpressionConvert;
 		_relationshipGraphQLDTOProperties = relationshipGraphQLDTOProperties;
 		_resourceName = resourceName;
 		_typeName = typeName;
@@ -344,11 +391,14 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private final long _companyId;
 	private final EntityModel _entityModel;
+	private final FilterParserProvider _filterParserProvider;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryManager _objectEntryManager;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectScopeProvider _objectScopeProvider;
+	private final PredicateExpressionConvert _predicateExpressionConvert;
 	private final List<GraphQLDTOProperty> _relationshipGraphQLDTOProperties;
 	private final String _resourceName;
 	private final String _typeName;

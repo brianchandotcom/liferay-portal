@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -121,6 +121,8 @@ public class ObjectFieldCacheModel
 		sb.append(relationshipType);
 		sb.append(", required=");
 		sb.append(required);
+		sb.append(", system=");
+		sb.append(system);
 		sb.append("}");
 
 		return sb.toString();
@@ -227,6 +229,7 @@ public class ObjectFieldCacheModel
 		}
 
 		objectFieldImpl.setRequired(required);
+		objectFieldImpl.setSystem(system);
 
 		objectFieldImpl.resetOriginalValues();
 
@@ -264,6 +267,8 @@ public class ObjectFieldCacheModel
 		relationshipType = objectInput.readUTF();
 
 		required = objectInput.readBoolean();
+
+		system = objectInput.readBoolean();
 	}
 
 	@Override
@@ -358,6 +363,8 @@ public class ObjectFieldCacheModel
 		}
 
 		objectOutput.writeBoolean(required);
+
+		objectOutput.writeBoolean(system);
 	}
 
 	public long mvccVersion;
@@ -381,5 +388,6 @@ public class ObjectFieldCacheModel
 	public String name;
 	public String relationshipType;
 	public boolean required;
+	public boolean system;
 
 }

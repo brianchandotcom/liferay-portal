@@ -83,7 +83,8 @@ create table ObjectField (
 	label STRING null,
 	name VARCHAR(75) null,
 	relationshipType VARCHAR(75) null,
-	required BOOLEAN
+	required BOOLEAN,
+	system_ BOOLEAN
 );
 
 create table ObjectFieldSetting (

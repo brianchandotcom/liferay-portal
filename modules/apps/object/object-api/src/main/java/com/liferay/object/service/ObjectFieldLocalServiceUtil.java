@@ -77,16 +77,16 @@ public class ObjectFieldLocalServiceUtil {
 
 	public static ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
-			String dbColumnName, String dbType, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			String dbColumnName, String dbTableName, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
 			boolean required)
 		throws PortalException {
 
 		return getService().addSystemObjectField(
-			userId, objectDefinitionId, businessType, dbColumnName, dbType,
-			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required);
+			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
+			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required);
 	}
 
 	/**
@@ -381,6 +381,14 @@ public class ObjectFieldLocalServiceUtil {
 
 		return getService().getObjectFieldsCountByListTypeDefinitionId(
 			listTypeDefinitionId);
+	}
+
+	public static com.liferay.petra.sql.dsl.Table getObjectFieldTable(
+			long objectDefinitionId, String objectFieldName)
+		throws PortalException {
+
+		return getService().getObjectFieldTable(
+			objectDefinitionId, objectFieldName);
 	}
 
 	/**

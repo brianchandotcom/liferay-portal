@@ -12,28 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.odata.internal.filter;
+package com.liferay.object.rest.internal.odata.filter.expression;
 
-import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import com.liferay.object.petra.sql.dsl.ObjectTableProvider;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.QueryFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
@@ -49,13 +42,10 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
-import com.liferay.portal.search.query.NestedFieldQueryHelper;
 
 import java.text.Format;
-import java.text.ParseException;
-import java.text.ParsePosition;
+
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -65,16 +55,18 @@ import java.util.Optional;
 /**
  * @author Marco Leo
  */
-public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object> {
+public class PredicateExpressionVisitorImpl
+	implements ExpressionVisitor<Object> {
 
 	public PredicateExpressionVisitorImpl(
 		Format format, Locale locale, EntityModel entityModel,
-		NestedFieldQueryHelper nestedFieldQueryHelper) {
+		long objectDefinitionId, ObjectTableProvider objectTableProvider) {
 
 		_format = format;
 		_locale = locale;
 		_entityModel = entityModel;
-		_nestedFieldQueryHelper = nestedFieldQueryHelper;
+		_objectDefinitionId = objectDefinitionId;
+		_objectTableProvider = objectTableProvider;
 	}
 
 	@Override
@@ -108,7 +100,7 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 					lambdaFunctionExpression.getVariableName(),
 					(CollectionEntityField)entityFieldsMap.get(
 						collectionPropertyExpression.getName())),
-				_nestedFieldQueryHelper));
+				_objectDefinitionId, _objectTableProvider));
 	}
 
 	@Override
@@ -173,7 +165,6 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 		throws ExpressionVisitException {
 
 		if (operation == ListExpression.Operation.IN) {
-
 			Object[] objects = new Object[right.size()];
 
 			objects = right.toArray(objects);
@@ -188,19 +179,29 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 
 	@Override
 	public Object visitLiteralExpression(LiteralExpression literalExpression) {
-		if (Objects.equals(
+
+		// TODO Implement all types conversions
+
+		/*if (Objects.equals(
 				LiteralExpression.Type.DATE, literalExpression.getType()) ||
 			Objects.equals(
 				LiteralExpression.Type.DATE_TIME,
 				literalExpression.getType())) {
 
-			return _normalizeDateLiteral(literalExpression.getText());
+			return TO CONVERT TO DATE
 		}
-		else if (Objects.equals(
-					LiteralExpression.Type.STRING,
-					literalExpression.getType())) {
+
+		else*/
+		if (Objects.equals(
+				LiteralExpression.Type.STRING, literalExpression.getType())) {
 
 			return _normalizeStringLiteral(literalExpression.getText());
+		}
+		else if (Objects.equals(
+					LiteralExpression.Type.INTEGER,
+					literalExpression.getType())) {
+
+			return GetterUtil.getInteger(literalExpression.getText());
 		}
 
 		return literalExpression.getText();
@@ -263,7 +264,7 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 		UnaryExpression.Operation operation, Object operand) {
 
 		if (Objects.equals(UnaryExpression.Operation.NOT, operation)) {
-			return _getNotFilter((Predicate)operand);
+			return Predicate.not((Predicate)operand);
 		}
 
 		throw new UnsupportedOperationException(
@@ -278,52 +279,16 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 	private Predicate _contains(
 		EntityField entityField, Object fieldValue, Locale locale) {
 
-		Table table = null;
+		Column<?, ?> column = _getColumn(entityField.getFilterableName(locale));
 
-		Column leftColumn = table.getColumn(entityField.getFilterableName(locale));
-
-		return  leftColumn.like("*" + entityField.getFilterableValue(fieldValue) +"*");
+		return column.like(
+			"*" + entityField.getFilterableValue(fieldValue) + "*");
 	}
 
-	private Optional<Predicate> _getPredicateOptional(
-		BinaryExpression.Operation operation, Object left, Object right,
-		Locale locale) {
+	private Column<?, ?> _getColumn(String columnName) {
+		Table<?> table = _getTable(columnName);
 
-		Predicate predicate = null;
-
-		Table table = null;
-
-		Column leftColumn = table.getColumn(((EntityField)left).getFilterableName(locale));
-
-		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			predicate = Predicate.and((Predicate) left,(Predicate)right);;
-		}
-		else if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			predicate = leftColumn.eq(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			predicate = leftColumn.gte(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			predicate = leftColumn.gt(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			predicate = leftColumn.lte(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			predicate = leftColumn.lt(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
-			predicate = leftColumn.neq(right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			predicate = Predicate.or((Predicate) left,(Predicate)right);;
-		}
-		else {
-			return Optional.empty();
-		}
-
-		return Optional.of(predicate);
+		return table.getColumn(columnName);
 	}
 
 	private EntityModel _getLambdaEntityModel(
@@ -345,32 +310,61 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 		};
 	}
 
-	private Predicate _getNotFilter(Predicate predicate) {
+	private Optional<Predicate> _getPredicateOptional(
+		BinaryExpression.Operation operation, Object left, Object right,
+		Locale locale) {
 
-		return predicate;
+		Predicate predicate = null;
 
-		//TODO
-		/*
-		BooleanFilter booleanFilter = new BooleanFilter();
+		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+			predicate = Predicate.and((Predicate)left, (Predicate)right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
+			predicate = Predicate.or((Predicate)left, (Predicate)right);
+		}
 
-		booleanFilter.add(filter, BooleanClauseOccur.MUST_NOT);
+		if (predicate != null) {
+			return Optional.of(predicate);
+		}
 
-		return booleanFilter; */
+		Column<?, Object> leftColumn = (Column<?, Object>)_getColumn(
+			((EntityField)left).getFilterableName(locale));
+
+		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			predicate = leftColumn.eq(right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
+			predicate = leftColumn.gte(right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
+			predicate = leftColumn.gt(right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
+			predicate = leftColumn.lte(right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
+			predicate = leftColumn.lt(right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
+			predicate = leftColumn.neq(right);
+		}
+		else {
+			return Optional.empty();
+		}
+
+		return Optional.of(predicate);
 	}
 
-
-
-	private Object _normalizeDateLiteral(String literal) {
+	private Table _getTable(String columnName) {
 		try {
-			Date date = ISO8601Utils.parse(literal, new ParsePosition(0));
+			return _objectTableProvider.getTable(
+				_objectDefinitionId, columnName);
+		}
+		catch (PortalException portalException) {
+			portalException.printStackTrace();
+		}
 
-			return _format.format(date);
-		}
-		catch (ParseException parseException) {
-			throw new InvalidFilterException(
-				"Invalid date format, use ISO 8601: " +
-					parseException.getMessage());
-		}
+		return null;
 	}
 
 	private Object _normalizeStringLiteral(String literal) {
@@ -382,13 +376,10 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 			literal, StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
 	}
 
-
 	private Predicate _startsWith(
 		EntityField entityField, Object fieldValue, Locale locale) {
 
-		Table table = null;
-
-		Column column = table.getColumn(entityField.getFilterableName(locale));
+		Column<?, ?> column = _getColumn(entityField.getFilterableName(locale));
 
 		return column.like(entityField.getFilterableValue(fieldValue) + "*");
 	}
@@ -396,6 +387,7 @@ public class PredicateExpressionVisitorImpl implements ExpressionVisitor<Object>
 	private final EntityModel _entityModel;
 	private final Format _format;
 	private final Locale _locale;
-	private final NestedFieldQueryHelper _nestedFieldQueryHelper;
+	private final long _objectDefinitionId;
+	private final ObjectTableProvider _objectTableProvider;
 
 }

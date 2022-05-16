@@ -164,6 +164,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setRequired(RandomTestUtil.randomBoolean());
 
+		newObjectField.setSystem(RandomTestUtil.randomBoolean());
+
 		_objectFields.add(_persistence.update(newObjectField));
 
 		ObjectField existingObjectField = _persistence.findByPrimaryKey(
@@ -223,6 +225,8 @@ public class ObjectFieldPersistenceTest {
 			newObjectField.getRelationshipType());
 		Assert.assertEquals(
 			existingObjectField.isRequired(), newObjectField.isRequired());
+		Assert.assertEquals(
+			existingObjectField.isSystem(), newObjectField.isSystem());
 	}
 
 	@Test
@@ -276,6 +280,18 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_DBT_I() throws Exception {
+		_persistence.countByODI_DBT_I(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI_DBT_I(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI_DBT_I(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectField newObjectField = addObjectField();
 
@@ -307,7 +323,7 @@ public class ObjectFieldPersistenceTest {
 			"dbColumnName", true, "dbTableName", true, "dbType", true,
 			"indexed", true, "indexedAsKeyword", true, "indexedLanguageId",
 			true, "label", true, "name", true, "relationshipType", true,
-			"required", true);
+			"required", true, "system", true);
 	}
 
 	@Test
@@ -626,6 +642,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setRelationshipType(RandomTestUtil.randomString());
 
 		objectField.setRequired(RandomTestUtil.randomBoolean());
+
+		objectField.setSystem(RandomTestUtil.randomBoolean());
 
 		_objectFields.add(_persistence.update(objectField));
 

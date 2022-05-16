@@ -12,37 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.odata.internal.filter;
+package com.liferay.object.rest.internal.odata.filter.expression;
 
+import com.liferay.object.petra.sql.dsl.ObjectTableProvider;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
-import com.liferay.portal.search.query.NestedFieldQueryHelper;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.text.Format;
+
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
-@Component(
-	immediate = true,
-	property = "result.class.name=com.liferay.petra.sql.dsl.expression.Predicate",
-	service = ExpressionConvert.class
-)
-public class PredicateExpressionConvertImpl implements ExpressionConvert<Predicate> {
+@Component(service = PredicateExpressionConvert.class)
+public class PredicateExpressionConvert {
 
-	@Override
 	public Predicate convert(
-			Expression expression, Locale locale, EntityModel entityModel)
+			Expression expression, Locale locale, EntityModel entityModel,
+			long objectDefinitionId)
 		throws ExpressionVisitException {
 
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
@@ -50,10 +46,11 @@ public class PredicateExpressionConvertImpl implements ExpressionConvert<Predica
 
 		return (Predicate)expression.accept(
 			new PredicateExpressionVisitorImpl(
-				format, locale, entityModel, nestedFieldQueryHelper));
+				format, locale, entityModel, objectDefinitionId,
+				_objectTableProvider));
 	}
 
 	@Reference
-	protected NestedFieldQueryHelper nestedFieldQueryHelper;
+	private ObjectTableProvider _objectTableProvider;
 
 }

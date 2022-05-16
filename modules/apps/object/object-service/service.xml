@@ -197,6 +197,7 @@
 		<column name="name" type="String" />
 		<column name="relationshipType" type="String" />
 		<column name="required" type="boolean" />
+		<column name="system" type="boolean" />
 
 		<!-- Order -->
 
@@ -219,6 +220,11 @@
 		<finder name="ODI_N" return-type="ObjectDefinition">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="ODI_DBT_I" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="dbType" />
+			<finder-column name="indexed" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectFieldSetting" remote-service="false" uuid="true">

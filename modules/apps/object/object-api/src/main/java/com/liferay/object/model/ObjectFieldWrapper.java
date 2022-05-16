@@ -64,6 +64,7 @@ public class ObjectFieldWrapper
 		attributes.put("name", getName());
 		attributes.put("relationshipType", getRelationshipType());
 		attributes.put("required", isRequired());
+		attributes.put("system", isSystem());
 
 		return attributes;
 	}
@@ -195,6 +196,12 @@ public class ObjectFieldWrapper
 
 		if (required != null) {
 			setRequired(required);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 	}
 
@@ -475,6 +482,16 @@ public class ObjectFieldWrapper
 	}
 
 	/**
+	 * Returns the system of this object field.
+	 *
+	 * @return the system of this object field
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the user ID of this object field.
 	 *
 	 * @return the user ID of this object field
@@ -542,6 +559,16 @@ public class ObjectFieldWrapper
 	@Override
 	public boolean isRequired() {
 		return model.isRequired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object field is system.
+	 *
+	 * @return <code>true</code> if this object field is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -813,6 +840,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setRequired(boolean required) {
 		model.setRequired(required);
+	}
+
+	/**
+	 * Sets whether this object field is system.
+	 *
+	 * @param system the system of this object field
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

@@ -91,7 +91,7 @@ public class ObjectFieldModelImpl
 		{"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"relationshipType", Types.VARCHAR},
-		{"required", Types.BOOLEAN}
+		{"required", Types.BOOLEAN}, {"system_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,10 +119,11 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("relationshipType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -152,25 +153,37 @@ public class ObjectFieldModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 4L;
+	public static final long DBTYPE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long INDEXED_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 16L;
+	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -373,6 +386,9 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"required",
 			(BiConsumer<ObjectField, Boolean>)ObjectField::setRequired);
+		attributeGetterFunctions.put("system", ObjectField::getSystem);
+		attributeSetterBiConsumers.put(
+			"system", (BiConsumer<ObjectField, Boolean>)ObjectField::setSystem);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -690,6 +706,15 @@ public class ObjectFieldModelImpl
 		_dbType = dbType;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalDBType() {
+		return getColumnOriginalValue("dbType");
+	}
+
 	@JSON
 	@Override
 	public boolean getIndexed() {
@@ -709,6 +734,16 @@ public class ObjectFieldModelImpl
 		}
 
 		_indexed = indexed;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalIndexed() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("indexed"));
 	}
 
 	@JSON
@@ -931,6 +966,27 @@ public class ObjectFieldModelImpl
 		_required = required;
 	}
 
+	@JSON
+	@Override
+	public boolean getSystem() {
+		return _system;
+	}
+
+	@JSON
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
+	@Override
+	public void setSystem(boolean system) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_system = system;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1080,6 +1136,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setName(getName());
 		objectFieldImpl.setRelationshipType(getRelationshipType());
 		objectFieldImpl.setRequired(isRequired());
+		objectFieldImpl.setSystem(isSystem());
 
 		objectFieldImpl.resetOriginalValues();
 
@@ -1128,6 +1185,8 @@ public class ObjectFieldModelImpl
 			this.<String>getColumnOriginalValue("relationshipType"));
 		objectFieldImpl.setRequired(
 			this.<Boolean>getColumnOriginalValue("required"));
+		objectFieldImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
 
 		return objectFieldImpl;
 	}
@@ -1320,6 +1379,8 @@ public class ObjectFieldModelImpl
 
 		objectFieldCacheModel.required = isRequired();
 
+		objectFieldCacheModel.system = isSystem();
+
 		return objectFieldCacheModel;
 	}
 
@@ -1435,6 +1496,7 @@ public class ObjectFieldModelImpl
 	private String _name;
 	private String _relationshipType;
 	private boolean _required;
+	private boolean _system;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1487,6 +1549,7 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("relationshipType", _relationshipType);
 		_columnOriginalValues.put("required", _required);
+		_columnOriginalValues.put("system_", _system);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1495,6 +1558,7 @@ public class ObjectFieldModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("system_", "system");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1551,6 +1615,8 @@ public class ObjectFieldModelImpl
 		columnBitmasks.put("relationshipType", 524288L);
 
 		columnBitmasks.put("required", 1048576L);
+
+		columnBitmasks.put("system_", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

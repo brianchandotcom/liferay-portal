@@ -22,18 +22,14 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
-import com.liferay.object.rest.internal.search.aggregation.AggregationUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -41,24 +37,23 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +63,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -167,7 +161,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			Filter filter, Pagination pagination, String search, Sort[] sorts)
+			Predicate predicate, Pagination pagination, String search,
+			Sort[] sorts)
 		throws Exception {
 
 		long groupId = _getGroupId(objectDefinition, scopeKey);
@@ -177,7 +172,60 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		UriInfo uriInfo = uriInfoOptional.orElse(null);
 
-		return SearchUtil.search(
+		//TODO Deal with search free text. We need to mark the fields to use
+
+		// for it and add to the predicate
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				objectDefinition.getObjectDefinitionId(), search, predicate,
+				pagination.getStartPosition(), pagination.getEndPosition());
+
+		List<ObjectEntry> items = new ArrayList<>();
+
+		for (Map<String, Serializable> map : valuesList) {
+			items.add(
+				getObjectEntry(
+					dtoConverterContext, objectDefinition,
+					GetterUtil.getLong(
+						map.get(objectDefinition.getPKObjectFieldName()))));
+		}
+
+		List<Facet> facets = new ArrayList<>();
+
+		if ((aggregation != null) &&
+			(aggregation.getAggregationTerms() != null)) {
+
+			Map<String, String> aggregationTerms =
+				aggregation.getAggregationTerms();
+
+			for (Map.Entry<String, String> entry :
+					aggregationTerms.entrySet()) {
+
+				Map<Object, Long> aggregationCountMap =
+					_objectEntryLocalService.getAggregationCount(
+						objectDefinition.getObjectDefinitionId(),
+						entry.getKey(), predicate,
+						pagination.getStartPosition(),
+						pagination.getEndPosition());
+
+				ArrayList<Facet.FacetValue> facetValues = new ArrayList<>();
+
+				for (Map.Entry<Object, Long> entry1 :
+						aggregationCountMap.entrySet()) {
+
+					facetValues.add(
+						new Facet.FacetValue(
+							entry1.getValue(
+							).intValue(),
+							String.valueOf(entry1.getKey())));
+				}
+
+				facets.add(new Facet(entry.getKey(), facetValues));
+			}
+		}
+
+		return Page.of(
 			HashMapBuilder.put(
 				"create",
 				ActionUtil.addAction(
@@ -195,50 +243,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 						objectDefinition.getObjectDefinitionId()),
 					groupId, uriInfo)
 			).build(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new TermFilter(
-						"objectDefinitionId",
-						String.valueOf(
-							objectDefinition.getObjectDefinitionId())),
-					BooleanClauseOccur.MUST);
-			},
-			filter, objectDefinition.getClassName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_ANY);
-				searchContext.setAttribute(
-					"objectDefinitionId",
-					objectDefinition.getObjectDefinitionId());
-
-				if (uriInfo != null) {
-					MultivaluedMap<String, String> queryParameters =
-						uriInfo.getQueryParameters();
-
-					searchContext.setAttribute(
-						"searchByObjectView",
-						queryParameters.containsKey("searchByObjectView"));
-				}
-
-				searchContext.setCompanyId(companyId);
-				searchContext.setGroupIds(new long[] {groupId});
-
-				SearchRequestBuilder searchRequestBuilder =
-					_searchRequestBuilderFactory.builder(searchContext);
-
-				AggregationUtil.processVulcanAggregation(
-					_aggregations, _queries, searchRequestBuilder, aggregation);
-			},
-			sorts,
-			document -> getObjectEntry(
-				dtoConverterContext, objectDefinition,
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+			facets, items, pagination,
+			_objectEntryLocalService.getValuesListCount(
+				objectDefinition.getObjectDefinitionId(), search, predicate));
 	}
 
 	@Override
@@ -470,6 +477,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

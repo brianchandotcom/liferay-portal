@@ -84,6 +84,8 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, Boolean> required = createColumn(
 		"required", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, Boolean> system = createColumn(
+		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private ObjectFieldTable() {
 		super("ObjectField", ObjectFieldTable::new);

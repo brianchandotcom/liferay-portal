@@ -503,6 +503,27 @@ public interface ObjectFieldModel
 	 */
 	public void setRequired(boolean required);
 
+	/**
+	 * Returns the system of this object field.
+	 *
+	 * @return the system of this object field
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this object field is system.
+	 *
+	 * @return <code>true</code> if this object field is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this object field is system.
+	 *
+	 * @param system the system of this object field
+	 */
+	public void setSystem(boolean system);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

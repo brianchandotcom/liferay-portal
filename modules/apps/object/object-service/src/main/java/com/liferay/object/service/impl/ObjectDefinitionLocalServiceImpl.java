@@ -34,6 +34,7 @@ import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
@@ -49,6 +50,7 @@ import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -83,6 +85,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -96,6 +99,8 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+
+import java.sql.Types;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -208,6 +213,7 @@ public class ObjectDefinitionLocalServiceImpl
 					userId, objectDefinition.getObjectDefinitionId(),
 					newObjectField.getBusinessType(),
 					newObjectField.getDBColumnName(),
+					objectDefinition.getDBTableName(),
 					newObjectField.getDBType(), false, false, "",
 					newObjectField.getLabelMap(), newObjectField.getName(),
 					newObjectField.isRequired());
@@ -714,14 +720,25 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Text",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(),
+			_dbTypes.get(ObjectEntryTable.INSTANCE.status.getSQLType()), false,
+			false, null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "status")),
+			"status", false);
+
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
 				if (system) {
 					_objectFieldLocalService.addSystemObjectField(
 						userId, objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(),
-						objectField.getDBColumnName(), objectField.getDBType(),
-						objectField.isIndexed(),
+						objectField.getDBColumnName(),
+						objectDefinition.getDBTableName(),
+						objectField.getDBType(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
@@ -1175,6 +1192,25 @@ public class ObjectDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionLocalServiceImpl.class);
 
+	private static final Map<Integer, String> _dbTypes = HashMapBuilder.put(
+		Types.BIGINT, "Long"
+	).put(
+		Types.BLOB, "Blob"
+	).put(
+		Types.BOOLEAN, "Boolean"
+	).put(
+		Types.CLOB, "Clob"
+	).put(
+		Types.DATE, "Date"
+	).put(
+		Types.DECIMAL, "BigDecimal"
+	).put(
+		Types.DOUBLE, "Double"
+	).put(
+		Types.INTEGER, "Integer"
+	).put(
+		Types.VARCHAR, "String"
+	).build();
 	private static final MethodKey _deployObjectDefinitionMethodKey =
 		new MethodKey(
 			ObjectDefinitionLocalServiceUtil.class, "deployObjectDefinition",

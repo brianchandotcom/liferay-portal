@@ -44,7 +44,7 @@ export default function DangerModal({
 							? errorMessage
 							: ''
 					}
-					onChange={({target: {value}}: any) => {
+					onChange={({target: {value}}) => {
 						setValue(value);
 					}}
 					value={value}
@@ -80,7 +80,7 @@ interface IProps {
 	errorMessage: string;
 	observer: Observer;
 	onClose: () => void;
-	onDelete: () => void;
+	onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title: string;
 	token: string;
 }

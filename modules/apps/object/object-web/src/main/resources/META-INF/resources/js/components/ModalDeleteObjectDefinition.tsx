@@ -34,60 +34,65 @@ function ModalDeleteObjectDefinition({
 		status: {code},
 	} = objectDefinition;
 
-	return hasObjectRelationship ? (
-		<WarningModal
-			observer={observer}
-			onClose={onClose}
-			title={Liferay.Language.get('deletion-not-allowed')}
-		>
-			<div>
-				{Liferay.Language.get(
-					'this-object-cannot-be-deleted-because-it-is-related-to-others'
-				)}
-			</div>
+	if (hasObjectRelationship) {
+		return (
+			<WarningModal
+				observer={observer}
+				onClose={onClose}
+				title={Liferay.Language.get('deletion-not-allowed')}
+			>
+				<div>
+					{Liferay.Util.sub(
+						Liferay.Language.get(
+							'x-has-active-relationships-and-cannot-be-deleted'
+						),
+						`${name}`
+					)}
+				</div>
 
-			<div>
-				{Liferay.Language.get(
-					'to-delete-this-object-you-need-first-delete-its-relationships'
-				)}
-			</div>
+				<div>
+					{Liferay.Util.sub(
+						Liferay.Language.get(
+							'to-delete-x-you-need-first-delete-its-relationships'
+						),
+						`${name}`
+					)}
+				</div>
 
-			<div>
-				{Liferay.Language.get('go-to-object-details-relationships')}
-			</div>
-		</WarningModal>
-	) : code === 0 ? (
+				<div>
+					{Liferay.Language.get('go-to-object-details-relationships')}
+				</div>
+			</WarningModal>
+		);
+	}
+
+	return code === 0 ? (
 		<DangerModal
-			errorMessage={Liferay.Language.get(
-				'input-and-object-name-does-not-match'
+			errorMessage={Liferay.Util.sub(
+				Liferay.Language.get('input-does-not-match-x'),
+				`${name}`
 			)}
 			observer={observer}
 			onClose={onClose}
 			onDelete={() => onDelete(id)}
-			title={Liferay.Language.get('delete-custom-object')}
+			title={Liferay.Language.get('delete-object-definition')}
 			token={name}
 		>
 			<p>
 				{Liferay.Language.get(
-					'deleted-custom-objects-cannot-be-restored'
+					'deleting-an-object-definition-also-removes-its-data-records'
 				)}
 			</p>
 
-			<ul>
-				<li>{Liferay.Language.get('objects-definitions')}</li>
-
-				<li>
-					{Liferay.Language.get('all-data-records-in-the-object')}
-				</li>
-			</ul>
-
-			<p>
-				{Liferay.Util.sub(
-					Liferay.Language.get('x-has-x-records'),
-					`${name}`,
-					`${objectEntriesCount}`
-				)}
-			</p>
+			<p
+				dangerouslySetInnerHTML={{
+					__html: Liferay.Util.sub(
+						Liferay.Language.get('x-has-x-records'),
+						`<strong>${name}</strong>`,
+						`${objectEntriesCount}`
+					),
+				}}
+			/>
 
 			<p>
 				{Liferay.Language.get(
@@ -98,9 +103,7 @@ function ModalDeleteObjectDefinition({
 			<p
 				dangerouslySetInnerHTML={{
 					__html: Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-type-the-object-name-x-to-confirm'
-						),
+						Liferay.Language.get('please-enter-x-to-confirm'),
 						`<strong>${name}</strong>`
 					),
 				}}
@@ -112,16 +115,41 @@ function ModalDeleteObjectDefinition({
 }
 
 interface IProps {
-	objectDefinition: any;
+	objectDefinition: {
+		hasObjectRelationship: boolean;
+		id: string;
+		name: string;
+		objectEntriesCount: number;
+		status: {code: number};
+	};
 	observer: Observer;
 	onClose: () => void;
 	onDelete: any;
 }
 
-export default function ModalWithProvider({baseResourceURL}: any) {
-	const [objectDefinition, setObjectDefinition] = useState<any>(null);
+export default function ModalWithProvider({
+	baseResourceURL,
+}: {
+	baseResourceURL: string;
+}) {
+	const [objectDefinition, setObjectDefinition] = useState<{
+		hasObjectRelationship: boolean;
+		id: string;
+		name: string;
+		objectEntriesCount: number;
+		status: {code: number};
+	} | null>(null);
 
-	const getDeleteObjectDefinition = async ({itemData}: any) => {
+	const getDeleteObjectDefinition = async ({
+		itemData,
+	}: {
+		itemData: {
+			id: string;
+			name: string;
+			objectEntriesCount: number;
+			status: {code: number};
+		};
+	}) => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
 				objectDefinitionId: itemData.id,
@@ -130,15 +158,17 @@ export default function ModalWithProvider({baseResourceURL}: any) {
 			})
 		);
 
-		const data = (await response.json()) as {
+		const {
+			hasObjectRelationship,
+			objectEntriesCount,
+		} = (await response.json()) as {
 			hasObjectRelationship: boolean;
 			objectEntriesCount: number;
 		};
-
 		setObjectDefinition({
 			...itemData,
-			hasObjectRelationship: data?.hasObjectRelationship,
-			objectEntriesCount: data?.objectEntriesCount,
+			hasObjectRelationship,
+			objectEntriesCount,
 		});
 	};
 
@@ -160,8 +190,9 @@ export default function ModalWithProvider({baseResourceURL}: any) {
 
 		if (response.ok) {
 			Liferay.Util.openToast({
-				message: Liferay.Language.get(
-					'custom-object-deleted-successfully'
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-deleted-successfully'),
+					`<strong>${objectDefinition?.name}</strong>`
 				),
 				type: 'success',
 			});

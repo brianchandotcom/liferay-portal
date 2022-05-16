@@ -63,7 +63,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 	);
 
 	const messageDeactivateKey = i18n.translate(
-		'activation-key-s-were-deactivated-successfully'
+		'activation-keys-were-deactivated-successfully'
 	);
 
 	const {

@@ -115,8 +115,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 			const sizing = `Sizing ${
 				infoSelectedKey?.selectedSubscription?.instanceSize || 1
@@ -146,8 +145,7 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {
@@ -226,7 +224,7 @@ const RequiredInformation = ({
 					helper: i18n.translate(
 						'fill-out-the-information-required-to-generate-the-activation-key'
 					),
-					title: i18n.translate('generate-activation-key-s'),
+					title: i18n.translate('generate-activation-keys'),
 				}}
 				layoutType="cp-required-info"
 			>

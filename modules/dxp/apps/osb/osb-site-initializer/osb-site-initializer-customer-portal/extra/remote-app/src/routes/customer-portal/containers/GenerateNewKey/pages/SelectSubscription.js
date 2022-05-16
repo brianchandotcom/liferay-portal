@@ -152,7 +152,7 @@ const SelectSubscription = ({
 		hasNotPermanentLicence ? (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
-					{i18n.sub('activation-key-s-will-be-valid-x-x', [
+					{i18n.sub('activation-keys-will-be-valid-x-x', [
 						getCurrentEndDate(subscriptionTerm.startDate),
 						getCurrentEndDate(subscriptionTerm.endDate),
 					])}
@@ -162,7 +162,7 @@ const SelectSubscription = ({
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
 					{i18n.sub(
-						'activation-key-s-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
+						'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
 						[getCurrentEndDate(subscriptionTerm.startDate)]
 					)}
 				</span>
@@ -213,7 +213,7 @@ const SelectSubscription = ({
 				helper: i18n.translate(
 					'select-the-subscription-and-key-type-you-would-like-to-generate'
 				),
-				title: i18n.translate('generate-activation-key-s'),
+				title: i18n.translate('generate-activation-keys'),
 			}}
 			layoutType="cp-generateKey"
 		>

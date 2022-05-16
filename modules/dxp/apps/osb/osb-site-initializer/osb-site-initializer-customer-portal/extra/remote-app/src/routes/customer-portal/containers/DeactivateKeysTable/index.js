@@ -95,7 +95,7 @@ const DeactivateKeysTable = ({productName}) => {
 		<div className="h-100 ml-auto mr-auto w-75">
 			<div className="d-flex flex-column">
 				<div className="text-left">
-					<h3>{i18n.translate('deactivate-dxp-activation-key-s')}</h3>
+					<h3>{i18n.translate('deactivate-dxp-activation-keys')}</h3>
 
 					<p>
 						{i18n.translate(

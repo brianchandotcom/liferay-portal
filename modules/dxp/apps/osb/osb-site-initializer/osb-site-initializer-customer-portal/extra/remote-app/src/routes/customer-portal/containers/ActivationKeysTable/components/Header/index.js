@@ -185,7 +185,7 @@ const ActivationKeysTableHeader = ({
 				<DownloadAlert
 					downloadStatus="success"
 					message={i18n.translate(
-						'activation-key-s-were-deactivated-successfully'
+						'activation-keys-were-deactivated-successfully'
 					)}
 					setDownloadStatus={(value) =>
 						setStatus((previousStatus) => ({

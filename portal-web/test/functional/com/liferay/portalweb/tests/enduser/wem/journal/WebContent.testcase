@@ -904,7 +904,7 @@ definition {
 		task ("Access to web content editor via warning message link") {
 			Click(
 				key_warningMessage = "Web Content Title is scheduled and will be displayed on 1/1/00 1:01 AM.",
-				locator1 = "Message#WARNING_SPECIFIC");
+				locator1 = "Message#WARNING_SPECIFIC_LINK");
 
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",

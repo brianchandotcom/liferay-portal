@@ -27,40 +27,40 @@ definition {
 		}
 	}
 
-	@description = "LPS-150325 - Verify that User can acess case types modal."
+	@description = "This is a test for LPS-150325 - Verify that User can acess case types modal."
 	@priority = "5"
 	test CanAcessCaseTypeModal {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickManageOnSidebar();
+		task ("Go to Case Types on Manage Sidebar and Verify that User can acess case types modal") {
+			TestrayLayout.clickManageOnSidebar();
 
-		TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
+			TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
 
-		AssertElementPresent(
-			key_title = "Case Types",
-			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
+			TestrayManage.assertTitleModal(key_itemvalue = "Case Types");
+		}
 	}
 
-	@description = "LPS-150326 - Verify that User can add new case types."
+	@description = "This is a test for LPS-150326 - Verify that User can add new case types."
 	@priority = "5"
 	test CanAddNewCaseTypes {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickManageOnSidebar();
+		task ("Go to Case Types on Manage Sidebar") {
+			TestrayLayout.clickManageOnSidebar();
 
-		TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
+			TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
+		}
 
-		Click(locator1 = "TestrayManage#ADD_OPTIONS");
-
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "Test Case Type");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		AssertElementPresent(
-			locator1 = "TestrayManage#OPTIONS_NAME",
-			value = "Test Case Type");
+		task ("Create a new Case Type and assert if it was created") { 
+			TestrayManage.createNewCaseTypes(key_value = "Test Case Type");
+		
+			TestrayManage.assertNameCaseTypes(key_value = "Test Case Type");
+		}
 	}
 
 }

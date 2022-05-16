@@ -48,4 +48,20 @@ definition {
 			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 	}
 
+	macro createNewCaseTypes {
+		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${key_value}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro assertNameCaseTypes {
+		AssertElementPresent(
+			locator1 = "TestrayManage#OPTIONS_NAME",
+			value = "${key_value}");
+	}
+
 }

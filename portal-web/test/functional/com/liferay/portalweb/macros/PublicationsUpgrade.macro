@@ -72,6 +72,10 @@ definition {
 			permissionNavigationValue = "Publications");
 
 		Role.viewPermissionCP(
+			permissionDefinitionValue = "Add Publication",
+			permissionNavigationValue = "Publications > Publications");
+
+		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
 			permissionNavigationValue = "Publications");
 

@@ -1,10 +1,10 @@
 {
 	"activated": "Activated",
 	"activation-key-details": "Activation Key Details",
-	"activation-key-s-were-deactivated-successfully": "Activation key(s) were deactivated successfully",
 	"activation-key-server-details": "Activation Key Server Details",
-	"activation-key-s-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated": "Activation Key(s) will be valid indefinitely starting {0} or until manually deactivated.",
-	"activation-key-s-will-be-valid-x-x": "Activation Key(s) will be valid {0} - {1}",
+	"activation-keys-were-deactivated-successfully": "Activation keys were deactivated successfully",
+	"activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated": "Activation Keys will be valid indefinitely starting {0} or until manually deactivated.",
+	"activation-keys-will-be-valid-x-x": "Activation Keys will be valid {0} - {1}",
 	"activation-key-was-generated-successfully": "Activation key was generated successfully",
 	"activation-keys": "Activation Keys",
 	"activation-status": "Activation Status",

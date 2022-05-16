@@ -9,6 +9,14 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                bcc:
+                    type: string
+                bodyMap:
+                    additionalProperties:
+                        type: string
+                    type: object
+                cc:
+                    type: string
                 dateCreated:
                     format: date
                     readOnly: true
@@ -17,13 +25,36 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                description:
+                    type: string
                 enable:
                     type: boolean
+                from:
+                    type: string
+                fromNameMap:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                subjectMap:
+                    additionalProperties:
+                        type: string
+                    type: object
+                to:
+                    type: string
+                userId:
+                    format: int64
+                    type: integer
+                userName:
                     type: string
             type: object
 info:

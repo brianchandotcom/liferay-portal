@@ -1157,6 +1157,8 @@
 			<description name="Finds missing language keys in `Language.properties`." />
 		</check>
 	</source-processor>
+	<source-processor name="LDIFSourceProcessor">
+	</source-processor>
 	<source-processor name="LFRBuildSourceProcessor">
 		<check name="LFRBuildContentCheck">
 			<category name="Bug Prevention" />

@@ -57,6 +57,27 @@ definition {
 			fail("New export schedule was not created: Wrong status");
 		}
 	}
+
+    macro viewApiResponseForError {
+        // Checks if the API response message explains the reason for the error
+
+		if(contains("${apiResponse}", "${message}")) {
+			echo("Correct error message - PASSED");
+		}
+        else {
+			fail("Wrong error message");
+		}
+
+        // Checks if the status value is ERROR
+
+        if(contains("${apiResponse}", "status=ERROR")) {
+			echo("Correct status - PASSED");
+		}
+        else {
+			fail("Wrong status");
+		}
+	}
+
 	macro getTokenValue {
 		ACUtils.clickAnyButton(button = "Generate Token");
 

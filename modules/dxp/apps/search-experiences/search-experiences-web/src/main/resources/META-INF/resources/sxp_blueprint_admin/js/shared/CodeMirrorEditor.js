@@ -453,8 +453,8 @@ function getSchemaProperties(
 
 			// Get `type` value, forward $ref reference if defined.
 
-			let type = schema.properties[name].type || '';
 			let enumList = schema.properties[name].enum;
+			let type = schema.properties[name].type || '';
 
 			if (
 				schema.properties[name].$ref &&
@@ -470,8 +470,8 @@ function getSchemaProperties(
 					schema.properties[name].$ref.substring(2)
 				);
 
-				type = refSchema.type || '';
 				enumList = refSchema.enum;
+				type = refSchema.type || '';
 			}
 
 			if (type === 'string' && enumList) {
@@ -542,21 +542,22 @@ function isObjectProperty(token) {
  * Removes any duplicate properties in an array with the same type and name.
  * This could happen in some cases like when flattening properties from `anyOf`
  * in a schema.
- * @param {Array} items An array of properties
+ * @param {Array} properties An array of object properties. Each property should
+ * have a name and type.
  * @returns {Array}
  */
-function removeDuplicateProperties(items) {
+function removeDuplicateProperties(properties) {
 	const uniqueProperties = [];
 
-	items.forEach((item) => {
+	properties.forEach((property) => {
 		if (
 			uniqueProperties.findIndex(
 				({name, type}) =>
-					name === item.name &&
-					type.toString() === item.type.toString()
+					name === property.name &&
+					type.toString() === property.type.toString()
 			) === -1
 		) {
-			uniqueProperties.push(item);
+			uniqueProperties.push(property);
 		}
 	});
 

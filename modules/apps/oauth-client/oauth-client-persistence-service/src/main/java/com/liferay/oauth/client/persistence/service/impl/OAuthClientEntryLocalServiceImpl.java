@@ -34,11 +34,12 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.client.ClientInformation;
-import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
 
 import java.util.List;
+
+import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,20 +60,27 @@ public class OAuthClientEntryLocalServiceImpl
 			String parametersJSON)
 		throws PortalException {
 
+		_validateParametersJSON(parametersJSON);
+
 		OAuthClientEntry oAuthClientEntry = oAuthClientEntryPersistence.create(
 			counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
+
+		JSONObject infoJSONObject = _getInfoJSONObject(infoJSON);
+
+		_validateInfo(user.getCompanyId(), authServerIssuer, infoJSONObject);
+
+		String clientId = infoJSONObject.getAsString("client_id");
+
+		_validateClientId(user.getCompanyId(), authServerIssuer, clientId);
 
 		oAuthClientEntry.setCompanyId(user.getCompanyId());
 		oAuthClientEntry.setUserId(user.getUserId());
 		oAuthClientEntry.setUserName(user.getFullName());
 
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
-		oAuthClientEntry.setClientId(
-			_validateAndGetClientId(
-				user.getCompanyId(), authServerIssuer, infoJSON,
-				parametersJSON));
+		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
@@ -191,32 +199,58 @@ public class OAuthClientEntryLocalServiceImpl
 			String parametersJSON)
 		throws PortalException {
 
+		_validateParametersJSON(parametersJSON);
+
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryLocalService.getOAuthClientEntry(
 				oAuthClientEntryId);
 
+		JSONObject infoJSONObject = _getInfoJSONObject(infoJSON);
+
+		_validateInfo(
+			oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSONObject);
+
+		String clientId = infoJSONObject.getAsString("client_id");
+
+		_validateClientId(
+			oAuthClientEntry.getCompanyId(), authServerIssuer, clientId);
+
 		oAuthClientEntry.setAuthServerIssuer(authServerIssuer);
-		oAuthClientEntry.setClientId(
-			_validateAndGetClientId(
-				oAuthClientEntry.getCompanyId(), authServerIssuer, infoJSON,
-				parametersJSON));
+		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setParametersJSON(parametersJSON);
 
 		return oAuthClientEntryPersistence.update(oAuthClientEntry);
 	}
 
-	private String _validateAndGetClientId(
-			long companyId, String authServerIssuer, String infoJSON,
-			String parametersJSON)
+	private JSONObject _getInfoJSONObject(String infoJSON)
 		throws PortalException {
 
 		try {
-			JSONObjectUtils.parse(parametersJSON);
+			return JSONObjectUtils.parse(infoJSON);
 		}
 		catch (ParseException parseException) {
-			throw new OAuthClientEntryParametersJSONException(parseException);
+			throw new PortalException(parseException);
 		}
+	}
+
+	private void _validateClientId(
+			long companyId, String authServerIssuer, String clientId)
+		throws PortalException {
+
+		OAuthClientEntry oAuthClientEntry =
+			oAuthClientEntryPersistence.fetchByC_A_C(
+				companyId, authServerIssuer, clientId);
+
+		if (oAuthClientEntry != null) {
+			throw new DuplicateOAuthClientEntryException(
+				"ClientId: " + clientId);
+		}
+	}
+
+	private void _validateInfo(
+			long companyId, String authServerIssuer, JSONObject infoJSONObject)
+		throws PortalException {
 
 		OAuthClientAuthServer oAuthClientAuthServer =
 			_oAuthClientAuthServerPersistence.findByC_I(
@@ -226,21 +260,7 @@ public class OAuthClientEntryLocalServiceImpl
 
 		if (type.equals("oauth-authorization-server")) {
 			try {
-				ClientInformation clientInformation = ClientInformation.parse(
-					JSONObjectUtils.parse(infoJSON));
-
-				ClientID clientID = clientInformation.getID();
-
-				OAuthClientEntry oAuthClientEntry =
-					oAuthClientEntryPersistence.fetchByC_A_C(
-						companyId, authServerIssuer, clientID.getValue());
-
-				if (oAuthClientEntry != null) {
-					throw new DuplicateOAuthClientEntryException(
-						"Client ID " + clientID.getValue());
-				}
-
-				return clientID.getValue();
+				ClientInformation.parse(infoJSONObject);
 			}
 			catch (ParseException parseException) {
 				throw new OAuthClientAuthServerTypeException(
@@ -249,22 +269,7 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 		else if (type.equals("openid-configuration")) {
 			try {
-				OIDCClientInformation oidcClientInformation =
-					OIDCClientInformation.parse(
-						JSONObjectUtils.parse(infoJSON));
-
-				ClientID clientID = oidcClientInformation.getID();
-
-				OAuthClientEntry oAuthClientEntry =
-					oAuthClientEntryPersistence.fetchByC_A_C(
-						companyId, authServerIssuer, clientID.getValue());
-
-				if (oAuthClientEntry != null) {
-					throw new DuplicateOAuthClientEntryException(
-						"Client ID " + clientID.getValue());
-				}
-
-				return clientID.getValue();
+				OIDCClientInformation.parse(infoJSONObject);
 			}
 			catch (ParseException parseException) {
 				throw new OAuthClientAuthServerTypeException(
@@ -274,6 +279,17 @@ public class OAuthClientEntryLocalServiceImpl
 		else {
 			throw new OAuthClientAuthServerTypeException(
 				"Invalid type: " + type);
+		}
+	}
+
+	private void _validateParametersJSON(String parametersJSON)
+		throws PortalException {
+
+		try {
+			JSONObjectUtils.parse(parametersJSON);
+		}
+		catch (ParseException parseException) {
+			throw new OAuthClientEntryParametersJSONException(parseException);
 		}
 	}
 

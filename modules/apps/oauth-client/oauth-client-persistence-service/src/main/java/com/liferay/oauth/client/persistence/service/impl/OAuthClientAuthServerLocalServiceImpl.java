@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.as.AuthorizationServerMetadata;
-import com.nimbusds.oauth2.sdk.id.Issuer;
+import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import java.util.List;
+
+import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,11 +55,19 @@ public class OAuthClientAuthServerLocalServiceImpl
 			String type)
 		throws PortalException {
 
+		JSONObject metadataJSONObject = _getMetadataJSONObject(metadataJSON);
+
+		_validateMetadata(metadataJSONObject, type);
+
 		OAuthClientAuthServer oAuthClientAuthServer =
 			oAuthClientAuthServerPersistence.create(
 				counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
+
+		String issuer = metadataJSONObject.getAsString("issuer");
+
+		_validateIssuer(user.getCompanyId(), issuer);
 
 		oAuthClientAuthServer.setCompanyId(user.getCompanyId());
 
@@ -65,8 +75,7 @@ public class OAuthClientAuthServerLocalServiceImpl
 		oAuthClientAuthServer.setUserName(user.getFullName());
 
 		oAuthClientAuthServer.setDiscoveryEndpoint(discoveryEndpoint);
-		oAuthClientAuthServer.setIssuer(
-			_validateAndGetIssuer(user.getCompanyId(), metadataJSON, type));
+		oAuthClientAuthServer.setIssuer(issuer);
 		oAuthClientAuthServer.setMetadataJSON(metadataJSON);
 		oAuthClientAuthServer.setType(type);
 
@@ -182,25 +191,39 @@ public class OAuthClientAuthServerLocalServiceImpl
 			String metadataJSON, String type)
 		throws PortalException {
 
+		JSONObject metadataJSONObject = _getMetadataJSONObject(metadataJSON);
+
+		_validateMetadata(metadataJSONObject, type);
+
 		OAuthClientAuthServer oAuthClientAuthServer =
 			oAuthClientAuthServerLocalService.getOAuthClientAuthServer(
 				oAuthClientAuthServerId);
 
+		String issuer = metadataJSONObject.getAsString("issuer");
+
+		_validateIssuer(oAuthClientAuthServer.getCompanyId(), issuer);
+
 		oAuthClientAuthServer.setDiscoveryEndpoint(discoveryEndpoint);
-		oAuthClientAuthServer.setIssuer(
-			_validateAndGetIssuer(
-				oAuthClientAuthServer.getCompanyId(), metadataJSON, type));
+		oAuthClientAuthServer.setIssuer(issuer);
 		oAuthClientAuthServer.setMetadataJSON(metadataJSON);
 		oAuthClientAuthServer.setType(type);
 
 		return oAuthClientAuthServerPersistence.update(oAuthClientAuthServer);
 	}
 
-	private String _validateAndGetIssuer(
-			long companyId, String metadataJSON, String type)
+	private JSONObject _getMetadataJSONObject(String metadataJSON)
 		throws PortalException {
 
-		String issuer = _validateAndGetIssuer(metadataJSON, type);
+		try {
+			return JSONObjectUtils.parse(metadataJSON);
+		}
+		catch (ParseException parseException) {
+			throw new PortalException(parseException);
+		}
+	}
+
+	private void _validateIssuer(long companyId, String issuer)
+		throws PortalException {
 
 		if (oAuthClientAuthServerPersistence.fetchByC_I(companyId, issuer) !=
 				null) {
@@ -208,11 +231,9 @@ public class OAuthClientAuthServerLocalServiceImpl
 			throw new DuplicateOAuthClientAuthServerException(
 				"Issuer: " + issuer);
 		}
-
-		return issuer;
 	}
 
-	private String _validateAndGetIssuer(String metadataJSON, String type)
+	private void _validateMetadata(JSONObject metadataJSONObject, String type)
 		throws PortalException {
 
 		if (Validator.isNull(type)) {
@@ -221,12 +242,7 @@ public class OAuthClientAuthServerLocalServiceImpl
 
 		if (type.equals("oauth-authorization-server")) {
 			try {
-				AuthorizationServerMetadata authorizationServerMetadata =
-					AuthorizationServerMetadata.parse(metadataJSON);
-
-				Issuer issuer = authorizationServerMetadata.getIssuer();
-
-				return issuer.getValue();
+				AuthorizationServerMetadata.parse(metadataJSONObject);
 			}
 			catch (ParseException parseException) {
 				throw new OAuthClientAuthServerTypeException(
@@ -235,12 +251,7 @@ public class OAuthClientAuthServerLocalServiceImpl
 		}
 		else if (type.equals("openid-configuration")) {
 			try {
-				OIDCProviderMetadata oidcProviderMetadata =
-					OIDCProviderMetadata.parse(metadataJSON);
-
-				Issuer issuer = oidcProviderMetadata.getIssuer();
-
-				return issuer.getValue();
+				OIDCProviderMetadata.parse(metadataJSONObject);
 			}
 			catch (ParseException parseException) {
 				throw new OAuthClientAuthServerTypeException(

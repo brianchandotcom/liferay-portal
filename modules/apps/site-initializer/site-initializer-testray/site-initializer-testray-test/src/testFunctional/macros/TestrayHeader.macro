@@ -12,4 +12,10 @@ definition {
 			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
 	}
 
+	macro assertBreadcrumbTitle {
+		AssertElementPresent(
+			key_breadcrumbName = "${key_value}",
+			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
+	}
+
 }

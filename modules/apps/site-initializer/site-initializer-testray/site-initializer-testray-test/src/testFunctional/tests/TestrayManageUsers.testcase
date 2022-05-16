@@ -27,18 +27,20 @@ definition {
 		}
 	}
 
-	@description = "LPS-150613 - Verify that User can access Manage Users page."
+	@description = "This is a test for LPS-150613 - Verify that User can access Manage Users page."
 	@priority = "5"
 	test CanAcessManageUsersPage {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickManageOnSidebar();
+		task ("Go to Manage Users on Manage Sidebar and Verify that User can access Manage Users page") {
+			TestrayLayout.clickManageOnSidebar();
 
-		TestrayManage.selectOptionsManage(key_itemvalue = "Manage Users");
+			TestrayManage.selectOptionsManage(key_itemvalue = "Manage Users");
 
-		AssertElementPresent(
-			key_breadcrumbName = "Manage Users",
-			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Manage Users");
+		}
 	}
 
 }

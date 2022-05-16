@@ -53,7 +53,7 @@ export default function render(
 		// Temporary workaround until frontend-icons-web is converted to ESM.
 		// We will replace with an import from frontend-icons-web later.
 
-		const spritemap = (Liferay as any)._ICONS_.spritemap;
+		const spritemap = ((Liferay as any)._ICONS_ || {}).spritemap as string;
 
 		let {componentId} = renderData;
 

@@ -150,7 +150,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 					ParamUtil.getString(actionRequest, "redirect"));
 			}
 
-			_wizardMode(actionRequest, actionResponse);
+			_processWizardMode(actionRequest, actionResponse);
 		}
 		catch (PrincipalException principalException) {
 			_log.error(principalException);
@@ -264,6 +264,29 @@ public abstract class BaseAnalyticsMVCActionCommand
 		return configurationProperties;
 	}
 
+	private void _processWizardMode(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateWizardMode(actionRequest, actionResponse);
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(actionRequest);
+
+		String configurationScreenKey =
+			WizardModeUtil.getNextConfigurationScreenKey(
+				httpServletRequest.getSession());
+
+		if (WizardModeUtil.isWizardMode(httpServletRequest.getSession()) &&
+			Validator.isNotNull(configurationScreenKey)) {
+
+			sendRedirect(
+				actionRequest, actionResponse,
+				WizardModeUtil.getNextStepURL(
+					actionResponse, configurationScreenKey));
+		}
+	}
+
 	private void _removeCompanyPreferences(long companyId) throws Exception {
 		companyService.removePreferences(
 			companyId,
@@ -314,29 +337,6 @@ public abstract class BaseAnalyticsMVCActionCommand
 			configurationProvider.saveCompanyConfiguration(
 				AnalyticsConfiguration.class, themeDisplay.getCompanyId(),
 				configurationProperties);
-		}
-	}
-
-	private void _wizardMode(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateWizardMode(actionRequest, actionResponse);
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(actionRequest);
-
-		String configurationScreenKey =
-			WizardModeUtil.getNextConfigurationScreenKey(
-				httpServletRequest.getSession());
-
-		if (WizardModeUtil.isWizardMode(httpServletRequest.getSession()) &&
-			Validator.isNotNull(configurationScreenKey)) {
-
-			sendRedirect(
-				actionRequest, actionResponse,
-				WizardModeUtil.getNextStepURL(
-					actionResponse, configurationScreenKey));
 		}
 	}
 

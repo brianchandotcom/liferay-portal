@@ -31,7 +31,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -62,7 +61,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -280,7 +278,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		_addTestrayCaseResultIssue(
 			companyId, testrayCaseResultId,
 			(String)testrayCasePropertiesMap.get("testray.case.defect"));
-		_addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
 	}
 
 	private void _addTestrayCaseResultIssue(
@@ -370,29 +367,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		return objectEntry.getId();
-	}
-
-	private void _addTestrayWarnings(
-			Map<String, Object> testrayCasePropertiesMap,
-			long testrayCaseResultId)
-		throws Exception {
-
-		List<String> warningsList = (List<String>)testrayCasePropertiesMap.get(
-			"testray.testcase.warnings");
-
-		if (warningsList == null) {
-			return;
-		}
-
-		for (String warning : warningsList) {
-			_addObjectEntry(
-				"Warning",
-				HashMapBuilder.<String, Object>put(
-					"content", warning
-				).put(
-					"r_caseResultToWarnings_c_caseResultId", testrayCaseResultId
-				).build());
-		}
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -598,31 +572,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				continue;
 			}
 
-			String propertyName = _getAttributeValue("name", propertyNode);
-
-			if (StringUtil.equalsIgnoreCase(
-					propertyName, "testray.testcase.warnings")) {
-
-				List<String> warningsList = new ArrayList<>();
-
-				NodeList warningsNodeList = propertyNode.getChildNodes();
-
-				for (int j = 0; j < warningsNodeList.getLength(); j++) {
-					Node warningNode = warningsNodeList.item(j);
-
-					String warning = warningNode.getTextContent();
-
-					if (!_isEmpty(warning)) {
-						warningsList.add(warningNode.getTextContent());
-					}
-				}
-
-				map.put(propertyName, warningsList);
-			}
-			else {
-				map.put(
-					propertyName, _getAttributeValue("value", propertyNode));
-			}
+			map.put(
+				_getAttributeValue("name", propertyNode),
+				_getAttributeValue("value", propertyNode));
 		}
 
 		return map;
@@ -676,6 +628,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			"r_runToCaseResult_c_runId", testrayRunId
 		).put(
 			"startDate", testrayBuildTime
+		).put(
+			"warnings",
+			(Integer)testrayCasePropertiesMap.get("testray.testcase.warnings")
 		).build();
 
 		Element element = (Element)testcaseNode;

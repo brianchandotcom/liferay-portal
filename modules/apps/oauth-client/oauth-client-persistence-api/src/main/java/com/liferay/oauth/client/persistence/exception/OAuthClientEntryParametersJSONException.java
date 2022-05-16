@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.oauth.client.persistence.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,9 @@ public class OAuthClientEntryParametersJSONException extends PortalException {
 		super(msg);
 	}
 
-	public OAuthClientEntryParametersJSONException(String msg, Throwable throwable) {
+	public OAuthClientEntryParametersJSONException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

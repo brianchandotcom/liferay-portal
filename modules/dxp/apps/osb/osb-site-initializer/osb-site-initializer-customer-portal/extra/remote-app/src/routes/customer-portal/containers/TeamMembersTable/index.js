@@ -84,7 +84,8 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 				const isSupportSeatRole = currentSelectedUser?.roles?.some(
 					(role) =>
 						role === ROLE_TYPES.admin.key ||
-						role === ROLE_TYPES.requester.key
+						role === ROLE_TYPES.requester.key ||
+						role === ROLE_TYPES.partnerManager.key
 				);
 				const filteredRoles = accountRoles.map((role) => {
 					const isAdministratorOrRequestor =

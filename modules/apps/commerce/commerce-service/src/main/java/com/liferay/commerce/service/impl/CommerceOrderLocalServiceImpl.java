@@ -51,7 +51,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
-import com.liferay.commerce.price.CommerceOrderPriceCalculationFactory;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.JsonHelper;
@@ -848,12 +847,8 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrderItem.getCommerceOrderItemId(), commerceContext);
 		}
 
-		CommerceOrderPriceCalculation commerceOrderPriceCalculation =
-			_commerceOrderPriceCalculationFactory.
-				getCommerceOrderPriceCalculation();
-
 		CommerceOrderPrice commerceOrderPrice =
-			commerceOrderPriceCalculation.getCommerceOrderPrice(
+			_commerceOrderPriceCalculation.getCommerceOrderPrice(
 				commerceOrder, false, commerceContext);
 
 		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
@@ -2256,9 +2251,8 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
-	@ServiceReference(type = CommerceOrderPriceCalculationFactory.class)
-	private CommerceOrderPriceCalculationFactory
-		_commerceOrderPriceCalculationFactory;
+	@ServiceReference(type = CommerceOrderPriceCalculation.class)
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@ServiceReference(type = CommerceShippingEngineRegistry.class)
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

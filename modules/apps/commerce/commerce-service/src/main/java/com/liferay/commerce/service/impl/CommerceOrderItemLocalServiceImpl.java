@@ -39,7 +39,6 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
-import com.liferay.commerce.price.CommerceProductPriceCalculationFactory;
 import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -1384,10 +1383,6 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		CommerceProductPriceCalculation commerceProductPriceCalculation =
-			_commerceProductPriceCalculationFactory.
-				getCommerceProductPriceCalculation();
-
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
@@ -1399,7 +1394,7 @@ public class CommerceOrderItemLocalServiceImpl
 			_getStaticOptionValuesNotLinkedToSku(cpDefinitionId, json));
 		commerceProductPriceRequest.setCalculateTax(true);
 
-		return commerceProductPriceCalculation.getCommerceProductPrice(
+		return _commerceProductPriceCalculation.getCommerceProductPrice(
 			commerceProductPriceRequest);
 	}
 
@@ -1973,9 +1968,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
-	@ServiceReference(type = CommerceProductPriceCalculationFactory.class)
-	private CommerceProductPriceCalculationFactory
-		_commerceProductPriceCalculationFactory;
+	@ServiceReference(type = CommerceProductPriceCalculation.class)
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;

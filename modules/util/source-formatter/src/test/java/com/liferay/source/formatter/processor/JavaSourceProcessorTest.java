@@ -586,4 +586,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {26, 29, 41});
 	}
 
+	@Test
+	public void testUpgradeDropTable() throws Exception {
+		test("UpgradeDropTable.testjava");
+	}
+
 }

@@ -40,16 +40,15 @@ public class NotificationTemplateServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationTemplate addNotificationTemplate(
-			long userId, String name, String description, String from,
-			Map<java.util.Locale, String> fromNameMap, String to, String cc,
-			String bcc, boolean enabled,
-			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> bodyMap)
+			long userId, String bcc, Map<java.util.Locale, String> bodyMap,
+			String cc, String description, boolean enabled, String from,
+			Map<java.util.Locale, String> fromNameMap, String name,
+			Map<java.util.Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
-			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
-			subjectMap, bodyMap);
+			userId, bcc, bodyMap, cc, description, enabled, from, fromNameMap,
+			name, subjectMap, to);
 	}
 
 	public static NotificationTemplate deleteNotificationTemplate(
@@ -93,16 +92,16 @@ public class NotificationTemplateServiceUtil {
 	}
 
 	public static NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String name, String description,
-			String from, Map<java.util.Locale, String> fromNameMap, String to,
-			String cc, String bcc, boolean enabled,
-			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> bodyMap)
+			long notificationTemplateId, String bcc,
+			Map<java.util.Locale, String> bodyMap, String cc,
+			String description, boolean enabled, String from,
+			Map<java.util.Locale, String> fromNameMap, String name,
+			Map<java.util.Locale, String> subjectMap, String to)
 		throws PortalException {
 
 		return getService().updateNotificationTemplate(
-			notificationTemplateId, name, description, from, fromNameMap, to,
-			cc, bcc, enabled, subjectMap, bodyMap);
+			notificationTemplateId, bcc, bodyMap, cc, description, enabled,
+			from, fromNameMap, name, subjectMap, to);
 	}
 
 	public static NotificationTemplateService getService() {

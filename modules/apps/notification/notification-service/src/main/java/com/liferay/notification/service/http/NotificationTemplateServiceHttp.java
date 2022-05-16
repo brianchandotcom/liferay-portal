@@ -52,12 +52,12 @@ public class NotificationTemplateServiceHttp {
 
 	public static com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				HttpPrincipal httpPrincipal, long userId, String name,
-				String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap, String to,
-				String cc, String bcc, boolean enabled,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap)
+				HttpPrincipal httpPrincipal, long userId, String bcc,
+				java.util.Map<java.util.Locale, String> bodyMap, String cc,
+				String description, boolean enabled, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap,
+				String name, java.util.Map<java.util.Locale, String> subjectMap,
+				String to)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -67,8 +67,8 @@ public class NotificationTemplateServiceHttp {
 				_addNotificationTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, name, description, from, fromNameMap, to, cc,
-				bcc, enabled, subjectMap, bodyMap);
+				methodKey, userId, bcc, bodyMap, cc, description, enabled, from,
+				fromNameMap, name, subjectMap, to);
 
 			Object returnObj = null;
 
@@ -301,11 +301,11 @@ public class NotificationTemplateServiceHttp {
 	public static com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
 				HttpPrincipal httpPrincipal, long notificationTemplateId,
-				String name, String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap, String to,
-				String cc, String bcc, boolean enabled,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap)
+				String bcc, java.util.Map<java.util.Locale, String> bodyMap,
+				String cc, String description, boolean enabled, String from,
+				java.util.Map<java.util.Locale, String> fromNameMap,
+				String name, java.util.Map<java.util.Locale, String> subjectMap,
+				String to)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -315,8 +315,8 @@ public class NotificationTemplateServiceHttp {
 				_updateNotificationTemplateParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, notificationTemplateId, name, description, from,
-				fromNameMap, to, cc, bcc, enabled, subjectMap, bodyMap);
+				methodKey, notificationTemplateId, bcc, bodyMap, cc,
+				description, enabled, from, fromNameMap, name, subjectMap, to);
 
 			Object returnObj = null;
 
@@ -352,9 +352,9 @@ public class NotificationTemplateServiceHttp {
 
 	private static final Class<?>[] _addNotificationTemplateParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, java.util.Map.class
+			long.class, String.class, java.util.Map.class, String.class,
+			String.class, boolean.class, String.class, java.util.Map.class,
+			String.class, java.util.Map.class, String.class
 		};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
 		new Class[] {long.class};
@@ -368,9 +368,9 @@ public class NotificationTemplateServiceHttp {
 		_getNotificationTemplatesCountParameterTypes5 = new Class[] {};
 	private static final Class<?>[] _updateNotificationTemplateParameterTypes6 =
 		new Class[] {
-			long.class, String.class, String.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, java.util.Map.class
+			long.class, String.class, java.util.Map.class, String.class,
+			String.class, boolean.class, String.class, java.util.Map.class,
+			String.class, java.util.Map.class, String.class
 		};
 
 }

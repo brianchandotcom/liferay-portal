@@ -566,6 +566,7 @@ public class NotificationTemplateModelImpl
 		_bcc = bcc;
 	}
 
+	@JSON
 	@Override
 	public String getBody() {
 		if (_body == null) {
@@ -692,6 +693,7 @@ public class NotificationTemplateModelImpl
 		_cc = cc;
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {
@@ -717,6 +719,7 @@ public class NotificationTemplateModelImpl
 		return _enabled;
 	}
 
+	@JSON
 	@Override
 	public boolean isEnabled() {
 		return _enabled;
@@ -731,6 +734,7 @@ public class NotificationTemplateModelImpl
 		_enabled = enabled;
 	}
 
+	@JSON
 	@Override
 	public String getFrom() {
 		if (_from == null) {
@@ -880,7 +884,6 @@ public class NotificationTemplateModelImpl
 		return getName(languageId);
 	}
 
-	@JSON
 	@Override
 	public String getName(Locale locale, boolean useDefault) {
 		String languageId = LocaleUtil.toLanguageId(locale);
@@ -893,7 +896,6 @@ public class NotificationTemplateModelImpl
 		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
-	@JSON
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return LocalizationUtil.getLocalization(
@@ -913,7 +915,6 @@ public class NotificationTemplateModelImpl
 		return getName(locale);
 	}
 
-	@JSON
 	@Override
 	public Map<Locale, String> getNameMap() {
 		return LocalizationUtil.getLocalizationMap(getName());

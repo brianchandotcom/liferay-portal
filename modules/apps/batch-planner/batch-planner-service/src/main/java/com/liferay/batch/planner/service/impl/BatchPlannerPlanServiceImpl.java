@@ -329,7 +329,7 @@ public class BatchPlannerPlanServiceImpl
 
 	private void _checkAmbiguousKeyword(String keyword) throws PortalException {
 		if (Validator.isNull(keyword) ||
-			!_AMBIGUOUS_SEARCH_KEWORDS.contains(
+			!_AMBIGUOUS_SEARCH_KEYWORDS.contains(
 				StringUtil.toLowerCase(keyword))) {
 
 			return;
@@ -339,7 +339,7 @@ public class BatchPlannerPlanServiceImpl
 			StringBundler.concat("Search term ", keyword, " is too ambiguous"));
 	}
 
-	private static final String _AMBIGUOUS_SEARCH_KEWORDS = "com.liferay";
+	private static final String _AMBIGUOUS_SEARCH_KEYWORDS = "com.liferay";
 
 	private static volatile ModelResourcePermission<BatchPlannerPlan>
 		_batchPlannerPlanModelResourcePermission =

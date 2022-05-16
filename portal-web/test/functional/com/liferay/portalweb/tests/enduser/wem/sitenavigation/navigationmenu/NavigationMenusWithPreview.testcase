@@ -166,6 +166,100 @@ definition {
 	@priority = "5"
 	test PreviewMenuInNavigationMenuEditor {
 		task ("Given a navigation menu admin has a navigation menu with multiple items") {
+			task ("Add the first display page template for Web Content Article and Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Web Content DPT",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+			}
+
+			task ("Add a Display Page Content fragment to the first display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Display Page Content");
+
+				PageEditor.clickPublish();
+			}
+
+			task ("Mark the first display page template as default") {
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Web Content DPT");
+			}
+
+			task ("Add the second display page template for Blogs Entry") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Blogs Entry",
+					displayPageTemplateEntryName = "Blogs Entry DPT",
+					groupName = "Test Site Name");
+			}
+
+			task ("Add a Display Page Content fragment to the second display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Display Page Content");
+
+				PageEditor.clickPublish();
+			}
+
+			task ("Mark the second display page template as default") {
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Blogs Entry DPT");
+			}
+
+			task ("Add the third display page template for Document") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Document",
+					displayPageTemplateEntryName = "Document DPT",
+					groupName = "Test Site Name",
+					subType = "Basic Document");
+			}
+
+			task ("Add a Display Page Content fragment to the third display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Display Page Content");
+
+				PageEditor.clickPublish();
+			}
+
+			task ("Mark the third display page template as default") {
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document DPT");
+			}
+
+			task ("Add the fourth display page template for Category") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Category",
+					displayPageTemplateEntryName = "Category DPT",
+					groupName = "Test Site Name");
+			}
+
+			task ("Add a Display Page Content fragment to the fourth display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Display Page Content");
+
+				PageEditor.clickPublish();
+			}
+
+			task ("Mark the fourth display page template as default") {
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Category DPT");
+			}
+
 			task ("Add a web content, blogs entry and document") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",

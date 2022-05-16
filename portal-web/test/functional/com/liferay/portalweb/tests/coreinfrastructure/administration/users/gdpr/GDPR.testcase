@@ -1192,7 +1192,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -2,7 +2,7 @@
 definition {
 
 	property analytics.cloud.release = "true";
-	property analytics.cloud.upstream = "true";
+	property analytics.cloud.upstream = "false";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -210,7 +210,7 @@ definition {
 			var token = ACApi.getTokenValue();
 		}
 
-		task ("Run curl command without 'fromData' and 'toData'") {
+		task ("Run curl command without 'fromDate' and 'toDate'") {
 			var curl = '''
 				http://localhost:8080/api/reports/export/${type}
 				-H "Authorization: Bearer ${token}"
@@ -240,7 +240,7 @@ definition {
 				message = "${message}");
 		}
 
-		task ("Run curl command without 'toData'") {
+		task ("Run curl command without 'toDate'") {
 			var curl = '''
 				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z
 				-H "Authorization: Bearer ${token}"

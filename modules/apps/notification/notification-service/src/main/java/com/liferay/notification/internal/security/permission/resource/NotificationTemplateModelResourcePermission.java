@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.notification.model.NotificationTemplate",
 	service = ModelResourcePermission.class
 )
-public class NotificationModelResourcePermission
+public class NotificationTemplateModelResourcePermission
 	implements ModelResourcePermission<NotificationTemplate> {
 
 	@Override

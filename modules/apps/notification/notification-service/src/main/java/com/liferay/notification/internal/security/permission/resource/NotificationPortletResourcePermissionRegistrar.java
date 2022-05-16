@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Gustavo Lima
  */
 @Component(immediate = true, service = {})
-public class NotificationResourcePermissionRegistrar {
+public class NotificationPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

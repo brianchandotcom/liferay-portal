@@ -14,8 +14,8 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
-import com.liferay.notification.constants.NotificationTemplateActionKeys;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.base.NotificationTemplateServiceBaseImpl;
@@ -56,7 +56,7 @@ public class NotificationTemplateServiceImpl
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			NotificationTemplateActionKeys.ADD_NOTIFICATION_TEMPLATE);
+			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
 			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,

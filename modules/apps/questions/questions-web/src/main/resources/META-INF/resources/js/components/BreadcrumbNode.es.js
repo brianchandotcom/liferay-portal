@@ -44,10 +44,7 @@ export default function BreadcrumbNode({
 			section.subSections.length > 0 ? (
 				<ClayDropDown
 					trigger={
-						<span
-							className="c-p-0 questions-breadcrumb-unstyled text-truncate"
-							displayType="unstyled"
-						>
+						<span className="c-p-0 questions-breadcrumb-unstyled text-truncate">
 							{isEllipsis ? (
 								<ClayIcon symbol="ellipsis-h" />
 							) : (

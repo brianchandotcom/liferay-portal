@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Objects;
 
@@ -56,7 +57,11 @@ public class FragmentEntryLinkServiceImpl
 			String rendererKey, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkPermission(groupId, plid, false, true);
+		boolean allowUpdateLayoutRestrictedPermission = GetterUtil.getBoolean(
+			PropsUtil.get("feature.flag.LPS-132571"));
+
+		_checkPermission(
+			groupId, plid, false, allowUpdateLayoutRestrictedPermission);
 
 		return fragmentEntryLinkLocalService.addFragmentEntryLink(
 			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -97,9 +102,12 @@ public class FragmentEntryLinkServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
+		boolean allowUpdateLayoutRestrictedPermission = GetterUtil.getBoolean(
+			PropsUtil.get("feature.flag.LPS-132571"));
+
 		_checkPermission(
 			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true,
-			true);
+			allowUpdateLayoutRestrictedPermission);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);

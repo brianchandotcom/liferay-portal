@@ -14,11 +14,11 @@
 
 package com.liferay.portal.scripting.groovy.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 
 /**
  * @author Michael C. Han

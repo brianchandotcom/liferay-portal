@@ -86,6 +86,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
 	@priority = "5"
 	test CanAddConditionNode {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddConditionNode";
 
 		Workflow.openWorkflowListView();
@@ -98,6 +99,8 @@ definition {
 			nodeType = "condition");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
+
+		
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
@@ -650,6 +653,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Condition"
 	@priority = "4"
 	test CanDeleteConditionNode {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
 
 		Workflow.openWorkflowListView();
@@ -1270,6 +1274,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
 	@priority = "2"
 	test CanHideShowInformationArea {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanHideShowInformationArea";
 
 		Workflow.openWorkflowListView();
@@ -1337,6 +1342,7 @@ definition {
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
 	@priority = "4"
 	test CanMoveNode {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanMoveNode";
 
 		Workflow.openWorkflowListView();
@@ -2257,6 +2263,7 @@ definition {
 	@description = "Verify that default names for nodes are provided"
 	@priority = "4"
 	test DefaultLabelsAreProvided {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelsAreProvided";
 
 		Workflow.openWorkflowListView();
@@ -2467,6 +2474,7 @@ definition {
 	@description = "Verify that each type of Node has Description property"
 	@priority = "4"
 	test HasDescriptionProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasDescriptionProperty";
 
 		Workflow.openWorkflowListView();
@@ -2507,6 +2515,7 @@ definition {
 	@description = "Verify that each type of Node has Notifications property"
 	@priority = "4"
 	test HasNotificationsProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasNotificationsProperty";
 
 		Workflow.openWorkflowListView();
@@ -2571,6 +2580,7 @@ definition {
 	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
 	@priority = "3"
 	test NodeCoordinatedAreUpdated {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeCoordinatedAreUpdated";
 
 		Workflow.openWorkflowListView();

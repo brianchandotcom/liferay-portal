@@ -19,6 +19,7 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.channel.web.internal.display.context.helper.CommerceChannelRequestHelper;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
@@ -352,6 +353,22 @@ public class CommerceChannelDisplayContext
 		}
 
 		return portletURL;
+	}
+
+	public String getRequestedDeliveryDate() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderImporterDateFormatConfiguration
+			commerceOrderImporterDateFormatConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderImporterDateFormatConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannel.getGroupId(),
+						CommerceConstants.
+							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+		return commerceOrderImporterDateFormatConfiguration.
+			requestedDeliveryDateFormat();
 	}
 
 	public List<CPTaxCategory> getTaxCategories() {

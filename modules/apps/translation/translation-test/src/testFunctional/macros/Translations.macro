@@ -195,7 +195,7 @@ definition {
 
 			AssertChecked.assertCheckedNotVisible(
 				locator1 = "Radio#ANY",
-				radioLabel = "All Experience");
+				radioLabel = "All Experiences");
 		}
 
 		if (isSet(experienceList)) {

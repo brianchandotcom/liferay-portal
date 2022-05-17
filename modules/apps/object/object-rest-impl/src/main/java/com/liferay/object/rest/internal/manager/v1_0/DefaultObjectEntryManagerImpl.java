@@ -211,10 +211,6 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 		UriInfo uriInfo = uriInfoOptional.orElse(null);
 
-		//TODO Deal with search free text. We need to mark the fields to use
-
-		// for it and add to the predicate
-
 		List<Map<String, Serializable>> valuesList =
 			_objectEntryLocalService.getValuesList(
 				objectDefinition.getObjectDefinitionId(), search, predicate,
@@ -285,23 +281,6 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			facets, items, pagination,
 			_objectEntryLocalService.getValuesListCount(
 				objectDefinition.getObjectDefinitionId(), search, predicate));
-	}
-
-	@Override
-	public Page<ObjectEntry> getObjectEntries(
-			long companyId, ObjectDefinition objectDefinition, String scopeKey,
-			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			String filterString, Pagination pagination, String search,
-			Sort[] sorts)
-		throws Exception {
-
-		return getObjectEntries(
-			companyId, objectDefinition, scopeKey, aggregation,
-			dtoConverterContext,
-			_toFilter(
-				filterString, dtoConverterContext.getLocale(),
-				objectDefinition.getObjectDefinitionId()),
-			pagination, search, sorts);
 	}
 
 	@Override
@@ -539,6 +518,9 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectRelationshipService _objectRelationshipService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

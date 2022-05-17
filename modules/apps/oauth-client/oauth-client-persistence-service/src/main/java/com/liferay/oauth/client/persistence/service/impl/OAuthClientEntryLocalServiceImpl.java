@@ -211,7 +211,8 @@ public class OAuthClientEntryLocalServiceImpl
 		String clientId = infoJSONObject.getAsString("client_id");
 
 		_validateClientId(
-			oAuthClientEntry.getCompanyId(), authServerIssuer, clientId);
+			oAuthClientEntry.getCompanyId(), authServerIssuer, clientId,
+			oAuthClientEntryId);
 
 		_validateParametersJSON(parametersJSON);
 
@@ -246,6 +247,23 @@ public class OAuthClientEntryLocalServiceImpl
 			throw new DuplicateOAuthClientEntryException(
 				"Client ID " + clientId);
 		}
+	}
+
+	private void _validateClientId(
+			long companyId, String authServerIssuer, String clientId,
+			long oAuthClientEntryId)
+		throws PortalException {
+
+		OAuthClientEntry oAuthClientEntry =
+			oAuthClientEntryPersistence.findByPrimaryKey(oAuthClientEntryId);
+
+		if (authServerIssuer.equals(oAuthClientEntry.getAuthServerIssuer()) &&
+			clientId.equals(oAuthClientEntry.getClientId())) {
+
+			return;
+		}
+
+		_validateClientId(companyId, authServerIssuer, clientId);
 	}
 
 	private void _validateInfoJSON(

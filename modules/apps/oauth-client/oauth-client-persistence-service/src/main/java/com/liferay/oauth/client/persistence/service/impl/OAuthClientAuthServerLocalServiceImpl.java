@@ -201,7 +201,9 @@ public class OAuthClientAuthServerLocalServiceImpl
 
 		String issuer = metadataJSONObject.getAsString("issuer");
 
-		_validateIssuer(oAuthClientAuthServer.getCompanyId(), issuer);
+		_validateIssuer(
+			oAuthClientAuthServer.getCompanyId(), issuer,
+			oAuthClientAuthServerId);
 
 		oAuthClientAuthServer.setDiscoveryEndpoint(discoveryEndpoint);
 		oAuthClientAuthServer.setIssuer(issuer);
@@ -233,6 +235,21 @@ public class OAuthClientAuthServerLocalServiceImpl
 				StringBundler.concat(
 					"Company ID ", companyId, " and issuer ", issuer));
 		}
+	}
+
+	private void _validateIssuer(
+			long companyId, String issuer, long oAuthClientAuthServerId)
+		throws PortalException {
+
+		OAuthClientAuthServer oAuthClientAuthServer =
+			oAuthClientAuthServerPersistence.findByPrimaryKey(
+				oAuthClientAuthServerId);
+
+		if (issuer.equals(oAuthClientAuthServer.getIssuer())) {
+			return;
+		}
+
+		_validateIssuer(companyId, issuer);
 	}
 
 	private void _validateMetadataJSON(

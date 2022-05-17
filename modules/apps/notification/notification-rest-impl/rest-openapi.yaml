@@ -11,7 +11,7 @@ components:
                     type: object
                 bcc:
                     type: string
-                bodyMap:
+                body:
                     additionalProperties:
                         type: string
                     type: object
@@ -31,7 +31,7 @@ components:
                     type: boolean
                 from:
                     type: string
-                fromNameMap:
+                fromName:
                     additionalProperties:
                         type: string
                     type: object
@@ -45,16 +45,11 @@ components:
                     additionalProperties:
                         type: string
                     type: object
-                subjectMap:
+                subject:
                     additionalProperties:
                         type: string
                     type: object
                 to:
-                    type: string
-                userId:
-                    format: int64
-                    type: integer
-                userName:
                     type: string
             type: object
 info:

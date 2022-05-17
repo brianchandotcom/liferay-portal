@@ -110,16 +110,16 @@ public class NotificationTemplateResourceImpl
 			_notificationTemplateService.addNotificationTemplate(
 				contextUser.getUserId(), notificationTemplate.getBcc(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBodyMap()),
+					notificationTemplate.getBody()),
 				notificationTemplate.getCc(),
 				notificationTemplate.getDescription(),
 				notificationTemplate.getEnable(),
 				notificationTemplate.getFrom(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromNameMap()),
+					notificationTemplate.getFromName()),
 				notificationTemplate.getName(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubjectMap()),
+					notificationTemplate.getSubject()),
 				notificationTemplate.getTo()));
 	}
 
@@ -133,16 +133,16 @@ public class NotificationTemplateResourceImpl
 			_notificationTemplateService.updateNotificationTemplate(
 				notificationTemplateId, notificationTemplate.getBcc(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBodyMap()),
+					notificationTemplate.getBody()),
 				notificationTemplate.getCc(),
 				notificationTemplate.getDescription(),
 				notificationTemplate.getEnable(),
 				notificationTemplate.getFrom(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromNameMap()),
+					notificationTemplate.getFromName()),
 				notificationTemplate.getName(),
 				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubjectMap()),
+					notificationTemplate.getSubject()),
 				notificationTemplate.getTo()));
 	}
 
@@ -186,7 +186,7 @@ public class NotificationTemplateResourceImpl
 							getNotificationTemplateId())
 				).build();
 				bcc = serviceBuilderNotificationTemplate.getBcc();
-				bodyMap = LocalizedMapUtil.getI18nMap(
+				body = LocalizedMapUtil.getI18nMap(
 					serviceBuilderNotificationTemplate.getBodyMap());
 				cc = serviceBuilderNotificationTemplate.getCc();
 				dateCreated =
@@ -197,7 +197,7 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getDescription();
 				enable = serviceBuilderNotificationTemplate.getEnabled();
 				from = serviceBuilderNotificationTemplate.getFrom();
-				fromNameMap = LocalizedMapUtil.getI18nMap(
+				fromName = LocalizedMapUtil.getI18nMap(
 					serviceBuilderNotificationTemplate.getFromNameMap());
 				id =
 					serviceBuilderNotificationTemplate.
@@ -205,7 +205,7 @@ public class NotificationTemplateResourceImpl
 				name = serviceBuilderNotificationTemplate.getName();
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderNotificationTemplate.getNameMap());
-				subjectMap = LocalizedMapUtil.getI18nMap(
+				subject = LocalizedMapUtil.getI18nMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
 			}
 		};

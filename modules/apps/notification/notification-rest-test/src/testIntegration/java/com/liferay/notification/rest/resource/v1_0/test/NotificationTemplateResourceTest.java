@@ -55,13 +55,13 @@ public class NotificationTemplateResourceTest
 		NotificationTemplate notificationTemplate =
 			super.randomNotificationTemplate();
 
-		notificationTemplate.setFromNameMap(
+		notificationTemplate.setFromName(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
-		notificationTemplate.setBodyMap(
+		notificationTemplate.setBody(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
-		notificationTemplate.setSubjectMap(
+		notificationTemplate.setSubject(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
 

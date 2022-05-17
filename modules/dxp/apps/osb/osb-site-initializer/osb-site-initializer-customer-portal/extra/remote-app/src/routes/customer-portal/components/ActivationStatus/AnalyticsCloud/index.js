@@ -145,7 +145,7 @@ const ActivationStatusAnalyticsCloud = ({
 			title: i18n.translate('analytics-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
-			buttonLink: (userAccount.isAdmin || userAccount.isStaff) && (
+			buttonLink: userAccount.isAdmin && (
 				<Button
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"

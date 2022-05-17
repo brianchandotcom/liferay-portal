@@ -100,9 +100,9 @@ public class JournalArticleActivityInterpreter
 				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 				return _journalHelper.buildURLPattern(
-					article, layout.isPrivateLayout(), themeDisplay,
-					themeDisplay.getLocale(),
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+					article, themeDisplay.getLocale(), layout.isPrivateLayout(),
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+					themeDisplay);
 			}
 
 			return null;

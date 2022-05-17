@@ -33,8 +33,8 @@ import javax.portlet.PortletRequest;
 public interface JournalHelper {
 
 	public String buildURLPattern(
-			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay, Locale locale, String separator)
+			JournalArticle article, Locale locale, boolean privateLayout,
+			String separator, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public String diffHtml(

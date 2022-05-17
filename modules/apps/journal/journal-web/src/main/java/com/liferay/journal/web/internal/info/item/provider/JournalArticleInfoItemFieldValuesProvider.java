@@ -186,9 +186,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 		}
 
 		return _journalHelper.buildURLPattern(
-			journalArticle, layout.isPrivateLayout(), themeDisplay,
-			themeDisplay.getLocale(),
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+			journalArticle, themeDisplay.getLocale(), layout.isPrivateLayout(),
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR, themeDisplay);
 	}
 
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {

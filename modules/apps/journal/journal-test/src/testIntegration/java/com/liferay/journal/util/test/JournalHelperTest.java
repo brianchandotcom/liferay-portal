@@ -103,9 +103,9 @@ public class JournalHelperTest {
 		Assert.assertEquals(
 			getArticleURL(),
 			_journalHelper.buildURLPattern(
-				article, layout.isPrivateLayout(), _themeDisplay,
-				_themeDisplay.getLocale(),
-				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE));
+				article, _themeDisplay.getLocale(), layout.isPrivateLayout(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+				_themeDisplay));
 	}
 
 	protected String getArticleURL() {

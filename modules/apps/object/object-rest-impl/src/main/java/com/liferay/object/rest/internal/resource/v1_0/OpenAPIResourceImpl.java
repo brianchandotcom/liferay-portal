@@ -93,13 +93,15 @@ public class OpenAPIResourceImpl {
 					StringUtil.replace(
 						key,
 						new String[] {
-							"currentObjectEntryId", "{objectRelationshipName}",
-							"relatedObjectEntryId"
+							"currentObjectEntry", "{objectRelationshipName}",
+							"relatedObjectEntry"
 						},
 						new String[] {
-							_currentObjectDefinition.getPKObjectFieldName(),
+							StringUtil.lowerCaseFirstLetter(
+								_currentObjectDefinition.getShortName()),
 							objectRelationship.getName(),
-							relatedObjectDefinition.getPKObjectFieldName()
+							StringUtil.lowerCaseFirstLetter(
+								relatedObjectDefinition.getShortName())
 						}),
 					_createPathItem(
 						objectRelationship, paths.get(key),
@@ -146,10 +148,16 @@ public class OpenAPIResourceImpl {
 			}
 
 			if (Objects.equals(parameterName, "currentObjectEntryId")) {
-				parameterName = _currentObjectDefinition.getPKObjectFieldName();
+				parameterName = StringUtil.replace(
+					parameterName, "currentObjectEntry",
+					StringUtil.lowerCaseFirstLetter(
+						_currentObjectDefinition.getShortName()));
 			}
 			else if (Objects.equals(parameterName, "relatedObjectEntryId")) {
-				parameterName = relatedObjectDefinition.getPKObjectFieldName();
+				parameterName = StringUtil.replace(
+					parameterName, "relatedObjectEntry",
+					StringUtil.lowerCaseFirstLetter(
+						relatedObjectDefinition.getShortName()));
 			}
 
 			String finalParameterName = parameterName;

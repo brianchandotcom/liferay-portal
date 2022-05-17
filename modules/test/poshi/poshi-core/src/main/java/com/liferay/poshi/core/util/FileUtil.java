@@ -228,29 +228,12 @@ public class FileUtil {
 	}
 
 	public static void replaceStringInFile(
-			String filePath, String placeholder, String text)
+			String filePath, String oldSub, String newSub)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
-		String line = null;
+		String fileContent = read(filePath);
 
-		File file = new File(filePath);
-
-		BufferedReader bufferedReader = new BufferedReader(
-			new FileReader(file));
-
-		while ((line = bufferedReader.readLine()) != null) {
-			if (line.contains(placeholder)) {
-				line = line.replace(placeholder, text);
-			}
-
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		bufferedReader.close();
-
-		write(file, sb.toString());
+		write(filePath, StringUtil.replace(fileContent, oldSub, newSub));
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {

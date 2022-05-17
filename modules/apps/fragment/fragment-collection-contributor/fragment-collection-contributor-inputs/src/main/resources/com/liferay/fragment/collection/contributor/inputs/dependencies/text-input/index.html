@@ -1,0 +1,11 @@
+<div class="text-input">
+	<div class="form-group">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input">${input.label}</label>
+
+		<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" maxlength="280" name="${input.name}" placeholder="${configuration.placeholder}" type="text" />
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-text-input-help-text">${input.helpText}</p>
+		[/#if]
+	</div>
+</div>

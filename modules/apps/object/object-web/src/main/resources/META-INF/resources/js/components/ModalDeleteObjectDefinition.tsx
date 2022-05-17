@@ -96,7 +96,7 @@ function ModalDeleteObjectDefinition({
 
 			<p>
 				{Liferay.Language.get(
-					'go-to-global-menu-applications-import-export-center-to-export-all-object-entries'
+					'before-deleting-this-object-definition-you-may-want-to-back-up-its-entries-to-prevent-data-loss'
 				)}
 			</p>
 

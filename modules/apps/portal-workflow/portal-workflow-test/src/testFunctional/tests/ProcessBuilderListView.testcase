@@ -273,6 +273,7 @@ definition {
 	@priority = "3"
 	test CanSearchByDescription {
 		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		task ("Search for existing Description") {
@@ -297,8 +298,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No workflow definitions are defined.");
-
-				
 		}
 	}
 
@@ -306,6 +305,7 @@ definition {
 	@priority = "4"
 	test CanSearchByTitle {
 		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

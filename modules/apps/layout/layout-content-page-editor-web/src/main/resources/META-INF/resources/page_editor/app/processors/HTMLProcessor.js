@@ -35,6 +35,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 			onCloseCallback: destroyCallback,
 			onSave: (content) => {
 				changeCallback(content);
+				destroyCallback();
 			},
 		},
 		document.createElement('div')

@@ -17,6 +17,7 @@ package com.liferay.notification.rest.internal.resource.v1_0;
 import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.internal.odata.entity.v1_0.NotificationTemplateEntityModel;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateService;
 import com.liferay.portal.kernel.search.Field;
@@ -25,11 +26,15 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +48,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = NotificationTemplateResource.class
 )
 public class NotificationTemplateResourceImpl
-	extends BaseNotificationTemplateResourceImpl {
+	extends BaseNotificationTemplateResourceImpl
+	implements EntityModelResource {
 
 	@Override
 	public void deleteNotificationTemplate(Long notificationTemplateId)
@@ -51,6 +57,11 @@ public class NotificationTemplateResourceImpl
 
 		_notificationTemplateService.deleteNotificationTemplate(
 			notificationTemplateId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -210,6 +221,9 @@ public class NotificationTemplateResourceImpl
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		new NotificationTemplateEntityModel();
 
 	@Reference
 	private NotificationTemplateService _notificationTemplateService;

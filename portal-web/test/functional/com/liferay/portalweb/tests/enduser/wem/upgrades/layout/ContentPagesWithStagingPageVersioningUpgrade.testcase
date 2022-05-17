@@ -1,0 +1,55 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Site Pages Administration,Upgrades WEM";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-142485. A draft content page with page versioning enabled should not have a main variation button after upgrade."
+	@priority = "4"
+	test NavigateToDraftContentPageAtViewModeInStagingSiteAfterUpgrade713 {
+		property data.archive.type = "data-archive-draft-page-with-page-versioning";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		task ("View Enable in Main Variation button not shown at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+
+			Button.viewNotPresent(button = "Enable in Main Variation");
+		}
+	}
+
+	@description = "This is a use case for LPS-142485. A draft content page with page versioning enabled should not have a main variation button after upgrade."
+	@priority = "4"
+	test NavigateToDraftContentPageAtViewModeInStagingSiteAfterUpgrade71105 {
+		property data.archive.type = "data-archive-draft-page-with-page-versioning";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.1.10.5";
+
+		task ("View Enable in Main Variation button not shown at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+
+			Button.viewNotPresent(button = "Enable in Main Variation");
+		}
+	}
+
+}

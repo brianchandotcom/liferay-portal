@@ -236,12 +236,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		int start, int end, String orderByCol1, String orderByCol2,
 		String orderByType1, String orderByType2) {
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			groupIds, classNameIds, classTypeIds, keywords, userName, title,
-			description, listable, advancedSearch, andOperator, start, end,
-			orderByCol1, orderByCol2, orderByType1, orderByType2);
-
-		return getEntries(assetEntryQuery);
+		return getEntries(
+			getAssetEntryQuery(
+				groupIds, classNameIds, classTypeIds, keywords, userName, title,
+				description, listable, advancedSearch, andOperator, start, end,
+				orderByCol1, orderByCol2, orderByType1, orderByType2));
 	}
 
 	@Override
@@ -252,12 +251,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		String orderByCol1, String orderByCol2, String orderByType1,
 		String orderByType2) {
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			groupIds, classNameIds, keywords, userName, title, description,
-			listable, advancedSearch, andOperator, start, end, orderByCol1,
-			orderByCol2, orderByType1, orderByType2);
-
-		return getEntries(assetEntryQuery);
+		return getEntries(
+			getAssetEntryQuery(
+				groupIds, classNameIds, keywords, userName, title, description,
+				listable, advancedSearch, andOperator, start, end, orderByCol1,
+				orderByCol2, orderByType1, orderByType2));
 	}
 
 	@Override
@@ -271,12 +269,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		String keywords, String userName, String title, String description,
 		Boolean listable, boolean advancedSearch, boolean andOperator) {
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			groupIds, classNameIds, classTypeIds, keywords, userName, title,
-			description, listable, advancedSearch, andOperator,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, null, null, null);
-
-		return getEntriesCount(assetEntryQuery);
+		return getEntriesCount(
+			getAssetEntryQuery(
+				groupIds, classNameIds, classTypeIds, keywords, userName, title,
+				description, listable, advancedSearch, andOperator,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, null, null, null));
 	}
 
 	@Override

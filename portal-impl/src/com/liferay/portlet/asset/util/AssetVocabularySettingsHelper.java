@@ -241,16 +241,10 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		if (classNameIdsAndClassTypePKs[0].equals(
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS)) {
-
-			return true;
-		}
-
-		String classNameIdAndClassTypePK = getClassNameIdAndClassTypePK(
-			classNameId, classTypePK);
-
-		if (ArrayUtil.contains(
-				classNameIdsAndClassTypePKs, classNameIdAndClassTypePK)) {
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS) ||
+			ArrayUtil.contains(
+				classNameIdsAndClassTypePKs,
+				getClassNameIdAndClassTypePK(classNameId, classTypePK))) {
 
 			return true;
 		}

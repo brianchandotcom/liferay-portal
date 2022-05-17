@@ -363,9 +363,9 @@ definition {
 				translationOverrideValueList = "Nieuwe Sleutel");
 
 			LanguageOverride.addLanguageKey(
-				languageKey = "text-contains-error",
+				languageKey = "text-not-bold",
 				translationOverrideList = "en-US",
-				translationOverrideValueList = "Text contains error");
+				translationOverrideValueList = "Text not bold");
 		}
 
 		task ("When the filter is set to 'Any Language' and the locale is set to 'nl-NL'") {
@@ -378,7 +378,7 @@ definition {
 
 		task ("Then both keys should be present, but only the selected language 'nl-NL' should be bold") {
 			AssertElementPresent(
-				key_languageKey = "text-contains-error",
+				key_languageKey = "text-not-bold",
 				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY");
 
 			AssertElementPresent(
@@ -388,7 +388,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_language = "en-US",
-				key_languageKey = "text-contains-error",
+				key_languageKey = "text-not-bold",
 				locator1 = "LanguageOverride#BOLD_LANGUAGE_WITH_OVERRIDE");
 		}
 	}

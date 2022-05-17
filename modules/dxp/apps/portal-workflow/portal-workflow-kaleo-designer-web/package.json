@@ -6,7 +6,7 @@
 	},
 	"jest": {
 		"setupFiles": [
-			"<rootDir>/test/mock/mockResizeObserver.js"
+			"<rootDir>/test/mock/mockProperties.js"
 		],
 		"setupFilesAfterEnv": [
 			"<rootDir>/test/setup.js"

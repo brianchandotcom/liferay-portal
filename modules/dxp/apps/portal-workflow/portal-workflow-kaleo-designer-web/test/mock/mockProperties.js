@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import crypto from 'crypto';
+
 window.ResizeObserver =
 	window.ResizeObserver ||
 	jest.fn().mockImplementation(() => ({
@@ -16,3 +18,9 @@ window.ResizeObserver =
 		observe: jest.fn(),
 		unobserve: jest.fn(),
 	}));
+
+Object.defineProperty(global, 'crypto', {
+	value: {
+		randomUUID: () => crypto.randomUUID(),
+	},
+});

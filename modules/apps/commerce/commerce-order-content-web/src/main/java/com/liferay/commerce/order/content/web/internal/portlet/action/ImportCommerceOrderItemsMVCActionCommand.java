@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.content.web.internal.portlet.action;
 
+import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -28,6 +30,7 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -36,9 +39,13 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.List;
 
@@ -80,6 +87,19 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		CommerceOrderImporterDateFormatConfiguration
+			commerceOrderImporterDateFormatConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderImporterDateFormatConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceOrder.getGroupId(),
+						CommerceConstants.
+							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			commerceOrderImporterDateFormatConfiguration.
+				requestedDeliveryDateFormat());
+
 		try {
 			if (cmd.equals(Constants.IMPORT)) {
 				CommerceOrderImporterType commerceOrderImporterType =
@@ -108,16 +128,33 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					}
 
 					try {
-						_commerceOrderItemService.addOrUpdateCommerceOrderItem(
-							commerceOrderId,
-							commerceOrderImporterItem.getCPInstanceId(),
-							commerceOrderImporterItem.getJSON(),
-							commerceOrderImporterItem.getQuantity(), 0,
-							(CommerceContext)actionRequest.getAttribute(
-								CommerceWebKeys.COMMERCE_CONTEXT),
-							ServiceContextFactory.getInstance(
-								CommerceOrderItem.class.getName(),
-								actionRequest));
+						CommerceOrderItem commerceOrderItem =
+							_commerceOrderItemService.
+								addOrUpdateCommerceOrderItem(
+									commerceOrderId,
+									commerceOrderImporterItem.getCPInstanceId(),
+									commerceOrderImporterItem.getJSON(),
+									commerceOrderImporterItem.getQuantity(), 0,
+									(CommerceContext)actionRequest.getAttribute(
+										CommerceWebKeys.COMMERCE_CONTEXT),
+									ServiceContextFactory.getInstance(
+										CommerceOrderItem.class.getName(),
+										actionRequest));
+
+						try {
+							String requestedDeliveryDate =
+								commerceOrderImporterItem.
+									getRequestedDeliveryDate();
+
+							_commerceOrderItemService.
+								updateCommerceOrderItemDeliveryDate(
+									commerceOrderItem.getCommerceOrderItemId(),
+									simpleDateFormat.parse(
+										requestedDeliveryDate));
+						}
+						catch (IllegalArgumentException | ParseException
+									exception) {
+						}
 
 						importedRowsCount++;
 					}
@@ -210,6 +247,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

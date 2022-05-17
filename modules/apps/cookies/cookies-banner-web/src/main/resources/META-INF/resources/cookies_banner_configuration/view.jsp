@@ -35,6 +35,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:link
 					href="<%= cookiesBannerConfigurationDisplayContext.getCookiePolicyLink() %>"
 					label="<%= cookiesBannerConfigurationDisplayContext.getLinkDisplayText(locale) %>"
+					target="_blank"
 				/>
 			</p>
 		</clay:col>

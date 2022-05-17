@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import togglePermission from '../actions/togglePermission';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
@@ -33,6 +33,24 @@ export default function EditModeSelector() {
 	const [editMode, setEditMode] = useState(
 		canSwitchEditMode ? EDIT_MODES.pageDesign : EDIT_MODES.contentEditing
 	);
+
+	const permissions = useSelector((state) => state.permissions);
+
+	const higherUpdatePermissionRef = useRef();
+
+	useEffect(() => {
+		if (permissions.UPDATE) {
+			higherUpdatePermissionRef.current = 'UPDATE';
+		}
+		else if (permissions.UPDATE_LAYOUT_BASIC) {
+			higherUpdatePermissionRef.current = 'UPDATE_LAYOUT_BASIC';
+		}
+		else {
+			higherUpdatePermissionRef.current = 'UPDATE_LAYOUT_LIMITED';
+		}
+
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	}, []);
 
 	return (
 		<ClayDropDown
@@ -63,7 +81,12 @@ export default function EditModeSelector() {
 						setActive(false);
 						setEditMode(EDIT_MODES.pageDesign);
 
-						dispatch(togglePermission('UPDATE', true));
+						dispatch(
+							togglePermission(
+								higherUpdatePermissionRef.current,
+								true
+							)
+						);
 					}}
 				>
 					{EDIT_MODES.pageDesign}
@@ -74,7 +97,12 @@ export default function EditModeSelector() {
 						setActive(false);
 						setEditMode(EDIT_MODES.contentEditing);
 
-						dispatch(togglePermission('UPDATE', false));
+						dispatch(
+							togglePermission(
+								higherUpdatePermissionRef.current,
+								false
+							)
+						);
 					}}
 				>
 					{EDIT_MODES.contentEditing}

@@ -13,6 +13,7 @@
  */
 
 import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useMemo, useRef, useState} from 'react';
@@ -121,7 +122,7 @@ export function SelectLayoutTree({
 		}
 	};
 
-	return (
+	return filteredItems.length > 0 ? (
 		<ClayTreeView
 			items={filteredItems}
 			onItemsChange={(items) => setItems(items)}
@@ -193,5 +194,14 @@ export function SelectLayoutTree({
 				</ClayTreeView.Item>
 			)}
 		</ClayTreeView>
+	) : (
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'try-again-with-a-different-search'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 }

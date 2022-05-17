@@ -74,16 +74,16 @@ public class ObjectFieldLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
-			String dbColumnName, String dbType, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			String dbColumnName, String dbTableName, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addSystemObjectField(
-			userId, objectDefinitionId, businessType, dbColumnName, dbType,
-			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required);
+			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
+			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required);
 	}
 
 	/**
@@ -438,6 +438,15 @@ public class ObjectFieldLocalServiceWrapper
 
 		return _objectFieldLocalService.
 			getObjectFieldsCountByListTypeDefinitionId(listTypeDefinitionId);
+	}
+
+	@Override
+	public com.liferay.petra.sql.dsl.Table getObjectFieldTable(
+			long objectDefinitionId, String objectFieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.getObjectFieldTable(
+			objectDefinitionId, objectFieldName);
 	}
 
 	/**

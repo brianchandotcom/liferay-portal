@@ -268,6 +268,16 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static Map<Object, Long> getAggregationCount(
+			long objectDefinitionId, String aggregationTerm,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate, int start,
+			int end)
+		throws PortalException {
+
+		return getService().getAggregationCount(
+			objectDefinitionId, aggregationTerm, predicate, start, end);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -472,11 +482,22 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId, int[] statuses, int start, int end)
+			long objectDefinitionId, String search,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate, int start,
+			int end)
 		throws PortalException {
 
 		return getService().getValuesList(
-			objectDefinitionId, statuses, start, end);
+			objectDefinitionId, search, predicate, start, end);
+	}
+
+	public static int getValuesListCount(
+			long objectDefinitionId, String search,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate)
+		throws PortalException {
+
+		return getService().getValuesListCount(
+			objectDefinitionId, search, predicate);
 	}
 
 	public static void insertIntoOrUpdateExtensionTable(

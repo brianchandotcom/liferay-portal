@@ -113,20 +113,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	private Optional<EntityField> _getEntityField(ObjectField objectField) {
 		if (objectField.isIndexedAsKeyword()) {
-			StringEntityField stringEntityField = new StringEntityField(
-				objectField.getName(),
-				locale ->
-					"nestedFieldArray.value_keyword#" + objectField.getName());
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				return Optional.of(
-					new CollectionEntityField(stringEntityField));
-			}
-
-			return Optional.of(stringEntityField);
+			return Optional.of(
+				new StringEntityField(
+					objectField.getName(),
+					locale ->
+						"nestedFieldArray.value_keyword#" +
+							objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -138,21 +130,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 					 objectField.getDBType(),
 					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			StringEntityField stringEntityField = new StringEntityField(
-				objectField.getName(),
-				locale ->
-					"nestedFieldArray.value_keyword_lowercase#" +
-						objectField.getName());
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				return Optional.of(
-					new CollectionEntityField(stringEntityField));
-			}
-
-			return Optional.of(stringEntityField);
+			return Optional.of(
+				new StringEntityField(
+					objectField.getName(),
+					locale ->
+						"nestedFieldArray.value_keyword_lowercase#" +
+							objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),

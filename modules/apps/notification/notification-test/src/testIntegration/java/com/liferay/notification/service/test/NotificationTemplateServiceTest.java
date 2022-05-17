@@ -130,7 +130,7 @@ public class NotificationTemplateServiceTest {
 	}
 
 	@Test
-	public void testUpdateListTypeDefinition() throws Exception {
+	public void testUpdateNotificationTemplate() throws Exception {
 		try {
 			_testUpdateNotificationTemplate(_adminUser, _user);
 

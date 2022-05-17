@@ -1,0 +1,59 @@
+.line-chart-container .line-class-data {
+	stroke-width: 4px;
+}
+
+.line-chart-container .line-chart-icon-success-color {
+	color: #4bc286;
+}
+
+.line-chart-container .bb-chart-arcs-title {
+	dominant-baseline: central;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.line-chart-container .line-chart-tooltip {
+	border: 1px solid #55c2ff;
+	color: #55c2ff;
+	font-size: 0.875rem;
+	font-style: normal;
+	width: 100%;
+}
+
+.bb-chart-arcs-title {
+	dominant-baseline: middle;
+	font-size: 1.3em;
+}
+
+.bb-chart-arcs .bb-chart-arcs-background {
+	fill: #e0e0e0;
+	stroke: none;
+}
+.bb-chart-arcs .bb-chart-arcs-gauge-unit {
+	fill: #000;
+	font-size: 24px;
+}
+
+.bb-chart-arc .bb-gauge-value {
+	fill: #000;
+}
+
+.bb path,
+.bb line {
+	fill: none;
+}
+
+.line-chart-container .line-chart-legend {
+	flex-direction: column;
+}
+
+@media screen and (max-width: 1280px) {
+	.line-chart-legend {
+		flex-direction: row !important;
+		justify-content: space-evenly !important;
+	}
+	.line-chart-screen {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}

@@ -99,7 +99,7 @@ public class FragmentEntryLinkServiceImpl
 
 		_checkPermission(
 			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true,
-			false);
+			true);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
@@ -146,17 +146,18 @@ public class FragmentEntryLinkServiceImpl
 				getUserId(), className, classPK, ActionKeys.UPDATE);
 		}
 
-		if (checkUpdateLayoutContentPermission &&
-			 _layoutPermission.containsLayoutUpdatePermission(
-				 getPermissionChecker(), classPK)) {
+		if (_layoutPermission.contains(
+				getPermissionChecker(), classPK, ActionKeys.UPDATE) ||
+			(checkUpdateLayoutContentPermission &&
+			 _layoutPermission.contains(
+				 getPermissionChecker(), classPK,
+				 ActionKeys.UPDATE_LAYOUT_CONTENT))) {
 
 			return;
 		}
 
 		if (checkUpdateLayoutRestrictedPermission &&
 			(_layoutPermission.contains(
-				getPermissionChecker(), classPK, ActionKeys.UPDATE) ||
-			 _layoutPermission.contains(
 				getPermissionChecker(), classPK,
 				ActionKeys.UPDATE_LAYOUT_BASIC) ||
 			 _layoutPermission.contains(

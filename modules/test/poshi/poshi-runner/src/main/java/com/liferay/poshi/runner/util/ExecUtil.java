@@ -47,6 +47,10 @@ public class ExecUtil {
 		Process process = executeCommands(
 			true, new File("."), 1000 * 60 * 15, command);
 
+		if (process.exitValue() != 0) {
+			return readInputStream(process.getErrorStream(), true);
+		}
+
 		return readInputStream(process.getInputStream(), true);
 	}
 
@@ -239,7 +243,7 @@ public class ExecUtil {
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
 
-	private static final List<String> _whitelistedExecutableNames = Arrays.asList(
-		"git", "grep", "sed");
+	private static final List<String> _whitelistedExecutableNames =
+		Arrays.asList("git", "grep", "sed");
 
 }

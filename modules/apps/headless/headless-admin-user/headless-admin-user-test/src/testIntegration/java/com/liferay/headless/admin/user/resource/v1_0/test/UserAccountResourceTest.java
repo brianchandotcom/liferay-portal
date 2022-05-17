@@ -30,11 +30,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
-import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
-import com.liferay.headless.admin.user.client.serdes.v1_0.PhoneSerDes;
-import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
-import com.liferay.headless.admin.user.client.serdes.v1_0.WebUrlSerDes;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -51,6 +47,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -79,11 +76,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -750,17 +744,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_assertUserAccountContactInformation(
 			userAccountContactInformation1, userAccountContactInformation2,
-			"emailAddresses", "emailAddress", EmailAddressSerDes::toDTO);
+			"emailAddresses", "emailAddress");
 		_assertUserAccountContactInformation(
 			userAccountContactInformation1, userAccountContactInformation2,
-			"postalAddresses", "streetAddressLine1",
-			PostalAddressSerDes::toDTO);
+			"postalAddresses", "streetAddressLine1");
 		_assertUserAccountContactInformation(
 			userAccountContactInformation1, userAccountContactInformation2,
-			"telephones", "phoneNumber", PhoneSerDes::toDTO);
+			"telephones", "phoneNumber");
 		_assertUserAccountContactInformation(
 			userAccountContactInformation1, userAccountContactInformation2,
-			"webUrls", "url", WebUrlSerDes::toDTO);
+			"webUrls", "url");
 	}
 
 	@Override
@@ -1011,38 +1004,30 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _assertUserAccountContactInformation(
 		UserAccountContactInformation userAccountContactInformation1,
 		UserAccountContactInformation userAccountContactInformation2,
-		String fieldName, String subfieldName,
-		Function<String, ?> deserializerFunction) {
+		String fieldName, String subfieldName) {
 
 		try {
-			String[] jsons1 = BeanUtils.getArrayProperty(
+			Object[] objects1 = ReflectionTestUtil.getFieldValue(
 				userAccountContactInformation1, fieldName);
-			String[] jsons2 = BeanUtils.getArrayProperty(
+			Object[] objects2 = ReflectionTestUtil.getFieldValue(
 				userAccountContactInformation2, fieldName);
 
 			Assert.assertEquals(
-				Arrays.toString(jsons1), jsons1.length, jsons2.length);
+				Arrays.toString(objects1), objects1.length, objects2.length);
 
-			Comparator<String> comparator = Comparator.comparing(
-				json -> {
-					try {
-						return BeanUtils.getProperty(
-							deserializerFunction.apply(json), subfieldName);
-					}
-					catch (Exception exception) {
-						return null;
-					}
-				});
+			Comparator<Object> comparator = Comparator.comparing(
+				object -> ReflectionTestUtil.getFieldValue(
+					object, subfieldName));
 
-			Arrays.sort(jsons1, comparator);
-			Arrays.sort(jsons2, comparator);
+			Arrays.sort(objects1, comparator);
+			Arrays.sort(objects2, comparator);
 
-			for (int i = 0; i < jsons1.length; i++) {
+			for (int i = 0; i < objects1.length; i++) {
 				Assert.assertEquals(
-					BeanUtils.getProperty(
-						deserializerFunction.apply(jsons1[i]), subfieldName),
-					BeanUtils.getProperty(
-						deserializerFunction.apply(jsons2[i]), subfieldName));
+					(String)ReflectionTestUtil.getFieldValue(
+						objects1[i], subfieldName),
+					(String)ReflectionTestUtil.getFieldValue(
+						objects2[i], subfieldName));
 			}
 		}
 		catch (Exception exception) {

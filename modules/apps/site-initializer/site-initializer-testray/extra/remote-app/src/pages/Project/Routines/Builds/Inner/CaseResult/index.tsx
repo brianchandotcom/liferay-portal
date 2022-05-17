@@ -16,7 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
@@ -37,6 +37,7 @@ import {getStatusLabel} from '../../../../../../util/constants';
 import {getTimeFromNow} from '../../../../../../util/date';
 
 type CollapsableItemProps = {
+	children: ReactNode;
 	count: number;
 	title: string;
 };

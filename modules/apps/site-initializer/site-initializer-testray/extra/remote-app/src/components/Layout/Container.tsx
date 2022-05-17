@@ -14,8 +14,10 @@
 
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 type ContainerProps = {
+	children: ReactNode;
 	className?: string;
 	collapsable?: boolean;
 	title?: string;
@@ -47,18 +49,16 @@ const Container: React.FC<ContainerProps> = ({
 	}
 
 	return (
-		<>
-			<div
-				className={classNames(
-					'bg-white border-1 rounded-xs p-4 ',
-					className
-				)}
-			>
-				<ContainerTitle />
+		<div
+			className={classNames(
+				'bg-white border-1 rounded-xs p-4 ',
+				className
+			)}
+		>
+			<ContainerTitle />
 
-				{children}
-			</div>
-		</>
+			{children}
+		</div>
 	);
 };
 

@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
@@ -56,7 +56,10 @@ const descriptionTypes = [
 	},
 ];
 
-const FormRow: React.FC<{title: string}> = ({children, title}) => (
+const FormRow: React.FC<{children: ReactNode; title: string}> = ({
+	children,
+	title,
+}) => (
 	<>
 		<ClayLayout.Row justify="start">
 			<ClayLayout.Col size={3} sm={12} xl={3}>

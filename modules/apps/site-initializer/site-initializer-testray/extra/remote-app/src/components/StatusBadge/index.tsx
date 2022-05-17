@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 const statusBarClassNames: any = {
 	blocked: 'label-inverse-secondary',
@@ -26,6 +27,7 @@ const statusBarClassNames: any = {
 };
 
 export type StatusBadgeProps = {
+	children: ReactNode;
 	type: string;
 };
 

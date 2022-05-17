@@ -13,9 +13,10 @@
  */
 
 import ClayModal from '@clayui/modal';
-import React, {ReactElement} from 'react';
+import React, {ReactElement, ReactNode} from 'react';
 
 type ModalProps = {
+	children: ReactNode;
 	className?: string;
 	first?: ReactElement;
 	last?: ReactElement;

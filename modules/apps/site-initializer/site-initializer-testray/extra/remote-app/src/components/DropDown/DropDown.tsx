@@ -33,7 +33,7 @@ const DropDown: React.FC<DropDownProps> = ({actions, item}) => {
 			active={active}
 			alignmentPosition={Align.RightCenter}
 			className="dropdown-action"
-			onActiveChange={(newVal) => setActive(newVal)}
+			onActiveChange={(newVal: boolean) => setActive(newVal)}
 			trigger={
 				<ClayButtonWithIcon
 					className="page-link"

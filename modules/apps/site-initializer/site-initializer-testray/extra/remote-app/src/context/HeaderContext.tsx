@@ -12,7 +12,7 @@
  * details.
  */
 
-import {createContext, useReducer} from 'react';
+import {ReactNode, createContext, useReducer} from 'react';
 
 import i18n from '../i18n';
 import {ActionMap} from '../types';
@@ -139,7 +139,7 @@ const reducer = (state: InitialState, action: AppActions): InitialState => {
 	}
 };
 
-const HeaderContextProvider: React.FC = ({children}) => {
+const HeaderContextProvider: React.FC<{children: ReactNode}> = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (

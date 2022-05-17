@@ -14,12 +14,14 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 type LoadingProps = {
 	className?: string;
 };
 
 type LoadingWrapperProps = {
+	children: ReactNode;
 	isLoading: boolean;
 } & LoadingProps;
 

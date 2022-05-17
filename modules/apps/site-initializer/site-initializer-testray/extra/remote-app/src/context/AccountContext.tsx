@@ -13,7 +13,7 @@
  * details.
  */
 
-import {createContext, useEffect, useReducer} from 'react';
+import {ReactNode, createContext, useEffect, useReducer} from 'react';
 
 import apolloClient from '../graphql/apolloClient';
 import {UserAccount, getLiferayMyUserAccount} from '../graphql/queries';
@@ -76,10 +76,10 @@ const reducer = (state: InitialState, action: AppActions) => {
 	}
 };
 
-const AccountContextProvider: React.FC<{skipRoleCheck: boolean}> = ({
-	children,
-	skipRoleCheck,
-}) => {
+const AccountContextProvider: React.FC<{
+	children: ReactNode;
+	skipRoleCheck: boolean;
+}> = ({children, skipRoleCheck}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	useEffect(() => {

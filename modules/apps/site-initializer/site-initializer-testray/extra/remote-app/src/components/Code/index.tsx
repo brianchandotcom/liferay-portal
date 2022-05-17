@@ -13,8 +13,10 @@
  */
 
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 type CodeProps = {
+	children: ReactNode;
 	className?: string;
 };
 

@@ -13,7 +13,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
@@ -47,6 +47,7 @@ const States = {
 };
 
 export type EmptyStateProps = {
+	children?: ReactNode;
 	description?: string;
 	title?: string;
 	type?: keyof typeof States;

@@ -16,7 +16,7 @@ import Container from '../../components/Layout/Container';
 import i18n from '../../i18n';
 
 const TestflowArchived = () => (
-	<Container title={i18n.translate('testflow-archived')} />
+	<Container title={i18n.translate('testflow-archived')}>...</Container>
 );
 
 export default TestflowArchived;

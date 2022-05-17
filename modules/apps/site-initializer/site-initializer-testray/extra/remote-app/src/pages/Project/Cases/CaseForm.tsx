@@ -16,7 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {useEffect} from 'react';
+import {ReactNode, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
@@ -60,7 +60,7 @@ const descriptionTypes = Object.values(
 	DescriptionType
 ).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
 
-const FormRow: React.FC<{title: string}> = ({children, title}) => (
+const FormRow: React.FC<{children: ReactNode, title: string}> = ({children, title}) => (
 	<>
 		<ClayLayout.Row justify="start">
 			<ClayLayout.Col size={3} sm={12} xl={3}>

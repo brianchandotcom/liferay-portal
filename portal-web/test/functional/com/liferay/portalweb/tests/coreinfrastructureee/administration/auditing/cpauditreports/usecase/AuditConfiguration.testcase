@@ -47,9 +47,13 @@ definition {
 
 		SignOut.signOut();
 
-		var afterLoginAuditTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM Audit_AuditEvent;");
+		var auditTablePersistenceDisabled = SQL.executeMySQLStatement(mysqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
 
-		echo("Audit table: ${afterLoginAuditTable}");
+		echo("Audit table: ${auditTablePersistenceDisabled}");
+
+		if (!(contains("${auditTablePersistenceDisabled}", "0"))) {
+			fail("Unexpected entries found in Audit_AuditEvent event table.");
+		}
 
 		User.firstLoginUI(
 			password = "test",
@@ -75,15 +79,12 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		var afterAuditTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM Audit_AuditEvent;");
+		var auditTablePersistenceEnabled = SQL.executeMySQLStatement(mysqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");
 
-		echo("Audit table: ${afterAuditTable}");
+		echo("Audit table: ${auditTablePersistenceEnabled}");
 
-		if ("${afterLoginAuditTable}" == "${afterAuditTable}") {
-			fail("Audit Table remains unmodified after enable Persistent Message.");
-		}
-		else {
-			echo("Login from Audit is added in persistence.");
+		if (!(contains("${auditTablePersistenceEnabled}", "2"))) {
+			fail("Expected entries not found in Audit_AuditEvent event table.");
 		}
 	}
 

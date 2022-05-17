@@ -52,76 +52,70 @@ describe('HTMLEditorModal', () => {
 		jest.useFakeTimers();
 	});
 
-	describe('render modal', () => {
-		it('injects the given string as innerHTML', () => {
-			const element = document.createElement('div');
+	it('injects the given string as innerHTML', () => {
+		const element = document.createElement('div');
 
-			HTMLProcessor.render(element, 'Jordi Kappler');
-			expect(element.innerHTML).toBe('Jordi Kappler');
-		});
-
-		it('modal is rendered', () => {
-			renderModal('');
-
-			expect(screen.getByText('save')).toBeInTheDocument();
-		});
-
-		it('initialContent is correct', () => {
-			renderModal({initialContent: 'Hello Jordi Kappler'});
-
-			expect(
-				screen.getAllByText('Hello Jordi Kappler')[0].innerHTML
-			).toContain('Hello Jordi Kappler');
-		});
+		HTMLProcessor.render(element, 'Jordi Kappler');
+		expect(element.innerHTML).toBe('Jordi Kappler');
 	});
 
-	describe('view types', () => {
-		it('view type column is displayed correctly', () => {
-			renderModal('');
+	it('modal is rendered', () => {
+		renderModal('');
 
-			const editor = document.querySelector(
-				'.page-editor__html-editor-modal__editor-container > div'
-			);
-
-			expect(editor.classList.contains('w-50')).toBe(true);
-		});
-
-		it('view type rows is displayed correctly', () => {
-			renderModal('');
-
-			fireEvent.click(screen.getByTitle('display-horizontally'));
-
-			const editor = document.querySelector(
-				'.page-editor__html-editor-modal__editor-container > div'
-			);
-
-			expect(editor).toHaveClass('w-100');
-		});
-
-		it('view type full screen is displayed correctly', () => {
-			renderModal('');
-
-			fireEvent.click(screen.getByTitle('full-screen'));
-
-			const preview = document.querySelector(
-				'.page-editor__html-editor-modal__preview-rows'
-			);
-
-			expect(preview).toBeNull();
-		});
+		expect(screen.getByText('save')).toBeInTheDocument();
 	});
 
-	describe('modal callbacks', () => {
-		it('Close button', async () => {
-			const onClose = jest.fn();
+	it('initialContent is correct', () => {
+		renderModal({initialContent: 'Hello Jordi Kappler'});
 
-			renderModal({onClose});
+		expect(
+			screen.getAllByText('Hello Jordi Kappler')[0].innerHTML
+		).toContain('Hello Jordi Kappler');
+	});
 
-			fireEvent.click(screen.getByText('cancel'));
+	it('view type column is displayed correctly', () => {
+		renderModal('');
 
-			jest.advanceTimersByTime(1000);
+		const editor = document.querySelector(
+			'.page-editor__html-editor-modal__editor-container > div'
+		);
 
-			expect(onClose).toHaveBeenCalled();
-		});
+		expect(editor.classList.contains('w-50')).toBe(true);
+	});
+
+	it('view type rows is displayed correctly', () => {
+		renderModal('');
+
+		fireEvent.click(screen.getByTitle('display-horizontally'));
+
+		const editor = document.querySelector(
+			'.page-editor__html-editor-modal__editor-container > div'
+		);
+
+		expect(editor).toHaveClass('w-100');
+	});
+
+	it('view type full screen is displayed correctly', () => {
+		renderModal('');
+
+		fireEvent.click(screen.getByTitle('full-screen'));
+
+		const preview = document.querySelector(
+			'.page-editor__html-editor-modal__preview-rows'
+		);
+
+		expect(preview).toBeNull();
+	});
+
+	it('Close button', async () => {
+		const onClose = jest.fn();
+
+		renderModal({onClose});
+
+		fireEvent.click(screen.getByText('cancel'));
+
+		jest.advanceTimersByTime(1000);
+
+		expect(onClose).toHaveBeenCalled();
 	});
 });

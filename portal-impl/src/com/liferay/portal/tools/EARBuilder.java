@@ -64,10 +64,8 @@ public class EARBuilder {
 				Element contextRootElement = webElement.addElement(
 					"context-root");
 
-				String contextRoot = _getContextRoot(
-					pluginFileName, portalContextPath);
-
-				contextRootElement.addText(contextRoot);
+				contextRootElement.addText(
+					_getContextRoot(pluginFileName, portalContextPath));
 			}
 
 			FileUtil.write(

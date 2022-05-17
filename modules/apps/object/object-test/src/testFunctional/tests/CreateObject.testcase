@@ -1715,6 +1715,8 @@ definition {
 	@description = "LPS-139160 - Verify it is not possible to delete an Object via API after it was published"
 	@priority = "4"
 	test CannotDeletePublishedObjectViaApi {
+		property portal.acceptance = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 43",
 			objectName = "CustomObject43",
@@ -1742,7 +1744,7 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"
 	@priority = "5"
 	test CannotDeleteRelationshipWhenPublished {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 44",

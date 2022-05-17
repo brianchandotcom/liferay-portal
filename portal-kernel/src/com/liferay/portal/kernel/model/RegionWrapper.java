@@ -314,6 +314,11 @@ public class RegionWrapper
 	}
 
 	@Override
+	public String getTitleCurrentLanguageId() {
+		return model.getTitleCurrentLanguageId();
+	}
+
+	@Override
 	public String getTitleMapAsXML() {
 		return model.getTitleMapAsXML();
 	}
@@ -501,6 +506,11 @@ public class RegionWrapper
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(String languageId) {
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**

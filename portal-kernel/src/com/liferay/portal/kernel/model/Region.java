@@ -55,4 +55,8 @@ public interface Region extends PersistedModel, RegionModel {
 
 		};
 
+	public String getTitleCurrentLanguageId();
+
+	public void setTitleCurrentLanguageId(String languageId);
+
 }

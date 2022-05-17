@@ -28,22 +28,17 @@ import java.util.Map;
  */
 public class BatchEngineImportTaskItemReaderFactory {
 
-	public BatchEngineImportTaskItemReaderFactory(
-		String csvFileColumnDelimiter) {
-
-		_csvFileColumnDelimiter = csvFileColumnDelimiter;
-	}
-
 	public BatchEngineImportTaskItemReader create(
 			BatchEngineTaskContentType batchEngineTaskContentType,
-			InputStream inputStream, Map<String, Serializable> parameters)
+			String csvFileColumnDelimiter, InputStream inputStream,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		inputStream = ZipInputStreamUtil.asZipInputStream(inputStream);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReaderImpl(
-				_csvFileColumnDelimiter, inputStream, parameters);
+				csvFileColumnDelimiter, inputStream, parameters);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
@@ -64,7 +59,5 @@ public class BatchEngineImportTaskItemReaderFactory {
 			"Unknown batch engine task content type " +
 				batchEngineTaskContentType);
 	}
-
-	private final String _csvFileColumnDelimiter;
 
 }

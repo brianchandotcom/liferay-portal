@@ -29,23 +29,18 @@ import java.util.Map;
  */
 public class BatchEngineExportTaskItemWriterFactory {
 
-	public BatchEngineExportTaskItemWriterFactory(
-		String csvFileColumnDelimiter) {
-
-		_csvFileColumnDelimiter = csvFileColumnDelimiter;
-	}
-
 	public BatchEngineExportTaskItemWriter create(
 			BatchEngineTaskContentType batchEngineTaskContentType,
-			List<String> fieldNames, Class<?> itemClass,
-			OutputStream outputStream, Map<String, Serializable> parameters)
+			String csvFileColumnDelimiter, List<String> fieldNames,
+			Class<?> itemClass, OutputStream outputStream,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		Map<String, Field> fieldMap = ItemClassIndexUtil.index(itemClass);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineExportTaskItemWriterImpl(
-				_csvFileColumnDelimiter, fieldMap, fieldNames, outputStream,
+				csvFileColumnDelimiter, fieldMap, fieldNames, outputStream,
 				parameters);
 		}
 
@@ -70,7 +65,5 @@ public class BatchEngineExportTaskItemWriterFactory {
 			"Unknown batch engine task content type " +
 				batchEngineTaskContentType);
 	}
-
-	private final String _csvFileColumnDelimiter;
 
 }

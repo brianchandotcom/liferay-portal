@@ -1394,7 +1394,7 @@ definition {
 
 			ImportExport.configureExport(
 				entityType = "admin.user.dto.v1_0.Account",
-				exportFields = "accountUserAccounts",
+				exportFields = "",
 				exportFileFormat = "CSV");
 
 			Button.click(button = "Export");

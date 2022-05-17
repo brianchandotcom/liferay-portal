@@ -296,9 +296,11 @@ definition {
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 		for (var exportField : list "${exportFields}") {
-			Click.clickAtNotVisible(
-				key_checkboxOption = "${exportField}",
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			if ("${exportField}" != "") {
+				Click.clickAtNotVisible(
+					key_checkboxOption = "${exportField}",
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
 		}
 	}
 

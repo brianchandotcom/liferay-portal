@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("And when the user try to import a CSV file with missing field") {
-			UploadDependencyFile.uploadFile(fileName = "missing_field.csv");
+			UploadDependencyFile.uploadFile(fileName = "commerce_missing_field.csv");
 
 			Button.clickImport();
 		}
@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("And when the user try to import a CSV file with invalid fields") {
-			UploadDependencyFile.uploadFile(fileName = "invalid_fields.csv");
+			UploadDependencyFile.uploadFile(fileName = "commerce_invalid_fields.csv");
 
 			Button.clickImport();
 		}
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("And when the user try to import a file with invalid quantity") {
-			UploadDependencyFile.uploadFile(fileName = "invalid_quantity.csv");
+			UploadDependencyFile.uploadFile(fileName = "commerce_invalid_quantity.csv");
 
 			Button.clickImport();
 		}
@@ -168,7 +168,7 @@ definition {
 		}
 
 		task ("And when the user try to import a pdf file") {
-			UploadDependencyFile.uploadFile(fileName = "Document_1.pdf");
+			UploadDependencyFile.uploadFile(fileName = "Commerce_1.pdf");
 
 			Button.clickImport();
 		}
@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("And when the user try to import a text file") {
-			UploadDependencyFile.uploadFile(fileName = "Document_1.txt");
+			UploadDependencyFile.uploadFile(fileName = "Commerce_1.txt");
 
 			Button.clickImport();
 		}
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("And when the user try to import a image file") {
-			UploadDependencyFile.uploadFile(fileName = "Document_1.jpeg");
+			UploadDependencyFile.uploadFile(fileName = "Commerce_1.jpeg");
 
 			Button.clickImport();
 		}
@@ -216,7 +216,7 @@ definition {
 		}
 
 		task ("And when the user try to import a executable file") {
-			UploadDependencyFile.uploadFile(fileName = "Document_1.exe");
+			UploadDependencyFile.uploadFile(fileName = "Commerce_1.exe");
 
 			Button.clickImport();
 		}

@@ -78,7 +78,7 @@ public class OpenAPIResourceImpl {
 
 		Paths paths = openAPI.getPaths();
 
-		for (String key : paths.keySet()) {
+		for (String key : new ArrayList<>(paths.keySet())) {
 			if (!key.contains("objectRelationshipName")) {
 				continue;
 			}

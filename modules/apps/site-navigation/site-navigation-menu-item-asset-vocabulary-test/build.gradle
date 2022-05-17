@@ -5,7 +5,6 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-display-page-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal:portal-props-test-util")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

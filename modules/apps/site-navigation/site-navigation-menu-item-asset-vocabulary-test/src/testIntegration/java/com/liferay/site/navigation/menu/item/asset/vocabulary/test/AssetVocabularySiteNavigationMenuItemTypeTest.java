@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -535,32 +534,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			expectedTitle,
 			siteNavigationMenuItemType.getTitle(
 				assetVocabularySiteNavigationMenuItem, LocaleUtil.SPAIN));
-	}
-
-	@Test
-	public void testIsAvailableWhenFeatureFlagDisabled() {
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
-
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-146502", "false")) {
-
-			Assert.assertFalse(siteNavigationMenuItemType.isAvailable(null));
-		}
-	}
-
-	@Test
-	public void testIsAvailableWhenFeatureFlagEnabled() {
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
-
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-146502", "true")) {
-
-			Assert.assertTrue(siteNavigationMenuItemType.isAvailable(null));
-		}
 	}
 
 	@Test

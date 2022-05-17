@@ -1,7 +1,13 @@
 <div class="forms-checkbox">
-	<label class="input-label">
-		<input class="input-input" type="checkbox" value="" />
+	<div class="custom-checkbox custom-control mb-0">
+		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" type="checkbox" />
 
-		<span class="input-span" data-lfr-editable-id="label" data-lfr-editable-type="text">Check me</span>
-	</label>
+		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox">
+			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${input.label}</span>
+		</label>
+	</div>
+
+	[#if input.showHelpText && input.helpText?has_content]
+		<div class="mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-checkbox-help-text">${input.helpText}</div>
+	[/#if]
 </div>

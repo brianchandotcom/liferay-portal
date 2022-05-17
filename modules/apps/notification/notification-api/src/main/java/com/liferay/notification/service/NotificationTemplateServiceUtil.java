@@ -17,7 +17,6 @@ package com.liferay.notification.service;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,16 +69,6 @@ public class NotificationTemplateServiceUtil {
 		throws PortalException {
 
 		return getService().getNotificationTemplate(notificationTemplateId);
-	}
-
-	public static List<NotificationTemplate> getNotificationTemplates(
-		int start, int end) {
-
-		return getService().getNotificationTemplates(start, end);
-	}
-
-	public static int getNotificationTemplatesCount() {
-		return getService().getNotificationTemplatesCount();
 	}
 
 	/**

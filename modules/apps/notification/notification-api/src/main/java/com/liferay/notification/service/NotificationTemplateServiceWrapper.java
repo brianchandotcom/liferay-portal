@@ -82,19 +82,6 @@ public class NotificationTemplateServiceWrapper
 			notificationTemplateId);
 	}
 
-	@Override
-	public java.util.List<com.liferay.notification.model.NotificationTemplate>
-		getNotificationTemplates(int start, int end) {
-
-		return _notificationTemplateService.getNotificationTemplates(
-			start, end);
-	}
-
-	@Override
-	public int getNotificationTemplatesCount() {
-		return _notificationTemplateService.getNotificationTemplatesCount();
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *

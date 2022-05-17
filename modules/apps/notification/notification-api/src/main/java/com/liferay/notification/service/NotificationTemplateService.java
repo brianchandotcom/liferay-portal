@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,13 +71,6 @@ public interface NotificationTemplateService extends BaseService {
 	public NotificationTemplate getNotificationTemplate(
 			long notificationTemplateId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationTemplate> getNotificationTemplates(
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNotificationTemplatesCount();
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -1253,10 +1253,25 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 				try {
 					_processArchive(companyId, blob.getContent());
+
+					blob.copyTo(
+						unicodeProperties.getProperty("s3BucketName"),
+						name.replaceFirst(
+							s3InboxFolderName,
+							unicodeProperties.getProperty(
+								"s3ProcessedFolderName")));
 				}
 				catch (Exception exception) {
 					_log.error(exception);
+					blob.copyTo(
+						unicodeProperties.getProperty("s3BucketName"),
+						name.replaceFirst(
+							s3InboxFolderName,
+							unicodeProperties.getProperty(
+								"s3ErroredFolderName")));
 				}
+
+				blob.delete();
 			}
 		}
 		catch (IOException ioException) {

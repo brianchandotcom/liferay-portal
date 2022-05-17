@@ -173,6 +173,5 @@
 	<classpathentry kind="lib" path="lib/portal/wstx.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/portal/xmlsec.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

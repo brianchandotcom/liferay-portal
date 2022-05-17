@@ -54,8 +54,7 @@ public class FaviconServlet extends HttpServlet {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			httpServletResponse.sendRedirect(
-				themeDisplay.getPathImage() + "/favicon.ico");
+			httpServletResponse.sendRedirect(themeDisplay.getFavicon());
 
 			return;
 		}

@@ -369,6 +369,77 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public Map<Object, Long> getAggregationCount(
+			long objectDefinitionId, String aggregationTerm,
+			Predicate predicate, int start, int end)
+		throws PortalException {
+
+		Table objectFieldTable = _objectFieldLocalService.getObjectFieldTable(
+			objectDefinitionId, aggregationTerm);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinitionId, aggregationTerm);
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getDynamicObjectDefinitionTable(objectDefinitionId);
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			objectFieldTable.getColumn(objectField.getDBColumnName()),
+			DSLFunctionFactoryUtil.countDistinct(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			).as(
+				"entryCount"
+			)
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			)
+		).where(
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinitionId
+			).and(
+				predicate
+			).and(
+				() -> {
+					if (PermissionThreadLocal.getPermissionChecker() == null) {
+						return null;
+					}
+
+					return _inlineSQLHelper.getPermissionWherePredicate(
+						dynamicObjectDefinitionTable.getName(),
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+				}
+			)
+		).groupBy(
+			objectFieldTable.getColumn(objectField.getDBColumnName())
+		).limit(
+			start, end
+		);
+
+		List<Object[]> results = dslQuery(dslQuery);
+
+		Map<Object, Long> map = new HashMap<>();
+
+		for (Object[] columns : results) {
+			map.put(
+				GetterUtil.getObject(columns[0]),
+				GetterUtil.getLong(columns[1]));
+		}
+
+		return map;
+	}
+
+	@Override
 	public List<ObjectEntry> getManyToManyRelatedObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean reverse, int start, int end)

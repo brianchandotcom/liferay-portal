@@ -1,0 +1,31 @@
+.tab-container {
+	height: 100vh;
+}
+
+.tab-container .container-fluid {
+	background-color: var(--white);
+	border-top: 1px solid #d4d4d6;
+	box-shadow: 0px 5px 15px rgba(77, 133, 255, 0.12);
+}
+
+.tab-container .nav-item:not(:last-child) {
+	margin-right: 10px;
+}
+
+.tab-container .nav-item .nav-link {
+	color: #272833;
+	cursor: pointer;
+	font-size: 13px;
+}
+
+.tab-container .nav-item .nav-link.active-tab {
+	font-weight: 700;
+}
+
+.tab-container .nav-item .nav-link {
+	padding: 20px 16px;
+}
+
+.tab-container .nav-item .nav-link.active-tab {
+	border-bottom: 3px solid var(--primary);
+}

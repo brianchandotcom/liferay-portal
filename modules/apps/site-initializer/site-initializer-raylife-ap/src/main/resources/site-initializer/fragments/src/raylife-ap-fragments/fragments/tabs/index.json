@@ -1,0 +1,37 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"description": "container-text",
+					"label": "Quantity of tabs",
+					"name": "quantityOfTabs",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the number of the tabs here"
+					}
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "1",
+					"description": "container-text",
+					"label": "Active tab",
+					"name": "activeTab",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Default tab active"
+					}
+				},
+				{
+					"defaultValue": false,
+					"description": "container-text",
+					"label": "Show tab counter",
+					"name": "showTabCounter",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

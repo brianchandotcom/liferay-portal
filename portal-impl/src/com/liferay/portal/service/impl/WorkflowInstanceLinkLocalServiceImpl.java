@@ -83,10 +83,8 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			long workflowInstanceLinkId)
 		throws PortalException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
-			workflowInstanceLinkId);
-
-		return deleteWorkflowInstanceLink(workflowInstanceLink);
+		return deleteWorkflowInstanceLink(
+			fetchWorkflowInstanceLink(workflowInstanceLinkId));
 	}
 
 	@Override
@@ -94,10 +92,8 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
-			companyId, groupId, className, classPK);
-
-		return deleteWorkflowInstanceLink(workflowInstanceLink);
+		return deleteWorkflowInstanceLink(
+			fetchWorkflowInstanceLink(companyId, groupId, className, classPK));
 	}
 
 	@Override

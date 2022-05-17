@@ -295,12 +295,10 @@ public class PasswordPolicyLocalServiceImpl
 				user.getCompanyId(), true);
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			User.class.getName());
-
 		PasswordPolicyRel passwordPolicyRel =
 			_passwordPolicyRelPersistence.fetchByC_C(
-				classNameId, user.getUserId());
+				_classNameLocalService.getClassNameId(User.class.getName()),
+				user.getUserId());
 
 		if (passwordPolicyRel != null) {
 			return getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());

@@ -2043,9 +2043,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		User user = _userLocalService.fetchUser(userId);
-
-		indexer.reindex(user);
+		indexer.reindex(_userLocalService.fetchUser(userId));
 	}
 
 	protected void setRolePermissions(

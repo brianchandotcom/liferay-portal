@@ -60,17 +60,19 @@ public class NotificationTemplateResourceImpl
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
-				contextUser.getUserId(), notificationTemplate.getName(),
+				contextUser.getUserId(), notificationTemplate.getBcc(),
+				LocalizedMapUtil.getLocalizedMap(
+					notificationTemplate.getBodyMap()),
+				notificationTemplate.getCc(),
 				notificationTemplate.getDescription(),
+				notificationTemplate.getEnable(),
 				notificationTemplate.getFrom(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getFromNameMap()),
-				notificationTemplate.getTo(), notificationTemplate.getCc(),
-				notificationTemplate.getBcc(), notificationTemplate.getEnable(),
+				notificationTemplate.getName(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getSubjectMap()),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBodyMap())));
+				notificationTemplate.getTo()));
 	}
 
 	@Override
@@ -81,17 +83,19 @@ public class NotificationTemplateResourceImpl
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.updateNotificationTemplate(
-				notificationTemplateId, notificationTemplate.getName(),
+				notificationTemplateId, notificationTemplate.getBcc(),
+				LocalizedMapUtil.getLocalizedMap(
+					notificationTemplate.getBodyMap()),
+				notificationTemplate.getCc(),
 				notificationTemplate.getDescription(),
+				notificationTemplate.getEnable(),
 				notificationTemplate.getFrom(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getFromNameMap()),
-				notificationTemplate.getTo(), notificationTemplate.getCc(),
-				notificationTemplate.getBcc(), notificationTemplate.getEnable(),
+				notificationTemplate.getName(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getSubjectMap()),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBodyMap())));
+				notificationTemplate.getTo()));
 	}
 
 	private NotificationTemplate _toNotificationTemplate(

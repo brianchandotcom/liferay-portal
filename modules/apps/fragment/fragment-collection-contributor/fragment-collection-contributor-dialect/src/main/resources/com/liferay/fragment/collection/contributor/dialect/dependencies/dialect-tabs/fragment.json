@@ -1,7 +1,6 @@
 {
-	"fragmentEntryKey": "tabs",
+	"fragmentEntryKey": "dialect-tabs",
 	"icon": "tabs",
-	"name": "tabs",
-	"thumbnail": "tabs.png",
+	"name": "dialect-tabs",
 	"type": "component"
 }

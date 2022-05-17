@@ -8788,7 +8788,9 @@ public class PortalImpl implements Portal {
 				return true;
 			}
 		}
-		else if (groupFriendlyURL.contains(layoutFriendlyURL)) {
+		else if (groupFriendlyURL.contains(
+					StringUtil.toLowerCase(layoutFriendlyURL))) {
+
 			return true;
 		}
 

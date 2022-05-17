@@ -46,6 +46,7 @@ export default function propsTransformer({
 
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
+				height: '70vh',
 				multiple: true,
 				onSelect: (selectedItem) => {
 					if (selectedItem) {
@@ -65,6 +66,7 @@ export default function propsTransformer({
 					}
 				},
 				selectEventName: eventName,
+				size: 'md',
 				title: Liferay.Language.get('select-layout'),
 				url: url.href,
 			});

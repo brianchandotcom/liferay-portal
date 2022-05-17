@@ -305,7 +305,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	private SearchPermissionContext _createSearchPermissionContext(
-			long companyId, long userId, PermissionChecker permissionChecker)
+			long companyId, long userId, long[] groupIds,
+			PermissionChecker permissionChecker)
 		throws Exception {
 
 		UserBag userBag = permissionChecker.getUserBag();
@@ -316,10 +317,17 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		Set<Role> roles = new HashSet<>();
 
-		if (permissionChecker.isSignedIn()) {
-			roles.addAll(userBag.getRoles());
+		if (permissionChecker.isSignedIn() && ArrayUtil.isNotEmpty(groupIds)) {
+			for (long groupId : groupIds) {
+				for (Role role :
+						roleLocalService.getRoles(
+							permissionChecker.getRoleIds(userId, groupId))) {
 
-			roles.add(roleLocalService.getRole(companyId, RoleConstants.GUEST));
+					if (role.getType() == RoleConstants.TYPE_REGULAR) {
+						roles.add(role);
+					}
+				}
+			}
 		}
 		else {
 			roles.addAll(
@@ -479,7 +487,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 		else if (!permissionChecker.isCompanyAdmin(companyId)) {
 			searchPermissionContext = _createSearchPermissionContext(
-				companyId, userId, permissionChecker);
+				companyId, userId, searchGroupIds, permissionChecker);
 		}
 
 		if (searchPermissionContext == null) {

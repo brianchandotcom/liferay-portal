@@ -362,7 +362,9 @@ definition {
 			locator1 = "TextInput#DISCOUNT",
 			value1 = "TEST");
 
-		Button.click(button = "Apply");
+		Click(
+			key_tab = "Apply",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		Type(
 			key_fieldName = "Name",
@@ -426,7 +428,9 @@ definition {
 			locator1 = "TextInput#DISCOUNT",
 			value1 = "TEST");
 
-		Button.click(button = "Apply");
+		Click(
+			key_tab = "Apply",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		Type(
 			key_fieldName = "Name",
@@ -490,7 +494,9 @@ definition {
 			locator1 = "TextInput#DISCOUNT",
 			value1 = "TEST");
 
-		Button.click(button = "Apply");
+		Click(
+			key_tab = "Apply",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",

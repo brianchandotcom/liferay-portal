@@ -53,8 +53,11 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -110,6 +113,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -662,7 +666,8 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId, int[] statuses, int start, int end)
+			long objectDefinitionId, String search, Predicate predicate,
+			int start, int end)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
@@ -673,6 +678,8 @@ public class ObjectEntryLocalServiceImpl
 		Expression<?>[] selectExpressions = ArrayUtil.append(
 			dynamicObjectDefinitionTable.getSelectExpressions(),
 			extensionDynamicObjectDefinitionTable.getSelectExpressions());
+
+		predicate = _fillSearch(objectDefinitionId, predicate, search);
 
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
@@ -693,14 +700,7 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectDefinitionId
 				).and(
-					() -> {
-						if (ArrayUtil.isEmpty(statuses)) {
-							return null;
-						}
-
-						return ObjectEntryTable.INSTANCE.status.in(
-							ArrayUtil.toArray(statuses));
-					}
+					predicate
 				).and(
 					() -> {
 						if (PermissionThreadLocal.getPermissionChecker() ==
@@ -727,6 +727,53 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return valuesList;
+	}
+
+	@Override
+	public int getValuesListCount(
+			long objectDefinitionId, String search, Predicate predicate)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getDynamicObjectDefinitionTable(objectDefinitionId);
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+
+		predicate = _fillSearch(objectDefinitionId, predicate, search);
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
+			ObjectEntryTable.INSTANCE.objectEntryId
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			)
+		).where(
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinitionId
+			).and(
+				predicate
+			).and(
+				() -> {
+					if (PermissionThreadLocal.getPermissionChecker() == null) {
+						return null;
+					}
+
+					return _inlineSQLHelper.getPermissionWherePredicate(
+						dynamicObjectDefinitionTable.getName(),
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+				}
+			)
+		);
+
+		return objectEntryPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override
@@ -1114,6 +1161,37 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return _dlFolderLocalService.fetchDLFolder(dlFolderId);
+	}
+
+	private Predicate _fillSearch(
+			long objectDefinitionId, Predicate predicate, String search)
+		throws PortalException {
+
+		if (Validator.isNotNull(search)) {
+			List<ObjectField> searchablefileds =
+				_objectFieldPersistence.findByODI_DBT_I(
+					objectDefinitionId, "String", true);
+
+			for (ObjectField objectField : searchablefileds) {
+				Table<?> objectFieldTable =
+					_objectFieldLocalService.getObjectFieldTable(
+						objectDefinitionId, objectField.getName());
+
+				Column<?, ?> column = objectFieldTable.getColumn(
+					objectField.getDBColumnName());
+
+				Predicate likePredicate = column.like("%" + search + "%");
+
+				if (predicate == null) {
+					predicate = likePredicate;
+				}
+				else {
+					predicate = predicate.and(likePredicate);
+				}
+			}
+		}
+
+		return predicate;
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(

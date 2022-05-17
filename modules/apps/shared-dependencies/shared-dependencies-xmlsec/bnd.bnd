@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Shared Dependencies XML Sec
+Bundle-SymbolicName: com.liferay.shared.dependencies.xmlsec
+Bundle-Version: 1.0.0

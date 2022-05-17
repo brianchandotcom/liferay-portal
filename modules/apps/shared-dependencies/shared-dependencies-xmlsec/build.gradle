@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "org.apache.santuario", name: "xmlsec", version: "2.1.7"
+}
+
+deployDependencies {
+	from configurations.compileOnly
+
+	include "xmlsec-*.jar"
+}

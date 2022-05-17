@@ -32,6 +32,9 @@
 		"@clayui/table": "^3.56.0",
 		"@clayui/tabs": "^3.56.0",
 		"@hookform/resolvers": "^2.8.8",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^13.2.0",
+		"@testing-library/user-event": "^14.2.0",
 		"apollo-link-rest": "^0.9.0-rc.1",
 		"classnames": "^2.3.1",
 		"dayjs": "^1.11.1",
@@ -58,7 +61,8 @@
 	"scripts": {
 		"build": "react-scripts build",
 		"format": "eslint src --ext js --fix",
-		"start": "react-scripts start"
+		"start": "react-scripts start",
+		"test": "react-scripts test"
 	},
 	"version": "1.0.0"
 }

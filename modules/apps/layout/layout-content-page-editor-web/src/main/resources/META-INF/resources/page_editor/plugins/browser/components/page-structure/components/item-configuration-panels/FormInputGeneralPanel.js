@@ -14,20 +14,23 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectFormConfiguration from '../../../../../../app/selectors/selectFormConfiguration';
+import selectFragmentEntryLink from '../../../../../../app/selectors/selectFragmentEntryLink';
+import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
+import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {setIn} from '../../../../../../app/utils/setIn';
 import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
@@ -36,6 +39,38 @@ import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 
 export function FormInputGeneralPanel({item}) {
+	const dispatch = useDispatch();
+	const languageId = useSelector(selectLanguageId);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	const fragmentEntryLinkRef = useSelectorRef((state) =>
+		selectFragmentEntryLink(state, item)
+	);
+
+	const configurationValues = useSelectorCallback(
+		(state) =>
+			selectFragmentEntryLink(state, item).editableValues[
+				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+			] || {},
+		[item.itemId],
+		deepEqual
+	);
+
+	const handleValueSelect = (key, value) =>
+		dispatch(
+			updateEditableValues({
+				editableValues: setIn(
+					fragmentEntryLinkRef.current.editableValues,
+					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key],
+					value
+				),
+				fragmentEntryLinkId:
+					fragmentEntryLinkRef.current.fragmentEntryLinkId,
+				languageId,
+				segmentsExperienceId,
+			})
+		);
+
 	return (
 		<>
 			<div className="mb-3">
@@ -43,7 +78,11 @@ export function FormInputGeneralPanel({item}) {
 					label={Liferay.Language.get('form-input-options')}
 					open
 				>
-					<FormInputOptions item={item} />
+					<FormInputOptions
+						configurationValues={configurationValues}
+						item={item}
+						onValueSelect={handleValueSelect}
+					/>
 				</Collapse>
 			</div>
 
@@ -52,59 +91,30 @@ export function FormInputGeneralPanel({item}) {
 	);
 }
 
-function FormInputOptions({item}) {
-	const dispatch = useDispatch();
+function FormInputOptions({configurationValues, item, onValueSelect}) {
 	const [fields, setFields] = useState(null);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
-	const layoutDataItem = useSelectorCallback(
-		(state) => state.layoutData.items[item.itemId],
-		[item.itemId]
-	);
-
-	const fragmentEntryLink = useSelectorCallback(
-		(state) =>
-			state.fragmentEntryLinks[
-				layoutDataItem?.config.fragmentEntryLinkId
-			],
-		[layoutDataItem?.config.fragmentEntryLinkId]
-	);
 
 	const formConfiguration = useSelectorCallback(
 		(state) => selectFormConfiguration(item, state.layoutData),
 		[item.itemId]
 	);
 
-	const inputType = useMemo(() => {
-		const element = document.createElement('div');
-		element.innerHTML = fragmentEntryLink.content;
+	const inputType = useSelectorCallback(
+		(state) => {
+			const element = document.createElement('div');
+			element.innerHTML = selectFragmentEntryLink(state, item).content;
 
-		if (element.querySelector('select')) {
-			return 'select';
-		}
-		else if (element.querySelector('textarea')) {
-			return 'textarea';
-		}
+			if (element.querySelector('select')) {
+				return 'select';
+			}
+			else if (element.querySelector('textarea')) {
+				return 'textarea';
+			}
 
-		return element.querySelector('input')?.type || 'text';
-	}, [fragmentEntryLink.content]);
-
-	const handleValueSelect = (event) =>
-		dispatch(
-			updateEditableValues({
-				editableValues: setIn(
-					fragmentEntryLink.editableValues,
-					[
-						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-						FIELD_ID_CONFIGURATION_KEY,
-					],
-					event.target.value
-				),
-				fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
-				languageId: config.defaultLanguageId,
-				segmentsExperienceId,
-			})
-		);
+			return element.querySelector('input')?.type || 'text';
+		},
+		[item.itemId]
+	);
 
 	useEffect(() => {
 		const {classNameId, classTypeId} = formConfiguration || {};
@@ -168,12 +178,10 @@ function FormInputOptions({item}) {
 		<MappingFieldSelector
 			fieldType={inputType}
 			fields={fields}
-			onValueSelect={handleValueSelect}
-			value={
-				fragmentEntryLink.editableValues[
-					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-				][FIELD_ID_CONFIGURATION_KEY] || ''
+			onValueSelect={(event) =>
+				onValueSelect(FIELD_ID_CONFIGURATION_KEY, event.target.value)
 			}
+			value={configurationValues[FIELD_ID_CONFIGURATION_KEY] || ''}
 		/>
 	) : (
 		<ClayLoadingIndicator />

@@ -390,6 +390,16 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
+	@description = "Bug: LRAC-11140 | Automation ID: LRAC-11141 | Test Summary: Check the AC connection success message with the DXP"
+	@priority = "3"
+	test CheckConnectionSuccessMessage {
+		ACDXPSettings.goToInstanceSettingsAC();
+
+		ACDXPSettings.connectAnalyticsCloud();
+
+		ACDXPSettings.assertSuccessfulConnection();
+	}
+
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
 	@priority = "5"
 	test DataSourceListIsSearchable {

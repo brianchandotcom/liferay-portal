@@ -168,7 +168,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_filterParserProvider, objectDefinition,
 					_objectEntryManagerServicesTracker.getObjectEntryManager(
 						objectDefinition.getStorageType()),
-					_objectEntryManager, _objectFieldLocalService,
+					 _objectFieldLocalService,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
 					objectScopeProvider, _predicateExpressionConvert),

@@ -131,6 +131,8 @@
 	top: 0;
 }
 
+.layout-container .mobile-header-container .search-icon,
+.layout-container .mobile-header-container .menu-icon,
 .page-header-container .header-content .search-icon {
 	cursor: pointer;
 }
@@ -161,9 +163,20 @@
 }
 
 @media screen and (max-width: 1625px) {
-	.layout-container .raylife-agent-portal-content {
-		padding-left: 16px;
-		padding-right: 16px;
+	.layout-container
+		.raylife-agent-portal-content:not(#Applications
+			.raylife-agent-portal-content) {
+		padding: 0 16px;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.layout-container .search-icon {
+		display: none !important;
+	}
+
+	.layout-container .page-header-container {
+		padding: 0 16px;
 	}
 }
 

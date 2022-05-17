@@ -107,13 +107,14 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"marginBottom": "4"
+														"marginBottom": "4",
+														"textAlign": ""
 													},
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
 																"marginBottom": "0",
-																"paddingBottom": "4",
+																"paddingBottom": "0",
 																"paddingTop": "4"
 															},
 															"id": "tablet"
@@ -252,7 +253,8 @@
 																			{
 																				"definition": {
 																					"fragmentStyle": {
-																						"marginBottom": "4"
+																						"marginBottom": "4",
+																						"textAlign": ""
 																					},
 																					"gutters": true,
 																					"indexed": true,
@@ -477,7 +479,8 @@
 																									"fragmentFields": [
 																									],
 																									"fragmentStyle": {
-																										"marginBottom": "4"
+																										"marginBottom": "4",
+																										"textAlign": ""
 																									},
 																									"indexed": true
 																								},
@@ -672,7 +675,8 @@
 																									"fragmentFields": [
 																									],
 																									"fragmentStyle": {
-																										"marginBottom": "4"
+																										"marginBottom": "4",
+																										"textAlign": ""
 																									},
 																									"indexed": true
 																								},

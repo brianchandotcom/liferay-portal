@@ -53,11 +53,11 @@ definition {
 
 		CP2NavigationMenu.goToTeamMembers();
 
-		CustomerPortal.clickInviteMembers();
+		CP2TeamMembers.clickInviteMembers();
 
 		CP2NavigationMenu.cancelTeamMembersInvitation();
 
-		CustomerPortal.viewTeamMembersPage();
+		CP2TeamMembers.viewTeamMembersPage();
 	}
 
 	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
@@ -80,17 +80,17 @@ definition {
 
 		CP2NavigationMenu.goToTeamMembers();
 
-		CustomerPortal.clickInviteMembers();
+		CP2TeamMembers.clickInviteMembers();
 
-		CustomerPortal.addFieldsTeamMembersExtra(
+		CP2TeamMembers.addFieldsTeamMembersExtra(
 			position = "0",
 			positionNumber = "0",
 			rowEmail = "test1@liferay.com",
 			rowRole = "User");
 
-		CP2NavigationMenu.clickTeamMembersSendInvitation();
+		CP2TeamMembers.clickTeamMembersSendInvitation();
 
-		CustomerPortal.viewTeamMembersPage();
+		CP2TeamMembers.viewTeamMembersPage();
 	}
 
 }

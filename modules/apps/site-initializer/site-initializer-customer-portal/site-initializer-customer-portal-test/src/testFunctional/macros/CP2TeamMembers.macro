@@ -1,0 +1,44 @@
+definition {
+    macro addFieldsTeamMembersExtra {
+        Type(
+            key_fieldNumber = "${position}",
+            locator1 = "CP2TeamMembers#EMAIL_FIELD",
+            value1 = "${rowEmail}");
+    
+        Select(
+            key_rowNumber = "${positionNumber}",
+            locator1 = "CP2TeamMembers#ROLE_SELECT",
+            value1 = "${rowRole}");
+        
+        if (isSet(addMembers)) {
+            Click(locator1 = "CP2TeamMembers#ADD_MORE_MEMBERS");
+        }
+    }
+
+    macro activePartnersRole {
+        ApplicationsMenu.gotoPortlet(
+            category = "Object",
+            panel = "Control Panel",
+            portlet = "Koroneiki Accounts");
+
+        CustomerPortal.viewKoroneikiInfo();
+
+        Click(locator1 = "CP2TeamMembers#SELECT_PARTNER");
+
+        Click(locator1 = "Button#SAVE");
+
+        Alert.viewSuccessMessage();
+    }
+
+    macro clickInviteMembers {
+		Click(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+	}
+
+    macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
+	}
+
+	macro clickTeamMembersSendInvitation {
+		Click(locator1 = "CP2TeamMembers#SEND_INVITATIONS_BUTTON");
+	}
+}

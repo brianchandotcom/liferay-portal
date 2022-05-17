@@ -19,22 +19,6 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
-	macro addFieldsTeamMembersExtra {
-		Type(
-			key_fieldNumber = "${position}",
-			locator1 = "CustomerPortalSite#EMAIL_FIELD",
-			value1 = "${rowEmail}");
-
-		Select(
-			key_rowNumber = "${positionNumber}",
-			locator1 = "CustomerPortalSite#ROLE_SELECT",
-			value1 = "${rowRole}");
-
-		if (isSet(addMembers)) {
-			Click(locator1 = "CustomerPortalSite#ADD_MORE_MEMBERS");
-		}
-	}
-
 	macro addIdPCForCustomerPortal {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
@@ -112,13 +96,9 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro clickInviteMembers {
-		Click(locator1 = "CustomerPortalSite#INVITE_BUTTON");
-	}
-
-	macro clickOnSendInvitationButton {
-		Click(locator1 = "CustomerPortalSite#SEND_INVITATIONS_BUTTON");
-	}
+	macro uncheckToggleHideInactiveWidget {
+		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
+	} 
 
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
@@ -166,6 +146,8 @@ definition {
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
 
+		CustomerPortal.showCPAccountFlagObject(title = "Account Flag");
+
 		CustomerPortal.showCPObject(title = "Koroneiki Account");
 	}
 
@@ -180,6 +162,12 @@ definition {
 	}
 
 	macro customerPortalTearDown {
+		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+        CustomerPortal.deleteCPObject(title = "Account Flag");
+
+        CustomerPortal.deleteCPObject(title = "Koroneiki Account");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -208,13 +196,26 @@ definition {
 
 		ObjectPortlet.selectObject(label = "${title}");
 
-		CreateObject.checkToggleInactive();
-
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
 
-		CustomerPortal.checkToggleHideWidget();
+		CustomerPortal.uncheckToggleHideInactiveWidget();
 
 		CreateObject.saveObject();
+	}
+
+	macro deactivateKoroneikiAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		Click(locator1 = "CP2TeamMembers#SELECT_PARTNER");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro deleteEntryAccountFlag {
@@ -511,10 +512,6 @@ definition {
 
 	macro viewSubcriptionsPage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
-	}
-
-	macro viewTeamMembersPage {
-		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
 }

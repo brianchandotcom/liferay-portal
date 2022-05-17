@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>CustomerPortalSite</title>
-</head>
+</head>	
 
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
@@ -101,39 +101,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_FIELD</td>
-	<td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLE_SELECT</td>
-	<td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_MORE_MEMBERS</td>
-	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITE_BUTTON</td>
-	<td>//button[contains(@class,'invite-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class, 'alert-danger')]</td>
-	<td></td>
+    <td>//div[contains(@class, 'alert-danger')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEND_INVITATIONS_BUTTON</td>
-	<td>//button[contains(text(), 'Send Invitations')]</td>
-	<td></td>
+    <td>SUCCESS_MESSAGE</td>
+    <td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

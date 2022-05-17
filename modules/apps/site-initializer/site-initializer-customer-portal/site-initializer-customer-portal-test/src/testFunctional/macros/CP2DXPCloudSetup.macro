@@ -33,8 +33,6 @@ definition {
 	}
 
 	macro addObjectsForDXPCloud {
-		CustomerPortal.showCPObject(title = "Account Flag");
-
 		CustomerPortal.showCPObject(title = "Account Subscription");
 
 		CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
@@ -118,10 +116,6 @@ definition {
 	}
 
 	macro deleteObjectsForDXPCloud {
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
-
-		CustomerPortal.deleteCPObject(title = "Account Flag");
-
 		CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter();
 
 		CustomerPortal.deleteCPObject(title = "Account Subscription");

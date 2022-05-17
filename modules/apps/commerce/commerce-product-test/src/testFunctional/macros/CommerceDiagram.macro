@@ -200,17 +200,17 @@ definition {
 
 		// Verify the postion after mouse drag
 
-		CommerceDiagram.useResetZoom();
+		WaitForElementPresent(locator1 = "CommerceDiagrams#CHECK_DIAGRAM_IMAGE_FOR_DRAG");
 
-		var first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+		var first_position = selenium.getAttribute("//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']@transform");
 
 		DragAndDrop.dragAndDropReorganizeObjects(
 			key_image = "${image_name}",
-			locator1 = "CommerceEntry#VERIFY_IMAGE",
-			locator2 = "CommerceEntry#VERIFY_IMAGE",
+			locator1 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC",
+			locator2 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC",
 			position = "${position}");
 
-		var second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+		var second_position = selenium.getAttribute("//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']@transform");
 
 		if ("${first_position}" != "${second_position}") {
 			echo("The position after the drag is correct");

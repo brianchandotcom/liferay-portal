@@ -110,8 +110,6 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_TITLE");
 
-		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_DESCRIPTION");
-
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#TITLE",
 			value1 = "${text}");

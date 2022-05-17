@@ -100,8 +100,6 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
-		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_DESCRIPTION");
-
 		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#ENABLED");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");

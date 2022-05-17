@@ -23,7 +23,6 @@ import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
-import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import TagsLayout from '../../components/TagsLayout.es';
 import useTags from '../../hooks/useTags.es';
@@ -38,9 +37,7 @@ export default withRouter(({history, location}) => {
 	const [questionToDelete, setQuestionToDelete] = useState({});
 
 	const {
-		changePage,
 		error,
-		loading,
 		orderBy,
 		page,
 		pageSize,
@@ -152,29 +149,10 @@ export default withRouter(({history, location}) => {
 						{Liferay.Language.get('tags')}
 					</h2>
 
-					{tagsFiltredSelected && (
+					{tagsFiltredSelected?.items?.length ? (
 						<div className="c-mt-3 row">
-							<PaginatedList
-								activeDelta={pageSize}
-								activePage={page}
-								changeDelta={(pageSize) =>
-									changePage(search, page, pageSize)
-								}
-								changePage={(page) =>
-									changePage(search, page, pageSize)
-								}
-								data={tagsFiltredSelected}
-								emptyState={
-									<ClayEmptyState
-										className="empty-state-icon"
-										title={Liferay.Language.get(
-											'there-are-no-results'
-										)}
-									/>
-								}
-								loading={loading}
-							>
-								{(tag) => (
+							{tagsFiltredSelected.items.map((tag) => (
+								<div className="col-md-4" key={tag.id}>
 									<TagsLayout
 										context={context.siteKey}
 										linkPage={linkSubscriptionPage}
@@ -184,14 +162,18 @@ export default withRouter(({history, location}) => {
 										search={search}
 										tag={tag}
 									/>
-								)}
-							</PaginatedList>
+								</div>
+							))}
 
 							<Alert info={error} />
 						</div>
+					) : (
+						<ClayEmptyState
+							title={Liferay.Language.get('there-are-no-results')}
+						/>
 					)}
 
-					<h2 className="sheet-subtitle">
+					<h2 className="mt-5 sheet-subtitle">
 						{Liferay.Language.get('topics')}
 					</h2>
 

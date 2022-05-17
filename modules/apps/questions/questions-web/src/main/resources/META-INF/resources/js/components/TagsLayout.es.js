@@ -35,7 +35,7 @@ export default function TagsLayout({
 	tag,
 }) {
 	return (
-		<div className="col-md-4 question-tags" key={tag.id}>
+		<div className="question-tags" key={tag.id}>
 			<div className="align-items-center card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
 				<div>
 					<Link

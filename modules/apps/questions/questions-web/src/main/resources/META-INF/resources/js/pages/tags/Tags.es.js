@@ -155,15 +155,17 @@ export default withRouter(({history, location}) => {
 						loading={loading}
 					>
 						{(tag) => (
-							<TagsLayout
-								context={context.siteKey}
-								linkPage={linkTagPage}
-								orderBy={orderBy}
-								page={page}
-								pageSize={pageSize}
-								search={search}
-								tag={tag}
-							/>
+							<div className="col-md-4" key={tag.id}>
+								<TagsLayout
+									context={context.siteKey}
+									linkPage={linkTagPage}
+									orderBy={orderBy}
+									page={page}
+									pageSize={pageSize}
+									search={search}
+									tag={tag}
+								/>
+							</div>
 						)}
 					</PaginatedList>
 

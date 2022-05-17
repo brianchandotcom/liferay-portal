@@ -148,8 +148,6 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getFirefoxDriver() {
-		System.setProperty("webdriver.firefox.marionette", "false");
-
 		_validateWebDriverBinary("webdriver.gecko.driver", "geckodriver");
 
 		FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -184,6 +182,8 @@ public class WebDriverUtil extends PropsValues {
 
 			firefoxOptions.setBinary(firefoxBinary);
 		}
+
+		firefoxOptions.setCapability("marionette", true);
 
 		firefoxOptions.setCapability("locationContextEnabled", false);
 

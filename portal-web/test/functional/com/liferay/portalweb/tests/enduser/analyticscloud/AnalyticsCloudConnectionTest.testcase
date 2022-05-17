@@ -393,6 +393,8 @@ definition {
 	@description = "Bug: LRAC-11140 | Automation ID: LRAC-11141 | Test Summary: Check the AC connection success message with the DXP"
 	@priority = "3"
 	test CheckConnectionSuccessMessage {
+		property portal.release = "true";
+
 		ACDXPSettings.goToInstanceSettingsAC();
 
 		ACDXPSettings.connectAnalyticsCloud();

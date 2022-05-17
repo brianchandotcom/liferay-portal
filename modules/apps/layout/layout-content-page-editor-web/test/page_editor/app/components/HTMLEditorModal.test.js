@@ -19,7 +19,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import HTMLEditorModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/HTMLEditorModal';
 
-const renderModal = async ({initialContent = '', onClose, onSave}) => {
+const renderModal = async ({initialContent = '', onClose, onSave} = {}) => {
 	document.body.createTextRange = () => {
 		const textRange = {
 			getBoundingClientRect: () => 1,
@@ -52,31 +52,31 @@ describe('HTMLEditorModal', () => {
 	});
 
 	it('modal is rendered', () => {
-		renderModal('');
+		renderModal();
 
 		expect(screen.getByText('save')).toBeInTheDocument();
 	});
 
-	it('initialContent is correct', () => {
+	it('sets initialContent to the editor', () => {
 		renderModal({initialContent: 'Hello Jordi Kappler'});
 
 		expect(
-			screen.getAllByText('Hello Jordi Kappler')[0].innerHTML
-		).toContain('Hello Jordi Kappler');
+			screen.queryAllByText('Hello Jordi Kappler')[0]
+		).toBeInTheDocument();
 	});
 
-	it('view type column is displayed correctly', () => {
-		renderModal('');
+	it('defaults to column view type', () => {
+		renderModal();
 
 		const editor = document.querySelector(
 			'.page-editor__html-editor-modal__editor-container > div'
 		);
 
-		expect(editor.classList.contains('w-50')).toBe(true);
+		expect(editor).toHaveClass('w-50');
 	});
 
-	it('view type rows is displayed correctly', () => {
-		renderModal('');
+	it('changes to row view type when clicking the display horizontally button', () => {
+		renderModal();
 
 		fireEvent.click(screen.getByTitle('display-horizontally'));
 
@@ -87,19 +87,19 @@ describe('HTMLEditorModal', () => {
 		expect(editor).toHaveClass('w-100');
 	});
 
-	it('view type full screen is displayed correctly', () => {
-		renderModal('');
+	it('changes to full-screen view type when clicking the full-screen button', () => {
+		renderModal();
 
 		fireEvent.click(screen.getByTitle('full-screen'));
 
-		const preview = document.querySelector(
-			'.page-editor__html-editor-modal__preview-rows'
-		);
-
-		expect(preview).toBeNull();
+		expect(
+			document.querySelector(
+				'.page-editor__html-editor-modal__preview-rows'
+			)
+		).not.toBeInTheDocument();
 	});
 
-	it('Close button', async () => {
+	it('calls close callback when cliking close button', () => {
 		const onClose = jest.fn();
 
 		renderModal({onClose});

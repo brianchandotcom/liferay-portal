@@ -241,6 +241,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		_updateShippingTaxCategory(commerceChannel, actionRequest);
 		_updateSiteType(commerceChannel, actionRequest);
 		_updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
+		_updateRequestedDeliveryDateFormat(commerceChannel, actionRequest);
 
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, commerceChannel.getSiteGroupId(), name,
@@ -263,6 +264,29 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
+	}
+
+	private void _updateRequestedDeliveryDateFormat(
+			CommerceChannel commerceChannel, ActionRequest actionRequest)
+		throws Exception {
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.
+					SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "format--");
 
 		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
 			modifiableSettings.setValue(entry.getKey(), entry.getValue());

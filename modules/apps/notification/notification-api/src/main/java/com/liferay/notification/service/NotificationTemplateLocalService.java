@@ -67,6 +67,7 @@ public interface NotificationTemplateLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification template local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationTemplateLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate addNotificationTemplate(
 			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
 			String description, boolean enabled, String from,
@@ -304,6 +305,7 @@ public interface NotificationTemplateLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate updateNotificationTemplate(
 			long notificationTemplateId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,

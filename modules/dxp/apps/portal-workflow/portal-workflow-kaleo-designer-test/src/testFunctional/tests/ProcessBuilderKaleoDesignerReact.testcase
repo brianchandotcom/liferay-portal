@@ -99,8 +99,6 @@ definition {
 			nodeType = "condition");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
-
-		
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"

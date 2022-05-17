@@ -57,9 +57,7 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 
 				userAttributeMappingsProperties.forEach(
 					(key, value) -> {
-						if (Validator.isNull(value) &&
-							Validator.isNotNull(key)) {
-
+						if (Validator.isNull(value)) {
 							userAttributeMappingsProperties.replace(key, key);
 						}
 					});

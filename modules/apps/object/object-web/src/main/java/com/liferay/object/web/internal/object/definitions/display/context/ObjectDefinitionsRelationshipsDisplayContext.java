@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,17 +65,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
-			"/o/object-admin/v1.0/object-relationships/{id}", "trash", "delete",
-			LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
-			"delete", "delete", "async");
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152508"))) {
-			fdsActionDropdownItem.setHref(null);
-			fdsActionDropdownItem.setId("deleteObjectRelationship");
-			fdsActionDropdownItem.setTarget(null);
-		}
-
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
@@ -92,7 +79,10 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 				"view", "view",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
-			fdsActionDropdownItem);
+			new FDSActionDropdownItem(
+				null, "trash", "deleteObjectRelationship",
+				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", null));
 	}
 
 	public JSONArray getObjectRelationshipDeletionTypesJSONArray() {

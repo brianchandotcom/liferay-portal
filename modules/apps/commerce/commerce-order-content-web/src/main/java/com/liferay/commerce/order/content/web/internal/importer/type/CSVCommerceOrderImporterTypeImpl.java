@@ -308,6 +308,16 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		commerceOrderImporterItemImpl.setQuantity(quantity);
 
+		if (csvRecord.isMapped("requestedDeliveryDate") &&
+			csvRecord.isSet("requestedDeliveryDate")) {
+
+			String requestedDeliveryDate = GetterUtil.getString(
+				csvRecord.get("requestedDeliveryDate"));
+
+			commerceOrderImporterItemImpl.setRequestedDeliveryDate(
+				requestedDeliveryDate);
+		}
+
 		return commerceOrderImporterItemImpl;
 	}
 

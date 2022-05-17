@@ -124,6 +124,13 @@ definition {
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Home");
+
+		VerifyElementPresent(
+			key_searchAssetTitle = "Home",
+			key_searchAssetType = "Page",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
 	}
 
 	@priority = "5"

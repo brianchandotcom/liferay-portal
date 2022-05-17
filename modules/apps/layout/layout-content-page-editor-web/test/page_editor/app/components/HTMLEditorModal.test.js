@@ -1,0 +1,117 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {fireEvent, render, screen} from '@testing-library/react';
+import React from 'react';
+
+import '@testing-library/jest-dom/extend-expect';
+
+import HTMLEditorModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/HTMLEditorModal';
+import HTMLProcessor from '../../../../src/main/resources/META-INF/resources/page_editor/app/processors/HTMLProcessor';
+
+const renderModal = ({initialContent = '', onCloseCallback, onSave}) => {
+	document.body.createTextRange = () => {
+		const textRange = {
+			getBoundingClientRect: () => 1,
+			getClientRects: () => 1,
+		};
+
+		return textRange;
+	};
+
+	jest.useFakeTimers();
+
+	render(
+		<HTMLEditorModal
+			initialContent={initialContent}
+			onCloseCallback={onCloseCallback}
+			onSave={onSave}
+		/>
+	);
+
+	jest.advanceTimersByTime(1000);
+};
+
+describe('HTMLEditorModal', () => {
+	describe('render modal', () => {
+		it('injects the given string as innerHTML', () => {
+			const element = document.createElement('div');
+
+			HTMLProcessor.render(element, 'Jordi Kappler');
+			expect(element.innerHTML).toBe('Jordi Kappler');
+		});
+
+		it('modal is rendered', () => {
+			renderModal('');
+
+			expect(screen.getByText('save')).toBeInTheDocument();
+		});
+
+		it('initialContent is correct', () => {
+			renderModal({initialContent: 'Hello Jordi Kappler'});
+
+			expect(
+				screen.getAllByText('Hello Jordi Kappler')[0].innerHTML
+			).toContain('Hello Jordi Kappler');
+		});
+	});
+
+	describe('view types', () => {
+		it('view type column is displayed correctly', () => {
+			renderModal('');
+
+			const editor = document.querySelector(
+				'.page-editor__html-editor-modal__editor-container > div'
+			);
+
+			expect(editor.classList.contains('w-50')).toBe(true);
+		});
+
+		it('view type rows is displayed correctly', () => {
+			renderModal('');
+
+			fireEvent.click(screen.getByLabelText('display-horizontally'));
+
+			const editor = document.querySelector(
+				'.page-editor__html-editor-modal__editor-container > div'
+			);
+
+			expect(editor).toHaveClass('w-100');
+		});
+
+		it('view type full screen is displayed correctly', () => {
+			renderModal('');
+
+			fireEvent.click(screen.getByLabelText('full-screen'));
+
+			const preview = document.querySelector(
+				'.page-editor__html-editor-modal__preview-rows'
+			);
+
+			expect(preview).toBeNull();
+		});
+	});
+
+	describe('modal callbacks', () => {
+		it('Close button', () => {
+			const onClose = jest.fn();
+
+			fireEvent.click(screen.getByText('cancel'));
+
+			renderModal({onCloseCallback: onClose});
+
+			expect(onClose).toHaveBeenCalled();
+		});
+	});
+});

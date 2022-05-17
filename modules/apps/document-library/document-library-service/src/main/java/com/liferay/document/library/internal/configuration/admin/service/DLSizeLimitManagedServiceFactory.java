@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.configuration.admin.service;
 
-import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.petra.string.CharPool;
@@ -51,12 +50,10 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.scoped",
 	service = {
-		DLSizeLimitConfigurationProvider.class,
 		DLSizeLimitManagedServiceFactory.class, ManagedServiceFactory.class
 	}
 )
-public class DLSizeLimitManagedServiceFactory
-	implements DLSizeLimitConfigurationProvider, ManagedServiceFactory {
+public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
@@ -96,7 +93,6 @@ public class DLSizeLimitManagedServiceFactory
 		return dlSizeLimitConfiguration.fileMaxSize();
 	}
 
-	@Override
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
 		return _groupMimeTypeSizeLimitsMap.computeIfAbsent(
 			groupId, this::_computeGroupMimeTypeSizeLimit);

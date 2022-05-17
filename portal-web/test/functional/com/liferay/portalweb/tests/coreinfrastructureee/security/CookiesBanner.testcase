@@ -68,6 +68,8 @@ definition {
 
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
 
+			Refresh();
+
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
 		}
 

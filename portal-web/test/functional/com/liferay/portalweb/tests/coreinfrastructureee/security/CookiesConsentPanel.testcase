@@ -108,6 +108,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-148320. Combined AC-1, AC-2, AC-3. Verify that Cookie Consent Panel could be enabled and customized via OSGI file. Blocked by LPS-153615."
+	@ignore = "true"
 	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
 		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
@@ -122,6 +123,8 @@ definition {
 			Pause(locator1 = "1000");
 
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+
+			Refresh();
 
 			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
 		}

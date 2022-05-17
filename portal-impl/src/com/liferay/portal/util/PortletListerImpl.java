@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
@@ -236,11 +235,9 @@ public class PortletListerImpl implements PortletLister {
 				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 					portlet, _servletContext);
 
-				ResourceBundle resourceBundle = portletConfig.getResourceBundle(
-					getLocale());
-
 				externalPortletCategory = ResourceBundleUtil.getString(
-					resourceBundle, portletCategory.getName());
+					portletConfig.getResourceBundle(getLocale()),
+					portletCategory.getName());
 			}
 		}
 

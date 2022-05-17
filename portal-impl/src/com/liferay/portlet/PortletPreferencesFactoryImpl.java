@@ -181,12 +181,10 @@ public class PortletPreferencesFactoryImpl
 			return;
 		}
 
-		PortletPreferencesIds portletPreferencesIds = getPortletPreferencesIds(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), layout,
-			portletId, false);
-
 		PortletPreferencesLocalServiceUtil.getPreferences(
-			portletPreferencesIds);
+			getPortletPreferencesIds(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				layout, portletId, false));
 	}
 
 	@Override
@@ -404,11 +402,8 @@ public class PortletPreferencesFactoryImpl
 			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
-		PortletPreferencesIds portletPreferencesIds = getPortletPreferencesIds(
-			httpServletRequest, portletId);
-
 		return PortletPreferencesLocalServiceUtil.getPreferences(
-			portletPreferencesIds);
+			getPortletPreferencesIds(httpServletRequest, portletId));
 	}
 
 	@Override

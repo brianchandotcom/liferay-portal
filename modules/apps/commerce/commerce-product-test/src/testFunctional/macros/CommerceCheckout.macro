@@ -156,17 +156,16 @@ definition {
 
 		if (isSet(deliveryTerm)) {
 			if (IsElementPresent(key_label = "Delivery Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
-				for (var deliveryTerms : list "${availableDeliveryTerms}") {
-					AssertElementPresent(
-						key_radioOption = "${deliveryTerms}",
-						locator1 = "CommerceEntry#RADIO_BUTTON");
-				}
-
 				Click(
 					key_radioOption = "${deliveryTerm}",
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 
 				Click(locator1 = "Button#CONTINUE");
+			}
+			else if (("${manageDeliveryTerms}" == "false") && isSet(manageDeliveryTerms)) {
+				AssertElementNotPresent(
+					key_label = "Delivery Terms",
+					locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
 			}
 		}
 
@@ -180,20 +179,19 @@ definition {
 			}
 		}
 
-		if (isSet(paymentTerm) && isSet(paymentTermsEligibility) && (IsElementPresent(key_label = "Payment Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL"))) {
-			for (var paymentTerms : list "${paymentTermsEligibility}") {
-				AssertElementPresent(
-					key_radioOption = "${paymentTerms}",
+		if (isSet(paymentTerm)) {
+			if (IsElementPresent(key_label = "Payment Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+				Click(
+					key_radioOption = "${paymentTerm}",
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 
-				echo("${paymentTermsEligibility} is available");
+				Click(locator1 = "Button#CONTINUE");
 			}
-
-			Click(
-				key_radioOption = "${paymentTerm}",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			Click(locator1 = "Button#CONTINUE");
+			else if (("${managePaymentTerms}" == "false") && isSet(managePaymentTerms)) {
+				AssertElementNotPresent(
+					key_label = "Payment Terms",
+					locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
+			}
 		}
 
 		CommerceCheckout.viewCheckoutOrderSummary(

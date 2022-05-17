@@ -17,6 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
@@ -88,9 +89,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 								path="/document_library/view_file_entry_descriptive.jsp"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="/document_library/file_entry_action.jsp"
-							/>
+							<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+								<liferay-ui:search-container-column-jsp
+									path="/document_library/file_entry_action.jsp"
+								/>
+							</c:if>
 						</c:when>
 						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
 							<liferay-ui:search-container-column-text>
@@ -266,9 +269,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("action") %>'>
-										<liferay-ui:search-container-column-jsp
-											path="/document_library/file_entry_action.jsp"
-										/>
+										<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+											<liferay-ui:search-container-column-jsp
+												path="/document_library/file_entry_action.jsp"
+											/>
+										</c:if>
 									</c:when>
 								</c:choose>
 

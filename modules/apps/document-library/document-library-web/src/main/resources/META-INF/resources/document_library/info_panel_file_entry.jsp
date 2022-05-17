@@ -58,7 +58,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 			</clay:content-section>
 		</clay:content-col>
 
-		<c:if test="<%= !hideActions %>">
+		<%
+		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+		%>
+
+		<c:if test="<%= !hideActions && dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<clay:content-col>
 				<ul class="autofit-padded-no-gutters autofit-row">
 					<li class="autofit-col">

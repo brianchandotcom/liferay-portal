@@ -123,9 +123,15 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 							path="/document_library/view_file_entry_descriptive.jsp"
 						/>
 
-						<liferay-ui:search-container-column-jsp
-							path="/document_library/file_entry_action.jsp"
-						/>
+						<%
+						DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+						%>
+
+						<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+							<liferay-ui:search-container-column-jsp
+								path="/document_library/file_entry_action.jsp"
+							/>
+						</c:if>
 					</c:when>
 					<c:when test="<%= (curFolder != null) && DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.VIEW) %>">
 

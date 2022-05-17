@@ -14,9 +14,9 @@
 }
 
 .dashboard-commission-container .dashboard-commission-select {
-	width: 105px;
 	border-color: #fff;
 	padding: 5px;
+	width: 105px;
 }
 
 .dashboard-commission-container .dashboard-commission-title::after {

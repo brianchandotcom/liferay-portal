@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +51,6 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
@@ -399,17 +397,6 @@ public class AssetVocabularySiteNavigationMenuItemType
 			).buildString());
 
 		return true;
-	}
-
-	@Override
-	public boolean isAvailable(
-		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146502"))) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

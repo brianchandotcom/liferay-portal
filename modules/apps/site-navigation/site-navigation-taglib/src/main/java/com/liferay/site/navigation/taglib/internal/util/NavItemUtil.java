@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -115,13 +113,6 @@ public class NavItemUtil {
 					!siteNavigationMenuItemType.hasPermission(
 						themeDisplay.getPermissionChecker(),
 						siteNavigationMenuItem)) {
-
-					continue;
-				}
-
-				if (siteNavigationMenuItemType.isDynamic() &&
-					!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-146502"))) {
 
 					continue;
 				}
@@ -292,10 +283,7 @@ public class NavItemUtil {
 		long parentSiteNavigationMenuItemId) {
 
 		try {
-			if ((parentSiteNavigationMenuItemId == 0) ||
-				!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-146502"))) {
-
+			if (parentSiteNavigationMenuItemId == 0) {
 				return _siteNavigationMenuItemService.
 					getSiteNavigationMenuItems(
 						siteNavigationMenuId, parentSiteNavigationMenuItemId);
@@ -310,10 +298,7 @@ public class NavItemUtil {
 					getSiteNavigationMenuItemType(
 						parentSiteNavigationMenuItem.getType());
 
-			if (siteNavigationMenuItemType.isDynamic() &&
-				GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-146502"))) {
-
+			if (siteNavigationMenuItemType.isDynamic()) {
 				return siteNavigationMenuItemType.
 					getChildrenSiteNavigationMenuItems(
 						httpServletRequest, parentSiteNavigationMenuItem);

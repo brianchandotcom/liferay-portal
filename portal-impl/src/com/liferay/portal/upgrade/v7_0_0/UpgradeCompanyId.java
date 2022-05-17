@@ -262,11 +262,11 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 				String columnName, int ownerType)
 			throws IOException, SQLException {
 
-			String selectSQL = _getSelectSQL(
-				foreignTableName, foreignColumnName, columnName);
-
 			return StringBundler.concat(
-				getUpdateSQL(selectSQL), " where ownerType = ", ownerType,
+				getUpdateSQL(
+					_getSelectSQL(
+						foreignTableName, foreignColumnName, columnName)),
+				" where ownerType = ", ownerType,
 				" and (companyId is null or companyId = 0)");
 		}
 

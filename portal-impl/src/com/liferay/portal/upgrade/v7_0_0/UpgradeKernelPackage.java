@@ -216,11 +216,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			sb2.append("', '");
 			sb2.append(name[1]);
 			sb2.append("') ");
-
-			String whereClause = _getWhereClause(
-				columnName, name[0], wildcardMode);
-
-			sb2.append(whereClause);
+			sb2.append(_getWhereClause(columnName, name[0], wildcardMode));
 
 			runSQL(sb2.toString());
 

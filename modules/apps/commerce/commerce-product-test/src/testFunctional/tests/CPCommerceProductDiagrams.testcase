@@ -88,11 +88,10 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 	}
-	
+
 	@description = "This is a test for COMMERCE-8865. CanDragFunctionWorkAfterDoubleClickOnMappedProduct"
 	@priority = "4"
 	test CanDragFunctionWorkAfterDoubleClickOnMappedProduct {
-
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -139,15 +138,13 @@ definition {
 			AssertElementNotPresent(
 				key_zoomValue = "NaN%",
 				locator1 = "CommerceDiagrams#CHECK_DIAGRAM_ZOOM_VALUE");
-		}	
+		}
 
 		task ("And then the image can be dragged and dropped in different direction") {
-			
 			CommerceDiagram.useDragOnBackground(
 				image_name = "Commerce_Black",
 				position = "300,0");
-		}		
-		
+		}
 	}
 
 	@description = "COMMERCE-7022 This test asserts that a diagram product image can be expanded to fit the full screen"

@@ -44,13 +44,15 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 				String userAttributeMappings = resultSet.getString(
 					"userAttributeMappings");
 
+				if (Validator.isNull(userAttributeMappings)) {
+					continue;
+				}
+
 				Properties userAttributeMappingsProperties =
 					new OrderedProperties();
 
-				if (Validator.isNotNull(userAttributeMappings)) {
-					userAttributeMappingsProperties.load(
-						new UnsyncStringReader(userAttributeMappings));
-				}
+				userAttributeMappingsProperties.load(
+					new UnsyncStringReader(userAttributeMappings));
 
 				userAttributeMappingsProperties.forEach(
 					(key, value) -> {

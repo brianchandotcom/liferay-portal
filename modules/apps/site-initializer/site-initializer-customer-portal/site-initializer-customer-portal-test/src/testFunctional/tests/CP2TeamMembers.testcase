@@ -1,266 +1,268 @@
 @component-name = "portal-solutions"
 definition {
 
-    property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
-    property portal.release = "false";
-    property portal.upstream = "false";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "Customer Portal";
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        //CustomerPortal.setUpForCP20();
+		//CustomerPortal.setUpForCP20();
 
-        CustomerPortal.createCPSite(siteName = "Customer Portal");
-    }
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            //CustomerPortal.tearDownForOktaAndSAML();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
 
-            CustomerPortal.customerPortalTearDown();
+			//CustomerPortal.tearDownForOktaAndSAML();
 
-            User.logoutPG();
-        }
-    }
+			CustomerPortal.customerPortalTearDown();
 
-    @description = "Verify if the user can invite multiple emails with roles on team members on the same screen."
-    @ignore = "true"
-    @priority = "4"
-    test MultipleEmailsWithRoleAtOnce {
-        Accounts.openAccountsAdmin();
+			User.logoutPG();
+		}
+	}
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+	@description = "Verify if trying to send invitation to members with a banned email shows a error"
+	@priority = "5"
+	test CanViewErrorMessageForBannedEmail {
+		Accounts.openAccountsAdmin();
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test01@project.com",
-            position = "0",
-            rowRole = "Administrator",
-            positionNumber = "0",
-            addMembers = "true");
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra( 
-            rowEmail = "test02@project.com",
-            position = "1",
-            rowRole = "User",
-            positionNumber = "1");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "0-mail.com",
+			rowRole = "User");
 
-        CP2TeamMembers.clickTeamMembersSendInvitation();
-    }
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
+			value1 = "Please insert a valid e-mail.");
+	}
 
-    @description = "Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
-    @priority = "4"
-    test IfMaxRequestorDropDisabled {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
+	@priority = "4"
+	test IfMaxAdminDropDisabled {
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test01@project.com",
-            position = "0",
-            rowRole = "Requester",
-            positionNumber = "0",
-            addMembers = "true");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "true",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "Administrator");
 
-        AssertElementPresent(
-            locator1 = "CP2TeamMembers#ROLE_DISABLED",
-            key_index = "1",
-            role = "Requester");      
-    }
+		AssertElementPresent(
+			key_index = "1",
+			locator1 = "CP2TeamMembers#ROLE_DISABLED",
+			role = "Administrator");
+	}
 
-    @description = "Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
-    @priority = "4"
-    test IfMaxAdminDropDisabled {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
+	@priority = "4"
+	test IfMaxRequestorDropDisabled {
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test01@project.com",
-            position = "0",
-            rowRole = "Administrator",
-            positionNumber = "0",
-            addMembers = "true");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "true",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "Requester");
 
-        AssertElementPresent(
-            locator1 = "CP2TeamMembers#ROLE_DISABLED",
-            key_index = "1",
-            role = "Administrator");
-    }
+		AssertElementPresent(
+			key_index = "1",
+			locator1 = "CP2TeamMembers#ROLE_DISABLED",
+			role = "Requester");
+	}
 
-    @description = "Verify if when the user selects 'Skip for Now' he is taken to the next step"
-    @priority = "5"
-    test IfSkipForNowJumpToNextStep {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when the user selects 'Skip for Now' he is taken to the next step"
+	@priority = "5"
+	test IfSkipForNowJumpToNextStep {
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CustomerPortal.clickOnSkipForNowButton();
+		CustomerPortal.clickOnSkipForNowButton();
 
-        AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
-    }
+		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+	}
 
-    @description = "Verify if partner = true, show 'Partner Member' on Roles"
-    @priority = "4"
-    test IsPartnerMemberShowingUp {
-        CP2TeamMembers.activePartnersRole();
+	@description = "Verify if partner = true, show 'Partner Manager' on Roles"
+	@priority = "4"
+	test IsPartnerManagerShowingUp {
+		CP2TeamMembers.activePartnersRole();
 
-        Accounts.openAccountsAdmin();
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Partner Member");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Partner Member",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        AssertElementPresent(
-            key_rowNumber = "0",
-            locator1 = "CP2TeamMembers#ROLE_SELECT",
-            value1 = "Partner Member");
+		AssertElementPresent(
+			key_rowNumber = "0",
+			locator1 = "CP2TeamMembers#ROLE_SELECT",
+			value1 = "Partner Manager");
 
-        CustomerPortal.deactivateKoroneikiAccount();
-    }
+		CustomerPortal.deactivateKoroneikiAccount();
+	}
 
-    @description = "Verify if partner = true, show 'Partner Manager' on Roles"
-    @priority = "4"
-    test IsPartnerManagerShowingUp {
-        CP2TeamMembers.activePartnersRole();
+	@description = "Verify if partner = true, show 'Partner Member' on Roles"
+	@priority = "4"
+	test IsPartnerMemberShowingUp {
+		CP2TeamMembers.activePartnersRole();
 
-        Accounts.openAccountsAdmin();
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Partner Member");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Partner Member",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        AssertElementPresent(
-            key_rowNumber = "0",
-            locator1 = "CP2TeamMembers#ROLE_SELECT",
-            value1 = "Partner Manager");
+		AssertElementPresent(
+			key_rowNumber = "0",
+			locator1 = "CP2TeamMembers#ROLE_SELECT",
+			value1 = "Partner Member");
 
-        CustomerPortal.deactivateKoroneikiAccount();
-    }
+		CustomerPortal.deactivateKoroneikiAccount();
+	}
 
-    @description = "Verify if trying to send invitation to members with a banned email shows a error"
-    @priority = "5"
-    test CanViewErrorMessageForBannedEmail {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when the fields are empty the button 'Send Invitations' is disabled"
+	@priority = "3"
+	test IsSendInvitationsButtonDisabled {
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "0-mail.com",
-            position = "0",
-            rowRole = "User",
-            positionNumber = "0");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test",
+			rowRole = "User");
 
-        AssertTextEquals(
-            locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-            value1 = "Please insert a valid e-mail.");
-    }
+		AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
+	}
 
-    @description = "Verify if when the fields are empty the button 'Send Invitations' is disabled"
-    @priority = "3"
-    test IsSendInvitationsButtonDisabled {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if the user can invite multiple emails with roles on team members on the same screen."
+	@ignore = "true"
+	@priority = "4"
+	test MultipleEmailsWithRoleAtOnce {
+		Accounts.openAccountsAdmin();
 
-        CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Accounts.addAssigneeToRoleViaUsersTab(
-            accountUserName = "Test Test",
-            accountRoleTitle = "Account Administrator");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.clickOnStartProjectSetup();
+		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test",
-            position = "0",
-            rowRole = "User",
-            positionNumber = "0");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "true",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "Administrator");
 
-        AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
-    }
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "1",
+			positionNumber = "1",
+			rowEmail = "test02@project.com",
+			rowRole = "User");
+
+		CP2TeamMembers.clickTeamMembersSendInvitation();
+	}
+
 }

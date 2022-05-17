@@ -50,6 +50,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
 			title = "Test Account 01");
 	}
 
@@ -60,6 +61,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
 			title = "Test Account 01");
 	}
 

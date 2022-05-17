@@ -39,6 +39,7 @@ definition {
 	}
 
 	@description = "LPS-148456 - Verify if its possible login in Okta, Configure SAML Admin and create CP2.0"
+	@ignore = "true"
 	@priority = "5"
 	test CanConnectWithOkta {
 		task ("Login in Okta") {

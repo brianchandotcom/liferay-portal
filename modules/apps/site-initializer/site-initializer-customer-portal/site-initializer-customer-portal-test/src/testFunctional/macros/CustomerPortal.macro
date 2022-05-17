@@ -96,10 +96,6 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro uncheckToggleHideInactiveWidget {
-		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
-	} 
-
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}
@@ -164,9 +160,9 @@ definition {
 	macro customerPortalTearDown {
 		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
-        CustomerPortal.deleteCPObject(title = "Account Flag");
+		CustomerPortal.deleteCPObject(title = "Account Flag");
 
-        CustomerPortal.deleteCPObject(title = "Koroneiki Account");
+		CustomerPortal.deleteCPObject(title = "Koroneiki Account");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -188,21 +184,6 @@ definition {
 		CustomerPortal.customerPortalApisTearDown();
 	}
 
-	macro deleteCPObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectObject(label = "${title}");
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
-
-		CustomerPortal.uncheckToggleHideInactiveWidget();
-
-		CreateObject.saveObject();
-	}
-
 	macro deactivateKoroneikiAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -216,6 +197,21 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro deleteCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
+
+		CustomerPortal.uncheckToggleHideInactiveWidget();
+
+		CreateObject.saveObject();
 	}
 
 	macro deleteEntryAccountFlag {
@@ -458,6 +454,10 @@ definition {
 
 			CustomerPortal.customerPortalTearDown();
 		}
+	}
+
+	macro uncheckToggleHideInactiveWidget {
+		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
 	macro viewAllProjectsTitlePage {

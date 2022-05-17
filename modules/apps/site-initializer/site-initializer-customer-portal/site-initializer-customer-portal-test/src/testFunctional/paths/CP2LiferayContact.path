@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>PROJECT_CARD</td>
-	<td>//div[contains(@class, 'card-body') and contains(.,'${title}')]['${status}']</td>
+	<td>//div[contains(@class, 'card-body') and contains(.,'${title}')]/parent::div//span[contains(text(), '${status}')]</td>
 	<td></td>
 </tr>
 <tr>

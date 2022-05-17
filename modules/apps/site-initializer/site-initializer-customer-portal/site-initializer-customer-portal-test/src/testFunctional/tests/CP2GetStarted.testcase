@@ -35,7 +35,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.clickOnStartProjectSetup();
 
@@ -43,7 +43,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.viewSubcriptionsPage();
 	}
@@ -53,7 +53,7 @@ definition {
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.viewSubcriptionsPage();
 	}
@@ -68,7 +68,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.viewStartProjectSetupButton();
 	}
@@ -83,7 +83,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.viewGetStartedModal();
 	}
@@ -98,7 +98,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account 01");
 
 		CustomerPortal.clickOnStartProjectSetup();
 

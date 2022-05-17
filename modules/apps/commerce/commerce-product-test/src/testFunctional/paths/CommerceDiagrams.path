@@ -87,6 +87,11 @@
 	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHECK_DIAGRAM_IMAGE_FOR_DRAG</td>
+	<td>//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']</td>
+	<td></td>
+</tr>
 <!--DIAGRAM_PRODUCT_DETAIL-->
 <tr>
 	<td>DIAGRAM_PRODUCT_DETAIL_NAME</td>

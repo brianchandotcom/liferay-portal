@@ -515,6 +515,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS</td>
+	<td>//div[contains (@class,'panel__title') and contains(.,'${key_termType}')]//..//a[contains(.,'${key_term}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_DISCOUNT</td>
 	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[6]</td>
 	<td></td>

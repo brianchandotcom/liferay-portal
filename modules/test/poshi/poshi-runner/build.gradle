@@ -64,5 +64,5 @@ release {
 test {
 	systemProperty "webdriver.chrome.driver", "${buildDir}/webdriver/chromedriver"
 
-	dependsOn downloadChromeDriver
+	dependsOn downloadWebDriverBrowserBinary
 }

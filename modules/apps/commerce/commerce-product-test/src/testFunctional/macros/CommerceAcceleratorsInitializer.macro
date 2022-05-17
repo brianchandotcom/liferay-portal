@@ -243,6 +243,20 @@ definition {
 			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 			value1 = "$ ${productPrice}");
+
+		if (isSet(deliveryTerm)) {
+			AssertElementPresent(
+				key_term = "${deliveryTerm}",
+				key_termType = "Delivery Terms",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_TERMS_AND_CONDITIONS");
+		}
+
+		if (isSet(paymentTerm)) {
+			AssertElementPresent(
+				key_term = "${paymentTerm}",
+				key_termType = "Payment Terms",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_TERMS_AND_CONDITIONS");
+		}
 	}
 
 	macro selectAccountFromAccountSelector {

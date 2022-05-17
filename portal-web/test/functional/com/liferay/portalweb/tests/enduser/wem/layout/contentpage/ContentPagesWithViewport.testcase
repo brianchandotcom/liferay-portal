@@ -683,6 +683,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for 147512. The page editor only could clear color picker selection defined on current non-desktop viewport."
+	@priority = "4"
+	test OnlyClearColorPickerSelectionInCurrentNonDesktopViewport {
+		property custom.properties = "feature.flag.LPS-132571=true";
+
+		task ("Given a page creator has a content page where a Heading fragment has a defined Text Color in desktop viewport") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(textColor = "Success");
+		}
+
+		task ("When the page creator switch to the Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+		}
+
+		task ("Then the page creator cannot clear color picker selection defined in desktop viewport") {
+			PageEditor.clearSelection(fieldLabel = "Text Color");
+
+			AssertTextEquals(
+				key_fieldLabel = "Text Color",
+				locator1 = "Button#COLOR_PICKER",
+				value1 = "Success");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Heading",
+				styleName = "color",
+				styleValue = "success");
+		}
+
+		task ("When the page creator changes the Text Color to Warning") {
+			SelectFrameTop();
+
+			PageEditor.configureFragment(textColor = "Warning");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Heading",
+				styleName = "color",
+				styleValue = "warning");
+		}
+
+		task ("Then the page creator could clear the color picker selection defined in Tablet viewport") {
+			SelectFrameTop();
+
+			PageEditor.clearSelection(fieldLabel = "Text Color");
+
+			AssertTextEquals(
+				key_fieldLabel = "Text Color",
+				locator1 = "Button#COLOR_PICKER",
+				value1 = "Success");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Heading",
+				styleName = "color",
+				styleValue = "success");
+		}
+	}
+
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "4"
 	@uitest

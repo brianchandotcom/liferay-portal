@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -93,8 +94,8 @@ public interface ObjectFieldLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
-			String dbColumnName, String dbType, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			String dbColumnName, String dbTableName, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required)
 		throws PortalException;
 
@@ -325,6 +326,11 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectFieldsCountByListTypeDefinitionId(
 		long listTypeDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Table getObjectFieldTable(
+			long objectDefinitionId, String objectFieldName)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

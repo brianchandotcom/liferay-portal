@@ -317,6 +317,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="GroovySourceProcessor">
+		<check name="GroovyImportsCheck">
+			<category name="Styling" />
+			<description name="Sorts and groups imports in `.groovy` files." />
+		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace." />

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -212,7 +213,16 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		LiferayPortletResponse liferayPortletResponse, Locale locale,
 		SearchHit searchHit, Layout searchLayout) {
 
+		Document document = searchHit.getDocument();
+
+		String entryClassName = document.getString(Field.ENTRY_CLASS_NAME);
+
 		SuggestionBuilder suggestionBuilder = _suggestionBuilderFactory.builder(
+		).attribute(
+			"fields",
+			HashMapBuilder.<String, Object>put(
+				Field.ENTRY_CLASS_NAME, entryClassName
+			).build()
 		).score(
 			searchHit.getScore()
 		);
@@ -220,10 +230,6 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		String text = null;
 
 		try {
-			Document document = searchHit.getDocument();
-
-			String entryClassName = document.getString(Field.ENTRY_CLASS_NAME);
-
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(entryClassName);

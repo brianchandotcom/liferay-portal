@@ -1294,9 +1294,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			Validator.isNull(
 				unicodeProperties.getProperty("s3ProcessedFolderName"))) {
 
-			_log.error("It is necessary to set all properties.");
+			_log.error("It is necessary to set all properties");
 
-			throw new PortalException("It is necessary to set all properties.");
+			throw new PortalException("It is necessary to set all properties");
 		}
 	}
 

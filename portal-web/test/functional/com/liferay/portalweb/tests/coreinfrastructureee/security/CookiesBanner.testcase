@@ -64,6 +64,8 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config");
 
+			Pause(locator1 = "1000");
+
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
 
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
@@ -95,6 +97,37 @@ definition {
 
 		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
 			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-148320. Combined AC-1, AC-2, AC-4. Verify Privacy Policy Links can be configured from a local site similarly to an external page with giving its url."
+	@priority = "5"
+	test PrivacyPolicyLinksCanBeConfiguredFromALocalSite {
+		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "CookiesBanner#PrivacyPolicyLinksCanBeConfiguredFromALocalSite";
+
+		task ("Given: a site configured to show the Banner") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "PolicyPage");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "PolicyPage",
+				widgetName = "Type Facet");
+		}
+
+		task ("When: the End User opens the 'Cookie Consent' panel and clicks on the 'Cookie Policy Link's Display Link Text' with the configured URL as a link on that after the Description") {
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+
+			CookieBannerAdmin.saveSettings(privacyPolicyLink = "/web/guest/policypage");
+
+			CookieBanner.clickOnPrivacyPolicyLink(privacyPolicyLink = "/web/guest/policypage");
+		}
+
+		task ("Then: they go to the 'Cookie Policy Link' page.") {
+			CookieHelper.verifyPolicyPageIsVisible(policyLink = "/web/guest/policypage");
 		}
 	}
 

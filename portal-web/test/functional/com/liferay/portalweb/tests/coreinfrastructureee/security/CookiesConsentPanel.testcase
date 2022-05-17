@@ -14,30 +14,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142518. TC-4 Verify that Decline All could be set and cookies are stored with declined values."
-	@priority = "5"
-	test CookiesConsentPanelDeclineAllSelected {
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentDeclineAllSelected";
-
-		task ("Given: Use opens the Cookie consent portlet in a popup") {
-			CookieBannerAdmin.configuredToShowBanner();
-
-			CookieBanner.openCookieConsentPanel();
-		}
-
-		task ("When: User click on Decline all") {
-			CookieConsentPanel.cookiesDeclineAll();
-		}
-
-		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
-			CookieHelper.checkAllCookieAreDeclinedAndSaved();
-		}
-
-		task ("And: Cookie Consent portlet in the popup is closed.") {
-			CookieBanner.checkCookieConsentPanelIsNotVisible();
-		}
-	}
-
 	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved."
 	@priority = "5"
 	test CookiesConsentPanelAcceptsOnlySelectedCookies {
@@ -132,7 +108,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-148320. Combined AC-1, AC-2, AC-3. Verify that Cookie Consent Panel could be enabled and customized via OSGI file. Blocked by LPS-153615."
-	@ignore = "true"
 	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
 		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
@@ -143,6 +118,8 @@ definition {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.config");
+
+			Pause(locator1 = "1000");
 
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
 
@@ -197,6 +174,30 @@ definition {
 
 		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
 			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-4 Verify that Decline All could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookiesConsentPanelDeclineAllSelected {
+		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentDeclineAllSelected";
+
+		task ("Given: Use opens the Cookie consent portlet in a popup") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBanner.openCookieConsentPanel();
+		}
+
+		task ("When: User click on Decline all") {
+			CookieConsentPanel.cookiesDeclineAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
+			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+
+		task ("And: Cookie Consent portlet in the popup is closed.") {
+			CookieBanner.checkCookieConsentPanelIsNotVisible();
 		}
 	}
 

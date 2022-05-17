@@ -17,6 +17,7 @@ package com.liferay.saml.persistence.internal.upgrade.v3_0_1;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,17 +38,12 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectUserAttributeMappingsSQL =
-			"select samlSpIdpConnectionId, userAttributeMappings from " +
-				"SamlSpIdpConnection";
-
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				selectUserAttributeMappingsSQL)) {
+				"select samlSpIdpConnectionId, userAttributeMappings from " +
+					"SamlSpIdpConnection")) {
 
 			while (resultSet.next()) {
-				long samlSpIdpConnectionId = resultSet.getLong(
-					"samlSpIdpConnectionId");
 				String userAttributeMappings = resultSet.getString(
 					"userAttributeMappings");
 
@@ -77,7 +73,8 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 							"userAttributeMappings = '",
 							stringWriter.toString(),
 							"' where samlSpIdpConnectionId = ",
-							String.valueOf(samlSpIdpConnectionId)));
+							GetterUtil.getString(
+								resultSet.getLong("samlSpIdpConnectionId"))));
 				}
 			}
 		}

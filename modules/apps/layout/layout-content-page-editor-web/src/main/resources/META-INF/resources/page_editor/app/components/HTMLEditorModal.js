@@ -48,6 +48,7 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 					<div className="d-flex justify-content-end pr-2 w-100">
 						<ClayButton.Group>
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('display-vertically')}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.columns)}
 								small
@@ -55,6 +56,7 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 							/>
 
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('display-horizontally')}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.rows)}
 								small
@@ -62,6 +64,7 @@ const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
 							/>
 
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('full-screen')}	
 								displayType="secondary"
 								onClick={() =>
 									setViewType(VIEW_TYPES.fullscreen)

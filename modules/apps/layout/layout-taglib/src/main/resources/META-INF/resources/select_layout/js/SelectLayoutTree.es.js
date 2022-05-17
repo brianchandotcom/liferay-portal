@@ -17,42 +17,24 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useMemo, useRef, useState} from 'react';
 
-function performFilter(value, tree) {
-	const getItems = (previous, item) => {
-		if (!item.vocabulary && item.name.toLowerCase().indexOf(value) !== -1) {
-			const immutableItem = {...item};
-
-			if (Array.isArray(immutableItem.children)) {
-				immutableItem.children = immutableItem.children.reduce(
-					getItems,
-					[]
-				);
-			}
-
-			previous.push(immutableItem);
-
-			return previous;
+const nodeByName = (items, name) => {
+	return items.reduce(function reducer(acc, item) {
+		if (item.name?.toLowerCase().includes(name.toLowerCase())) {
+			acc.push(item);
+		}
+		else if (item.children) {
+			acc.concat(item.children.reduce(reducer, acc));
 		}
 
-		if (Array.isArray(item.children)) {
-			const children = item.children.reduce(getItems, []);
-
-			if (children.length) {
-				previous.push({...item, children});
-			}
-		}
-
-		return previous;
-	};
-
-	return tree.reduce(getItems, []);
-}
+		return acc;
+	}, []);
+};
 
 export function SelectLayoutTree({
 	filter,
 	followURLOnTitleClick,
 	itemSelectorSaveEvent,
-	items: initialItems,
+	items: initialItems = [],
 	multiSelection,
 	selectedLayoutIds,
 }) {
@@ -67,7 +49,7 @@ export function SelectLayoutTree({
 			return items;
 		}
 
-		return performFilter(filter.toLowerCase(), [...items]);
+		return nodeByName(items, filter);
 	}, [items, filter]);
 
 	const selectedItemsRef = useRef(new Map());
@@ -151,11 +133,13 @@ export function SelectLayoutTree({
 			{(item, selection) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) =>
-							!multiSelection &&
-							!item.disabled &&
-							handleSingleSelectionChange(event, item)
-						}
+						onClick={(event) => {
+							event.preventDefault();
+
+							if (!multiSelection && !item.disabled) {
+								handleSingleSelectionChange(event, item);
+							}
+						}}
 					>
 						{multiSelection && !item.disabled && (
 							<ClayCheckbox
@@ -176,11 +160,18 @@ export function SelectLayoutTree({
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
 							<ClayTreeView.Item
-								onClick={(event) =>
-									!multiSelection &&
-									!item.disabled &&
-									handleSingleSelectionChange(event, item)
-								}
+								disabled={item.disabled}
+								expanderDisabled={false}
+								onClick={(event) => {
+									event.preventDefault();
+
+									if (!multiSelection && !item.disabled) {
+										handleSingleSelectionChange(
+											event,
+											item
+										);
+									}
+								}}
 							>
 								{multiSelection && !item.disabled && (
 									<ClayCheckbox

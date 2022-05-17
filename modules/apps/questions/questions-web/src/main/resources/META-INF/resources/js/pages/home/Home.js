@@ -112,7 +112,11 @@ export default withRouter(({history, isHomePath}) => {
 						'text-white': isHomePath,
 					})}
 					displayType="unstyled"
-					onClick={() => history.push('/questions')}
+					onClick={() =>
+						history.push(
+							isHomePath ? '/questions' : '/questions/all'
+						)
+					}
 				>
 					{Liferay.Language.get('all-questions')}
 

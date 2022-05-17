@@ -52,6 +52,7 @@ import {
 	subscribeQuery,
 	unsubscribeQuery,
 } from '../../utils/client.es';
+import {ALL_SECTIONS_ID} from '../../utils/contants.es';
 import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
@@ -148,7 +149,7 @@ export default withRouter(
 		}, [questionId, context.siteKey]);
 
 		sectionTitle =
-			sectionTitle || sectionTitle === '0'
+			sectionTitle || sectionTitle === ALL_SECTIONS_ID
 				? sectionTitle
 				: question.messageBoardSection &&
 				  question.messageBoardSection.title;

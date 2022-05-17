@@ -40,6 +40,7 @@ import {
 	subscribeSectionQuery,
 	unsubscribeSectionQuery,
 } from '../../utils/client.es';
+import {ALL_SECTIONS_ID} from '../../utils/contants.es';
 import lang from '../../utils/lang.es';
 import {
 	deleteCacheKey,
@@ -159,7 +160,10 @@ export default withRouter(
 		}, [queryParams]);
 
 		useEffect(() => {
-			document.title = (section && section.title) || sectionTitle;
+			document.title =
+				sectionTitle === ALL_SECTIONS_ID
+					? Liferay.Language.get('all-questions')
+					: (section && section.title) || sectionTitle;
 		}, [sectionTitle, section]);
 
 		useEffect(() => {
@@ -385,7 +389,7 @@ export default withRouter(
 		function buildURL(search, page, pageSize) {
 			let url = '/questions';
 
-			if (sectionTitle || sectionTitle === '0') {
+			if (sectionTitle || sectionTitle === ALL_SECTIONS_ID) {
 				url += `/${sectionTitle}`;
 			}
 
@@ -417,7 +421,7 @@ export default withRouter(
 		);
 
 		useEffect(() => {
-			if (sectionTitle && sectionTitle !== '0') {
+			if (sectionTitle && sectionTitle !== ALL_SECTIONS_ID) {
 				const variables = {
 					filter: `title eq '${slugToText(
 						sectionTitle
@@ -439,7 +443,7 @@ export default withRouter(
 					}
 				});
 			}
-			else if (sectionTitle === '0') {
+			else if (sectionTitle === ALL_SECTIONS_ID) {
 				const variables = {siteKey: context.siteKey};
 				getSections({
 					variables,

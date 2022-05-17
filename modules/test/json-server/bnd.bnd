@@ -1,0 +1,3 @@
+Bundle-Name: Liferay JSON Server
+Bundle-SymbolicName: com.liferay.json.server
+Bundle-Version: 1.0.0

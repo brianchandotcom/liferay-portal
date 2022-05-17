@@ -37,7 +37,7 @@ definition {
 
 		ACDXPSettings.connectAnalyticsCloud();
 
-		ACDXPSettings.assertSuccessfulConnection();
+		Alert.viewSuccessMessage();
 
 		ACDXPSettings.navToSyncedSitesMenu();
 

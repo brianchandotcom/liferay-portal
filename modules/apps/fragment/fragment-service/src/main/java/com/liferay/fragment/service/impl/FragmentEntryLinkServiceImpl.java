@@ -56,7 +56,7 @@ public class FragmentEntryLinkServiceImpl
 			String rendererKey, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkPermission(groupId, plid, false);
+		_checkPermission(groupId, plid, false, true);
 
 		return fragmentEntryLinkLocalService.addFragmentEntryLink(
 			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -72,7 +72,8 @@ public class FragmentEntryLinkServiceImpl
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		_checkPermission(
-			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), false);
+			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), false,
+			false);
 
 		return fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
@@ -97,14 +98,16 @@ public class FragmentEntryLinkServiceImpl
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		_checkPermission(
-			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true);
+			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true,
+			false);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
 	}
 
 	private void _checkPermission(
-			long groupId, long plid, boolean checkUpdateLayoutContentPermission)
+			long groupId, long plid, boolean checkUpdateLayoutContentPermission,
+			boolean checkUpdateLayoutRestrictedPermission)
 		throws PortalException {
 
 		String className = Layout.class.getName();
@@ -136,14 +139,29 @@ public class FragmentEntryLinkServiceImpl
 		}
 
 		if (!Objects.equals(className, Layout.class.getName()) ||
-			!checkUpdateLayoutContentPermission) {
+			(!checkUpdateLayoutContentPermission &&
+			 !checkUpdateLayoutRestrictedPermission)) {
 
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), className, classPK, ActionKeys.UPDATE);
 		}
 
-		if (_layoutPermission.containsLayoutUpdatePermission(
-				getPermissionChecker(), classPK)) {
+		if (checkUpdateLayoutContentPermission &&
+			 _layoutPermission.containsLayoutUpdatePermission(
+				 getPermissionChecker(), classPK)) {
+
+			return;
+		}
+
+		if (checkUpdateLayoutRestrictedPermission &&
+			(_layoutPermission.contains(
+				getPermissionChecker(), classPK, ActionKeys.UPDATE) ||
+			 _layoutPermission.contains(
+				getPermissionChecker(), classPK,
+				ActionKeys.UPDATE_LAYOUT_BASIC) ||
+			 _layoutPermission.contains(
+				 getPermissionChecker(), classPK,
+				 ActionKeys.UPDATE_LAYOUT_LIMITED))) {
 
 			return;
 		}

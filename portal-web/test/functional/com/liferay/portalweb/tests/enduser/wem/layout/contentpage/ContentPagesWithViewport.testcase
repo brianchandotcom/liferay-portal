@@ -35,6 +35,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for 147512. The page editor could customize styles on non-desktop viewports."
+	@priority = "5"
+	test CustomizeFragmentStylesInNonDesktopViewport {
+		property custom.properties = "feature.flag.LPS-132571=true";
+
+		task ("Given a page creator has a content page with a Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator switch to the Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+		}
+
+		task ("Then the page creator could customize styles of Heading fragment in the Tablet viewport") {
+			task ("View the Advanced tab is not shown on sidebar") {
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+				PageEditor.clickConfigurableField(fragmentName = "Heading");
+
+				SelectFrameTop();
+
+				Navigator.viewNoNavTab(navTab = "Advanced");
+			}
+
+			task ("View only the Frame section is available on General panel") {
+				Navigator.gotoNavTab(navTab = "General");
+
+				AssertElementPresent(
+					key_fieldSetLabel = "Frame",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+
+				AssertElementNotPresent(
+					key_fieldSetLabel = "Heading Options",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+			}
+
+			task ("View all sections are available on Styles panel") {
+				Navigator.gotoNavTab(navTab = "Styles");
+
+				for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
+					AssertElementPresent(
+						key_fieldSetLabel = "${fieldSetLabel}",
+						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-119979 and LPS-106776. Customize the Layout of Grid in each viewport."
 	@priority = "4"
 	@uitest
@@ -103,7 +157,6 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-6')]");
-
 			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
 			TestUtils.isGreaterThan(
@@ -122,7 +175,6 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-4')]");
-
 			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
 			TestUtils.isGreaterThan(
@@ -143,7 +195,6 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-2')]");
-
 			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
 			TestUtils.isGreaterThan(
@@ -164,7 +215,6 @@ definition {
 				position = "1");
 
 			var moduleHeight = selenium.getElementHeight("//div[@aria-label='Grid']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'col-12')]");
-
 			var moduleHeight = StringUtil.replace("${moduleHeight}", "px", "");
 
 			TestUtils.isGreaterThan(

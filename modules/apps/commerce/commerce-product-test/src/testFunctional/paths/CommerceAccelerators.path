@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>ADD_TO_CART_BUTTON_INVALID</td>
-	<td>//p[@title='${key_productName}']//../..//button[contains(@class,'add-to-cart invalid')]</td>
+	<td>//p[@title='${key_productName}']//../..//button[contains(@class,'add-to-cart not-allowed')]</td>
 	<td></td>
 </tr>
 <tr>

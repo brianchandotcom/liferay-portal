@@ -49,6 +49,13 @@ describe('Export Translation', () => {
 
 		const radioButton = getAllByRole('radio');
 
+		expect(radioButton[0].parentElement).toHaveTextContent(
+			'default-experience'
+		);
+		expect(radioButton[1].parentElement).toHaveTextContent(
+			'all-experience'
+		);
+
 		expect(radioButton[0]).toBeChecked();
 	});
 });

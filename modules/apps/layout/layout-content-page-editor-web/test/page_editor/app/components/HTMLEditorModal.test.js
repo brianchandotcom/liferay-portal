@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 import HTMLEditorModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/HTMLEditorModal';
 import HTMLProcessor from '../../../../src/main/resources/META-INF/resources/page_editor/app/processors/HTMLProcessor';
 
-const renderModal = ({initialContent = '', onCloseCallback, onSave}) => {
+const renderModal = async ({initialContent = '', onClose, onSave}) => {
 	document.body.createTextRange = () => {
 		const textRange = {
 			getBoundingClientRect: () => 1,
@@ -30,20 +30,28 @@ const renderModal = ({initialContent = '', onCloseCallback, onSave}) => {
 		return textRange;
 	};
 
-	jest.useFakeTimers();
+	await act(async () => {
+		render(
+			<HTMLEditorModal
+				initialContent={initialContent}
+				onClose={onClose}
+				onSave={onSave}
+			/>
+		);
 
-	render(
-		<HTMLEditorModal
-			initialContent={initialContent}
-			onCloseCallback={onCloseCallback}
-			onSave={onSave}
-		/>
-	);
-
-	jest.advanceTimersByTime(1000);
+		jest.advanceTimersByTime(1000);
+	});
 };
 
 describe('HTMLEditorModal', () => {
+	afterAll(() => {
+		jest.useRealTimers();
+	});
+
+	beforeAll(() => {
+		jest.useFakeTimers();
+	});
+
 	describe('render modal', () => {
 		it('injects the given string as innerHTML', () => {
 			const element = document.createElement('div');
@@ -81,7 +89,7 @@ describe('HTMLEditorModal', () => {
 		it('view type rows is displayed correctly', () => {
 			renderModal('');
 
-			fireEvent.click(screen.getByLabelText('display-horizontally'));
+			fireEvent.click(screen.getByTitle('display-horizontally'));
 
 			const editor = document.querySelector(
 				'.page-editor__html-editor-modal__editor-container > div'
@@ -93,7 +101,7 @@ describe('HTMLEditorModal', () => {
 		it('view type full screen is displayed correctly', () => {
 			renderModal('');
 
-			fireEvent.click(screen.getByLabelText('full-screen'));
+			fireEvent.click(screen.getByTitle('full-screen'));
 
 			const preview = document.querySelector(
 				'.page-editor__html-editor-modal__preview-rows'
@@ -104,12 +112,14 @@ describe('HTMLEditorModal', () => {
 	});
 
 	describe('modal callbacks', () => {
-		it('Close button', () => {
+		it('Close button', async () => {
 			const onClose = jest.fn();
+
+			renderModal({onClose});
 
 			fireEvent.click(screen.getByText('cancel'));
 
-			renderModal({onCloseCallback: onClose});
+			jest.advanceTimersByTime(1000);
 
 			expect(onClose).toHaveBeenCalled();
 		});

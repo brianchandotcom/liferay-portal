@@ -292,19 +292,37 @@ function getCustomHintProperties(item, endToken) {
 			// Check characters after if any property value is defined already.
 
 			if (endToken.string?.startsWith('"') || endToken.string === '') {
-				switch (item.type) {
-					case 'array':
-						text = `${item.name}": []`;
-						break;
-					case 'object':
-						text = `${item.name}": {}`;
-						break;
-					case 'string':
-						text = `${item.name}": ""`;
-						break;
-					default:
-						text = `${item.name}": `;
-						break;
+
+				// For special case "aggs" within aggregation configuration, autofill
+				// with this snippet to show how aggregation types are structured.
+
+				if (item.name === 'aggs') {
+					const indentedTabs =
+						endToken.state.indented / cm.getOption('indentUnit');
+
+					const aggsText = JSON.stringify(
+						{NAME: {AGG_TYPE: {}}},
+						null,
+						'\t'
+					).replace(/\n/g, '\n' + '\t'.repeat(indentedTabs));
+
+					text = `aggs": ${aggsText}`;
+				}
+				else {
+					switch (item.type) {
+						case 'array':
+							text = `${item.name}": []`;
+							break;
+						case 'object':
+							text = `${item.name}": {}`;
+							break;
+						case 'string':
+							text = `${item.name}": ""`;
+							break;
+						default:
+							text = `${item.name}": `;
+							break;
+					}
 				}
 			}
 

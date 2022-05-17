@@ -369,6 +369,15 @@ public class ThemeDisplay
 		return _doAsUserLanguageId;
 	}
 
+	public String getFavicon() {
+		if (Validator.isNotNull(_favicon)) {
+			return _favicon;
+		}
+
+		return getPathThemeImages() + "/" +
+			PropsUtil.get(PropsKeys.THEME_SHORTCUT_ICON);
+	}
+
 	/**
 	 * Returns the current internationalization language's code.
 	 *
@@ -1295,6 +1304,10 @@ public class ThemeDisplay
 		_doAsUserLanguageId = doAsUserLanguageId;
 	}
 
+	public void setFavicon(String favicon) {
+		_favicon = favicon;
+	}
+
 	public void setHubAction(boolean hubAction) {
 		_hubAction = hubAction;
 	}
@@ -1857,6 +1870,7 @@ public class ThemeDisplay
 	private long _doAsGroupId;
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;
+	private String _favicon;
 	private transient HttpServletRequest _httpServletRequest;
 	private transient HttpServletResponse _httpServletResponse;
 	private boolean _hubAction;

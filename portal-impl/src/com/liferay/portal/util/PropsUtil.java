@@ -373,7 +373,7 @@ public class PropsUtil {
 			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
 
 		if (portalShieldedContainerLibDirProperty != null) {
-			StringUtil.replace(
+			portalShieldedContainerLibDirProperty = StringUtil.replace(
 				portalShieldedContainerLibDirProperty, CharPool.BACK_SLASH,
 				CharPool.SLASH);
 

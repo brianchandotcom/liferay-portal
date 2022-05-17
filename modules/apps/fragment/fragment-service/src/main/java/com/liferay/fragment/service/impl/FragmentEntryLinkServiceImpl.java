@@ -127,23 +127,29 @@ public class FragmentEntryLinkServiceImpl
 			classPK = layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 		}
 
-		boolean containsPermission = GetterUtil.getBoolean(
-			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-				getPermissionChecker(), groupId, className, classPK,
-				ActionKeys.UPDATE));
+		if (GetterUtil.getBoolean(
+				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					getPermissionChecker(), groupId, className, classPK,
+					ActionKeys.UPDATE))) {
 
-		if (!containsPermission && checkUpdateLayoutContentPermission &&
-			Objects.equals(className, Layout.class.getName())) {
-
-			containsPermission =
-				_layoutPermission.containsLayoutUpdatePermission(
-					getPermissionChecker(), classPK);
+			return;
 		}
 
-		if (!containsPermission) {
+		if (!Objects.equals(className, Layout.class.getName()) ||
+			!checkUpdateLayoutContentPermission) {
+
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), className, classPK, ActionKeys.UPDATE);
 		}
+
+		if (_layoutPermission.containsLayoutUpdatePermission(
+				getPermissionChecker(), classPK)) {
+
+			return;
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			getUserId(), className, classPK, ActionKeys.UPDATE);
 	}
 
 	@Reference

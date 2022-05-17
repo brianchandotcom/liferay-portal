@@ -124,7 +124,7 @@ describe('Answer', () => {
 		});
 
 		let markAsAnswerButton = getByTestId('mark-as-answer-button');
-		expect(markAsAnswerButton.textContent).toMatch('Unmark as answer');
+		expect(markAsAnswerButton.textContent).toMatch('unmark-as-answer');
 
 		let markAsAnswerStyle = getByTestId('mark-as-answer-style');
 		expect(
@@ -146,7 +146,7 @@ describe('Answer', () => {
 		);
 
 		markAsAnswerButton = getByTestId('mark-as-answer-button');
-		expect(markAsAnswerButton.textContent).toMatch('Mark as answer');
+		expect(markAsAnswerButton.textContent).toMatch('mark-as-answer');
 
 		markAsAnswerStyle = getByTestId('mark-as-answer-style');
 		expect(

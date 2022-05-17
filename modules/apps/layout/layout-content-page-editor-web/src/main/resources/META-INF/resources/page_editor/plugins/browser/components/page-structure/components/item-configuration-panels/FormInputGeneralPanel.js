@@ -17,7 +17,6 @@ import {openToast} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
-import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {config} from '../../../../../../app/config/index';
 import {
@@ -32,7 +31,7 @@ import updateEditableValues from '../../../../../../app/thunks/updateEditableVal
 import {setIn} from '../../../../../../app/utils/setIn';
 import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
-import {CommonStyles} from './CommonStyles';
+import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 
@@ -48,11 +47,7 @@ export function FormInputGeneralPanel({item}) {
 				</Collapse>
 			</div>
 
-			<CommonStyles
-				commonStylesValues={item.config.styles || {}}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
+			<FragmentGeneralPanel item={item} />
 		</>
 	);
 }

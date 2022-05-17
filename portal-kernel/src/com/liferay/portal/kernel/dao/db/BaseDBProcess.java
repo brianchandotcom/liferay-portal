@@ -243,7 +243,8 @@ public abstract class BaseDBProcess implements DBProcess {
 		if (GetterUtil.getBoolean(
 				PropsUtil.get("database.partition.enabled")) &&
 			GetterUtil.getBoolean(
-				PropsUtil.get("database.partition.thread.pool.enabled"))) {
+				PropsUtil.get("database.partition.thread.pool.enabled"),
+				true)) {
 
 			return (Connection)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),

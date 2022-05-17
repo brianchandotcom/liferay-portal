@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -99,20 +98,6 @@ public class NotificationTemplateServiceImpl
 
 		return _notificationTemplateLocalService.getNotificationTemplate(
 			notificationTemplateId);
-	}
-
-	@Override
-	public List<NotificationTemplate> getNotificationTemplates(
-		int start, int end) {
-
-		return _notificationTemplateLocalService.getNotificationTemplates(
-			start, end);
-	}
-
-	@Override
-	public int getNotificationTemplatesCount() {
-		return _notificationTemplateLocalService.
-			getNotificationTemplatesCount();
 	}
 
 	@Override

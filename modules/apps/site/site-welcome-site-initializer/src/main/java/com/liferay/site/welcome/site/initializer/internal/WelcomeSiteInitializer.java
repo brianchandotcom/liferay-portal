@@ -303,14 +303,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 
 			Class<?> clazz = getClass();
 
-			String releaseInfo = StringPool.BLANK;
-
-			if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
-				releaseInfo = ReleaseInfo.getName();
-			}
-			else if (!_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
-				releaseInfo = ReleaseInfo.getReleaseInfo();
-			}
+			String releaseInfo = ReleaseInfo.getReleaseInfo();
 
 			releaseInfo = StringUtil.replace(
 				releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>(");
@@ -356,14 +349,6 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 	}
 
 	private static final String _FILE_NAME_TREE_IMAGE = "tree.png";
-
-	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
-		StringUtil.equalsIgnoreCase(
-			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "off");
-
-	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
-		StringUtil.equalsIgnoreCase(
-			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "partial");
 
 	private static final String _PATH =
 		"com/liferay/site/welcome/site/initializer/internal/dependencies/";

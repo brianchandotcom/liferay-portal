@@ -514,12 +514,28 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is not is possible to create a Default Sort when there isn't column"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotCreateDefaultSortWhenNoColumn {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152054",
+			objectName = "CustomObject152054",
+			pluralLabelName = "Custom Objects 152054");
 
-		// TODO LPS-152054 CannotCreateDefaultSortWhenNoColumn pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152054");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 152054");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 152054");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.assertNoColumnPresentInDefaultSort();
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"

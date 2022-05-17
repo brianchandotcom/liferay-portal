@@ -100,6 +100,14 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
+	macro assertNoColumnPresentInDefaultSort {
+		ObjectCustomViews.addNewDefaultSort();
+
+		Click(locator1 = "ObjectCustomViews#SELECT_COLUMN_ON_DEFAULT_SORT");
+
+		AssertElementPresent(locator1 = "ObjectCustomViews#DEFAULT_SORT_NO_COLUMN_OPTION");
+	}
+
 	macro assertObjectView {
 		var key_viewLabel = "${viewLabel}";
 

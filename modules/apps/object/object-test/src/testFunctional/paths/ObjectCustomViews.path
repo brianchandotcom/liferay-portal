@@ -156,6 +156,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DEFAULT_SORT_NO_COLUMN_OPTION</td>
+		<td>//span[(@class='dropdown-item') and contains(.,'There are no columns added in this view yet.')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SORT_OPTION</td>
 		<td>//button[(@class='dropdown-item') and contains(.,'${key_sortOption}')]</td>
 		<td></td>

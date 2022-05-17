@@ -183,7 +183,7 @@ definition {
 		}
 
 		task ("Assert there are no segments found") {
-			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Learn more about segments.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 

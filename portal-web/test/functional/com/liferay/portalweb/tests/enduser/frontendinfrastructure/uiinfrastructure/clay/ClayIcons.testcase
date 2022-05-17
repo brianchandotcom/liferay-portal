@@ -6,65 +6,116 @@ definition {
 	property testray.component.names = "Clay";
 	property testray.main.component.name = "User Interface";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        task ("Add a site") {
-                JSONGroup.addGroup(groupName = "Test Site Name");
-            }
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-        task ("Add a widget page") {
-                JSONLayout.addPublicLayout(
-                    groupName = "Test Site Name",
-                    layoutName = "Language Test Page Name");
-            }
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Language Test Page Name");
+		}
 
-        task ("Add a Language Selector to page") {
-                JSONLayout.addWidgetToPublicLayout(
-                    groupName = "Test Site Name",
-                    layoutName = "Language Test Page Name",
-                    widgetName = "Language Selector");
-            }
-        }
+		task ("Add a Language Selector to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Language Test Page Name",
+				widgetName = "Language Selector");
+		}
+	}
 
-        tearDown {
-            var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-            if ("${testPortalInstance}" == "true") {
-                PortalInstances.tearDownCP();
-            }
-            else {
-                JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-            }
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
 	@description = "LPS-152271 Verify that flag icons are present when clicking on localization button"
 	@priority = "5"
 	test FlagIconsCanRender {
-        task ("Given language portlet") {
-            Navigator.gotoSitePage(
+		task ("Given language portlet") {
+			Navigator.gotoSitePage(
 				pageName = "Language Test Page Name",
 				siteName = "Test Site Name");
+		}
 
-           AssertElementPresent(
-                locator1 = "Icon#FLAG_enUS");
+		task ("When click on localization button") {
+			Click(
+				key_portletName = "LanguagePortlet",
+				locator1 = "Language#DROPDOWN");
+		}
 
-            LanguagePortlet.viewCurrentLanguage(locale = "en-US");         
-        }  
-   
-        task ("When click on localization button") {
-            Click(
-                locator1 = "Icon#FLAG_enUS");
-        }
+		task ("Then flag icons are present on the button and dropdown menu items") {
+			AssertElementPresent(
+				key_flagID = "ar-sa",
+				key_languageID = "العربية-السعودية",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
 
-        task ("Then flag icons are present on the button and dropdown menu items") {
-            if (IsElementPresent(locator1 = "Icon#FLAG_caES")) {
-                AssertTextEquals(
-                    key_text = "catala_2d_espanya",
-                    locator1 = "Language#ANY");
-            }
-        }  
-    }
+			AssertElementPresent(
+				key_flagID = "ca-es",
+				key_languageID = "català-Espanya",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "zh-cn",
+				key_languageID = "中文-中国",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "nl-nl",
+				key_languageID = "nederlands-Nederland",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "fi-fi",
+				key_languageID = "suomi-Suomi",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "fr-fr",
+				key_languageID = "français-France",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "de-de",
+				key_languageID = "deutsch-Deutschland",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "hu-hu",
+				key_languageID = "magyar-Magyarország",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "ja-jp",
+				key_languageID = "日本語-日本",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "pt-br",
+				key_languageID = "português-Brasil",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "es-es",
+				key_languageID = "español-España",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+
+			AssertElementPresent(
+				key_flagID = "sv-se",
+				key_languageID = "svenska-Sverige",
+				locator1 = "Language#FLAG_AND_LANGUAGE");
+		}
+	}
+
 }

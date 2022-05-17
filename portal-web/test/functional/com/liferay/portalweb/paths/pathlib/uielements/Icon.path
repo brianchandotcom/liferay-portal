@@ -241,13 +241,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FLAG_caES</td>
-	<td>//*[*[name()='svg'][contains(@class,'ca-es')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FLAG_enUS</td>
-	<td>//*[*[name()='svg'][contains(@class,'en-us')]]</td>
+	<td>FLAG_ID</td>
+	<td>//*[name()='svg']//*[contains(@href,'${key_flagID}')]</td>
 	<td></td>
 </tr>
 <tr>

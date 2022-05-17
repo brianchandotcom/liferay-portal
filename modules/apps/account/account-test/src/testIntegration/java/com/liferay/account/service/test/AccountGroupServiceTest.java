@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -122,18 +120,15 @@ public class AccountGroupServiceTest {
 		UserRoleTestUtil.addResourcePermission(
 			ActionKeys.VIEW, AccountGroup.class.getName(), _user.getUserId());
 
-		OrderByComparator<AccountGroup> orderByComparator =
-			OrderByComparatorFactoryUtil.create("AccountGroup", "name", true);
-
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupService.searchAccountGroups(
 				_user.getCompanyId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, orderByComparator);
+				QueryUtil.ALL_POS, null);
 
 		List<AccountGroup> expectedAccountGroups =
 			_accountGroupLocalService.getAccountGroups(
 				_user.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				orderByComparator);
+				null);
 
 		expectedAccountGroups = ListUtil.filter(
 			expectedAccountGroups,
@@ -141,8 +136,13 @@ public class AccountGroupServiceTest {
 
 		Assert.assertEquals(
 			expectedAccountGroups.size(), baseModelSearchResult.getLength());
-		Assert.assertEquals(
-			expectedAccountGroups, baseModelSearchResult.getBaseModels());
+
+		List<AccountGroup> accountGroups =
+			baseModelSearchResult.getBaseModels();
+
+		for (AccountGroup expectedAccountGroup : expectedAccountGroups) {
+			Assert.assertTrue(accountGroups.contains(expectedAccountGroup));
+		}
 	}
 
 	@Test

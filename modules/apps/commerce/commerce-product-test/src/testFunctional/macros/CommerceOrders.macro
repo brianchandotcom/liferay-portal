@@ -311,6 +311,43 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro editOrdersEntryTerms {
+		if ("${type}" == "Payment") {
+			Click(
+				key_buttonName = "Edit",
+				key_titleName = "Payment Terms",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				key_fieldLabel = "Title",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${newTerm}");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+		}
+		else if ("${type}" == "Delivery") {
+			Click(
+				key_buttonName = "Edit",
+				key_titleName = "Delivery Terms",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				key_fieldLabel = "Title",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${newTerm}");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+		}
+	}
+
 	macro editOrderType {
 		if (isSet(orderTypeName)) {
 			Type(

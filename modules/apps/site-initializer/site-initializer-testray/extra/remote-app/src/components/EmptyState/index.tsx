@@ -12,62 +12,8 @@
  * details.
  */
 
-import ClayEmptyState from '@clayui/empty-state';
-import React, {ReactNode} from 'react';
+import EmptyState, {EmptyStateProps} from './EmptyState'
 
-import i18n from '../../i18n';
-import {Liferay} from '../../services/liferay/liferay';
+export type {EmptyStateProps}
 
-const States = {
-	BLANK: '',
-
-	/**
-	 * When the filters or search results return zero results.
-	 */
-
-	EMPTY_SEARCH: 'https://clayui.com/images/empty_state.gif',
-
-	/**
-	 * When there are no elements in the data set at a certain level
-	 */
-
-	EMPTY_STATE: `https://clayui.com/images/empty_state.gif`,
-
-	/**
-	 * When there no permission to access the module
-	 */
-
-	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/app_builder/illustration_locker.svg`,
-
-	/**
-	 * The user has emptied the dataset for a good cause.
-	 * For example, all the notifications have been addressed, resulting in a clean state.
-	 */
-	SUCCESS: 'https://clayui.com/images/success_state.gif',
-};
-
-export type EmptyStateProps = {
-	children?: ReactNode;
-	description?: string;
-	title?: string;
-	type?: keyof typeof States;
-};
-
-const EmptyState: React.FC<EmptyStateProps> = ({
-	children,
-	description,
-	title,
-	type,
-}) => (
-	<ClayEmptyState
-		description={
-			description || i18n.translate('sorry-there-are-no-results-found')
-		}
-		imgSrc={type ? States[type] : States.EMPTY_SEARCH}
-		title={title || i18n.translate('no-results-found')}
-	>
-		{children}
-	</ClayEmptyState>
-);
-
-export default EmptyState;
+export default EmptyState

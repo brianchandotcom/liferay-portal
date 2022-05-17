@@ -25,7 +25,11 @@ const VIEW_TYPES = {
 	rows: 3,
 };
 
-const HTMLEditorModal = ({initialContent = '', onCloseCallback, onSave}) => {
+const HTMLEditorModal = ({
+	initialContent = '',
+	onClose: onCloseCallback,
+	onSave,
+}) => {
 	const [content, setContent] = useState(initialContent);
 	const [viewType, setViewType] = useState(VIEW_TYPES.columns);
 	const [visible, setVisible] = useState(true);

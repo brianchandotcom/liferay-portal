@@ -55,6 +55,8 @@ public class PreviewCommerceOrderItemClayTableDataSetDisplayView
 			"importStatus", "import-status");
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"replacingSKU", "replacing");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"requestedDeliveryDate", "requested-delivery-date");
 
 		return clayTableSchemaBuilder.build();
 	}

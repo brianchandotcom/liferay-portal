@@ -320,9 +320,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 								path="/document_library/view_folder_descriptive.jsp"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="/document_library/folder_action.jsp"
-							/>
+							<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+								<liferay-ui:search-container-column-jsp
+									path="/document_library/folder_action.jsp"
+								/>
+							</c:if>
 						</c:when>
 						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
 
@@ -334,7 +336,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 								colspan="<%= 2 %>"
 							>
 								<liferay-frontend:horizontal-card
-									actionJsp="/document_library/folder_action.jsp"
+									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : null %>'
 									actionJspServletContext="<%= application %>"
 									resultRow="<%= row %>"
 									rowChecker="<%= searchContainer.getRowChecker() %>"
@@ -452,9 +454,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("action") %>'>
-										<liferay-ui:search-container-column-jsp
-											path="/document_library/folder_action.jsp"
-										/>
+										<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+											<liferay-ui:search-container-column-jsp
+												path="/document_library/folder_action.jsp"
+											/>
+										</c:if>
 									</c:when>
 								</c:choose>
 

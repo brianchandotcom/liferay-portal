@@ -35,6 +35,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for 147512. The page editor cannot change background image on non-desktop viewports."
+	@priority = "4"
+	test CannotChangeBackgroundImageOfFragmentInNonDesktopViewport {
+		property custom.properties = "feature.flag.LPS-132571=true";
+
+		task ("Given a page creator has a content page where a Container fragment has a background image") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Direct",
+				panel = "Styles",
+				uploadFileName = "high_resolution_photo.jpg");
+
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
+
+			AssertEditable(
+				key_text = "Background Image",
+				locator1 = "TextInput#ANY");
+		}
+
+		task ("When the page creator switch to the Landscape Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+		}
+
+		task ("Then the page creator cannot change background image of Container in the Landscape Phone viewport") {
+			AssertNotEditable(
+				key_text = "Background Image",
+				locator1 = "TextInput#ANY");
+		}
+	}
+
 	@description = "This is a test for 147512. The page editor could customize styles on non-desktop viewports."
 	@priority = "5"
 	test CustomizeFragmentStylesInNonDesktopViewport {

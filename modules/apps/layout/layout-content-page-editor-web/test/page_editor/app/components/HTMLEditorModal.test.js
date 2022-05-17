@@ -18,7 +18,6 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 
 import HTMLEditorModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/HTMLEditorModal';
-import HTMLProcessor from '../../../../src/main/resources/META-INF/resources/page_editor/app/processors/HTMLProcessor';
 
 const renderModal = async ({initialContent = '', onClose, onSave}) => {
 	document.body.createTextRange = () => {
@@ -50,13 +49,6 @@ describe('HTMLEditorModal', () => {
 
 	beforeAll(() => {
 		jest.useFakeTimers();
-	});
-
-	it('injects the given string as innerHTML', () => {
-		const element = document.createElement('div');
-
-		HTMLProcessor.render(element, 'Jordi Kappler');
-		expect(element.innerHTML).toBe('Jordi Kappler');
 	});
 
 	it('modal is rendered', () => {

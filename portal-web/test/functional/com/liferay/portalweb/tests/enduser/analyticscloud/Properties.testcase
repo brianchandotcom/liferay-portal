@@ -53,7 +53,7 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			ACDXPSettings.assertSuccessfulConnection();
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Navigate to the Synced Sites Menu tab") {
@@ -99,7 +99,7 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			ACDXPSettings.assertSuccessfulConnection();
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assign the new site to existing property") {
@@ -303,7 +303,7 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			ACDXPSettings.assertSuccessfulConnection();
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assign the new site to a new property") {

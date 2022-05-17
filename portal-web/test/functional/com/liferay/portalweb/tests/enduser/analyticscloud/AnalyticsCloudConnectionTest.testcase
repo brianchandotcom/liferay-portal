@@ -190,7 +190,7 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			ACDXPSettings.assertSuccessfulConnection();
+			Alert.viewSuccessMessage();
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
@@ -399,7 +399,7 @@ definition {
 	test ConnectACtoDXP {
 		property portal.release = "true";
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"

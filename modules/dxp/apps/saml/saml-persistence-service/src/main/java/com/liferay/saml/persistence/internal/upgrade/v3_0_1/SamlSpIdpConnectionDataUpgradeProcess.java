@@ -15,18 +15,15 @@
 package com.liferay.saml.persistence.internal.upgrade.v3_0_1;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.Properties;
@@ -75,9 +72,6 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 								resultSet.getLong("samlSpIdpConnectionId"))));
 				}
 			}
-		}
-		catch (IOException | SQLException exception) {
-			throw new UpgradeException(exception);
 		}
 	}
 

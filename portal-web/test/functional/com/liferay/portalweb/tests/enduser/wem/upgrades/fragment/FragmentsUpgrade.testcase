@@ -1,0 +1,45 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Fragments,Upgrades WEM";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a test for LPS-153154. View embedded instantiable fragment after upgrade from 7.1.10.5"
+	@priority = "4"
+	test ViewEmbeddedInstantiableFragmentAfterUpgradeFrom71105 {
+		property data.archive.type = "data-archive-fragment-with-instantiable-widget";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.1.10.5";
+
+		task ("View instatiable fragment is successfully upgraded on the page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "Web Content Content");
+		}
+
+		task ("View instatiable fragment is successfully upgraded on the page at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragment(fragmentName = "Fragment Name");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "Web Content Content");
+		}
+	}
+
+}

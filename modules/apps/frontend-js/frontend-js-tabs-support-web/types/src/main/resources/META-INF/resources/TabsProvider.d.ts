@@ -24,7 +24,9 @@ declare class TabsProvider {
 	show: ({panel, trigger}: {panel?: any; trigger?: any}) => void;
 	_getPanel(trigger: any): any;
 	_getTrigger(panel: any): Element | null;
+	_onFadeEnd: (panel: any, trigger: any) => void;
 	_onTriggerClick: (event: any) => void;
+	_prefersReducedMotion(): boolean;
 	_setTransitionEndEvent(): void;
 }
 export default TabsProvider;

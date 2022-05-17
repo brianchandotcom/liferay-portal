@@ -74,17 +74,16 @@ class TabsProvider {
 
 		this._transitioning = true;
 
-		panel.addEventListener(
-			this._transitionEndEvent,
-			() => {
-				panel.classList.remove(CssClass.ACTIVE);
-
-				this._transitioning = false;
-
-				Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
-			},
-			{once: true}
-		);
+		if (this._prefersReducedMotion()) {
+			this._onFadeEnd(panel, trigger);
+		}
+		else {
+			panel.addEventListener(
+				this._transitionEndEvent,
+				() => this._onFadeEnd(panel, trigger),
+				{once: true}
+			);
+		}
 	};
 
 	show = ({panel, trigger}: {panel?: any; trigger?: any}) => {
@@ -138,6 +137,14 @@ class TabsProvider {
 		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
+	_onFadeEnd = (panel: any, trigger: any) => {
+		panel.classList.remove(CssClass.ACTIVE);
+
+		this._transitioning = false;
+
+		Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
+	};
+
 	_onTriggerClick = (event: any) => {
 		const trigger = event.delegateTarget;
 
@@ -151,6 +158,10 @@ class TabsProvider {
 			this.show({panel, trigger});
 		}
 	};
+
+	_prefersReducedMotion() {
+		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	}
 
 	_setTransitionEndEvent() {
 		const sampleElement = document.body;

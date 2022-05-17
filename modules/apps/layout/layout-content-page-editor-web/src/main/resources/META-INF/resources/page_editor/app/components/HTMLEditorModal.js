@@ -52,29 +52,33 @@ const HTMLEditorModal = ({
 					<div className="d-flex justify-content-end pr-2 w-100">
 						<ClayButton.Group>
 							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('display-vertically')}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.columns)}
 								small
 								symbol="columns"
+								title={Liferay.Language.get(
+									'display-vertically'
+								)}
 							/>
 
 							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('display-horizontally')}
 								displayType="secondary"
 								onClick={() => setViewType(VIEW_TYPES.rows)}
 								small
 								symbol="cards"
+								title={Liferay.Language.get(
+									'display-horizontally'
+								)}
 							/>
 
 							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('full-screen')}	
 								displayType="secondary"
 								onClick={() =>
 									setViewType(VIEW_TYPES.fullscreen)
 								}
 								small
 								symbol="expand"
+								title={Liferay.Language.get('full-screen')}
 							/>
 						</ClayButton.Group>
 					</div>

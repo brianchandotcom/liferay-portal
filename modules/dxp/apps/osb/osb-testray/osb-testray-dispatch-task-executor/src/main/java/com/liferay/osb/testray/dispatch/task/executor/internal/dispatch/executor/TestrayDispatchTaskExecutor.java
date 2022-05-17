@@ -1014,13 +1014,14 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			String objectDefinitionShortName)
 		throws Exception {
 
-		Sort[] sorts = {new Sort(fieldName, true)};
-
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
 			objectEntriesPage = _objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get(objectDefinitionShortName),
 				null, null, _defaultDTOConverterContext, filterString, null,
-				null, sorts);
+				null,
+				new Sort[] {
+					new Sort("nestedFieldArray.value_long#" + fieldName, true)
+				});
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -1030,7 +1031,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		int caseNumber = (Integer)properties.get("caseNumber");
+		long caseNumber = (Long)properties.get(fieldName);
 
 		return caseNumber + 1;
 	}

@@ -118,6 +118,7 @@ const HTMLEditorModal = ({
 							>
 								<div
 									dangerouslySetInnerHTML={{__html: content}}
+									onClick={(event) => event.preventDefault()}
 								/>
 							</div>
 						)}

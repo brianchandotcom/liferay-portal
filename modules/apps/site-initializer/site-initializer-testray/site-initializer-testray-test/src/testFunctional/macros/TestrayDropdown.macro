@@ -1,0 +1,22 @@
+definition {
+
+    macro clickOnTheDropdown {
+        Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+    }
+
+    macro selectTheProjectFromDropdown {
+        Click(
+			key_itemvalue = "${key_value}",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+    }
+
+    macro assertTitleBreadcrumbs {
+        AssertElementPresent(
+				key_projectName = "${key_projectName}",
+				locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+    }
+
+    macro assertTheDropdownDisabled {
+        AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+    }
+}

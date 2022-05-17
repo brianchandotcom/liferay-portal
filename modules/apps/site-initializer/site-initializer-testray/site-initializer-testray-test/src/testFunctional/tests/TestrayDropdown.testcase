@@ -27,66 +27,77 @@ definition {
 		}
 	}
 
-	@description = "LPS-149726 - Verify that User can go to a project page."
+	@description = "This is a test for LPS-149726 - Verify that User can go to a project page."
 	@priority = "5"
 	test CanAcessProjectByDropdown {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+		task ("Verify if it is possible to change projects through the dropdown") {
+			TestrayDropdown.clickOnTheDropdown();
 
-		Click(
-			key_itemvalue = "Liferay Portal 7.3",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			TestrayDropdown.selectTheProjectFromDropdown(key_value = "Liferay Portal 7.3");
 
-		AssertElementPresent(
-			key_projectName = "Liferay Portal 7.3",
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Liferay Portal 7.3");
+		}
 	}
 
-	@description = "LPS-149728 - Verify that User can go to the Project directory."
+	@description = "This is a test for LPS-149728 - Verify that User can go to the Project directory."
 	@priority = "5"
 	test CanAcessProjectDirectoryByDropdown {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		task ("Create Project and go to Project") {
+			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+			Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
+		}
 
-		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+		task ("Verify that User can go to the Project directory through the dropdown") {
+			TestrayDropdown.clickOnTheDropdown();
 
-		Click(
-			key_itemvalue = "Project Directory",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			TestrayDropdown.selectTheProjectFromDropdown(key_value = "Project Directory");
 
-		AssertElementPresent(
-			key_projectName = "Project Directory",
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Project Directory");
+		}
 	}
 
-	@description = "LPS-149730 - Verify that User can't acess dropdown on Projects Directory page"
+	@description = "This is a test for LPS-149730 - Verify that User can't acess dropdown on Projects Directory page"
 	@priority = "2"
 	test CanNotAcessDropdownOnProjectDirectory {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Click(locator1 = "Testray#RESULTS_SIDEBAR");
+		task ("Verify that User can't acess dropdown on Projects Directory page") {
+			TestrayLayout.clickResultsOnSidebar();
 
-		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+			TestrayDropdown.assertTheDropdownDisabled();
+		}
 	}
 
-	@description = "LPS-149729 - Verify that User can't acess dropdown on Testflow page"
+	@description = "This is a test for LPS-149729 - Verify that User can't acess dropdown on Testflow page"
 	@priority = "2"
 	test CanNotAcessDropdownOnTestfow {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		TestrayLayout.clickResultsOnSidebar();
+		task ("Verify that User can't acess dropdown on Testflow page") {
+			TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+			TestrayDropdown.assertTheDropdownDisabled();
+		}
 	}
-
 }

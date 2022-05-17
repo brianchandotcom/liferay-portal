@@ -75,6 +75,11 @@ public class CommerceOrderImporterItemImpl
 	}
 
 	@Override
+	public String getRequestedDeliveryDate() {
+		return _requestedDeliveryDate;
+	}
+
+	@Override
 	public String getSKU() {
 		return _sku;
 	}
@@ -140,6 +145,10 @@ public class CommerceOrderImporterItemImpl
 		_replacingSKU = replacingSKU;
 	}
 
+	public void setRequestedDeliveryDate(String requestedDeliveryDate) {
+		_requestedDeliveryDate = requestedDeliveryDate;
+	}
+
 	public void setSku(String sku) {
 		_sku = sku;
 	}
@@ -153,6 +162,7 @@ public class CommerceOrderImporterItemImpl
 	private long _parentCommerceOrderItemCPDefinitionId;
 	private int _quantity;
 	private String _replacingSKU;
+	private String _requestedDeliveryDate;
 	private String _sku;
 
 }

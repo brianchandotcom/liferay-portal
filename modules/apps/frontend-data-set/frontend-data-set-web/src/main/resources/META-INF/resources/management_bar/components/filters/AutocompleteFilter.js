@@ -68,7 +68,7 @@ Item.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
-function composeMultipleValuesOdataString(key, values, exclude) {
+function composeCollectionEntityFieldMultipleValuesOdata(key, values, exclude) {
 	return `${key}/any(x:${values
 		.map(
 			(value) =>
@@ -77,6 +77,18 @@ function composeMultipleValuesOdataString(key, values, exclude) {
 				})`
 		)
 		.join(exclude ? ' and ' : ' or ')})`;
+}
+
+function composeStringEntityFieldMultipleValuesOdata(key, values, exclude) {
+	const expression = `${key} in (${values
+		.map((value) => `'${value}'`)
+		.join(', ')})`;
+
+	if (exclude) {
+		return 'not (' + expression + ')';
+	}
+
+	return expression;
 }
 
 function composeSingleValuesOdataString(key, value, exclude) {
@@ -94,14 +106,26 @@ const getSelectedItemsLabel = ({selectedData}) => {
 	);
 };
 
-const getOdataString = ({id, selectedData, selectionType}) => {
+const getOdataString = ({entityFieldType, id, selectedData, selectionType}) => {
 	const {exclude, itemsValues} = selectedData;
 
 	if (itemsValues?.length) {
 		const values = itemsValues.map((item) => item.value);
 
+		if (entityFieldType === 'string') {
+			return composeStringEntityFieldMultipleValuesOdata(
+				id,
+				values,
+				exclude
+			);
+		}
+
 		return selectionType === 'multiple'
-			? composeMultipleValuesOdataString(id, values, exclude)
+			? composeCollectionEntityFieldMultipleValuesOdata(
+					id,
+					values,
+					exclude
+			  )
 			: composeSingleValuesOdataString(id, values[0], exclude);
 	}
 
@@ -109,6 +133,7 @@ const getOdataString = ({id, selectedData, selectionType}) => {
 };
 function AutocompleteFilter({
 	apiURL,
+	entityFieldType,
 	id,
 	inputPlaceholder,
 	itemKey,
@@ -384,6 +409,7 @@ function AutocompleteFilter({
 								active: true,
 								id,
 								odataFilterString: getOdataString({
+									entityFieldType,
 									id,
 									selectedData: newSelectedData,
 									selectionType,
@@ -413,6 +439,7 @@ function AutocompleteFilter({
 
 AutocompleteFilter.propTypes = {
 	apiURL: PropTypes.string.isRequired,
+	entityFieldType: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	inputPlaceholder: PropTypes.string,
 	itemKey: PropTypes.string.isRequired,

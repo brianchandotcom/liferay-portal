@@ -41,6 +41,11 @@ public class ListTypeEntryAutocompleteFDSFilter
 	}
 
 	@Override
+	public String getEntityFieldType() {
+		return "string";
+	}
+
+	@Override
 	public String getId() {
 		return _id;
 	}

@@ -13,6 +13,7 @@
  */
 
 import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -87,7 +88,7 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 		return nodeByName(items, filterQuery);
 	}, [items, filterQuery]);
 
-	return (
+	return filteredItems.length > 0 ? (
 		<ClayTreeView
 			items={filteredItems}
 			onItemsChange={setItems}
@@ -125,6 +126,15 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 				</ClayTreeView.Item>
 			)}
 		</ClayTreeView>
+	) : (
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'try-again-with-a-different-search'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 }
 

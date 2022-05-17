@@ -45,7 +45,7 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 		_createDate = new Date();
 	}
 
-	public static class BaseItem {
+	public class BaseItem {
 
 		public Long getId() {
 			return _id;
@@ -60,7 +60,7 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 	}
 
 	@JsonFilter("Liferay.Vulcan")
-	public static class Item extends BaseItem {
+	public class Item extends BaseItem {
 
 		public Date getCreateDate() {
 			return _createDate;
@@ -208,10 +208,11 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 		"createDate", "description", "id", "name_en", "name_hr");
 	protected static final DateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-	protected static Map<String, Field> fieldMap = ItemClassIndexUtil.index(
-		Item.class);
 	protected static final List<String> jsonFieldNames = Arrays.asList(
 		"createDate", "description", "id", "name");
+
+	protected Map<String, Field> fieldMap = ItemClassIndexUtil.index(
+		Item.class);
 
 	private String _formatJSONValue(Object value) {
 		if (value == null) {
@@ -231,6 +232,6 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 		return value.toString();
 	}
 
-	private static Date _createDate;
+	private Date _createDate;
 
 }

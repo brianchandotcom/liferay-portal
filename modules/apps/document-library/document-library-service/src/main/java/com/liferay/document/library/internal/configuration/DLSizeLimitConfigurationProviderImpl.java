@@ -16,9 +16,15 @@ package com.liferay.document.library.internal.configuration;
 
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.Dictionary;
 import java.util.Map;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,6 +40,71 @@ public class DLSizeLimitConfigurationProviderImpl
 		return _dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
 			groupId);
 	}
+
+	@Override
+	public void updateGroupMimeTypeSizeLimit(
+			long groupId, Map<String, Long> mimeTypeSizeLimit)
+		throws Exception {
+
+		Dictionary<String, Object> properties;
+
+		Configuration configuration = _getGroupConfiguration(groupId);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				DLSizeLimitConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		if (mimeTypeSizeLimit.isEmpty()) {
+			properties.put("mimeTypeSizeLimit", new String[0]);
+		}
+		else {
+			String[] mimeTypeSizeLimitArray =
+				new String[mimeTypeSizeLimit.size()];
+
+			int i = 0;
+
+			for (Map.Entry<String, Long> entry : mimeTypeSizeLimit.entrySet()) {
+				mimeTypeSizeLimitArray[i] =
+					entry.getKey() + StringPool.COLON + entry.getValue();
+
+				i++;
+			}
+
+			properties.put("mimeTypeSizeLimit", mimeTypeSizeLimitArray);
+		}
+
+		configuration.update(properties);
+	}
+
+	private Configuration _getGroupConfiguration(long groupId)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				DLSizeLimitConfiguration.class.getName() + ".scoped",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;

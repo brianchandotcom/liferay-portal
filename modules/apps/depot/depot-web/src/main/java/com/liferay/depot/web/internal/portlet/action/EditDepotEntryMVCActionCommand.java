@@ -17,6 +17,7 @@ package com.liferay.depot.web.internal.portlet.action;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,8 +31,10 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -82,6 +85,8 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "TypeSettingsProperties--"),
 				ServiceContextFactory.getInstance(
 					DepotEntry.class.getName(), actionRequest));
+
+			_updateDLSizeLimitConfiguration(group.getGroupId(), actionRequest);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -106,10 +111,41 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		return map;
 	}
 
+	private void _updateDLSizeLimitConfiguration(
+			long groupId, ActionRequest actionRequest)
+		throws Exception {
+
+		Map<String, Long> mimeTypeSizeLimits = new LinkedHashMap<>();
+
+		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+
+		for (int i = 0; parameterMap.containsKey("mimeType_" + i); i++) {
+			String[] mimeType = parameterMap.get("mimeType_" + i);
+
+			if ((mimeType.length == 0) || Validator.isNull(mimeType[0])) {
+				continue;
+			}
+
+			String[] size = parameterMap.get("size_" + i);
+
+			if ((size.length == 0) || Validator.isNull(size[0])) {
+				continue;
+			}
+
+			mimeTypeSizeLimits.put(mimeType[0], GetterUtil.getLong(size[0]));
+		}
+
+		_dlSizeLimitConfigurationProvider.updateGroupMimeTypeSizeLimit(
+			groupId, mimeTypeSizeLimits);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditDepotEntryMVCActionCommand.class);
 
 	@Reference
 	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
 
 }

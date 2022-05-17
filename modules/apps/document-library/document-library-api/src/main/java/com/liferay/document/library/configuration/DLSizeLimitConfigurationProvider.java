@@ -23,4 +23,8 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId);
 
+	public void updateGroupMimeTypeSizeLimit(
+			long groupId, Map<String, Long> mimeTypeSizeLimit)
+		throws Exception;
+
 }

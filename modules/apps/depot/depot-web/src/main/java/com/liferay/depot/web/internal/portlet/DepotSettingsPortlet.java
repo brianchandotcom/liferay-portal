@@ -19,13 +19,16 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.depot.web.internal.display.context.DepotAdminDLDisplayContext;
 import com.liferay.depot.web.internal.display.context.DepotAdminDetailsDisplayContext;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.DynamicRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -81,6 +84,12 @@ public class DepotSettingsPortlet extends MVCPortlet {
 				DepotAdminWebKeys.DEPOT_ENTRY, depotEntry);
 
 			renderRequest.setAttribute(
+				DepotAdminDLDisplayContext.class.getName(),
+				new DepotAdminDLDisplayContext(
+					depotEntry, _dlSizeLimitConfigurationProvider,
+					_portal.getHttpServletRequest(renderRequest)));
+
+			renderRequest.setAttribute(
 				DepotAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.SHOW_BREADCRUMB, Boolean.TRUE);
@@ -108,6 +117,12 @@ public class DepotSettingsPortlet extends MVCPortlet {
 	private DepotEntryService _depotEntryService;
 
 	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
+
+	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

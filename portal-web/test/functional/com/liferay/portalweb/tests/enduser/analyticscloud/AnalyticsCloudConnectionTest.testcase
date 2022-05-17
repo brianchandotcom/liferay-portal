@@ -382,14 +382,6 @@ definition {
 		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
 	}
 
-	@description = "Validate if the user can connect AC to DXP"
-	@priority = "5"
-	test ConnectACtoDXP {
-		property portal.release = "true";
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-	}
-
 	@description = "Bug: LRAC-11140 | Automation ID: LRAC-11141 | Test Summary: Check the AC connection success message with the DXP"
 	@priority = "3"
 	test CheckConnectionSuccessMessage {
@@ -400,6 +392,14 @@ definition {
 		ACDXPSettings.connectAnalyticsCloud();
 
 		ACDXPSettings.assertSuccessfulConnection();
+	}
+
+	@description = "Validate if the user can connect AC to DXP"
+	@priority = "5"
+	test ConnectACtoDXP {
+		property portal.release = "true";
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"

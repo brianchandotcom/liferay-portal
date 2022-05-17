@@ -1,0 +1,41 @@
+definition {
+
+	macro removeAccountRolePermission {
+		Navigator.gotoNavTab(navTab = "Account Roles");
+
+		CommerceNavigator.gotoEntry(entryName = "${roleTitle}");
+
+		Navigator.gotoNavTab(navTab = "Define Permissions");
+
+		ClickNoError(
+			key_resourceAction = "${permission}",
+			locator1 = "CommercePermissions#REMOVE_PERMISSION");
+
+		Confirm(value1 = "Are you sure you want to remove this permission?");
+
+		AssertElementNotPresent(
+			key_resourceAction = "${permission}",
+			locator1 = "CommercePermissions#REMOVE_PERMISSION");
+
+		Click(locator1 = "Icon#BACK");
+	}
+
+	macro removeRegularRolePermission {
+		CommerceNavigator.gotoEntry(entryName = "${roleTitle}");
+
+		Navigator.gotoNavTab(navTab = "Define Permissions");
+
+		ClickNoError(
+			key_resourceAction = "${permission}",
+			locator1 = "CommercePermissions#REMOVE_PERMISSION");
+
+		Confirm(value1 = "Are you sure you want to remove this permission?");
+
+		AssertElementNotPresent(
+			key_resourceAction = "${permission}",
+			locator1 = "CommercePermissions#REMOVE_PERMISSION");
+
+		Click(locator1 = "Icon#BACK");
+	}
+
+}

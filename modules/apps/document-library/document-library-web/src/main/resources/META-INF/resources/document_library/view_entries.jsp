@@ -96,6 +96,11 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 							</c:if>
 						</c:when>
 						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
+
+							<%
+							String fileEntryActionJsp = dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/file_entry_action.jsp" : null;
+							%>
+
 							<liferay-ui:search-container-column-text>
 								<c:choose>
 									<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
@@ -110,7 +115,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										</liferay-util:buffer>
 
 										<liferay-frontend:html-vertical-card
-											actionJsp="/document_library/file_entry_action.jsp"
+											actionJsp="<%= fileEntryActionJsp %>"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
 											html="<%= customThumbnailHTML %>"
@@ -124,7 +129,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 									</c:when>
 									<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 										<liferay-frontend:icon-vertical-card
-											actionJsp="/document_library/file_entry_action.jsp"
+											actionJsp="<%= fileEntryActionJsp %>"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
 											icon="documents-and-media"
@@ -138,7 +143,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 									</c:when>
 									<c:otherwise>
 										<liferay-frontend:vertical-card
-											actionJsp="/document_library/file_entry_action.jsp"
+											actionJsp="<%= fileEntryActionJsp %>"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
 											imageUrl="<%= thumbnailSrc %>"

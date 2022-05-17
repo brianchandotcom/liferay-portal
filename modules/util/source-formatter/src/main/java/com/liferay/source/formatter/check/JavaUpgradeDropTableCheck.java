@@ -49,18 +49,22 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
-		Matcher matcher = _runSqlPattern.matcher(content);
+		Matcher matcher1 = _runSqlPattern.matcher(content);
 
-		while (matcher.find()) {
-			String runSqlMethodCall = _getMethodCall(content, matcher.start());
+		while (matcher1.find()) {
+			String runSqlMethodCall = _getMethodCall(content, matcher1.start());
 
-			if (!runSqlMethodCall.contains("drop table if exists")) {
+			Matcher matcher2 = _dropTablePattern.matcher(runSqlMethodCall);
+
+			if (!matcher2.find()) {
 				continue;
 			}
 
+			String template = String.format(
+				"DROP_TABLE_IF_EXISTS(%s)", matcher2.group(1));
+
 			return StringUtil.replaceFirst(
-				content, "drop table if exists", "DROP_TABLE_IF_EXISTS",
-				matcher.start());
+				content, matcher2.group(0), template, matcher2.start());
 		}
 
 		return javaTerm.getContent();
@@ -89,6 +93,8 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 		}
 	}
 
+	private static final Pattern _dropTablePattern = Pattern.compile(
+		"drop table if exists ([\\w,\\s]+)");
 	private static final Pattern _runSqlPattern = Pattern.compile(
 		"\\brunSQL\\(");
 

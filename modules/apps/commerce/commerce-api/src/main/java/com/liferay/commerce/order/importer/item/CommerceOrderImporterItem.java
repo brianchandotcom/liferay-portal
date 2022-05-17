@@ -41,6 +41,8 @@ public interface CommerceOrderImporterItem {
 
 	public String getReplacingSKU();
 
+	public String getRequestedDeliveryDate();
+
 	public String getSKU();
 
 	public boolean hasParentCommerceOrderItem();

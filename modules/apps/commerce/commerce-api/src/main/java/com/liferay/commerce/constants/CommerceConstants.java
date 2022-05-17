@@ -45,6 +45,10 @@ public class CommerceConstants {
 	public static final String SERVICE_NAME_COMMERCE_ORDER_FIELDS =
 		"com.liferay.commerce.order.fields";
 
+	public static final String
+		SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT =
+			"com.liferay.commerce.order.requested.delivery.date";
+
 	public static final String SERVICE_NAME_COMMERCE_PRICE =
 		"com.liferay.commerce.price";
 

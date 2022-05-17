@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionConvert;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
@@ -25,11 +26,15 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -159,7 +164,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null), filter, pagination, search, sorts);
+			_getDTOConverterContext(null),
+			toPredicate(
+				ParamUtil.getString(contextHttpServletRequest, "filter")),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -200,8 +208,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-			aggregation, _getDTOConverterContext(null), filter, pagination,
-			search, sorts);
+			aggregation, _getDTOConverterContext(null),
+			toPredicate(
+				ParamUtil.getString(contextHttpServletRequest, "filter")),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -313,6 +323,31 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			null, filter, pagination, sorts);
 	}
 
+	public Predicate toPredicate(String filterString) {
+		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId()));
+
+			FilterParser filterParser = filterParserProvider.provide(
+				entityModel);
+
+			com.liferay.portal.odata.filter.Filter oDataFilter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
+
+			return _predicateExpressionConvert.convert(
+				oDataFilter.getExpression(),
+				contextAcceptLanguage.getPreferredLocale(), entityModel,
+				_objectDefinition.getObjectDefinitionId());
+		}
+		catch (Exception exception) {
+			System.out.println(exception.getMessage());
+		}
+
+		return null;
+	}
+
 	@Override
 	public void update(
 			Collection<ObjectEntry> objectEntries,
@@ -368,6 +403,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throw new NotFoundException("Missing parameter \"objectDefinitionId\"");
 	}
 
+	@Reference
+	private FilterParserProvider _filterParserProvider;
+
 	@Context
 	private ObjectDefinition _objectDefinition;
 
@@ -383,5 +421,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private PredicateExpressionConvert _predicateExpressionConvert;
 
 }

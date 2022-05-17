@@ -60,7 +60,10 @@ const descriptionTypes = Object.values(
 	DescriptionType
 ).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
 
-const FormRow: React.FC<{children: ReactNode, title: string}> = ({children, title}) => (
+const FormRow: React.FC<{children: ReactNode; title: string}> = ({
+	children,
+	title,
+}) => (
 	<>
 		<ClayLayout.Row justify="start">
 			<ClayLayout.Col size={3} sm={12} xl={3}>

@@ -14,13 +14,13 @@
 
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 
 import i18n from '../../i18n';
 import InputWarning from './InputWarning';
 
 type InputWrapper = {
-	children: ReactNode
+	children: ReactNode;
 	description?: string;
 	error?: string;
 	label?: string;

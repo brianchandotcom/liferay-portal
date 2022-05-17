@@ -127,7 +127,7 @@ if (organization != null) {
 		{
 			select: '<portlet:namespace />regionId',
 			selectData: Liferay.Address.getRegions,
-			selectDesc: 'name',
+			selectDesc: 'title',
 			selectDisableOnEmpty: true,
 			selectId: 'regionId',
 			selectVal: '<%= regionId %>',

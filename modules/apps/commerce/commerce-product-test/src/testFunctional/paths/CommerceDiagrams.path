@@ -130,6 +130,12 @@
 	<td>//select[contains(@id,'type')]//option[@selected and contains(.,'${key_selectedType}')]</td>
 	<td></td>
 </tr>
+<!--DIAGRAM_ZOOM-->
+<tr>
+	<td>CHECK_DIAGRAM_ZOOM_VALUE</td>
+	<td>//select[contains(@class,'form-control ml-1')]//option[contains(.,'${key_zoomValue}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

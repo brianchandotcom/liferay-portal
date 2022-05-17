@@ -353,10 +353,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-146568. It asserts a key with an overridden translation for a specified language will have the language in bold."
+	@description = "This is a use case for LPS-146568. It asserts the language overriden will be bolded when it matches the selected language."
 	@priority = "3"
-	test LanguageWithOverrideIsBoldWhenFilteringBySpecifiedLanguage {
-		task ("Given a new language key is added for en-US and nl-NL") {
+	test LanguageOverrideIsBoldedWhenMatchestheSelectedLanguage {
+		task ("Given new languages key are added for en-US and nl-NL separately") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "new-key",
 				translationOverrideList = "nl-NL",

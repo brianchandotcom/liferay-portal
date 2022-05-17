@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -26,6 +28,7 @@ import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.clay.data.Filter;
@@ -36,16 +39,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.math.BigDecimal;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
@@ -79,6 +91,23 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 			return Collections.emptyList();
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long groupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getSiteGroupId());
+
+		CommerceOrderImporterDateFormatConfiguration
+			commerceOrderImporterDateFormatConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderImporterDateFormatConfiguration.class,
+					new GroupServiceSettingsLocator(
+						groupId,
+						CommerceConstants.
+							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
 		IntegerWrapper integerWrapper = new IntegerWrapper();
 		Locale locale = _portal.getLocale(httpServletRequest);
 
@@ -105,6 +134,11 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 					commerceOrderImporterItem.getName(locale),
 					commerceOrderImporterItem.getQuantity(),
 					commerceOrderImporterItem.getReplacingSKU(),
+					_formatImportDate(
+						commerceOrderImporterItem.getRequestedDeliveryDate(),
+						commerceOrderImporterDateFormatConfiguration.
+							requestedDeliveryDateFormat(),
+						themeDisplay.getLocale()),
 					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),
 					_formatFinalPrice(
@@ -158,6 +192,28 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _formatImportDate(
+		String requestedDeliveryDate, String requestedDeliveryDateFormat,
+		Locale locale) {
+
+		try {
+			if (Validator.isNull(requestedDeliveryDate)) {
+				return StringPool.BLANK;
+			}
+
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				requestedDeliveryDateFormat);
+
+			Date formattedRequestedDeliveryDate = simpleDateFormat.parse(
+				requestedDeliveryDate);
+
+			return simpleDateFormat.format(formattedRequestedDeliveryDate);
+		}
+		catch (IllegalArgumentException | ParseException exception) {
+			return LanguageUtil.get(locale, "request-delivery-date-invalid");
+		}
 	}
 
 	private String _formatUnitPrice(
@@ -261,6 +317,9 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreviewCommerceOrderItemDataSetDataProvider.class);
 
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
 	private List<CommerceOrderImporterItem> _commerceOrderImporterItems;
 
 	@Reference
@@ -278,6 +337,9 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

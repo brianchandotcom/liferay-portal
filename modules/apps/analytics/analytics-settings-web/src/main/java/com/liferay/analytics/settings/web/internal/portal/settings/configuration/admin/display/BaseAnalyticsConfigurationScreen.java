@@ -127,13 +127,15 @@ public abstract class BaseAnalyticsConfigurationScreen
 			configurationProvider.getCompanyConfiguration(
 				AnalyticsConfiguration.class, themeDisplay.getCompanyId()));
 
-		DisplayContext displayContext = getDisplayContext(
-			httpServletRequest, httpServletResponse);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10757"))) {
+			DisplayContext displayContext = getDisplayContext(
+				httpServletRequest, httpServletResponse);
 
-		if (displayContext != null) {
-			httpServletRequest.setAttribute(
-				AnalyticsSettingsWebKeys.ANALYTICS_DISPLAY_CONTEXT,
-				getDisplayContext(httpServletRequest, httpServletResponse));
+			if (displayContext != null) {
+				httpServletRequest.setAttribute(
+					AnalyticsSettingsWebKeys.ANALYTICS_DISPLAY_CONTEXT,
+					getDisplayContext(httpServletRequest, httpServletResponse));
+			}
 		}
 
 		httpServletRequest.setAttribute(

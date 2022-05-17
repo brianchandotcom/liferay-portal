@@ -2,7 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
-	"main": "js/index.ts",
+	"main": "js/index.js",
 	"name": "@liferay/frontend-icons-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

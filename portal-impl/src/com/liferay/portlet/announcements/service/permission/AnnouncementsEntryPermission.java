@@ -123,9 +123,9 @@ public class AnnouncementsEntryPermission {
 		PermissionChecker permissionChecker, long plid, String name,
 		String actionId) {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-		return contains(permissionChecker, layout, name, actionId);
+		return contains(
+			permissionChecker, LayoutLocalServiceUtil.fetchLayout(plid), name,
+			actionId);
 	}
 
 }

@@ -35,10 +35,12 @@ public class ExecUtil {
 	public static String executeCommand(String command)
 		throws IOException, TimeoutException {
 
-		for (String terminalCommand : _terminalCommandWhiteList) {
-			if (!command.startsWith(terminalCommand)) {
+		for (String executableName : _whitelistedExecutableNames) {
+			if (!command.startsWith(executableName)) {
 				throw new RuntimeException(
-					"Unable to utilize command. Please use git, grep, or sed.");
+					"Unable to run command: " + command +
+						"\nPlease use a whitelisted executable: " +
+							_whitelistedExecutableNames);
 			}
 		}
 
@@ -237,7 +239,7 @@ public class ExecUtil {
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
 
-	private static final List<String> _terminalCommandWhiteList = Arrays.asList(
+	private static final List<String> _whitelistedExecutableNames = Arrays.asList(
 		"git", "grep", "sed");
 
 }

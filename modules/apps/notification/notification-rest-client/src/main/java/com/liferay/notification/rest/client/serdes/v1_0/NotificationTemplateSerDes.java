@@ -85,14 +85,14 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 		}
 
-		if (notificationTemplate.getBodyMap() != null) {
+		if (notificationTemplate.getBody() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"bodyMap\": ");
+			sb.append("\"body\": ");
 
-			sb.append(_toJSON(notificationTemplate.getBodyMap()));
+			sb.append(_toJSON(notificationTemplate.getBody()));
 		}
 
 		if (notificationTemplate.getCc() != null) {
@@ -179,14 +179,14 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 		}
 
-		if (notificationTemplate.getFromNameMap() != null) {
+		if (notificationTemplate.getFromName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fromNameMap\": ");
+			sb.append("\"fromName\": ");
 
-			sb.append(_toJSON(notificationTemplate.getFromNameMap()));
+			sb.append(_toJSON(notificationTemplate.getFromName()));
 		}
 
 		if (notificationTemplate.getId() != null) {
@@ -223,14 +223,14 @@ public class NotificationTemplateSerDes {
 			sb.append(_toJSON(notificationTemplate.getName_i18n()));
 		}
 
-		if (notificationTemplate.getSubjectMap() != null) {
+		if (notificationTemplate.getSubject() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subjectMap\": ");
+			sb.append("\"subject\": ");
 
-			sb.append(_toJSON(notificationTemplate.getSubjectMap()));
+			sb.append(_toJSON(notificationTemplate.getSubject()));
 		}
 
 		if (notificationTemplate.getTo() != null) {
@@ -243,30 +243,6 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(notificationTemplate.getTo()));
-
-			sb.append("\"");
-		}
-
-		if (notificationTemplate.getUserId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userId\": ");
-
-			sb.append(notificationTemplate.getUserId());
-		}
-
-		if (notificationTemplate.getUserName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(notificationTemplate.getUserName()));
 
 			sb.append("\"");
 		}
@@ -310,12 +286,11 @@ public class NotificationTemplateSerDes {
 			map.put("bcc", String.valueOf(notificationTemplate.getBcc()));
 		}
 
-		if (notificationTemplate.getBodyMap() == null) {
-			map.put("bodyMap", null);
+		if (notificationTemplate.getBody() == null) {
+			map.put("body", null);
 		}
 		else {
-			map.put(
-				"bodyMap", String.valueOf(notificationTemplate.getBodyMap()));
+			map.put("body", String.valueOf(notificationTemplate.getBody()));
 		}
 
 		if (notificationTemplate.getCc() == null) {
@@ -368,13 +343,12 @@ public class NotificationTemplateSerDes {
 			map.put("from", String.valueOf(notificationTemplate.getFrom()));
 		}
 
-		if (notificationTemplate.getFromNameMap() == null) {
-			map.put("fromNameMap", null);
+		if (notificationTemplate.getFromName() == null) {
+			map.put("fromName", null);
 		}
 		else {
 			map.put(
-				"fromNameMap",
-				String.valueOf(notificationTemplate.getFromNameMap()));
+				"fromName", String.valueOf(notificationTemplate.getFromName()));
 		}
 
 		if (notificationTemplate.getId() == null) {
@@ -400,13 +374,12 @@ public class NotificationTemplateSerDes {
 				String.valueOf(notificationTemplate.getName_i18n()));
 		}
 
-		if (notificationTemplate.getSubjectMap() == null) {
-			map.put("subjectMap", null);
+		if (notificationTemplate.getSubject() == null) {
+			map.put("subject", null);
 		}
 		else {
 			map.put(
-				"subjectMap",
-				String.valueOf(notificationTemplate.getSubjectMap()));
+				"subject", String.valueOf(notificationTemplate.getSubject()));
 		}
 
 		if (notificationTemplate.getTo() == null) {
@@ -414,21 +387,6 @@ public class NotificationTemplateSerDes {
 		}
 		else {
 			map.put("to", String.valueOf(notificationTemplate.getTo()));
-		}
-
-		if (notificationTemplate.getUserId() == null) {
-			map.put("userId", null);
-		}
-		else {
-			map.put("userId", String.valueOf(notificationTemplate.getUserId()));
-		}
-
-		if (notificationTemplate.getUserName() == null) {
-			map.put("userName", null);
-		}
-		else {
-			map.put(
-				"userName", String.valueOf(notificationTemplate.getUserName()));
 		}
 
 		return map;
@@ -464,9 +422,9 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setBcc((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "bodyMap")) {
+			else if (Objects.equals(jsonParserFieldName, "body")) {
 				if (jsonParserFieldValue != null) {
-					notificationTemplate.setBodyMap(
+					notificationTemplate.setBody(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
@@ -505,9 +463,9 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setFrom((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fromNameMap")) {
+			else if (Objects.equals(jsonParserFieldName, "fromName")) {
 				if (jsonParserFieldValue != null) {
-					notificationTemplate.setFromNameMap(
+					notificationTemplate.setFromName(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
@@ -530,9 +488,9 @@ public class NotificationTemplateSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "subjectMap")) {
+			else if (Objects.equals(jsonParserFieldName, "subject")) {
 				if (jsonParserFieldValue != null) {
-					notificationTemplate.setSubjectMap(
+					notificationTemplate.setSubject(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
@@ -540,18 +498,6 @@ public class NotificationTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "to")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setTo((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userId")) {
-				if (jsonParserFieldValue != null) {
-					notificationTemplate.setUserId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userName")) {
-				if (jsonParserFieldValue != null) {
-					notificationTemplate.setUserName(
-						(String)jsonParserFieldValue);
 				}
 			}
 		}

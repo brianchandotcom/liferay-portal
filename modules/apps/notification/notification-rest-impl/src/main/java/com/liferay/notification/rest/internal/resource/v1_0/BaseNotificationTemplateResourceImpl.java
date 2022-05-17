@@ -187,7 +187,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -229,9 +229,9 @@ public abstract class BaseNotificationTemplateResourceImpl
 			existingNotificationTemplate.setBcc(notificationTemplate.getBcc());
 		}
 
-		if (notificationTemplate.getBodyMap() != null) {
-			existingNotificationTemplate.setBodyMap(
-				notificationTemplate.getBodyMap());
+		if (notificationTemplate.getBody() != null) {
+			existingNotificationTemplate.setBody(
+				notificationTemplate.getBody());
 		}
 
 		if (notificationTemplate.getCc() != null) {
@@ -263,9 +263,9 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getFrom());
 		}
 
-		if (notificationTemplate.getFromNameMap() != null) {
-			existingNotificationTemplate.setFromNameMap(
-				notificationTemplate.getFromNameMap());
+		if (notificationTemplate.getFromName() != null) {
+			existingNotificationTemplate.setFromName(
+				notificationTemplate.getFromName());
 		}
 
 		if (notificationTemplate.getName() != null) {
@@ -278,23 +278,13 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getName_i18n());
 		}
 
-		if (notificationTemplate.getSubjectMap() != null) {
-			existingNotificationTemplate.setSubjectMap(
-				notificationTemplate.getSubjectMap());
+		if (notificationTemplate.getSubject() != null) {
+			existingNotificationTemplate.setSubject(
+				notificationTemplate.getSubject());
 		}
 
 		if (notificationTemplate.getTo() != null) {
 			existingNotificationTemplate.setTo(notificationTemplate.getTo());
-		}
-
-		if (notificationTemplate.getUserId() != null) {
-			existingNotificationTemplate.setUserId(
-				notificationTemplate.getUserId());
-		}
-
-		if (notificationTemplate.getUserName() != null) {
-			existingNotificationTemplate.setUserName(
-				notificationTemplate.getUserName());
 		}
 
 		preparePatch(notificationTemplate, existingNotificationTemplate);
@@ -306,7 +296,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -444,7 +434,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"bcc": ___, "bodyMap": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromNameMap": ___, "name": ___, "name_i18n": ___, "subjectMap": ___, "to": ___, "userId": ___, "userName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "enable": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {

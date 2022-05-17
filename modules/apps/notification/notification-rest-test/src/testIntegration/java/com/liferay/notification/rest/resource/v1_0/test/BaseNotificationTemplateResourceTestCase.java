@@ -197,7 +197,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		notificationTemplate.setFrom(regex);
 		notificationTemplate.setName(regex);
 		notificationTemplate.setTo(regex);
-		notificationTemplate.setUserName(regex);
 
 		String json = NotificationTemplateSerDes.toJSON(notificationTemplate);
 
@@ -211,7 +210,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		Assert.assertEquals(regex, notificationTemplate.getFrom());
 		Assert.assertEquals(regex, notificationTemplate.getName());
 		Assert.assertEquals(regex, notificationTemplate.getTo());
-		Assert.assertEquals(regex, notificationTemplate.getUserName());
 	}
 
 	@Test
@@ -979,8 +977,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("bodyMap", additionalAssertFieldName)) {
-				if (notificationTemplate.getBodyMap() == null) {
+			if (Objects.equals("body", additionalAssertFieldName)) {
+				if (notificationTemplate.getBody() == null) {
 					valid = false;
 				}
 
@@ -1019,8 +1017,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("fromNameMap", additionalAssertFieldName)) {
-				if (notificationTemplate.getFromNameMap() == null) {
+			if (Objects.equals("fromName", additionalAssertFieldName)) {
+				if (notificationTemplate.getFromName() == null) {
 					valid = false;
 				}
 
@@ -1043,8 +1041,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("subjectMap", additionalAssertFieldName)) {
-				if (notificationTemplate.getSubjectMap() == null) {
+			if (Objects.equals("subject", additionalAssertFieldName)) {
+				if (notificationTemplate.getSubject() == null) {
 					valid = false;
 				}
 
@@ -1053,22 +1051,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 			if (Objects.equals("to", additionalAssertFieldName)) {
 				if (notificationTemplate.getTo() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", additionalAssertFieldName)) {
-				if (notificationTemplate.getUserId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (notificationTemplate.getUserName() == null) {
 					valid = false;
 				}
 
@@ -1192,10 +1174,10 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("bodyMap", additionalAssertFieldName)) {
+			if (Objects.equals("body", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)notificationTemplate1.getBodyMap(),
-						(Map)notificationTemplate2.getBodyMap())) {
+						(Map)notificationTemplate1.getBody(),
+						(Map)notificationTemplate2.getBody())) {
 
 					return false;
 				}
@@ -1269,10 +1251,10 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("fromNameMap", additionalAssertFieldName)) {
+			if (Objects.equals("fromName", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)notificationTemplate1.getFromNameMap(),
-						(Map)notificationTemplate2.getFromNameMap())) {
+						(Map)notificationTemplate1.getFromName(),
+						(Map)notificationTemplate2.getFromName())) {
 
 					return false;
 				}
@@ -1313,10 +1295,10 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("subjectMap", additionalAssertFieldName)) {
+			if (Objects.equals("subject", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)notificationTemplate1.getSubjectMap(),
-						(Map)notificationTemplate2.getSubjectMap())) {
+						(Map)notificationTemplate1.getSubject(),
+						(Map)notificationTemplate2.getSubject())) {
 
 					return false;
 				}
@@ -1328,28 +1310,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getTo(),
 						notificationTemplate2.getTo())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationTemplate1.getUserId(),
-						notificationTemplate2.getUserId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationTemplate1.getUserName(),
-						notificationTemplate2.getUserName())) {
 
 					return false;
 				}
@@ -1468,7 +1428,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("bodyMap")) {
+		if (entityFieldName.equals("body")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1570,7 +1530,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("fromNameMap")) {
+		if (entityFieldName.equals("fromName")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1593,7 +1553,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("subjectMap")) {
+		if (entityFieldName.equals("subject")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1601,19 +1561,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		if (entityFieldName.equals("to")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationTemplate.getTo()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("userId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("userName")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationTemplate.getUserName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1676,9 +1623,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				to = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				userId = RandomTestUtil.randomLong();
-				userName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 			}
 		};
 	}

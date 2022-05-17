@@ -77,26 +77,26 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected String bcc;
 
-	public Map<String, String> getBodyMap() {
-		return bodyMap;
+	public Map<String, String> getBody() {
+		return body;
 	}
 
-	public void setBodyMap(Map<String, String> bodyMap) {
-		this.bodyMap = bodyMap;
+	public void setBody(Map<String, String> body) {
+		this.body = body;
 	}
 
-	public void setBodyMap(
-		UnsafeSupplier<Map<String, String>, Exception> bodyMapUnsafeSupplier) {
+	public void setBody(
+		UnsafeSupplier<Map<String, String>, Exception> bodyUnsafeSupplier) {
 
 		try {
-			bodyMap = bodyMapUnsafeSupplier.get();
+			body = bodyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> bodyMap;
+	protected Map<String, String> body;
 
 	public String getCc() {
 		return cc;
@@ -220,27 +220,26 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected String from;
 
-	public Map<String, String> getFromNameMap() {
-		return fromNameMap;
+	public Map<String, String> getFromName() {
+		return fromName;
 	}
 
-	public void setFromNameMap(Map<String, String> fromNameMap) {
-		this.fromNameMap = fromNameMap;
+	public void setFromName(Map<String, String> fromName) {
+		this.fromName = fromName;
 	}
 
-	public void setFromNameMap(
-		UnsafeSupplier<Map<String, String>, Exception>
-			fromNameMapUnsafeSupplier) {
+	public void setFromName(
+		UnsafeSupplier<Map<String, String>, Exception> fromNameUnsafeSupplier) {
 
 		try {
-			fromNameMap = fromNameMapUnsafeSupplier.get();
+			fromName = fromNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> fromNameMap;
+	protected Map<String, String> fromName;
 
 	public Long getId() {
 		return id;
@@ -302,27 +301,26 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
-	public Map<String, String> getSubjectMap() {
-		return subjectMap;
+	public Map<String, String> getSubject() {
+		return subject;
 	}
 
-	public void setSubjectMap(Map<String, String> subjectMap) {
-		this.subjectMap = subjectMap;
+	public void setSubject(Map<String, String> subject) {
+		this.subject = subject;
 	}
 
-	public void setSubjectMap(
-		UnsafeSupplier<Map<String, String>, Exception>
-			subjectMapUnsafeSupplier) {
+	public void setSubject(
+		UnsafeSupplier<Map<String, String>, Exception> subjectUnsafeSupplier) {
 
 		try {
-			subjectMap = subjectMapUnsafeSupplier.get();
+			subject = subjectUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> subjectMap;
+	protected Map<String, String> subject;
 
 	public String getTo() {
 		return to;
@@ -342,48 +340,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected String to;
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public void setUserId(
-		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
-
-		try {
-			userId = userIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long userId;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String userName;
 
 	@Override
 	public NotificationTemplate clone() throws CloneNotSupportedException {

@@ -121,20 +121,20 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, String> getBodyMap() {
-		return bodyMap;
+	public Map<String, String> getBody() {
+		return body;
 	}
 
-	public void setBodyMap(Map<String, String> bodyMap) {
-		this.bodyMap = bodyMap;
+	public void setBody(Map<String, String> body) {
+		this.body = body;
 	}
 
 	@JsonIgnore
-	public void setBodyMap(
-		UnsafeSupplier<Map<String, String>, Exception> bodyMapUnsafeSupplier) {
+	public void setBody(
+		UnsafeSupplier<Map<String, String>, Exception> bodyUnsafeSupplier) {
 
 		try {
-			bodyMap = bodyMapUnsafeSupplier.get();
+			body = bodyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -146,7 +146,7 @@ public class NotificationTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> bodyMap;
+	protected Map<String, String> body;
 
 	@Schema
 	public String getCc() {
@@ -314,21 +314,20 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, String> getFromNameMap() {
-		return fromNameMap;
+	public Map<String, String> getFromName() {
+		return fromName;
 	}
 
-	public void setFromNameMap(Map<String, String> fromNameMap) {
-		this.fromNameMap = fromNameMap;
+	public void setFromName(Map<String, String> fromName) {
+		this.fromName = fromName;
 	}
 
 	@JsonIgnore
-	public void setFromNameMap(
-		UnsafeSupplier<Map<String, String>, Exception>
-			fromNameMapUnsafeSupplier) {
+	public void setFromName(
+		UnsafeSupplier<Map<String, String>, Exception> fromNameUnsafeSupplier) {
 
 		try {
-			fromNameMap = fromNameMapUnsafeSupplier.get();
+			fromName = fromNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -340,7 +339,7 @@ public class NotificationTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> fromNameMap;
+	protected Map<String, String> fromName;
 
 	@Schema
 	public Long getId() {
@@ -426,21 +425,20 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, String> getSubjectMap() {
-		return subjectMap;
+	public Map<String, String> getSubject() {
+		return subject;
 	}
 
-	public void setSubjectMap(Map<String, String> subjectMap) {
-		this.subjectMap = subjectMap;
+	public void setSubject(Map<String, String> subject) {
+		this.subject = subject;
 	}
 
 	@JsonIgnore
-	public void setSubjectMap(
-		UnsafeSupplier<Map<String, String>, Exception>
-			subjectMapUnsafeSupplier) {
+	public void setSubject(
+		UnsafeSupplier<Map<String, String>, Exception> subjectUnsafeSupplier) {
 
 		try {
-			subjectMap = subjectMapUnsafeSupplier.get();
+			subject = subjectUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -452,7 +450,7 @@ public class NotificationTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> subjectMap;
+	protected Map<String, String> subject;
 
 	@Schema
 	public String getTo() {
@@ -479,62 +477,6 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String to;
-
-	@Schema
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	@JsonIgnore
-	public void setUserId(
-		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
-
-		try {
-			userId = userIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long userId;
-
-	@Schema
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	@JsonIgnore
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -591,14 +533,14 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 		}
 
-		if (bodyMap != null) {
+		if (body != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"bodyMap\": ");
+			sb.append("\"body\": ");
 
-			sb.append(_toJSON(bodyMap));
+			sb.append(_toJSON(body));
 		}
 
 		if (cc != null) {
@@ -681,14 +623,14 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 		}
 
-		if (fromNameMap != null) {
+		if (fromName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fromNameMap\": ");
+			sb.append("\"fromName\": ");
 
-			sb.append(_toJSON(fromNameMap));
+			sb.append(_toJSON(fromName));
 		}
 
 		if (id != null) {
@@ -725,14 +667,14 @@ public class NotificationTemplate implements Serializable {
 			sb.append(_toJSON(name_i18n));
 		}
 
-		if (subjectMap != null) {
+		if (subject != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subjectMap\": ");
+			sb.append("\"subject\": ");
 
-			sb.append(_toJSON(subjectMap));
+			sb.append(_toJSON(subject));
 		}
 
 		if (to != null) {
@@ -745,30 +687,6 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(to));
-
-			sb.append("\"");
-		}
-
-		if (userId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userId\": ");
-
-			sb.append(userId);
-		}
-
-		if (userName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userName));
 
 			sb.append("\"");
 		}

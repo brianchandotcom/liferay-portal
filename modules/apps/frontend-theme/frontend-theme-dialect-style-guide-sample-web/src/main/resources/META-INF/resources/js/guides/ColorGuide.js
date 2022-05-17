@@ -105,7 +105,7 @@ const ACCENT_COLORS = [
 	'accent-5',
 	'accent-5-lighten',
 	'accent-6',
-	'accent-7-lighten',
+	'accent-6-lighten',
 ];
 
 const SAMPLE_TEXT = 'Sample';

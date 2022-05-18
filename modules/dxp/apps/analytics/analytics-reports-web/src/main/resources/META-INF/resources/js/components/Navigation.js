@@ -33,7 +33,6 @@ const noop = () => {};
 export default function Navigation({
 	author,
 	canonicalURL,
-	featureFlag,
 	onSelectedLanguageClick = noop,
 	pagePublishDate,
 	pageTitle,
@@ -242,7 +241,6 @@ export default function Navigation({
 				<Drawer>
 					<Detail
 						currentPage={currentPage}
-						featureFlag={featureFlag}
 						handleDetailPeriodChange={
 							updateTrafficSourcesAndCurrentPage
 						}

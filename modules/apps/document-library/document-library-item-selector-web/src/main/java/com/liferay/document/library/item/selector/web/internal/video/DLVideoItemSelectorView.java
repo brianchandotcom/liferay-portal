@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.item.selector.web.internal.video;
 
-import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
@@ -26,6 +25,7 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -54,7 +54,9 @@ public class DLVideoItemSelectorView
 
 	@Override
 	public String[] getMimeTypes() {
-		String[] mimeTypes = {DLContentTypes.VIDEO_EXTERNAL_SHORTCUT};
+		String[] mimeTypes = {
+			ContentTypes.APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML
+		};
 
 		if (VideoProcessorUtil.isAvailable()) {
 			mimeTypes = ArrayUtil.append(

@@ -15,9 +15,9 @@
 package com.liferay.document.library.internal.display.context;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Map;
 import java.util.Objects;
@@ -143,7 +143,10 @@ public class DefaultDLMimeTypeDisplayContext
 	}
 
 	private boolean _isMultimediaFileMimeType(String mimeType) {
-		if (Objects.equals(mimeType, DLContentTypes.VIDEO_EXTERNAL_SHORTCUT) ||
+		if (Objects.equals(
+				mimeType,
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML) ||
 			_containsMimeType(
 				_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 

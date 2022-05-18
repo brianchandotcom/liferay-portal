@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
-import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -37,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -201,7 +201,9 @@ public class DLFileVersionCTDisplayRenderer
 		Set<String> videoMimeTypes = _videoProcessor.getVideoMimeTypes();
 
 		if (videoMimeTypes.contains(mimeType) ||
-			mimeType.equals(DLContentTypes.VIDEO_EXTERNAL_SHORTCUT)) {
+			mimeType.equals(
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
 
 			if (!_videoProcessor.hasVideo(fileVersion)) {
 				return null;

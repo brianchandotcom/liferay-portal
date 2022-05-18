@@ -14,7 +14,6 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
-import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -79,7 +79,8 @@ public class RepositoryEntryBrowserDisplayContext {
 				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
 				fileVersion.getMimeType()) ||
 			Objects.equals(
-				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,
 				fileVersion.getMimeType())) {
 
 			return "video";
@@ -98,7 +99,8 @@ public class RepositoryEntryBrowserDisplayContext {
 				fileVersion.getMimeType()) ||
 			ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) ||
 			Objects.equals(
-				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT,
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,
 				fileVersion.getMimeType())) {
 
 			return true;

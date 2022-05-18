@@ -15,13 +15,13 @@
 package com.liferay.content.dashboard.document.library.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -67,7 +67,8 @@ public class DownloadFileEntryContentDashboardItemAction
 	public String getURL() {
 		if (Objects.equals(
 				_fileEntry.getMimeType(),
-				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT)) {
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
 
 			return StringPool.BLANK;
 		}

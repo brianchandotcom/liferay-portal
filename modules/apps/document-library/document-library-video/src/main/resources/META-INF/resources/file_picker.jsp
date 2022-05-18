@@ -27,7 +27,7 @@ String onFilePickCallback = (String)request.getAttribute(DLVideoWebKeys.ON_FILE_
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<aui:input name="contentType" type="hidden" value="<%= DLContentTypes.VIDEO_EXTERNAL_SHORTCUT %>" />
+<aui:input name="contentType" type="hidden" value="<%= ContentTypes.APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML %>" />
 
 <div class="form-group">
 	<aui:input disabled="<%= true %>" label="video-url" name="dlVideoExternalShortcutURL" value="<%= (dlVideoExternalShortcut != null) ? dlVideoExternalShortcut.getURL() : null %>" wrapperCssClass="mb-0" />

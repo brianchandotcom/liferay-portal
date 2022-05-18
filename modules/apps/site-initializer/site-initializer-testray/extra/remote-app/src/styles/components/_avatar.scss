@@ -1,8 +1,8 @@
 .assign-to-me {
 	align-items: center;
 	background-color: transparent;
-	border: 1px dashed $color-gray;
 	border-radius: 50%;
+	border: 1px dashed $color-gray;
 	color: $color-gray;
 	cursor: pointer;
 	display: flex;
@@ -34,6 +34,10 @@
 	&:not(:last-child) {
 		left: 0;
 	}
+}
+.sticker-circle {
+	min-height: 40px;
+	min-width: 40px;
 }
 
 .avatar-skeleton-loader:empty {

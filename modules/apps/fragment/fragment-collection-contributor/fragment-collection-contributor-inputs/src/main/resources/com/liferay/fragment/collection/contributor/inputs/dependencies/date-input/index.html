@@ -1,0 +1,11 @@
+<div class="date-input">
+	<div class="form-group">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-date-input">${input.label}</label>
+
+		<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" name="${input.name}" type="date" />
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mt-1 mb-0 text-secondary" id="${fragmentEntryLinkNamespace}-date-input-help-text">${input.helpText}</p>
+		[/#if]
+	</div>
+</div>

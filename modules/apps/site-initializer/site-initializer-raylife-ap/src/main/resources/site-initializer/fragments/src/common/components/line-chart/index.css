@@ -17,7 +17,6 @@
 	color: #55c2ff;
 	font-size: 0.875rem;
 	font-style: normal;
-	width: 100%;
 }
 
 .bb-chart-arcs-title {
@@ -29,13 +28,14 @@
 	fill: #e0e0e0;
 	stroke: none;
 }
+
 .bb-chart-arcs .bb-chart-arcs-gauge-unit {
-	fill: #000;
+	fill: var(--black);
 	font-size: 24px;
 }
 
 .bb-chart-arc .bb-gauge-value {
-	fill: #000;
+	fill: var(--black);
 }
 
 .bb path,
@@ -43,15 +43,12 @@
 	fill: none;
 }
 
-.line-chart-container .line-chart-legend {
-	flex-direction: column;
-}
-
 @media screen and (max-width: 1280px) {
 	.line-chart-legend {
 		flex-direction: row !important;
 		justify-content: space-evenly !important;
 	}
+
 	.line-chart-screen {
 		padding-left: 24px;
 		padding-right: 24px;

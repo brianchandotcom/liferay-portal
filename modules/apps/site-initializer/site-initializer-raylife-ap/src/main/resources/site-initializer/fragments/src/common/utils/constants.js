@@ -12,6 +12,20 @@
  * details.
  */
 export const CONSTANTS = {
+	MONTHS: [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	],
 	STATUS: {
 		APPROVED: 'approved',
 		BOUND: 'bound',

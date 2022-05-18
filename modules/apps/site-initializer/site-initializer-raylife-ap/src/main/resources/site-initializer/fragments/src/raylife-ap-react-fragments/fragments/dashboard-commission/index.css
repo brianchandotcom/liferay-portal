@@ -1,6 +1,7 @@
 .dashboard-commission-container {
 	min-height: 257px;
 }
+
 .dashboard-commission-container
 	.dashboard-commission-header
 	.dashboard-commission-title::after {
@@ -14,7 +15,7 @@
 }
 
 .dashboard-commission-container .dashboard-commission-select {
-	border-color: #fff;
+	border-color: var(--white);
 	padding: 5px;
 	width: 105px;
 }

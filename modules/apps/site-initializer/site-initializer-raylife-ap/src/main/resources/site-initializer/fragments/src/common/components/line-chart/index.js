@@ -76,13 +76,13 @@ const LineChart = ({
 
 								const value = data[0].value.toFixed(1);
 
-								return `<div class="line-chart-tooltip bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> $${value}</div>`;
+								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> $${value}</div>`;
 							},
 						}}
 					/>
 				)}
 
-				<div className="d-flex h-100 justify-content-end line-chart-legend mt-5">
+				<div className="d-flex flex-column h-100 justify-content-end line-chart-legend mt-5">
 					<div className="font-weight-normal mb-2 text-neutral-8 text-paragraph-sm">
 						{getDataDate}
 					</div>

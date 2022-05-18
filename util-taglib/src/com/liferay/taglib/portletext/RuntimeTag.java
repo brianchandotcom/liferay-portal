@@ -15,7 +15,9 @@
 package com.liferay.taglib.portletext;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -325,8 +327,14 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 							themeDisplay.getPlid(), portletInstanceKey);
 
 				if (count < 1) {
-					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, portletInstanceKey, defaultPreferences);
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setToProductionWithSafeCloseable()) {
+
+						PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+							layout, portletInstanceKey, defaultPreferences);
+					}
+
 					PortletPreferencesFactoryUtil.getPortletSetup(
 						httpServletRequest, portletInstanceKey,
 						defaultPreferences);

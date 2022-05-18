@@ -25,7 +25,17 @@ definition {
 		var key_columnEntry = "${asset}";
 
 		if (isSet(recipient)) {
+			var counter = "0";
 			var key_recipient = "${recipient}";
+			var maxRetries = "3";
+
+			while (("${counter}" != "${maxRetries}") && (IsTextNotEqual(locator1 = "MockMock#MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK", value1 = "${asset}"))) {
+				var counter = ${counter} + 1;
+
+				MockMock._gotoMail();
+
+				Refresh();
+			}
 
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "MockMock#MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK",

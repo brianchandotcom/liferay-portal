@@ -43,6 +43,19 @@ function getFormItems(layoutData) {
 	);
 }
 
+function itemIsHidden(layoutData, itemId) {
+	const item = layoutData.items[itemId];
+
+	if (!item) {
+		return false;
+	}
+
+	return (
+		item.config.styles?.display === 'none' ||
+		itemIsHidden(layoutData, item.parentId)
+	);
+}
+
 export default function useIsSomeFormIncomplete() {
 	const stateRef = useSelectorRef((state) => state);
 
@@ -92,23 +105,23 @@ export default function useIsSomeFormIncomplete() {
 
 				const descendantIds = getDescendantIds(layoutData, itemId);
 
-				return requiredFields.some(
-					(field) =>
-						!Object.values(fragmentEntryLinks).some(
-							(fragmentEntryLink) => {
-								const item = getFragmentItem(
-									layoutData,
-									fragmentEntryLink.fragmentEntryLinkId
-								);
+				return requiredFields.some((field) =>
+					Object.values(fragmentEntryLinks).some(
+						(fragmentEntryLink) => {
+							const {itemId} = getFragmentItem(
+								layoutData,
+								fragmentEntryLink.fragmentEntryLinkId
+							);
 
-								return (
-									fragmentEntryLink.editableValues?.[
-										FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-									]?.inputFieldId === field.key &&
-									descendantIds.includes(item.itemId)
-								);
-							}
-						)
+							return (
+								itemIsHidden(layoutData, itemId) &&
+								fragmentEntryLink.editableValues?.[
+									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+								]?.inputFieldId === field.key &&
+								descendantIds.includes(itemId)
+							);
+						}
+					)
 				);
 			})
 		);

@@ -226,20 +226,20 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "Article";
 
 		_assertSearch(
-			"[Article alpha es_ES, Article omega es_ES, Article beta " +
-				"en_US, Article delta en_US]");
+			"[Article alpha es_ES, Article omega es_ES, Article beta en_US, " +
+				"Article delta en_US]");
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.US);
 
 		_assertSearch(
-			"[Article beta en_US, Article delta en_US, Article alpha " +
-				"es_ES, Article omega es_ES]");
+			"[Article beta en_US, Article delta en_US, Article alpha es_ES, " +
+				"Article omega es_ES]");
 
 		_updateElementInstancesJSON(null, null);
 
 		_assertSearch(
-			"[Article alpha es_ES, Article beta en_US, Article delta " +
-				"en_US, Article omega es_ES]");
+			"[Article alpha es_ES, Article beta en_US, Article delta en_US, " +
+				"Article omega es_ES]");
 	}
 
 	@Test
@@ -892,8 +892,8 @@ public class SXPBlueprintSearchResultTest {
 
 			Assert.assertEquals(
 				"[com.liferay.search.experiences.blueprint.exception." +
-					"UnresolvedTemplateVariableException: Unresolved template " +
-						"variables: [myparam]]",
+					"UnresolvedTemplateVariableException: Unresolved " +
+						"template variables: [myparam]]",
 				Arrays.toString(suppressed));
 		}
 
@@ -1236,8 +1236,8 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(null, null);
 
 		_assertSearchIgnoreRelevance(
-			"[Article 1 Default User, Article 1 New User, " +
-				"Article 2 Default User, Article 2 New User]");
+			"[Article 1 Default User, Article 1 New User, Article 2 Default " +
+				"User, Article 2 New User]");
 	}
 
 	@Test
@@ -1456,8 +1456,8 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "coca drink";
 
 		_assertSearch(
-			"[this looks like a kind of coca drink, " +
-				"this coca looks like a kind of drink]");
+			"[this looks like a kind of coca drink, this coca looks like a " +
+				"kind of drink]");
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1474,8 +1474,8 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"Paste Any Elasticsearch Query"});
 
 		_assertSearch(
-			"[this coca looks like a kind of drink, " +
-				"this looks like a kind of coca drink]");
+			"[this coca looks like a kind of drink, this looks like a kind " +
+				"of coca drink]");
 	}
 
 	@Test
@@ -1656,8 +1656,8 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "coca cola";
 
 		_assertSearch(
-			"[drink carbonated coca, drink carbonated pepsi cola, " +
-				"sprite, fruit punch]");
+			"[drink carbonated coca, drink carbonated pepsi cola, sprite, " +
+				"fruit punch]");
 
 		_setUpJournalArticles(
 			new String[] {"ipsum sit", "ipsum sit sit", "non-lorem ipsum sit"},

@@ -872,8 +872,8 @@ public class CalendarBookingLocalServiceTest {
 
 		assertMailBody(
 			mailSubject,
-			"mySubject #123 &amp; 412, firstN@m&amp; #124 &amp; " +
-				"423, myLocation #123 &amp; 321");
+			"mySubject #123 &amp; 412, firstN@m&amp; #124 &amp; 423, " +
+				"myLocation #123 &amp; 321");
 	}
 
 	@Test

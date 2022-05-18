@@ -17,18 +17,29 @@ package com.liferay.site.welcome.site.initializer.internal.instance.lifecycle;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.site.initializer.SiteInitializer;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,7 +68,22 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
 
 			if (defaultLayout == null) {
-				_siteInitializer.initialize(group.getGroupId());
+				String name = PrincipalThreadLocal.getName();
+
+				try {
+					User user = _getUser(company.getCompanyId());
+
+					PrincipalThreadLocal.setName(user.getUserId());
+
+					ServiceContextThreadLocal.pushServiceContext(
+						new ServiceContext());
+
+					_siteInitializer.initialize(group.getGroupId());
+				}
+				finally {
+					PrincipalThreadLocal.setName(name);
+					ServiceContextThreadLocal.popServiceContext();
+				}
 			}
 		}
 	}
@@ -77,6 +103,24 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private User _getUser(long companyId) throws PortalException {
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		if (role == null) {
+			return _userLocalService.getDefaultUser(companyId);
+		}
+
+		List<User> adminUsers = _userLocalService.getRoleUsers(
+			role.getRoleId(), 0, 1);
+
+		if (adminUsers.isEmpty()) {
+			return _userLocalService.getDefaultUser(companyId);
+		}
+
+		return adminUsers.get(0);
+	}
+
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
@@ -86,6 +130,9 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
+	@Reference
+	private RoleLocalService _roleLocalService;
+
 	@Reference(
 		target = "(site.initializer.key=com.liferay.site.initializer.welcome)"
 	)
@@ -93,5 +140,8 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	@Reference(target = "(dl.store.impl.enabled=true)")
 	private StoreFactory _storeFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

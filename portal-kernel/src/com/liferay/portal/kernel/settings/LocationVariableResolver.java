@@ -16,12 +16,20 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Iván Zaera
@@ -71,6 +79,9 @@ public class LocationVariableResolver {
 		if (LocationVariableProtocol.FILE.equals(protocol)) {
 			return _resolveFile(location);
 		}
+		else if (LocationVariableProtocol.LANGUAGE.equals(protocol)) {
+			return _resolveLanguage(location);
+		}
 		else if (LocationVariableProtocol.RESOURCE.equals(protocol)) {
 			return _resolveResource(location);
 		}
@@ -109,6 +120,23 @@ public class LocationVariableResolver {
 			throw new SystemException(
 				"Unable to read file " + location, ioException);
 		}
+	}
+
+	private String _resolveLanguage(String location) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Set<Locale> availableLocales = LanguageUtil.getCompanyAvailableLocales(
+			CompanyThreadLocal.getCompanyId());
+
+		for (Locale locale : availableLocales) {
+			String message = LanguageUtil.get(locale, location);
+
+			if (!message.equals(location)) {
+				jsonObject.put(LocaleUtil.toLanguageId(locale), message);
+			}
+		}
+
+		return jsonObject.toString();
 	}
 
 	private String _resolveResource(String location) {

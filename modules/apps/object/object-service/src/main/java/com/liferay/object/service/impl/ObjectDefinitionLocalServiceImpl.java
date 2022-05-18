@@ -86,7 +86,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -100,7 +99,6 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -283,11 +281,7 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (!CompanyThreadLocal.isDeleteInProcess() &&
-			!PortalRunMode.isTestMode() &&
-			((!GetterUtil.getBoolean(
-				PropsUtil.get("feature.flag.LPS-150886")) &&
-			  objectDefinition.isApproved()) ||
-			 objectDefinition.isSystem())) {
+			!PortalRunMode.isTestMode() && objectDefinition.isSystem()) {
 
 			throw new RequiredObjectDefinitionException();
 		}

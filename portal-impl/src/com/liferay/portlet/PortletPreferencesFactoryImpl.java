@@ -176,7 +176,10 @@ public class PortletPreferencesFactoryImpl
 			layout, portletId);
 
 		if (portletSetup instanceof StrictPortletPreferencesImpl) {
-			try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setToProductionWithSafeCloseable()) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setToProductionWithSafeCloseable()) {
+
 				getLayoutPortletSetup(layout, portletId);
 			}
 		}

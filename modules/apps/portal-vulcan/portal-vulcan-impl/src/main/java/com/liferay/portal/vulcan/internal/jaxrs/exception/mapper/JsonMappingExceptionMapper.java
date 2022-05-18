@@ -16,8 +16,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -38,10 +36,6 @@ public class JsonMappingExceptionMapper
 
 	@Override
 	protected Problem getProblem(JsonMappingException jsonMappingException) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(jsonMappingException);
-		}
-
 		List<JsonMappingException.Reference> references =
 			jsonMappingException.getPath();
 
@@ -58,8 +52,5 @@ public class JsonMappingExceptionMapper
 			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path,
 			"JsonMappingException");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JsonMappingExceptionMapper.class);
 
 }

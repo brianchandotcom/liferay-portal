@@ -86,6 +86,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -177,6 +178,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -1460,9 +1463,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			SiteInitializerUtil.read(
-				parentResourcePath + "page.json", _servletContext));
+		String json = SiteInitializerUtil.read(
+			parentResourcePath + "page.json", _servletContext);
+
+		Map<String, String> portalPropertiesReplaceValues =
+			_getPortalPropertiesReplaceValues(json);
+
+		json = StringUtil.replace(
+			json, "[$", "$]", portalPropertiesReplaceValues);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
@@ -3297,6 +3307,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
+	private Map<String, String> _getPortalPropertiesReplaceValues(
+		String content) {
+
+		Map<String, String> portalPropertiesReplaceValues = new HashMap<>();
+
+		Matcher matcher = _portalPropertyPattern.matcher(content);
+
+		while (matcher.find()) {
+			String portalProperty = matcher.group();
+
+			portalProperty = portalProperty.substring(
+				2, portalProperty.length() - 2);
+
+			String[] portalPropertyParts = StringUtil.split(
+				portalProperty, CharPool.COLON);
+
+			portalPropertiesReplaceValues.put(
+				portalProperty, PropsUtil.get(portalPropertyParts[1]));
+		}
+
+		return portalPropertiesReplaceValues;
+	}
+
 	private String _getThemeId(
 		long companyId, String defaultThemeId, String themeName) {
 
@@ -3495,6 +3528,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final Pattern _portalPropertyPattern = Pattern.compile(
+		"\\[\\$PORTAL_PROPERTY:((?!\\.)(?!.*\\.\\.)[a-zA-Z0-9_.]+)\\$\\]");
 
 	private final AccountResource.Factory _accountResourceFactory;
 	private final AccountRoleLocalService _accountRoleLocalService;

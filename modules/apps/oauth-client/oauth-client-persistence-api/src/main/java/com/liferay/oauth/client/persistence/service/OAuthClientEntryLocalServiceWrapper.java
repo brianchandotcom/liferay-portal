@@ -40,12 +40,12 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			addOAuthClientEntry(
-				long userId, String authServerIssuer, String infoJSON,
+				long userId, String authServerWellKnownURI, String infoJSON,
 				String parametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryLocalService.addOAuthClientEntry(
-			userId, authServerIssuer, infoJSON, parametersJSON);
+			userId, authServerWellKnownURI, infoJSON, parametersJSON);
 	}
 
 	/**
@@ -117,11 +117,11 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			deleteOAuthClientEntry(
-				long companyId, String authServerIssuer, String clientId)
+				long companyId, String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryLocalService.deleteOAuthClientEntry(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
@@ -272,10 +272,10 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 		fetchOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId) {
+			long companyId, String authServerWellKnownURI, String clientId) {
 
 		return _oAuthClientEntryLocalService.fetchOAuthClientEntry(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	@Override
@@ -288,21 +288,12 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.oauth.client.persistence.model.OAuthClientEntry>
-			getAuthServerIssuerOAuthClientEntries(
-				long companyId, String authServerIssuer) {
+			getAuthServerWellKnownURISuffixOAuthClientEntries(
+				long companyId, String authServerWellKnownURISuffix) {
 
 		return _oAuthClientEntryLocalService.
-			getAuthServerIssuerOAuthClientEntries(companyId, authServerIssuer);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.oauth.client.persistence.model.OAuthClientEntry>
-			getAuthServerTypeOAuthClientEntries(
-				long companyId, String authServerType) {
-
-		return _oAuthClientEntryLocalService.
-			getAuthServerTypeOAuthClientEntries(companyId, authServerType);
+			getAuthServerWellKnownURISuffixOAuthClientEntries(
+				companyId, authServerWellKnownURISuffix);
 	}
 
 	@Override
@@ -370,11 +361,11 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			getOAuthClientEntry(
-				long companyId, String authServerIssuer, String clientId)
+				long companyId, String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryLocalService.getOAuthClientEntry(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
@@ -409,12 +400,13 @@ public class OAuthClientEntryLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			updateOAuthClientEntry(
-				long oAuthClientEntryId, String authServerIssuer,
+				long oAuthClientEntryId, String authServerWellKnownURI,
 				String infoJSON, String parametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryLocalService.updateOAuthClientEntry(
-			oAuthClientEntryId, authServerIssuer, infoJSON, parametersJSON);
+			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
+			parametersJSON);
 	}
 
 	/**

@@ -53,7 +53,8 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			addOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long userId,
-				String authServerIssuer, String infoJSON, String parametersJSON)
+				String authServerWellKnownURI, String infoJSON,
+				String parametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -62,7 +63,8 @@ public class OAuthClientEntryServiceHttp {
 				_addOAuthClientEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, authServerIssuer, infoJSON, parametersJSON);
+				methodKey, userId, authServerWellKnownURI, infoJSON,
+				parametersJSON);
 
 			Object returnObj = null;
 
@@ -138,7 +140,7 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			deleteOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long companyId,
-				String authServerIssuer, String clientId)
+				String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -147,7 +149,7 @@ public class OAuthClientEntryServiceHttp {
 				_deleteOAuthClientEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, authServerIssuer, clientId);
+				methodKey, companyId, authServerWellKnownURI, clientId);
 
 			Object returnObj = null;
 
@@ -180,45 +182,7 @@ public class OAuthClientEntryServiceHttp {
 
 	public static java.util.List
 		<com.liferay.oauth.client.persistence.model.OAuthClientEntry>
-			getAuthServerIssuerOAuthClientEntries(
-				HttpPrincipal httpPrincipal, long companyId,
-				String authServerIssuer) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				OAuthClientEntryServiceUtil.class,
-				"getAuthServerIssuerOAuthClientEntries",
-				_getAuthServerIssuerOAuthClientEntriesParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, authServerIssuer);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.oauth.client.persistence.model.OAuthClientEntry>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.oauth.client.persistence.model.OAuthClientEntry>
-				getAuthServerTypeOAuthClientEntries(
+				getAuthServerWellKnownURISuffixOAuthClientEntries(
 					HttpPrincipal httpPrincipal, long companyId,
 					String authServerType)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -226,8 +190,8 @@ public class OAuthClientEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class,
-				"getAuthServerTypeOAuthClientEntries",
-				_getAuthServerTypeOAuthClientEntriesParameterTypes4);
+				"getAuthServerWellKnownURISuffixOAuthClientEntries",
+				_getAuthServerWellKnownURISuffixOAuthClientEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, authServerType);
@@ -271,7 +235,7 @@ public class OAuthClientEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class,
 				"getCompanyOAuthClientEntries",
-				_getCompanyOAuthClientEntriesParameterTypes5);
+				_getCompanyOAuthClientEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -309,7 +273,7 @@ public class OAuthClientEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class,
 				"getCompanyOAuthClientEntries",
-				_getCompanyOAuthClientEntriesParameterTypes6);
+				_getCompanyOAuthClientEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -340,16 +304,16 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			getOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long companyId,
-				String authServerIssuer, String clientId)
+				String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class, "getOAuthClientEntry",
-				_getOAuthClientEntryParameterTypes7);
+				_getOAuthClientEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, authServerIssuer, clientId);
+				methodKey, companyId, authServerWellKnownURI, clientId);
 
 			Object returnObj = null;
 
@@ -388,7 +352,7 @@ public class OAuthClientEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class, "getUserOAuthClientEntries",
-				_getUserOAuthClientEntriesParameterTypes8);
+				_getUserOAuthClientEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
@@ -423,7 +387,7 @@ public class OAuthClientEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class, "getUserOAuthClientEntries",
-				_getUserOAuthClientEntriesParameterTypes9);
+				_getUserOAuthClientEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, start, end);
@@ -454,16 +418,17 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			updateOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long oAuthClientEntryId,
-				String authServerIssuer, String infoJSON, String parametersJSON)
+				String authServerWellKnownURI, String infoJSON,
+				String parametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				OAuthClientEntryServiceUtil.class, "updateOAuthClientEntry",
-				_updateOAuthClientEntryParameterTypes10);
+				_updateOAuthClientEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, oAuthClientEntryId, authServerIssuer, infoJSON,
+				methodKey, oAuthClientEntryId, authServerWellKnownURI, infoJSON,
 				parametersJSON);
 
 			Object returnObj = null;
@@ -505,26 +470,21 @@ public class OAuthClientEntryServiceHttp {
 	private static final Class<?>[] _deleteOAuthClientEntryParameterTypes2 =
 		new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[]
-		_getAuthServerIssuerOAuthClientEntriesParameterTypes3 = new Class[] {
-			long.class, String.class
-		};
+		_getAuthServerWellKnownURISuffixOAuthClientEntriesParameterTypes3 =
+			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getAuthServerTypeOAuthClientEntriesParameterTypes4 = new Class[] {
-			long.class, String.class
-		};
+		_getCompanyOAuthClientEntriesParameterTypes4 = new Class[] {long.class};
 	private static final Class<?>[]
-		_getCompanyOAuthClientEntriesParameterTypes5 = new Class[] {long.class};
-	private static final Class<?>[]
-		_getCompanyOAuthClientEntriesParameterTypes6 = new Class[] {
+		_getCompanyOAuthClientEntriesParameterTypes5 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getOAuthClientEntryParameterTypes7 =
+	private static final Class<?>[] _getOAuthClientEntryParameterTypes6 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _getUserOAuthClientEntriesParameterTypes8 =
+	private static final Class<?>[] _getUserOAuthClientEntriesParameterTypes7 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getUserOAuthClientEntriesParameterTypes9 =
+	private static final Class<?>[] _getUserOAuthClientEntriesParameterTypes8 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _updateOAuthClientEntryParameterTypes10 =
+	private static final Class<?>[] _updateOAuthClientEntryParameterTypes9 =
 		new Class[] {long.class, String.class, String.class, String.class};
 
 }

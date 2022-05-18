@@ -187,19 +187,19 @@ public interface OAuthClientEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the auth server issuer of this o auth client entry.
+	 * Returns the auth server well known uri of this o auth client entry.
 	 *
-	 * @return the auth server issuer of this o auth client entry
+	 * @return the auth server well known uri of this o auth client entry
 	 */
 	@AutoEscape
-	public String getAuthServerIssuer();
+	public String getAuthServerWellKnownURI();
 
 	/**
-	 * Sets the auth server issuer of this o auth client entry.
+	 * Sets the auth server well known uri of this o auth client entry.
 	 *
-	 * @param authServerIssuer the auth server issuer of this o auth client entry
+	 * @param authServerWellKnownURI the auth server well known uri of this o auth client entry
 	 */
-	public void setAuthServerIssuer(String authServerIssuer);
+	public void setAuthServerWellKnownURI(String authServerWellKnownURI);
 
 	/**
 	 * Returns the client ID of this o auth client entry.

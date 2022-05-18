@@ -62,7 +62,7 @@ public interface OAuthClientEntryLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerIssuer, String infoJSON,
+			long userId, String authServerWellKnownURI, String infoJSON,
 			String parametersJSON)
 		throws PortalException;
 
@@ -111,7 +111,7 @@ public interface OAuthClientEntryLocalService
 		throws PortalException;
 
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException;
 
 	/**
@@ -214,18 +214,15 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientEntry fetchOAuthClientEntry(
-		long companyId, String authServerIssuer, String clientId);
+		long companyId, String authServerWellKnownURI, String clientId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
-		long companyId, String authServerIssuer);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
-		long companyId, String authServerType);
+	public List<OAuthClientEntry>
+		getAuthServerWellKnownURISuffixOAuthClientEntries(
+			long companyId, String authServerWellKnownURISuffix);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthClientEntry> getCompanyOAuthClientEntries(long companyId);
@@ -268,7 +265,7 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException;
 
 	/**
@@ -290,8 +287,8 @@ public interface OAuthClientEntryLocalService
 	public List<OAuthClientEntry> getUserOAuthClientEntries(long userId);
 
 	public OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authServerIssuer, String infoJSON,
-			String parametersJSON)
+			long oAuthClientEntryId, String authServerWellKnownURI,
+			String infoJSON, String parametersJSON)
 		throws PortalException;
 
 	/**

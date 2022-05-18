@@ -49,7 +49,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("authServerIssuer", getAuthServerIssuer());
+		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
 		attributes.put("parametersJSON", getParametersJSON());
@@ -101,10 +101,11 @@ public class OAuthClientEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String authServerIssuer = (String)attributes.get("authServerIssuer");
+		String authServerWellKnownURI = (String)attributes.get(
+			"authServerWellKnownURI");
 
-		if (authServerIssuer != null) {
-			setAuthServerIssuer(authServerIssuer);
+		if (authServerWellKnownURI != null) {
+			setAuthServerWellKnownURI(authServerWellKnownURI);
 		}
 
 		String clientId = (String)attributes.get("clientId");
@@ -132,13 +133,13 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Returns the auth server issuer of this o auth client entry.
+	 * Returns the auth server well known uri of this o auth client entry.
 	 *
-	 * @return the auth server issuer of this o auth client entry
+	 * @return the auth server well known uri of this o auth client entry
 	 */
 	@Override
-	public String getAuthServerIssuer() {
-		return model.getAuthServerIssuer();
+	public String getAuthServerWellKnownURI() {
+		return model.getAuthServerWellKnownURI();
 	}
 
 	/**
@@ -267,13 +268,13 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Sets the auth server issuer of this o auth client entry.
+	 * Sets the auth server well known uri of this o auth client entry.
 	 *
-	 * @param authServerIssuer the auth server issuer of this o auth client entry
+	 * @param authServerWellKnownURI the auth server well known uri of this o auth client entry
 	 */
 	@Override
-	public void setAuthServerIssuer(String authServerIssuer) {
-		model.setAuthServerIssuer(authServerIssuer);
+	public void setAuthServerWellKnownURI(String authServerWellKnownURI) {
+		model.setAuthServerWellKnownURI(authServerWellKnownURI);
 	}
 
 	/**

@@ -14,9 +14,9 @@
 
 package com.liferay.oauth.client.persistence.service.persistence.impl;
 
-import com.liferay.oauth.client.persistence.model.OAuthClientAuthServerTable;
-import com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerImpl;
-import com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerModelImpl;
+import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadataTable;
+import com.liferay.oauth.client.persistence.model.impl.OAuthClientASLocalMetadataImpl;
+import com.liferay.oauth.client.persistence.model.impl.OAuthClientASLocalMetadataModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The arguments resolver class for retrieving value from OAuthClientAuthServer.
+ * The arguments resolver class for retrieving value from OAuthClientASLocalMetadata.
  *
  * @author Brian Wing Shun Chan
  * @generated
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		OAuthClientAuthServerModelArgumentsResolver.class,
+		OAuthClientASLocalMetadataModelArgumentsResolver.class,
 		ArgumentsResolver.class
 	}
 )
-public class OAuthClientAuthServerModelArgumentsResolver
+public class OAuthClientASLocalMetadataModelArgumentsResolver
 	implements ArgumentsResolver {
 
 	@Override
@@ -57,14 +57,16 @@ public class OAuthClientAuthServerModelArgumentsResolver
 			return null;
 		}
 
-		OAuthClientAuthServerModelImpl oAuthClientAuthServerModelImpl =
-			(OAuthClientAuthServerModelImpl)baseModel;
+		OAuthClientASLocalMetadataModelImpl
+			oAuthClientASLocalMetadataModelImpl =
+				(OAuthClientASLocalMetadataModelImpl)baseModel;
 
-		long columnBitmask = oAuthClientAuthServerModelImpl.getColumnBitmask();
+		long columnBitmask =
+			oAuthClientASLocalMetadataModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				oAuthClientAuthServerModelImpl, columnNames, original);
+				oAuthClientASLocalMetadataModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +77,8 @@ public class OAuthClientAuthServerModelArgumentsResolver
 
 			for (String columnName : columnNames) {
 				finderPathColumnBitmask |=
-					oAuthClientAuthServerModelImpl.getColumnBitmask(columnName);
+					oAuthClientASLocalMetadataModelImpl.getColumnBitmask(
+						columnName);
 			}
 
 			_finderPathColumnBitmasksCache.put(
@@ -84,7 +87,7 @@ public class OAuthClientAuthServerModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				oAuthClientAuthServerModelImpl, columnNames, original);
+				oAuthClientASLocalMetadataModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -92,16 +95,16 @@ public class OAuthClientAuthServerModelArgumentsResolver
 
 	@Override
 	public String getClassName() {
-		return OAuthClientAuthServerImpl.class.getName();
+		return OAuthClientASLocalMetadataImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return OAuthClientAuthServerTable.INSTANCE.getTableName();
+		return OAuthClientASLocalMetadataTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		OAuthClientAuthServerModelImpl oAuthClientAuthServerModelImpl,
+		OAuthClientASLocalMetadataModelImpl oAuthClientASLocalMetadataModelImpl,
 		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
@@ -111,12 +114,13 @@ public class OAuthClientAuthServerModelArgumentsResolver
 
 			if (original) {
 				arguments[i] =
-					oAuthClientAuthServerModelImpl.getColumnOriginalValue(
+					oAuthClientASLocalMetadataModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] = oAuthClientAuthServerModelImpl.getColumnValue(
-					columnName);
+				arguments[i] =
+					oAuthClientASLocalMetadataModelImpl.getColumnValue(
+						columnName);
 			}
 		}
 

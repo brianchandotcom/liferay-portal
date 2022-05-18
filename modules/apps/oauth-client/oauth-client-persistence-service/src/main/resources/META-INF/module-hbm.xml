@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.oauth.client.persistence.model.OAuthClientAuthServer" />
+	<import class="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata" />
 	<import class="com.liferay.oauth.client.persistence.model.OAuthClientEntry" />
-	<class dynamic-update="true" name="com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerImpl" table="OAuthClientAuthServer">
-		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthClientAuthServerId" type="long">
+	<class dynamic-update="true" name="com.liferay.oauth.client.persistence.model.impl.OAuthClientASLocalMetadataImpl" table="OAuthClientASLocalMetadata">
+		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthClientASLocalMetadataId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
@@ -14,10 +14,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="discoveryEndpoint" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="issuer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localWellKnownURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="metadataJSON" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.oauth.client.persistence.model.impl.OAuthClientEntryImpl" table="OAuthClientEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuthClientEntryId" type="long">
@@ -29,7 +27,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="authServerIssuer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="authServerWellKnownURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="infoJSON" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parametersJSON" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />

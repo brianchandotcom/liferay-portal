@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.client.persistence.model.impl;
 
-import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
+import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,13 +28,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing OAuthClientAuthServer in entity cache.
+ * The cache model class for representing OAuthClientASLocalMetadata in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class OAuthClientAuthServerCacheModel
-	implements CacheModel<OAuthClientAuthServer>, Externalizable, MVCCModel {
+public class OAuthClientASLocalMetadataCacheModel
+	implements CacheModel<OAuthClientASLocalMetadata>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -42,16 +43,18 @@ public class OAuthClientAuthServerCacheModel
 			return true;
 		}
 
-		if (!(object instanceof OAuthClientAuthServerCacheModel)) {
+		if (!(object instanceof OAuthClientASLocalMetadataCacheModel)) {
 			return false;
 		}
 
-		OAuthClientAuthServerCacheModel oAuthClientAuthServerCacheModel =
-			(OAuthClientAuthServerCacheModel)object;
+		OAuthClientASLocalMetadataCacheModel
+			oAuthClientASLocalMetadataCacheModel =
+				(OAuthClientASLocalMetadataCacheModel)object;
 
-		if ((oAuthClientAuthServerId ==
-				oAuthClientAuthServerCacheModel.oAuthClientAuthServerId) &&
-			(mvccVersion == oAuthClientAuthServerCacheModel.mvccVersion)) {
+		if ((oAuthClientASLocalMetadataId ==
+				oAuthClientASLocalMetadataCacheModel.
+					oAuthClientASLocalMetadataId) &&
+			(mvccVersion == oAuthClientASLocalMetadataCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,7 +64,7 @@ public class OAuthClientAuthServerCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, oAuthClientAuthServerId);
+		int hashCode = HashUtil.hash(0, oAuthClientASLocalMetadataId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -78,12 +81,12 @@ public class OAuthClientAuthServerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", oAuthClientAuthServerId=");
-		sb.append(oAuthClientAuthServerId);
+		sb.append(", oAuthClientASLocalMetadataId=");
+		sb.append(oAuthClientASLocalMetadataId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -94,82 +97,66 @@ public class OAuthClientAuthServerCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", discoveryEndpoint=");
-		sb.append(discoveryEndpoint);
-		sb.append(", issuer=");
-		sb.append(issuer);
+		sb.append(", localWellKnownURI=");
+		sb.append(localWellKnownURI);
 		sb.append(", metadataJSON=");
 		sb.append(metadataJSON);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public OAuthClientAuthServer toEntityModel() {
-		OAuthClientAuthServerImpl oAuthClientAuthServerImpl =
-			new OAuthClientAuthServerImpl();
+	public OAuthClientASLocalMetadata toEntityModel() {
+		OAuthClientASLocalMetadataImpl oAuthClientASLocalMetadataImpl =
+			new OAuthClientASLocalMetadataImpl();
 
-		oAuthClientAuthServerImpl.setMvccVersion(mvccVersion);
-		oAuthClientAuthServerImpl.setOAuthClientAuthServerId(
-			oAuthClientAuthServerId);
-		oAuthClientAuthServerImpl.setCompanyId(companyId);
-		oAuthClientAuthServerImpl.setUserId(userId);
+		oAuthClientASLocalMetadataImpl.setMvccVersion(mvccVersion);
+		oAuthClientASLocalMetadataImpl.setOAuthClientASLocalMetadataId(
+			oAuthClientASLocalMetadataId);
+		oAuthClientASLocalMetadataImpl.setCompanyId(companyId);
+		oAuthClientASLocalMetadataImpl.setUserId(userId);
 
 		if (userName == null) {
-			oAuthClientAuthServerImpl.setUserName("");
+			oAuthClientASLocalMetadataImpl.setUserName("");
 		}
 		else {
-			oAuthClientAuthServerImpl.setUserName(userName);
+			oAuthClientASLocalMetadataImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			oAuthClientAuthServerImpl.setCreateDate(null);
+			oAuthClientASLocalMetadataImpl.setCreateDate(null);
 		}
 		else {
-			oAuthClientAuthServerImpl.setCreateDate(new Date(createDate));
+			oAuthClientASLocalMetadataImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			oAuthClientAuthServerImpl.setModifiedDate(null);
+			oAuthClientASLocalMetadataImpl.setModifiedDate(null);
 		}
 		else {
-			oAuthClientAuthServerImpl.setModifiedDate(new Date(modifiedDate));
+			oAuthClientASLocalMetadataImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
-		if (discoveryEndpoint == null) {
-			oAuthClientAuthServerImpl.setDiscoveryEndpoint("");
+		if (localWellKnownURI == null) {
+			oAuthClientASLocalMetadataImpl.setLocalWellKnownURI("");
 		}
 		else {
-			oAuthClientAuthServerImpl.setDiscoveryEndpoint(discoveryEndpoint);
-		}
-
-		if (issuer == null) {
-			oAuthClientAuthServerImpl.setIssuer("");
-		}
-		else {
-			oAuthClientAuthServerImpl.setIssuer(issuer);
+			oAuthClientASLocalMetadataImpl.setLocalWellKnownURI(
+				localWellKnownURI);
 		}
 
 		if (metadataJSON == null) {
-			oAuthClientAuthServerImpl.setMetadataJSON("");
+			oAuthClientASLocalMetadataImpl.setMetadataJSON("");
 		}
 		else {
-			oAuthClientAuthServerImpl.setMetadataJSON(metadataJSON);
+			oAuthClientASLocalMetadataImpl.setMetadataJSON(metadataJSON);
 		}
 
-		if (type == null) {
-			oAuthClientAuthServerImpl.setType("");
-		}
-		else {
-			oAuthClientAuthServerImpl.setType(type);
-		}
+		oAuthClientASLocalMetadataImpl.resetOriginalValues();
 
-		oAuthClientAuthServerImpl.resetOriginalValues();
-
-		return oAuthClientAuthServerImpl;
+		return oAuthClientASLocalMetadataImpl;
 	}
 
 	@Override
@@ -178,7 +165,7 @@ public class OAuthClientAuthServerCacheModel
 
 		mvccVersion = objectInput.readLong();
 
-		oAuthClientAuthServerId = objectInput.readLong();
+		oAuthClientASLocalMetadataId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -186,17 +173,15 @@ public class OAuthClientAuthServerCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		discoveryEndpoint = objectInput.readUTF();
-		issuer = objectInput.readUTF();
+		localWellKnownURI = objectInput.readUTF();
 		metadataJSON = (String)objectInput.readObject();
-		type = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(oAuthClientAuthServerId);
+		objectOutput.writeLong(oAuthClientASLocalMetadataId);
 
 		objectOutput.writeLong(companyId);
 
@@ -212,18 +197,11 @@ public class OAuthClientAuthServerCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (discoveryEndpoint == null) {
+		if (localWellKnownURI == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(discoveryEndpoint);
-		}
-
-		if (issuer == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(issuer);
+			objectOutput.writeUTF(localWellKnownURI);
 		}
 
 		if (metadataJSON == null) {
@@ -232,25 +210,16 @@ public class OAuthClientAuthServerCacheModel
 		else {
 			objectOutput.writeObject(metadataJSON);
 		}
-
-		if (type == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(type);
-		}
 	}
 
 	public long mvccVersion;
-	public long oAuthClientAuthServerId;
+	public long oAuthClientASLocalMetadataId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String discoveryEndpoint;
-	public String issuer;
+	public String localWellKnownURI;
 	public String metadataJSON;
-	public String type;
 
 }

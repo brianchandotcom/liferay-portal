@@ -19,22 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateOAuthClientAuthServerException extends PortalException {
+public class DuplicateOAuthClientASLocalMetadataException
+	extends PortalException {
 
-	public DuplicateOAuthClientAuthServerException() {
+	public DuplicateOAuthClientASLocalMetadataException() {
 	}
 
-	public DuplicateOAuthClientAuthServerException(String msg) {
+	public DuplicateOAuthClientASLocalMetadataException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateOAuthClientAuthServerException(
+	public DuplicateOAuthClientASLocalMetadataException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateOAuthClientAuthServerException(Throwable throwable) {
+	public DuplicateOAuthClientASLocalMetadataException(Throwable throwable) {
 		super(throwable);
 	}
 

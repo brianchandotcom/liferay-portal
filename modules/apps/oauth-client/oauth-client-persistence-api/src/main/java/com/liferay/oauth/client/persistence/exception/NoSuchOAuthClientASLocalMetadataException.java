@@ -14,25 +14,28 @@
 
 package com.liferay.oauth.client.persistence.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class OAuthClientAuthServerTypeException extends PortalException {
+public class NoSuchOAuthClientASLocalMetadataException
+	extends NoSuchModelException {
 
-	public OAuthClientAuthServerTypeException() {
+	public NoSuchOAuthClientASLocalMetadataException() {
 	}
 
-	public OAuthClientAuthServerTypeException(String msg) {
+	public NoSuchOAuthClientASLocalMetadataException(String msg) {
 		super(msg);
 	}
 
-	public OAuthClientAuthServerTypeException(String msg, Throwable throwable) {
+	public NoSuchOAuthClientASLocalMetadataException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public OAuthClientAuthServerTypeException(Throwable throwable) {
+	public NoSuchOAuthClientASLocalMetadataException(Throwable throwable) {
 		super(throwable);
 	}
 

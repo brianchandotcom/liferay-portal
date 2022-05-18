@@ -1,0 +1,76 @@
+{
+	"beef@DELETE": [
+		{
+			"request": {
+				"cut": "Chunk"
+			},
+			"response": {
+				"message": "Done"
+			}
+		},
+		{
+			"request": {
+				"cut": "Rib"
+			},
+			"response": {
+				"message": "Are you sure?"
+			}
+		},
+		{
+			"request": {
+				"cut": "Round"
+			},
+			"response": {
+				"!exception": "Item does not exist"
+			}
+		},
+		{
+			"response": {
+				"!exception": "Invalid input"
+			}
+		}
+	],
+	"chicken@PUT": [
+		{
+			"request": {
+				"cut": "Breast"
+			},
+			"response": {
+				"message": "Done"
+			}
+		},
+		{
+			"request": {
+				"cut": "Thighs"
+			},
+			"response": {
+				"!exception": "Item does not exist"
+			}
+		},
+		{
+			"response": {
+				"!exception": "Invalid input"
+			}
+		}
+	],
+	"fish": [
+		{
+			"id": 1,
+			"name": "Trout"
+		}
+	],
+	"pork": [
+		{
+			"id": 1,
+			"name": "Pork Belly"
+		},
+		{
+			"id": 2,
+			"name": "Pork Ribs"
+		},
+		{
+			"id": 3,
+			"name": "Pork Tenderloin"
+		}
+	]
+}

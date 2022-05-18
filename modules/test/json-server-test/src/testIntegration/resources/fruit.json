@@ -1,0 +1,72 @@
+{
+	"apple@GET": [
+		{
+			"request": {
+				"color": "green"
+			},
+			"response": {
+				"price": 5
+			}
+		},
+		{
+			"request": {
+				"color": "red"
+			},
+			"response": {
+				"price": 6
+			}
+		},
+		{
+			"request": {
+				"color": "yellow"
+			},
+			"response": {
+				"!exception": "Out of stock"
+			}
+		},
+		{
+			"response": {
+				"!exception": "Invalid input"
+			}
+		}
+	],
+	"banana@POST": [
+		{
+			"request": {
+				"color": "green"
+			},
+			"response": {
+				"!exception": "Unripen banana :("
+			}
+		},
+		{
+			"request": {
+				"color": "yellow"
+			},
+			"response": {
+				"message": "Yummy!"
+			}
+		},
+		{
+			"response": {
+				"!exception": "Invalid input"
+			}
+		}
+	],
+	"orange": [
+		{
+			"id": 1,
+			"name": "Navel Orange"
+		},
+		{
+			"id": 2,
+			"name": "Boold Orange"
+		}
+	],
+	"raspberry": [
+		{
+			"id": 1,
+			"name": "Bristol"
+		}
+	]
+}

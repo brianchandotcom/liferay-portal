@@ -31,9 +31,10 @@ export function getCacheItem(key) {
 	return cache[key] || {};
 }
 
-export function setCacheItem({data, key, status}) {
+export function setCacheItem({data, key, loadPromise, status}) {
 	cache[key] = {
 		data,
+		loadPromise,
 		status,
 	};
 }

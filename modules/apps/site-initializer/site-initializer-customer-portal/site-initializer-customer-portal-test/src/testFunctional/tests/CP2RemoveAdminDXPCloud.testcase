@@ -12,17 +12,13 @@ definition {
 
 		User.firstLoginPG();
 
-        CP2DXPCloudSetup.addObjectsForDXPCloud();
-
 		//CustomerPortal.setUpForCP20();
 
-		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-        CP2DXPCloudSetup.deleteObjectsForDXPCloud();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -31,16 +27,16 @@ definition {
 
 			//CustomerPortal.tearDownForOktaAndSAML();
 
-			//CustomerPortal.customerPortalTearDown();
+			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
 	}
 
-    @description = "Verify if the user is allowed to remove the additional admin(s) added before continuing"
-    @priority = "5"
-    test IfAddedAdminCanBeRemoved {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
+	@priority = "4"
+	test IfAddAnotherAdminButtonOptionsAppear {
+		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
@@ -54,28 +50,28 @@ definition {
 
 		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test01@project.com",
-            position = "0",
-            rowRole = "User",
-            positionNumber = "0",
-            addMembers = "false");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "false",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "User");
 
-        CP2TeamMembers.clickTeamMembersSendInvitation();
+		CP2TeamMembers.clickTeamMembersSendInvitation();
 
-        CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-        CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+		CP2DXPCloudSetup.clickOnAddMoreAdminButton();
 
-        CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
+		CP2DXPCloudSetup.typeAllSetupDXPCloufEXtraInfo();
 
-        CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
-    }
+		CP2DXPCloudSetup.viewSetupDXPCloufEXtraInfo();
+	}
 
-    @description = "Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
-    @priority = "4"
-    test IfAddAnotherAdminButtonOptionsAppear {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if the user is allowed to remove the additional admin(s) added before continuing"
+	@priority = "5"
+	test IfAddedAdminCanBeRemoved {
+		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
@@ -89,22 +85,22 @@ definition {
 
 		CustomerPortal.clickOnStartProjectSetup();
 
-        CP2TeamMembers.addFieldsTeamMembersExtra(
-            rowEmail = "test01@project.com",
-            position = "0",
-            rowRole = "User",
-            positionNumber = "0",
-            addMembers = "false");
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "false",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "User");
 
-        CP2TeamMembers.clickTeamMembersSendInvitation();
+		CP2TeamMembers.clickTeamMembersSendInvitation();
 
-        CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-        CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+		CP2DXPCloudSetup.clickOnAddMoreAdminButton();
 
-        CP2DXPCloudSetup.typeAllSetupDXPCloufEXtraInfo();
+		CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
 
-        CP2DXPCloudSetup.viewSetupDXPCloufEXtraInfo();
-    }
+		CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
+	}
 
 }

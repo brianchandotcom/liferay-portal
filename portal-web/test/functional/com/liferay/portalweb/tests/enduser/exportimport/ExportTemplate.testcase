@@ -28,6 +28,7 @@ definition {
 		}
 	}
 
+	@description = "Verify is possible delete an export template."
 	@priority = "4"
 	test DeleteExportTemplate {
 		LAR.addExportTemplateCP(
@@ -70,6 +71,7 @@ definition {
 			exportTemplateName = "Export Template Name");
 	}
 
+	@description = "Verify is possible relaunch the exported process."
 	@priority = "3"
 	test ExportWithRelaunchedProcess {
 		LAR.exportSiteCP(siteScopeName = "Guest");
@@ -97,6 +99,7 @@ definition {
 			value1 = "Successful");
 	}
 
+	@description = "Verify is possible search an export template."
 	@priority = "4"
 	test SearchExportTemplate {
 		LAR.addExportTemplateCP(
@@ -118,6 +121,7 @@ definition {
 		LAR.searchTemplate(
 			exportTemplateDescription = "Export Template Description",
 			exportTemplateName = "Export Template Name");
+			
 	}
 
 }

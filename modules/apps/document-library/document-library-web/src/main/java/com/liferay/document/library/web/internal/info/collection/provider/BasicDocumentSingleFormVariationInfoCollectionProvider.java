@@ -29,6 +29,7 @@ import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
@@ -212,7 +213,8 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		for (AssetTag assetTag : assetTags) {
 			options.add(
 				new SelectInfoFieldType.Option(
-					assetTag.getName(), assetTag.getName()));
+					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
+					assetTag.getName()));
 		}
 
 		InfoField.FinalStep<?> finalStep = InfoField.builder(

@@ -28,6 +28,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -246,8 +246,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 			options.add(
 				new SelectInfoFieldType.Option(
-					ResourceActionsUtil.getModelResource(
-						locale, assetRendererFactory.getClassName()),
+					new ModelResourceLocalizedValue(
+						assetRendererFactory.getClassName()),
 					assetRendererFactory.getClassName()));
 		}
 

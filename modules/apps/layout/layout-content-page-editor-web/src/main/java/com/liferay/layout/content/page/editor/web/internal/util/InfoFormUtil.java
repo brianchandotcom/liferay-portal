@@ -137,7 +137,7 @@ public class InfoFormUtil {
 						JSONUtil.toJSONArray(
 							options,
 							option -> JSONUtil.put(
-								"label", String.valueOf(option.getLabel())
+								"label", String.valueOf(option.getLabel(locale))
 							).put(
 								"value", String.valueOf(option.getValue())
 							))

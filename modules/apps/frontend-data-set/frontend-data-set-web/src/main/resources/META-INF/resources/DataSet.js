@@ -73,7 +73,7 @@ const DataSet = ({
 	id,
 	inlineAddingSettings,
 	inlineEditingSettings,
-	items: itemsProp = [],
+	items: itemsProp,
 	itemsActions,
 	namespace,
 	nestedItemsKey,
@@ -200,12 +200,10 @@ const DataSet = ({
 	}
 
 	useEffect(() => {
-		const itemsAreInjected = !apiURL && itemsProp?.length !== items.length;
-
-		if (itemsAreInjected) {
+		if (itemsProp) {
 			updateDataSetItems({items: itemsProp});
 		}
-	}, [items, apiURL, itemsProp]);
+	}, [itemsProp]);
 
 	function selectItems(value) {
 		if (Array.isArray(value)) {
@@ -338,6 +336,10 @@ const DataSet = ({
 	};
 
 	useEffect(() => {
+		if (!apiURL) {
+			return;
+		}
+
 		setDataLoading(true);
 
 		requestData().then(({data, ok, status: statusCode}) => {
@@ -351,7 +353,7 @@ const DataSet = ({
 				setDataLoading(false);
 			}
 		});
-	}, [isMounted, requestData, setDataLoading]);
+	}, [apiURL, isMounted, requestData, setDataLoading]);
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event) {

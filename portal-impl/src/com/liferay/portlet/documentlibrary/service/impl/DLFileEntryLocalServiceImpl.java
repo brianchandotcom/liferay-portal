@@ -3191,7 +3191,6 @@ public class DLFileEntryLocalServiceImpl
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(
 			"file_entry", fileVersion.getFileEntryId());
-
 		subscriptionSender.setNotificationType(notificationType);
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(
@@ -3336,7 +3335,6 @@ public class DLFileEntryLocalServiceImpl
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(
 			"file_entry", fileVersion.getFileEntryId());
-
 		subscriptionSender.setNotificationType(notificationType);
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(

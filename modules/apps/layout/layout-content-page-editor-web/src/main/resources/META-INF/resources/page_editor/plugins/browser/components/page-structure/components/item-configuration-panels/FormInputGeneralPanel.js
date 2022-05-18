@@ -217,20 +217,8 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 			});
 	}, [formConfiguration, inputType]);
 
-	if (!formConfiguration) {
-		return (
-			<p className="alert alert-info text-center" role="alert">
-				you-need-to-put-inputs-inside-a-form-item
-			</p>
-		);
-	}
-
-	if (!formConfiguration.classNameId || !formConfiguration.classTypeId) {
-		return (
-			<p className="alert alert-info text-center" role="alert">
-				you-need-to-select-a-form-item-type-first
-			</p>
-		);
+	if (!formConfiguration?.classNameId || !formConfiguration?.classTypeId) {
+		return null;
 	}
 
 	return fields ? (

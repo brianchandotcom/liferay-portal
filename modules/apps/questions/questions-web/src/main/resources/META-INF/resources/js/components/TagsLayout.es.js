@@ -25,6 +25,16 @@ import lang from '../utils/lang.es';
 import {dateToInternationalHuman, deleteCacheKey} from '../utils/utils.es';
 import SubscriptionButton from './SubscriptionButton.es';
 
+function isClickOutside(target, ...elements) {
+	return !elements.some((element) => {
+		if (typeof element === 'string') {
+			return !!target.closest(element);
+		}
+
+		return element && element.contains(target);
+	});
+}
+
 export default function TagsLayout({
 	context,
 	orderBy,
@@ -35,7 +45,19 @@ export default function TagsLayout({
 }) {
 	return (
 		<div className="question-tags" key={tag.id}>
-			<Link title={tag.name} to={`/questions/tag/${tag.name}`}>
+			<Link
+				onClick={(event) => {
+					const clickingOutside = isClickOutside(
+						event.target,
+						'#questions-subscription-link'
+					);
+					if (!clickingOutside) {
+						event.preventDefault();
+					}
+				}}
+				title={tag.name}
+				to={`/questions/tag/${tag.name}`}
+			>
 				<div className="align-items-center card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
 					<div>
 						<div className="card-body d-flex flex-column">
@@ -85,7 +107,7 @@ export default function TagsLayout({
 						</div>
 					</div>
 
-					<div className="c-pr-3">
+					<div className="c-pr-3" id="questions-subscription-link">
 						{tag.actions.subscribe && (
 							<div className="autofit-col">
 								<div className="autofit-section">

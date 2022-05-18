@@ -12,52 +12,13 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		task ("Disable email verification for strangers") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+		Navigator.openURL();
 
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
-		task ("Add user and set password") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				requirePasswordReset = "true",
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
-		}
-
-		task ("Add segment for the user created") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Global",
-				operator = "contains",
-				segmentName = "Segment global usersn",
-				text = "usersn");
-		}
-
-		task ("Add role and permissions") {
+		task ("Add role with permissions") {
 			JSONRole.addRegularRole(
 				roleKey = "Roles Regrole Name",
 				roleTitle = "Roles Regrole Name");
-
+			
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
@@ -66,18 +27,6 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Roles Regrole Name");
-		}
-
-		task ("Assign the segment to the role created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.addAssignee(
-				assigneeName = "Segment global usersn",
-				assigneeType = "Segments",
 				roleTitle = "Roles Regrole Name");
 		}
 	}
@@ -89,11 +38,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-
-			Role.tearDownCP();
-
 			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "Roles Regrole Name");
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
@@ -161,6 +108,41 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
 
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Global",
+				operator = "contains",
+				segmentName = "Segment global usersn",
+				text = "usersn");
+		}
+
+		task ("Assign the segment to the role created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.addAssignee(
+				assigneeName = "Segment global usersn",
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
+		}
+
 		task ("Assert the Enable Assign roles by segments checkbox is disabled") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -176,15 +158,25 @@ definition {
 		}
 
 		task ("Log out and login with the user assigned to the segment") {
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 		}
 
 		task ("Assert the role is not working") {
 			AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete one of the segments") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "global");
+
+			Segmentation.deleteSegment(entry = "Segment global usersn");
 		}
 	}
 
@@ -235,6 +227,40 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesBySegment";
 
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Global",
+				operator = "contains",
+				segmentName = "Segment global usersn",
+				text = "usersn");
+		}
+
+		task ("Assign the segment to the role created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.addAssignee(
+				assigneeName = "Segment global usersn",
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
+		}
+
 		task ("Enable Assign roles by segment") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -250,11 +276,9 @@ definition {
 		}
 
 		task ("Log out and login with the user assigned to the segment") {
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 		}
 
 		task ("Assert the role is working") {
@@ -266,6 +290,18 @@ definition {
 				key_category = "Content",
 				key_portlet = "Content Dashboard",
 				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete one of the segments") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "global");
+
+			Segmentation.deleteSegment(entry = "Segment global usersn");
 		}
 	}
 

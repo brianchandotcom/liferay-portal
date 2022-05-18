@@ -167,6 +167,8 @@ definition {
 			Click(locator1 = "Button#UPDATE");
 		}
 
+		Alert.viewSuccessMessage();
+
 		AssertChecked.assertCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
 	}
 

@@ -19,19 +19,19 @@ definition {
 				value1 = "Billing and Shipping");
 		}
 
-		Type(
+		Type.type(
 			locator1 = "TextInput#STREET_1",
 			value1 = "${addressStreet1}");
 
 		if (isSet(addressStreet2)) {
-			Type(
+			Type.type(
 				key_streetNumber = "2",
 				locator1 = "TextInput#STREET_N",
 				value1 = "${addressStreet2}");
 		}
 
 		if (isSet(addressStreet3)) {
-			Type(
+			Type.type(
 				key_streetNumber = "3",
 				locator1 = "TextInput#STREET_N",
 				value1 = "${addressStreet3}");

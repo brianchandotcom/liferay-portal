@@ -5,7 +5,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${userGroupName}");
+		Type.type(
+			locator1 = "TextInput#NAME",
+			value1 = "${userGroupName}");
 
 		if ("${selectSiteTemplate}" == "true") {
 			Select(

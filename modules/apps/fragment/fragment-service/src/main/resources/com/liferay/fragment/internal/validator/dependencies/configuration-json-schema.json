@@ -175,6 +175,21 @@
 						"boolean",
 						"string"
 					]
+				},
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"displayType": {
+							"enum": [
+								"checkbox",
+								"toggle"
+							],
+							"title": "The DisplayType Schema",
+							"type": "string"
+						}
+					},
+					"title": "The Typeoptions Schema",
+					"type": "object"
 				}
 			}
 		},

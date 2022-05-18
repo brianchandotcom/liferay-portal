@@ -31,6 +31,10 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 
 	const customValues = field.typeOptions?.customValues;
 
+	const label = (
+		<span className="font-weight-normal text-3">{field.label}</span>
+	);
+
 	return (
 		<ClayForm.Group className="mb-0 mt-1">
 			<div
@@ -46,7 +50,7 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 					}
 					containerProps={{className: 'mb-0'}}
 					disabled={disabled}
-					label={field.label}
+					label={label}
 					onChange={(event) => {
 						let eventValue = event.target.checked;
 

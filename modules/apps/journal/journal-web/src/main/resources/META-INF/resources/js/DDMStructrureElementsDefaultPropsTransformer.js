@@ -25,6 +25,16 @@ const ACTIONS = {
 		}
 	},
 
+	importAndOverrideDDMStructure(itemData) {
+		Liferay.componentReady(
+			`${itemData.portletNamespace}importAndOverrideDataDefinitionModal`
+		).then((importAndOverrideDataDefinitionModal) => {
+			importAndOverrideDataDefinitionModal.open(
+				itemData.importAndOverrideDDMStructureURL
+			);
+		});
+	},
+
 	permissionsDDMStructure(itemData) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

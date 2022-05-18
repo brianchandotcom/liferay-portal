@@ -104,6 +104,8 @@ public class DDMStructureActionDropdownItemsProvider {
 						_getCopyDDMStructureActionUnsafeConsumer()
 					).add(
 						_getExportAsJSONActionUnsafeConsumer()
+					).add(
+						_getImportAndOverrideActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -240,6 +242,30 @@ public class DDMStructureActionDropdownItemsProvider {
 			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export-as-json"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getImportAndOverrideActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "importAndOverrideDDMStructure");
+			dropdownItem.putData(
+				"importAndOverrideDDMStructureURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/journal/import_and_override_data_definition"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"dataDefinitionId", _ddmStructure.getStructureId()
+				).buildString());
+			dropdownItem.putData(
+				"portletNamespace", _liferayPortletResponse.getNamespace());
+			dropdownItem.setIcon("download");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "import-and-override"));
 		};
 	}
 

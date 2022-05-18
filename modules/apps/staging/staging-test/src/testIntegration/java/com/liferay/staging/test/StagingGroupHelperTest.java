@@ -17,7 +17,6 @@ package com.liferay.staging.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -39,11 +39,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.StagingGroupHelper;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -904,11 +900,12 @@ public class StagingGroupHelperTest {
 		_remoteLiveGroup = GroupTestUtil.addGroup();
 		_remoteStagingGroup = GroupTestUtil.addGroup();
 
-		_setPortalProperty(
+		PropsValuesTestUtil.setPortalProperty(
 			"TUNNELING_SERVLET_SHARED_SECRET",
 			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
 
-		_setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+		PropsValuesTestUtil.setPortalProperty(
+			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
 
 		int serverPort = PortalUtil.getPortalServerPort(false);
 
@@ -950,22 +947,6 @@ public class StagingGroupHelperTest {
 			).build(),
 			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
 			false, true, null);
-	}
-
-	private void _setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 	private static final String _PORTLET_ID_BLOGS =

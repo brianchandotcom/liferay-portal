@@ -35,7 +35,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -70,14 +70,10 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.configuration.StagingConfiguration;
 
 import java.io.File;
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -521,11 +517,12 @@ public class StagingImplTest {
 	}
 
 	protected void enableRemoteStaging(boolean branching) throws Exception {
-		_setPortalProperty(
+		PropsValuesTestUtil.setPortalProperty(
 			"TUNNELING_SERVLET_SHARED_SECRET",
 			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
 
-		_setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+		PropsValuesTestUtil.setPortalProperty(
+			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -590,22 +587,6 @@ public class StagingImplTest {
 			category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private void _setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 	private static final Locale[] _locales = {

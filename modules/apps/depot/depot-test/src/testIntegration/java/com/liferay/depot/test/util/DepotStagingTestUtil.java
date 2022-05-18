@@ -21,20 +21,16 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.util.Map;
 
@@ -70,11 +66,12 @@ public class DepotStagingTestUtil {
 			DepotEntry remoteLiveDepotEntry, DepotEntry remoteStagingDepotEntry)
 		throws Exception {
 
-		_setPortalProperty(
+		PropsValuesTestUtil.setPortalProperty(
 			"TUNNELING_SERVLET_SHARED_SECRET",
 			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
 
-		_setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+		PropsValuesTestUtil.setPortalProperty(
+			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -135,22 +132,6 @@ public class DepotStagingTestUtil {
 			serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, true);
 		_addStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, true);
-	}
-
-	private static void _setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 	private static final String _DEPOT_ADMIN_PORTLET_ID =

@@ -19,20 +19,16 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 /**
  * @author Victor Ware
@@ -67,11 +63,12 @@ public class DDMFormStagingTestUtil {
 			Group remoteLiveGroup, Group remoteStagingGroup)
 		throws Exception {
 
-		setPortalProperty(
+		PropsValuesTestUtil.setPortalProperty(
 			"TUNNELING_SERVLET_SHARED_SECRET",
 			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
 
-		setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+		PropsValuesTestUtil.setPortalProperty(
+			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -107,22 +104,6 @@ public class DDMFormStagingTestUtil {
 		serviceContext.setAttribute(
 			StagingConstants.STAGED_PREFIX + key + StringPool.DOUBLE_DASH,
 			String.valueOf(value));
-	}
-
-	protected static void setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 }

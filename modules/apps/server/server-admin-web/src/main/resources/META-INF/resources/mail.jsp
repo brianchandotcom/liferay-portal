@@ -16,9 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
-</liferay-util:include>
+<aui:fieldset-group markupView="lexicon">
+	<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
+	</liferay-util:include>
+</aui:fieldset-group>
 
 <aui:button-row>
 	<aui:button cssClass="save-server-button" data-cmd="updateMail" value="save" />

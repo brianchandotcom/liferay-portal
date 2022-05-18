@@ -79,7 +79,7 @@ public class MailSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	protected String getJspPath() {
-		return "/mail.jsp";
+		return "/company_mail.jsp";
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.server.admin.web)")

@@ -18,15 +18,31 @@
 
 <portlet:actionURL name="/server_admin/edit_server" var="actionURL" />
 
-<aui:form action="<%= actionURL %>" method="post" name="fm">
+<portlet:renderURL var="redirectURL" />
+
+<aui:form action="<%= actionURL %>" cssClass="sheet-lg" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateMail" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
-	</liferay-util:include>
+	<aui:fieldset-group markupView="lexicon">
+		<h2>
+			<liferay-ui:message key="mail-settings" />
+		</h2>
 
-	<aui:button-row>
-		<aui:button cssClass="save-server-button" type="submit" value="save" />
-	</aui:button-row>
+		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
+		</liferay-util:include>
+
+		<clay:sheet-footer>
+			<div class="btn-group">
+				<div class="btn-group-item">
+					<aui:button cssClass="save-server-button" type="submit" value="save" />
+				</div>
+
+				<div class="btn-group-item">
+					<aui:button href="<%= redirectURL %>" type="cancel" />
+				</div>
+			</div>
+		</clay:sheet-footer>
+	</aui:fieldset-group>
 </aui:form>

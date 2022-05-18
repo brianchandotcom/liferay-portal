@@ -23,31 +23,46 @@ export default function Card({
 	className,
 	title,
 	tooltip,
+	viewMode,
 	...otherProps
 }: IProps) {
+	const inline = viewMode === 'inline';
+	const noPadding = viewMode === 'no-padding';
+
 	return (
 		<div
 			{...otherProps}
-			className={classNames(className, 'lfr-objects__card')}
+			className={classNames(className, 'lfr-objects__card', {
+				'lfr-objects__card--inline': inline,
+			})}
 		>
-			<div className="lfr-objects__card-header">
-				<h3 className="lfr-objects__card-title">{title}</h3>
+			{inline ? (
+				title
+			) : (
+				<div className="lfr-objects__card-header">
+					<h3 className="lfr-objects__card-title">{title}</h3>
 
-				{tooltip && (
-					<span
-						className="ml-2"
-						data-tooltip-align="top"
-						title={tooltip.content}
-					>
-						<ClayIcon
-							className="lfr-objects__card-header-tooltip-icon"
-							symbol={tooltip.symbol}
-						/>
-					</span>
-				)}
-			</div>
+					{tooltip && (
+						<span
+							className="ml-2"
+							data-tooltip-align="top"
+							title={tooltip.content}
+						>
+							<ClayIcon
+								className="lfr-objects__card-header-tooltip-icon"
+								symbol={tooltip.symbol}
+							/>
+						</span>
+					)}
+				</div>
+			)}
 
-			<div className={classNames(className, 'lfr-objects__card-body')}>
+			<div
+				className={classNames('lfr-objects__card-body', {
+					'lfr-objects__card-body--inline': inline,
+					'lfr-objects__card-body--no-padding': noPadding,
+				})}
+			>
 				{children}
 			</div>
 		</div>
@@ -57,6 +72,7 @@ export default function Card({
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	tooltip?: ITooltip | null;
+	viewMode?: 'inline' | 'no-padding';
 }
 
 interface ITooltip {

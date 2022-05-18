@@ -124,45 +124,41 @@ function Conditions({
 
 	return (
 		<>
-			<div className="lfr-objects__no-padding-card">
-				<Card
-					title={values.engineLabel!}
-					tooltip={engine === 'ddm' ? ddmTooltip : null}
-				>
-					<div className="lfr-objects__object-validation-editor-sidebar-container">
-						<div className="lfr-objects__object-validation-editor-container">
-							<CodeMirrorEditor
-								editorRef={editorRef}
-								error={emptyScriptError}
-								onChange={(script) => setValues({script})}
-								options={{
-									lineWrapping: true,
-									mode:
-										engine === 'groovy' ? 'groovy' : 'null',
-									readOnly: disabled,
-									value: values.script ?? '',
-								}}
-								placeholder={placeholder}
-							/>
+			<Card
+				title={values.engineLabel!}
+				tooltip={engine === 'ddm' ? ddmTooltip : null}
+				viewMode="no-padding"
+			>
+				<div className="lfr-objects__object-validation-editor-sidebar-container">
+					<div className="lfr-objects__object-validation-editor-container">
+						<CodeMirrorEditor
+							editorRef={editorRef}
+							error={emptyScriptError}
+							onChange={(script) => setValues({script})}
+							options={{
+								lineWrapping: true,
+								mode: engine === 'groovy' ? 'groovy' : 'null',
+								readOnly: disabled,
+								value: values.script ?? '',
+							}}
+							placeholder={placeholder}
+						/>
 
-							<div className="has-error mb-3">
-								<FieldFeedback
-									errorMessage={emptyScriptError}
-								/>
-							</div>
+						<div className="has-error mb-3">
+							<FieldFeedback errorMessage={emptyScriptError} />
 						</div>
-
-						{flags['LPS-147651'] && (
-							<Sidebar
-								editorRef={editorRef}
-								objectValidationRuleElements={
-									objectValidationRuleElements
-								}
-							/>
-						)}
 					</div>
-				</Card>
-			</div>
+
+					{flags['LPS-147651'] && (
+						<Sidebar
+							editorRef={editorRef}
+							objectValidationRuleElements={
+								objectValidationRuleElements
+							}
+						/>
+					)}
+				</div>
+			</Card>
 
 			<Card title={Liferay.Language.get('error-message')}>
 				<InputLocalized

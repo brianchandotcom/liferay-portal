@@ -19,11 +19,13 @@ export default function Card({
 	className,
 	title,
 	tooltip,
+	viewMode,
 	...otherProps
 }: IProps): JSX.Element;
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	tooltip?: ITooltip | null;
+	viewMode?: 'inline' | 'no-padding';
 }
 interface ITooltip {
 	content: string;

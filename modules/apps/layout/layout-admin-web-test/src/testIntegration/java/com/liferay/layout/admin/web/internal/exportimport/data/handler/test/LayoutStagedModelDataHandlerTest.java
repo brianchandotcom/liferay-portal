@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -93,6 +97,46 @@ public class LayoutStagedModelDataHandlerTest
 	@AfterClass
 	public static void tearDownClass() {
 		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testCompanyScopedPortletOnContentLayoutHasCorrectAttributes()
+		throws Exception {
+
+		_registerTestPortlet();
+
+		initExport();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				_TEST_PORTLET_NAME, null, null);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferenceValueLocalServiceUtil.getPreferences(
+				portletPreferences);
+
+		jxPortletPreferences.setValue("lfrScopeType", "company");
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),
+			portletPreferences.getPlid(), portletPreferences.getPortletId(),
+			jxPortletPreferences);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layout);
+
+		initImport();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			liveGroup.getCompanyId());
+
+		validatePortletAttributes(
+			layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
+			"company");
 	}
 
 	@Test

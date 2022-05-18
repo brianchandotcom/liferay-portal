@@ -21,4 +21,6 @@ public class SharingDLWebKeys {
 
 	public static final String FILE_ENTRY = "FILE_ENTRY";
 
+	public static final String SHARING_CONFIGURATION = "SHARING_CONFIGURATION";
+
 }

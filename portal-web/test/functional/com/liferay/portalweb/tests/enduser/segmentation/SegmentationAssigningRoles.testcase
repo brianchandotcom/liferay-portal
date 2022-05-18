@@ -345,4 +345,350 @@ definition {
 		}
 	}
 
+	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings
+	When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen
+	Then a message will show: 'Warning: Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service'."
+	@priority = "3"
+	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CheckMessageSegmentationByRolesDisabledInstanceSettings";
+
+		task ("Disable segmentation by roles from instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+
+			Segmentation.disableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Go to the role segments assignee's section") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role._goToRoleAssigneeType(
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("Assert the warning message is displayed") {
+			AssertTextPresent(
+				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
+				textValue = "Assigning roles by segment is disabled",
+				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+		}
+	}
+
+	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
+    When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen
+    Then the user may still add segments to the list by using the '+' button, but assigning won't be accomplished"
+	@priority = "4"
+	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssigningBySegmentNotWorkingDisabledInstanceSettings";
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Global",
+				operator = "contains",
+				segmentName = "Segment global usersn",
+				text = "usersn");
+		}
+
+		task ("Enable Assign roles by segment from system settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Disable segmentation by roles from instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+
+			Segmentation.disableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Assign the segment to the role created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.addAssignee(
+				assigneeName = "Segment global usersn",
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("Log out and login with the user assigned to the segment") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert the role is not working") {
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete one of the segments") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "global");
+
+			Segmentation.deleteSegment(entry = "Segment global usersn");
+		}
+	}
+
+	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
+    When Enable Segmentation by roles is enabled And the user accesses the Segments tab in the role assignment screen
+    Then no warning message is shown and the assigning will be accomplished"
+	@priority = "3"
+	test CanAssignBySegmentEnabledInstanceSettings {
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignBySegmentEnabledInstanceSettings";
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Global",
+				operator = "contains",
+				segmentName = "Segment global usersn",
+				text = "usersn");
+		}
+
+		task ("Enable Assign roles by segment from system settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Enable segmentation by roles from instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Assign the segment to the role created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.addAssignee(
+				assigneeName = "Segment global usersn",
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("Log out and login with the user assigned to the segment") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert the role is working") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			AssertElementPresent(
+				key_category = "Content",
+				key_portlet = "Content Dashboard",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete one of the segments") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "global");
+
+			Segmentation.deleteSegment(entry = "Segment global usersn");
+		}
+	}
+
+	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
+    When Enable Segmentation by roles is disabled
+    Then the Assign Site Roles option will be disabled in the Segments Editor"
+	@priority = "4"
+	test DisabledAssignSiteRolesOptionInSegmentsEditor {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisabledAssignSiteRolesOptionInSegmentsEditor";
+
+		task ("Add segment in Test Site Name") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment site usersn",
+				text = "usersn");
+		}
+
+		task ("Enable Assign roles by segment at System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Disable segmentation by roles from instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+
+			Segmentation.disableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Go to segments portlet") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Open segment's options and assert the option Assign site roles is enabled") {
+			Segmentation.openSegmentOptions(segmentName = "site");
+
+			AssertElementPresent(
+				key_text = "Assign Site Roles",
+				locator1 = "Dropdown#ANY_DISABLED");
+		}
+	}
+
+	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
+    When Enable Segmentation by roles is enabled
+    Then it shows a dialog allowing user to assign/unassign site roles"
+	@priority = "4"
+	test CanAssignSiteRolesToSegment {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignSiteRolesToSegment";
+
+		task ("Add segment in Test Site Name") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment site usersn",
+				text = "usersn");
+		}
+
+		task ("Enable Assign roles by segment at System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Disable segmentation by roles from instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "Virtual Instance Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Go to segments portlet") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add site role to segment") {
+			Segmentation.assignSiteRoles(
+				roleName = "Site Member",
+				segmentName = "Segment site usersn");
+		}
+	}
+
 }

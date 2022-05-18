@@ -34,6 +34,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -307,6 +308,18 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "purchasable");
 		boolean published = ParamUtil.getBoolean(actionRequest, "published");
 
+		double width = ParamUtil.getDouble(actionRequest, "width");
+		double height = ParamUtil.getDouble(actionRequest, "height");
+		double depth = ParamUtil.getDouble(actionRequest, "depth");
+		double weight = ParamUtil.getDouble(actionRequest, "weight");
+
+		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "price", BigDecimal.ZERO);
+		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "promoPrice", BigDecimal.ZERO);
+		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "cost", BigDecimal.ZERO);
+
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -395,6 +408,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
+				width, height, depth, weight, price, promoPrice, cost,
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -411,33 +425,22 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
 			cpInstance = _cpInstanceService.addCPInstance(
-				cpDefinitionId, cpDefinition.getGroupId(), sku, gtin,
-				manufacturerPartNumber, purchasable,
+				StringPool.BLANK, cpDefinitionId, cpDefinition.getGroupId(),
+				sku, gtin, manufacturerPartNumber, purchasable,
 				_cpDefinitionOptionRelLocalService.
 					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 						cpDefinitionId,
 						ParamUtil.getString(actionRequest, "ddmFormValues")),
+				width, height, depth, weight, price, promoPrice, cost,
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, unspsc, discontinued,
-				replacementCPInstanceUuid, replacementCProductId,
-				discontinuedDateMonth, discontinuedDateDay,
-				discontinuedDateYear, serviceContext);
+				expirationDateMinute, neverExpire, false, false, 1,
+				StringPool.BLANK, null, 0, false, 0, StringPool.BLANK, null, 0,
+				unspsc, discontinued, replacementCPInstanceUuid,
+				replacementCProductId, discontinuedDateMonth,
+				discontinuedDateDay, discontinuedDateYear, serviceContext);
 		}
-
-		// Update pricing info
-
-		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "price", BigDecimal.ZERO);
-		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "promoPrice", BigDecimal.ZERO);
-		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "cost", BigDecimal.ZERO);
-
-		cpInstance = _cpInstanceService.updatePricingInfo(
-			cpInstance.getCPInstanceId(), price, promoPrice, cost,
-			serviceContext);
 
 		if (Objects.equals(
 				_getCommercePricingConfigurationKey(),
@@ -448,16 +451,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContextFactory.getInstance(actionRequest));
 		}
 
-		// Update shipping info
-
-		double width = ParamUtil.getDouble(actionRequest, "width");
-		double height = ParamUtil.getDouble(actionRequest, "height");
-		double depth = ParamUtil.getDouble(actionRequest, "depth");
-		double weight = ParamUtil.getDouble(actionRequest, "weight");
-
-		return _cpInstanceService.updateShippingInfo(
-			cpInstance.getCPInstanceId(), width, height, depth, weight,
-			serviceContext);
+		return cpInstance;
 	}
 
 	private static final TransactionConfig _transactionConfig =

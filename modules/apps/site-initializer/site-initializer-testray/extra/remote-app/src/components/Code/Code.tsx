@@ -16,19 +16,19 @@ import classNames from 'classnames';
 import {ReactNode} from 'react';
 
 type CodeProps = {
-    children: ReactNode;
-    className?: string;
+	children: ReactNode;
+	className?: string;
 };
 
 const Code: React.FC<CodeProps> = ({children, className}) => (
-    <code
-        className={classNames(
-            'bg-light font-italic p-2 text-secondary',
-            className
-        )}
-    >
-        {children}
-    </code>
+	<code
+		className={classNames(
+			'bg-light font-italic p-2 text-secondary',
+			className
+		)}
+	>
+		{children}
+	</code>
 );
 
 export default Code;

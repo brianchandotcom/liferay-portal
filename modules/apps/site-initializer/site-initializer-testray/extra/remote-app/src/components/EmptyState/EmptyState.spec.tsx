@@ -18,19 +18,27 @@ import EmptyState from '.';
 
 describe('EmptyState', () => {
 	it('renders with default properties', () => {
-		const {asFragment, container, queryByText} = render(<EmptyState  />);
+		const {asFragment, container, queryByText} = render(<EmptyState />);
 
-		expect(queryByText("No results found")).toBeTruthy()
-		expect(queryByText("Sorry, there are no results found")).toBeTruthy()
-		expect(container.querySelector("img")?.src).toBe("https://clayui.com/images/empty_state.gif")
-		expect(asFragment()).toMatchSnapshot()
+		expect(queryByText('No results found')).toBeTruthy();
+		expect(queryByText('Sorry, there are no results found')).toBeTruthy();
+		expect(container.querySelector('img')?.src).toBe(
+			'https://clayui.com/images/empty_state.gif'
+		);
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders with custom properties', () => {
-		const {container, queryByText} = render(<EmptyState description='No users found' title='No users' type='BLANK' />);
+		const {container, queryByText} = render(
+			<EmptyState
+				description="No users found"
+				title="No users"
+				type="BLANK"
+			/>
+		);
 
-		expect(queryByText("No users")).toBeTruthy()
-		expect(queryByText("No users found")).toBeTruthy()
-		expect(container.querySelector("img")?.src).toBeUndefined()
+		expect(queryByText('No users')).toBeTruthy();
+		expect(queryByText('No users found')).toBeTruthy();
+		expect(container.querySelector('img')?.src).toBeUndefined();
 	});
 });

@@ -12,15 +12,19 @@
  * details.
  */
 
-import { render } from "@testing-library/react";
+import {render} from '@testing-library/react';
 
-import Code from "./";
+import Code from './';
 
 describe('Code', () => {
-    it('renders code with children', () => {
-        const {asFragment, container} = render(<Code>com.liferay.testray.user</Code>)
+	it('renders code with children', () => {
+		const {asFragment, container} = render(
+			<Code>com.liferay.testray.user</Code>
+		);
 
-        expect(container.querySelector("code")).toHaveTextContent("com.liferay.testray.user")
-        expect(asFragment()).toMatchSnapshot();
-    });
+		expect(container.querySelector('code')).toHaveTextContent(
+			'com.liferay.testray.user'
+		);
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

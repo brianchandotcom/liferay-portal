@@ -12,8 +12,8 @@
  * details.
  */
 
-import EmptyState, {EmptyStateProps} from './EmptyState'
+import EmptyState, {EmptyStateProps} from './EmptyState';
 
-export type {EmptyStateProps}
+export type {EmptyStateProps};
 
-export default EmptyState
+export default EmptyState;

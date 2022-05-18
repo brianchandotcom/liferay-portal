@@ -10,6 +10,8 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
+		WaitForPageLoad();
+
 		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
 	}
 

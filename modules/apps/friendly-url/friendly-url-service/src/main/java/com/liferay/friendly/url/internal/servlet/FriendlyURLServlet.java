@@ -216,6 +216,13 @@ public class FriendlyURLServlet extends HttpServlet {
 								friendlyURL;
 					}
 
+					String queryString = HttpComponentsUtil.getQueryString(
+						originalHttpServletRequest);
+
+					if (Validator.isNotNull(queryString)) {
+						redirectURL += StringPool.QUESTION + queryString;
+					}
+
 					return new Redirect(redirectURL, true, false);
 				}
 			}

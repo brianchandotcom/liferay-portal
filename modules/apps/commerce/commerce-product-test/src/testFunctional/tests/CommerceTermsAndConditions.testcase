@@ -62,9 +62,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -160,9 +162,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -294,9 +298,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -418,9 +424,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -518,9 +526,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -698,7 +708,7 @@ definition {
 
 		for (var paymentTerms : list "${paymentTermsEligibility}") {
 			AssertElementPresent(
-				key_radioOption = "${deliveryTerms}",
+				key_radioOption = "${paymentTerms}",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			echo("${paymentTerms} is available");
@@ -755,9 +765,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -880,9 +892,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
@@ -1088,9 +1102,11 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		SetWindowSize(value1 = "1765,966");
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Navigator.gotoNavTab(navTab = "Eligibility");
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "Delivery Term 1");
 

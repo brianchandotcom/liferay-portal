@@ -1,0 +1,25 @@
+changetype: add
+dn: cn=testUser,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: testUser
+givenName: firstName2
+sn: lastName2
+userPassword: test
+mail: testUser2@liferay.com
+
+dn: cn=notTestUser,dc=example,dc=com
+changetype: add
+objectClass: top
+description: John Smith from Accounting.  John is the project
+  manager of the building project, so contact him with any que
+ stions.
+objectClass: person
+objectClass: organizationalPerson
+mail: testUser1@liferay.com
+objectClass: inetOrgPerson
+cn: notTestUser
+userPassword: test
+sn: lastName1

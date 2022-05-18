@@ -1865,50 +1865,50 @@ public class OAuthClientEntryPersistenceImpl
 	private FinderPath _finderPathCountByC_A;
 
 	/**
-	 * Returns all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entries
 	 */
 	@Override
 	public List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer) {
+		long companyId, String authServerWellKnownURI) {
 
 		return findByC_A(
-			companyId, authServerIssuer, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			companyId, authServerWellKnownURI, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns a range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @return the range of matching o auth client entries
 	 */
 	@Override
 	public List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end) {
+		long companyId, String authServerWellKnownURI, int start, int end) {
 
-		return findByC_A(companyId, authServerIssuer, start, end, null);
+		return findByC_A(companyId, authServerWellKnownURI, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1916,22 +1916,23 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
 		return findByC_A(
-			companyId, authServerIssuer, start, end, orderByComparator, true);
+			companyId, authServerWellKnownURI, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1940,11 +1941,11 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		OrderByComparator<OAuthClientEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1954,13 +1955,13 @@ public class OAuthClientEntryPersistenceImpl
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_A;
-				finderArgs = new Object[] {companyId, authServerIssuer};
+				finderArgs = new Object[] {companyId, authServerWellKnownURI};
 			}
 		}
 		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_A;
 			finderArgs = new Object[] {
-				companyId, authServerIssuer, start, end, orderByComparator
+				companyId, authServerWellKnownURI, start, end, orderByComparator
 			};
 		}
 
@@ -1973,8 +1974,8 @@ public class OAuthClientEntryPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuthClientEntry oAuthClientEntry : list) {
 					if ((companyId != oAuthClientEntry.getCompanyId()) ||
-						!authServerIssuer.equals(
-							oAuthClientEntry.getAuthServerIssuer())) {
+						!authServerWellKnownURI.equals(
+							oAuthClientEntry.getAuthServerWellKnownURI())) {
 
 						list = null;
 
@@ -1999,15 +2000,15 @@ public class OAuthClientEntryPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-			boolean bindAuthServerIssuer = false;
+			boolean bindAuthServerWellKnownURI = false;
 
-			if (authServerIssuer.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+			if (authServerWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 			}
 			else {
-				bindAuthServerIssuer = true;
+				bindAuthServerWellKnownURI = true;
 
-				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2031,8 +2032,8 @@ public class OAuthClientEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindAuthServerIssuer) {
-					queryPos.add(authServerIssuer);
+				if (bindAuthServerWellKnownURI) {
+					queryPos.add(authServerWellKnownURI);
 				}
 
 				list = (List<OAuthClientEntry>)QueryUtil.list(
@@ -2056,22 +2057,22 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry findByC_A_First(
-			long companyId, String authServerIssuer,
+			long companyId, String authServerWellKnownURI,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
 		OAuthClientEntry oAuthClientEntry = fetchByC_A_First(
-			companyId, authServerIssuer, orderByComparator);
+			companyId, authServerWellKnownURI, orderByComparator);
 
 		if (oAuthClientEntry != null) {
 			return oAuthClientEntry;
@@ -2084,8 +2085,8 @@ public class OAuthClientEntryPersistenceImpl
 		sb.append("companyId=");
 		sb.append(companyId);
 
-		sb.append(", authServerIssuer=");
-		sb.append(authServerIssuer);
+		sb.append(", authServerWellKnownURI=");
+		sb.append(authServerWellKnownURI);
 
 		sb.append("}");
 
@@ -2093,20 +2094,20 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry fetchByC_A_First(
-		long companyId, String authServerIssuer,
+		long companyId, String authServerWellKnownURI,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
 		List<OAuthClientEntry> list = findByC_A(
-			companyId, authServerIssuer, 0, 1, orderByComparator);
+			companyId, authServerWellKnownURI, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2116,22 +2117,22 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry findByC_A_Last(
-			long companyId, String authServerIssuer,
+			long companyId, String authServerWellKnownURI,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
 		OAuthClientEntry oAuthClientEntry = fetchByC_A_Last(
-			companyId, authServerIssuer, orderByComparator);
+			companyId, authServerWellKnownURI, orderByComparator);
 
 		if (oAuthClientEntry != null) {
 			return oAuthClientEntry;
@@ -2144,8 +2145,8 @@ public class OAuthClientEntryPersistenceImpl
 		sb.append("companyId=");
 		sb.append(companyId);
 
-		sb.append(", authServerIssuer=");
-		sb.append(authServerIssuer);
+		sb.append(", authServerWellKnownURI=");
+		sb.append(authServerWellKnownURI);
 
 		sb.append("}");
 
@@ -2153,26 +2154,27 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry fetchByC_A_Last(
-		long companyId, String authServerIssuer,
+		long companyId, String authServerWellKnownURI,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		int count = countByC_A(companyId, authServerIssuer);
+		int count = countByC_A(companyId, authServerWellKnownURI);
 
 		if (count == 0) {
 			return null;
 		}
 
 		List<OAuthClientEntry> list = findByC_A(
-			companyId, authServerIssuer, count - 1, count, orderByComparator);
+			companyId, authServerWellKnownURI, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2182,22 +2184,23 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param oAuthClientEntryId the primary key of the current o auth client entry
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientEntry[] findByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId, String authServerIssuer,
+			long oAuthClientEntryId, long companyId,
+			String authServerWellKnownURI,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		OAuthClientEntry oAuthClientEntry = findByPrimaryKey(
 			oAuthClientEntryId);
@@ -2210,13 +2213,13 @@ public class OAuthClientEntryPersistenceImpl
 			OAuthClientEntry[] array = new OAuthClientEntryImpl[3];
 
 			array[0] = getByC_A_PrevAndNext(
-				session, oAuthClientEntry, companyId, authServerIssuer,
+				session, oAuthClientEntry, companyId, authServerWellKnownURI,
 				orderByComparator, true);
 
 			array[1] = oAuthClientEntry;
 
 			array[2] = getByC_A_PrevAndNext(
-				session, oAuthClientEntry, companyId, authServerIssuer,
+				session, oAuthClientEntry, companyId, authServerWellKnownURI,
 				orderByComparator, false);
 
 			return array;
@@ -2231,7 +2234,7 @@ public class OAuthClientEntryPersistenceImpl
 
 	protected OAuthClientEntry getByC_A_PrevAndNext(
 		Session session, OAuthClientEntry oAuthClientEntry, long companyId,
-		String authServerIssuer,
+		String authServerWellKnownURI,
 		OrderByComparator<OAuthClientEntry> orderByComparator,
 		boolean previous) {
 
@@ -2250,15 +2253,15 @@ public class OAuthClientEntryPersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		boolean bindAuthServerIssuer = false;
+		boolean bindAuthServerWellKnownURI = false;
 
-		if (authServerIssuer.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+		if (authServerWellKnownURI.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 		}
 		else {
-			bindAuthServerIssuer = true;
+			bindAuthServerWellKnownURI = true;
 
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2332,8 +2335,8 @@ public class OAuthClientEntryPersistenceImpl
 
 		queryPos.add(companyId);
 
-		if (bindAuthServerIssuer) {
-			queryPos.add(authServerIssuer);
+		if (bindAuthServerWellKnownURI) {
+			queryPos.add(authServerWellKnownURI);
 		}
 
 		if (orderByComparator != null) {
@@ -2356,50 +2359,51 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entries that the user has permission to view
 	 */
 	@Override
 	public List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer) {
+		long companyId, String authServerWellKnownURI) {
 
 		return filterFindByC_A(
-			companyId, authServerIssuer, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			companyId, authServerWellKnownURI, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns a range of all the o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @return the range of matching o auth client entries that the user has permission to view
 	 */
 	@Override
 	public List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer, int start, int end) {
+		long companyId, String authServerWellKnownURI, int start, int end) {
 
-		return filterFindByC_A(companyId, authServerIssuer, start, end, null);
+		return filterFindByC_A(
+			companyId, authServerWellKnownURI, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth client entries that the user has permissions to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries that the user has permissions to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2407,15 +2411,16 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_A(
-				companyId, authServerIssuer, start, end, orderByComparator);
+				companyId, authServerWellKnownURI, start, end,
+				orderByComparator);
 		}
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		StringBundler sb = null;
 
@@ -2437,15 +2442,15 @@ public class OAuthClientEntryPersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		boolean bindAuthServerIssuer = false;
+		boolean bindAuthServerWellKnownURI = false;
 
-		if (authServerIssuer.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+		if (authServerWellKnownURI.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 		}
 		else {
-			bindAuthServerIssuer = true;
+			bindAuthServerWellKnownURI = true;
 
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -2496,8 +2501,8 @@ public class OAuthClientEntryPersistenceImpl
 
 			queryPos.add(companyId);
 
-			if (bindAuthServerIssuer) {
-				queryPos.add(authServerIssuer);
+			if (bindAuthServerWellKnownURI) {
+				queryPos.add(authServerWellKnownURI);
 			}
 
 			return (List<OAuthClientEntry>)QueryUtil.list(
@@ -2512,28 +2517,29 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param oAuthClientEntryId the primary key of the current o auth client entry
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	@Override
 	public OAuthClientEntry[] filterFindByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId, String authServerIssuer,
+			long oAuthClientEntryId, long companyId,
+			String authServerWellKnownURI,
 			OrderByComparator<OAuthClientEntry> orderByComparator)
 		throws NoSuchOAuthClientEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_A_PrevAndNext(
-				oAuthClientEntryId, companyId, authServerIssuer,
+				oAuthClientEntryId, companyId, authServerWellKnownURI,
 				orderByComparator);
 		}
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		OAuthClientEntry oAuthClientEntry = findByPrimaryKey(
 			oAuthClientEntryId);
@@ -2546,13 +2552,13 @@ public class OAuthClientEntryPersistenceImpl
 			OAuthClientEntry[] array = new OAuthClientEntryImpl[3];
 
 			array[0] = filterGetByC_A_PrevAndNext(
-				session, oAuthClientEntry, companyId, authServerIssuer,
+				session, oAuthClientEntry, companyId, authServerWellKnownURI,
 				orderByComparator, true);
 
 			array[1] = oAuthClientEntry;
 
 			array[2] = filterGetByC_A_PrevAndNext(
-				session, oAuthClientEntry, companyId, authServerIssuer,
+				session, oAuthClientEntry, companyId, authServerWellKnownURI,
 				orderByComparator, false);
 
 			return array;
@@ -2567,7 +2573,7 @@ public class OAuthClientEntryPersistenceImpl
 
 	protected OAuthClientEntry filterGetByC_A_PrevAndNext(
 		Session session, OAuthClientEntry oAuthClientEntry, long companyId,
-		String authServerIssuer,
+		String authServerWellKnownURI,
 		OrderByComparator<OAuthClientEntry> orderByComparator,
 		boolean previous) {
 
@@ -2592,15 +2598,15 @@ public class OAuthClientEntryPersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		boolean bindAuthServerIssuer = false;
+		boolean bindAuthServerWellKnownURI = false;
 
-		if (authServerIssuer.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+		if (authServerWellKnownURI.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 		}
 		else {
-			bindAuthServerIssuer = true;
+			bindAuthServerWellKnownURI = true;
 
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -2713,8 +2719,8 @@ public class OAuthClientEntryPersistenceImpl
 
 		queryPos.add(companyId);
 
-		if (bindAuthServerIssuer) {
-			queryPos.add(authServerIssuer);
+		if (bindAuthServerWellKnownURI) {
+			queryPos.add(authServerWellKnownURI);
 		}
 
 		if (orderByComparator != null) {
@@ -2737,16 +2743,16 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes all the o auth client entries where companyId = &#63; and authServerIssuer = &#63; from the database.
+	 * Removes all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 */
 	@Override
-	public void removeByC_A(long companyId, String authServerIssuer) {
+	public void removeByC_A(long companyId, String authServerWellKnownURI) {
 		for (OAuthClientEntry oAuthClientEntry :
 				findByC_A(
-					companyId, authServerIssuer, QueryUtil.ALL_POS,
+					companyId, authServerWellKnownURI, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(oAuthClientEntry);
@@ -2754,19 +2760,19 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries
 	 */
 	@Override
-	public int countByC_A(long companyId, String authServerIssuer) {
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+	public int countByC_A(long companyId, String authServerWellKnownURI) {
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		FinderPath finderPath = _finderPathCountByC_A;
 
-		Object[] finderArgs = new Object[] {companyId, authServerIssuer};
+		Object[] finderArgs = new Object[] {companyId, authServerWellKnownURI};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
@@ -2777,15 +2783,15 @@ public class OAuthClientEntryPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-			boolean bindAuthServerIssuer = false;
+			boolean bindAuthServerWellKnownURI = false;
 
-			if (authServerIssuer.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+			if (authServerWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 			}
 			else {
-				bindAuthServerIssuer = true;
+				bindAuthServerWellKnownURI = true;
 
-				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+				sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 			}
 
 			String sql = sb.toString();
@@ -2801,8 +2807,8 @@ public class OAuthClientEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindAuthServerIssuer) {
-					queryPos.add(authServerIssuer);
+				if (bindAuthServerWellKnownURI) {
+					queryPos.add(authServerWellKnownURI);
 				}
 
 				count = (Long)query.uniqueResult();
@@ -2821,19 +2827,19 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the number of o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_A(long companyId, String authServerIssuer) {
+	public int filterCountByC_A(long companyId, String authServerWellKnownURI) {
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A(companyId, authServerIssuer);
+			return countByC_A(companyId, authServerWellKnownURI);
 		}
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		StringBundler sb = new StringBundler(3);
 
@@ -2841,15 +2847,15 @@ public class OAuthClientEntryPersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		boolean bindAuthServerIssuer = false;
+		boolean bindAuthServerWellKnownURI = false;
 
-		if (authServerIssuer.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_3);
+		if (authServerWellKnownURI.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3);
 		}
 		else {
-			bindAuthServerIssuer = true;
+			bindAuthServerWellKnownURI = true;
 
-			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERISSUER_2);
+			sb.append(_FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -2870,8 +2876,8 @@ public class OAuthClientEntryPersistenceImpl
 
 			queryPos.add(companyId);
 
-			if (bindAuthServerIssuer) {
-				queryPos.add(authServerIssuer);
+			if (bindAuthServerWellKnownURI) {
+				queryPos.add(authServerWellKnownURI);
 			}
 
 			Long count = (Long)sqlQuery.uniqueResult();
@@ -2889,31 +2895,31 @@ public class OAuthClientEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 =
 		"oAuthClientEntry.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_AUTHSERVERISSUER_2 =
-		"oAuthClientEntry.authServerIssuer = ?";
+	private static final String _FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_2 =
+		"oAuthClientEntry.authServerWellKnownURI = ?";
 
-	private static final String _FINDER_COLUMN_C_A_AUTHSERVERISSUER_3 =
-		"(oAuthClientEntry.authServerIssuer IS NULL OR oAuthClientEntry.authServerIssuer = '')";
+	private static final String _FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3 =
+		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '')";
 
 	private FinderPath _finderPathFetchByC_A_C;
 	private FinderPath _finderPathCountByC_A_C;
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry findByC_A_C(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws NoSuchOAuthClientEntryException {
 
 		OAuthClientEntry oAuthClientEntry = fetchByC_A_C(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 
 		if (oAuthClientEntry == null) {
 			StringBundler sb = new StringBundler(8);
@@ -2923,8 +2929,8 @@ public class OAuthClientEntryPersistenceImpl
 			sb.append("companyId=");
 			sb.append(companyId);
 
-			sb.append(", authServerIssuer=");
-			sb.append(authServerIssuer);
+			sb.append(", authServerWellKnownURI=");
+			sb.append(authServerWellKnownURI);
 
 			sb.append(", clientId=");
 			sb.append(clientId);
@@ -2942,41 +2948,43 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerIssuer, String clientId) {
+		long companyId, String authServerWellKnownURI, String clientId) {
 
-		return fetchByC_A_C(companyId, authServerIssuer, clientId, true);
+		return fetchByC_A_C(companyId, authServerWellKnownURI, clientId, true);
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
 	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerIssuer, String clientId,
+		long companyId, String authServerWellKnownURI, String clientId,
 		boolean useFinderCache) {
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 		clientId = Objects.toString(clientId, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, authServerIssuer, clientId};
+			finderArgs = new Object[] {
+				companyId, authServerWellKnownURI, clientId
+			};
 		}
 
 		Object result = null;
@@ -2990,7 +2998,8 @@ public class OAuthClientEntryPersistenceImpl
 
 			if ((companyId != oAuthClientEntry.getCompanyId()) ||
 				!Objects.equals(
-					authServerIssuer, oAuthClientEntry.getAuthServerIssuer()) ||
+					authServerWellKnownURI,
+					oAuthClientEntry.getAuthServerWellKnownURI()) ||
 				!Objects.equals(clientId, oAuthClientEntry.getClientId())) {
 
 				result = null;
@@ -3004,15 +3013,15 @@ public class OAuthClientEntryPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_A_C_COMPANYID_2);
 
-			boolean bindAuthServerIssuer = false;
+			boolean bindAuthServerWellKnownURI = false;
 
-			if (authServerIssuer.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_3);
+			if (authServerWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3);
 			}
 			else {
-				bindAuthServerIssuer = true;
+				bindAuthServerWellKnownURI = true;
 
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_2);
+				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2);
 			}
 
 			boolean bindClientId = false;
@@ -3039,8 +3048,8 @@ public class OAuthClientEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindAuthServerIssuer) {
-					queryPos.add(authServerIssuer);
+				if (bindAuthServerWellKnownURI) {
+					queryPos.add(authServerWellKnownURI);
 				}
 
 				if (bindClientId) {
@@ -3080,43 +3089,43 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; from the database.
+	 * Removes the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the o auth client entry that was removed
 	 */
 	@Override
 	public OAuthClientEntry removeByC_A_C(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws NoSuchOAuthClientEntryException {
 
 		OAuthClientEntry oAuthClientEntry = findByC_A_C(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 
 		return remove(oAuthClientEntry);
 	}
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the number of matching o auth client entries
 	 */
 	@Override
 	public int countByC_A_C(
-		long companyId, String authServerIssuer, String clientId) {
+		long companyId, String authServerWellKnownURI, String clientId) {
 
-		authServerIssuer = Objects.toString(authServerIssuer, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 		clientId = Objects.toString(clientId, "");
 
 		FinderPath finderPath = _finderPathCountByC_A_C;
 
 		Object[] finderArgs = new Object[] {
-			companyId, authServerIssuer, clientId
+			companyId, authServerWellKnownURI, clientId
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
@@ -3128,15 +3137,15 @@ public class OAuthClientEntryPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_A_C_COMPANYID_2);
 
-			boolean bindAuthServerIssuer = false;
+			boolean bindAuthServerWellKnownURI = false;
 
-			if (authServerIssuer.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_3);
+			if (authServerWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3);
 			}
 			else {
-				bindAuthServerIssuer = true;
+				bindAuthServerWellKnownURI = true;
 
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_2);
+				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2);
 			}
 
 			boolean bindClientId = false;
@@ -3163,8 +3172,8 @@ public class OAuthClientEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindAuthServerIssuer) {
-					queryPos.add(authServerIssuer);
+				if (bindAuthServerWellKnownURI) {
+					queryPos.add(authServerWellKnownURI);
 				}
 
 				if (bindClientId) {
@@ -3189,11 +3198,11 @@ public class OAuthClientEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_C_COMPANYID_2 =
 		"oAuthClientEntry.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_2 =
-		"oAuthClientEntry.authServerIssuer = ? AND ";
+	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2 =
+		"oAuthClientEntry.authServerWellKnownURI = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERISSUER_3 =
-		"(oAuthClientEntry.authServerIssuer IS NULL OR oAuthClientEntry.authServerIssuer = '') AND ";
+	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3 =
+		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '') AND ";
 
 	private static final String _FINDER_COLUMN_C_A_C_CLIENTID_2 =
 		"oAuthClientEntry.clientId = ?";
@@ -3225,7 +3234,7 @@ public class OAuthClientEntryPersistenceImpl
 			_finderPathFetchByC_A_C,
 			new Object[] {
 				oAuthClientEntry.getCompanyId(),
-				oAuthClientEntry.getAuthServerIssuer(),
+				oAuthClientEntry.getAuthServerWellKnownURI(),
 				oAuthClientEntry.getClientId()
 			},
 			oAuthClientEntry);
@@ -3306,7 +3315,7 @@ public class OAuthClientEntryPersistenceImpl
 
 		Object[] args = new Object[] {
 			oAuthClientEntryModelImpl.getCompanyId(),
-			oAuthClientEntryModelImpl.getAuthServerIssuer(),
+			oAuthClientEntryModelImpl.getAuthServerWellKnownURI(),
 			oAuthClientEntryModelImpl.getClientId()
 		};
 
@@ -3815,17 +3824,17 @@ public class OAuthClientEntryPersistenceImpl
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
-			new String[] {"companyId", "authServerIssuer"}, true);
+			new String[] {"companyId", "authServerWellKnownURI"}, true);
 
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "authServerIssuer"}, true);
+			new String[] {"companyId", "authServerWellKnownURI"}, true);
 
 		_finderPathCountByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "authServerIssuer"}, false);
+			new String[] {"companyId", "authServerWellKnownURI"}, false);
 
 		_finderPathFetchByC_A_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_C",
@@ -3833,7 +3842,8 @@ public class OAuthClientEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerIssuer", "clientId"}, true);
+			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
+			true);
 
 		_finderPathCountByC_A_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_C",
@@ -3841,7 +3851,8 @@ public class OAuthClientEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerIssuer", "clientId"}, false);
+			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
+			false);
 
 		_setOAuthClientEntryUtilPersistence(this);
 	}

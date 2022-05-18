@@ -457,59 +457,59 @@ public interface OAuthClientEntryPersistence
 	public int filterCountByUserId(long userId);
 
 	/**
-	 * Returns all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entries
 	 */
 	public java.util.List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer);
+		long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns a range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns a range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @return the range of matching o auth client entries
 	 */
 	public java.util.List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end);
+		long companyId, String authServerWellKnownURI, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth client entries
 	 */
 	public java.util.List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -517,229 +517,231 @@ public interface OAuthClientEntryPersistence
 	 * @return the ordered range of matching o auth client entries
 	 */
 	public java.util.List<OAuthClientEntry> findByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry findByC_A_First(
-			long companyId, String authServerIssuer,
+			long companyId, String authServerWellKnownURI,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 				orderByComparator)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the first o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry fetchByC_A_First(
-		long companyId, String authServerIssuer,
+		long companyId, String authServerWellKnownURI,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry findByC_A_Last(
-			long companyId, String authServerIssuer,
+			long companyId, String authServerWellKnownURI,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 				orderByComparator)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the last o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry fetchByC_A_Last(
-		long companyId, String authServerIssuer,
+		long companyId, String authServerWellKnownURI,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param oAuthClientEntryId the primary key of the current o auth client entry
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public OAuthClientEntry[] findByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId, String authServerIssuer,
+			long oAuthClientEntryId, long companyId,
+			String authServerWellKnownURI,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 				orderByComparator)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entries that the user has permission to view
 	 */
 	public java.util.List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer);
+		long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns a range of all the o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns a range of all the o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @return the range of matching o auth client entries that the user has permission to view
 	 */
 	public java.util.List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer, int start, int end);
+		long companyId, String authServerWellKnownURI, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the o auth client entries that the user has permissions to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns an ordered range of all the o auth client entries that the user has permissions to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthClientEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param start the lower bound of the range of o auth client entries
 	 * @param end the upper bound of the range of o auth client entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth client entries that the user has permission to view
 	 */
 	public java.util.List<OAuthClientEntry> filterFindByC_A(
-		long companyId, String authServerIssuer, int start, int end,
+		long companyId, String authServerWellKnownURI, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param oAuthClientEntryId the primary key of the current o auth client entry
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
 	 */
 	public OAuthClientEntry[] filterFindByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId, String authServerIssuer,
+			long oAuthClientEntryId, long companyId,
+			String authServerWellKnownURI,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 				orderByComparator)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Removes all the o auth client entries where companyId = &#63; and authServerIssuer = &#63; from the database.
+	 * Removes all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 */
-	public void removeByC_A(long companyId, String authServerIssuer);
+	public void removeByC_A(long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries
 	 */
-	public int countByC_A(long companyId, String authServerIssuer);
+	public int countByC_A(long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns the number of o auth client entries that the user has permission to view where companyId = &#63; and authServerIssuer = &#63;.
+	 * Returns the number of o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries that the user has permission to view
 	 */
-	public int filterCountByC_A(long companyId, String authServerIssuer);
+	public int filterCountByC_A(long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry findByC_A_C(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerIssuer, String clientId);
+		long companyId, String authServerWellKnownURI, String clientId);
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerIssuer, String clientId,
+		long companyId, String authServerWellKnownURI, String clientId,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the o auth client entry where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63; from the database.
+	 * Removes the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the o auth client entry that was removed
 	 */
 	public OAuthClientEntry removeByC_A_C(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerIssuer = &#63; and clientId = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerIssuer the auth server issuer
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
 	 * @return the number of matching o auth client entries
 	 */
 	public int countByC_A_C(
-		long companyId, String authServerIssuer, String clientId);
+		long companyId, String authServerWellKnownURI, String clientId);
 
 	/**
 	 * Caches the o auth client entry in the entity cache if it is enabled.

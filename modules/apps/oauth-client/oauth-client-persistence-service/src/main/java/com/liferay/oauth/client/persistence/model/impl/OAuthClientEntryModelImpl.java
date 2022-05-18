@@ -74,9 +74,9 @@ public class OAuthClientEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"oAuthClientEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"authServerIssuer", Types.VARCHAR},
-		{"clientId", Types.VARCHAR}, {"infoJSON", Types.CLOB},
-		{"parametersJSON", Types.CLOB}
+		{"modifiedDate", Types.TIMESTAMP},
+		{"authServerWellKnownURI", Types.VARCHAR}, {"clientId", Types.VARCHAR},
+		{"infoJSON", Types.CLOB}, {"parametersJSON", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,14 +90,14 @@ public class OAuthClientEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("authServerIssuer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("authServerWellKnownURI", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("infoJSON", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("parametersJSON", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authServerIssuer VARCHAR(128) null,clientId VARCHAR(128) null,infoJSON TEXT null,parametersJSON TEXT null)";
+		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(128) null,infoJSON TEXT null,parametersJSON TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuthClientEntry";
 
@@ -117,7 +117,7 @@ public class OAuthClientEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long AUTHSERVERISSUER_COLUMN_BITMASK = 1L;
+	public static final long AUTHSERVERWELLKNOWNURI_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -295,11 +295,12 @@ public class OAuthClientEntryModelImpl
 			(BiConsumer<OAuthClientEntry, Date>)
 				OAuthClientEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"authServerIssuer", OAuthClientEntry::getAuthServerIssuer);
+			"authServerWellKnownURI",
+			OAuthClientEntry::getAuthServerWellKnownURI);
 		attributeSetterBiConsumers.put(
-			"authServerIssuer",
+			"authServerWellKnownURI",
 			(BiConsumer<OAuthClientEntry, String>)
-				OAuthClientEntry::setAuthServerIssuer);
+				OAuthClientEntry::setAuthServerWellKnownURI);
 		attributeGetterFunctions.put("clientId", OAuthClientEntry::getClientId);
 		attributeSetterBiConsumers.put(
 			"clientId",
@@ -476,22 +477,22 @@ public class OAuthClientEntryModelImpl
 
 	@JSON
 	@Override
-	public String getAuthServerIssuer() {
-		if (_authServerIssuer == null) {
+	public String getAuthServerWellKnownURI() {
+		if (_authServerWellKnownURI == null) {
 			return "";
 		}
 		else {
-			return _authServerIssuer;
+			return _authServerWellKnownURI;
 		}
 	}
 
 	@Override
-	public void setAuthServerIssuer(String authServerIssuer) {
+	public void setAuthServerWellKnownURI(String authServerWellKnownURI) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_authServerIssuer = authServerIssuer;
+		_authServerWellKnownURI = authServerWellKnownURI;
 	}
 
 	/**
@@ -499,8 +500,8 @@ public class OAuthClientEntryModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalAuthServerIssuer() {
-		return getColumnOriginalValue("authServerIssuer");
+	public String getOriginalAuthServerWellKnownURI() {
+		return getColumnOriginalValue("authServerWellKnownURI");
 	}
 
 	@JSON
@@ -635,7 +636,8 @@ public class OAuthClientEntryModelImpl
 		oAuthClientEntryImpl.setUserName(getUserName());
 		oAuthClientEntryImpl.setCreateDate(getCreateDate());
 		oAuthClientEntryImpl.setModifiedDate(getModifiedDate());
-		oAuthClientEntryImpl.setAuthServerIssuer(getAuthServerIssuer());
+		oAuthClientEntryImpl.setAuthServerWellKnownURI(
+			getAuthServerWellKnownURI());
 		oAuthClientEntryImpl.setClientId(getClientId());
 		oAuthClientEntryImpl.setInfoJSON(getInfoJSON());
 		oAuthClientEntryImpl.setParametersJSON(getParametersJSON());
@@ -663,8 +665,8 @@ public class OAuthClientEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		oAuthClientEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		oAuthClientEntryImpl.setAuthServerIssuer(
-			this.<String>getColumnOriginalValue("authServerIssuer"));
+		oAuthClientEntryImpl.setAuthServerWellKnownURI(
+			this.<String>getColumnOriginalValue("authServerWellKnownURI"));
 		oAuthClientEntryImpl.setClientId(
 			this.<String>getColumnOriginalValue("clientId"));
 		oAuthClientEntryImpl.setInfoJSON(
@@ -783,12 +785,16 @@ public class OAuthClientEntryModelImpl
 			oAuthClientEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		oAuthClientEntryCacheModel.authServerIssuer = getAuthServerIssuer();
+		oAuthClientEntryCacheModel.authServerWellKnownURI =
+			getAuthServerWellKnownURI();
 
-		String authServerIssuer = oAuthClientEntryCacheModel.authServerIssuer;
+		String authServerWellKnownURI =
+			oAuthClientEntryCacheModel.authServerWellKnownURI;
 
-		if ((authServerIssuer != null) && (authServerIssuer.length() == 0)) {
-			oAuthClientEntryCacheModel.authServerIssuer = null;
+		if ((authServerWellKnownURI != null) &&
+			(authServerWellKnownURI.length() == 0)) {
+
+			oAuthClientEntryCacheModel.authServerWellKnownURI = null;
 		}
 
 		oAuthClientEntryCacheModel.clientId = getClientId();
@@ -916,7 +922,7 @@ public class OAuthClientEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _authServerIssuer;
+	private String _authServerWellKnownURI;
 	private String _clientId;
 	private String _infoJSON;
 	private String _parametersJSON;
@@ -955,7 +961,8 @@ public class OAuthClientEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("authServerIssuer", _authServerIssuer);
+		_columnOriginalValues.put(
+			"authServerWellKnownURI", _authServerWellKnownURI);
 		_columnOriginalValues.put("clientId", _clientId);
 		_columnOriginalValues.put("infoJSON", _infoJSON);
 		_columnOriginalValues.put("parametersJSON", _parametersJSON);
@@ -986,7 +993,7 @@ public class OAuthClientEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("authServerIssuer", 128L);
+		columnBitmasks.put("authServerWellKnownURI", 128L);
 
 		columnBitmasks.put("clientId", 256L);
 

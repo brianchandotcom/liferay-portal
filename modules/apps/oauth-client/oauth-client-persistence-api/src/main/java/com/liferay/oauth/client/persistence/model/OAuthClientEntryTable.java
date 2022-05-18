@@ -51,9 +51,9 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	public final Column<OAuthClientEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<OAuthClientEntryTable, String> authServerIssuer =
+	public final Column<OAuthClientEntryTable, String> authServerWellKnownURI =
 		createColumn(
-			"authServerIssuer", String.class, Types.VARCHAR,
+			"authServerWellKnownURI", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, String> clientId = createColumn(
 		"clientId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

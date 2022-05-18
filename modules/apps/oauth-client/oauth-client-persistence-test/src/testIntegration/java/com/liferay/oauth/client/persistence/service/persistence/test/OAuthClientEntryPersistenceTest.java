@@ -137,7 +137,8 @@ public class OAuthClientEntryPersistenceTest {
 
 		newOAuthClientEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newOAuthClientEntry.setAuthServerIssuer(RandomTestUtil.randomString());
+		newOAuthClientEntry.setAuthServerWellKnownURI(
+			RandomTestUtil.randomString());
 
 		newOAuthClientEntry.setClientId(RandomTestUtil.randomString());
 
@@ -172,8 +173,8 @@ public class OAuthClientEntryPersistenceTest {
 			Time.getShortTimestamp(existingOAuthClientEntry.getModifiedDate()),
 			Time.getShortTimestamp(newOAuthClientEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingOAuthClientEntry.getAuthServerIssuer(),
-			newOAuthClientEntry.getAuthServerIssuer());
+			existingOAuthClientEntry.getAuthServerWellKnownURI(),
+			newOAuthClientEntry.getAuthServerWellKnownURI());
 		Assert.assertEquals(
 			existingOAuthClientEntry.getClientId(),
 			newOAuthClientEntry.getClientId());
@@ -244,8 +245,8 @@ public class OAuthClientEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"OAuthClientEntry", "mvccVersion", true, "oAuthClientEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "authServerIssuer", true, "clientId",
-			true);
+			true, "modifiedDate", true, "authServerWellKnownURI", true,
+			"clientId", true);
 	}
 
 	@Test
@@ -523,10 +524,10 @@ public class OAuthClientEntryPersistenceTest {
 				oAuthClientEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			oAuthClientEntry.getAuthServerIssuer(),
+			oAuthClientEntry.getAuthServerWellKnownURI(),
 			ReflectionTestUtil.invoke(
 				oAuthClientEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "authServerIssuer"));
+				new Class<?>[] {String.class}, "authServerWellKnownURI"));
 		Assert.assertEquals(
 			oAuthClientEntry.getClientId(),
 			ReflectionTestUtil.invoke(
@@ -551,7 +552,8 @@ public class OAuthClientEntryPersistenceTest {
 
 		oAuthClientEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		oAuthClientEntry.setAuthServerIssuer(RandomTestUtil.randomString());
+		oAuthClientEntry.setAuthServerWellKnownURI(
+			RandomTestUtil.randomString());
 
 		oAuthClientEntry.setClientId(RandomTestUtil.randomString());
 

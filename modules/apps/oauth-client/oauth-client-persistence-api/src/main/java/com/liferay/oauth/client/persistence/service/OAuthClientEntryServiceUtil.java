@@ -39,12 +39,12 @@ public class OAuthClientEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerIssuer, String infoJSON,
+			long userId, String authServerWellKnownURI, String infoJSON,
 			String parametersJSON)
 		throws PortalException {
 
 		return getService().addOAuthClientEntry(
-			userId, authServerIssuer, infoJSON, parametersJSON);
+			userId, authServerWellKnownURI, infoJSON, parametersJSON);
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
@@ -55,25 +55,19 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException {
 
 		return getService().deleteOAuthClientEntry(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
-	public static List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
-		long companyId, String authServerIssuer) {
-
-		return getService().getAuthServerIssuerOAuthClientEntries(
-			companyId, authServerIssuer);
-	}
-
-	public static List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
-			long companyId, String authServerType)
+	public static List<OAuthClientEntry>
+			getAuthServerWellKnownURISuffixOAuthClientEntries(
+				long companyId, String authServerType)
 		throws PortalException {
 
-		return getService().getAuthServerTypeOAuthClientEntries(
+		return getService().getAuthServerWellKnownURISuffixOAuthClientEntries(
 			companyId, authServerType);
 	}
 
@@ -90,11 +84,11 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException {
 
 		return getService().getOAuthClientEntry(
-			companyId, authServerIssuer, clientId);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
@@ -119,12 +113,13 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authServerIssuer, String infoJSON,
-			String parametersJSON)
+			long oAuthClientEntryId, String authServerWellKnownURI,
+			String infoJSON, String parametersJSON)
 		throws PortalException {
 
 		return getService().updateOAuthClientEntry(
-			oAuthClientEntryId, authServerIssuer, infoJSON, parametersJSON);
+			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
+			parametersJSON);
 	}
 
 	public static OAuthClientEntryService getService() {

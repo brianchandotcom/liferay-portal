@@ -21,31 +21,34 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the OAuthClientAuthServer service. Represents a row in the &quot;OAuthClientAuthServer&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the OAuthClientASLocalMetadata service. Represents a row in the &quot;OAuthClientASLocalMetadata&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see OAuthClientAuthServerModel
+ * @see OAuthClientASLocalMetadataModel
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerImpl"
+	"com.liferay.oauth.client.persistence.model.impl.OAuthClientASLocalMetadataImpl"
 )
 @ProviderType
-public interface OAuthClientAuthServer
-	extends OAuthClientAuthServerModel, PersistedModel {
+public interface OAuthClientASLocalMetadata
+	extends OAuthClientASLocalMetadataModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.client.persistence.model.impl.OAuthClientAuthServerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.client.persistence.model.impl.OAuthClientASLocalMetadataImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuthClientAuthServer, Long>
-		O_AUTH_CLIENT_AUTH_SERVER_ID_ACCESSOR =
-			new Accessor<OAuthClientAuthServer, Long>() {
+	public static final Accessor<OAuthClientASLocalMetadata, Long>
+		O_AUTH_CLIENT_AS_LOCAL_METADATA_ID_ACCESSOR =
+			new Accessor<OAuthClientASLocalMetadata, Long>() {
 
 				@Override
-				public Long get(OAuthClientAuthServer oAuthClientAuthServer) {
-					return oAuthClientAuthServer.getOAuthClientAuthServerId();
+				public Long get(
+					OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
+
+					return oAuthClientASLocalMetadata.
+						getOAuthClientASLocalMetadataId();
 				}
 
 				@Override
@@ -54,8 +57,8 @@ public interface OAuthClientAuthServer
 				}
 
 				@Override
-				public Class<OAuthClientAuthServer> getTypeClass() {
-					return OAuthClientAuthServer.class;
+				public Class<OAuthClientASLocalMetadata> getTypeClass() {
+					return OAuthClientASLocalMetadata.class;
 				}
 
 			};

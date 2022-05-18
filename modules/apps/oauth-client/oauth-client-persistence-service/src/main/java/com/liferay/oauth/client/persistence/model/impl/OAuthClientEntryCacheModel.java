@@ -94,8 +94,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", authServerIssuer=");
-		sb.append(authServerIssuer);
+		sb.append(", authServerWellKnownURI=");
+		sb.append(authServerWellKnownURI);
 		sb.append(", clientId=");
 		sb.append(clientId);
 		sb.append(", infoJSON=");
@@ -137,11 +137,12 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (authServerIssuer == null) {
-			oAuthClientEntryImpl.setAuthServerIssuer("");
+		if (authServerWellKnownURI == null) {
+			oAuthClientEntryImpl.setAuthServerWellKnownURI("");
 		}
 		else {
-			oAuthClientEntryImpl.setAuthServerIssuer(authServerIssuer);
+			oAuthClientEntryImpl.setAuthServerWellKnownURI(
+				authServerWellKnownURI);
 		}
 
 		if (clientId == null) {
@@ -184,7 +185,7 @@ public class OAuthClientEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		authServerIssuer = objectInput.readUTF();
+		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
 		parametersJSON = (String)objectInput.readObject();
@@ -210,11 +211,11 @@ public class OAuthClientEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (authServerIssuer == null) {
+		if (authServerWellKnownURI == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(authServerIssuer);
+			objectOutput.writeUTF(authServerWellKnownURI);
 		}
 
 		if (clientId == null) {
@@ -246,7 +247,7 @@ public class OAuthClientEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String authServerIssuer;
+	public String authServerWellKnownURI;
 	public String clientId;
 	public String infoJSON;
 	public String parametersJSON;

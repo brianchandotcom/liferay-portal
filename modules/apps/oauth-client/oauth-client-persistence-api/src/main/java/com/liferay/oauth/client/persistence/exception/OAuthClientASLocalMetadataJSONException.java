@@ -12,10 +12,30 @@
  * details.
  */
 
-package com.liferay.oauth.client.persistence.model.impl;
+package com.liferay.oauth.client.persistence.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class OAuthClientAuthServerImpl extends OAuthClientAuthServerBaseImpl {
+public class OAuthClientASLocalMetadataJSONException extends PortalException {
+
+	public OAuthClientASLocalMetadataJSONException() {
+	}
+
+	public OAuthClientASLocalMetadataJSONException(String msg) {
+		super(msg);
+	}
+
+	public OAuthClientASLocalMetadataJSONException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	public OAuthClientASLocalMetadataJSONException(Throwable throwable) {
+		super(throwable);
+	}
+
 }

@@ -88,13 +88,32 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is not possible to edit default fields on System Object Account"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotEditDefaultFields {
 		property portal.acceptance = "true";
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153521 CannotEditDefaultFields pending implementation
+		ObjectPortlet.selectSystemObject(label = "Account");
 
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Description,Type") {
+			ObjectAdmin.goToFieldsDetails(label = "${label}");
+
+			ObjectField.assertTypeDisabled();
+
+			ObjectField.assertNameDisabled();
+
+			ObjectField.typeLabel(content = "Text Update");
+
+			Button.clickSave();
+
+			SelectFrame(locator1 = "Message#ERROR");
+
+			Alert.viewErrorMessage(errorMessage = "An error occurred.");
+
+			Refresh();
+		}
 	}
 
 	@description = "LPS-151765 - Verify if is possible a Custom User to view the System Object Account, if it to have permission"

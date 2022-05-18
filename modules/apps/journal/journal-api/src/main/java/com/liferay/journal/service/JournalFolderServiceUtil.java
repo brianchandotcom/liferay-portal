@@ -39,6 +39,12 @@ public class JournalFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFolder(String, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static JournalFolder addFolder(
 			long groupId, long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -46,6 +52,17 @@ public class JournalFolderServiceUtil {
 
 		return getService().addFolder(
 			groupId, parentFolderId, name, description, serviceContext);
+	}
+
+	public static JournalFolder addFolder(
+			String externalReferenceCode, long groupId, long parentFolderId,
+			String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFolder(
+			externalReferenceCode, groupId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 	public static void deleteFolder(long folderId) throws PortalException {
@@ -90,6 +107,14 @@ public class JournalFolderServiceUtil {
 		throws PortalException {
 
 		return getService().getFolder(folderId);
+	}
+
+	public static JournalFolder getFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static List<Long> getFolderIds(long groupId, long folderId)

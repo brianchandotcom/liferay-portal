@@ -38,6 +38,10 @@ public class JournalFolderTable extends BaseTable<JournalFolderTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<JournalFolderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<JournalFolderTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<JournalFolderTable, Long> folderId = createColumn(
 		"folderId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<JournalFolderTable, Long> groupId = createColumn(

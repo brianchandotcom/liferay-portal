@@ -1565,9 +1565,9 @@ public class JournalFolderLocalServiceImpl
 		if (journalFolder != null) {
 			throw new DuplicateJournalFolderExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate structure content folder entry",
-					" external reference code ", externalReferenceCode,
-					" in group ", groupId));
+					"Duplicate structure content folder entry external",
+					"reference code ", externalReferenceCode, "in group ",
+					groupId));
 		}
 	}
 

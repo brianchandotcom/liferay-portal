@@ -14,12 +14,24 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,6 +111,46 @@ public class LocationVariableResolverTest {
 	public void testResolveVariableWithInvalidFile() {
 		_locationVariableResolver.resolve(
 			"${file:bad_file_uri_without_slashes.txt}");
+	}
+
+	@Test
+	public void testResolveVariableWithLanguage() throws Exception {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
+
+			String languageKey = "action-name";
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			Set<Locale> availableLocales =
+				LanguageUtil.getCompanyAvailableLocales(
+					CompanyThreadLocal.getCompanyId());
+
+			for (Locale locale : availableLocales) {
+				String message = LanguageUtil.get(locale, languageKey);
+
+				if (!message.equals(languageKey)) {
+					jsonObject.put(LocaleUtil.toLanguageId(locale), message);
+				}
+			}
+
+			String expectedValue = jsonObject.toString();
+
+			String json = _locationVariableResolver.resolve(
+				String.format("${language:%s}", languageKey));
+
+			Assert.assertTrue(JSONUtil.isValid(json));
+			Assert.assertEquals(expectedValue, json);
+
+			json = _locationVariableResolver.resolve(
+				String.format(
+					"${language:%s}",
+					"nonexistent-key" + RandomTestUtil.randomString()));
+
+			Assert.assertTrue(JSONUtil.isValid(json));
+			Assert.assertEquals("{}", json);
+		}
 	}
 
 	@Test

@@ -25,6 +25,8 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,11 +34,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
 import java.io.Serializable;
@@ -188,6 +195,63 @@ public class ExpandoValueLocalServiceTest {
 	}
 
 	@Test
+	public void testAddValuesWithFlushInBetween() throws Throwable {
+		ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column1", ExpandoColumnConstants.STRING);
+
+		ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column2", ExpandoColumnConstants.STRING);
+
+		long classPK = CounterLocalServiceUtil.increment();
+
+		// Create initial ExpandoValue for each column
+
+		ExpandoTestUtil.addValues(
+			_expandoTable, classPK,
+			new HashMapBuilder<>().<String, Serializable>put(
+				"Test Column1", "column1-one"
+			).<String, Serializable>put(
+				"Test Column2", "column2-one"
+			).build());
+
+		// Remove cache to force  ExpandoValuePeristence find methods be
+		// executed against the database to force flush in between.
+
+		_entityCache.clearCache(ExpandoValueImpl.class);
+		_finderCache.clearCache(ExpandoValueImpl.class);
+
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			() -> {
+
+				// Add different value for first column so that ExpandoValue
+				// gets modified and ExpandoRow gets updated. ExpandoRow isn't
+				// persisted on the database because transaction hasn't finish
+				// yet.
+				// Add a new different value to second column so that both
+				// ExpandoValue and ExpandoRow are updated. Since ExpandoRow
+				// was updated in the previous addValue we must ensure that
+				// ExpandoRow isn't stale before updating it again. Right now
+				// there's a expandoValuePersistence.fetchByC_R between the
+				// moment that row is retrieved and the moment it gets updated.
+				// That fetch can cause a flush if the value isn't cached so we
+				// must ensure that row has the latest mvcc version before it
+				// gets persisted.
+
+				ExpandoTestUtil.addValues(
+					_expandoTable, classPK,
+					new HashMapBuilder<>().<String, Serializable>put(
+						"Test Column1", "column1-two"
+					).<String, Serializable>put(
+						"Test Column2", "column2-two"
+					).build());
+
+				return null;
+			});
+	}
+
+	@Test
 	public void testAddWrongValue() throws Exception {
 		ExpandoColumn column = ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column", ExpandoColumnConstants.STRING);
@@ -332,8 +396,14 @@ public class ExpandoValueLocalServiceTest {
 	private long _classNameId;
 	private Locale _enLocale;
 
+	@Inject
+	private EntityCache _entityCache;
+
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
+
+	@Inject
+	private FinderCache _finderCache;
 
 	private Locale _frLocale;
 	private Locale _ptLocale;

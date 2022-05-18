@@ -27,7 +27,6 @@ import com.liferay.info.field.type.GridInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
-import com.liferay.info.field.type.RadioInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -126,6 +125,8 @@ public class DDMFormFieldInfoFieldConverterImpl
 					ddmFormFieldType,
 					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
 				 Objects.equals(
+					 ddmFormFieldType, DDMFormFieldTypeConstants.RADIO) ||
+				 Objects.equals(
 					 ddmFormFieldType, DDMFormFieldTypeConstants.SELECT)) {
 
 			return SelectInfoFieldType.INSTANCE;
@@ -150,11 +151,6 @@ public class DDMFormFieldInfoFieldConverterImpl
 					ddmFormFieldType, DDMFormFieldTypeConstants.GRID)) {
 
 			return GridInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					ddmFormFieldType, DDMFormFieldTypeConstants.RADIO)) {
-
-			return RadioInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

@@ -495,6 +495,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141352. The navigation menu admin could add a vocabulary item to navigation menu."
+	@priority = "5"
+	test AddVocabularyTypeNavigationMenuItem {
+		property custom.properties = "feature.flag.LPS-146502=true";
+
+		task ("Given a navigation menu admin has a navigation menu") {
+			task ("Add a navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+
+			task ("Add a vocabulary") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name");
+			}
+		}
+
+		task ("When the navigation menu admin adds a Vocabulary type item to navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Vocabulary Name",
+				item = "Vocabulary");
+		}
+
+		task ("Then the navigation menu admin could view both Vocabulary and Dynamic labels are shown on item") {
+			var i = "1";
+
+			for (var label : list "Vocabulary,Dynamic") {
+				NavigationMenusAdmin.viewItemStatus(
+					index = "${i}",
+					itemName = "Vocabulary Name",
+					itemStatus = "${label}");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("When the navigation menu admin opens the contextual menu of item") {
+			NavigationMenusAdmin.openItemSidebar(itemName = "Vocabulary Name");
+		}
+
+		task ("Then the navigation menu admin could view a warning message on menu") {
+			NavigationMenusAdmin.viewItemWarningMessage(warningMessage = "No categories inside");
+		}
+	}
+
 	@description = "This is a test for LPS-107833. Don't support Add page to Global Navigation Menu when creating a new page."
 	@priority = "5"
 	test CannotAddPageToGlobalNavigationMenuWhenCreatingPageInNormalSite {

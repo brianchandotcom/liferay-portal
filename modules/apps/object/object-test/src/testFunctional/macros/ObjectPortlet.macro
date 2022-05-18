@@ -353,6 +353,12 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro selectSystemObject {
+		Click(
+			key_label = "${label}",
+			locator1 = "ObjectPortlet#SELECT_SYSTEM_OBJECT");
+	}
+
 	macro sortField {
 		Click(
 			key_sortFieldName = "${sortFieldName}",

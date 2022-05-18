@@ -141,6 +141,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_SYSTEM_OBJECT</td>
+		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SORT_FIELD</td>
 		<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
 		<td></td>

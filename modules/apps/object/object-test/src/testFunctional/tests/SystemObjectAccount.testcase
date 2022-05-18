@@ -126,12 +126,23 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if the fields Name and Type are mandatory on System Object Account"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewNameAndTypeAsMandatoryFields {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153523 CanViewNameAndTypeAsMandatoryFields pending implementation
+		ObjectPortlet.selectSystemObject(label = "Account");
 
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Type") {
+			ObjectAdmin.goToFieldsDetails(label = "${label}");
+
+			ObjectField.assertType(fieldType = "Text");
+
+			ObjectField.assertMandatory();
+
+			Refresh();
+		}
 	}
 
 	@description = "LPS-151765 - Verify if is possible to choose by Name Field on entries, when Title Field is Name"

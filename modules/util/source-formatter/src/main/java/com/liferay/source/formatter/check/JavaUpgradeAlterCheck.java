@@ -15,10 +15,8 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -61,7 +59,7 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				_getMethodCall(content, matcher.start()));
+				JavaSourceUtil.getMethodCall(content, matcher.start()));
 
 			String firstParameter = parameterList.get(0);
 
@@ -283,24 +281,6 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 		_columnNamesMap.put(tableClassName, columnNames);
 
 		return columnNames;
-	}
-
-	private String _getMethodCall(String content, int start) {
-		int x = start;
-
-		while (true) {
-			x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-			if (ToolsUtil.isInsideQuotes(content, x + 1)) {
-				continue;
-			}
-
-			String methodCall = content.substring(start, x + 1);
-
-			if (getLevel(methodCall) == 0) {
-				return methodCall;
-			}
-		}
 	}
 
 	private String _getTableClassName(String content, String parameter) {

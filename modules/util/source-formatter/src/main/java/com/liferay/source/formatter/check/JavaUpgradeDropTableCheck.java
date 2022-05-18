@@ -14,9 +14,8 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
@@ -50,7 +49,8 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 		Matcher matcher1 = _runSqlPattern.matcher(content);
 
 		while (matcher1.find()) {
-			String runSqlMethodCall = _getMethodCall(content, matcher1.start());
+			String runSqlMethodCall = JavaSourceUtil.getMethodCall(
+				content, matcher1.start());
 
 			Matcher matcher2 = _dropTablePattern.matcher(runSqlMethodCall);
 
@@ -71,24 +71,6 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
-	}
-
-	private String _getMethodCall(String s, int start) {
-		int x = start;
-
-		while (true) {
-			x = s.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-			if (ToolsUtil.isInsideQuotes(s, x + 1)) {
-				continue;
-			}
-
-			String methodCall = s.substring(start, x + 1);
-
-			if (getLevel(methodCall) == 0) {
-				return methodCall;
-			}
-		}
 	}
 
 	private boolean _isUpgradeJavaClass(JavaClass javaClass) {

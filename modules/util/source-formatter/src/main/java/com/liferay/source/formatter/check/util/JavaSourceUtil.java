@@ -98,6 +98,24 @@ public class JavaSourceUtil extends SourceUtil {
 		return null;
 	}
 
+	public static String getMethodCall(String s, int start) {
+		int x = start;
+
+		while (true) {
+			x = s.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+			if (ToolsUtil.isInsideQuotes(s, x + 1)) {
+				continue;
+			}
+
+			String methodCall = s.substring(start, x + 1);
+
+			if (ToolsUtil.getLevel(methodCall) == 0) {
+				return methodCall;
+			}
+		}
+	}
+
 	public static String getPackageName(String content) {
 		Matcher matcher = _packagePattern.matcher(content);
 

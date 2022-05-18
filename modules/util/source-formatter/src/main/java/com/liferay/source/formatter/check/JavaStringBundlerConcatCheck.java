@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -56,7 +55,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String stringBundlerConcatMethodCall = _getMethodCall(
+			String stringBundlerConcatMethodCall = JavaSourceUtil.getMethodCall(
 				content, matcher1.start());
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
@@ -86,7 +85,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 					continue;
 				}
 
-				String stringValueOfMethodCall = _getMethodCall(
+				String stringValueOfMethodCall = JavaSourceUtil.getMethodCall(
 					stringBundlerConcatMethodCall, matcher2.start());
 
 				parameterList = JavaSourceUtil.getParameterList(
@@ -113,24 +112,6 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
-	}
-
-	private String _getMethodCall(String s, int start) {
-		int x = start;
-
-		while (true) {
-			x = s.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-			if (ToolsUtil.isInsideQuotes(s, x + 1)) {
-				continue;
-			}
-
-			String methodCall = s.substring(start, x + 1);
-
-			if (getLevel(methodCall) == 0) {
-				return methodCall;
-			}
-		}
 	}
 
 	private static final Pattern _stringBundlerConcatPattern = Pattern.compile(

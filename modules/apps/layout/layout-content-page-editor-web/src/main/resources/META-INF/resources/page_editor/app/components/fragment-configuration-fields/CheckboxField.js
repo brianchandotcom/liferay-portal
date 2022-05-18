@@ -13,7 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -59,13 +59,23 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 				data-tooltip-align="bottom"
 				title={title}
 			>
-				<ClayCheckbox
-					checked={checked}
-					containerProps={{className: 'mb-0'}}
-					disabled={disabled}
-					label={label}
-					onChange={(event) => handleChange(event.target.checked)}
-				/>
+				{field.typeOptions?.displayType === 'toggle' ? (
+					<ClayToggle
+						containerProps={{className: 'mb-0'}}
+						disabled={disabled}
+						label={label}
+						onToggle={(nextChecked) => handleChange(nextChecked)}
+						toggled={checked}
+					/>
+				) : (
+					<ClayCheckbox
+						checked={checked}
+						containerProps={{className: 'mb-0'}}
+						disabled={disabled}
+						label={label}
+						onChange={(event) => handleChange(event.target.checked)}
+					/>
+				)}
 
 				{field.responsive &&
 					selectedViewportSize !== VIEWPORT_SIZES.desktop && (

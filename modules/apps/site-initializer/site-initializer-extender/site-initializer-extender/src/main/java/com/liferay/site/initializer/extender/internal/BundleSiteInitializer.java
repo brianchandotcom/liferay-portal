@@ -532,30 +532,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCustomFields(ServiceContext serviceContext) throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/custom-fields.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-				serviceContext.getCompanyId(), jsonObject.getString("modelResource"), jsonObject.getInt("resourcePrimKey"));
-			if (expandoBridge==null){
-				continue;
-			}
-			if (expandoBridge.getAttribute(jsonObject.getString("name"))==null){
-				expandoBridge.addAttribute(jsonObject.getString("name"),jsonObject.getInt("dataType"));
-			}
-		}
-	}
 	private Map<String, String> _addAssetListEntries(
 			DDMStructureLocalService ddmStructureLocalService,
 			ServiceContext serviceContext)
@@ -759,6 +735,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_bundle, documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			_servletContext);
+	}
+
+	private void _addCustomFields(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/custom-fields.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			ExpandoBridge expandoBridge =
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("modelResource"),
+					jsonObject.getInt("resourcePrimKey"));
+
+			if (expandoBridge == null) {
+				continue;
+			}
+
+			if (expandoBridge.getAttribute(jsonObject.getString("name")) ==
+					null) {
+
+				expandoBridge.addAttribute(
+					jsonObject.getString("name"),
+					jsonObject.getInt("dataType"));
+			}
+		}
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)

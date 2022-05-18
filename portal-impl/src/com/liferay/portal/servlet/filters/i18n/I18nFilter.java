@@ -151,10 +151,8 @@ public class I18nFilter extends BasePortalFilter {
 		requestURI = StringUtil.replace(
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		String i18nPathLanguageId = PortalUtil.getI18nPathLanguageId(
-			locale, i18nLanguageId);
-
-		String i18nPath = StringPool.SLASH.concat(i18nPathLanguageId);
+		String i18nPath = StringPool.SLASH.concat(
+			PortalUtil.getI18nPathLanguageId(locale, i18nLanguageId));
 
 		if (requestURI.contains(i18nPath.concat(StringPool.SLASH))) {
 			return null;
@@ -253,10 +251,8 @@ public class I18nFilter extends BasePortalFilter {
 			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 				companyId, friendlyURL);
 
-			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
-				group.getGroupId());
-
-			return LocaleUtil.toLanguageId(siteDefaultLocale);
+			return LocaleUtil.toLanguageId(
+				PortalUtil.getSiteDefaultLocale(group.getGroupId()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -56,4 +56,15 @@ definition {
 		return "${segmentId}";
 	}
 
+	@summary = "Delete a segment based on its name and group"
+	macro deleteSegment {
+		Variables.assertDefined(parameterList = "${groupName},${segmentName}");
+
+		var segmentId = JSONSegmentsentry.getSegmentId(
+			groupName = "${groupName}",
+			segmentName = "${segmentName}");
+
+		JSONSegmentsentryAPI._deleteSegment(segmentsId = "${segmentId}");
+	}
+
 }

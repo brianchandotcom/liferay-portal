@@ -120,10 +120,8 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 			return null;
 		}
 
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			getData());
-
-		return LocaleUtil.fromLanguageId(defaultLanguageId);
+		return LocaleUtil.fromLanguageId(
+			LocalizationUtil.getDefaultLanguageId(getData()));
 	}
 
 	@Override
@@ -565,10 +563,10 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 			return;
 		}
 
-		String data = LocalizationUtil.updateLocalization(
-			dataMap, getData(), "Data", LocaleUtil.toLanguageId(defaultLocale));
-
-		setData(data);
+		setData(
+			LocalizationUtil.updateLocalization(
+				dataMap, getData(), "Data",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	protected String getData(String languageId) {

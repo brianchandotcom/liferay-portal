@@ -14,6 +14,10 @@
 
 const cache = {};
 
+export const CACHE_KEYS = {
+	formFields: 'formFields',
+};
+
 export const CACHE_STATUS = {
 	loading: 'loading',
 	saved: 'saved',

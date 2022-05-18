@@ -19,6 +19,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectorCallback, useSelectorRef} from '../contexts/StoreContext';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
+import {CACHE_KEYS} from './cache';
 import useCache from './useCache';
 
 function isMappedToRequiredInput(fragmentEntryLink, formFields) {
@@ -85,7 +86,7 @@ export default function useHasInputChild(itemId) {
 
 	const formFields = useCache({
 		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
-		key: ['formFields', classNameId, classTypeId],
+		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
 	});
 
 	return useCallback(

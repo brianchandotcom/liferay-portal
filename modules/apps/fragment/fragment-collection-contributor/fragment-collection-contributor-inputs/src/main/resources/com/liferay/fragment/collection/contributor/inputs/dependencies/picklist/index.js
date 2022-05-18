@@ -192,3 +192,6 @@ if (!editMode && listbox.children.length) {
 
 	repositionDropdown();
 }
+else {
+	button.disabled = true;
+}

@@ -165,11 +165,10 @@ public class SetupWizardSampleDataUtil {
 			FullNameGenerator fullNameGenerator =
 				FullNameGeneratorFactory.getInstance();
 
-			String fullName = fullNameGenerator.getFullName(
-				firstName, null, lastName);
-
 			String greeting = LanguageUtil.format(
-				locale, "welcome-x", fullName, false);
+				locale, "welcome-x",
+				fullNameGenerator.getFullName(firstName, null, lastName),
+				false);
 
 			Contact contact = adminUser.getContact();
 

@@ -39,7 +39,6 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 				title={title}
 			>
 				<ClayCheckbox
-					aria-label={field.label}
 					checked={
 						customValues
 							? nextValue === customValues.checked

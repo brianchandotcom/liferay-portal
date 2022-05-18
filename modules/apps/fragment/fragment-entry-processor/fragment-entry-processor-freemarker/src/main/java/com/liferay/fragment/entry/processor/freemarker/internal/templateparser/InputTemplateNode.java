@@ -24,18 +24,24 @@ import java.util.List;
 public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public InputTemplateNode(
-		String label, String name, boolean required, String type,
-		String value) {
+		String helpText, String label, String name, boolean required,
+		boolean showHelpText, boolean showLabel, String type, String value) {
 
+		_helpText = helpText;
 		_label = label;
 		_name = name;
 		_required = required;
+		_showHelpText = showHelpText;
+		_showLabel = showLabel;
 		_type = type;
 		_value = value;
 
-		put("name", name);
+		put("helpText", helpText);
 		put("label", label);
+		put("name", name);
 		put("required", required);
+		put("showHelpText", showHelpText);
+		put("showLabel", showLabel);
 		put("type", type);
 		put("value", value);
 
@@ -44,6 +50,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public void addOption(String label, String value) {
 		_options.add(new Option(label, value));
+	}
+
+	public String getHelpText() {
+		return _helpText;
 	}
 
 	public String getInputLabel() {
@@ -70,6 +80,14 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		return _required;
 	}
 
+	public boolean isShowHelpText() {
+		return _showHelpText;
+	}
+
+	public boolean isShowLabel() {
+		return _showLabel;
+	}
+
 	public static class Option {
 
 		public Option(String label, String value) {
@@ -90,10 +108,13 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	}
 
+	private final String _helpText;
 	private final String _label;
 	private final String _name;
 	private final List<InputTemplateNode.Option> _options = new ArrayList<>();
 	private final boolean _required;
+	private final boolean _showHelpText;
+	private final boolean _showLabel;
 	private final String _type;
 	private final String _value;
 

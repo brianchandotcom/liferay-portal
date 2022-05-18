@@ -14,7 +14,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -34,9 +34,47 @@ import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {setIn} from '../../../../../../app/utils/setIn';
 import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
+import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
+const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
+const SHOW_HELP_TEXT_CONFIGURATION_KEY = 'inputShowHelpText';
+
+const INPUT_COMMON_CONFIGURATION = [
+	{
+		defaultValue: false,
+		label: Liferay.Language.get('mark-as-required'),
+		name: 'inputRequired',
+		type: 'checkbox',
+	},
+	{
+		defaultValue: true,
+		label: Liferay.Language.get('show-label'),
+		name: 'inputShowLabel',
+		type: 'checkbox',
+	},
+	{
+		defaultValue: '',
+		label: Liferay.Language.get('label'),
+		localizable: true,
+		name: 'inputLabel',
+		type: 'text',
+	},
+	{
+		defaultValue: true,
+		label: Liferay.Language.get('show-help-text'),
+		name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
+		type: 'checkbox',
+	},
+	{
+		defaultValue: '',
+		label: Liferay.Language.get('help-text'),
+		localizable: true,
+		name: HELP_TEXT_CONFIGURATION_KEY,
+		type: 'text',
+	},
+];
 
 export function FormInputGeneralPanel({item}) {
 	const dispatch = useDispatch();
@@ -55,6 +93,18 @@ export function FormInputGeneralPanel({item}) {
 		[item.itemId],
 		deepEqual
 	);
+
+	const fields = useMemo(() => {
+		let nextFields = INPUT_COMMON_CONFIGURATION;
+
+		if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] === false) {
+			nextFields = nextFields.filter(
+				(field) => field.name !== HELP_TEXT_CONFIGURATION_KEY
+			);
+		}
+
+		return nextFields;
+	}, [configurationValues]);
 
 	const handleValueSelect = (key, value) =>
 		dispatch(
@@ -82,6 +132,15 @@ export function FormInputGeneralPanel({item}) {
 						configurationValues={configurationValues}
 						item={item}
 						onValueSelect={handleValueSelect}
+					/>
+
+					<FieldSet
+						fields={fields}
+						item={item}
+						label=""
+						languageId={languageId}
+						onValueSelect={handleValueSelect}
+						values={configurationValues}
 					/>
 				</Collapse>
 			</div>

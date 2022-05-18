@@ -3481,6 +3481,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String metadataJSON = SiteInitializerUtil.read(
 			resourcePath + "/metadata.json", _servletContext);
 
+		if (metadataJSON != null) {
+			Map<String, String> portalPropertiesReplaceValues =
+				_getPortalPropertiesReplaceValues(metadataJSON);
+
+			metadataJSON = StringUtil.replace(
+				metadataJSON, "[$", "$]", portalPropertiesReplaceValues);
+		}
+
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			(metadataJSON == null) ? "{}" : metadataJSON);
 

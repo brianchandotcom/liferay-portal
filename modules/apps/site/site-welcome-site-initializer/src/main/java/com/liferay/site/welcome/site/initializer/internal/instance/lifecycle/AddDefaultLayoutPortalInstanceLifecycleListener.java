@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.welcome.site.initializer.internal.WelcomeSiteInitializer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,7 +87,7 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
-		target = "(site.initializer.key=" + WelcomeSiteInitializer.KEY + ")"
+		target = "(site.initializer.key=com.liferay.site.initializer.welcome)"
 	)
 	private SiteInitializer _siteInitializer;
 

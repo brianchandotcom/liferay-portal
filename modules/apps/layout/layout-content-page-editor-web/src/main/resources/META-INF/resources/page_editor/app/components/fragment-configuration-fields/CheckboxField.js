@@ -31,6 +31,23 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 
 	const customValues = field.typeOptions?.customValues;
 
+	const checked = customValues
+		? nextValue === customValues.checked
+		: nextValue;
+
+	const handleChange = (nextChecked) => {
+		let eventValue = nextChecked;
+
+		if (customValues) {
+			eventValue = eventValue
+				? customValues.checked
+				: customValues.unchecked;
+		}
+
+		setNextValue(eventValue);
+		onValueSelect(field.name, eventValue);
+	};
+
 	const label = (
 		<span className="font-weight-normal text-3">{field.label}</span>
 	);
@@ -43,26 +60,11 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 				title={title}
 			>
 				<ClayCheckbox
-					checked={
-						customValues
-							? nextValue === customValues.checked
-							: nextValue
-					}
+					checked={checked}
 					containerProps={{className: 'mb-0'}}
 					disabled={disabled}
 					label={label}
-					onChange={(event) => {
-						let eventValue = event.target.checked;
-
-						if (customValues) {
-							eventValue = eventValue
-								? customValues.checked
-								: customValues.unchecked;
-						}
-
-						setNextValue(eventValue);
-						onValueSelect(field.name, eventValue);
-					}}
+					onChange={(event) => handleChange(event.target.checked)}
 				/>
 
 				{field.responsive &&

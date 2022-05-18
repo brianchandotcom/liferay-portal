@@ -13,8 +13,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {openToast} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -31,12 +30,14 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {setIn} from '../../../../../../app/utils/setIn';
+import useCache from '../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 
 const DEFAULT_CONFIGURATION_VALUES = {};
+const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
@@ -163,10 +164,10 @@ export function FormInputGeneralPanel({item}) {
 }
 
 function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
-	const [fields, setFields] = useState(null);
-
-	const formConfiguration = useSelectorCallback(
-		(state) => selectFormConfiguration(item, state.layoutData),
+	const {classNameId, classTypeId} = useSelectorCallback(
+		(state) =>
+			selectFormConfiguration(item, state.layoutData) ||
+			DEFAULT_FORM_CONFIGURATION,
 		[item.itemId]
 	);
 
@@ -187,56 +188,36 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 		[item.itemId]
 	);
 
-	useEffect(() => {
-		const {classNameId, classTypeId} = formConfiguration || {};
+	const fields = useCache({
+		fetcher: () =>
+			InfoItemService.getAvailableStructureMappingFields({
+				classNameId,
+				classTypeId,
+			}),
+		key: ['availableStructureMappingFields', classNameId, classTypeId],
+	});
 
-		if (!classNameId || !classTypeId) {
-			return;
-		}
-
-		InfoItemService.getAvailableStructureMappingFields({
-			classNameId,
-			classTypeId,
-			onNetworkStatus: () => {},
-		})
-			.then((nextFields) =>
-				setFields(
-					nextFields
-						.map((fieldset) => ({
-							...fieldset,
-							fields: fieldset.fields.filter((field) =>
-								ALLOWED_INPUT_TYPES[field.type]?.includes(
-									inputType
-								)
-							),
-						}))
-						.filter((fieldset) => fieldset.fields.length)
-				)
-			)
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
-				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
+	const filteredFields = useMemo(
+		() =>
+			fields
+				?.map((fieldset) => ({
+					...fieldset,
+					fields: fieldset.fields.filter((field) =>
+						ALLOWED_INPUT_TYPES[field.type]?.includes(inputType)
 					),
-					type: 'danger',
-				});
+				}))
+				.filter((fieldset) => fieldset.fields.length),
+		[fields, inputType]
+	);
 
-				setFields([]);
-			});
-	}, [formConfiguration, inputType]);
-
-	if (!formConfiguration?.classNameId || !formConfiguration?.classTypeId) {
+	if (!classNameId || !classTypeId) {
 		return null;
 	}
 
-	return fields ? (
+	return filteredFields ? (
 		<MappingFieldSelector
 			fieldType={inputType}
-			fields={fields}
+			fields={filteredFields}
 			onValueSelect={(event) =>
 				onValueSelect(FIELD_ID_CONFIGURATION_KEY, event.target.value)
 			}

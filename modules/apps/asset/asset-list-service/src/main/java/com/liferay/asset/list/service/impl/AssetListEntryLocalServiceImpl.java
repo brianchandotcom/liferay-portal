@@ -114,7 +114,21 @@ public class AssetListEntryLocalServiceImpl
 					segmentsEntryId, StringPool.BLANK, serviceContext);
 		}
 
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 		for (long assetEntryId : assetEntryIds) {
+			if (ListUtil.exists(
+					assetListEntryAssetEntryRels,
+					assetListEntryAssetEntryRel ->
+						assetListEntryAssetEntryRel.getAssetEntryId() ==
+							assetEntryId)) {
+
+				continue;
+			}
+
 			_assetListEntryAssetEntryRelLocalService.
 				addAssetListEntryAssetEntryRel(
 					assetListEntryId, assetEntryId, segmentsEntryId,

@@ -3579,11 +3579,6 @@ definition {
 				fieldName = "${fieldName}");
 		}
 
-		DynamicDataMapping.editFieldNameInvalidCharacter(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = ''',''');
-
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text2",

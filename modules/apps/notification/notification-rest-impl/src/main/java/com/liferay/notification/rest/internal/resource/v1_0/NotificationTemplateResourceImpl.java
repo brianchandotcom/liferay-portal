@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -55,6 +56,8 @@ public class NotificationTemplateResourceImpl
 	public void deleteNotificationTemplate(Long notificationTemplateId)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		_notificationTemplateService.deleteNotificationTemplate(
 			notificationTemplateId);
 	}
@@ -69,6 +72,8 @@ public class NotificationTemplateResourceImpl
 			Long notificationTemplateId)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		return _toNotificationTemplate(
 			_notificationTemplateService.getNotificationTemplate(
 				notificationTemplateId));
@@ -79,6 +84,8 @@ public class NotificationTemplateResourceImpl
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		_checkFeatureFlag();
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -117,6 +124,8 @@ public class NotificationTemplateResourceImpl
 			NotificationTemplate notificationTemplate)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
 				contextUser.getUserId(), notificationTemplate.getBcc(),
@@ -140,6 +149,8 @@ public class NotificationTemplateResourceImpl
 			NotificationTemplate notificationTemplate)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		return _toNotificationTemplate(
 			_notificationTemplateService.updateNotificationTemplate(
 				notificationTemplateId, notificationTemplate.getBcc(),
@@ -155,6 +166,12 @@ public class NotificationTemplateResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getSubject()),
 				notificationTemplate.getTo()));
+	}
+
+	private void _checkFeatureFlag() throws Exception {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149050"))) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private NotificationTemplate _toNotificationTemplate(

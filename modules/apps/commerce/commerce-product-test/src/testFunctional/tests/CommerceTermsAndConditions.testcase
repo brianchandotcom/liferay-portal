@@ -8,7 +8,7 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 
 		CommerceConfiguration.commerceSetUp(minium = "true");
 

@@ -270,6 +270,22 @@ export default class Blogs {
 		return document.getElementById(`${this._config.namespace}${id}`);
 	}
 
+	_getValuesByName(name) {
+		const nodes = document.querySelectorAll(
+			`input[name*=${this._config.namespace + name}]`
+		);
+
+		const values = [];
+
+		for (let i = 0; i < nodes.length; i++) {
+			const input = nodes[i].value;
+
+			values.push(input);
+		}
+
+		return values;
+	}
+
 	_getTempImages() {
 		return this._rootNode.querySelectorAll('img[data-random-id]');
 	}
@@ -359,13 +375,14 @@ export default class Blogs {
 				const allowPingbacks = this._getElementById('allowPingbacks');
 				const allowTrackbacks = this._getElementById('allowTrackbacks');
 
-				const assetTagNames = this._getElementById('assetTagNames');
-
 				const bodyData = addNamespace(
 					{
 						allowPingbacks: allowPingbacks?.value,
 						allowTrackbacks: allowTrackbacks?.value,
-						assetTagNames: assetTagNames?.value || '',
+						assetCategoryIds: this._getValuesByName(
+							'assetCategoryIds'
+						),
+						assetTagNames: this._getValuesByName('assetTagNames'),
 						cmd: constants.ADD,
 						content,
 						coverImageCaption,

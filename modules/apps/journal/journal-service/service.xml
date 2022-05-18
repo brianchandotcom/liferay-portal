@@ -401,7 +401,7 @@
 			<finder-column name="feedId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="JournalFolder" remote-service="true" trash-enabled="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="JournalFolder" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

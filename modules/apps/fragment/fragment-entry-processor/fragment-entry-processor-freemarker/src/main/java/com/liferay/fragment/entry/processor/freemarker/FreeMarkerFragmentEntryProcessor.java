@@ -149,7 +149,9 @@ public class FreeMarkerFragmentEntryProcessor
 		if (_isInputFragmentEntryType(fragmentEntryLink)) {
 			template.put(
 				"input",
-				new InputTemplateNode("label", "name", false, "type", "value"));
+				new InputTemplateNode(
+					"helpText", "label", "name", false, false, false, "type",
+					"value"));
 		}
 
 		template.prepareTaglib(

@@ -80,20 +80,6 @@ public interface AddressLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(Address address);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addAddress(String, long, String, long, String, String,
-	 String, String, String, String, String, long, long, long,
-	 boolean, boolean, String, ServiceContext)}
-	 */
-	@Deprecated
-	public Address addAddress(
-			long userId, String className, long classPK, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
-			boolean primary, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(
 			String externalReferenceCode, long userId, String className,

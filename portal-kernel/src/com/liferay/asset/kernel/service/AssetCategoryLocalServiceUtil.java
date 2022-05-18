@@ -60,24 +60,6 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().addAssetCategory(assetCategory);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCategory(String, long, long, long, Map, Map, long, String[], ServiceContext)}
-	 */
-	@Deprecated
-	public static AssetCategory addCategory(
-			long userId, long groupId, long parentCategoryId,
-			Map<java.util.Locale, String> titleMap,
-			Map<java.util.Locale, String> descriptionMap, long vocabularyId,
-			String[] categoryProperties,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCategory(
-			userId, groupId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
-	}
-
 	public static AssetCategory addCategory(
 			long userId, long groupId, String title, long vocabularyId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

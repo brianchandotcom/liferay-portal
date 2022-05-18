@@ -55,25 +55,6 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.addAssetCategory(assetCategory);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCategory(String, long, long, long, Map, Map, long, String[], ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetCategory addCategory(
-			long userId, long groupId, long parentCategoryId,
-			java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			long vocabularyId, String[] categoryProperties,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetCategoryLocalService.addCategory(
-			userId, groupId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
-	}
-
 	@Override
 	public AssetCategory addCategory(
 			long userId, long groupId, String title, long vocabularyId,

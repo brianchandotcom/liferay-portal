@@ -68,15 +68,6 @@ public interface UserNotificationEventLocalService
 			NotificationEvent notificationEvent)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, boolean actionRequired,
-			NotificationEvent notificationEvent)
-		throws PortalException;
-
 	public UserNotificationEvent addUserNotificationEvent(
 			long userId, NotificationEvent notificationEvent)
 		throws PortalException;
@@ -86,16 +77,6 @@ public interface UserNotificationEventLocalService
 			long deliverBy, boolean delivered, String payload,
 			boolean actionRequired, boolean archived,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, String type, long timestamp, int deliveryType,
-			long deliverBy, String payload, boolean actionRequired,
-			boolean archived, ServiceContext serviceContext)
 		throws PortalException;
 
 	public UserNotificationEvent addUserNotificationEvent(

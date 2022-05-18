@@ -59,25 +59,6 @@ public class AddressLocalServiceUtil {
 		return getService().addAddress(address);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addAddress(String, long, String, long, String, String,
-	 String, String, String, String, String, long, long, long,
-	 boolean, boolean, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static Address addAddress(
-			long userId, String className, long classPK, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
-			boolean primary, ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addAddress(
-			userId, className, classPK, street1, street2, street3, city, zip,
-			regionId, countryId, typeId, mailing, primary, serviceContext);
-	}
-
 	public static Address addAddress(
 			String externalReferenceCode, long userId, String className,
 			long classPK, String name, String description, String street1,

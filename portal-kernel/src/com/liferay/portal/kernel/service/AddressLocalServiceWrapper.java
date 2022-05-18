@@ -49,27 +49,6 @@ public class AddressLocalServiceWrapper
 		return _addressLocalService.addAddress(address);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addAddress(String, long, String, long, String, String,
-	 String, String, String, String, String, long, long, long,
-	 boolean, boolean, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.Address addAddress(
-			long userId, java.lang.String className, long classPK,
-			java.lang.String street1, java.lang.String street2,
-			java.lang.String street3, java.lang.String city,
-			java.lang.String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _addressLocalService.addAddress(
-			userId, className, classPK, street1, street2, street3, city, zip,
-			regionId, countryId, typeId, mailing, primary, serviceContext);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.Address addAddress(
 			java.lang.String externalReferenceCode, long userId,

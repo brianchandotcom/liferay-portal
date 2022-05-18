@@ -101,7 +101,7 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 		if ((literalString1.endsWith(StringPool.NEW_LINE) &&
 			 literalString2.startsWith(StringPool.SPACE)) ||
 			(!literalString1.endsWith(StringPool.SPACE) &&
-			 literalString2.matches("^[-:;.].*"))) {
+			 literalString2.matches("^([-:;.]| (?! )).*"))) {
 
 			log(
 				lineNumber + 1, _MSG_INVALID_START_CHARACTER,

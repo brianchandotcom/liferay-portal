@@ -128,7 +128,7 @@ export function FormInputGeneralPanel({item}) {
 					label={Liferay.Language.get('form-input-options')}
 					open
 				>
-					<FormInputOptions
+					<FormInputMappingOptions
 						configurationValues={configurationValues}
 						item={item}
 						onValueSelect={handleValueSelect}
@@ -150,7 +150,7 @@ export function FormInputGeneralPanel({item}) {
 	);
 }
 
-function FormInputOptions({configurationValues, item, onValueSelect}) {
+function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 	const [fields, setFields] = useState(null);
 
 	const formConfiguration = useSelectorCallback(

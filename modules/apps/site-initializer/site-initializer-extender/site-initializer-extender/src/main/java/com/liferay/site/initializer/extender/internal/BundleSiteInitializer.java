@@ -136,6 +136,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1541,8 +1542,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addLayoutContent(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
-			Map<String, String> documentsStringUtilReplaceValues, Layout layout,
-			String resourcePath, ServiceContext serviceContext,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> releaseInfoStringUtilReplaceValues,
+			Layout layout, String resourcePath, ServiceContext serviceContext,
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
@@ -1565,6 +1567,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				clientExtensionEntryIdsStringUtilReplaceValues
 			).putAll(
 				documentsStringUtilReplaceValues
+			).putAll(
+				releaseInfoStringUtilReplaceValues
 			).putAll(
 				taxonomyCategoryIdsStringUtilReplaceValues
 			).build());
@@ -1789,11 +1793,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
+		Map<String, String> releaseInfoStringUtilReplaceValues =
+			_getReleaseInfoStringUtilReplaceValues();
+
 		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
 			_addLayoutContent(
 				assetListEntryIdsStringUtilReplaceValues,
 				clientExtensionEntryIdsStringUtilReplaceValues,
-				documentsStringUtilReplaceValues, entry.getValue(),
+				documentsStringUtilReplaceValues,
+				releaseInfoStringUtilReplaceValues, entry.getValue(),
 				entry.getKey(), serviceContext,
 				taxonomyCategoryIdsStringUtilReplaceValues);
 		}
@@ -3349,6 +3357,37 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return portalPropertiesReplaceValues;
+	}
+
+	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {
+		return HashMapBuilder.put(
+			"RELEASE_INFO:BUILD_DATE",
+			String.valueOf(ReleaseInfo.getBuildDate())
+		).put(
+			"RELEASE_INFO:BUILD_NUMBER",
+			String.valueOf(ReleaseInfo.getBuildNumber())
+		).put(
+			"RELEASE_INFO:CODE_NAME", ReleaseInfo.getCodeName()
+		).put(
+			"RELEASE_INFO:NAME", ReleaseInfo.getName()
+		).put(
+			"RELEASE_INFO:PARENT_BUILD_NUMBER",
+			String.valueOf(ReleaseInfo.getParentBuildNumber())
+		).put(
+			"RELEASE_INFO:RELEASE_INFO",
+			StringUtil.replace(
+				ReleaseInfo.getReleaseInfo(), CharPool.OPEN_PARENTHESIS,
+				"<br>(")
+		).put(
+			"RELEASE_INFO:SERVER_INFO", ReleaseInfo.getServerInfo()
+		).put(
+			"RELEASE_INFO:VENDOR", ReleaseInfo.getVendor()
+		).put(
+			"RELEASE_INFO:VERSION", ReleaseInfo.getVersion()
+		).put(
+			"RELEASE_INFO:VERSION_DISPLAY_NAME",
+			ReleaseInfo.getVersionDisplayName()
+		).build();
 	}
 
 	private String _getThemeId(

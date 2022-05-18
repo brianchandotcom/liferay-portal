@@ -213,6 +213,24 @@ definition {
 			value = "GitHubUser");
 	}
 
+	macro notViewSetupDXPCloufEXtraInfo {
+		AssertElementNotPresent(
+			label = "dxp.admins[1].email",
+			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+
+		AssertElementNotPresent(
+			label = "dxp.admins[1].firstName",
+			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+
+		AssertElementNotPresent(
+			label = "dxp.admins[1].lastName",
+			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+
+		AssertElementNotPresent(
+			label = "dxp.admins[1].github",
+			locator1 = "CP2DXPCloudSetup#SETUP_VALUE");
+	}
+
 	macro viewSetupDXPCloufInfo {
 		AssertElementPresent(
 			label = "dxp.projectId",
@@ -242,6 +260,14 @@ definition {
 			label = "dxp.admins[0].github",
 			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
 			value = "GitHubUser");
+	}
+
+	macro clickOnAddMoreAdminButton {
+		Click(locator1 = "CP2DXPCloudSetup#ADD_MORE_ADMIN_DXP_CLOUD");
+	}
+
+	macro clickOnRemoveThisAdminButton {
+		Click(locator1 = "CP2DXPCloudSetup#REMOVE_THIS_ADMIN_DXP_CLOUD");
 	}
 
 }

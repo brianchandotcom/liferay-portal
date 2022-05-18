@@ -6,7 +6,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewKoroneikiInfo();
+		CustomerPortal.viewCPObjectInfo();
 
 		Click(locator1 = "CP2TeamMembers#SELECT_PARTNER");
 

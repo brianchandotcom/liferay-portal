@@ -10,7 +10,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewKoroneikiInfo();
+		CustomerPortal.viewCPObjectInfo();
 
 		Type(
 			locator1 = "CP2LiferayContact#CONTACT_ROLE",
@@ -142,7 +142,7 @@ definition {
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
 
-		CustomerPortal.showCPAccountFlagObject(title = "Account Flag");
+		CustomerPortal.showCPObject(title = "Account Flag");
 
 		CustomerPortal.showCPObject(title = "Koroneiki Account");
 	}
@@ -375,23 +375,6 @@ definition {
 		}
 	}
 
-	macro showCPAccountFlagObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectObject(label = "${title}");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
-	}
-
 	macro showCPObject {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -399,23 +382,6 @@ definition {
 			portlet = "Objects");
 
 		ObjectPortlet.selectObject(label = "${title}");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
-	}
-
-	macro showCPSubscriptionsObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectObject(label = "Account Subscription");
 
 		CreateObject.checkToggleActive();
 
@@ -487,14 +453,6 @@ definition {
 
 	macro viewInviteTeamMembersModalPage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
-	}
-
-	macro viewKoroneikiInfo {
-		Click(
-			key_text = "",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "View");
 	}
 
 	macro viewObjectInfo {

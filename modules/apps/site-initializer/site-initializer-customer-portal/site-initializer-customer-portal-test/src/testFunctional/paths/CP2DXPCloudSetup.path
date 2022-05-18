@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_THIS_ADMIN_DXP_CLOUD</td>
+	<td>//button[contains(@type, 'button') and contains(text(), 'Remove this Admin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HAS_DISASTER_DATA_CENTER_REGION</td>
 	<td>//div[contains(@class, 'checkbox')]//span[contains(text(), 'Has Disaster Data Center Region')]</td>
 	<td></td>

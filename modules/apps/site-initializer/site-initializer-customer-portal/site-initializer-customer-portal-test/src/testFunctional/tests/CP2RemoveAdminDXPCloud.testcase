@@ -1,0 +1,110 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+        CP2DXPCloudSetup.addObjectsForDXPCloud();
+
+		//CustomerPortal.setUpForCP20();
+
+		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        CP2DXPCloudSetup.deleteObjectsForDXPCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "Verify if the user is allowed to remove the additional admin(s) added before continuing"
+    @priority = "5"
+    test IfAddedAdminCanBeRemoved {
+        Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+        CP2TeamMembers.addFieldsTeamMembersExtra(
+            rowEmail = "test01@project.com",
+            position = "0",
+            rowRole = "User",
+            positionNumber = "0",
+            addMembers = "false");
+
+        CP2TeamMembers.clickTeamMembersSendInvitation();
+
+        CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+        CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+
+        CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
+
+        CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
+    }
+
+    @description = "Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
+    @priority = "4"
+    test IfAddAnotherAdminButtonOptionsAppear {
+        Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+        CP2TeamMembers.addFieldsTeamMembersExtra(
+            rowEmail = "test01@project.com",
+            position = "0",
+            rowRole = "User",
+            positionNumber = "0",
+            addMembers = "false");
+
+        CP2TeamMembers.clickTeamMembersSendInvitation();
+
+        CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+        CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+
+        CP2DXPCloudSetup.typeAllSetupDXPCloufEXtraInfo();
+
+        CP2DXPCloudSetup.viewSetupDXPCloufEXtraInfo();
+    }
+
+}

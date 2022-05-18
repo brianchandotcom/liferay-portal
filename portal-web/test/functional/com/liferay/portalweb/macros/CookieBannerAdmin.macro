@@ -100,13 +100,13 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
+		while (IsTextNotEqual(locator1 = "CookieBannerAdmin#CONTENT", value1 = "${text}") && (maxIterations = "10")) {
+			Refresh();
+		}
+
 		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#ENABLED");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");
-
-		AssertTextEquals(
-			locator1 = "CookieBannerAdmin#CONTENT",
-			value1 = "${text}");
 
 		AssertTextEquals(
 			locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",

@@ -120,11 +120,7 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.config");
 
-			Pause(locator1 = "1000");
-
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
-
-			Refresh();
 
 			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
 		}

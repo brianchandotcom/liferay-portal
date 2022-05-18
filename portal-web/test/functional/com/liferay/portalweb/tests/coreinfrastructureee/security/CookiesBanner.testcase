@@ -64,11 +64,7 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config");
 
-			Pause(locator1 = "1000");
-
 			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
-
-			Refresh();
 
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
 		}

@@ -1,9 +1,24 @@
+$normal-transition-width: width 0.9s ease;
+$hover-transition-width: width 0.9s ease;
+
+$normal-transition: opacity 1s ease;
+$hover-transition: opacity 1s ease;
+
 .testray-sidebar {
 	background-color: #18215c;
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	padding: 20px 0 0;
-	width: 250px;
+	transition: $normal-transition-width;
+	width: 80px;
+
+	&:hover {
+		padding: 20px 0 0;
+		transition: $hover-transition-width;
+		width: 250px;
+	}
 
 	.divider {
 		background-color: $sidebar-divider-color;
@@ -20,35 +35,22 @@
 	.testray-sidebar-content {
 		box-sizing: border-box;
 		display: flex;
-		flex: 1;
 		flex-direction: column;
+		flex: 1;
 		overflow-x: hidden;
 		overflow-y: auto;
-
-		.testray-logo {
-			margin: 5px 25px 30px -14px;
-
-			svg {
-				height: 35px;
-
-				circle,
-				path,
-				polygon {
-					fill: #8b8db2;
-				}
-			}
-		}
 	}
 
 	.testray-sidebar-footer {
-		width: 100%;
+		overflow: hidden;
 	}
 
 	.testray-sidebar-item {
 		color: #8b8db2;
 		display: block;
-		padding: 10px 25px;
+		padding: 10px 30px;
 		position: relative;
+		transition: 0.75s ease-in-out 0.33s;
 		white-space: nowrap;
 
 		&:active,
@@ -57,6 +59,7 @@
 			background-color: #303376;
 			color: white;
 			text-decoration: none;
+			transition: $hover-transition;
 		}
 
 		&.active {
@@ -71,9 +74,85 @@
 		.testray-sidebar-text {
 			font-size: 1.2em;
 			font-weight: 450;
+			opacity: 0;
 			padding-left: 10px;
-			transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+			transition: $normal-transition;
 			vertical-align: middle;
 		}
 	}
+}
+
+.testray-sidebar:hover .testray-sidebar-item {
+	padding: 10px 30px;
+	transition: $hover-transition;
+}
+
+.testray-sidebar:hover .testray-sidebar-text {
+	font-size: 1.2em;
+	font-weight: 450;
+	opacity: 1;
+	padding-left: 10px;
+	transition: $hover-transition;
+	vertical-align: middle;
+}
+
+.testray-logo {
+	background-image: url('http://localhost:8080/documents/40559/0/testray-icon-gray.svg/');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 40px;
+	margin-left: 20px;
+	max-width: 40px;
+	min-height: 40px;
+	min-width: 40px;
+	transition: $normal-transition;
+	width: 40px;
+}
+
+.testray-brand-logo {
+	background-image: url('http://localhost:8080/documents/40559/0/testray-logo-brand-gray.svg/');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: '';
+	height: 30px;
+	margin-left: 5px;
+	margin-right: 30px;
+	margin-top: 5px;
+	min-height: 30px;
+	min-width: 150px;
+	opacity: 0;
+	transition: $normal-transition;
+}
+
+.testray-sidebar:hover .testray-brand-logo {
+	background-image: url('http://localhost:8080/documents/40559/0/testray-logo-brand-gray.svg/');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: '';
+	height: 30px;
+	margin-left: 5px;
+	margin-right: 30px;
+	margin-top: 5px;
+	min-height: 30px;
+	opacity: 1;
+	transition: $hover-transition;
+	width: 150px;
+}
+
+.testray-avatar-dropdown {
+	color: #8b8db2;
+	padding: 10px 20px;
+}
+
+.testray-avatar-dropdown-text {
+	opacity: 0;
+	transition: $normal-transition;
+}
+
+.testray-sidebar:hover .testray-avatar-dropdown-text {
+	opacity: 1;
+	transition: $hover-transition;
 }

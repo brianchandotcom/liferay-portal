@@ -59,7 +59,9 @@ const Avatar: React.FC<AvatarProps> = ({
 			)}
 		</ClaySticker>
 
-		{displayName && <span className="ml-3">{name}</span>}
+		{displayName && (
+			<span className="ml-3 testray-avatar-dropdown-text">{name}</span>
+		)}
 	</div>
 );
 

@@ -17,6 +17,7 @@ import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
 import Input from '../../../components/Input';
+import InputSelect from '../../../components/Input/InputSelect';
 import Modal from '../../../components/Modal';
 import {
 	CreateFactorOption,
@@ -101,23 +102,14 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 		>
 			<Input label={i18n.translate('name')} name="name" {...inputProps} />
 
-			<label htmlFor="category-type">
-				{i18n.translate('category-type')}
-			</label>
-
-			<select
-				className="form-control"
-				id="category-type"
-				{...register('factorCategoryId')}
-			>
-				<option>{i18n.translate('choose-an-option')}</option>
-
-				{factorCategories.map(({id, name}) => (
-					<option key={id} value={id}>
-						{name}
-					</option>
-				))}
-			</select>
+			<InputSelect
+				label="Category"
+				name="category"
+				options={factorCategories.map(({id: value, name: label}) => ({
+					label,
+					value,
+				}))}
+			/>
 		</Modal>
 	);
 };

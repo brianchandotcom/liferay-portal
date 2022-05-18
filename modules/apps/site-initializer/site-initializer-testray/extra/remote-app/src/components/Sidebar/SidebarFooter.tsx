@@ -35,7 +35,7 @@ const SidebarFooter = () => {
 				items={MANAGE_DROPDOWN}
 				position={Align.RightBottom}
 				trigger={
-					<div className="align-items-center d-flex testray-sidebar-item">
+					<div className="testray-sidebar-item">
 						<ClayIcon fontSize={16} symbol="cog" />
 
 						<span className="ml-1 testray-sidebar-text">
@@ -65,7 +65,7 @@ const SidebarFooter = () => {
 				]}
 				position={Align.RightBottom}
 				trigger={
-					<div className="testray-sidebar-item">
+					<div className="testray-avatar-dropdown">
 						<Avatar
 							displayName
 							name={Liferay.ThemeDisplay.getUserName()}

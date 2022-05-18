@@ -16,6 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink, {ClayLinkContext} from '@clayui/link';
 import classNames from 'classnames';
 import {cancelDebounce, debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -162,6 +163,16 @@ const TreeFilter = ({
 		);
 	}, [childrenPropertyKey, filterQuery, namePropertyKey, nodes]);
 
+	const handleClearSelected = ({children, href, ...otherProps}) => (
+		<a
+			{...otherProps}
+			href={href}
+			onClick={() => handleSelectionChange(new Set())}
+		>
+			{children}
+		</a>
+	);
+
 	useEffect(() => {
 		handleSelectionChange(selectedKeys);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,7 +232,7 @@ const TreeFilter = ({
 					containerElement="section"
 					fluid
 				>
-					<div className="container p-0">
+					<div className="align-items-center container d-flex justify-content-between p-0">
 						<p className="m-0 text-2">
 							{selectedItemsCount + ' '}
 
@@ -229,6 +240,14 @@ const TreeFilter = ({
 								? Liferay.Language.get('items-selected')
 								: Liferay.Language.get('item-selected')}
 						</p>
+
+						<ClayLinkContext.Provider value={handleClearSelected}>
+							<div>
+								<ClayLink button="true" href="#">
+									{Liferay.Language.get('clear-all')}
+								</ClayLink>
+							</div>
+						</ClayLinkContext.Provider>
 					</div>
 				</ClayLayout.Container>
 			)}

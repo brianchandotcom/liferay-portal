@@ -74,6 +74,7 @@ export const createCommentQuery = `
 			}
 			dateCreated
 			dateModified
+			friendlyUrlPath
 			id
 		}
 	}

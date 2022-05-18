@@ -79,11 +79,11 @@ if (ratingsType == null) {
 		</aui:form>
 	</div>
 
-	<liferay-ui:success key="suggestionDeleted" message="suggestion-deleted-successfully" />
+	<liferay-ui:success key="suggestionDeleted" message="suggestion-was-deleted-successfully" />
 
-	<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-updated-successfully" />
+	<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-was-updated-successfully" />
 
-	<liferay-ui:success key="suggestionSaved" message="suggestion-saved-successfully" />
+	<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
 
 	<c:choose>
 		<c:when test="<%= kbCommentsCount == 1 %>">

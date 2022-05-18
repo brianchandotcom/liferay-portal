@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Code renders code with children 1`] = `
+<DocumentFragment>
+  <code
+    class="bg-light font-italic p-2 text-secondary"
+  >
+    com.liferay.testray.user
+  </code>
+</DocumentFragment>
+`;

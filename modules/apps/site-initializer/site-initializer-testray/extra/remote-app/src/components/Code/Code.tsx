@@ -12,6 +12,23 @@
  * details.
  */
 
-import Code from './Code'
+import classNames from 'classnames';
+import {ReactNode} from 'react';
 
-export default Code
+type CodeProps = {
+    children: ReactNode;
+    className?: string;
+};
+
+const Code: React.FC<CodeProps> = ({children, className}) => (
+    <code
+        className={classNames(
+            'bg-light font-italic p-2 text-secondary',
+            className
+        )}
+    >
+        {children}
+    </code>
+);
+
+export default Code;

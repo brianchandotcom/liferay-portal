@@ -12,6 +12,15 @@
  * details.
  */
 
-import Code from './Code'
+import { render } from "@testing-library/react";
 
-export default Code
+import Code from "./";
+
+describe('Code', () => {
+    it('renders code with children', () => {
+        const {asFragment, container} = render(<Code>com.liferay.testray.user</Code>)
+
+        expect(container.querySelector("code")).toHaveTextContent("com.liferay.testray.user")
+        expect(asFragment()).toMatchSnapshot();
+    });
+});

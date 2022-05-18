@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -25,15 +24,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -96,16 +91,14 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	@Override
 	public List<Region> getRegions(long countryId) {
 		return regionPersistence.findByCountryId(
-			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			_getOrderByComparator(countryId));
+			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public List<Region> getRegions(long countryId, boolean active) {
 		return regionPersistence.findByC_A(
-			countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			_getOrderByComparator(countryId));
+			countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override
@@ -176,24 +169,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		return regionLocalService.updateRegion(
 			regionId, active, name, position, regionCode);
 	}
-
-	private OrderByComparator<Region> _getOrderByComparator(long countryId) {
-		Country country = _countryService.fetchCountry(countryId);
-
-		if (country == null) {
-			return null;
-		}
-
-		return _orderByComparators.get(country.getA2());
-	}
-
-	private static final Map<String, OrderByComparator<Region>>
-		_orderByComparators =
-			HashMapBuilder.<String, OrderByComparator<Region>>put(
-				"JP",
-				OrderByComparatorFactoryUtil.create(
-					RegionModelImpl.TABLE_NAME, "regionCode", true)
-			).build();
 
 	@BeanReference(type = CountryService.class)
 	private CountryService _countryService;

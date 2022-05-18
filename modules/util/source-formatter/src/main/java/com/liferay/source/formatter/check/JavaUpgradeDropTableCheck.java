@@ -41,10 +41,8 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
-
-		if (!extendedClassNames.contains("UpgradeProcess")) {
-			return javaTerm.getContent();
+		if (!_isUpgradeJavaClass(javaClass)) {
+			return javaClass.getContent();
 		}
 
 		String content = javaTerm.getContent();
@@ -91,6 +89,18 @@ public class JavaUpgradeDropTableCheck extends BaseJavaTermCheck {
 				return methodCall;
 			}
 		}
+	}
+
+	private boolean _isUpgradeJavaClass(JavaClass javaClass) {
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+
+		for (String extendedClassName : extendedClassNames) {
+			if (extendedClassName.endsWith("UpgradeProcess")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Pattern _dropTablePattern = Pattern.compile(

@@ -2,6 +2,7 @@
 **/.gradle
 **/.settings
 **/.sonar
+**/bin
 **/TEST-frontend-js.xml
 **/liferay/logs/*.log
 **/liferay/logs/*.xml
@@ -39,7 +40,6 @@
 /benchmarks/*.sql
 /benchmarks/lib
 /benchmarks/log
-/bin
 /build
 /build.*.properties
 /classes/Test.class

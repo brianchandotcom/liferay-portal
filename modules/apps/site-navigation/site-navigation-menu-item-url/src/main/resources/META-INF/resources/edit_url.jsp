@@ -39,7 +39,7 @@ if (siteNavigationMenuItem != null) {
 <aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://" value="<%= url %>">
 	<aui:validator name="required" />
 
-	<aui:validator name="url" />
+	<aui:validator name="urlAllowRelative" />
 </aui:input>
 
 <aui:input checked="<%= useNewTab %>" label="open-in-a-new-tab" name="TypeSettingsProperties--useNewTab--" type="checkbox" />

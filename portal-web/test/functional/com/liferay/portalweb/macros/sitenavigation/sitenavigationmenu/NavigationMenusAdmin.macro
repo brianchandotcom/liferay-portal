@@ -525,7 +525,12 @@ definition {
 	}
 
 	macro viewItemStatus {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		AssertTextEquals(
+			index = "${index}",
 			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_STATUS",
 			value1 = "${itemStatus}");
@@ -550,13 +555,24 @@ definition {
 			NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 		}
 
-		AssertElementPresent(
-			key_warningMessage = "No Display Page",
-			locator1 = "Message#WARNING_SPECIFIC");
+		if ("${warningMessage}" == "No Display Page") {
+			AssertElementPresent(
+				key_warningMessage = "No Display Page",
+				locator1 = "Message#WARNING_SPECIFIC");
 
-		AssertTextEquals(
-			locator1 = "Message#SUBTITLE",
-			value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+			AssertTextEquals(
+				locator1 = "Message#SUBTITLE",
+				value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+		}
+		else if ("${warningMessage}" == "No categories inside") {
+			AssertElementPresent(
+				key_warningMessage = "No categories inside",
+				locator1 = "Message#WARNING_SPECIFIC");
+
+			AssertTextEquals(
+				locator1 = "Message#SUBTITLE",
+				value1 = "Vocabularies without categories are hidden from Navigation Menus.");
+		}
 	}
 
 	macro viewItemWarningMessageNotPresent {

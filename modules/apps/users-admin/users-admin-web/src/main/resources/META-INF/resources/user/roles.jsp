@@ -122,11 +122,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
-				<liferay-ui:search-container-column-text>
+			<%
+			String roleName = role.getName();
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) && !(roleName.equals(RoleConstants.ADMINISTRATOR) && userDisplayContext.isLastAdmin()) %>">
 					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</c:if>
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

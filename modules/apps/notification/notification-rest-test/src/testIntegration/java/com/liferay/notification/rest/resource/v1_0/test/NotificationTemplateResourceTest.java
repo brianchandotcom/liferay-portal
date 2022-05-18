@@ -99,10 +99,10 @@ public class NotificationTemplateResourceTest
 		NotificationTemplate notificationTemplate =
 			super.randomNotificationTemplate();
 
-		notificationTemplate.setFromName(
+		notificationTemplate.setBody(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
-		notificationTemplate.setBody(
+		notificationTemplate.setFromName(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
 		notificationTemplate.setSubject(

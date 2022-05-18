@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Portal K8s Agent Implementation
+Bundle-SymbolicName: com.liferay.portal.k8s.agent.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!android.*,\
+	\
+	!javax.annotation.meta.*,\
+	\
+	!org.apache.commons.compress.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.conscrypt.*,\
+	\
+	*
+-conditionalpackage: org.apache.felix.configurator.impl.*
+-fixupmessages: Classes found in the wrong directory

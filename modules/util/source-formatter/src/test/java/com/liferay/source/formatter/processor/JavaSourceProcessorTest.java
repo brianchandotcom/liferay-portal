@@ -543,6 +543,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testStringConcatenation() throws Exception {
+		test(
+			"StringConcatenation.testjava",
+			"When concatenating multiple literal strings, only the first " +
+				"literal string can start with ' '",
+			28);
+	}
+
+	@Test
 	public void testTruncateLongLines() throws Exception {
 		test("TruncateLongLines.testjava");
 	}

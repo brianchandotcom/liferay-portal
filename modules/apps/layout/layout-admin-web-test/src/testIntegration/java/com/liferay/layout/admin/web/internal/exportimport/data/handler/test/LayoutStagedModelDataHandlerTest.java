@@ -29,12 +29,15 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,20 +49,34 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import javax.portlet.Portlet;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Máté Thurzó
@@ -72,6 +89,41 @@ public class LayoutStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testCompanyScopedPortletOnPortletLayoutHasCorrectAttributes()
+		throws Exception {
+
+		_registerTestPortlet();
+
+		initExport();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			stagingGroup.getGroupId());
+
+		LayoutTestUtil.addPortletToLayout(
+			layout, _TEST_PORTLET_NAME,
+			HashMapBuilder.put(
+				"lfrScopeType", new String[] {"company"}
+			).build());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layout);
+
+		initImport();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			liveGroup.getCompanyId());
+
+		validatePortletAttributes(
+			layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
+			"company");
+	}
 
 	@Test
 	public void testTypeLinkToLayout() throws Exception {
@@ -399,6 +451,69 @@ public class LayoutStagedModelDataHandlerTest
 		Assert.assertEquals(layout.getCss(), importedLayout.getCss());
 	}
 
+	protected void validatePortletAttributes(
+			String layoutUuid, String portletId, long expectedScopeGroupId,
+			String expectedScopeLayoutType)
+		throws Exception {
+
+		Element layoutRootElement = rootElement.element("Layout");
+
+		List<Element> layoutElements = layoutRootElement.elements();
+
+		Element layoutElement = null;
+
+		for (Element curLayoutElement : layoutElements) {
+			if (Objects.equals(
+					curLayoutElement.attributeValue("uuid"), layoutUuid)) {
+
+				layoutElement = curLayoutElement;
+
+				break;
+			}
+		}
+
+		if (layoutElement == null) {
+			throw new IllegalStateException(
+				"Unable to find layout element with uuid " + layoutUuid);
+		}
+
+		Element portletRootElement = layoutElement.element("portlets");
+
+		List<Element> portletElements = portletRootElement.elements();
+
+		Element portletElement = null;
+
+		for (Element curPortletElement : portletElements) {
+			if (Objects.equals(
+					curPortletElement.attributeValue("portlet-id"),
+					portletId)) {
+
+				portletElement = curPortletElement;
+
+				break;
+			}
+		}
+
+		if (portletElement == null) {
+			throw new IllegalStateException(
+				"Unable to find portlet element with portlet id " + portletId);
+		}
+
+		Document portletDocument = SAXReaderUtil.read(
+			portletDataContext.getZipEntryAsString(
+				portletElement.attributeValue("path")));
+
+		Element portletDocumentRootElement = portletDocument.getRootElement();
+
+		Assert.assertEquals(
+			String.valueOf(expectedScopeGroupId),
+			portletDocumentRootElement.attributeValue("scope-group-id"));
+
+		Assert.assertEquals(
+			expectedScopeLayoutType,
+			portletDocumentRootElement.attributeValue("scope-layout-type"));
+	}
+
 	private void _addDependentFriendlyURLEntries(
 		Map<String, List<StagedModel>> dependentStagedModelsMap,
 		Layout layout) {
@@ -437,5 +552,25 @@ public class LayoutStagedModelDataHandlerTest
 					String.valueOf(layout.isPrivateLayout()))),
 			layout.getPlid());
 	}
+
+	private void _registerTestPortlet() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			LayoutStagedModelDataHandlerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"com.liferay.portlet.preferences-company-wide", "true"
+			).put(
+				"javax.portlet.name", _TEST_PORTLET_NAME
+			).build());
+	}
+
+	private static final String _TEST_PORTLET_NAME =
+		"com_liferay_test_portlet_TestPortlet";
+
+	private static ServiceRegistration<Portlet> _serviceRegistration;
 
 }

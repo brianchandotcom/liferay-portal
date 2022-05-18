@@ -997,6 +997,9 @@ public class DLImpl implements DL {
 	private static final Set<String> _allMediaGalleryMimeTypes =
 		new TreeSet<String>() {
 			{
+				add(
+					ContentTypes.
+						APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML);
 				addAll(
 					SetUtil.fromArray(
 						PropsUtil.getArray(

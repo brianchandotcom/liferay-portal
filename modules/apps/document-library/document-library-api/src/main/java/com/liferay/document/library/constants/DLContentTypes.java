@@ -14,12 +14,14 @@
 
 package com.liferay.document.library.constants;
 
+import com.liferay.portal.kernel.util.ContentTypes;
+
 /**
  * @author Alejandro Tardín
  */
 public class DLContentTypes {
 
 	public static final String VIDEO_EXTERNAL_SHORTCUT =
-		"application/vnd+liferay.video.external.shortcut+html";
+		ContentTypes.APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML;
 
 }

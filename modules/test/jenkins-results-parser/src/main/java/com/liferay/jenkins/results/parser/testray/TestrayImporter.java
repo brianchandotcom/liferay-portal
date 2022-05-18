@@ -1070,6 +1070,8 @@ public class TestrayImporter {
 
 								warningsPropertyElement.addAttribute(
 									"name", "testray.testcase.warnings");
+								warningsPropertyElement.addAttribute(
+									"value", String.valueOf(warnings.length));
 
 								for (String warning : warnings) {
 									Element warningPropertyElement =

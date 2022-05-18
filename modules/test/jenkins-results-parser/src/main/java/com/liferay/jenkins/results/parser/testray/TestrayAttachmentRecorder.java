@@ -24,6 +24,8 @@ import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.TestClassResult;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
@@ -38,6 +40,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import org.json.JSONObject;
@@ -66,7 +70,7 @@ public class TestrayAttachmentRecorder {
 				_recordLiferayLogs();
 				_recordLiferayOSGiLogs();
 				_recordPoshiReportFiles();
-				_recordPoshiWarnings();
+				_recordWarnings();
 			}
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
@@ -221,6 +225,88 @@ public class TestrayAttachmentRecorder {
 				portalUpstreamBranchName);
 
 		return _portalGitWorkingDirectory;
+	}
+
+	private List<String> _getPortalLogWarnings() {
+		List<String> portalLogWarnings = new ArrayList<>();
+
+		if (_build == null) {
+			return portalLogWarnings;
+		}
+
+		TestClassResult testClassResult = _build.getTestClassResult(
+			"com.liferay.portal.log.assertor.PortalLogAssertorTest");
+
+		if (testClassResult == null) {
+			return portalLogWarnings;
+		}
+
+		for (TestResult testResult : testClassResult.getTestResults()) {
+			String errorDetails = testResult.getErrorDetails();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+				continue;
+			}
+
+			portalLogWarnings.add(errorDetails);
+		}
+
+		return portalLogWarnings;
+	}
+
+	private List<String> _getPoshiWarnings() {
+		List<String> poshiWarnings = new ArrayList<>();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			return poshiWarnings;
+		}
+
+		File poshiWarningsFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"poshi-warnings.xml");
+
+		if (!poshiWarningsFile.exists()) {
+			return poshiWarnings;
+		}
+
+		String content = null;
+
+		try {
+			content = JenkinsResultsParserUtil.read(poshiWarningsFile);
+
+			content = content.trim();
+		}
+		catch (IOException ioException) {
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+			return poshiWarnings;
+		}
+
+		try {
+			Document document = Dom4JUtil.parse("<html>" + content + "</html>");
+
+			Element rootElement = document.getRootElement();
+
+			for (Element valueElement : rootElement.elements()) {
+				String valueElementText = valueElement.getText();
+
+				valueElementText = valueElementText.trim();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(valueElementText)) {
+					continue;
+				}
+
+				poshiWarnings.add(valueElementText);
+			}
+		}
+		catch (DocumentException documentException) {
+		}
+
+		return poshiWarnings;
 	}
 
 	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
@@ -540,40 +626,32 @@ public class TestrayAttachmentRecorder {
 		}
 	}
 
-	private void _recordPoshiWarnings() {
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_getPortalGitWorkingDirectory();
+	private void _recordWarnings() {
+		List<String> warnings = new ArrayList<>();
 
-		if (portalGitWorkingDirectory == null) {
+		warnings.addAll(_getPortalLogWarnings());
+		warnings.addAll(_getPoshiWarnings());
+
+		if (warnings.isEmpty()) {
 			return;
 		}
 
-		File sourcePoshiWarningsFile = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			"poshi-warnings.xml");
+		StringBuilder sb = new StringBuilder();
 
-		if (!sourcePoshiWarningsFile.exists()) {
-			return;
+		sb.append("<html>\n");
+
+		for (String warning : warnings) {
+			sb.append("<pre>");
+			sb.append(StringEscapeUtils.escapeHtml(warning));
+			sb.append("</pre>\n");
 		}
 
-		File poshiWarningsFile = new File(
-			_getRecordedFilesBuildDir(), "poshi-warnings.xml");
+		sb.append("</html>");
 
 		try {
-			JenkinsResultsParserUtil.copy(
-				sourcePoshiWarningsFile, poshiWarningsFile);
-
-			String content = JenkinsResultsParserUtil.read(poshiWarningsFile);
-
-			if (content.matches("\\s*")) {
-				return;
-			}
-
 			JenkinsResultsParserUtil.write(
-				poshiWarningsFile,
-				JenkinsResultsParserUtil.combine(
-					"<?xml version=\"1.0\"?>\n<values>\n", content,
-					"\n</values>"));
+				new File(_getRecordedFilesBuildDir(), "warnings.html"),
+				sb.toString());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

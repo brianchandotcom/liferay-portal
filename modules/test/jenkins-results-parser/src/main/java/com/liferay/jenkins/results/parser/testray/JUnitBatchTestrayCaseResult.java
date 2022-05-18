@@ -170,36 +170,6 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		return Status.PASSED;
 	}
 
-	@Override
-	public String[] getWarnings() {
-		Build build = getBuild();
-
-		if (build == null) {
-			return null;
-		}
-
-		TestClassResult testClassResult = build.getTestClassResult(
-			"com.liferay.portal.log.assertor.PortalLogAssertorTest");
-
-		if (testClassResult == null) {
-			return null;
-		}
-
-		List<String> warnings = new ArrayList<>();
-
-		for (TestResult testResult : testClassResult.getTestResults()) {
-			String errorDetails = testResult.getErrorDetails();
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-				continue;
-			}
-
-			warnings.add(errorDetails);
-		}
-
-		return warnings.toArray(new String[0]);
-	}
-
 	private List<TestClassResult> _getTestClassResults() {
 		if (_testClassResults != null) {
 			return _testClassResults;

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -41,6 +42,10 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.WordUtils;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -240,6 +245,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTopLevelTestrayAttachment());
 		testrayAttachments.add(_getJenkinsReportTestrayAttachment());
+		testrayAttachments.add(_getWarningsTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));
 
@@ -260,6 +266,45 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 	@Override
 	public String[] getWarnings() {
+		TestrayAttachment testrayAttachment = _getWarningsTestrayAttachment();
+
+		if (testrayAttachment == null) {
+			return null;
+		}
+
+		String testrayAttachmentValue = testrayAttachment.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayAttachmentValue)) {
+			return null;
+		}
+
+		try {
+			Document document = Dom4JUtil.parse(testrayAttachmentValue);
+
+			Element rootElement = document.getRootElement();
+
+			List<String> warnings = new ArrayList<>();
+
+			for (Element valueElement : rootElement.elements()) {
+				String warning = valueElement.getText();
+
+				warning = warning.trim();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(warning)) {
+					continue;
+				}
+
+				warnings.add(warning);
+			}
+
+			if (!warnings.isEmpty()) {
+				return warnings.toArray(new String[0]);
+			}
+		}
+		catch (DocumentException documentException) {
+			return null;
+		}
+
 		return null;
 	}
 
@@ -457,6 +502,12 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		sb.append(topLevelBuild.getBuildNumber());
 
 		return sb.toString();
+	}
+
+	private TestrayAttachment _getWarningsTestrayAttachment() {
+		return getTestrayAttachment(
+			getBuild(), "Warnings",
+			getAxisBuildURLPath() + "/warnings.html.gz");
 	}
 
 	private TestrayAttachment _uploadDefaultTestrayAttachment(

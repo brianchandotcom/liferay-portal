@@ -58,8 +58,8 @@ public interface JournalFolderService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal folder remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalFolderServiceUtil} if injection and service tracking are not available.
 	 */
 	public JournalFolder addFolder(
-			long groupId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFolder(long folderId) throws PortalException;
@@ -83,6 +83,11 @@ public interface JournalFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder getFolder(long folderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder getFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getFolderIds(long groupId, long folderId)

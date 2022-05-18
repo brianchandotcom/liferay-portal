@@ -278,6 +278,50 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	@Override
+	public JournalFolder fetchJournalFolderByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return journalFolderPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public JournalFolder fetchJournalFolderByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return fetchJournalFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder
+	 * @throws PortalException if a matching journal folder could not be found
+	 */
+	@Override
+	public JournalFolder getJournalFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return journalFolderPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the journal folder with the primary key.
 	 *
 	 * @param folderId the primary key of the journal folder

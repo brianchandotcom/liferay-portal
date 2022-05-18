@@ -75,8 +75,9 @@ public interface JournalFolderLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal folder local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalFolderLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public JournalFolder addFolder(
-			long userId, long groupId, long parentFolderId, String name,
-			String description, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -255,6 +256,25 @@ public interface JournalFolderLocalService
 	public JournalFolder fetchJournalFolder(long folderId);
 
 	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchJournalFolderByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchJournalFolderByReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	/**
 	 * Returns the journal folder matching the UUID and group.
 	 *
 	 * @param uuid the journal folder's UUID
@@ -361,6 +381,19 @@ public interface JournalFolderLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder getJournalFolder(long folderId) throws PortalException;
+
+	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder
+	 * @throws PortalException if a matching journal folder could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder getJournalFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
 
 	/**
 	 * Returns the journal folder matching the UUID and group.

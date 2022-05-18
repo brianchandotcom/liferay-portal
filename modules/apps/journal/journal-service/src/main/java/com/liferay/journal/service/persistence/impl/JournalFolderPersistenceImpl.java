@@ -7465,6 +7465,275 @@ public class JournalFolderPersistenceImpl
 	private static final String _FINDER_COLUMN_GTF_C_P_NOTS_STATUS_2 =
 		"journalFolder.status != ?";
 
+	private FinderPath _finderPathFetchByG_ERC;
+	private FinderPath _finderPathCountByG_ERC;
+
+	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching journal folder
+	 * @throws NoSuchFolderException if a matching journal folder could not be found
+	 */
+	@Override
+	public JournalFolder findByG_ERC(long groupId, String externalReferenceCode)
+		throws NoSuchFolderException {
+
+		JournalFolder journalFolder = fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (journalFolder == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchFolderException(sb.toString());
+		}
+
+		return journalFolder;
+	}
+
+	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	@Override
+	public JournalFolder fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return fetchByG_ERC(groupId, externalReferenceCode, true);
+	}
+
+	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	@Override
+	public JournalFolder fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalFolder.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {groupId, externalReferenceCode};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
+		}
+
+		if (result instanceof JournalFolder) {
+			JournalFolder journalFolder = (JournalFolder)result;
+
+			if ((groupId != journalFolder.getGroupId()) ||
+				!Objects.equals(
+					externalReferenceCode,
+					journalFolder.getExternalReferenceCode())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_JOURNALFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				List<JournalFolder> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByG_ERC, finderArgs, list);
+					}
+				}
+				else {
+					JournalFolder journalFolder = list.get(0);
+
+					result = journalFolder;
+
+					cacheResult(journalFolder);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (JournalFolder)result;
+		}
+	}
+
+	/**
+	 * Removes the journal folder where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the journal folder that was removed
+	 */
+	@Override
+	public JournalFolder removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws NoSuchFolderException {
+
+		JournalFolder journalFolder = findByG_ERC(
+			groupId, externalReferenceCode);
+
+		return remove(journalFolder);
+	}
+
+	/**
+	 * Returns the number of journal folders where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching journal folders
+	 */
+	@Override
+	public int countByG_ERC(long groupId, String externalReferenceCode) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalFolder.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_ERC;
+
+			finderArgs = new Object[] {groupId, externalReferenceCode};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_JOURNALFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
+		"journalFolder.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
+		"journalFolder.externalReferenceCode = ?";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
+		"(journalFolder.externalReferenceCode IS NULL OR journalFolder.externalReferenceCode = '')";
+
 	public JournalFolderPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -7510,6 +7779,14 @@ public class JournalFolderPersistenceImpl
 			new Object[] {
 				journalFolder.getGroupId(), journalFolder.getParentFolderId(),
 				journalFolder.getName()
+			},
+			journalFolder);
+
+		finderCache.putResult(
+			_finderPathFetchByG_ERC,
+			new Object[] {
+				journalFolder.getGroupId(),
+				journalFolder.getExternalReferenceCode()
 			},
 			journalFolder);
 	}
@@ -7616,6 +7893,15 @@ public class JournalFolderPersistenceImpl
 		finderCache.putResult(_finderPathCountByG_P_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByG_P_N, args, journalFolderModelImpl);
+
+		args = new Object[] {
+			journalFolderModelImpl.getGroupId(),
+			journalFolderModelImpl.getExternalReferenceCode()
+		};
+
+		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByG_ERC, args, journalFolderModelImpl);
 	}
 
 	/**
@@ -7748,6 +8034,11 @@ public class JournalFolderPersistenceImpl
 
 		JournalFolderModelImpl journalFolderModelImpl =
 			(JournalFolderModelImpl)journalFolder;
+
+		if (Validator.isNull(journalFolder.getExternalReferenceCode())) {
+			journalFolder.setExternalReferenceCode(
+				String.valueOf(journalFolder.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(journalFolder.getUuid())) {
 			String uuid = _portalUUID.generate();
@@ -8263,6 +8554,7 @@ public class JournalFolderPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -8293,6 +8585,9 @@ public class JournalFolderPersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"groupId", "parentFolderId", "name"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "externalReferenceCode"});
 	}
 
 	/**
@@ -8518,6 +8813,16 @@ public class JournalFolderPersistenceImpl
 			},
 			new String[] {"folderId", "companyId", "parentFolderId", "status"},
 			false);
+
+		_finderPathFetchByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, true);
+
+		_finderPathCountByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, false);
 
 		_setJournalFolderUtilPersistence(this);
 	}

@@ -77,7 +77,7 @@ public class JournalFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,6 +85,8 @@ public class JournalFolderCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", folderId=");
 		sb.append(folderId);
 		sb.append(", groupId=");
@@ -136,6 +138,13 @@ public class JournalFolderCacheModel
 		}
 		else {
 			journalFolderImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			journalFolderImpl.setExternalReferenceCode("");
+		}
+		else {
+			journalFolderImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		journalFolderImpl.setFolderId(folderId);
@@ -224,6 +233,7 @@ public class JournalFolderCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		folderId = objectInput.readLong();
 
@@ -262,6 +272,13 @@ public class JournalFolderCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(folderId);
@@ -325,6 +342,7 @@ public class JournalFolderCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long folderId;
 	public long groupId;
 	public long companyId;

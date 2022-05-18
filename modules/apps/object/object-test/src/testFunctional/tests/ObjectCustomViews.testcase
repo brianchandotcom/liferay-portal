@@ -531,8 +531,6 @@ definition {
 
 		ObjectCustomViews.goToViewsDetails(label = "Custom View 152054");
 
-		ObjectCustomViews.markViewAsDefault();
-
 		ObjectCustomViews.goToDefaultSortTab();
 
 		ObjectCustomViews.assertNoColumnPresentInDefaultSort();

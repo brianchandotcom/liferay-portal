@@ -193,24 +193,126 @@ public abstract class BaseDBProcess implements DBProcess {
 			String tableName, String oldColumnName, String newColumnDefinition)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
+		String newColumnName = StringUtil.extractFirst(
+			newColumnDefinition, StringPool.SPACE);
 
-		db.alterColumnName(
-			connection, tableName, oldColumnName, newColumnDefinition);
+		String newColumnType = newColumnDefinition.substring(
+			newColumnName.length() + 1);
+
+		boolean sameColumn = StringUtil.equalsIgnoreCase(
+			oldColumnName, newColumnName);
+
+		if (hasColumn(tableName, oldColumnName)) {
+			if (sameColumn) {
+				if (!hasColumnType(tableName, oldColumnName, newColumnType)) {
+					throw new SQLException(
+						StringBundler.concat(
+							"This method does not allow type changes. Column ",
+							oldColumnName, " has a different type than ",
+							newColumnType));
+				}
+
+				DBInspector dbInspector = new DBInspector(connection);
+
+				String normalizedOldColumnName = dbInspector.normalizeName(
+					oldColumnName);
+				String normalizedNewColumnName = dbInspector.normalizeName(
+					newColumnName);
+
+				boolean databaseSameColumn = normalizedOldColumnName.equals(
+					normalizedNewColumnName);
+
+				if (!databaseSameColumn) {
+					DB db = DBManagerUtil.getDB();
+
+					db.alterColumnName(
+						connection, tableName, oldColumnName,
+						newColumnDefinition);
+				}
+
+				return;
+			}
+
+			if (hasColumn(tableName, newColumnName)) {
+				String message = StringBundler.concat(
+					"Column ", oldColumnName, " should not exist in table ",
+					tableName, ".");
+
+				if (!hasColumnType(tableName, newColumnName, newColumnType)) {
+					message = StringBundler.concat(
+						message, " Column ", newColumnName,
+						" already exists with a different type than ",
+						newColumnType);
+				}
+
+				throw new SQLException(message);
+			}
+
+			if (!hasColumnType(tableName, oldColumnName, newColumnType)) {
+				throw new SQLException(
+					StringBundler.concat(
+						"This method does not allow type changes. Column ",
+						oldColumnName, " has a different type than ",
+						newColumnType));
+			}
+
+			DB db = DBManagerUtil.getDB();
+
+			db.alterColumnName(
+				connection, tableName, oldColumnName, newColumnDefinition);
+
+			return;
+		}
+
+		if (!hasColumn(tableName, newColumnName)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Column ", oldColumnName, " does not exist in table ",
+					tableName));
+		}
+
+		if (!hasColumnType(tableName, newColumnName, newColumnType)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Column ", newColumnName,
+					" already exists with a different type than ",
+					newColumnType));
+		}
 	}
 
 	protected void alterColumnType(
 			String tableName, String columnName, String newColumnType)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
+		if (!hasColumn(tableName, columnName)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Column ", columnName, " does not exist in table ",
+					tableName));
+		}
 
-		db.alterColumnType(connection, tableName, columnName, newColumnType);
+		if (!hasColumnType(tableName, columnName, newColumnType)) {
+			DB db = DBManagerUtil.getDB();
+
+			db.alterColumnType(
+				connection, tableName, columnName, newColumnType);
+		}
 	}
 
 	protected void alterTableAddColumn(
 			String tableName, String columnName, String columnType)
 		throws Exception {
+
+		if (hasColumn(tableName, columnName)) {
+			if (!hasColumnType(tableName, columnName, columnType)) {
+				throw new SQLException(
+					StringBundler.concat(
+						"Column ", columnName, " already exists in table ",
+						tableName, " with different type than ", columnType));
+			}
+
+			return;
+		}
 
 		DB db = DBManagerUtil.getDB();
 
@@ -220,9 +322,11 @@ public abstract class BaseDBProcess implements DBProcess {
 	protected void alterTableDropColumn(String tableName, String columnName)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
+		if (hasColumn(tableName, columnName)) {
+			DB db = DBManagerUtil.getDB();
 
-		db.alterTableDropColumn(connection, tableName, columnName);
+			db.alterTableDropColumn(connection, tableName, columnName);
+		}
 	}
 
 	protected void alterTableName(String tableName, String newTableName)

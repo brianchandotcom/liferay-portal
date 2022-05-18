@@ -1,7 +1,8 @@
 {
 	"dependencies": {
 	},
-	"name": "address-web",
+	"main": "js/index.js",
+	"name": "@liferay/address-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

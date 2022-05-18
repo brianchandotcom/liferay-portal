@@ -47,6 +47,8 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.math.BigDecimal;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -332,6 +334,14 @@ public class SkuResourceImpl
 			cpInstance.getCPInstanceId(), sku.getSku(), sku.getGtin(),
 			sku.getManufacturerPartNumber(),
 			GetterUtil.get(sku.getPurchasable(), cpInstance.isPurchasable()),
+			GetterUtil.get(sku.getWidth(), cpInstance.getWidth()),
+			GetterUtil.get(sku.getHeight(), cpInstance.getHeight()),
+			GetterUtil.get(sku.getDepth(), cpInstance.getWeight()),
+			GetterUtil.get(sku.getWeight(), cpInstance.getWeight()),
+			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
+			(BigDecimal)GetterUtil.get(
+				sku.getPromoPrice(), cpInstance.getPromoPrice()),
+			(BigDecimal)GetterUtil.get(sku.getCost(), cpInstance.getCost()),
 			GetterUtil.get(sku.getPublished(), cpInstance.isPublished()),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),

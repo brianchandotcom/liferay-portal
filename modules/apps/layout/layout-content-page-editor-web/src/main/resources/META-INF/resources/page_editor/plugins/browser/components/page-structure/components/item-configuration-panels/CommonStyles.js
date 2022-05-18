@@ -23,6 +23,7 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
+import selectCanUpdateFrameStyles from '../../../../../../app/selectors/selectCanUpdateFrameStyles';
 import selectCanUpdateItemStyles from '../../../../../../app/selectors/selectCanUpdateItemStyles';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
@@ -34,7 +35,6 @@ export function CommonStyles({
 	role = COMMON_STYLES_ROLES.styles,
 	item,
 }) {
-	const {commonStyles} = config;
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
@@ -42,33 +42,18 @@ export function CommonStyles({
 	);
 
 	const canUpdateItemStyles = useSelector(selectCanUpdateItemStyles);
+	const canUpdateFrameStyles = useSelector(selectCanUpdateFrameStyles);
 
 	if (!canUpdateItemStyles) {
 		return null;
 	}
 
-	let styles = commonStyles;
-
-	styles = styles.filter((fieldSet) =>
-		role === COMMON_STYLES_ROLES.general
-			? fieldSet.configurationRole === COMMON_STYLES_ROLES.general
-			: fieldSet.configurationRole !== COMMON_STYLES_ROLES.general
-	);
-
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-		styles = styles
-			.filter((fieldSet) =>
-				fieldSet.styles.find((field) => field.name === 'display')
-			)
-			.map((fieldSet) => {
-				return {
-					...fieldSet,
-					styles: fieldSet.styles.filter(
-						(field) => field.name === 'display'
-					),
-				};
-			});
-	}
+	let styles = filterCommonStyles({
+		canUpdateFrameStyles,
+		item,
+		role,
+		styles: config.commonStyles,
+	});
 
 	const handleValueSelect = (name, value) => {
 		updateItemStyle({
@@ -138,6 +123,50 @@ export function CommonStyles({
 	);
 }
 
+CommonStyles.propTypes = {
+	commonStylesValues: PropTypes.object.isRequired,
+	item: PropTypes.object.isRequired,
+};
+
+function filterCommonStyles({canUpdateFrameStyles, item, role, styles}) {
+	let nextStyles = styles.filter((fieldSet) =>
+		role === COMMON_STYLES_ROLES.general
+			? fieldSet.configurationRole === COMMON_STYLES_ROLES.general
+			: fieldSet.configurationRole !== COMMON_STYLES_ROLES.general
+	);
+
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
+		nextStyles = nextStyles
+			.filter((fieldSet) =>
+				fieldSet.styles.find((field) => field.name === 'display')
+			)
+			.map((fieldSet) => {
+				return {
+					...fieldSet,
+					styles: fieldSet.styles.filter(
+						(field) => field.name === 'display'
+					),
+				};
+			});
+	}
+
+	if (
+		item.type !== LAYOUT_DATA_ITEM_TYPES.container &&
+		item.type !== LAYOUT_DATA_ITEM_TYPES.row &&
+		role === COMMON_STYLES_ROLES.general &&
+		!canUpdateFrameStyles
+	) {
+		nextStyles = nextStyles.map((fieldSet) => {
+			return {
+				...fieldSet,
+				styles: fieldSet.styles.filter((style) => !isFrameStyle(style)),
+			};
+		});
+	}
+
+	return nextStyles;
+}
+
 function isSpacingFieldSet(fieldSet) {
 	return (
 		fieldSet.styles.every((field) => field.name.startsWith('margin')) ||
@@ -145,7 +174,9 @@ function isSpacingFieldSet(fieldSet) {
 	);
 }
 
-CommonStyles.propTypes = {
-	commonStylesValues: PropTypes.object.isRequired,
-	item: PropTypes.object.isRequired,
-};
+function isFrameStyle(style) {
+	return (
+		style.name.toLowerCase().endsWith('height') ||
+		style.name.toLowerCase().endsWith('width')
+	);
+}

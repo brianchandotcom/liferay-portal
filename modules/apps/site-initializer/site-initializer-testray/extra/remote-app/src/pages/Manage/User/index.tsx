@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useNavigate} from 'react-router-dom';
+
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getLiferayUserAccounts} from '../../../graphql/queries/liferayUserAccount';
@@ -22,6 +24,7 @@ import useUserActions from './useUserActions';
 
 const Users: React.FC = () => {
 	const {actions, formModal} = useUserActions();
+	const navigate = useNavigate();
 
 	useHeader({
 		useDropdown: [],
@@ -38,7 +41,7 @@ const Users: React.FC = () => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: formModal.modal.open,
+						addButton: () => navigate(`create`),
 					}}
 					query={getLiferayUserAccounts}
 					tableProps={{

@@ -547,24 +547,13 @@ definition {
 	test ValidateDefaulLocalizableValue {
 		var checkboxName = "Localizable";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.assertLocalizableField(fieldFieldLabel = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		DataEngine.assertLocalizableField(fieldFieldLabel = "Numeric");
-
 		DataEngine.gotoCreateNewFieldset();
 
 		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset Test");
 
-		DataEngine.addFields(fieldNameList = "Text");
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Text",
@@ -587,6 +576,21 @@ definition {
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		AssertElementPresent(locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Numeric");
 	}
 
 	@description = "This is a test for LRQA-66427. This test check it's not possible to translate a field with Localizable property set as Off in a simple field and a Field Group into a Fieldset"

@@ -366,6 +366,11 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "test@liferay.com");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
 		User.assignRegularRoleCP(
 			roleTitle = "Operations Manager",
 			userScreenName = "buyeruser");

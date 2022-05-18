@@ -13,6 +13,7 @@
  */
 
 import 'codemirror/mode/groovy/groovy';
+import {ClayToggle} from '@clayui/form';
 import {FieldFeedback, useFeatureFlag} from 'data-engine-js-components-web';
 import React, {ChangeEventHandler, useRef, useState} from 'react';
 
@@ -20,12 +21,11 @@ import Card from '../Card/Card';
 import Sidebar from '../Editor/Sidebar/Sidebar';
 import InputLocalized from '../Form/InputLocalized/InputLocalized';
 import Select from '../Form/Select';
-import ObjectValidationFormBase, {
-	ObjectValidationErrors,
-} from '../ObjectValidationFormBase';
+import {ObjectValidationErrors} from '../ObjectValidationFormBase';
 
 import './ObjectValidationTabs.scss';
 import CodeMirrorEditor from '../CodeMirrorEditor';
+import Input from '../Form/Input';
 
 function BasicInfo({
 	componentLabel,
@@ -59,12 +59,17 @@ function BasicInfo({
 					translations={values.name as LocalizedValue<string>}
 				/>
 
-				<ObjectValidationFormBase
+				<Input
+					disabled
+					label={Liferay.Language.get('type')}
+					value={values.engineLabel}
+				/>
+
+				<ClayToggle
 					disabled={disabled}
-					errors={errors}
-					objectValidationTypeLabel={values.engineLabel!}
-					setValues={setValues}
-					values={values}
+					label={Liferay.Language.get('active-validation')}
+					onToggle={(active) => setValues({active})}
+					toggled={values.active}
 				/>
 			</Card>
 

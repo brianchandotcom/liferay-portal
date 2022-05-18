@@ -168,12 +168,9 @@ public class RenderStateUtil {
 				for (PublicRenderParameter publicRenderParameter :
 						publicRenderParameters) {
 
-					String publicRenderParameterName =
-						PortletQNameUtil.getPublicRenderParameterName(
-							publicRenderParameter.getQName());
-
 					String[] currentValue = currentPublicRenderParameters.get(
-						publicRenderParameterName);
+						PortletQNameUtil.getPublicRenderParameterName(
+							publicRenderParameter.getQName()));
 
 					if (currentValue != null) {
 						changedPublicRenderParameters.put(
@@ -375,11 +372,8 @@ public class RenderStateUtil {
 				httpServletRequest, themeDisplay.getPlid(), portlets);
 
 		for (Portlet portlet : portlets) {
-			String portletNamespace = PortalUtil.getPortletNamespace(
-				portlet.getPortletId());
-
 			jsonObject.put(
-				portletNamespace,
+				PortalUtil.getPortletNamespace(portlet.getPortletId()),
 				_getPortletJSONObject(
 					httpServletRequest, themeDisplay, layoutTypePortlet,
 					portlet, renderDataMap.get(portlet.getPortletId()),

@@ -468,13 +468,10 @@ public class PortletContainerImpl implements PortletContainer {
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
 			ParamUtil.getString(httpServletRequest, "p_p_mode"));
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				httpServletRequest, portlet.getPortletId());
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getStrictPreferences(
-				portletPreferencesIds);
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					httpServletRequest, portlet.getPortletId()));
 
 		ServletContext servletContext =
 			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
@@ -656,12 +653,11 @@ public class PortletContainerImpl implements PortletContainer {
 			portletMode = PortletMode.VIEW;
 		}
 
-		long scopeGroupId = getScopeGroupId(
-			httpServletRequest, layout, portlet.getPortletId());
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletSetup(
-				scopeGroupId, layout, portlet.getPortletId(), null);
+				getScopeGroupId(
+					httpServletRequest, layout, portlet.getPortletId()),
+				layout, portlet.getPortletId(), null);
 
 		LiferayEventRequest liferayEventRequest = EventRequestFactory.create(
 			httpServletRequest, portlet, invokerPortlet,

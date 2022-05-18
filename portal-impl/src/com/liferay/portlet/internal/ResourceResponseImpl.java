@@ -125,10 +125,8 @@ public class ResourceResponseImpl
 		httpServletResponse.setHeader(name, value);
 
 		if (name.equals(ResourceResponse.HTTP_STATUS_CODE)) {
-			int status = GetterUtil.getInteger(
-				value, HttpServletResponse.SC_OK);
-
-			httpServletResponse.setStatus(status);
+			httpServletResponse.setStatus(
+				GetterUtil.getInteger(value, HttpServletResponse.SC_OK));
 		}
 	}
 

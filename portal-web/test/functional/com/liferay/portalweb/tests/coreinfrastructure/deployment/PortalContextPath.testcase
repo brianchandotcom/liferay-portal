@@ -1,6 +1,8 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Deployment";
 
 	setUp {

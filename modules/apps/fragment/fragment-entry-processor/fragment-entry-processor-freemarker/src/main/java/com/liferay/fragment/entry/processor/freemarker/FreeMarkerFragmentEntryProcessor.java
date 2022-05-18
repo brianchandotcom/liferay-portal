@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
@@ -147,11 +148,50 @@ public class FreeMarkerFragmentEntryProcessor
 			).build());
 
 		if (_isInputFragmentEntryType(fragmentEntryLink)) {
+			String inputHelpText =
+				(String)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							"inputHelpText",
+							FragmentConfigurationFieldDataType.STRING);
+
+			String inputLabel =
+				(String)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(), "inputLabel",
+							FragmentConfigurationFieldDataType.STRING);
+
+			boolean inputRequired =
+				(boolean)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							"inputRequired",
+							FragmentConfigurationFieldDataType.BOOLEAN);
+
+			boolean inputShowHelpText =
+				(boolean)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							"inputShowHelpText",
+							FragmentConfigurationFieldDataType.BOOLEAN);
+
+			boolean inputShowLabel =
+				(boolean)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							"inputShowLabel",
+							FragmentConfigurationFieldDataType.BOOLEAN);
+
 			template.put(
 				"input",
 				new InputTemplateNode(
-					"helpText", "label", "name", false, false, false, "type",
-					"value"));
+					inputHelpText, inputLabel, "name", inputRequired,
+					inputShowHelpText, inputShowLabel, "type", "value"));
 		}
 
 		template.prepareTaglib(

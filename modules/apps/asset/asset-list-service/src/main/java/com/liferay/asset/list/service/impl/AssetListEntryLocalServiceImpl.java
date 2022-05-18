@@ -52,13 +52,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -114,11 +113,26 @@ public class AssetListEntryLocalServiceImpl
 					segmentsEntryId, StringPool.BLANK, serviceContext);
 		}
 
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 		for (long assetEntryId : assetEntryIds) {
+
+			if (ListUtil.exists(
+				assetListEntryAssetEntryRels,
+				assetListEntryAssetEntryRel ->
+					assetListEntryAssetEntryRel.getAssetEntryId() ==
+					assetEntryId)) {
+				continue;
+			}
+
 			_assetListEntryAssetEntryRelLocalService.
 				addAssetListEntryAssetEntryRel(
 					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
+
 		}
 
 		// Asset list entry

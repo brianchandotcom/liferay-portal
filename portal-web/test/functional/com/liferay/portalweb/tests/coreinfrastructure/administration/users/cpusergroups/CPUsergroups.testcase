@@ -77,7 +77,7 @@ definition {
 		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(
-			userGroupName = "UG UserGroup Comma, Name",
+			userGroupName = "UG UserGroup Name Comma,",
 			userGroupNameVariation = "Invalid");
 
 		UserGroup.openUserGroupsAdmin();

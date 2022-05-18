@@ -27,8 +27,9 @@ import selectFormConfiguration from '../../../../../../app/selectors/selectFormC
 import selectFragmentEntryLink from '../../../../../../app/selectors/selectFragmentEntryLink';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import InfoItemService from '../../../../../../app/services/InfoItemService';
+import FormService from '../../../../../../app/services/FormService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
+import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../common/components/Collapse';
@@ -189,12 +190,8 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 	);
 
 	const fields = useCache({
-		fetcher: () =>
-			InfoItemService.getAvailableStructureMappingFields({
-				classNameId,
-				classTypeId,
-			}),
-		key: ['availableStructureMappingFields', classNameId, classTypeId],
+		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
+		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
 	});
 
 	const filteredFields = useMemo(

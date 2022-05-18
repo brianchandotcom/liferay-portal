@@ -45,6 +45,11 @@
 	<td>//button[contains(@id,'_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_declineAllButton') and contains(.,'Decline All')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VISIT_OUR_PRIVACY_POLICY</td>
+	<td>//a[contains(@href,'${key_text}') and contains(.,'Visit our Privacy Policy')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>FUNCTIONAL_COOKIES_DESCRIPTION_PRE_CHECKED</td>
-	<td>//input[contains(@name,'functionalCookiesPreChecked')]</td>
+	<td>//input[contains(@name,'functionalCookiesPrechecked')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>PREFROMANCE_COOKIES_DESCRIPTION_PRE_CHECKED</td>
-	<td>//input[contains(@name,'performanceCookiesPreChecked')]</td>
+	<td>//input[contains(@name,'performanceCookiesPrechecked')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>PERSONALIZATION_COOKIES_DESCRIPTION_PRE_CHECKED</td>
-	<td>//input[contains(@name,'personalizationCookiesPreChecked')]</td>
+	<td>//input[contains(@name,'personalizationCookiesPrechecked')]</td>
 	<td></td>
 </tr>
 </tbody>

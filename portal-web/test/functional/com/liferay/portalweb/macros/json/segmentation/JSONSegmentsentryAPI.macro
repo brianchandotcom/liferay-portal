@@ -25,7 +25,7 @@ definition {
 		Variables.assertDefined(parameterList = "${segmentsId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-	
+
 		var curl = '''
 			${portalURL}/api/jsonws/segments.segmentsentry/delete-segments-entry \
 				-u test@liferay.com:test \
@@ -36,4 +36,5 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
+
 }

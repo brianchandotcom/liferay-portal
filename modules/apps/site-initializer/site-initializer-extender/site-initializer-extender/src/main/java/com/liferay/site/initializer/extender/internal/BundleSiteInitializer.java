@@ -33,6 +33,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
@@ -374,6 +376,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new SiteNavigationMenuItemSettingsBuilder();
 
 			_invoke(() -> _addAccounts(serviceContext));
+			_invoke(() -> _addCustomFields(serviceContext));
 			_invoke(() -> _addDDMStructures(serviceContext));
 
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
@@ -529,6 +532,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addCustomFields(ServiceContext serviceContext) throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/custom-fields.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+				serviceContext.getCompanyId(), jsonObject.getString("modelResource"), jsonObject.getInt("resourcePrimKey"));
+			if (expandoBridge==null){
+				continue;
+			}
+			if (expandoBridge.getAttribute(jsonObject.getString("name"))==null){
+				expandoBridge.addAttribute(jsonObject.getString("name"),jsonObject.getInt("dataType"));
+			}
+		}
+	}
 	private Map<String, String> _addAssetListEntries(
 			DDMStructureLocalService ddmStructureLocalService,
 			ServiceContext serviceContext)

@@ -265,6 +265,14 @@ definition {
 			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME");
 	}
 
+	macro deployInstanceConfigFile {
+		var companyId = JSONCompany.getCompanyId();
+
+		AntCommand(
+			locator1 = "build-test-oauth2.xml",
+			value1 = "prepare-oauth2-osgi-configuration -Dosgi.config.file.name=${osgiConfigFileName} -DcompanyId=${companyId}");
+	}
+
 	macro editApplication {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

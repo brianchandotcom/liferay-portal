@@ -614,7 +614,7 @@ definition {
 			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
 			value1 = "Delivery Term 1");
 
-		Click(locator1 = "Button#PREVIOUS");
+		Click(locator1 = "//span[contains(.,'Previous')]");
 
 		Click(
 			key_radioOption = "Delivery Term 2",
@@ -730,7 +730,7 @@ definition {
 			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
 			value1 = "Payment Term 1");
 
-		Click(locator1 = "Button#PREVIOUS");
+		Click(locator1 = "//span[contains(.,'Previous')]");
 
 		Click(
 			key_radioOption = "Payment Term 2",

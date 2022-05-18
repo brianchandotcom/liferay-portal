@@ -281,11 +281,10 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 				file = FileUtil.createTempFile(inputStream);
 
-				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
-
-				serviceContext.setAssetTagNames(assetTagNames);
+				serviceContext.setAssetTagNames(
+					AssetTagLocalServiceUtil.getTagNames(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId()));
 
 				fileEntry = DLAppServiceUtil.updateFileEntry(
 					fileEntryId, newName, mimeType, newName, StringPool.BLANK,
@@ -377,11 +376,10 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 				description = fileEntry.getDescription();
 
-				String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
-
-				serviceContext.setAssetTagNames(assetTagNames);
+				serviceContext.setAssetTagNames(
+					AssetTagLocalServiceUtil.getTagNames(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId()));
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), title, contentType, title,

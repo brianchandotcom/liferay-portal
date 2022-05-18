@@ -307,10 +307,9 @@ public class VideoProcessorImpl
 
 		stopWatch.start();
 
-		String tempFileId = DLUtil.getTempFileId(
-			fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-		File thumbnailTempFile = getThumbnailTempFile(tempFileId);
+		File thumbnailTempFile = getThumbnailTempFile(
+			DLUtil.getTempFileId(
+				fileVersion.getFileEntryId(), fileVersion.getVersion()));
 
 		try {
 			try {

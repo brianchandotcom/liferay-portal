@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.github.graphql-java", name: "graphql-java-annotations", version: "5.4"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
@@ -21,6 +22,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }

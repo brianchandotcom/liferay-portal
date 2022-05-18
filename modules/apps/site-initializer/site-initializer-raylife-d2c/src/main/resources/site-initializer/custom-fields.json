@@ -2,7 +2,6 @@
 	{
 		"dataType": 5,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Commission Rate",
-		"resourcePrimKey": 0
+		"name": "Commission Rate"
 	}
 ]

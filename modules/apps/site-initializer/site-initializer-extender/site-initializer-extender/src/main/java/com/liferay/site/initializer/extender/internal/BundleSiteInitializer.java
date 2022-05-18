@@ -755,8 +755,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ExpandoBridge expandoBridge =
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(),
-					jsonObject.getString("modelResource"),
-					jsonObject.getInt("resourcePrimKey"));
+					jsonObject.getString("modelResource"));
 
 			if (expandoBridge == null) {
 				continue;

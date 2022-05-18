@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -1496,6 +1497,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, Layout> layouts = HashMapBuilder.put(
 			parentResourcePath, layout
 		).build();
+
+		String layoutTemplateId = StringUtil.toLowerCase(
+			jsonObject.getString("layoutTemplateId"));
+
+		if (Validator.isNotNull(layoutTemplateId)) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
+		}
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			parentResourcePath);

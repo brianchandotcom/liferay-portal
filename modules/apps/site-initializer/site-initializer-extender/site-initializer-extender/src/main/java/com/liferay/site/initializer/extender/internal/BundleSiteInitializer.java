@@ -1494,6 +1494,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteInitializerUtil.toMap(jsonObject.getString("friendlyURL_i18n")),
 			serviceContext);
 
+		if (jsonObject.has("priority")) {
+			layout = _layoutLocalService.updatePriority(
+				layout.getPlid(), jsonObject.getInt("priority"));
+		}
+
 		Map<String, Layout> layouts = HashMapBuilder.put(
 			parentResourcePath, layout
 		).build();

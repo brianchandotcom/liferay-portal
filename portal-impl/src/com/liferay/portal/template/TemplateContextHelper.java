@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -320,6 +321,7 @@ public class TemplateContextHelper {
 			contextObjects.put("realUser", themeDisplay.getRealUser());
 			contextObjects.put(
 				"scopeGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
+			contextObjects.put("siteSpritemapPath", FrontendIconsUtil.getSpritemapPath(themeDisplay.getSiteGroupId()));
 			contextObjects.put("themeDisplay", themeDisplay);
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());
 

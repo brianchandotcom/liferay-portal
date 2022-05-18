@@ -204,7 +204,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
 
 		if (locale != null) {
-			String localizedFriendlyURL = friendlyURL;
+			String originalFriendlyURL = _getOriginalFriendlyURL(friendlyURL);
+
+			String localizedFriendlyURL = originalFriendlyURL;
 
 			String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
 				locale);
@@ -213,7 +215,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				localizedFriendlyURL = getURLSeparator() + urlTitle;
 			}
 
-			if (!Objects.equals(friendlyURL, localizedFriendlyURL)) {
+			if (!Objects.equals(originalFriendlyURL, localizedFriendlyURL)) {
 				return new LayoutFriendlyURLComposite(
 					layout, localizedFriendlyURL, true);
 			}
@@ -417,6 +419,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return Optional.ofNullable(
 			layoutSEOTemplateProcessor.processTemplate(
 				template, infoItemFieldValues, locale));
+	}
+
+	private String _getOriginalFriendlyURL(String friendlyURL) {
+		int pos = friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+		if ((pos == -1) || (pos == 0)) {
+			return friendlyURL;
+		}
+
+		return friendlyURL.substring(0, pos);
 	}
 
 	private String _getURLSeparator(String friendlyURL) {

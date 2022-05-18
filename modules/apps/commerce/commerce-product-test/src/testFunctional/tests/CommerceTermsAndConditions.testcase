@@ -86,7 +86,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -448,7 +448,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -534,7 +534,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -650,7 +650,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -773,9 +773,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
-
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "Money Order",
@@ -787,7 +785,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -900,7 +898,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -1003,7 +1001,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -1110,7 +1108,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "Delivery Term 1");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 
@@ -1195,7 +1193,7 @@ definition {
 
 		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "Payment Term 1");
 
-		Click(locator1 = "Icon#CLOSE");
+		Refresh();
 
 		User.logoutPG();
 

@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -27,6 +26,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssociateAnyTypeOfAccount {
+		property portal.acceptance = "true";
 
 		// TODO LPS-153535 CanAssociateAnyTypeOfAccount pending implementation
 
@@ -63,6 +63,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotDeleteDefaultFields {
+		property portal.acceptance = "true";
 
 		// TODO LPS-153522 CannotDeleteDefaultFields pending implementation
 
@@ -90,6 +91,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotEditDefaultFields {
+		property portal.acceptance = "true";
 
 		// TODO LPS-153521 CannotEditDefaultFields pending implementation
 
@@ -117,6 +119,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewFieldsLabelByDefault {
+		property portal.acceptance = "true";
 
 		// TODO LPS-153520 CanViewFieldsLabelByDefault pending implementation
 

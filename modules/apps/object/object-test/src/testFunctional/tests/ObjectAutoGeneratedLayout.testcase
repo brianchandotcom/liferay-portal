@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -177,6 +176,7 @@ definition {
 	@priority = "5"
 	test CannotAddMoreThanLimitOfCharacters {
 		property custom.properties = "feature.flag.LPS-146889=true";
+		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 146889",

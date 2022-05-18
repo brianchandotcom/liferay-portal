@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -153,6 +152,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewValidationTab {
+		property portal.acceptance = "true";
 
 		// TODO LPS-153546 CanViewValidationTab pending implementation
 

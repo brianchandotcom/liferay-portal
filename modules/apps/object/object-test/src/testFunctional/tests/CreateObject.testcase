@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -5243,6 +5242,8 @@ definition {
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) and its relations to be deleted"
 	@priority = "5"
 	test CascadeDeletionOneToManyWillAllowDeleteParent {
+		property portal.acceptance = "true";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 124",
@@ -5460,6 +5461,8 @@ definition {
 	@description = "LPS-135649 - Verify that a completed entry is displayed with an Approved status"
 	@priority = "5"
 	test CompletedEntryDisplaysApprovedStatus {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141629",
 			objectName = "CustomObject141629",
@@ -5726,6 +5729,8 @@ definition {
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
 	@priority = "5"
 	test DisassociateDeletionOneToManyWillAllowDeleteParent {
+		property portal.acceptance = "true";
+
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject} 129",

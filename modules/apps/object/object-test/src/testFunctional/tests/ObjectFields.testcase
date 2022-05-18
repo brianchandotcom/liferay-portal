@@ -1,7 +1,6 @@
 @component-name = "portal-object"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
@@ -272,6 +271,8 @@ definition {
 	@description = "LPS-143065 - Verify if the 'Attachment' option is shown on the 'Type' dropdown"
 	@priority = "5"
 	test CanViewAttachmentOption {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151557",
 			objectName = "CustomObject151557",
@@ -320,6 +321,8 @@ definition {
 	@description = "LPS-146523 - Verify if there's an option on Request Files: Upload and Select from Documents and Media Item Selector"
 	@priority = "5"
 	test CanViewDocumentsAndMediaOption {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151562",
 			objectName = "CustomObject151562",
@@ -429,7 +432,7 @@ definition {
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
 	@priority = "5"
 	test CanViewSetMaximumCharactersOption {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151569",

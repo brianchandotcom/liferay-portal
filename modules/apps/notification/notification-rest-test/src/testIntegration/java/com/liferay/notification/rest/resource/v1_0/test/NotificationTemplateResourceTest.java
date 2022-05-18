@@ -17,6 +17,7 @@ package com.liferay.notification.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.junit.Ignore;
@@ -29,6 +30,30 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class NotificationTemplateResourceTest
 	extends BaseNotificationTemplateResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetNotificationTemplatesPageWithSortInteger()
+		throws Exception {
+
+		testGetNotificationTemplatesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, notificationTemplate1, notificationTemplate2) -> {
+				if (BeanTestUtil.hasProperty(
+						notificationTemplate1, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						notificationTemplate1, entityField.getName(), 0);
+				}
+
+				if (BeanTestUtil.hasProperty(
+						notificationTemplate2, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						notificationTemplate2, entityField.getName(), 1);
+				}
+			});
+	}
 
 	@Ignore
 	@Override

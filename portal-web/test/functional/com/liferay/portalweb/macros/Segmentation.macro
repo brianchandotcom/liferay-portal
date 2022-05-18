@@ -143,6 +143,8 @@ definition {
 			Click(locator1 = "Button#UPDATE");
 		}
 
+		Alert.viewSuccessMessage();
+
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
 	}
 
@@ -152,6 +154,26 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro assignSiteRoles {
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "${segmentName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Assign Site Roles");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_checkboxName = "${roleName}",
+			locator1 = "Checkbox#ENABLE_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+		
+		Button.clickAdd();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro enableAssingRolesBySegmentsCheckbox {

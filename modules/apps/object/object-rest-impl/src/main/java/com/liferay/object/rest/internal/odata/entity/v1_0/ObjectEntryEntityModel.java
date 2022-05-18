@@ -90,10 +90,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 				_entityFieldsMap.put(
 					relationshipIdName,
-					new IntegerEntityField(
+					new IdEntityField(
 						relationshipIdName,
 						locale ->
-							"nestedFieldArray.value_long#" + objectFieldName));
+							"nestedFieldArray.value_long#" + objectFieldName,
+						String::valueOf));
 			}
 			else {
 				_getEntityField(

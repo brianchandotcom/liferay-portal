@@ -534,6 +534,10 @@ definition {
 		ObjectCustomViews.goToDefaultSortTab();
 
 		ObjectCustomViews.assertNoColumnPresentInDefaultSort();
+
+		AssertElementPresent(
+			key_text = "Save",
+			locator1 = "Button#ANY_DISABLED");
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"

@@ -126,7 +126,48 @@ if (organization != null) {
 		},
 		{
 			select: '<portlet:namespace />regionId',
-			selectData: Liferay.Address.getRegions,
+			selectData: function (callback, selectKey) {
+				Liferay.Service(
+					'/region/get-regions',
+					{
+						active: true,
+						countryId: Number(selectKey),
+					},
+					function sortRegions(regions) {
+
+						<%
+						Country countryJP = CountryServiceUtil.getCountryByA2(themeDisplay.getCompanyId(), "JP");
+						%>
+
+						if (
+							selectKey == '<%= countryJP.getCountryId() %>' &&
+							JSON.parse(
+								'<%= Objects.equals(themeDisplay.getLocale(), LocaleUtil.JAPAN) %>'
+							)
+						) {
+							regions.sort((region1, region2) => {
+								if (
+									Number(region1.regionCode) >
+									Number(region2.regionCode)
+								) {
+									return 1;
+								}
+
+								if (
+									Number(region1.regionCode) <
+									Number(region2.regionCode)
+								) {
+									return -1;
+								}
+
+								return 0;
+							});
+						}
+
+						callback(regions);
+					}
+				);
+			},
 			selectDesc: 'title',
 			selectDisableOnEmpty: true,
 			selectId: 'regionId',

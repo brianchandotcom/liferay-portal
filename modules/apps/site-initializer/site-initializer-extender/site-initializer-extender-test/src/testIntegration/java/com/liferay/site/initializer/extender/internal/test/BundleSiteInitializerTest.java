@@ -592,19 +592,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(cpInstance2.isSubscriptionEnabled());
 	}
 
-	private void _assertCustomFields(ServiceContext serviceContext) {
-
-		ExpandoBridge expandoBridge =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				serviceContext.getCompanyId(),
-				"com.liferay.account.model.AccountEntry");
-
-		Assert.assertNotNull(expandoBridge);
-		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 1"));
-		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 2"));
-		Assert.assertNull(expandoBridge.getAttribute("Test Custom Field 3"));
-	}
-
 	private void _assertCPOption(Group group) throws Exception {
 		CPOption cpOption1 = _cpOptionLocalService.fetchCPOption(
 			group.getCompanyId(), "test-option-1");
@@ -633,6 +620,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			cpDefinitionOptionRels.toString(), 2,
 			cpDefinitionOptionRels.size());
+	}
+
+	private void _assertCustomFields(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			serviceContext.getCompanyId(),
+			"com.liferay.account.model.AccountEntry");
+
+		Assert.assertNotNull(expandoBridge);
+		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 1"));
+		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 2"));
+		Assert.assertNull(expandoBridge.getAttribute("Test Custom Field 3"));
 	}
 
 	private void _assertDDMStructure(Group group) {

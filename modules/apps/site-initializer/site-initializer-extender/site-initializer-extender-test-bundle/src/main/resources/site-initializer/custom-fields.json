@@ -1,0 +1,14 @@
+[
+	{
+		"dataType": 5,
+		"modelResource": "com.liferay.account.model.AccountEntry",
+		"name": "Test Custom Field 1",
+		"resourcePrimKey": 0
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.account.model.AccountEntry",
+		"name": "Test Custom Field 2",
+		"resourcePrimKey": 0
+	}
+]

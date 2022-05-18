@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']/..//span[@class='label-item label-item-expand']</td>
+	<td>xpath=(//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']/..//span[@class='label-item label-item-expand'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -222,7 +222,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "1005 High-Tech Zone",
 			phoneNumber = "+86 (0)411 88120855");
 
@@ -272,7 +272,7 @@ definition {
 				addressName = "Liferay Dalian Software Co., Ltd.",
 				addressPostalCode = "116023",
 				addressRegion = "Liaoning Sheng",
-				addressStreet1 = "537 Huangpu Road Taide Building",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
 				addressType = "Shipping",
 				phoneNumber = "+86 (0)411 88120855");
@@ -750,7 +750,7 @@ definition {
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			phoneNumber = "+81 3-5456-5796");
 
@@ -778,7 +778,7 @@ definition {
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			addressType = "Shipping",
 			phoneNumber = "+81 3-5456-5796");
@@ -1031,7 +1031,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "1005 High-Tech Zone",
 			phoneNumber = "+86 (0)411 88120855");
 
@@ -1125,7 +1125,7 @@ definition {
 			addressName = "Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			addressType = "Shipping",
 			phoneNumber = "+81 3-5456-5796");
@@ -1716,7 +1716,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -1775,7 +1775,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			addressType = "Shipping",
@@ -1787,7 +1787,7 @@ definition {
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			addressType = "Shipping",
 			phoneNumber = "+81 3-5456-5796");
@@ -1896,7 +1896,7 @@ definition {
 				addressCountry = "Cuba",
 				addressName = "Address Entry Name",
 				addressPostalCode = "116023",
-				addressStreet1 = "537 Huangpu Road Taide Building");
+				addressStreet1 = "537 Huangpu Road Taide Building,");
 		}
 
 		task ("Edit the previously added account entry information.") {
@@ -1927,7 +1927,7 @@ definition {
 				key_columnName = "lfr-street-column",
 				key_rowEntry = "Address Entry Name",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "537 Huangpu Road Taide Building");
+				value1 = "537 Huangpu Road Taide Building,");
 
 			AssertTextNotEquals(
 				key_columnName = "lfr-city-column",
@@ -2294,7 +2294,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			addressType = "Shipping",
@@ -2458,7 +2458,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2477,7 +2477,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2492,7 +2492,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2744,7 +2744,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2824,7 +2824,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2847,7 +2847,7 @@ definition {
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			addressType = "Shipping",
 			phoneNumber = "+81 3-5456-5796");
@@ -2864,7 +2864,7 @@ definition {
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
-			addressStreet1 = "1F Faveur Ebisu",
+			addressStreet1 = "1F Faveur Ebisu,",
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			phoneNumber = "+81 3-5456-5796");
 
@@ -2889,7 +2889,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -2900,7 +2900,7 @@ definition {
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
-			addressStreet1 = "537 Huangpu Road Taide Building",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
 			addressStreet3 = "1005",
 			phoneNumber = "+86 (0)411 88120855");
@@ -3174,7 +3174,7 @@ definition {
 				addressName = "Liferay Dalian Software Co., Ltd.",
 				addressPostalCode = "116023",
 				addressRegion = "Liaoning Sheng",
-				addressStreet1 = "537 Huangpu Road Taide Building",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
 				addressType = "Shipping",
 				phoneNumber = "+86 (0)411 88120855");
@@ -3224,7 +3224,7 @@ definition {
 				addressName = "Liferay Dalian Software Co., Ltd.",
 				addressPostalCode = "116023",
 				addressRegion = "Liaoning Sheng",
-				addressStreet1 = "537 Huangpu Road Taide Building",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
 				addressType = "Shipping",
 				phoneNumber = "+86 (0)411 88120855");

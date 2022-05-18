@@ -13,6 +13,7 @@
  */
 
 export default {
+	'add-another': 'Add Another',
 	'add-case': 'Add Case',
 	'add-project': 'Add Project',
 	'add-requirement': 'Add Requirement',

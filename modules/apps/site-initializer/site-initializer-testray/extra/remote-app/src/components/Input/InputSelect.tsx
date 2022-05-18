@@ -12,12 +12,15 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {InputHTMLAttributes} from 'react';
 
 import i18n from '../../i18n';
 import InputWrapper from './InputWrapper';
 
 type InputSelectProps = {
+	className?: string;
+
 	defaultOption?: boolean;
 	errors?: any;
 	id?: string;
@@ -30,6 +33,7 @@ type InputSelectProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const InputSelect: React.FC<InputSelectProps> = ({
+	className,
 	defaultOption = true,
 	errors = {},
 	label,
@@ -47,7 +51,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 			required={required}
 		>
 			<select
-				className="form-control rounded-xs"
+				className={classNames(`form-control rounded-xs ${className}`)}
 				id={id}
 				{...otherProps}
 				{...register(name, {required})}

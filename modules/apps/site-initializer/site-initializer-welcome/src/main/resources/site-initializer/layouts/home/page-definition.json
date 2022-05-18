@@ -251,20 +251,20 @@
 																	"value": {
 																		"title": "Welcome to Liferay Portal"
 																	},
-																	"value_i18n" : {
-																		"sv_SE" : "Välkommen till Liferay",
-																		"pt_BR" : "Bem vindo ao Liferay",
-																		"ja_JP" : "Liferayへようこそ",
-																		"fr_FR" : "Bienvenue à Liferay",
-																		"hu_HU" : "Isten hozott a Liferay-nél!",
-																		"de_DE" : "Willkommen bei Liferay",
-																		"ca_ES" : "Benvingut, benvinguda a Liferay",
-																		"ar_SA" : "أهلا بكم في Liferay",
-																		"fi_FI" : "Liferay toivottaa tervetulleeksi",
-																		"en_US" : "Welcome to Liferay",
-																		"zh_CN" : "欢迎来到Liferay",
-																		"es_ES" : "Bienvenido a Liferay",
-																		"nl_NL" : "Welkom bij Liferay"
+																	"value_i18n": {
+																		"ar_SA": "أهلا بكم في Liferay",
+																		"ca_ES": "Benvingut, benvinguda a Liferay",
+																		"de_DE": "Willkommen bei Liferay",
+																		"en_US": "Welcome to Liferay",
+																		"es_ES": "Bienvenido a Liferay",
+																		"fi_FI": "Liferay toivottaa tervetulleeksi",
+																		"fr_FR": "Bienvenue à Liferay",
+																		"hu_HU": "Isten hozott a Liferay-nél!",
+																		"ja_JP": "Liferayへようこそ",
+																		"nl_NL": "Welkom bij Liferay",
+																		"pt_BR": "Bem vindo ao Liferay",
+																		"sv_SE": "Välkommen till Liferay",
+																		"zh_CN": "欢迎来到Liferay"
 																	}
 																}
 															}

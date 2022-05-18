@@ -442,13 +442,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		if (roleIdSet.isEmpty()) {
-			return false;
-		}
-
 		long[] roleIds = ArrayUtil.toArray(roleIdSet.toArray(new Long[0]));
 
 		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
+
+		if (ArrayUtil.containsAll(userRoleIds, roleIds)) {
+			return false;
+		}
 
 		userPersistence.addRoles(userId, roleIds);
 

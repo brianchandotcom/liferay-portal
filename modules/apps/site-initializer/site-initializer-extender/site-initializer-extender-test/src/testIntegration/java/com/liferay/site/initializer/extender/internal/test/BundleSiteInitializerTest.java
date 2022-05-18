@@ -122,7 +122,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -805,52 +807,8 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertLayouts(Group group) throws Exception {
-		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		Assert.assertTrue(privateLayouts.size() == 1);
-
-		Layout privateLayout = privateLayouts.get(0);
-
-		Assert.assertTrue(privateLayout.isHidden());
-		Assert.assertEquals(
-			"Test Private Layout",
-			privateLayout.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("content", privateLayout.getType());
-
-		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
-
-		Assert.assertTrue(privateChildLayouts.size() == 1);
-
-		Layout privateChildLayout = privateChildLayouts.get(0);
-
-		Assert.assertEquals(
-			"Test Private Child Layout",
-			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
-
-		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		Assert.assertTrue(publicLayouts.size() == 1);
-
-		Layout publicLayout = publicLayouts.get(0);
-
-		Assert.assertFalse(publicLayout.isHidden());
-		Assert.assertEquals(
-			"Test Public Layout",
-			publicLayout.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("content", publicLayout.getType());
-
-		List<Layout> publicChildLayouts = publicLayout.getAllChildren();
-
-		Assert.assertTrue(publicChildLayouts.size() == 1);
-
-		Layout publicChildLayout = publicChildLayouts.get(0);
-
-		Assert.assertEquals(
-			"Test Public Child Layout",
-			publicChildLayout.getName(LocaleUtil.getSiteDefault()));
+		_assertPrivateLayouts(group);
+		_assertPublicLayouts(group);
 	}
 
 	private void _assertLayoutSets(Group group) throws Exception {
@@ -1110,6 +1068,71 @@ public class BundleSiteInitializerTest {
 			"TEST PORTLET SETTINGS 1",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
+	private void _assertPrivateLayouts(Group group) {
+		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		Assert.assertTrue(privateLayouts.size() == 1);
+
+		Layout privateLayout = privateLayouts.get(0);
+
+		Assert.assertTrue(privateLayout.isHidden());
+		Assert.assertEquals(
+			"Test Private Layout",
+			privateLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", privateLayout.getType());
+
+		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
+
+		Assert.assertTrue(privateChildLayouts.size() == 1);
+
+		Layout privateChildLayout = privateChildLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Private Child Layout",
+			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+	}
+
+	private void _assertPublicLayouts(Group group) {
+		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new LayoutPriorityComparator());
+
+		Assert.assertTrue(publicLayouts.size() == 2);
+
+		Layout publicLayout = publicLayouts.get(0);
+
+		Assert.assertFalse(publicLayout.isHidden());
+		Assert.assertEquals(
+			"Test Public Layout",
+			publicLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", publicLayout.getType());
+
+		List<Layout> publicChildLayouts = publicLayout.getAllChildren();
+
+		Assert.assertTrue(publicChildLayouts.size() == 1);
+
+		Layout publicChildLayout = publicChildLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Public Child Layout",
+			publicChildLayout.getName(LocaleUtil.getSiteDefault()));
+
+		publicLayout = publicLayouts.get(1);
+
+		Assert.assertEquals(
+			PropsUtil.get("default.guest.public.layout.name"),
+			publicLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertNotEquals(
+			PropsUtil.get("default.user.private.layout.name"),
+			publicLayout.getName(LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			PropsUtil.get("default.guest.public.layout.friendly.url"),
+			publicLayout.getFriendlyURL(LocaleUtil.getSiteDefault()));
 	}
 
 	private void _assertResourcePermission(Group group) throws Exception {

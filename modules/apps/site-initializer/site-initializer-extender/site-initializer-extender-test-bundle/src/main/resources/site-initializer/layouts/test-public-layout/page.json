@@ -3,6 +3,7 @@
 	"name_i18n": {
 		"en_US": "Test Public Layout"
 	},
+	"priority": 0,
 	"private": false,
 	"system": false,
 	"type": "Content",

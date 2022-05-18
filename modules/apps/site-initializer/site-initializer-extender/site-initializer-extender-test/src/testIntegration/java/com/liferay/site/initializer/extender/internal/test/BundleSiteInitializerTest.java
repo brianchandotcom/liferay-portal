@@ -49,6 +49,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
@@ -215,6 +217,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceSpecificationProducts(serviceContext);
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
+			_assertCustomFields(serviceContext);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
@@ -587,6 +590,19 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(cpInstance2);
 		Assert.assertTrue(cpInstance2.isSubscriptionEnabled());
+	}
+
+	private void _assertCustomFields(ServiceContext serviceContext) {
+
+		ExpandoBridge expandoBridge =
+			ExpandoBridgeFactoryUtil.getExpandoBridge(
+				serviceContext.getCompanyId(),
+				"com.liferay.account.model.AccountEntry");
+
+		Assert.assertNotNull(expandoBridge);
+		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 1"));
+		Assert.assertNotNull(expandoBridge.getAttribute("Test Custom Field 2"));
+		Assert.assertNull(expandoBridge.getAttribute("Test Custom Field 3"));
 	}
 
 	private void _assertCPOption(Group group) throws Exception {

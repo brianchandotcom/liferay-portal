@@ -279,6 +279,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141352. The navigation menu admin could add a global or asset library vocabulary item to navigation menu."
+	@priority = "4"
+	test AddGlobalOrAssetLibraryVocabularyNavigationMenuItem {
+		property custom.properties = "feature.flag.LPS-146502=true";
+
+		task ("Given a navigation menu admin has a navigation menu") {
+			task ("Add an asset library") {
+				JSONDepot.addDepot(
+					depotDescription = "This is the description of a depot",
+					depotName = "Test Depot Name");
+			}
+
+			task ("Connect the asset library to the site") {
+				JSONDepot.connectSite(
+					depotName = "Test Depot Name",
+					groupName = "Test Site Name");
+			}
+
+			task ("Add a navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+
+			task ("Add a vocabulary in asset library") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Depot Name",
+					site = "false",
+					title = "Vocabulary Name");
+			}
+		}
+
+		task ("When the navigation menu admin adds vocabulary type item") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Then the navigation menu admin could select vocabulary from global or asset library") {
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Topic (Global),Vocabulary Name (Test Depot Name)",
+				item = "Vocabulary");
+
+			for (var itemName : list "Topic,Vocabulary Name") {
+				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+			}
+
+			task ("Delete the asset library") {
+				JSONDepot.deleteDepot(depotName = "Test Depot Name");
+			}
+		}
+	}
+
 	@description = "This is a test case for LPS-77912. The user could add page, submenu, and URL items to a navigation menu."
 	@priority = "5"
 	@uitest

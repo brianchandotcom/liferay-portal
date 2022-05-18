@@ -181,8 +181,10 @@ definition {
 		}
 
 		task ("Run curl command with wrong date format") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
 			var curl = '''
-				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}\&toDate=${endDate}
+				${analyticsCloudURL}/api/reports/export/${type}\?fromDate=${startDate}\&toDate=${endDate}
 				-H "Authorization: Bearer ${token}"
 				''';
 
@@ -211,8 +213,10 @@ definition {
 		}
 
 		task ("Run curl command without 'fromDate' and 'toDate'") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
 			var curl = '''
-				http://localhost:8080/api/reports/export/${type}
+				${analyticsCloudURL}/api/reports/export/${type}
 				-H "Authorization: Bearer ${token}"
 				''';
 
@@ -226,8 +230,10 @@ definition {
 		}
 
 		task ("Run curl command without 'fromDate'") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
 			var curl = '''
-				http://localhost:8080/api/reports/export/${type}\?toDate=${endDate}T${endTime}Z
+				${analyticsCloudURL}/api/reports/export/${type}\?toDate=${endDate}T${endTime}Z
 				-H "Authorization: Bearer ${token}"
 				''';
 
@@ -241,8 +247,10 @@ definition {
 		}
 
 		task ("Run curl command without 'toDate'") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
 			var curl = '''
-				http://localhost:8080/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z
+				${analyticsCloudURL}/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z
 				-H "Authorization: Bearer ${token}"
 				''';
 

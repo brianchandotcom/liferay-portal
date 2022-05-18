@@ -19,8 +19,6 @@ package com.liferay.journal.constants;
  */
 public class JournalStructureConstants {
 
-	public static final String RESERVED = "reserved";
-
 	public static final String RESERVED_ARTICLE_ASSET_TAG_NAMES =
 		"reserved-article-asset-tag-names";
 
@@ -36,14 +34,8 @@ public class JournalStructureConstants {
 	public static final String RESERVED_ARTICLE_AUTHOR_JOB_TITLE =
 		"reserved-article-author-job-title";
 
-	public static final String RESERVED_ARTICLE_AUTHOR_LOCATION =
-		"reserved-article-author-location";
-
 	public static final String RESERVED_ARTICLE_AUTHOR_NAME =
 		"reserved-article-author-name";
-
-	public static final String RESERVED_ARTICLE_AUTHOR_ORGANIZATION =
-		"reserved-article-author-organization";
 
 	public static final String RESERVED_ARTICLE_CREATE_DATE =
 		"reserved-article-create-date";
@@ -64,8 +56,6 @@ public class JournalStructureConstants {
 
 	public static final String RESERVED_ARTICLE_TITLE =
 		"reserved-article-title";
-
-	public static final String RESERVED_ARTICLE_TYPE = "reserved-article-type";
 
 	public static final String RESERVED_ARTICLE_URL_TITLE =
 		"reserved-article-url-title";

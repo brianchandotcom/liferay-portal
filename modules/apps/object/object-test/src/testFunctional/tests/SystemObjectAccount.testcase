@@ -116,13 +116,20 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if there are the fields Name, Description and Type as default on System Object Account"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewFieldsLabelByDefault {
 		property portal.acceptance = "true";
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153520 CanViewFieldsLabelByDefault pending implementation
+		ObjectPortlet.selectSystemObject(label = "Account");
 
+		ObjectAdmin.goToFieldsTab();
+
+		for (var label : list "Name,Description,Type") {
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "${label}",
+				fieldType = "Text");
+		}
 	}
 
 	@description = "LPS-151765 - Verify if the fields Name and Type are mandatory on System Object Account"

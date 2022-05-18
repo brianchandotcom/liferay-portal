@@ -30,12 +30,13 @@ import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
-import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {setIn} from '../../../../../../app/utils/setIn';
 import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
+
+const DEFAULT_CONFIGURATION_VALUES = {};
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
@@ -91,9 +92,8 @@ export function FormInputGeneralPanel({item}) {
 		(state) =>
 			selectFragmentEntryLink(state, item).editableValues[
 				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-			] || {},
-		[item.itemId],
-		deepEqual
+			] || DEFAULT_CONFIGURATION_VALUES,
+		[item.itemId]
 	);
 
 	const fields = useMemo(() => {

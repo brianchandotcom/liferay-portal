@@ -616,8 +616,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			if (!chromeBinaryFile.exists()) {
 				throw new IllegalArgumentException(
 					"Unable to not find a Google Chrome binary. Manually set " +
-						"\"browser.chrome.bin.file\" in \"poshi.properties\"" +
-							" to a Google Chrome or Chromium binary.");
+						"\"browser.chrome.bin.file\" in \"poshi.properties\" " +
+							"to a Google Chrome or Chromium binary.");
 			}
 		}
 

@@ -135,8 +135,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Assert.assertTrue(
 				message,
 				message.contains(
-					"Obtained character set encoding" +
-						" from session with value:"));
+					"Obtained character set encoding " +
+						"from session with value:"));
 		}
 	}
 

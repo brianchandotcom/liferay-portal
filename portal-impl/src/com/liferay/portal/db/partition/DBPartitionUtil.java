@@ -497,8 +497,8 @@ public class DBPartitionUtil {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Obtained character set encoding from session" +
-							" with value: " + encoding);
+						"Obtained character set encoding from session " +
+							"with value: " + encoding);
 				}
 
 				return encoding;

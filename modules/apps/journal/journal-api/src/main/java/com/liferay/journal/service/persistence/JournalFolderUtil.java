@@ -2334,6 +2334,74 @@ public class JournalFolderUtil {
 	}
 
 	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching journal folder
+	 * @throws NoSuchFolderException if a matching journal folder could not be found
+	 */
+	public static JournalFolder findByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.journal.exception.NoSuchFolderException {
+
+		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	public static JournalFolder fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the journal folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	public static JournalFolder fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_ERC(
+			groupId, externalReferenceCode, useFinderCache);
+	}
+
+	/**
+	 * Removes the journal folder where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the journal folder that was removed
+	 */
+	public static JournalFolder removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.journal.exception.NoSuchFolderException {
+
+		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of journal folders where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching journal folders
+	 */
+	public static int countByG_ERC(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Caches the journal folder in the entity cache if it is enabled.
 	 *
 	 * @param journalFolder the journal folder

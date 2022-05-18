@@ -45,13 +45,14 @@ public class JournalFolderLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static JournalFolder addFolder(
-			long userId, long groupId, long parentFolderId, String name,
-			String description,
+			String externalReferenceCode, long userId, long groupId,
+			long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFolder(
-			userId, groupId, parentFolderId, name, description, serviceContext);
+			externalReferenceCode, userId, groupId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	/**
@@ -265,6 +266,31 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	 */
+	public static JournalFolder fetchJournalFolderByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchJournalFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static JournalFolder fetchJournalFolderByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchJournalFolderByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the journal folder matching the UUID and group.
 	 *
 	 * @param uuid the journal folder's UUID
@@ -437,6 +463,22 @@ public class JournalFolderLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getJournalFolder(folderId);
+	}
+
+	/**
+	 * Returns the journal folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the journal folder's external reference code
+	 * @return the matching journal folder
+	 * @throws PortalException if a matching journal folder could not be found
+	 */
+	public static JournalFolder getJournalFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getJournalFolderByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

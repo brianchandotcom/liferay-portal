@@ -48,6 +48,7 @@ public class JournalFolderWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -87,6 +88,13 @@ public class JournalFolderWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long folderId = (Long)attributes.get("folderId");
@@ -276,6 +284,16 @@ public class JournalFolderWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the external reference code of this journal folder.
+	 *
+	 * @return the external reference code of this journal folder
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -675,6 +693,16 @@ public class JournalFolderWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the external reference code of this journal folder.
+	 *
+	 * @param externalReferenceCode the external reference code of this journal folder
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

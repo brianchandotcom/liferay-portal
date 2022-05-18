@@ -79,13 +79,13 @@ public class JournalFolderModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"folderId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentFolderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"restrictionType", Types.INTEGER},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"folderId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentFolderId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"restrictionType", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -98,6 +98,7 @@ public class JournalFolderModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -118,7 +119,7 @@ public class JournalFolderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalFolder (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,folderId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (folderId, ctCollectionId))";
+		"create table JournalFolder (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,folderId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (folderId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 
@@ -144,37 +145,43 @@ public class JournalFolderModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FOLDERID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long FOLDERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTFOLDERID_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long PARENTFOLDERID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -299,6 +306,12 @@ public class JournalFolderModelImpl
 		attributeGetterFunctions.put("uuid", JournalFolder::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<JournalFolder, String>)JournalFolder::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", JournalFolder::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<JournalFolder, String>)
+				JournalFolder::setExternalReferenceCode);
 		attributeGetterFunctions.put("folderId", JournalFolder::getFolderId);
 		attributeSetterBiConsumers.put(
 			"folderId",
@@ -441,6 +454,35 @@ public class JournalFolderModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1126,6 +1168,7 @@ public class JournalFolderModelImpl
 		journalFolderImpl.setMvccVersion(getMvccVersion());
 		journalFolderImpl.setCtCollectionId(getCtCollectionId());
 		journalFolderImpl.setUuid(getUuid());
+		journalFolderImpl.setExternalReferenceCode(getExternalReferenceCode());
 		journalFolderImpl.setFolderId(getFolderId());
 		journalFolderImpl.setGroupId(getGroupId());
 		journalFolderImpl.setCompanyId(getCompanyId());
@@ -1158,6 +1201,8 @@ public class JournalFolderModelImpl
 		journalFolderImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		journalFolderImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		journalFolderImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		journalFolderImpl.setFolderId(
 			this.<Long>getColumnOriginalValue("folderId"));
 		journalFolderImpl.setGroupId(
@@ -1291,6 +1336,18 @@ public class JournalFolderModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			journalFolderCacheModel.uuid = null;
+		}
+
+		journalFolderCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			journalFolderCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			journalFolderCacheModel.externalReferenceCode = null;
 		}
 
 		journalFolderCacheModel.folderId = getFolderId();
@@ -1480,6 +1537,7 @@ public class JournalFolderModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _folderId;
 	private long _groupId;
 	private long _companyId;
@@ -1531,6 +1589,8 @@ public class JournalFolderModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("folderId", _folderId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1577,39 +1637,41 @@ public class JournalFolderModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("folderId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("folderId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("parentFolderId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("treePath", 2048L);
+		columnBitmasks.put("parentFolderId", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("treePath", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("restrictionType", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("restrictionType", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
-		columnBitmasks.put("statusByUserId", 131072L);
+		columnBitmasks.put("status", 131072L);
 
-		columnBitmasks.put("statusByUserName", 262144L);
+		columnBitmasks.put("statusByUserId", 262144L);
 
-		columnBitmasks.put("statusDate", 524288L);
+		columnBitmasks.put("statusByUserName", 524288L);
+
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

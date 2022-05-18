@@ -450,7 +450,14 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPage(pageName = "Form Page");
+		LexiconEntry.gotoAdd();
+
+		if (IsElementPresent(key_menuItem = "Page", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			PagesAdmin.addPage(pageName = "Form Page");
+		}
+		else if (IsElementPresent(key_menuItem = "Public Page", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			PagesAdmin.addPublicPage(pageName = "Form Page");
+		}
 
 		Navigator.gotoPage(pageName = "Form Page");
 

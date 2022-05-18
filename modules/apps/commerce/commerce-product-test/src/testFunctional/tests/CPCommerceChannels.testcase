@@ -2171,33 +2171,24 @@ definition {
 	test UseSearchBar {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewChannelsEntry(
-			channelCurrency = "US Dollar",
+		CommerceJSONChannelsAPI._addChannel(
 			channelName = "Test Channel",
-			channelType = "Site");
+			channelType = "Site",
+			currencyCode = "USD");
 
-		Click(locator1 = "Icon#BACK");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewChannelsEntry(
-			channelCurrency = "US Dollar",
+		CommerceJSONChannelsAPI._addChannel(
 			channelName = "Minium",
-			channelType = "Site");
+			channelType = "Site",
+			currencyCode = "USD");
 
-		Click(locator1 = "Icon#BACK");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "Test Channel");
 
-		AssertElementPresent(
-			key_nameChannel = "Test Channel",
-			locator1 = "CommerceEntry#CHECK_FIRST_ELEMENT_SEARCHED");
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "CommerceNavigation#ENTRY_NAME_N",
+			value1 = "Test Channel");
 
 		CommerceNavigator.searchEntry(entryName = "1111");
 

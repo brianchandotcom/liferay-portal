@@ -889,6 +889,11 @@ public class PropsValues {
 	public static final int GZIP_COMPRESSION_LEVEL = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.GZIP_COMPRESSION_LEVEL));
 
+	public static final boolean
+		HEADLESS_BASE_EXCEPTION_MAPPER_SANITIZE_PROBLEM = GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.HEADLESS_BASE_EXCEPTION_MAPPER_SANITIZE_PROBLEM));
+
 	public static final String HIBERNATE_DIALECT = PropsUtil.get(
 		PropsKeys.HIBERNATE_DIALECT);
 

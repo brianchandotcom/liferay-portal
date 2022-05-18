@@ -1035,6 +1035,9 @@ public interface PropsKeys {
 	public static final String GZIP_COMPRESSION_LEVEL =
 		"gzip.compression.level";
 
+	public static final String HEADLESS_BASE_EXCEPTION_MAPPER_SANITIZE_PROBLEM =
+		"headless.base.exception.mapper.sanitize.problem";
+
 	public static final String HIBERNATE_CONFIGS = "hibernate.configs";
 
 	public static final String HIBERNATE_DIALECT = "hibernate.dialect";

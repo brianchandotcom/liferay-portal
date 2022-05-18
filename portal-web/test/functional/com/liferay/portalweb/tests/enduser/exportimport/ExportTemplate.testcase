@@ -121,7 +121,6 @@ definition {
 		LAR.searchTemplate(
 			exportTemplateDescription = "Export Template Description",
 			exportTemplateName = "Export Template Name");
-			
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -31,6 +33,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -247,9 +250,19 @@ public class SkuResourceImpl
 	private Sku _addOrUpdateSKU(CPDefinition cpDefinition, Sku sku)
 		throws Exception {
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpDefinition.getGroupId());
+
 		CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
-			_cpInstanceService, sku, cpDefinition,
-			_serviceContextHelper.getServiceContext(cpDefinition.getGroupId()));
+			_cpInstanceService, sku, cpDefinition, serviceContext);
+
+		SkuUtil.updateCommercePriceEntries(
+			_commercePriceEntryLocalService, _commercePriceListLocalService,
+			_configurationProvider, cpInstance,
+			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
+			(BigDecimal)GetterUtil.get(
+				sku.getPromoPrice(), cpInstance.getPromoPrice()),
+			serviceContext);
 
 		return _toSku(cpInstance.getCPInstanceId());
 	}
@@ -356,10 +369,27 @@ public class SkuResourceImpl
 			discontinuedDateConfig.getDay(), discontinuedDateConfig.getYear(),
 			serviceContext);
 
+		SkuUtil.updateCommercePriceEntries(
+			_commercePriceEntryLocalService, _commercePriceListLocalService,
+			_configurationProvider, cpInstance,
+			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
+			(BigDecimal)GetterUtil.get(
+				sku.getPromoPrice(), cpInstance.getPromoPrice()),
+			serviceContext);
+
 		return _toSku(cpInstance.getCPInstanceId());
 	}
 
 	private static final EntityModel _entityModel = new SkuEntityModel();
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

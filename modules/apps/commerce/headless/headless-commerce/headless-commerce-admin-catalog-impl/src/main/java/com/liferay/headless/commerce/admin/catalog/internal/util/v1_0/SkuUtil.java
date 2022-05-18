@@ -14,6 +14,13 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -26,14 +33,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -138,6 +149,42 @@ public class SkuUtil {
 			discontinuedDateConfig.getYear(), serviceContext);
 	}
 
+	public static void updateCommercePriceEntries(
+			CommercePriceEntryLocalService commercePriceEntryLocalService,
+			CommercePriceListLocalService commercePriceListLocalService,
+			ConfigurationProvider configurationProvider, CPInstance cpInstance,
+			BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Objects.equals(
+				_getCommercePricingConfigurationKey(configurationProvider),
+				CommercePricingConstants.VERSION_2_0)) {
+
+			_updateCommercePriceEntry(
+				commercePriceEntryLocalService, commercePriceListLocalService,
+				cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
+				serviceContext);
+			_updateCommercePriceEntry(
+				commercePriceEntryLocalService, commercePriceListLocalService,
+				cpInstance, CommercePriceListConstants.TYPE_PROMOTION,
+				promoPrice, serviceContext);
+		}
+	}
+
+	private static String _getCommercePricingConfigurationKey(
+			ConfigurationProvider configurationProvider)
+		throws Exception {
+
+		CommercePricingConfiguration commercePricingConfiguration =
+			configurationProvider.getConfiguration(
+				CommercePricingConfiguration.class,
+				new SystemSettingsLocator(
+					CommercePricingConstants.SERVICE_NAME));
+
+		return commercePricingConfiguration.commercePricingCalculationKey();
+	}
+
 	private static String _getOptions(Sku sku) {
 		SkuOption[] skuOptions = sku.getSkuOptions();
 
@@ -157,6 +204,39 @@ public class SkuUtil {
 		}
 
 		return jsonArray.toString();
+	}
+
+	private static void _updateCommercePriceEntry(
+			CommercePriceEntryLocalService commercePriceEntryLocalService,
+			CommercePriceListLocalService commercePriceListLocalService,
+			CPInstance cpInstance, String type, BigDecimal price,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CommercePriceList commercePriceList =
+			commercePriceListLocalService.getCatalogBaseCommercePriceListByType(
+				cpInstance.getGroupId(), type);
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		if (commercePriceEntry == null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			commercePriceEntryLocalService.addCommercePriceEntry(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, null,
+				serviceContext);
+		}
+		else {
+			commercePriceEntryLocalService.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, null,
+				serviceContext);
+		}
 	}
 
 }

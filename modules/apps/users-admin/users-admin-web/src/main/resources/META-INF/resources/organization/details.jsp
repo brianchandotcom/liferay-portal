@@ -114,67 +114,25 @@ if (organization != null) {
 	</clay:col>
 </clay:row>
 
-<script>
-	new Liferay.DynamicSelect([
-		{
-			select: '<portlet:namespace />countryId',
-			selectData: Liferay.Address.getCountries,
-			selectDesc: 'nameCurrentValue',
-			selectId: 'countryId',
-			selectSort: '<%= true %>',
-			selectVal: '<%= countryId %>',
-		},
-		{
-			select: '<portlet:namespace />regionId',
-			selectData: function (callback, selectKey) {
-				Liferay.Service(
-					'/region/get-regions',
-					{
-						active: true,
-						countryId: Number(selectKey),
-					},
-					function sortRegions(regions) {
-
-						<%
-						Country countryJP = CountryServiceUtil.getCountryByA2(themeDisplay.getCompanyId(), "JP");
-						%>
-
-						if (
-							selectKey == '<%= countryJP.getCountryId() %>' &&
-							JSON.parse(
-								'<%= Objects.equals(themeDisplay.getLocale(), LocaleUtil.JAPAN) %>'
-							)
-						) {
-							regions.sort((region1, region2) => {
-								if (
-									Number(region1.regionCode) >
-									Number(region2.regionCode)
-								) {
-									return 1;
-								}
-
-								if (
-									Number(region1.regionCode) <
-									Number(region2.regionCode)
-								) {
-									return -1;
-								}
-
-								return 0;
-							});
-						}
-
-						callback(regions);
-					}
-				);
-			},
-			selectDesc: 'title',
-			selectDisableOnEmpty: true,
-			selectId: 'regionId',
-			selectVal: '<%= regionId %>',
-		},
-	]);
-</script>
+<liferay-frontend:component
+	componentId="CountryRegionDynamicSelect"
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"countrySelect", portletDisplay.getNamespace() + "countryId"
+		).put(
+			"countrySelectId", "countryId"
+		).put(
+			"countrySelectVal", countryId
+		).put(
+			"regionSelect", portletDisplay.getNamespace() + "regionId"
+		).put(
+			"regionSelectId", "regionId"
+		).put(
+			"regionSelectVal", regionId
+		).build()
+	%>'
+	module="js/CountryRegionDynamicSelect"
+/>
 
 <c:if test="<%= organization == null %>">
 	<aui:script sandbox="<%= true %>">

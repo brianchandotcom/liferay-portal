@@ -120,25 +120,25 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 		</clay:sheet>
 	</clay:container-fluid>
 
-	<script>
-		new Liferay.DynamicSelect([
-			{
-				select: '<portlet:namespace />addressCountryId',
-				selectData: Liferay.Address.getCountries,
-				selectDesc: 'nameCurrentValue',
-				selectId: 'countryId',
-				selectSort: '<%= true %>',
-				selectVal: '<%= countryId %>',
-			},
-			{
-				select: '<portlet:namespace />addressRegionId',
-				selectData: Liferay.Address.getRegions,
-				selectDesc: 'name',
-				selectId: 'regionId',
-				selectVal: '<%= regionId %>',
-			},
-		]);
-	</script>
+	<liferay-frontend:component
+		componentId="CountryRegionDynamicSelect"
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"countrySelect", portletDisplay.getNamespace() + "addressCountryId"
+			).put(
+				"countrySelectId", "countryId"
+			).put(
+				"countrySelectVal", countryId
+			).put(
+				"regionSelect", portletDisplay.getNamespace() + "addressRegionId"
+			).put(
+				"regionSelectId", "regionId"
+			).put(
+				"regionSelectVal", regionId
+			).build()
+		%>'
+		module="js/CountryRegionDynamicSelect"
+	/>
 </aui:form>
 
 <aui:script use="liferay-form">

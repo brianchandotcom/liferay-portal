@@ -53,6 +53,7 @@ const INPUT_COMMON_CONFIGURATION = [
 		label: Liferay.Language.get('show-label'),
 		name: 'inputShowLabel',
 		type: 'checkbox',
+		typeOptions: {displayType: 'toggle'},
 	},
 	{
 		defaultValue: '',
@@ -66,6 +67,7 @@ const INPUT_COMMON_CONFIGURATION = [
 		label: Liferay.Language.get('show-help-text'),
 		name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
 		type: 'checkbox',
+		typeOptions: {displayType: 'toggle'},
 	},
 	{
 		defaultValue: '',

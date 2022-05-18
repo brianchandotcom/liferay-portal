@@ -390,7 +390,7 @@ definition {
 		}
 
 		if ("${showWarningMessage}" == "true") {
-			NavigationMenusAdmin.viewItemWarningMessage();
+			NavigationMenusAdmin.viewItemWarningMessage(warningMessage = "${warningMessage}");
 		}
 		else if ("${showWarningMessage}" == "false") {
 			NavigationMenusAdmin.viewItemWarningMessageNotPresent();

@@ -675,7 +675,9 @@ definition {
 		}
 
 		task ("View a warning message is shown in the item contextual menu") {
-			NavigationMenusAdmin.viewItemWarningMessage(itemName = "Category Name 1");
+			NavigationMenusAdmin.viewItemWarningMessage(
+				itemName = "Category Name 1",
+				warningMessage = "No Display Page");
 		}
 
 		task ("Change to the second category via contextual menu without save") {

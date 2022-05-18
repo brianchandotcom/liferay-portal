@@ -1,0 +1,4 @@
+{
+	"colorSchemeId": "[$PORTAL_PROPERTY:default.guest.public.layout.regular.color.scheme.id$]",
+	"themeId": "[$PORTAL_PROPERTY:default.guest.public.layout.regular.theme.id$]"
+}

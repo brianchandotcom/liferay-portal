@@ -38,7 +38,7 @@ definition {
 		Click(locator1 = "TestrayManage#CLOSE_MODAL");
 	}
 
-	macro createNewOption {
+	macro createNewCaseTypes {
 		Click(locator1 = "TestrayManage#ADD_OPTIONS");
 
 		Type(
@@ -48,13 +48,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro selectOptionsManage {
-		Click(
-			key_itemvalue = "${key_itemvalue}",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
-	}
-
-	macro createNewCaseTypes {
+	macro createNewOption {
 		Click(locator1 = "TestrayManage#ADD_OPTIONS");
 
 		Type(

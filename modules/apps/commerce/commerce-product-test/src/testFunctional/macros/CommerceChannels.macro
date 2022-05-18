@@ -158,10 +158,18 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${pageType}" == "Private") {
+			if (IsElementNotPresent(key_menuTab = "Private Pages", locator1 = "CommerceEntry#MENU_TAB")) {
+				Click(
+					key_panel = "Public Pages",
+					locator1 = "Panel#PANEL_COLLAPSED");
+			}
+
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		CommerceNavigator.searchEntry(entryName = "${pageName}");
+		if (IsElementNotPresent(key_card = "${pageName}", locator1 = "Card#CARD")) {
+			CommerceNavigator.searchEntry(entryName = "${pageName}");
+		}
 
 		LexiconCard.clickCard(card = "${pageName}");
 

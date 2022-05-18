@@ -4635,7 +4635,8 @@ tell application "Safari" to quit
 
 			<beanshell>
 				<![CDATA[
-					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+					import java.nio.file.Files;
+					import java.nio.file.Paths;
 
 					public int getFileLineCount() {
 						String fileLineCount = "@{file.line.count}";
@@ -4653,7 +4654,7 @@ tell application "Safari" to quit
 						return;
 					}
 
-					String fileContent = JenkinsResultsParserUtil.read(file);
+					String fileContent = new String(Files.readAllBytes(Paths.get(file.toURI())));
 
 					String[] fileLines = fileContent.split("\n");
 

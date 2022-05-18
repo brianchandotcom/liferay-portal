@@ -108,12 +108,21 @@ export function FormInputGeneralPanel({item}) {
 		return nextFields;
 	}, [configurationValues]);
 
-	const handleValueSelect = (key, value) =>
+	const handleValueSelect = (key, value) => {
+		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];
+
+		const localizable =
+			fields.find((field) => field.name === key)?.localizable || false;
+
+		if (localizable) {
+			keyPath.push(languageId);
+		}
+
 		dispatch(
 			updateEditableValues({
 				editableValues: setIn(
 					fragmentEntryLinkRef.current.editableValues,
-					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key],
+					keyPath,
 					value
 				),
 				fragmentEntryLinkId:
@@ -122,6 +131,7 @@ export function FormInputGeneralPanel({item}) {
 				segmentsExperienceId,
 			})
 		);
+	};
 
 	return (
 		<>

@@ -209,8 +209,6 @@ definition {
 			key_propertyValue = "${propertyValue}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
 			value1 = "${propertyValue}");
-
-
 	}
 
 	macro hideSidebarFields {
@@ -609,15 +607,13 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
 				value1 = "${actionsTemplateValue}");
 		}
-		
+
 		if (isSet(priorityValue)) {
 			Type(
 				key_inputOption = "Priority",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
 				value1 = "${priorityValue}");
 		}
-
-
 	}
 
 	macro viewConnectorID {
@@ -1058,7 +1054,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
 				value1 = "${actionsTemplateValue}");
-	
 		}
 
 		if (isSet(priorityValue)) {
@@ -1067,8 +1062,6 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
 				value1 = "${priorityValue}");
 		}
-
-		
 	}
 
 	macro viewTranslationDropdown {

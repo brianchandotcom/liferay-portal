@@ -3323,8 +3323,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String[] portalPropertyParts = StringUtil.split(
 				portalProperty, CharPool.COLON);
 
-			portalPropertiesReplaceValues.put(
-				portalProperty, PropsUtil.get(portalPropertyParts[1]));
+			String value = PropsUtil.get(portalPropertyParts[1]);
+
+			if (value == null) {
+				value = StringPool.BLANK;
+			}
+
+			portalPropertiesReplaceValues.put(portalProperty, value);
 		}
 
 		return portalPropertiesReplaceValues;

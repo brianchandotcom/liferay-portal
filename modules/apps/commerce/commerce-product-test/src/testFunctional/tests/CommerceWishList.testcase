@@ -538,4 +538,360 @@ definition {
 		}
 	}
 
+	@description = "Verify user can import item from wish list and see imported items"
+	@priority = "3"
+	test ViewImportedWishlistItemsPreview {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump,Brake Fluid");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
+				wishListName = "Default");
+		}
+
+		task ("When the buyer import orders from wish list") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "24.00",
+				unitPrice = "24.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "34.00",
+				unitPrice = "34.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The specified quantity is unavailable.",
+				productName = "Power Steering Pump",
+				productQuantity = "1",
+				productSku = "MIN38800",
+				totalPrice = "",
+				unitPrice = "");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The product is no longer available.",
+				productName = "Brake Fluid",
+				productQuantity = "1",
+				productSku = "",
+				totalPrice = "",
+				unitPrice = "");
+		}
+	}
+
+	@description = "Verify if the wish list pagination show the right items"
+	@priority = "3"
+	test ViewPaginationOnImportFromWishlist {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the buyer add six new wish lists") {
+			CommerceNavigator.goToWishLists();
+
+			for (var wishListNumber : list "1,2,3,4,5,6") {
+				CommerceWishList.addWishList(wishListName = "Test Wish List ${wishListNumber}");
+			}
+		}
+
+		task ("When the buyer go to import a new order from wish list and change tha pagination to 4 items per page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then only four wish lists are displayed") {
+			Pagination.changePagination(itemsPerPage = "4 items");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertVisible(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then only two wish lists are displayed") {
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertElementNotPresent(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertVisible(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertVisible(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to first page") {
+			Click(locator1 = "Pagination#PREVIOUS_LINK");
+		}
+
+		task ("Then the first page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "1",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+
+		task ("And when the user go to second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then the first page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "2",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+	}
+
+	@description = "COMMERCE-7721 | Verify user can import wish discount and see price variations"
+	@priority = "3"
+	test CanImportProductsFromWishlistWithPriceVariations {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters",
+				wishListName = "Default");
+		}
+
+		task ("And given the buyer starts a new order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			for (var product : list "U-Joint:1,ABS Sensor:1,Torque Converters:1") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productQuantity = StringUtil.extractLast("${product}", ":");
+
+				CommerceProducts.searchProduct(search = "${productName}");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "${productQuantity}");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint,ABS Sensor,Torque Converters",
+				cartItemPriceValues = "24,50,34",
+				cartItemQuantities = "1,1,1",
+				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
+				cartSummaryQuantity = "3",
+				cartSummarySubtotal = "108",
+				cartSummaryTotal = "${cartSummarySubtotal}");
+		}
+
+		task ("And given admin user add a new descount and promotion") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewDiscountsEntry(
+				channelsEligibility = "Minium Portal",
+				discountAmount = "20",
+				discountName = "Test Discount",
+				discountTarget = "Products",
+				discountType = "Percentage");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "ABS Sensor",
+				title = "Add Products");
+
+			Button.clickPublish();
+
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = "20",
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
+
+			Refresh();
+
+			CommerceNavigator.searchEntry(entryName = "Torque Converters");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55859");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_radioOption = "Bulk Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				key_text = "Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "2");
+
+			Click(locator1 = "Button#SUBMIT");
+		}
+
+		task ("And given a login with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer select the pending order and import a new order from wish list") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			Button.click(button = "Import");
+
+			SelectFrameTop();
+
+			Alert.viewSuccessMessageText(successMessage = "3 rows were imported successfully.");
+		}
+
+		task ("Then all the order details are displayed, including discount") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "2",
+				productDiscount = "20.00",
+				productSku = "MIN93015",
+				productTotalPrice = "80.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "2",
+				productSku = "MIN55859",
+				productTotalPrice = "68.00");
+
+			CommerceOrders.viewOrderPrices(
+				subTotalPrice = "196.00",
+				deliveryPrice = "0.00",
+				taxPrice = "0.00",
+				totalPrice = "196.00");
+		}
+
+	}
+
 }

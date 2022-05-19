@@ -1966,4 +1966,102 @@ definition {
 
 		CommerceProducts.disableProductSingleApproverWorkflow();
 	}
+
+	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow { 
+		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "categorymanager@liferay.com",
+			userFirstName = "Category",
+			userLastName = "Manager",
+			userScreenName = "categorymanager",
+			userSiteMembership = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "categorymanager");
+
+		CommerceProducts.enableProductSingleApproverWorkflow();
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Button.click(button = "Submit for Publication");
+
+		AssertElementPresent(
+			key_status = "Pending (Created)",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.approvePendingProduct(
+			approveRequest = "true",
+			userFirstName = "Category",
+			userLastName = "Manager");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Simple T-Shirt",
+			status = "Approved",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
 }

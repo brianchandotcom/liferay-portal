@@ -269,4 +269,17 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Commerce Product");
 	}
+
+	macro disableProductSingleApproverWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Commerce Product");
+	}
 }

@@ -73,6 +73,10 @@ definition {
 			var shortDescription = "";
 		}
 
+		if (!(isSet(productStatus))) {
+			var productStatus = "0";
+		}
+
 		if (!(isSet(sku))) {
 			var sku = "default";
 		}
@@ -120,7 +124,7 @@ definition {
 					},
 					"productAccountGroupFilter": false,
 					"productChannelFilter": false,
-					"productStatus": 0,
+					"productStatus": "${productStatus}",
 					"productType": "${productType}",
 					"shortDescription": {
 					  "en_US": "${shortDescription}"

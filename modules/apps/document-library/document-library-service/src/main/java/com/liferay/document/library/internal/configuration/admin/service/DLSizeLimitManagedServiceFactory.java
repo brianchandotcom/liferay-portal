@@ -221,9 +221,12 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 
 			_companyConfigurationBeans.remove(companyId);
 			_companyMimeTypeSizeLimitsMap.remove(companyId);
-		}
 
-		if (_groupIds.containsKey(pid)) {
+			_groupIds.clear();
+			_groupConfigurationBeans.clear();
+			_groupMimeTypeSizeLimitsMap.clear();
+		}
+		else if (_groupIds.containsKey(pid)) {
 			long groupId = _groupIds.remove(pid);
 
 			_groupConfigurationBeans.remove(groupId);

@@ -14,6 +14,8 @@
 
 package com.liferay.site.welcome.site.initializer.internal.instance.lifecycle;
 
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -23,10 +25,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -89,6 +93,13 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	}
 
 	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+	}
+
+	@Reference(
 		target = "(fragment.collection.key=BASIC_COMPONENT)", unbind = "-"
 	)
 	protected void setFragmentCollectionContributorRegistration(
@@ -126,6 +137,11 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private Indexer<DLFileEntry> _indexer;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

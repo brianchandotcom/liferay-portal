@@ -70,13 +70,45 @@ definition {
 		}
 	}
 
-	@description = "LPS-144472 - Verify if the user can add metadata columns to Default Sort and save it"
-	@ignore = "Test Stub"
+	@description = "LPS-144472 - Verify if the user can add metadata columns to Default Sort"
 	@priority = "4"
-	test CanAddMetadacolumnDefaultSort {
+	test CanAddMetadataColumnsToDefaultSort {
+		var listMetaData = "Author,Creation Date,Modified Date,Workflow Status,ID";
 
-		// TODO LPS-152059 CanAddMetadacolumnDefaultSort pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152059",
+			objectName = "CustomObject152059",
+			pluralLabelName = "Custom Objects 152059");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152059");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		for (var columnName : list "${listMetaData}") {
+			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
+		}
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		for (var columnName : list "${listMetaData}") {
+			ObjectCustomViews.addDefaultSort(
+				columnOption = "${columnName}",
+				sortOption = "Ascending");
+		}
+
+		for (var columnName : list "${listColumnName}") {
+			ObjectCustomViews.assertColumnPresentOnDefaultSort(
+				colunmName = "${columnName}",
+				sortingLabel = "Ascending");
+		}
 	}
 
 	@description = "LPS-147792 - Verify it is possible to add any translation for any Column Label"

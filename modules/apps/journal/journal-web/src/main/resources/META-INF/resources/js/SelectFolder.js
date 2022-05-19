@@ -88,6 +88,20 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 		return nodeByName(items, filterQuery);
 	}, [items, filterQuery]);
 
+	const onClick = (event, item) => {
+		event.preventDefault();
+
+		handleSelectionChange(item);
+	};
+
+	const onKeyUp = (event, item) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+
+			handleSelectionChange(item);
+		}
+	};
+
 	return filteredItems.length > 0 ? (
 		<ClayTreeView
 			items={filteredItems}
@@ -97,11 +111,8 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 			{(item) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => {
-							event.preventDefault();
-
-							handleSelectionChange(item);
-						}}
+						onClick={(event) => onClick(event, item)}
+						onKeyUp={(event) => onKeyUp(event, item)}
 					>
 						<ClayIcon symbol="folder" />
 
@@ -111,11 +122,8 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
 							<ClayTreeView.Item
-								onClick={(event) => {
-									event.preventDefault();
-
-									handleSelectionChange(item);
-								}}
+								onClick={(event) => onClick(event, item)}
+								onKeyUp={(event) => onKeyUp(event, item)}
 							>
 								<ClayIcon symbol="folder" />
 

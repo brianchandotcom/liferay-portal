@@ -109,7 +109,8 @@ public class CommerceAccountUpgradeStepRegistrator
 		registry.register(
 			"5.0.0", "6.0.0",
 			new com.liferay.commerce.account.internal.upgrade.v6_0_0.
-				CommerceAccountGroupUpgradeProcess(_accountGroupLocalService));
+				CommerceAccountGroupUpgradeProcess(
+					_accountGroupLocalService, _resourceLocalService));
 
 		registry.register(
 			"6.0.0", "7.0.0",

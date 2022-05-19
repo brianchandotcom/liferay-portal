@@ -214,6 +214,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		structuredContentFolder.setAssetLibraryKey(regex);
 		structuredContentFolder.setDescription(regex);
+		structuredContentFolder.setExternalReferenceCode(regex);
 		structuredContentFolder.setName(regex);
 
 		String json = StructuredContentFolderSerDes.toJSON(
@@ -226,6 +227,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Assert.assertEquals(
 			regex, structuredContentFolder.getAssetLibraryKey());
 		Assert.assertEquals(regex, structuredContentFolder.getDescription());
+		Assert.assertEquals(
+			regex, structuredContentFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, structuredContentFolder.getName());
 	}
 
@@ -1226,6 +1229,209 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					structuredContentFolder.getSiteId(),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					structuredContentFolder.getSiteId(),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					structuredContentFolder.getSiteId(),
+					structuredContentFolder.getExternalReferenceCode()));
+	}
+
+	protected StructuredContentFolder
+			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGetSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					postStructuredContentFolder.getSiteId(),
+					postStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+	}
+
+	protected StructuredContentFolder
+			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder structuredContentFolder =
+			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		Assert.assertTrue(
+			equals(
+				structuredContentFolder,
+				StructuredContentFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"structuredContentFolderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												structuredContentFolder.
+													getSiteId() + "\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												structuredContentFolder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/structuredContentFolderByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"structuredContentFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	@Test
+	public void testPutSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder putStructuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					postStructuredContentFolder.getSiteId(),
+					postStructuredContentFolder.getExternalReferenceCode(),
+					randomStructuredContentFolder);
+
+		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					putStructuredContentFolder.getSiteId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+
+		StructuredContentFolder newStructuredContentFolder =
+			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
+
+		putStructuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					newStructuredContentFolder.getSiteId(),
+					newStructuredContentFolder.getExternalReferenceCode(),
+					newStructuredContentFolder);
+
+		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		getStructuredContentFolder =
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					putStructuredContentFolder.getSiteId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
+
+		Assert.assertEquals(
+			newStructuredContentFolder.getExternalReferenceCode(),
+			putStructuredContentFolder.getExternalReferenceCode());
+	}
+
+	protected StructuredContentFolder
+			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
+		throws Exception {
+
+		return randomStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
 	public void testGetSiteStructuredContentFolderPermissionsPage()
 		throws Exception {
 
@@ -2181,6 +2387,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		return jsonDeserializer.deserialize(
@@ -2353,6 +2561,18 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (structuredContentFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (structuredContentFolder.getExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -2577,6 +2797,19 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContentFolder1.getDescription(),
 						structuredContentFolder2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						structuredContentFolder1.getExternalReferenceCode(),
+						structuredContentFolder2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2877,6 +3110,16 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					structuredContentFolder.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2978,6 +3221,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

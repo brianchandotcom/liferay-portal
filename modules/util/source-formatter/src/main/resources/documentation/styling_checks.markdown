@@ -32,7 +32,7 @@ EnumConstantDividerCheck | .java | Find unnecessary empty lines between enum con
 EnumConstantOrderCheck | .java | Checks the order of enum constants. |
 EqualClauseIfStatementsCheck | .java | Finds consecutive if-statements with identical clauses. |
 [ExceptionMessageCheck](check/message_check.markdown#messagecheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates messages that are passed to exceptions. |
-FDSTableSchemaBuilderCheck | .java | Finds cases where `add` should be used. |
+[FDSTableSchemaBuilderCheck](check/fds_table_schema_builder_check.markdown#fdstableschemabuildercheck) | .java | Finds cases where `add` should be used. |
 FTLEmptyLinesCheck | .ftl | Finds missing and unnecessary empty lines. |
 [FTLIfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .ftl | Finds incorrect use of parentheses in statement. |
 FTLImportsCheck | .ftl | Sorts and groups imports in `.ftl` files. |

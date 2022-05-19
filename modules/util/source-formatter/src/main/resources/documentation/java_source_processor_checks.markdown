@@ -38,7 +38,7 @@ ExceptionMapperAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown
 [ExceptionMessageCheck](check/message_check.markdown#messagecheck) | [Styling](styling_checks.markdown#styling-checks) | Validates messages that are passed to exceptions. |
 ExceptionPrintStackTraceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Avoid using printStackTrace. |
 ExceptionVariableNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Validates variable names that have type `*Exception`. |
-FDSTableSchemaBuilderCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where `add` should be used. |
+[FDSTableSchemaBuilderCheck](check/fds_table_schema_builder_check.markdown#fdstableschemabuildercheck) | [Styling](styling_checks.markdown#styling-checks) | Finds cases where `add` should be used. |
 FactoryCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `*Factory` should be used when creating new instances of an object. |
 FilterStringWhitespaceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`. |
 [FrameworkBundleCheck](check/framework_bundle_check.markdown#frameworkbundlecheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used. |

@@ -1653,4 +1653,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Draft Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckExpiredProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "3",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Expired Product",
+			status = "Expired",
+			productCatalog = "Master",
+			productName = "Expired Product");
+	}
 }

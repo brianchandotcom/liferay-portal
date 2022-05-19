@@ -1445,7 +1445,8 @@ definition {
 
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
 	@priority = "3"
-	test VerifyDraftProductNotAppearOnMiniumCatalogPage {
+	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
+		property portal.acceptance = "false";
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1474,6 +1475,14 @@ definition {
 			productName = "Simple T-Shirt",
 			productType = "Simple",
 			publishProduct = "false");
+
+		Click(locator1 = "Icon#BACK");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
 		User.logoutPG();
 
@@ -1505,6 +1514,14 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
 		CommerceEntry.publishEntry(status = "Approved");
+
+		Click(locator1 = "Icon#BACK");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
 		User.logoutPG();
 

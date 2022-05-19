@@ -218,4 +218,42 @@ definition {
 		CommerceProducts.convertProductToDraft(status = "${status}");
 
 	}
+
+	macro approvePendingProduct {
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		Click(
+			key_text = "${userFirstName} ${userLastName} sent you a Commerce Product for review in the workflow.",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_menuItem = "Assign to Me",
+			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Button.click(button = "Done");
+
+		SelectFrameTop();
+
+		if ((isSet(approveRequest)) && "${approveRequest}" == "true") {
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			Click(
+				key_menuItem = "Approve",
+				locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+			Button.click(button = "Done");
+		}
+
+	}
 }

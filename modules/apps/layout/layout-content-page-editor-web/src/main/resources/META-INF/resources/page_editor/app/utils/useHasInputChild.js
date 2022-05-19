@@ -20,6 +20,8 @@ import {useSelectorCallback, useSelectorRef} from '../contexts/StoreContext';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from './cache';
+import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
+import hasSubmitChild from './hasSubmitChild';
 import useCache from './useCache';
 
 function isMappedToRequiredInput(fragmentEntryLink, formFields) {
@@ -89,16 +91,24 @@ export default function useHasInputChild(itemId) {
 		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
 	});
 
-	return useCallback(
-		() =>
+	return useCallback(() => {
+		if (!formFields) {
+			return false;
+		}
+
+		const itemElement = document.querySelector(
+			`.${getLayoutDataItemUniqueClassName(itemId)}`
+		);
+
+		if (hasSubmitChild(itemElement)) {
+			return true;
+		}
+
+		return hasRequiredInputChild(
+			layoutDataRef.current?.items[itemId],
+			layoutDataRef.current,
+			fragmentEntryLinksRef.current,
 			formFields
-				? hasRequiredInputChild(
-						layoutDataRef.current?.items[itemId],
-						layoutDataRef.current,
-						fragmentEntryLinksRef.current,
-						formFields
-				  )
-				: false,
-		[formFields, layoutDataRef, fragmentEntryLinksRef, itemId]
-	);
+		);
+	}, [formFields, layoutDataRef, fragmentEntryLinksRef, itemId]);
 }

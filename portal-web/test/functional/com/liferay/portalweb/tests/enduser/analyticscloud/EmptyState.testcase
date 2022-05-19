@@ -30,6 +30,86 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: LRAC-10698 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
+	@priority = "3"
+	test CheckAllMessagesNoAssetsWhenHasPropertyAndDataSourceButNoData {
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+		
+		task ("Go to Assets") {
+			ACUtils.goToAssets();
+		}
+
+		task ("Go to Blogs, check empty state message") {
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about blogs.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about blogs.");
+
+			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Blogs");
+
+			SelectWindow(locator1 = "title=Assets - Analytics Cloud");
+		}
+
+		task ("Go to Documents and Media, check empty state message") {
+			ACNavigation.switchTab(tabName = "Documents and Media");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about documents and media.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
+
+			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Documents and Media");
+
+			SelectWindow(locator1 = "title=Assets - Analytics Cloud");
+		}
+
+		task ("Go to Forms, check empty state message") {
+			ACNavigation.switchTab(tabName = "Forms");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about forms.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
+
+			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Forms");
+
+			SelectWindow(locator1 = "title=Assets - Analytics Cloud");
+		}
+
+		task ("Go to Web Content, check empty state message") {
+			ACNavigation.switchTab(tabName = "Web Content");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about web content.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about web content.");
+
+			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Web Content");
+
+			SelectWindow(locator1 = "title=Assets - Analytics Cloud");
+		}
+
+		task ("Go to Custom, check empty state message") {
+			ACNavigation.switchTab(tabName = "Custom");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about custom assets.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about custom assets.");
+
+			SelectWindow(locator1 = "title=Tracking Custom Assets — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Custom Assets");
+
+			SelectWindow(locator1 = "title=Assets - Analytics Cloud");
+		}
+	}
+
 	@description = "Feature ID: LRAC-9248 | Automation ID: LRAC-10727 | Test Summary: Empty state of pages with no data source and no property"
 	@priority = "2"
 	test CheckAllMessagesRelatedToSettings {

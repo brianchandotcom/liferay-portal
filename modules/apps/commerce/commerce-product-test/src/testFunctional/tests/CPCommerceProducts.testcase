@@ -1737,4 +1737,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Incomplete Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckScheduledProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckScheduledProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "7",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Scheduled Product",
+			status = "Scheduled",
+			productCatalog = "Master",
+			productName = "Scheduled Product");
+	}
 }

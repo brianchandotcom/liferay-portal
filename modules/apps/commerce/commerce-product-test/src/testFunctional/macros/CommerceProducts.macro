@@ -256,4 +256,17 @@ definition {
 		}
 
 	}
+
+	macro enableProductSingleApproverWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Commerce Product");
+	}
 }

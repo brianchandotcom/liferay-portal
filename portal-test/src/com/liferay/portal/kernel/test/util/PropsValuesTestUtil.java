@@ -45,30 +45,6 @@ public class PropsValuesTestUtil {
 		field.set(null, value);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #swapWithSafeCloseable(String, Object)}
-	 */
-	@Deprecated
-	public static SafeClosable swap(String propsKeysFieldName, Object value) {
-		String propsKeysName = ReflectionTestUtil.getFieldValue(
-			PropsKeys.class, propsKeysFieldName);
-
-		String originalPropsValue = PropsUtil.get(propsKeysName);
-
-		PropsUtil.set(propsKeysName, String.valueOf(value));
-
-		Object originalValue = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, propsKeysFieldName, value);
-
-		return () -> {
-			PropsUtil.set(propsKeysName, originalPropsValue);
-
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, propsKeysFieldName, originalValue);
-		};
-	}
-
 	public static SafeCloseable swapWithSafeCloseable(
 		String propsKeysFieldName, Object value) {
 

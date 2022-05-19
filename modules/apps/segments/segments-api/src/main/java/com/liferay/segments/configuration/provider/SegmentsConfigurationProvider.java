@@ -14,12 +14,18 @@
 
 package com.liferay.segments.configuration.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Cristina González
  */
 public interface SegmentsConfigurationProvider {
+
+	public String getConfigurationURL(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public boolean isRoleSegmentationEnabled() throws ConfigurationException;
 

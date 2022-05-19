@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>BACK</td>
+	<td>//li[contains(@class,'control-menu-nav-item')]//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CPOPTIONS_STATUS</td>
 	<td>//table[contains (@data-searchcontainerid,'cpOptions')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')] | //table[contains (@data-searchcontainerid,'cpInstances')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')]</td>
 	<td></td>

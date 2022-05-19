@@ -195,6 +195,16 @@
 		<td>//div[contains(@class,'dnd-tbody')]//div[${key_position}]//span[contains(text(),'${key_entryName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//p[contains(@class,'list-group-title') and contains(text(),'${key_columnName1}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT</td>
+		<td>//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_colunmName1}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

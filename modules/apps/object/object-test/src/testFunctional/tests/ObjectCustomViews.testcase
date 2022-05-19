@@ -701,12 +701,61 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to prioritize columns to Default Sort"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanPrioritizeColumns {
+		var listColumns = "Author,Creation Date";
 
-		// TODO LPS-152061 CanPrioritizeColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152061",
+			objectName = "CustomObject152061",
+			pluralLabelName = "Custom Objects 152061");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152061");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		for (var columnName : list "${listColumns}") {
+			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
+		}
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		for (var columnName : list "${listColumns}") {
+			ObjectCustomViews.addDefaultSort(
+				columnOption = "${columnName}",
+				sortOption = "Ascending");
+		}
+
+		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+			colunmName = "Author",
+			position = "1");
+
+		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+			colunmName = "Creation Date",
+			position = "2");
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_columnName = "Creation Date",
+			key_columnName1 = "Author",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT",
+			locator2 = "ObjectCustomViews#CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT",
+			value1 = "");
+
+		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+			colunmName = "Creation Date",
+			position = "1");
+
+		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+			colunmName = "Author",
+			position = "2");
 	}
 
 	@description = "LPS-147792 - Verify it is possible to rename a column label"

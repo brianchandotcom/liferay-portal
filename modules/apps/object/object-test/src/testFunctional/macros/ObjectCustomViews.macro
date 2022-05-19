@@ -376,4 +376,11 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
+	macro viewOrdersOfTheColumnsOnDefaultSort {
+		AssertElementPresent(
+			key_colunmName1 = "${colunmName}",
+			key_position = "${position}",
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
+	}
+
 }

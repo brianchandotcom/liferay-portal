@@ -75,6 +75,8 @@ public class StructuredContentFolderDTOConverter
 				dateCreated = journalFolder.getCreateDate();
 				dateModified = journalFolder.getModifiedDate();
 				description = journalFolder.getDescription();
+				externalReferenceCode =
+					journalFolder.getExternalReferenceCode();
 				id = journalFolder.getFolderId();
 				name = journalFolder.getName();
 				numberOfStructuredContentFolders =

@@ -1,78 +1,93 @@
 @component-name = "portal-solutions"
 definition {
 
-	property osgi.modules.includes = "site-initializer-testray";
-	property portal.release = "false";
-	property portal.upstream = "true";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Testray 2";
+    property osgi.modules.includes = "site-initializer-testray";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+    property testray.main.component.name = "Testray 2";
 
-	setUp {
-		TestCase.setUpPortalInstance();
+    setUp {
+        TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+        User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+        Testray.createTestraySite(siteName = "Testray 2");
 
-		Refresh();
-	}
+        Refresh();
+    }
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.tearDownCP();
+        Testray.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+    }
 
-	@description = "LPS-150542 - Verify that by clicking on Results on sidebar the user goes to Project Directory Results."
-	@priority = "5"
-	test CanAcessProejctDirectoryByClickingOnResults {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+    @description = "This is a test for LPS-150542 - Verify that by clicking on Results on sidebar the user goes to Project Directory Results."
+    @priority = "5"
+    test CanAcessProejctDirectoryByClickingOnResults {
+        task ("Go to Testray") {
+            ApplicationsMenu.gotoSite(site = "Testray 2");
+        }
 
-		TestrayLayout.clickTestfowOnSidebar();
+        task ("Verify that by clicking on Results on sidebar the user goes to Project Directory Results") {
+            TestrayLayout.clickTestfowOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
 
-		TestrayLayout.clickResultsOnSidebar();
+            TestrayLayout.clickResultsOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
-	}
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+        }
+    }
 
-	@description = "LPS-150539 - Verify that by clicking in Testray icon on sidebar the user is redirected to the Project Directory page."
-	@priority = "4"
-	test CanAcessProjectDirectoryBySidebarIcon {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+    @description = "This is a test for LPS-150539 - Verify that by clicking in Testray icon on sidebar the user is redirected to the Project Directory page."
+    @priority = "4"
+    test CanAcessProjectDirectoryBySidebarIcon {
+        task ("Go to Testray") {
+            ApplicationsMenu.gotoSite(site = "Testray 2");
+        }
 
-		TestrayLayout.clickTestfowOnSidebar();
+        task ("Verify that by clicking in Testray icon on sidebar the user is redirected to the Project Directory page") {
+            TestrayLayout.clickTestfowOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
 
-		TestrayLayout.clickLogoOnSidebar();
+            TestrayLayout.clickLogoOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
-	}
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+        }
+    }
 
-	@description = "LPS-150540 - Verify that by clicking on Manage on sidebar shows a Management Options Dropdown on sidebar."
-	@priority = "5"
-	test CanManageDropdownOnSidebarOpen {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+    @description = "This is a test for LPS-150540 - Verify that by clicking on Manage on sidebar shows a Management Options Dropdown on sidebar."
+    @priority = "5"
+    test CanManageDropdownOnSidebarOpen {
+        task ("Go to Testray") {
+            ApplicationsMenu.gotoSite(site = "Testray 2");
+        }
 
-		TestrayLayout.clickManageOnSidebar();
+        task ("Verify that by clicking on Manage on sidebar shows a Management Options Dropdown on sidebar") {
+            TestrayLayout.clickManageOnSidebar();
 
-		TestrayLayout.assertDropdownOnSidebar();
-	}
+            TestrayLayout.assertDropdownOnSidebar();
+        }
+    }
 
-	@description = "LPS-150541 - Verify that by clicking on User on sidebar it shows User options on sidebar."
-	@priority = "5"
-	test CanUserDropdownOnSidebarOpen {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+    @description = "This is a test for LPS-150541 - Verify that by clicking on User on sidebar it shows User options on sidebar."
+    @priority = "5"
+    test CanUserDropdownOnSidebarOpen {
+        task ("Go to Testray") {
+            ApplicationsMenu.gotoSite(site = "Testray 2");
+        }
 
-		TestrayLayout.clickUserOnSidebar();
+        task ("Verify that by clicking on User on sidebar it shows User options on sidebar") {
+            TestrayLayout.clickUserOnSidebar();
 
-		TestrayLayout.assertDropdownOnSidebar();
-	}
-
+            TestrayLayout.assertDropdownOnSidebar();
+        }
+    }
 }

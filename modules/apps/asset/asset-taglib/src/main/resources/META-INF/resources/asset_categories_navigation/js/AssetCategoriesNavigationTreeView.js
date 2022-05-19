@@ -20,14 +20,26 @@ const AssetCategoriesNavigationTreeView = ({
 	selectedCategoryId,
 	vocabularies,
 }) => {
-	const handleSelectionChange = (event, item) => {
-		event.preventDefault();
-
+	const handleSelectionChange = (item) => {
 		if (selectedCategoryId === item.id) {
 			return;
 		}
 
 		Liferay.Util.navigate(item.url);
+	};
+
+	const onClick = (event, item) => {
+		event.preventDefault();
+
+		handleSelectionChange(item);
+	};
+
+	const onKeyUp = (event, item) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+
+			handleSelectionChange(item);
+		}
 	};
 
 	return (
@@ -41,11 +53,13 @@ const AssetCategoriesNavigationTreeView = ({
 			{(item) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => {
-							event.preventDefault();
-
-							handleSelectionChange(event, item);
+						onClick={(event) => onClick(event, item)}
+						onKeyDownCapture={(event) => {
+							if (event.key === ' ' && item.disabled) {
+								event.stopPropagation();
+							}
 						}}
+						onKeyUp={(event) => onKeyUp(event, item)}
 					>
 						<ClayIcon symbol={item.icon} />
 
@@ -55,11 +69,8 @@ const AssetCategoriesNavigationTreeView = ({
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
 							<ClayTreeView.Item
-								onClick={(event) => {
-									event.preventDefault();
-
-									handleSelectionChange(event, item);
-								}}
+								onClick={(event) => onClick(event, item)}
+								onKeyUp={(event) => onKeyUp(event, item)}
 							>
 								<ClayIcon symbol={item.icon} />
 

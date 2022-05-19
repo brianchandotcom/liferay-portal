@@ -197,4 +197,25 @@ definition {
 				locator1 = "CommerceEntry#WORKFLOW_STATUS");
 		}
 	}
+
+	macro checkProductStatusAfterDuplicationAndConvertionToDraft {
+
+		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+
+		CommerceProducts.duplicateProduct(
+			status = "${status}",
+			productCatalog = "${productCatalog}",
+			productName = "${productName}");
+
+		Click(locator1 = "Icon#BACK");
+
+		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+
+		CommerceProducts.convertProductToDraft(status = "${status}");
+
+	}
 }

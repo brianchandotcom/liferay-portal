@@ -118,7 +118,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
 				</liferay-frontend:sidebar-panel>
 
-				<div class="<%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-view sidenav-content" : StringPool.BLANK %>">
+				<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-view" : StringPool.BLANK %>">
 					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 						<c:if test="<%= !dlViewDisplayContext.isSearch() %>">
 

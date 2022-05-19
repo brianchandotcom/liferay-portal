@@ -187,6 +187,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/commons-compress.jar</file-name>
+				<version>1.21</version>
+				<project-name>Commons Compress</project-name>
+				<project-url>http://commons.apache.org/compress</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/commons-lang3.jar</file-name>
 				<version>3.12.0</version>
 				<project-name>Commons Lang</project-name>

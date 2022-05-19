@@ -15,6 +15,7 @@
 /development/com.liferay.jenkins.results.parser.jar
 /development/com.liferay.poshi.core.jar
 /development/commons-collections4.jar
+/development/commons-compress.jar
 /development/commons-lang3.jar
 /development/db2jcc.jar
 /development/db2jcc_license_cu.jar

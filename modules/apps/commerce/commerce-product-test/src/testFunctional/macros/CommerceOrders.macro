@@ -688,4 +688,26 @@ definition {
 		}
 	}
 
+	macro viewOrderPrices {
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Subtotal",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "${subTotalPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Delivery",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "${deliveryPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Tax",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "${taxPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Total",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "${totalPrice}");
+	}
+
 }

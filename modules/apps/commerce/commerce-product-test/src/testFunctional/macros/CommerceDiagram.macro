@@ -212,6 +212,35 @@ definition {
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_EXPAND");
 	}
 
+	macro setVisibility {
+		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+		Click(
+			key_name = "${name}",
+			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+
+		if ("${name}" == "Account Groups") {
+			ClickNoError.clickNoMouseOver(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "Button#BUTTON_PLUS_PRODUCT_VISIBILITY");
+		}
+		else {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_checkboxName = "${checkboxName}",
+			locator1 = "Checkbox#ENABLE_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Add");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro useDragOnBackground {
 
 		// Verify the postion after mouse drag

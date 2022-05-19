@@ -20,6 +20,35 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+function mapItemsOnClick(items) {
+	return items.map((item) => {
+		if (item.items) {
+			item.items = [...mapItemsOnClick(item.items)];
+		}
+
+		const {jsOnClickConfig, ...otherKeys} = item;
+
+		return {
+			onClick: jsOnClickConfig
+				? () => {
+						const {selectEventName, title, url} = jsOnClickConfig;
+
+						Liferay.Util.openSelectionModal({
+							id: selectEventName,
+							onSelect(selectedItem) {
+								Liferay.Util.navigate(selectedItem.url);
+							},
+							selectEventName,
+							title,
+							url,
+						});
+				  }
+				: undefined,
+			...otherKeys,
+		};
+	});
+}
+
 function PersonalMenu({
 	color,
 	isImpersonated,
@@ -41,7 +70,7 @@ function PersonalMenu({
 
 	return (
 		<ClayDropDownWithItems
-			items={items}
+			items={mapItemsOnClick([...items])}
 			menuElementAttrs={{className: 'dropdown-menu-personal-menu'}}
 			trigger={
 				label ? (

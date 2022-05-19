@@ -211,10 +211,18 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					ParamUtil.getString(portletRequest, "portletId")));
 
 			try {
-				jsonObject.put(
-					"href",
-					personalMenuEntry.getPortletURL(
-						_portal.getHttpServletRequest(portletRequest)));
+				String href = personalMenuEntry.getPortletURL(
+					_portal.getHttpServletRequest(portletRequest));
+
+				if (href != null) {
+					jsonObject.put("href", href);
+				}
+				else {
+					jsonObject.put(
+						"jsOnClickConfig",
+						personalMenuEntry.getPortletJSOnClickConfig(
+							_portal.getHttpServletRequest(portletRequest)));
+				}
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);

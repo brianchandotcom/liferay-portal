@@ -16,6 +16,7 @@ package com.liferay.product.navigation.personal.menu;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
@@ -58,6 +59,22 @@ public interface PersonalMenuEntry {
 	 * @return the label of the user personal menu entry
 	 */
 	public String getLabel(Locale locale);
+
+	/**
+	 * Returns JSONObject to be used by the menu entry onClick action.
+	 *
+	 * The object should contain the keys `selectEventName`, `title`, and `url`.
+	 * These values are passed to Liferay.Util.openSelectionModal, which is called
+	 * at product-navigation-taglib/src/main/resources/META-INF/resources/personal_menu/js/PersonalMenu.es.js
+	 *
+	 * @param  httpServletRequest the servlet request used to create a portlet's URL
+	 * @return JSONObject
+	 */
+	public default JSONObject getPortletJSOnClickConfig(
+		HttpServletRequest httpServletRequest) {
+
+		return null;
+	}
 
 	/**
 	 * Returns the URL used to render a portlet based on the servlet request

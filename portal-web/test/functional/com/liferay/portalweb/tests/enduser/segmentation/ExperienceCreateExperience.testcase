@@ -321,21 +321,21 @@ definition {
 		task ("Create a segment for each user") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User1",
 				text = "userfn1");
 
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User2",
 				text = "userfn2");
 			
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User3",
 				text = "userfn3");
@@ -380,8 +380,6 @@ definition {
 				experienceName = "Experience User 2",
 				segmentName = "Segment With User2");
 			
-			PageEditor.prioritizeExperience(experienceName = "Experience User 2");
-
 			Button.clickPublish();
 
 			ContentPages.gotoPageEditor();
@@ -392,8 +390,12 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "User 2");
+			
+			PageEditor.prioritizeExperience(
+				experienceName = "Experience User 2",
+				key_index = "2");
 
-			PageEditor.clickPublish();
+			Button.clickPublish();
 
 			ContentPages.gotoPageEditor();
 
@@ -401,8 +403,6 @@ definition {
 				experienceName = "Experience User 3",
 				segmentName = "Segment With User3");
 			
-			PageEditor.prioritizeExperience(experienceName = "Experience User 3");
-
 			Button.clickPublish();
 
 			ContentPages.gotoPageEditor();
@@ -413,6 +413,9 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "User 3");
+			
+			PageEditor.prioritizeExperience(experienceName = "Experience User 3",
+				key_index = "3");
 
 			PageEditor.clickPublish();
 		}

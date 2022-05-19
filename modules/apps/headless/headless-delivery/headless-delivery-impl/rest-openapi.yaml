@@ -4659,6 +4659,11 @@ components:
                     description:
                         The folder's description.
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The structured content folder's external reference code.
+                    type: string
                 id:
                     description:
                         The folder's ID.
@@ -11971,6 +11976,78 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+            tags: ["StructuredContentFolder"]
+    "/sites/{siteId}/structured-content-folders/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteSiteStructuredContentFolderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["StructuredContentFolder"]
+        get:
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+            tags: ["StructuredContentFolder"]
+        put:
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

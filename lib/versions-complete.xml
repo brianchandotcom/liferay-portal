@@ -160,6 +160,102 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.calendar.service.jar!cache-api.jar</file-name>
+				<version>1.1.1</version>
+				<project-name>JSR107 API and SPI</project-name>
+				<project-url>https://github.com/jsr107/jsr107spec</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!handy-uri-templates.jar</file-name>
+				<version>2.1.7</version>
+				<project-name>Handy URI Templates</project-name>
+				<project-url>https://github.com/damnhandy/Handy-URI-Templates</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!ical4j.jar</file-name>
+				<version>3.2.2</version>
+				<project-name>ical4j</project-name>
+				<project-url>http://ical4j.github.io</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://raw.githubusercontent.com/ical4j/ical4j/master/LICENSE.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!joda-convert.jar</file-name>
+				<version>2.2.1</version>
+				<project-name>Joda-Convert</project-name>
+				<project-url>https://www.joda.org/${joda.artifactId}/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!joda-time.jar</file-name>
+				<version>2.9.1</version>
+				<project-name>Joda-Time</project-name>
+				<project-url>http://www.joda.org/joda-time/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!jparsec.jar</file-name>
+				<version>3.1</version>
+				<project-name>jparsec</project-name>
+				<project-url>http://jparsec.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!org.everit.json.schema.jar</file-name>
+				<version>1.11.1</version>
+				<project-name>everit-org/json-schema</project-name>
+				<project-url>https://github.com/everit-org/json-schema</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.calendar.service.jar!re2j.jar</file-name>
+				<version>1.2</version>
+				<project-name>RE2/J</project-name>
+				<project-url>http://github.com/google/re2j</project-url>
+				<licenses>
+					<license>
+						<license-name>Go License</license-name>
+						<license-url>https://golang.org/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.captcha.api.jar!filters.jar</file-name>
 				<version>2.0.235</version>
 				<project-name>JHLabs Image Processing Filters</project-name>
@@ -2320,6 +2416,137 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!accessors-smart.jar</file-name>
+				<version>2.4.2</version>
+				<project-name>ASM based accessors helper used by json-smart</project-name>
+				<project-url>https://urielch.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!activation.jar</file-name>
+				<version>1.1.1</version>
+				<project-name>Sun Java System Application Server</project-name>
+				<project-url>http://java.sun.com/javase/technologies/desktop/javabeans/jaf/index.jsp</project-url>
+				<licenses>
+					<license>
+						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
+						<license-url>https://glassfish.dev.java.net/public/CDDLv1.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!asm.jar</file-name>
+				<version>5.0.4</version>
+				<project-name>ASM Core</project-name>
+				<project-url>http://asm.objectweb.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!commons-lang3.jar</file-name>
+				<version>3.4</version>
+				<project-name>Apache Commons Lang</project-name>
+				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!content-type.jar</file-name>
+				<version>2.0</version>
+				<project-name>Nimbus Content Type</project-name>
+				<project-url>https://connect2id.com</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!jakarta.mail.jar</file-name>
+				<version>1.6.6</version>
+				<project-name>Jakarta Mail API</project-name>
+				<project-url>http://www.oracle.com</project-url>
+				<licenses>
+					<license>
+						<license-name>http://www.eclipse.org/legal/epl-2.0, https://www.gnu.org/software/classpath/license.html, http://www.eclipse.org/org/documents/edl-v10.php</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!jcip-annotations.jar</file-name>
+				<version>1.0-1</version>
+				<project-name>JCIP Annotations under Apache License</project-name>
+				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!json-smart.jar</file-name>
+				<version>2.4.5</version>
+				<project-name>JSON Small and Fast Parser</project-name>
+				<project-url>https://urielch.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!lang-tag.jar</file-name>
+				<version>1.4.4</version>
+				<project-name>Nimbus LangTag</project-name>
+				<project-url>https://bitbucket.org/connect2id/nimbus-language-tags</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!nimbus-jose-jwt.jar</file-name>
+				<version>8.14.1</version>
+				<project-name>Nimbus JOSE+JWT</project-name>
+				<project-url>https://bitbucket.org/connect2id/nimbus-jose-jwt</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth.client.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
+				<version>8.4.3</version>
+				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
+				<project-url>https://connect2id.com</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html‎</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4903,17 +5130,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.vulcan.impl.jar!swagger-models.jar</file-name>
-				<version>2.0.6</version>
-				<project-name>swagger-models</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.workflow.kaleo.service.jar!json.jar</file-name>
 				<version>20180813</version>
 				<project-name>JSON in Java</project-name>
@@ -7357,7 +7573,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xercesImpl.jar</file-name>
-				<version>2.12.1</version>
+				<version>2.12.2</version>
 				<project-name>Xerces</project-name>
 				<project-url>http://xerces.apache.org/xerces2-j</project-url>
 				<licenses>

@@ -245,38 +245,18 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 					secondBuild.getPortalBranchSHA()
 				)) {
 
-				for (int i = 0; i < historicalLocalGitCommits.size(); i++) {
-					LocalGitCommit localGitCommit =
-						historicalLocalGitCommits.get(i);
+				for (BuildData buildData : buildDataList) {
+					portalBuildData = (PortalBuildData)buildData;
 
-					String sha = localGitCommit.getSHA();
+					if (portalBuildData != null) {
+						gitCommitGroup = new GitCommitGroup(portalBuildData);
 
-					for (BuildData buildData : buildDataList) {
-						if (buildData instanceof PortalBuildData) {
-							PortalBuildData currentPortalBuildData =
-								(PortalBuildData)buildData;
+						gitCommitGroups.add(gitCommitGroup);
+					}
+					else {
+						gitCommitGroup = new GitCommitGroup(null);
 
-							if (sha.equals(
-									currentPortalBuildData.
-										getPortalBranchSHA())) {
-
-								portalBuildData = currentPortalBuildData;
-
-								if (portalBuildData != null) {
-									gitCommitGroup = new GitCommitGroup(
-										portalBuildData);
-
-									gitCommitGroups.add(gitCommitGroup);
-								}
-								else if (i == 0) {
-									gitCommitGroup = new GitCommitGroup(null);
-
-									gitCommitGroups.add(gitCommitGroup);
-								}
-
-								gitCommitGroup.add(localGitCommit);
-							}
-						}
+						gitCommitGroups.add(gitCommitGroup);
 					}
 				}
 

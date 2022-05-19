@@ -122,6 +122,33 @@ definition {
 		return "${curl}";
 	}
 
+	macro _filterStructuredContentWithPriority {
+		Variables.assertDefined(parameterList = "${filtervalue}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro assertPriorityFieldIsFilterWithDefaultValue {
+		var actualPriorityDefaultValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
+
+		TestUtils.assertEquals(
+			actual = "${actualPriorityDefaultValue}",
+			expected = "${expectedPriorityDefaultValue}");
+	}
+
 	macro assertPriorityFieldWithDefaultValue {
 		var actualPriorityDefaultValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.priority");
 
@@ -137,6 +164,12 @@ definition {
 			label = "${label}",
 			name = "${name}",
 			title = "${title}");
+
+		return "${response}";
+	}
+
+	macro filterStructuredContentWithPriority {
+		var response = HeadlessWebcontentAPI._filterStructuredContentWithPriority(filtervalue = "${filtervalue}");
 
 		return "${response}";
 	}

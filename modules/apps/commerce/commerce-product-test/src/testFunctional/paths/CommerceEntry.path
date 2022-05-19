@@ -923,6 +923,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAYMENT_SUBSCRIPTION_TOGGLE_ACTIVE</td>
+	<td>//h4[contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]//following::div[contains(@class,'collapse show')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELIVERY_SUBSCRIPTION_TOGGLE</td>
 	<td>//h4[contains(text(), 'Delivery Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>

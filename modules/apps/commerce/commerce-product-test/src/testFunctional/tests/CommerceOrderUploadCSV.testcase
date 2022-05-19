@@ -210,22 +210,6 @@ definition {
 
 			IFrame.closeFrame();
 		}
-
-		task ("When the user start a new order by Import from CSV") {
-			CommerceOrders.importOrderFromType(orderType = "CSV");
-		}
-
-		task ("And when the user try to import a executable file") {
-			UploadDependencyFile.uploadFile(fileName = "Commerce_1.exe");
-
-			Button.clickImport();
-		}
-
-		task ("Then an error message is displayed because the file is not a CSV file") {
-			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
-
-			IFrame.closeFrame();
-		}
 	}
 
 }

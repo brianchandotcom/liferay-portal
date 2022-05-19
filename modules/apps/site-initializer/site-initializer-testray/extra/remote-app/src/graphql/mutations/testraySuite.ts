@@ -44,9 +44,9 @@ export const UpdateSuite = gql`
 `;
 
 export const DeleteSuite = gql`
-	mutation deleteSuite($suiteId: Long) {
+	mutation deleteSuite($id: Long) {
 		c {
-			deleteSuite(suiteId: $suiteId)
+			deleteSuite(suiteId: $id)
 		}
 	}
 `;

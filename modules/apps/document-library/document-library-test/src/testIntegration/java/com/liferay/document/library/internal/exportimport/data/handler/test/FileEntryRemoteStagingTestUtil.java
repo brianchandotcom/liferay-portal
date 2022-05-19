@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,39 +39,42 @@ public class FileEntryRemoteStagingTestUtil {
 			Group remoteLiveGroup, Group remoteStagingGroup)
 		throws Exception {
 
-		PropsValuesTestUtil.setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET",
-			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
 
-		PropsValuesTestUtil.setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(remoteStagingGroup.getGroupId());
+			_addStagingAttribute(
+				serviceContext,
+				StagingUtil.getStagedPortletId(
+					DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
+				true);
+			_addStagingAttribute(
+				serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
+			_addStagingAttribute(
+				serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+				false);
 
-		_addStagingAttribute(
-			serviceContext,
-			StagingUtil.getStagedPortletId(
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
-			true);
-		_addStagingAttribute(
-			serviceContext, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-		_addStagingAttribute(
-			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, false);
+			UserTestUtil.setUser(TestPropsValues.getUser());
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+			StagingLocalServiceUtil.enableRemoteStaging(
+				TestPropsValues.getUserId(), remoteStagingGroup, false, false,
+				"localhost", PortalUtil.getPortalServerPort(false),
+				PortalUtil.getPathContext(), false,
+				remoteLiveGroup.getGroupId(), serviceContext);
 
-		StagingLocalServiceUtil.enableRemoteStaging(
-			TestPropsValues.getUserId(), remoteStagingGroup, false, false,
-			"localhost", PortalUtil.getPortalServerPort(false),
-			PortalUtil.getPathContext(), false, remoteLiveGroup.getGroupId(),
-			serviceContext);
-
-		GroupUtil.clearCache();
+			GroupUtil.clearCache();
+		}
 	}
 
 	private static void _addStagingAttribute(

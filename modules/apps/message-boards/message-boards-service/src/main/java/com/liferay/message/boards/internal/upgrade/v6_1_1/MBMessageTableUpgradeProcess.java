@@ -23,9 +23,7 @@ public class MBMessageTableUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("MBMessage", "subject", "VARCHAR(255) null")) {
-			alterColumnType("MBMessage", "subject", "VARCHAR(255) null");
-		}
+		alterColumnType("MBMessage", "subject", "VARCHAR(255) null");
 	}
 
 }

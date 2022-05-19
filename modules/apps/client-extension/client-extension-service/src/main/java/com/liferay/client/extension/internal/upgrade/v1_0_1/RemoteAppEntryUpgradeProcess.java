@@ -23,9 +23,7 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("RemoteAppEntry", "url")) {
-			alterColumnType("RemoteAppEntry", "url", "VARCHAR(1024) null");
-		}
+		alterColumnType("RemoteAppEntry", "url", "VARCHAR(1024) null");
 	}
 
 }

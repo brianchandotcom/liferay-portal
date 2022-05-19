@@ -24,9 +24,7 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("KBComment", "status")) {
-			runSQL("alter table KBComment add status INT null");
-		}
+		alterTableAddColumn("KBComment", "status", "INT null");
 
 		runSQL(
 			"update KBComment set status = " +

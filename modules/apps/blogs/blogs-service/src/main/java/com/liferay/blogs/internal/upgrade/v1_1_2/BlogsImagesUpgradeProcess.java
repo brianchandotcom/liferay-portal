@@ -55,9 +55,7 @@ public class BlogsImagesUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("BlogsEntry", "smallImageId", "LONG null")) {
-			alterColumnType("BlogsEntry", "smallImageId", "LONG null");
-		}
+		alterColumnType("BlogsEntry", "smallImageId", "LONG null");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(

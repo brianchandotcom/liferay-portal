@@ -23,9 +23,7 @@ public class UpgradeUserGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("UserGroup", "name", "VARCHAR(255) null")) {
-			alterColumnType("UserGroup", "name", "VARCHAR(255) null");
-		}
+		alterColumnType("UserGroup", "name", "VARCHAR(255) null");
 	}
 
 }

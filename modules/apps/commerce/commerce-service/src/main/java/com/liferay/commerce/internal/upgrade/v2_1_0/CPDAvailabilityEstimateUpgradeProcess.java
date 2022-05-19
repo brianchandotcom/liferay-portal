@@ -73,8 +73,7 @@ public class CPDAvailabilityEstimateUpgradeProcess
 
 		runSQL("drop index IX_86A2368F on CPDAvailabilityEstimate");
 
-		runSQL(
-			"alter table CPDAvailabilityEstimate drop column CPDefinitionId");
+		alterTableDropColumn("CPDAvailabilityEstimate", "CPDefinitionId");
 	}
 
 	private void _addIndexes(String tableName) throws Exception {

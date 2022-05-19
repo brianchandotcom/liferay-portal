@@ -24,14 +24,11 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectDefinition", "storageType")) {
-			alterTableAddColumn(
-				"ObjectDefinition", "storageType", "VARCHAR(75)");
+		alterTableAddColumn("ObjectDefinition", "storageType", "VARCHAR(75)");
 
-			runSQL(
-				"update ObjectDefinition set storageType = '" +
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + "'");
-		}
+		runSQL(
+			"update ObjectDefinition set storageType = '" +
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + "'");
 	}
 
 }

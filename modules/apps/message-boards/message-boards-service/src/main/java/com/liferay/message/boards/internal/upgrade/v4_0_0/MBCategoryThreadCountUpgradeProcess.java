@@ -23,7 +23,7 @@ public class MBCategoryThreadCountUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table MBCategory drop column threadCount");
+		alterTableDropColumn("MBCategory", "threadCount");
 	}
 
 }

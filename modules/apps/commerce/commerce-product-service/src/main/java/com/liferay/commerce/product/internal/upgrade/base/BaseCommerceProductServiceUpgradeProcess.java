@@ -14,14 +14,11 @@
 
 package com.liferay.commerce.product.internal.upgrade.base;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -45,17 +42,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 					"Adding column %s to table %s", columnName, tableName));
 		}
 
-		if (!hasColumn(tableName, columnName)) {
-			alterTableAddColumn(tableName, columnName, columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableAddColumn(tableName, columnName, columnType);
 	}
 
 	protected void addIndexes(String tableName) throws Exception {
@@ -95,19 +82,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 					"Dropping column %s from table %s", columnName, tableName));
 		}
 
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
-			}
-		}
+		alterTableDropColumn(tableName, columnName);
 	}
 
 	protected void renameColumn(
@@ -121,20 +96,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 					tableName));
 		}
 
-		String newColumnSimpleName = StringUtil.extractFirst(
-			newColumnName, StringPool.SPACE);
-
-		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alterColumnName(tableName, oldColumnName, newColumnName);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", newColumnName,
-						tableName));
-			}
-		}
+		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	protected boolean tableHasIndex(String tableName, String indexName)

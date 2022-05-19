@@ -23,9 +23,7 @@ public class UpgradeExpandoColumn extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ExpandoColumn", "modifiedDate")) {
-			alterTableAddColumn("ExpandoColumn", "modifiedDate", "DATE");
-		}
+		alterTableAddColumn("ExpandoColumn", "modifiedDate", "DATE");
 
 		runSQL(
 			"update ExpandoColumn set modifiedDate = CURRENT_TIMESTAMP where " +

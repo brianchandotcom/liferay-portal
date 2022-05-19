@@ -23,9 +23,7 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("Group_", "modifiedDate")) {
-			alterTableAddColumn("Group_", "modifiedDate", "DATE");
-		}
+		alterTableAddColumn("Group_", "modifiedDate", "DATE");
 
 		runSQL(
 			"update Group_ set modifiedDate = CURRENT_TIMESTAMP where " +

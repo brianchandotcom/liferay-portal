@@ -23,10 +23,6 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("DispatchTrigger", "overlapAllowed")) {
-			return;
-		}
-
 		alterTableAddColumn("DispatchTrigger", "overlapAllowed", "BOOLEAN");
 	}
 

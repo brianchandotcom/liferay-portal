@@ -23,9 +23,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("FragmentEntry", "readOnly")) {
-			runSQL("alter table FragmentEntry add readOnly BOOLEAN");
-		}
+		alterTableAddColumn("FragmentEntry", "readOnly", "BOOLEAN");
 	}
 
 }

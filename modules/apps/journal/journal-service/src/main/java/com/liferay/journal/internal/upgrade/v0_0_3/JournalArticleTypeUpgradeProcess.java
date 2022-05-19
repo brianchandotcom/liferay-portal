@@ -120,7 +120,7 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 
 	private void _alterTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table JournalArticle drop column type_");
+			alterTableDropColumn("JournalArticle", "type_");
 		}
 	}
 

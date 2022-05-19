@@ -150,7 +150,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void updateFileEntryFileNames() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table DLFileEntry add fileName VARCHAR(255) null");
+			alterTableAddColumn("DLFileEntry", "fileName", "VARCHAR(255) null");
 
 			runSQL(
 				"update DLFileEntry set fileName = title where title like " +
@@ -359,7 +359,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void updateFileVersionFileNames() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table DLFileVersion add fileName VARCHAR(255) null");
+			alterTableAddColumn(
+				"DLFileVersion", "fileName", "VARCHAR(255) null");
 
 			runSQL(
 				"update DLFileVersion set fileName = title where title like " +

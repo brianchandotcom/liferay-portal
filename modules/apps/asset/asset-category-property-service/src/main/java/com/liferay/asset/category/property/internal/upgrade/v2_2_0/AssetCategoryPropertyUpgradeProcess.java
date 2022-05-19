@@ -23,19 +23,9 @@ public class AssetCategoryPropertyUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				"AssetCategoryProperty", "key_", "VARCHAR(75) null")) {
+		alterColumnType("AssetCategoryProperty", "key_", "VARCHAR(255) null");
 
-			alterColumnType(
-				"AssetCategoryProperty", "key_", "VARCHAR(255) null");
-		}
-
-		if (hasColumnType(
-				"AssetCategoryProperty", "value", "VARCHAR(75) null")) {
-
-			alterColumnType(
-				"AssetCategoryProperty", "value", "VARCHAR(255) null");
-		}
+		alterColumnType("AssetCategoryProperty", "value", "VARCHAR(255) null");
 	}
 
 }

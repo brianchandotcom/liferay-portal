@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_6_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v4_6_0.util.CommerceSubscriptionEntryTable;
 
 /**
  * @author Luca Pellizzon
@@ -25,82 +24,34 @@ public class SubscriptionUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionLength")) {
+		addColumn(
+			"CommerceSubscriptionEntry", "deliverySubscriptionLength",
+			"INTEGER");
 
-			addColumn(
-				"CommerceSubscriptionEntry", "deliverySubscriptionLength",
-				"INTEGER");
-		}
+		addColumn(
+			"CommerceSubscriptionEntry", "deliverySubscriptionType",
+			"VARCHAR(75)");
 
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionType")) {
+		addColumn(
+			"CommerceSubscriptionEntry", "deliverySubTypeSettings", "TEXT");
 
-			addColumn(
-				"CommerceSubscriptionEntry", "deliverySubscriptionType",
-				"VARCHAR(75)");
-		}
+		addColumn("CommerceSubscriptionEntry", "deliveryCurrentCycle", "LONG");
 
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubTypeSettings")) {
+		addColumn(
+			"CommerceSubscriptionEntry", "deliveryMaxSubscriptionCycles",
+			"LONG");
 
-			addColumn(
-				"CommerceSubscriptionEntry", "deliverySubTypeSettings", "TEXT");
-		}
+		addColumn(
+			"CommerceSubscriptionEntry", "deliverySubscriptionStatus",
+			"INTEGER");
 
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryCurrentCycle")) {
+		addColumn(
+			"CommerceSubscriptionEntry", "deliveryLastIterationDate", "DATE");
 
-			addColumn(
-				"CommerceSubscriptionEntry", "deliveryCurrentCycle", "LONG");
-		}
+		addColumn(
+			"CommerceSubscriptionEntry", "deliveryNextIterationDate", "DATE");
 
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryMaxSubscriptionCycles")) {
-
-			addColumn(
-				"CommerceSubscriptionEntry", "deliveryMaxSubscriptionCycles",
-				"LONG");
-		}
-
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionStatus")) {
-
-			addColumn(
-				"CommerceSubscriptionEntry", "deliverySubscriptionStatus",
-				"INTEGER");
-		}
-
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryLastIterationDate")) {
-
-			addColumn(
-				"CommerceSubscriptionEntry", "deliveryLastIterationDate",
-				"DATE");
-		}
-
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryNextIterationDate")) {
-
-			addColumn(
-				"CommerceSubscriptionEntry", "deliveryNextIterationDate",
-				"DATE");
-		}
-
-		if (!hasColumn(
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryStartDate")) {
-
-			addColumn("CommerceSubscriptionEntry", "deliveryStartDate", "DATE");
-		}
+		addColumn("CommerceSubscriptionEntry", "deliveryStartDate", "DATE");
 	}
 
 }

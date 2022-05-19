@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.price.list.internal.upgrade.base;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -35,17 +34,7 @@ public abstract class BaseCommercePriceListUpgradeProcess
 					"Adding column %s to table %s", columnName, tableName));
 		}
 
-		if (!hasColumn(tableName, columnName)) {
-			alterTableAddColumn(tableName, columnName, columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableAddColumn(tableName, columnName, columnType);
 	}
 
 	@Override
@@ -60,19 +49,7 @@ public abstract class BaseCommercePriceListUpgradeProcess
 					"Dropping column %s from table %s", columnName, tableName));
 		}
 
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
-			}
-		}
+		alterTableDropColumn(tableName, columnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

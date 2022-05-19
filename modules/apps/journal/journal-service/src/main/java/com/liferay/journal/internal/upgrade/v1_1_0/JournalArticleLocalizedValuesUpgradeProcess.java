@@ -71,7 +71,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 
 	private void _dropDescriptionColumn() throws Exception {
 		try {
-			runSQL("alter table JournalArticle drop column description");
+			alterTableDropColumn("JournalArticle", "description");
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
@@ -82,7 +82,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 
 	private void _dropTitleColumn() throws Exception {
 		try {
-			runSQL("alter table JournalArticle drop column title");
+			alterTableDropColumn("JournalArticle", "title");
 		}
 		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
@@ -190,11 +190,8 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	}
 
 	private void _updateJournalArticleDefaultLanguageId() throws Exception {
-		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
-			runSQL(
-				"alter table JournalArticle add defaultLanguageId " +
-					"VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"JournalArticle", "defaultLanguageId", "VARCHAR(75) null");
 
 		_updateDefaultLanguage("title", false);
 		_updateDefaultLanguage("content", true);

@@ -51,9 +51,8 @@ public class UpgradeUserGroupRole extends UpgradeProcess {
 
 		removePrimaryKey("UserGroupRole");
 
-		runSQL(
-			"alter table UserGroupRole add userGroupRoleId LONG default 0 " +
-				"not null");
+		alterTableAddColumn(
+			"UserGroupRole", "userGroupRoleId", "LONG default 0 not null");
 
 		long userGroupRoleId = 0;
 

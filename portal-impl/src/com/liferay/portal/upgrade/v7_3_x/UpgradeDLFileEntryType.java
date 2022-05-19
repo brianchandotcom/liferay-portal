@@ -79,9 +79,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		if (!hasColumn("DLFileEntryType", "dataDefinitionId")) {
-			runSQL("alter table DLFileEntryType add dataDefinitionId LONG ");
-		}
+		alterTableAddColumn("DLFileEntryType", "dataDefinitionId", "LONG");
 	}
 
 }

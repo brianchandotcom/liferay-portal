@@ -14,11 +14,9 @@
 
 package com.liferay.commerce.account.internal.upgrade.v2_0_0;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Ethan Bustad
@@ -41,20 +39,7 @@ public class CommerceAccountGroupSystemUpgradeProcess extends UpgradeProcess {
 					tableName));
 		}
 
-		String newColumnSimpleName = StringUtil.extractFirst(
-			newColumnName, StringPool.SPACE);
-
-		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alterColumnName(tableName, oldColumnName, newColumnName);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", newColumnName,
-						tableName));
-			}
-		}
+		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

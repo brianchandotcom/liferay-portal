@@ -52,92 +52,50 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	private void _addKaleoDefinitionId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("KaleoAction", "kaleoDefinitionId")) {
-				alterTableAddColumn("KaleoAction", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoAction", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoCondition", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoCondition", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoCondition", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoDefinitionVersion", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoDefinitionVersion", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoDefinitionVersion", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoInstance", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoInstance", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoInstance", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoInstanceToken", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoInstanceToken", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoInstanceToken", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoLog", "kaleoDefinitionId")) {
-				alterTableAddColumn("KaleoLog", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoLog", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoNode", "kaleoDefinitionId")) {
-				alterTableAddColumn("KaleoNode", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoNode", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoNotification", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoNotification", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoNotification", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoNotificationRecipient", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoNotificationRecipient", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoNotificationRecipient", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTask", "kaleoDefinitionId")) {
-				alterTableAddColumn("KaleoTask", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoTask", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTaskAssignment", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTaskAssignment", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoTaskAssignment", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn(
-					"KaleoTaskAssignmentInstance", "kaleoDefinitionId")) {
+			alterTableAddColumn(
+				"KaleoTaskAssignmentInstance", "kaleoDefinitionId", "LONG");
 
-				alterTableAddColumn(
-					"KaleoTaskAssignmentInstance", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoTaskForm", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTaskForm", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTaskForm", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoTaskFormInstance", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTaskFormInstance", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTaskFormInstance", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoTaskInstanceToken", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTaskInstanceToken", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTaskInstanceToken", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoTimer", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTimer", "kaleoDefinitionId")) {
-				alterTableAddColumn("KaleoTimer", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn(
+				"KaleoTimerInstanceToken", "kaleoDefinitionId", "LONG");
 
-			if (!hasColumn("KaleoTimerInstanceToken", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTimerInstanceToken", "kaleoDefinitionId", "LONG");
-			}
-
-			if (!hasColumn("KaleoTransition", "kaleoDefinitionId")) {
-				alterTableAddColumn(
-					"KaleoTransition", "kaleoDefinitionId", "LONG");
-			}
+			alterTableAddColumn("KaleoTransition", "kaleoDefinitionId", "LONG");
 		}
 	}
 

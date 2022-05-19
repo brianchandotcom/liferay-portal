@@ -24,9 +24,7 @@ public class UpgradeMappingTables extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		for (String tableName : _TABLE_NAMES) {
-			if (!hasColumnType(tableName, "companyId", "LONG NOT NULL")) {
-				alterColumnType(tableName, "companyId", "LONG NOT NULL");
-			}
+			alterColumnType(tableName, "companyId", "LONG NOT NULL");
 		}
 	}
 

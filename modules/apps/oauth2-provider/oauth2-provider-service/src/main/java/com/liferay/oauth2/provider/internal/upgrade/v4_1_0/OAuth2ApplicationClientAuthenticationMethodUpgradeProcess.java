@@ -24,11 +24,9 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("OAuth2Application", "clientAuthenticationMethod")) {
-			alterTableAddColumn(
-				"OAuth2Application", "clientAuthenticationMethod",
-				"VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"OAuth2Application", "clientAuthenticationMethod",
+			"VARCHAR(75) null");
 
 		runSQL(
 			"update OAuth2Application set clientAuthenticationMethod = " +
@@ -38,10 +36,7 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 			"update OAuth2Application set clientAuthenticationMethod = " +
 				"'none' where (clientSecret is null OR clientSecret = '');");
 
-		if (!hasColumn("OAuth2Application", "jwks")) {
-			alterTableAddColumn(
-				"OAuth2Application", "jwks", "VARCHAR(3999) null");
-		}
+		alterTableAddColumn("OAuth2Application", "jwks", "VARCHAR(3999) null");
 	}
 
 }

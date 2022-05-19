@@ -863,9 +863,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMFormInstance() throws Exception {
-		if (!hasColumn("DDMFormInstance", "expirationDate")) {
-			runSQL("alter table DDMFormInstance add expirationDate DATE null");
-		}
+		alterTableAddColumn("DDMFormInstance", "expirationDate", "DATE null");
 	}
 
 	private void _upgradePollsQuestion(

@@ -23,10 +23,7 @@ public class ObjectActionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectAction", "conditionExpression")) {
-			alterTableAddColumn(
-				"ObjectAction", "conditionExpression", "TEXT null");
-		}
+		alterTableAddColumn("ObjectAction", "conditionExpression", "TEXT null");
 	}
 
 }

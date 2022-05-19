@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBTemplateTable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -85,39 +84,17 @@ public class KBTemplateUpgradeProcess extends UpgradeProcess {
 			String tableName, String columnName, String dataType, String data)
 		throws Exception {
 
-		if (hasColumn(tableName, columnName)) {
-			return;
-		}
-
 		String dataTypeUpperCase = StringUtil.toUpperCase(dataType);
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("alter table ");
-		sb.append(tableName);
-		sb.append(" add ");
-		sb.append(columnName);
-		sb.append(StringPool.SPACE);
-		sb.append(dataTypeUpperCase);
-
-		String sql = sb.toString();
-
 		if (dataTypeUpperCase.equals("DATE") || dataType.equals("STRING")) {
-			sql = sql.concat(" null");
+			dataTypeUpperCase = dataTypeUpperCase.concat(" null");
 		}
 
-		runSQL(sql);
+		alterTableAddColumn(tableName, columnName, dataTypeUpperCase);
 
-		sb.setIndex(0);
-
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set ");
-		sb.append(columnName);
-		sb.append(" = ");
-		sb.append(data);
-
-		runSQL(sb.toString());
+		runSQL(
+			StringBundler.concat(
+				"update ", tableName, " set ", columnName, " = ", data));
 	}
 
 	protected void updateSchema(
@@ -132,13 +109,9 @@ public class KBTemplateUpgradeProcess extends UpgradeProcess {
 		updateColumn(oldTableName, "engineType", "INTEGER", "0");
 		updateColumn(oldTableName, "cacheable", "BOOLEAN", "TRUE");
 
-		if (hasColumn(oldTableName, "templateId")) {
-			runSQL("alter table " + oldTableName + " drop column templateId");
-		}
+		alterTableDropColumn(oldTableName, "templateId");
 
-		if (hasColumn(oldTableName, "description")) {
-			runSQL("alter table " + oldTableName + " drop column description");
-		}
+		alterTableDropColumn(oldTableName, "description");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

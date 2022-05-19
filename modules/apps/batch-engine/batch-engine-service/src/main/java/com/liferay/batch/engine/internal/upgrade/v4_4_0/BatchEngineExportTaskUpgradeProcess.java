@@ -23,15 +23,11 @@ public class BatchEngineExportTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("BatchEngineExportTask", "processedItemsCount")) {
-			alterTableAddColumn(
-				"BatchEngineExportTask", "processedItemsCount", "INTEGER");
-		}
+		alterTableAddColumn(
+			"BatchEngineExportTask", "processedItemsCount", "INTEGER");
 
-		if (!hasColumn("BatchEngineExportTask", "totalItemsCount")) {
-			alterTableAddColumn(
-				"BatchEngineExportTask", "totalItemsCount", "INTEGER");
-		}
+		alterTableAddColumn(
+			"BatchEngineExportTask", "totalItemsCount", "INTEGER");
 	}
 
 }

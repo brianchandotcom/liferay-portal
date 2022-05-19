@@ -50,10 +50,7 @@ public class ViewCountUpgradeProcess extends UpgradeProcess {
 			preparedStatement.executeUpdate();
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"alter table ", _tableName, " drop column ",
-				_viewCountColumnName));
+		alterTableDropColumn(_tableName, _viewCountColumnName);
 	}
 
 	private final Class<?> _clazz;

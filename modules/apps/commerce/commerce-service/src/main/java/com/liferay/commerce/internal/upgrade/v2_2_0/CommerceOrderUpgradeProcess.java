@@ -49,11 +49,9 @@ public class CommerceOrderUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrder", "commerceAccountId", "LONG");
 
-		if (hasColumn(CommerceOrderModelImpl.TABLE_NAME, "siteGroupId")) {
-			runSQL("update CommerceOrder set groupId = siteGroupId");
+		runSQL("update CommerceOrder set groupId = siteGroupId");
 
-			dropColumn(CommerceOrderModelImpl.TABLE_NAME, "siteGroupId");
-		}
+		dropColumn(CommerceOrderModelImpl.TABLE_NAME, "siteGroupId");
 
 		if (!hasColumn(
 				CommerceOrderModelImpl.TABLE_NAME, "orderOrganizationId") ||

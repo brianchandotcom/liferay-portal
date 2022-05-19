@@ -23,15 +23,10 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectDefinition", "accountERObjectFieldId")) {
-			alterTableAddColumn(
-				"ObjectDefinition", "accountERObjectFieldId", "LONG");
-		}
-
-		if (!hasColumn("ObjectDefinition", "accountEntryRestricted")) {
-			alterTableAddColumn(
-				"ObjectDefinition", "accountEntryRestricted", "BOOLEAN");
-		}
+		alterTableAddColumn(
+			"ObjectDefinition", "accountERObjectFieldId", "LONG");
+		alterTableAddColumn(
+			"ObjectDefinition", "accountEntryRestricted", "BOOLEAN");
 	}
 
 }

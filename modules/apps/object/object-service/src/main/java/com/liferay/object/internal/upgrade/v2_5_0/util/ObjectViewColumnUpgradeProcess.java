@@ -23,9 +23,7 @@ public class ObjectViewColumnUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectViewColumn", "label")) {
-			alterTableAddColumn("ObjectViewColumn", "label", "STRING null");
-		}
+		alterTableAddColumn("ObjectViewColumn", "label", "STRING null");
 	}
 
 }

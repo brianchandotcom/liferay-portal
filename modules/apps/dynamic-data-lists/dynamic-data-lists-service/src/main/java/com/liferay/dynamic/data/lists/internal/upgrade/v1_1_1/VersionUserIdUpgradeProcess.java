@@ -23,11 +23,7 @@ public class VersionUserIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				"DDLRecordSet", "versionUserId", "VARCHAR(75) null")) {
-
-			alterColumnType("DDLRecordSet", "versionUserId", "LONG");
-		}
+		alterColumnType("DDLRecordSet", "versionUserId", "LONG");
 	}
 
 }

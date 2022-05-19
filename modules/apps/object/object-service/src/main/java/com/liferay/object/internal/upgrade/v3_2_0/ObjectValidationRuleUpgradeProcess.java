@@ -23,9 +23,7 @@ public class ObjectValidationRuleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectValidationRule", "name")) {
-			alterTableAddColumn("ObjectValidationRule", "name", "STRING null");
-		}
+		alterTableAddColumn("ObjectValidationRule", "name", "STRING null");
 	}
 
 }

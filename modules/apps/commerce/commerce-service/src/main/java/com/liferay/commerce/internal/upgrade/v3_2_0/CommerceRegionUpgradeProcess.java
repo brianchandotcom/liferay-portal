@@ -24,9 +24,7 @@ public class CommerceRegionUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("CommerceRegion", "groupId")) {
-			alterTableDropColumn("CommerceRegion", "groupId");
-		}
+		alterTableDropColumn("CommerceRegion", "groupId");
 	}
 
 }

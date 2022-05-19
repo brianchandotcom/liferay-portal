@@ -23,14 +23,9 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectField", "businessType")) {
-			alterTableAddColumn(
-				"ObjectField", "businessType", "VARCHAR(75) null");
-		}
+		alterTableAddColumn("ObjectField", "businessType", "VARCHAR(75) null");
 
-		if (!hasColumn("ObjectField", "dbType")) {
-			alterColumnName("ObjectField", "type_", "dbType VARCHAR(75) null");
-		}
+		alterColumnName("ObjectField", "type_", "dbType VARCHAR(75) null");
 	}
 
 }

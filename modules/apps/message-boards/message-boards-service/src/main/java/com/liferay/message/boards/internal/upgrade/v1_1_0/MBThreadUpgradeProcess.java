@@ -28,9 +28,7 @@ public class MBThreadUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("MBThread", "title")) {
-			runSQL("alter table MBThread add title STRING null");
-		}
+		alterTableAddColumn("MBThread", "title", "STRING null");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(

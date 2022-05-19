@@ -23,13 +23,9 @@ public class AppUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType("Marketplace_App", "title", "VARCHAR(75) null")) {
-			alterColumnType("Marketplace_App", "title", "VARCHAR(255) null");
-		}
+		alterColumnType("Marketplace_App", "title", "VARCHAR(255) null");
 
-		if (hasColumnType("Marketplace_App", "category", "VARCHAR(75) null")) {
-			alterColumnType("Marketplace_App", "category", "VARCHAR(255) null");
-		}
+		alterColumnType("Marketplace_App", "category", "VARCHAR(255) null");
 	}
 
 }

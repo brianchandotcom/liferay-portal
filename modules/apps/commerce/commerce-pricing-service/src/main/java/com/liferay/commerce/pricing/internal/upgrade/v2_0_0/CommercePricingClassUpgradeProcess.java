@@ -77,9 +77,7 @@ public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		if (hasColumn("CommercePricingClass", "groupId")) {
-			alterTableDropColumn("CommercePricingClass", "groupId");
-		}
+		alterTableDropColumn("CommercePricingClass", "groupId");
 	}
 
 	private static final String[] _OWNER_PERMISSIONS = {

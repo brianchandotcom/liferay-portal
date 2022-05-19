@@ -23,9 +23,7 @@ public class UpgradeAssetEntryTitle extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("AssetEntry", "title", "TEXT null")) {
-			alterColumnType("AssetEntry", "title", "TEXT null");
-		}
+		alterColumnType("AssetEntry", "title", "TEXT null");
 	}
 
 }

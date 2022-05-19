@@ -313,18 +313,6 @@ public class TrafficChannel {
 		).build();
 	private static final Map<Type, Tuple> _tuples =
 		HashMapBuilder.<Type, Tuple>put(
-			Type.ORGANIC,
-			new Tuple(
-				"/analytics_reports" +
-					"/get_country_search_keywords_traffic_sources",
-				Collections.singletonMap("name", new String[] {"organic"}))
-		).put(
-			Type.PAID,
-			new Tuple(
-				"/analytics_reports" +
-					"/get_country_search_keywords_traffic_sources",
-				Collections.singletonMap("name", new String[] {"paid"}))
-		).put(
 			Type.REFERRAL,
 			new Tuple(
 				"/analytics_reports/get_referral_traffic_sources",

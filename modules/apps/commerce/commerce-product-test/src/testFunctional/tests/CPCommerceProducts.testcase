@@ -1716,4 +1716,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Inactive Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckIncompleteProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "6",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Incomplete Product",
+			status = "Incomplete",
+			productCatalog = "Master",
+			productName = "Incomplete Product");
+	}
 }

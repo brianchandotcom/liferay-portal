@@ -26,6 +26,7 @@ import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../services/liferay/liferay';
 import {getStatusLabel} from '../../../../util/constants';
+import {searchUtil} from '../../../../util/search';
 
 const Build = () => {
 	const {buildId} = useParams();
@@ -118,7 +119,9 @@ const Build = () => {
 					navigateTo: ({id}) => `case-result/${id}`,
 				}}
 				transformData={(data) => data?.caseResults}
-				variables={{filter: `buildId eq ${buildId}`}}
+				variables={{
+					filter: searchUtil.eq('buildId', buildId as string),
+				}}
 			/>
 		</Container>
 	);

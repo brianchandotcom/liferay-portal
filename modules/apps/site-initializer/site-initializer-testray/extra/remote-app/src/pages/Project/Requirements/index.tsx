@@ -19,6 +19,7 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getRequirements} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {searchUtil} from '../../../util/search';
 import RequirementsModal from './RequirementModal';
 import useRequirementActions from './useRequirementActions';
 
@@ -89,7 +90,9 @@ const Requirements = () => {
 						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.requirements}
-					variables={{filter: `projectId eq ${projectId}`}}
+					variables={{
+						filter: searchUtil.eq('projectId', projectId as string),
+					}}
 				/>
 			</Container>
 

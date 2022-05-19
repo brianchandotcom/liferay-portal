@@ -22,6 +22,7 @@ import {TestrayCase, getCaseResults} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {getStatusLabel} from '../../../util/constants';
 import dayjs from '../../../util/date';
+import {searchUtil} from '../../../util/search';
 import useCaseActions from './useCaseActions';
 
 const Case = () => {
@@ -161,7 +162,9 @@ const Case = () => {
 							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
 					transformData={(data) => data?.caseResults}
-					variables={{filter: `caseId eq ${caseId}`}}
+					variables={{
+						filter: searchUtil.eq('caseId', caseId as string),
+					}}
 				/>
 			</Container>
 		</>

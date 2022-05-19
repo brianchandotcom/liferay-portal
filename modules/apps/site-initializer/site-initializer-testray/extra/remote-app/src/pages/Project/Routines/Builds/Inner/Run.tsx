@@ -19,6 +19,7 @@ import ListView from '../../../../../components/ListView/ListView';
 import {APIResponse, CTypePagination} from '../../../../../graphql/queries';
 import {TestrayRun, getRuns} from '../../../../../graphql/queries/testrayRun';
 import i18n from '../../../../../i18n';
+import {searchUtil} from '../../../../../util/search';
 
 const transformData = (
 	data: CTypePagination<'runs', TestrayRun>
@@ -87,7 +88,9 @@ const Runs = () => {
 					],
 				}}
 				transformData={transformData}
-				variables={{filter: `buildId eq ${buildId}`}}
+				variables={{
+					filter: searchUtil.eq('buildId', buildId as string),
+				}}
 			/>
 		</Container>
 	);

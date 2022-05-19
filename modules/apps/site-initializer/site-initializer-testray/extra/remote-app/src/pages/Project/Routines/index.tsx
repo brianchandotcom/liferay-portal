@@ -20,12 +20,15 @@ import ProgressBar from '../../../components/ProgressBar';
 import {getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {getTimeFromNow} from '../../../util/date';
+import {searchUtil} from '../../../util/search';
 import RoutineModal from './RoutineModal';
 import useRoutineActions from './useRoutineActions';
 
 const Routines = () => {
-	const {projectId} = useParams();
+	const {projectId: _projectId} = useParams();
 	const {actions, formModal} = useRoutineActions();
+
+	const projectId = Number(_projectId);
 
 	return (
 		<Container title={i18n.translate('routines')}>
@@ -86,13 +89,12 @@ const Routines = () => {
 					navigateTo: ({id}) => id?.toString(),
 				}}
 				transformData={(data) => data?.c?.routines}
-				variables={{filter: `projectId eq ${projectId}`}}
+				variables={{
+					filter: searchUtil.eq('projectId', projectId),
+				}}
 			/>
 
-			<RoutineModal
-				modal={formModal.modal}
-				projectId={Number(projectId)}
-			/>
+			<RoutineModal modal={formModal.modal} projectId={projectId} />
 		</Container>
 	);
 };

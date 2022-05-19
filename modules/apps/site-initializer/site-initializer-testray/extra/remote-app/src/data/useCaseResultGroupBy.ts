@@ -20,6 +20,7 @@ import {
 	FacetAggregationQuery,
 	getCaseResultsAggregation,
 } from '../graphql/queries';
+import {searchUtil} from '../util/search';
 
 enum Statuses {
 	PASSED = 'PASSED',
@@ -53,7 +54,7 @@ const useCaseResultGroupBy = () => {
 		{
 			variables: {
 				aggregation: 'dueStatus',
-				filter: `buildId eq ${buildId}`,
+				filter: searchUtil.eq('buildId', buildId),
 			},
 		}
 	);

@@ -24,6 +24,7 @@ import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
+import {searchUtil} from '../../../util/search';
 import RoutineBuildModal from './RoutineBuildModal';
 import useRoutineActions from './useRoutineActions';
 
@@ -199,7 +200,9 @@ const Routine = () => {
 					navigateTo: ({id}) => `build/${id}`,
 				}}
 				transformData={(data) => data?.builds}
-				variables={{filter: `routineId eq ${routineId}`}}
+				variables={{
+					filter: searchUtil.eq('routineId', routineId as string),
+				}}
 			/>
 
 			<RoutineBuildModal modal={formModal.modal} />

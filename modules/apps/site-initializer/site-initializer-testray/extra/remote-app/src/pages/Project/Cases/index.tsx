@@ -20,6 +20,7 @@ import {TableProps} from '../../../components/Table';
 import {getCases} from '../../../graphql/queries';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {searchUtil} from '../../../util/search';
 import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
 
@@ -120,7 +121,9 @@ const Cases = () => {
 				<CaseListView
 					actions={actions}
 					formModal={formModal}
-					variables={{filter: `projectId eq ${projectId}`}}
+					variables={{
+						filter: searchUtil.eq('projectId', projectId as string),
+					}}
 				/>
 			</Container>
 

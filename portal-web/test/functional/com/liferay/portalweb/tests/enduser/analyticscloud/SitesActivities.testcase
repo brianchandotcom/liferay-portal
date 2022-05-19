@@ -13,7 +13,7 @@ definition {
 
 		ACSettings.takeTokenFromAnalyticsCloud();
 
-		TestCase.setUpPortalInstance();
+		// TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
 
@@ -111,6 +111,84 @@ definition {
 
 			ACTimeFilter.setLast180Days();
 		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-10257 | Test Summary: Assert total amount of views in all cards"
+	@ignore = "true"
+	@priority = "4"
+	test AssertTotalAmountOfViewsInAllCards {
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Login new user and view page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("Interation with page") {
+			ACUtils.navigateToSitePageWithUser(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset views for 24 hours") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("Get views value"){
+			var current = ACSettings.getCurrentNumber(metricName = "Views");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert views by location") {
+			var country = ACUtils.getIPCountry();
+
+			ACCards.viewGeomapTableText(
+				cardTitle = "Sessions by Location",
+				leftText = "${country}",
+				rightText = "${current} 100%");
+		}
+
+		task ("Assert views by devices metric") {
+			ACAssets.viewTechnologyDeviceViewsAndPercentage(
+				actionValue = "${current} Views",
+				cardTitle = "Views by Technology",
+				deviceName = "Desktop",
+				percentageValue = "100%");
+		}
+
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8275 | Test Summary: Site Activity Card: Can filter graph by day"

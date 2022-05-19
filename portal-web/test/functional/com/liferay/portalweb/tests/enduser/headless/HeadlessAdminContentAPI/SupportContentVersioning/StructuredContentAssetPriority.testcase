@@ -55,4 +55,27 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test StructuredContentDraftContainsSetPriorityValue {
+		property portal.acceptance = "true";
+
+		task ("When create a structuredContent draft with Headless Admin Content POST '/v1.0/sites/{siteId}/structured-contents/draft' with a priority field set (as in the json example attached)") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "Text",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "1",
+				title = "Title");
+		}
+
+		task ("Then the response body includes the set priority") {
+			HeadlessWebcontentAPI.assertPriorityFieldWithDefaultValue(
+				expectedPriorityDefaultValue = "1.0",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
 }

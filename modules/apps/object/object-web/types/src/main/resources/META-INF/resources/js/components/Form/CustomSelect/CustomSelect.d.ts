@@ -38,7 +38,7 @@ interface IProps<T extends CustomItem = CustomItem> {
 	error?: string;
 	feedbackMessage?: string;
 	id?: string;
-	label: string;
+	label?: string;
 	onChange?: (selected: T) => void;
 	options: T[];
 	required?: boolean;

@@ -50,6 +50,11 @@
 	<td>//button[contains(@class,'invite-button')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACCOUNT_USER_NAME</td>
+	<td>//td[contains(@class, 'lfr-email-address-column') and contains(text(), '${email}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

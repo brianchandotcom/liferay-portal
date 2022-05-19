@@ -17,12 +17,12 @@
 </tr>
 <tr>
 	<td>REGIONS_NAMES</td>
-	<td>//option[contains(@value, '${regionName}')]</td>
+	<td>//option[contains(text(), '${regionName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISASTER_REGION</td>
-	<td>//select[contains(@name, 'dxp.disasterDataCenterRegion')]//option[contains(@value, '${region}')]</td>
+	<td>//select[contains(@name, 'dxp.disasterDataCenterRegion')]//option[contains(text(), '${region}')]</td>
 	<td></td>
 </tr>
 <tr>

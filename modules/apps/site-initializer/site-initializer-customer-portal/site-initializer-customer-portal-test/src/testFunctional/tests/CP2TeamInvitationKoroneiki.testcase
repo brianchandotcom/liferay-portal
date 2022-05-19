@@ -1,0 +1,73 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//CustomerPortal.setUpForCP20();
+
+		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        CP2TeamMembers.deleteMemberInvitedViaAccounts();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+
+			//CustomerPortal.tearDownForOktaAndSAML();
+
+			//CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+    @priority = "5"
+    test IfInvitedIsSeenOnAccountRoles {
+        Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@liferay.com",
+			rowRole = "User");
+
+        CP2TeamMembers.clickTeamMembersSendInvitation();
+
+        Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+        Navigator.gotoNavTab(navTab = "Users");
+
+        AssertElementPresent(
+            locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME",
+            email = "test01@liferay.com");
+    }
+}

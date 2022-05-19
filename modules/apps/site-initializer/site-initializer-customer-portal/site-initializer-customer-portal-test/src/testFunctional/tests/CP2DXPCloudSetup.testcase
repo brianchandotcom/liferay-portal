@@ -15,14 +15,10 @@ definition {
 		//CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
-
-		CP2DXPCloudSetup.addObjectsForDXPCloud();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		CP2DXPCloudSetup.deleteObjectsForDXPCloud();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -40,6 +36,8 @@ definition {
 	@description = "Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
 	@priority = "5"
 	test CanChooseDisasterRecoveryDataCenter {
+		CP2DXPCloudSetup.addObjectsForDXPCloud();
+
 		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
@@ -56,7 +54,9 @@ definition {
 
 		CustomerPortal.clickOnSkipForNowButton();
 
-		CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,São Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+		CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+	
+		CP2DXPCloudSetup.deleteObjectsForDXPCloud();
 	}
 
 	@description = "Verify if the user can choose an option at 'Primary Data Center Region"
@@ -78,7 +78,7 @@ definition {
 
 		CustomerPortal.clickOnSkipForNowButton();
 
-		CP2DXPCloudSetup.viewRegionList(regionList = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,São Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
+		CP2DXPCloudSetup.viewRegionList(regionList = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
 	}
 
 	@description = "Verify if Submit button is only enabled when all the fields are filled"

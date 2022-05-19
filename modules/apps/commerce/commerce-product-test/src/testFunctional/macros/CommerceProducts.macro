@@ -145,4 +145,56 @@ definition {
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
 	}
+
+	macro convertProductToDraft {
+
+		if ("${status}" == "Draft") {
+			AssertElementPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			AssertElementNotPresent(
+				key_optionValue = "Convert To Draft",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+		}
+		else {
+			AssertElementNotPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			Click(
+				key_optionValue = "Convert To Draft",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+			Click(locator1 = "Button#CANCEL");
+
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			Click(
+				key_optionValue = "Convert To Draft",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+			AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_CONVERT_TO_DRAFT_MODAL_MESSAGE");
+
+			Click(locator1 = "Button#OK");
+
+			AssertElementPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+	}
 }

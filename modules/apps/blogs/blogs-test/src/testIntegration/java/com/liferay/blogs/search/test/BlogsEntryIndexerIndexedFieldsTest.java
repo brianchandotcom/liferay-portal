@@ -118,6 +118,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 				searchRequestBuilderFactory.builder(
 				).companyId(
 					_group.getCompanyId()
+				).fetchSourceIncludes(
+					new String[] {"*_sortable"}
 				).fields(
 					StringPool.STAR
 				).groupIds(
@@ -128,8 +130,6 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 					MODEL_INDEXER_CLASS
 				).queryString(
 					searchTerm
-				).fetchSource(
-					true
 				).build()));
 	}
 

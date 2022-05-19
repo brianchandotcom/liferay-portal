@@ -78,7 +78,7 @@ public class FieldValuesAssert {
 			Map<String, Object> sourcesMap = _getSourcesMap(searchResponse);
 
 			for (String key : filteredFieldValuesMap.keySet()) {
-				if (sourcesMap.containsKey(key)) {
+				if (key.endsWith("_sortable") && sourcesMap.containsKey(key)) {
 					filteredFieldValuesMap.put(
 						key, _toObjectString(sourcesMap.get(key)));
 				}

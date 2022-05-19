@@ -126,6 +126,8 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 				searchRequestBuilderFactory.builder(
 				).companyId(
 					_group.getCompanyId()
+				).fetchSourceIncludes(
+					new String[] {"*_sortable"}
 				).fields(
 					StringPool.STAR
 				).groupIds(
@@ -134,8 +136,6 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 					MODEL_INDEXER_CLASS
 				).queryString(
 					searchTerm
-				).fetchSource(
-					true
 				).build()));
 	}
 

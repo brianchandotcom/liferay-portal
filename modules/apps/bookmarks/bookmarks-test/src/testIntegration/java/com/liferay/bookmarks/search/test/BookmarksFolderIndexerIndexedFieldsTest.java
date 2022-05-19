@@ -128,16 +128,16 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 				searchRequestBuilderFactory.builder(
 				).companyId(
 					_group.getCompanyId()
-				).groupIds(
-					_group.getGroupId()
+				).fetchSourceIncludes(
+					new String[] {"*_sortable"}
 				).fields(
 					StringPool.STAR
+				).groupIds(
+					_group.getGroupId()
 				).modelIndexerClasses(
 					BookmarksFolder.class
 				).queryString(
 					searchTerm
-				).fetchSource(
-					true
 				).build()));
 	}
 

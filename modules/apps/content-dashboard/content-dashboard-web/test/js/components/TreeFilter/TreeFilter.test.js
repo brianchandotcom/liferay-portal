@@ -164,16 +164,49 @@ describe('SelectFileExtension', () => {
 		expect(await getByText('Image (4 items)')).toBeInTheDocument();
 	});
 
-	it('shows the total number of elements selected in the list above the tree', async () => {
+	it('shows the total number of elements selected and a Clear all button in the list above the tree', async () => {
 		const {container, getByText} = render(
 			<TreeFilter {...mockExtensionsProps} />
 		);
 
 		expect(getByText('1 item-selected')).toBeInTheDocument();
+		expect(getByText('clear-all')).toBeInTheDocument();
 
 		const checkbox = container.querySelector('input[type=checkbox]');
 		fireEvent.click(checkbox);
 
 		expect(getByText('2 items-selected')).toBeInTheDocument();
+		expect(getByText('clear-all')).toBeInTheDocument();
+	});
+
+	it('shows Clear All only when the are nodes selected', () => {
+		const {container, getByText, queryByText} = render(
+			<TreeFilter {...mockTypesProps} />
+		);
+
+		expect(queryByText('clear-all')).not.toBeInTheDocument();
+		const checkbox = container.querySelector('input[type=checkbox]');
+		fireEvent.click(checkbox);
+		expect(getByText('clear-all')).toBeInTheDocument();
+	});
+
+	it('clears the selection the the Clear All button is clicked', () => {
+		const {container, getByText, queryByText} = render(
+			<TreeFilter {...mockExtensionsProps} />
+		);
+
+		expect(getByText('1 item-selected')).toBeInTheDocument();
+		const clearButton = container.querySelector(
+			'.tree-filter-count-feedback .btn'
+		);
+		fireEvent.click(clearButton);
+		expect(queryByText('1 item-selected')).not.toBeInTheDocument();
+
+		const checkboxes = container.querySelectorAll('input[type=checkbox]');
+		const checkedCheckboxesCount = Array.from(checkboxes).reduce(
+			(acc, checkbox) => (checkbox.checked ? ++acc : acc),
+			0
+		);
+		expect(checkedCheckboxesCount).toBe(0);
 	});
 });

@@ -192,19 +192,12 @@ public class IndexerFixture<T> {
 	}
 
 	public SearchResponse searchOnlyOneSearchResponse(
-		long userId, String keywords, Locale locale) {
-
-		return searchOnlyOneSearchResponse(userId, keywords, locale, null);
-	}
-
-	public SearchResponse searchOnlyOneSearchResponse(
-		long userId, String keywords, Locale locale,
-		Map<String, Serializable> attributes) {
+		String keywords, Locale locale) {
 
 		try {
 			SearchContext searchContext =
 				SearchContextTestUtil.getSearchContext(
-					userId, null, keywords, locale, attributes);
+					TestPropsValues.getUserId(), keywords, locale);
 
 			_searchRequestBuilderFactory.builder(
 				searchContext
@@ -219,28 +212,6 @@ public class IndexerFixture<T> {
 
 			return (SearchResponse)searchContext.getAttribute(
 				"search.response");
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
-	public SearchResponse searchOnlyOneSearchResponse(String keywords) {
-		return searchOnlyOneSearchResponse(keywords, null, null);
-	}
-
-	public SearchResponse searchOnlyOneSearchResponse(
-		String keywords, Locale locale) {
-
-		return searchOnlyOneSearchResponse(keywords, locale, null);
-	}
-
-	public SearchResponse searchOnlyOneSearchResponse(
-		String keywords, Locale locale, Map<String, Serializable> attributes) {
-
-		try {
-			return searchOnlyOneSearchResponse(
-				TestPropsValues.getUserId(), keywords, locale, attributes);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

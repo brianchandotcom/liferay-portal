@@ -224,7 +224,7 @@ public class ObjectActionCacheModel
 		objectDefinitionId = objectInput.readLong();
 
 		active = objectInput.readBoolean();
-		conditionExpression = objectInput.readUTF();
+		conditionExpression = (String)objectInput.readObject();
 		description = objectInput.readUTF();
 		name = objectInput.readUTF();
 		objectActionExecutorKey = objectInput.readUTF();
@@ -264,10 +264,10 @@ public class ObjectActionCacheModel
 		objectOutput.writeBoolean(active);
 
 		if (conditionExpression == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(conditionExpression);
+			objectOutput.writeObject(conditionExpression);
 		}
 
 		if (description == null) {

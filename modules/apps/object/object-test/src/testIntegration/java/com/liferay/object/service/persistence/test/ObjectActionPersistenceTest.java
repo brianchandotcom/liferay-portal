@@ -269,9 +269,8 @@ public class ObjectActionPersistenceTest {
 			"ObjectAction", "mvccVersion", true, "uuid", true, "objectActionId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "active", true, "conditionExpression", true, "description",
-			true, "name", true, "objectActionExecutorKey", true,
-			"objectActionTriggerKey", true);
+			true, "active", true, "description", true, "name", true,
+			"objectActionExecutorKey", true, "objectActionTriggerKey", true);
 	}
 
 	@Test

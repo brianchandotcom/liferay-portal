@@ -201,44 +201,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 	}
 
-	@priority = "5"
-	test AssertPublicationHistoryIsSortedByPublishDate {
-		JSONPublications.addPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content 1",
-			groupName = "Guest",
-			title = "WC WebContent Title 1");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content 2",
-			groupName = "Guest",
-			title = "WC WebContent Title 2");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 3");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 3");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content 3",
-			groupName = "Guest",
-			title = "WC WebContent Title 3");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 3");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 2,Publication Name 3,Publication Name 1");
-	}
-
 	@description = "Filter Publications Changes."
 	@priority = "4"
 	test CanFilterChangesInReview {
@@ -1086,6 +1048,41 @@ definition {
 		PublicationsChangeDetails.viewChangeDetailsInChildren(
 			changeChildrenCategory = "Web Content Translation",
 			changeChildrenTitle = "WC WebContent Title Edited");
+	}
+
+	@description = "Can view Published Publications items pagination and order on History Tab."
+	@priority = "4"
+	test ViewPublicationsHistoryItemsPaginationAndOrder {
+		for (var count : list "1,2,3,4,5,6,7") {
+			JSONPublications.addPublication(publicationName = "Publication Name ${count}");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name ${count}");
+
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+
+			JSONPublications.publishPublication(publicationName = "Publication Name ${count}");
+		}
+
+		PublicationsNavigator.openPublicationsHistory();
+
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 7,Publication Name 6,Publication Name 5,Publication Name 4,Publication Name 3,Publication Name 2,Publication Name 1");
+
+		Pagination.viewResults(results = "Showing 1 to 7 of 7 entries.");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
+
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 7,Publication Name 6,Publication Name 5,Publication Name 4");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
+
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 3,Publication Name 2,Publication Name 1");
 	}
 
 }

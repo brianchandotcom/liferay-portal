@@ -42,11 +42,11 @@ public class ObjectEntryDisplayContextFactory {
 
 		return new ObjectEntryDisplayContext(
 			_ddmFormRenderer, httpServletRequest, _itemSelector,
-			_objectDefinitionLocalService, _objectDefinitionService,
-			_objectEntryService, _objectFieldBusinessTypeServicesTracker,
-			_objectFieldLocalService, _objectLayoutLocalService,
-			_objectRelationshipLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry, readOnly);
+			_objectDefinitionLocalService, _objectEntryService,
+			_objectFieldBusinessTypeServicesTracker, _objectFieldLocalService,
+			_objectLayoutLocalService, _objectRelationshipLocalService,
+			_objectScopeProviderRegistry, _objectDefinitionService,
+			_objectRelationshipService, readOnly);
 	}
 
 	@Reference

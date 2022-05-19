@@ -146,9 +146,6 @@ public class TrafficChannelTest {
 
 		Assert.assertEquals(
 			JSONUtil.put(
-				"endpointURL",
-				"http//localhost/test?param_name=organic;param_param1=value1"
-			).put(
 				"helpMessage", trafficChannel.getHelpMessageKey()
 			).put(
 				"name", String.valueOf(trafficChannel.getType())
@@ -188,12 +185,7 @@ public class TrafficChannelTest {
 		Assert.assertEquals(
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
-
-		Tuple tuple = trafficChannel.getTuple();
-
-		Assert.assertEquals(
-			"/analytics_reports/get_country_search_keywords_traffic_sources",
-			tuple.getObject(0));
+		Assert.assertNull(trafficChannel.getTuple());
 	}
 
 	@Test
@@ -217,12 +209,7 @@ public class TrafficChannelTest {
 		Assert.assertEquals(
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
-
-		Tuple tuple = trafficChannel.getTuple();
-
-		Assert.assertEquals(
-			"/analytics_reports/get_country_search_keywords_traffic_sources",
-			tuple.getObject(0));
+		Assert.assertNull(trafficChannel.getTuple());
 	}
 
 	@Test

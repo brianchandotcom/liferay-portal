@@ -157,9 +157,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					JSONObject jsonObject2 = jsonArray.getJSONObject(0);
 
-					Assert.assertEquals(
-						"http//localhost/test?param_name=organic",
-						jsonObject2.getString("endpointURL"));
 					Assert.assertEquals("organic", jsonObject2.get("name"));
 					Assert.assertEquals(
 						String.format("%.1f", 89.20D),
@@ -185,9 +182,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					JSONObject jsonObject5 = jsonArray.getJSONObject(3);
 
-					Assert.assertEquals(
-						"http//localhost/test?param_name=paid",
-						jsonObject5.getString("endpointURL"));
 					Assert.assertEquals("paid", jsonObject5.get("name"));
 					Assert.assertEquals(1L, jsonObject5.getInt("value"));
 
@@ -273,9 +267,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 									resourceBundle, "direct")
 							),
 							JSONUtil.put(
-								"endpointURL",
-								"http//localhost/test?param_name=organic"
-							).put(
 								"helpMessage",
 								ResourceBundleUtil.getString(
 									resourceBundle,
@@ -290,9 +281,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 									resourceBundle, "organic")
 							),
 							JSONUtil.put(
-								"endpointURL",
-								"http//localhost/test?param_name=paid"
-							).put(
 								"helpMessage",
 								ResourceBundleUtil.getString(
 									resourceBundle,

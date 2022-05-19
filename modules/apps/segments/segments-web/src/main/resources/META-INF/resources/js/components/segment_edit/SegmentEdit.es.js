@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
@@ -53,6 +54,7 @@ class SegmentEdit extends Component {
 		initialMembersCount: PropTypes.number,
 		initialSegmentActive: PropTypes.bool,
 		initialSegmentName: PropTypes.object,
+		isSegmentationEnabled: PropTypes.bool,
 		locale: PropTypes.string.isRequired,
 		portletNamespace: PropTypes.string,
 		previewMembersURL: PropTypes.string,
@@ -534,6 +536,24 @@ class SegmentEdit extends Component {
 				</div>
 
 				<div className="form-body">
+					{!this.props.isSegmentationEnabled && (
+						<ClayAlert
+							className="mx-0"
+							displayType="warning"
+							variant="stripe"
+						>
+							<strong className="lead">
+								{Liferay.Language.get(
+									'segmentation-is-disabled'
+								)}
+							</strong>
+
+							{Liferay.Language.get(
+								'to-enable-segmentation-go-to-system-settings-segments-segments-service'
+							)}
+						</ClayAlert>
+					)}
+
 					<FieldArray
 						name="contributors"
 						render={this._renderContributors}

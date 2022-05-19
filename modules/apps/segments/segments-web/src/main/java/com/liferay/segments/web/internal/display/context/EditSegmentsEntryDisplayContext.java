@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -43,13 +44,13 @@ import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.odata.ExpressionVisitorImpl;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
 
@@ -74,6 +75,7 @@ public class EditSegmentsEntryDisplayContext {
 		FilterParserProvider filterParserProvider,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsCriteriaContributorRegistry segmentsCriteriaContributorRegistry,
 		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry,
 		SegmentsEntryService segmentsEntryService) {
@@ -82,6 +84,7 @@ public class EditSegmentsEntryDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 		_segmentsCriteriaContributorRegistry =
 			segmentsCriteriaContributorRegistry;
 		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
@@ -427,6 +430,9 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"initialSegmentName", _getInitialSegmentsNameJSONObject()
 		).put(
+			"isSegmentationEnabled",
+			_isSegmentationEnabled(_themeDisplay.getCompanyId())
+		).put(
 			"locale", _locale.toString()
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
@@ -439,17 +445,8 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
 		).put(
-			"isSegmentationEnabled", _isSegmentationEnabled()
-		).put(
 			"showInEditMode", _isShowInEditMode()
 		).build();
-	}
-
-	private boolean _isSegmentationEnabled() {
-		SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)_renderRequest.getAttribute(
-			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
-
-		return segmentsDisplayContext.isSegmentationEnabled(_themeDisplay.getCompanyId());
 	}
 
 	private List<SegmentsCriteriaContributor> _getSegmentsCriteriaContributors()
@@ -529,6 +526,18 @@ public class EditSegmentsEntryDisplayContext {
 		return false;
 	}
 
+	private boolean _isSegmentationEnabled(long companyId) {
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return false;
+	}
+
 	private boolean _isShowInEditMode() {
 		return ParamUtil.getBoolean(
 			_httpServletRequest, "showInEditMode", true);
@@ -546,6 +555,7 @@ public class EditSegmentsEntryDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private final SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
 	private Long _segmentsEntryId;

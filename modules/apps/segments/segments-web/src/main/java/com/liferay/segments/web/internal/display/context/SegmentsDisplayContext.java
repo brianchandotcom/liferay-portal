@@ -301,7 +301,7 @@ public class SegmentsDisplayContext {
 		return false;
 	}
 
-	public boolean isSegmentationEnabled(long companyId){
+	public boolean isSegmentationEnabled(long companyId) {
 		try {
 			return _segmentsConfigurationProvider.isSegmentationEnabled(
 				companyId);

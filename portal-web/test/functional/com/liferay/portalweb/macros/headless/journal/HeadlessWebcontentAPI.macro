@@ -159,7 +159,7 @@ definition {
 	}
 
 	macro createStructuredContentDraft {
-		if(!(isSet(priority))){
+		if (!(isSet(priority))) {
 			var priority = "";
 		}
 

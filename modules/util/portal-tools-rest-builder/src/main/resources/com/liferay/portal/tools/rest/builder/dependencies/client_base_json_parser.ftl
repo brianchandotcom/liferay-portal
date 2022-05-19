@@ -339,6 +339,14 @@ public abstract class BaseJSONParser<T> {
 		return false;
 	}
 
+	private boolean _isLastCharPositive() {
+		if (_lastChar == '+') {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isLastCharScientificNotation() {
 		if (_lastChar == 'E') {
 			return true;
@@ -555,7 +563,8 @@ public abstract class BaseJSONParser<T> {
 			_readNextChar();
 		}
 		while (_isLastCharDigit() || _isLastCharDecimalSeparator() ||
-			   _isLastCharNegative() || _isLastCharScientificNotation());
+			   _isLastCharNegative() || _isLastCharPositive() ||
+				_isLastCharScientificNotation());
 
 		return _getCapturedSubstring();
 	}

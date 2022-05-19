@@ -26,9 +26,8 @@ type OnSubmitOptions = {
 };
 
 export type FormOptions = {
-	formState: any;
 	onChange: (state: any) => (event: any) => void;
-	onClose: (path: string) => void;
+	onClose: () => void;
 	onError: (error?: any) => void;
 	onSave: (param?: any) => void;
 	onSubmit: (data: any, options: OnSubmitOptions) => Promise<void>;
@@ -42,7 +41,6 @@ export type Form = {
 export type FormComponent = Omit<Form, 'forceRefetch'>;
 
 const useFormActions = (): Form => {
-	const [formState, setFormState] = useState();
 	const [forceRefetch, setForceRefetch] = useState(0);
 	const navigate = useNavigate();
 
@@ -68,7 +66,6 @@ const useFormActions = (): Form => {
 		setForceRefetch(new Date().getTime());
 
 		if (state) {
-			setFormState(state);
 			onSave(state);
 		}
 		navigate(-1);
@@ -95,8 +92,7 @@ const useFormActions = (): Form => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;
@@ -106,7 +102,6 @@ const useFormActions = (): Form => {
 	return {
 		forceRefetch,
 		form: {
-			formState,
 			onChange: ({form, setForm}: any) => (event: any) => {
 				const {
 					target: {checked, name, type},

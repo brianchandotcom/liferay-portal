@@ -16,6 +16,14 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const yupSchema = {
+	build: yup.object({
+		description: yup.string(),
+		gitHash: yup.string(),
+		name: yup.string().required(),
+		productVersionId: yup.string(),
+		routineId: yup.string(),
+		template: yup.string(),
+	}),
 	case: yup.object({
 		addAnother: yup.boolean(),
 		caseTypeId: yup.string().required(),

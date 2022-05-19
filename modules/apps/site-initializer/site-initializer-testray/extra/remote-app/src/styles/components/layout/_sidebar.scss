@@ -15,7 +15,6 @@ $hover-transition: opacity 1s ease;
 	width: 80px;
 
 	&:hover {
-		padding: 20px 0 0;
 		transition: $hover-transition-width;
 		width: 250px;
 	}
@@ -88,16 +87,11 @@ $hover-transition: opacity 1s ease;
 }
 
 .testray-sidebar:hover .testray-sidebar-text {
-	font-size: 1.2em;
-	font-weight: 450;
 	opacity: 1;
-	padding-left: 10px;
 	transition: $hover-transition;
-	vertical-align: middle;
 }
 
 .testray-logo {
-	background-image: url('http://localhost:8080/documents/40559/0/testray-icon-gray.svg/');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -111,11 +105,9 @@ $hover-transition: opacity 1s ease;
 }
 
 .testray-brand-logo {
-	background-image: url('http://localhost:8080/documents/40559/0/testray-logo-brand-gray.svg/');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	content: '';
 	height: 30px;
 	margin-left: 5px;
 	margin-right: 30px;
@@ -124,22 +116,12 @@ $hover-transition: opacity 1s ease;
 	min-width: 150px;
 	opacity: 0;
 	transition: $normal-transition;
+	width: 150px;
 }
 
 .testray-sidebar:hover .testray-brand-logo {
-	background-image: url('http://localhost:8080/documents/40559/0/testray-logo-brand-gray.svg/');
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: contain;
-	content: '';
-	height: 30px;
-	margin-left: 5px;
-	margin-right: 30px;
-	margin-top: 5px;
-	min-height: 30px;
 	opacity: 1;
 	transition: $hover-transition;
-	width: 150px;
 }
 
 .testray-avatar-dropdown {

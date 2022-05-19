@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,8 +38,12 @@ import java.util.Locale;
 public class FileEntryLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<FileEntry> {
 
-	public FileEntryLayoutDisplayPageObjectProvider(FileEntry fileEntry) {
+	public FileEntryLayoutDisplayPageObjectProvider(
+		FileEntry fileEntry,
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
+
 		_fileEntry = fileEntry;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 
 		_assetEntry = _getAssetEntry(fileEntry);
 	}
@@ -88,7 +94,16 @@ public class FileEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return String.valueOf(_fileEntry.getFileEntryId());
+		FriendlyURLEntry mainFriendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				PortalUtil.getClassNameId(FileEntry.class),
+				_fileEntry.getFileEntryId());
+
+		if (mainFriendlyURLEntry == null) {
+			return String.valueOf(_fileEntry.getFileEntryId());
+		}
+
+		return mainFriendlyURLEntry.getUrlTitle();
 	}
 
 	private AssetEntry _getAssetEntry(FileEntry fileEntry) {
@@ -124,5 +139,6 @@ public class FileEntryLayoutDisplayPageObjectProvider
 
 	private final AssetEntry _assetEntry;
 	private final FileEntry _fileEntry;
+	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

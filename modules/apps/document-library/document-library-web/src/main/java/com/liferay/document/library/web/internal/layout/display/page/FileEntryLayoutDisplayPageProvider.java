@@ -63,7 +63,8 @@ public class FileEntryLayoutDisplayPageProvider
 				return null;
 			}
 
-			return new FileEntryLayoutDisplayPageObjectProvider(fileEntry);
+			return new FileEntryLayoutDisplayPageObjectProvider(
+				fileEntry, _friendlyURLEntryLocalService);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

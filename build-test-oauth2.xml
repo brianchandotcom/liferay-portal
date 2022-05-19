@@ -8,7 +8,7 @@
 
 		<copy
 			file="${osgi.dependency.dir}/${osgi.config.file.name}"
-			tofile="${liferay.home}"
+			todir="${liferay.home}"
 		/>
 
 		<replace

@@ -147,9 +147,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithInvalidJWT";
 
 		task ("Add the OSGI configuration file") {
-			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
 		}
 
 		task ("Add a new OAuth2 application") {
@@ -341,9 +339,7 @@ definition {
 		}
 
 		task ("Add the OSGI configuration file to configure Instance Settings") {
-			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~SSO.config");
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~SSO.config");
 		}
 
 		task ("Add a new user") {
@@ -1224,9 +1220,7 @@ definition {
 		}
 
 		task ("Add the OSGI configuration file to configure Instance Settings") {
-			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
 		}
 
 		task ("Add a new OAuth2 application") {
@@ -1291,9 +1285,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithJWTBearerAsGrantTypeAndEmailAddressAsUserAuthenticationType";
 
 		task ("Add the OSGI configuration file") {
-			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
 		}
 
 		task ("Add a new OAuth2 application") {
@@ -1407,9 +1399,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#JWTAssertionCanBeAcceptedAsGrantTypeWithScreenNameAsUserAuthenticationType";
 
 		task ("Add the OSGI configuration file") {
-			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
 		}
 
 		task ("Add a new OAuth2 application") {

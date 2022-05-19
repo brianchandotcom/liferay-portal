@@ -1632,4 +1632,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Pending Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckDraftProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckDraftProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "2",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Draft Product",
+			status = "Draft",
+			productCatalog = "Master",
+			productName = "Draft Product");
+	}
 }

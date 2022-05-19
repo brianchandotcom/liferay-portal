@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.oauth.client.persistence" short-no-such-exception-enabled="false">
 	<namespace>OAuthClient</namespace>
-	<entity local-service="true" name="OAuthClientAuthServer" remote-service="true">
+	<entity local-service="true" name="OAuthClientASLocalMetadata" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="oAuthClientAuthServerId" primary="true" type="long" />
+		<column name="oAuthClientASLocalMetadataId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -19,10 +19,8 @@
 
 		<!-- Other fields -->
 
-		<column name="discoveryEndpoint" type="String" />
-		<column name="issuer" type="String" />
+		<column name="localWellKnownURI" type="String" />
 		<column name="metadataJSON" type="String" />
-		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 
@@ -32,13 +30,9 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="C_I" return-type="OAuthClientAuthServer" unique="true">
+		<finder name="C_L" return-type="OAuthClientASLocalMetadata" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="issuer" />
-		</finder>
-		<finder name="C_T" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="type" />
+			<finder-column name="localWellKnownURI" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="OAuthClientEntry" remote-service="true">
@@ -57,7 +51,7 @@
 
 		<!-- Other fields -->
 
-		<column name="authServerIssuer" type="String" />
+		<column name="authServerWellKnownURI" type="String" />
 		<column name="clientId" type="String" />
 		<column name="infoJSON" type="String" />
 		<column name="parametersJSON" type="String" />
@@ -72,19 +66,19 @@
 		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="authServerIssuer" />
+			<finder-column name="authServerWellKnownURI" />
 		</finder>
 		<finder name="C_A_C" return-type="OAuthClientEntry" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="authServerIssuer" />
+			<finder-column name="authServerWellKnownURI" />
 			<finder-column name="clientId" />
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateOAuthClientAuthServer</exception>
+		<exception>DuplicateOAuthClientASLocalMetadata</exception>
 		<exception>DuplicateOAuthClientEntry</exception>
-		<exception>OAuthClientAuthServerMetadataJSON</exception>
-		<exception>OAuthClientAuthServerType</exception>
+		<exception>OAuthClientASLocalMetadataJSON</exception>
+		<exception>OAuthClientEntryAuthServerWellKnownURI</exception>
 		<exception>OAuthClientEntryInfoJSON</exception>
 		<exception>OAuthClientEntryParametersJSON</exception>
 	</exceptions>

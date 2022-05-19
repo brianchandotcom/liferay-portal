@@ -1,24 +1,20 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.oauth.client.persistence.model.OAuthClientAuthServer">
+	<model name="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata">
 		<field name="mvccVersion" type="long" />
-		<field name="oAuthClientAuthServerId" type="long" />
+		<field name="oAuthClientASLocalMetadataId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="discoveryEndpoint" type="String">
+		<field name="localWellKnownURI" type="String">
 			<hint name="max-length">256</hint>
-		</field>
-		<field name="issuer" type="String">
-			<hint name="max-length">128</hint>
 		</field>
 		<field name="metadataJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.oauth.client.persistence.model.OAuthClientEntry">
 		<field name="mvccVersion" type="long" />
@@ -28,8 +24,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="authServerIssuer" type="String">
-			<hint name="max-length">128</hint>
+		<field name="authServerWellKnownURI" type="String">
+			<hint name="max-length">256</hint>
 		</field>
 		<field name="clientId" type="String">
 			<hint name="max-length">128</hint>

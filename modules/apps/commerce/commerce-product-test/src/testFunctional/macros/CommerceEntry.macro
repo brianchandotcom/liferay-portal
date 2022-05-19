@@ -266,6 +266,28 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro activeProductPaymentSubscription {
+		ApplicationsMenu.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "${productName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${productName}");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+		if (IsElementNotPresent(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE_ACTIVE")) {
+			Click(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE");
+
+			Button.clickPublish();
+		}
+
+		AssertElementPresent(
+			locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE_ACTIVE");
+	}
+
 	macro addNewFilters {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 

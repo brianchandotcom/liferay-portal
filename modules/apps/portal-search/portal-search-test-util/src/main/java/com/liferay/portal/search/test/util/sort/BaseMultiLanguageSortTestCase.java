@@ -138,8 +138,8 @@ public abstract class BaseMultiLanguageSortTestCase
 			StringPool.UNDERLINE, Field.SORTABLE_FIELD_SUFFIX);
 
 		addDocuments(
-			value -> DocumentCreationHelpers.singleTextSortable(
-				fieldName, fieldNameSortable, value),
+			value -> DocumentCreationHelpers.twoKeywords(
+				fieldName, value, fieldNameSortable, value),
 			Arrays.asList(values));
 
 		assertOrder(

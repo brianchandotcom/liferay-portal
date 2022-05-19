@@ -1800,4 +1800,68 @@ definition {
 			productCatalog = "Master",
 			productName = "Any Product");
 	}
+
+	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow { 
+		property portal.acceptance = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "categorymanager@liferay.com",
+			userFirstName = "Category",
+			userLastName = "Manager",
+			userScreenName = "categorymanager",
+			userSiteMembership = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "categorymanager");
+
+		CommerceProducts.enableProductSingleApproverWorkflow();
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Simple T-Shirt",
+			status = "Draft",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
 }

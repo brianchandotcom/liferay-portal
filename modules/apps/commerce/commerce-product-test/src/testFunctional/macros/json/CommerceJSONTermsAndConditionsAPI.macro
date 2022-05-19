@@ -85,6 +85,7 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
+
 		var termsAndConditionsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
 
 		echo("The Commerce Terms And Conditions count is: ${termsAndConditionsCount}");
@@ -111,6 +112,7 @@ definition {
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';
+
 		var termsAndConditionsIds = JSONCurlUtil.get("${curl}", "$..['id']");
 
 		return "${termsAndConditionsIds}";

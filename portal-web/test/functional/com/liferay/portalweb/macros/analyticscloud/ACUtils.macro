@@ -405,7 +405,11 @@ definition {
 	macro clickGenericHyperlink {
 		var key_textValue = "${hyperlinkText}";
 
-		Click(locator1 = "ACUtils#GENERIC_TEXT");
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(locator1 = "ACUtils#GENERIC_TEXT_ORDER");
 	}
 
 	macro clickKebab {
@@ -895,6 +899,24 @@ definition {
 			}
 
 			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT");
+		}
+	}
+
+	macro viewGenericTextInOrder {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		for (var textValue : list "${textValueList}") {
+			var key_textValue = "${textValue}";
+
+			WaitForPageLoad();
+
+			while (IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT_ORDER") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
+			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT_ORDER");
 		}
 	}
 

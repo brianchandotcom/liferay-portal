@@ -38,7 +38,7 @@ definition {
 		}
 
 		task ("Go to Assets") {
-			ACUtils.goToAssets();
+			ACNavigation.goToAssets();
 		}
 
 		task ("Go to Blogs, check empty state message") {

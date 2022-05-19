@@ -14,6 +14,8 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +31,8 @@ import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +50,20 @@ public class SegmentsEntryDisplayContext {
 		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
 
 		return group.getDescriptiveName(locale);
+	}
+
+	public static String getSegmentsConfigurationURL(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			return _segmentsConfigurationProvider.getConfigurationURL(
+				httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public static List<User> getSegmentsEntryUsers(

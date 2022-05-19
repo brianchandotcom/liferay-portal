@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestrayResultsParserUtil;
@@ -30,6 +31,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -169,10 +174,60 @@ public abstract class BaseTestrayServer implements TestrayServer {
 
 		File resultsDir = getResultsDir();
 
-		File resultsTarGzFile = new File(
-			resultsDir.getParentFile(), sb.toString());
+		File gcpResultsDir = new File(
+			resultsDir.getParentFile(), "gcp-results");
 
-		JenkinsResultsParserUtil.tarGzip(resultsDir, resultsTarGzFile);
+		try {
+			JenkinsResultsParserUtil.copy(resultsDir, gcpResultsDir);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		for (File gcpResultFile :
+				JenkinsResultsParserUtil.findFiles(gcpResultsDir, ".*.xml")) {
+
+			try {
+				Document document = Dom4JUtil.parse(
+					JenkinsResultsParserUtil.read(gcpResultFile));
+
+				Element rootElement = document.getRootElement();
+
+				for (Element testcaseElement :
+						rootElement.elements("testcase")) {
+
+					Element propertiesElement = testcaseElement.element(
+						"properties");
+
+					for (Element propertyElement :
+							propertiesElement.elements("property")) {
+
+						String propertyName = propertyElement.attributeValue(
+							"name");
+
+						if ((propertyName == null) ||
+							!propertyName.equals("testray.testcase.warnings")) {
+
+							continue;
+						}
+
+						for (Element element : propertyElement.elements()) {
+							propertyElement.remove(element);
+						}
+					}
+				}
+
+				JenkinsResultsParserUtil.write(
+					gcpResultFile, Dom4JUtil.format(rootElement, false));
+			}
+			catch (DocumentException | IOException exception) {
+			}
+		}
+
+		File resultsTarGzFile = new File(
+			gcpResultsDir.getParentFile(), sb.toString());
+
+		JenkinsResultsParserUtil.tarGzip(gcpResultsDir, resultsTarGzFile);
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 

@@ -1,0 +1,68 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given a content structure created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
+
+			WebContentStructures.tearDownCP();
+		}
+	}
+
+	@description = "StructuredContent can be filtered with default priority"
+	@priority = "5"
+	test StructuredContentContainsPriorityField {
+		property portal.acceptance = "true";
+
+		task ("Given a web content are created with default priority") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When web contents are filtered with default priority") {
+			var responseToParse = HeadlessWebcontentAPI.filterStructuredContentWithPriority(filtervalue = "priority%20eq%200.0");
+		}
+
+		task ("Then the response body includes the default priority field") {
+			HeadlessWebcontentAPI.assertPriorityFieldIsFilterWithDefaultValue(
+				expectedPriorityDefaultValue = "0.0",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
+}

@@ -182,6 +182,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		ObjectAction objectAction = randomObjectAction();
 
+		objectAction.setConditionExpression(regex);
 		objectAction.setDescription(regex);
 		objectAction.setName(regex);
 		objectAction.setObjectActionExecutorKey(regex);
@@ -193,6 +194,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		objectAction = ObjectActionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectAction.getConditionExpression());
 		Assert.assertEquals(regex, objectAction.getDescription());
 		Assert.assertEquals(regex, objectAction.getName());
 		Assert.assertEquals(regex, objectAction.getObjectActionExecutorKey());
@@ -642,6 +644,16 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"conditionExpression", additionalAssertFieldName)) {
+
+				if (objectAction.getConditionExpression() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (objectAction.getDescription() == null) {
 					valid = false;
@@ -793,6 +805,19 @@ public abstract class BaseObjectActionResourceTestCase {
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectAction1.getActive(), objectAction2.getActive())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"conditionExpression", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectAction1.getConditionExpression(),
+						objectAction2.getConditionExpression())) {
 
 					return false;
 				}
@@ -997,6 +1022,14 @@ public abstract class BaseObjectActionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("conditionExpression")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectAction.getConditionExpression()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1151,6 +1184,8 @@ public abstract class BaseObjectActionResourceTestCase {
 		return new ObjectAction() {
 			{
 				active = RandomTestUtil.randomBoolean();
+				conditionExpression = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

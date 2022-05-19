@@ -81,6 +81,20 @@ public class ObjectActionSerDes {
 			sb.append(objectAction.getActive());
 		}
 
+		if (objectAction.getConditionExpression() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"conditionExpression\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectAction.getConditionExpression()));
+
+			sb.append("\"");
+		}
+
 		if (objectAction.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -223,6 +237,15 @@ public class ObjectActionSerDes {
 			map.put("active", String.valueOf(objectAction.getActive()));
 		}
 
+		if (objectAction.getConditionExpression() == null) {
+			map.put("conditionExpression", null);
+		}
+		else {
+			map.put(
+				"conditionExpression",
+				String.valueOf(objectAction.getConditionExpression()));
+		}
+
 		if (objectAction.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -319,6 +342,14 @@ public class ObjectActionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					objectAction.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "conditionExpression")) {
+
+				if (jsonParserFieldValue != null) {
+					objectAction.setConditionExpression(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

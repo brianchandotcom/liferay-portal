@@ -121,6 +121,34 @@ public class ObjectAction implements Serializable {
 	protected Boolean active;
 
 	@Schema
+	public String getConditionExpression() {
+		return conditionExpression;
+	}
+
+	public void setConditionExpression(String conditionExpression) {
+		this.conditionExpression = conditionExpression;
+	}
+
+	@JsonIgnore
+	public void setConditionExpression(
+		UnsafeSupplier<String, Exception> conditionExpressionUnsafeSupplier) {
+
+		try {
+			conditionExpression = conditionExpressionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String conditionExpression;
+
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -392,6 +420,20 @@ public class ObjectAction implements Serializable {
 			sb.append("\"active\": ");
 
 			sb.append(active);
+		}
+
+		if (conditionExpression != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"conditionExpression\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(conditionExpression));
+
+			sb.append("\"");
 		}
 
 		if (dateCreated != null) {

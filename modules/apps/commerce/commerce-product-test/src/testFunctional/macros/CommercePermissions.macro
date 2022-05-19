@@ -17,7 +17,7 @@ definition {
 			key_resourceAction = "${permission}",
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Click(locator1 = "Icon#BACK");
+		Click(locator1 = "CommerceNavigation#BACK");
 	}
 
 	macro removeRegularRolePermission {
@@ -35,7 +35,7 @@ definition {
 			key_resourceAction = "${permission}",
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Click(locator1 = "Icon#BACK");
+		Click(locator1 = "CommerceNavigation#BACK");
 	}
 
 }

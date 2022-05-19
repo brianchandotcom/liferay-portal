@@ -272,18 +272,10 @@ export default class Blogs {
 
 	_getValuesByName(name) {
 		const nodes = document.querySelectorAll(
-			`input[name*=${this._config.namespace + name}]`
+			`input[name=${this._config.namespace + name}]`
 		);
 
-		const values = [];
-
-		for (let i = 0; i < nodes.length; i++) {
-			const input = nodes[i].value;
-
-			values.push(input);
-		}
-
-		return values;
+		return [...nodes].map((node) => node.value);
 	}
 
 	_getTempImages() {

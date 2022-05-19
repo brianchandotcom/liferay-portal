@@ -560,19 +560,12 @@ public class ObjectEntryDisplayContext {
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
-				try {
-					if (!_isActive(objectField)) {
-						continue;
-					}
+				if (!_isActive(objectField)) {
+					continue;
+				}
 
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectField, readOnly));
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
+				ddmForm.addDDMFormField(
+					_getDDMFormField(objectField, readOnly));
 			}
 		}
 		else {
@@ -840,33 +833,26 @@ public class ObjectEntryDisplayContext {
 			for (ObjectLayoutColumn objectLayoutColumn :
 					objectLayoutRow.getObjectLayoutColumns()) {
 
-				try {
-					Stream<ObjectField> stream = objectFields.stream();
+				Stream<ObjectField> stream = objectFields.stream();
 
-					Optional<ObjectField> objectFieldOptional = stream.filter(
-						objectField ->
-							objectField.getObjectFieldId() ==
-								objectLayoutColumn.getObjectFieldId()
-					).findFirst();
+				Optional<ObjectField> objectFieldOptional = stream.filter(
+					objectField ->
+						objectField.getObjectFieldId() ==
+							objectLayoutColumn.getObjectFieldId()
+				).findFirst();
 
-					if (objectFieldOptional.isPresent()) {
-						ObjectField objectField = objectFieldOptional.get();
+				if (objectFieldOptional.isPresent()) {
+					ObjectField objectField = objectFieldOptional.get();
 
-						if (!_isActive(objectField)) {
-							continue;
-						}
-
-						_objectFieldNames.put(
-							objectLayoutColumn.getObjectFieldId(),
-							objectField.getName());
-						nestedDDMFormFields.add(
-							_getDDMFormField(objectField, readOnly));
+					if (!_isActive(objectField)) {
+						continue;
 					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
+
+					_objectFieldNames.put(
+						objectLayoutColumn.getObjectFieldId(),
+						objectField.getName());
+					nestedDDMFormFields.add(
+						_getDDMFormField(objectField, readOnly));
 				}
 			}
 		}
@@ -927,7 +913,7 @@ public class ObjectEntryDisplayContext {
 						objectField.getObjectFieldId());
 
 			ObjectDefinition relatedObjectDefinition =
-				_objectDefinitionService.getObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
 			return relatedObjectDefinition.isActive();

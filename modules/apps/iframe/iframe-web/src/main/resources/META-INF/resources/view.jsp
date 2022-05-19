@@ -142,11 +142,29 @@
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');
 
+	function isNested(initial = window, parentUrls = []) {
+		var isTop = initial === initial.Liferay.Util.getTop();
+
+		if (isTop) {
+			return false;
+		}
+
+		var href = initial.location.href;
+
+		if (parentUrls.length > 2 && parentUrls.includes(href)) {
+			return true;
+		}
+
+		return isNested(initial.Liferay.Util.getTop(), parentUrls.concat([href]));
+	}
+
 	if (iframe) {
-		iframe.set(
-			'src',
-			'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>'
-		);
+		if (!isNested()) {
+			iframe.set(
+				'src',
+				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>'
+			);
+		}
 
 		iframe.plug(A.Plugin.AutosizeIframe, {
 			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>,

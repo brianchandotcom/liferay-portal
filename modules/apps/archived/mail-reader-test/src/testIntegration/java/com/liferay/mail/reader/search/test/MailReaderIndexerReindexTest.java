@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexerFixture;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
@@ -140,13 +138,11 @@ public class MailReaderIndexerReindexTest {
 	}
 
 	protected void setUpAccountIndexerFixture() {
-		_accountIndexerFixture = new IndexerFixture<>(
-			Account.class, _searchRequestBuilderFactory);
+		_accountIndexerFixture = new IndexerFixture<>(Account.class);
 	}
 
 	protected void setUpFolderIndexerFixture() {
-		_folderIndexerFixture = new IndexerFixture<>(
-			Folder.class, _searchRequestBuilderFactory);
+		_folderIndexerFixture = new IndexerFixture<>(Folder.class);
 	}
 
 	protected void setUpMailReaderFixture() {
@@ -158,8 +154,7 @@ public class MailReaderIndexerReindexTest {
 	}
 
 	protected void setUpMessageIndexerFixture() {
-		_messageIndexerFixture = new IndexerFixture<>(
-			Message.class, _searchRequestBuilderFactory);
+		_messageIndexerFixture = new IndexerFixture<>(Message.class);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -199,9 +194,6 @@ public class MailReaderIndexerReindexTest {
 
 	@DeleteAfterTestRun
 	private List<Message> _messages;
-
-	@Inject
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	private User _user;
 

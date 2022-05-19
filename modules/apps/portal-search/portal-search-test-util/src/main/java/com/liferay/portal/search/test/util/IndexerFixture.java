@@ -38,6 +38,10 @@ import java.util.stream.Stream;
  */
 public class IndexerFixture<T> {
 
+	public IndexerFixture(Class<T> clazz) {
+		this(clazz, null);
+	}
+
 	public IndexerFixture(
 		Class<T> clazz,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {

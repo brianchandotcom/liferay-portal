@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -68,8 +67,7 @@ public class UserIndexerReindexTest {
 
 		_groupSearchFixture = groupSearchFixture;
 
-		_indexerFixture = new IndexerFixture<>(
-			User.class, _searchRequestBuilderFactory);
+		_indexerFixture = new IndexerFixture<>(User.class);
 
 		_users = userSearchFixture.getUsers();
 
@@ -115,9 +113,6 @@ public class UserIndexerReindexTest {
 
 	private GroupSearchFixture _groupSearchFixture;
 	private IndexerFixture<User> _indexerFixture;
-
-	@Inject
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

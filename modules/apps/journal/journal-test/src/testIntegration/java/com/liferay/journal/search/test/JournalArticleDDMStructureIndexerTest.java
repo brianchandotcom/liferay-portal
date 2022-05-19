@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -157,8 +156,7 @@ public class JournalArticleDDMStructureIndexerTest {
 	}
 
 	protected void setUpJournalArticleIndexerFixture() {
-		journalArticleIndexer = new IndexerFixture<>(
-			JournalArticle.class, _searchRequestBuilderFactory);
+		journalArticleIndexer = new IndexerFixture<>(JournalArticle.class);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -197,8 +195,5 @@ public class JournalArticleDDMStructureIndexerTest {
 
 	@Inject
 	private static MessageBus _messageBus;
-
-	@Inject
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

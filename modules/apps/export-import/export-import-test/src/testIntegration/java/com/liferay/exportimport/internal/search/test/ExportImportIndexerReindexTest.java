@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.IndexerFixture;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
@@ -102,7 +100,7 @@ public class ExportImportIndexerReindexTest {
 
 	protected void setUpExportImportIndexerFixture() {
 		exportImportIndexerFixture = new IndexerFixture<>(
-			ExportImportConfiguration.class, _searchRequestBuilderFactory);
+			ExportImportConfiguration.class);
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
@@ -135,9 +133,6 @@ public class ExportImportIndexerReindexTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
-
-	@Inject
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

@@ -61,6 +61,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -376,6 +377,34 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		return objectEntry.getId();
+	}
+
+	private ObjectEntry _fetchLatestMachingTestrayRun(
+			long companyId, String environmentHash, long testrayRoutineId,
+			long testrayRunId)
+		throws Exception {
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			buildsEntriesPage = _objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get("Build"), null, null,
+				_defaultDTOConverterContext,
+				"routineId eq '" + testrayRoutineId + "'", null, null,
+				new Sort[] {new Sort("createDate_sortable", 3, false)});
+
+		Collection<ObjectEntry> builds = buildsEntriesPage.getItems();
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry> runsEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get("Run"), null, null,
+				_defaultDTOConverterContext,
+				StringBundler.concat(
+					"environmentHash eq '", environmentHash, "' and id ne '",
+					testrayRunId, "'"),
+				null, null, null);
+
+		Collection<ObjectEntry> runs = runsEntriesPage.getItems();
+
+		return _getBuildInRun(builds, runs);
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -1058,6 +1087,25 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 	}
 
+		private ObjectEntry _getBuildInRun(
+		Collection<ObjectEntry> builds, Collection<ObjectEntry> runs) {
+
+		String buildsString = builds.toString();
+
+		for (ObjectEntry run : runs) {
+			Map<String, Object> properties = run.getProperties();
+
+			if (buildsString.contains(
+					String.valueOf(
+						properties.get("r_buildToRuns_c_buildId")))) {
+
+				return run;
+			}
+		}
+
+		return null;
+	}
+
 	private boolean _isEmpty(String value) {
 		if (value == null) {
 			return true;
@@ -1275,6 +1323,25 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			companyId, element, testrayBuildId,
 			propertiesMap.get("testray.build.time"), testrayProjectId,
 			testrayRunId);
+
+		ObjectEntry testrayRoutine = _objectEntryManager.getObjectEntry(
+			_defaultDTOConverterContext, _objectDefinitions.get("Routine"),
+			testrayRoutineId);
+
+		ObjectEntry currentRun = _objectEntryManager.getObjectEntry(
+			_defaultDTOConverterContext, _objectDefinitions.get("Run"),
+			testrayRunId);
+
+		Map<String, Object> routineProperties = testrayRoutine.getProperties();
+
+		Map<String, Object> runProperties = currentRun.getProperties();
+
+		if((boolean) routineProperties.get("autoanalyze")){
+
+		ObjectEntry latestMachingTestrayRun = _fetchLatestMachingTestrayRun(
+			companyId, (String)runProperties.get("environmentHash"),
+			testrayRoutine.getId(), testrayRunId);
+		}
 	}
 
 	private void _uploadToTestray(

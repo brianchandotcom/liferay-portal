@@ -402,6 +402,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingEmptyLinesMiddleDBProcessMethods() throws Exception {
+		test("MissingEmptyLinesMiddleDBProcessMethodsUpgradeProcess.testjava");
+	}
+
+	@Test
 	public void testMissingDiamondOperator() throws Exception {
 		test("MissingDiamondOperator.testjava",
 			new String[] {

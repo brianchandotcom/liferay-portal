@@ -16,7 +16,6 @@ package com.liferay.poshi.core.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -122,22 +121,6 @@ public class FileUtil {
 		return filePath;
 	}
 
-	public static String getDirContents(String filePath) {
-		File sourceDir = new File(filePath);
-
-		File[] filesList = sourceDir.listFiles();
-
-		StringBuilder sb = new StringBuilder();
-
-		for (File file : filesList) {
-			if (file.isDirectory() || file.isFile()) {
-				sb.append(file.getName() + ",");
-			}
-		}
-
-		return sb.toString();
-	}
-
 	public static String getFileName(String filePath) {
 		Path path = Paths.get(filePath);
 
@@ -211,6 +194,24 @@ public class FileUtil {
 		URI uri = file.toURI();
 
 		return uri.toURL();
+	}
+
+	public static List<String> listFiles(String filePath) {
+		List<String> fileNames = new ArrayList<>();
+
+		File baseDir = new File(filePath);
+
+		if (baseDir.isDirectory()) {
+			File[] files = baseDir.listFiles();
+
+			for (File file : files) {
+				if (file.isDirectory() || file.isFile()) {
+					fileNames.add(file.getName());
+				}
+			}
+		}
+
+		return fileNames;
 	}
 
 	public static String read(File file) throws IOException {

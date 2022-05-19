@@ -15,7 +15,6 @@
 import classNames from 'classnames';
 import {InputHTMLAttributes} from 'react';
 
-import i18n from '../../i18n';
 import InputWrapper from './InputWrapper';
 
 type InputSelectProps = {
@@ -56,11 +55,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				{...otherProps}
 				{...register(name, {required})}
 			>
-				{defaultOption && (
-					<option value="">
-						{i18n.translate('choose-an-option')}
-					</option>
-				)}
+				{defaultOption && <option value=""></option>}
 
 				{options.map(({label, value}, index) => (
 					<option key={index} value={value}>

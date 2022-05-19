@@ -17,9 +17,8 @@ import classNames from 'classnames';
 import {Link, useLocation} from 'react-router-dom';
 
 import i18n from '../../i18n';
-
-// import TestrayLogo from '../../images/testray-logo';
-
+import TestrayIcon from '../../images/testray-icon';
+import TestrayIconBrand from '../../images/testray-icon-brand';
 import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
@@ -66,9 +65,9 @@ const Sidebar = () => {
 		<div className={classNames('testray-sidebar')}>
 			<div className="testray-sidebar-content">
 				<Link className="d-flex flex-center mb-5 w-100" to="/">
-					<span className="testray-logo"></span>
+					<TestrayIcon className="testray-logo" />
 
-					<span className="testray-brand-logo"></span>
+					<TestrayIconBrand className="testray-brand-logo" />
 				</Link>
 
 				{sidebarItems.map(

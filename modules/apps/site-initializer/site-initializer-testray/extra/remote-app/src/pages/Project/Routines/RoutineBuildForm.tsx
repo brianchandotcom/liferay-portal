@@ -14,7 +14,7 @@
 
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 
 import Input from '../../../components/Input';
@@ -33,7 +33,14 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 
-type RoutineBuildData = {};
+type RoutineBuildData = {
+	description: string;
+	gitHash: string;
+	name: string;
+	productVersionId: string;
+	routineId: string;
+	template: boolean;
+};
 
 const RoutineBuildForm: React.FC = () => {
 	const {data: routinesData} = useQuery<
@@ -48,16 +55,22 @@ const RoutineBuildForm: React.FC = () => {
 	const productVersions = productVersionsData?.c.productVersions.items || [];
 
 	const {
-		form: {formState, onClose},
+		form: {onClose},
 	} = useFormActions();
 
 	const {
 		formState: {errors},
 		register,
+		setValue,
+		watch,
 	} = useForm<RoutineBuildData>({
-		defaultValues: formState,
-		resolver: yupResolver(yupSchema.case),
+		defaultValues: {
+			template: false,
+		},
+		resolver: yupResolver(yupSchema.build),
 	});
+
+	const template = watch('template');
 
 	const inputProps = {
 		errors,
@@ -109,11 +122,11 @@ const RoutineBuildForm: React.FC = () => {
 					type="textarea"
 				/>
 
-				{/* <ClayCheckbox
-						checked={form.autoanalyze}
-						label={i18n.translate('template')}
-						name="template"
-					/> */}
+				<ClayCheckbox
+					checked={template}
+					label={i18n.translate('template')}
+					onChange={() => setValue('template', !template)}
+				/>
 
 				<ClayButton.Group className="mb-4">
 					<ClayButton displayType="secondary">
@@ -129,7 +142,7 @@ const RoutineBuildForm: React.FC = () => {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onClose}
+							onClick={() => onClose()}
 						>
 							{i18n.translate('close')}
 						</ClayButton>

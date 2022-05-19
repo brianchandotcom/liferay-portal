@@ -82,22 +82,45 @@ const FormRow: React.FC<{
 );
 
 const CaseForm: React.FC = () => {
-	const {setDropdownIcon, setHeading, setTabs} = useHeader({
+	const {testrayProject}: any = useOutletContext();
+	const {setHeading, setTabs} = useHeader({
 		shouldUpdate: false,
 	});
 
 	const context: {testrayCase?: TestrayCase} = useOutletContext();
+	const {data: testrayComponentsData} = useQuery<
+		CTypePagination<'components', TestrayComponent>
+	>(getComponents);
+
+	const {data: testrayCaseTypesData} = useQuery<
+		CTypePagination<'caseTypes', TestrayCaseType>
+	>(getCaseTypes);
+
+	const testrayCaseTypes = testrayCaseTypesData?.c.caseTypes.items || [];
+	const testrayComponents = testrayComponentsData?.c.components.items || [];
 
 	useEffect(() => {
-		setDropdownIcon('polls');
+		if (testrayProject) {
+			setTimeout(() => {
+				setHeading([
+					{
+						category: i18n.translate('project').toUpperCase(),
+						path: `/project/${testrayProject.id}/routines`,
+						title: testrayProject.name,
+					},
+					{
+						category: i18n.translate('project').toUpperCase(),
+						title: i18n.translate('add-case'),
+					},
+				]);
 
-		setTimeout(() => {
-			setTabs([]);
-		}, 10);
-	}, [setDropdownIcon, setHeading, setTabs]);
+				setTabs([]);
+			}, 10);
+		}
+	}, [setHeading, setTabs, testrayProject]);
 
 	const {
-		form: {formState, onClose, onSubmit},
+		form: {onClose, onSubmit},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -114,20 +137,9 @@ const CaseForm: React.FC = () => {
 					caseTypeId: context.testrayCase.caseType?.id,
 					componentId: context.testrayCase.component?.id,
 			  }
-			: formState,
+			: {},
 		resolver: yupResolver(yupSchema.case),
 	});
-
-	const {data: testrayComponentsData} = useQuery<
-		CTypePagination<'components', TestrayComponent>
-	>(getComponents);
-
-	const {data: testrayCaseTypesData} = useQuery<
-		CTypePagination<'caseTypes', TestrayCaseType>
-	>(getCaseTypes);
-
-	const testrayCaseTypes = testrayCaseTypesData?.c.caseTypes.items || [];
-	const testrayComponents = testrayComponentsData?.c.components.items || [];
 
 	const _onSubmit = (form: CaseFormData) => {
 		onSubmit(
@@ -143,14 +155,13 @@ const CaseForm: React.FC = () => {
 	const componentId = watch('componentId');
 	const description = watch('description');
 	const steps = watch('steps');
+	const addAnother = watch('addAnother');
 
 	const inputProps = {
 		errors,
 		register,
 		required: true,
 	};
-
-	const addAnother = watch('addAnother');
 
 	return (
 		<Container className="container">
@@ -212,15 +223,14 @@ const CaseForm: React.FC = () => {
 					separator={false}
 					title={i18n.translate('description')}
 				>
-					<ClayForm.Group className="form-group-sm">
-						<InputSelect
-							{...inputProps}
-							className="col-2 ml-auto"
-							name="descriptionType"
-							options={descriptionTypes}
-							required={false}
-						/>
-					</ClayForm.Group>
+					<InputSelect
+						defaultOption={false}
+						{...inputProps}
+						className="col-2 ml-auto"
+						name="descriptionType"
+						options={descriptionTypes}
+						required={false}
+					/>
 				</FormRow>
 
 				<Input
@@ -236,6 +246,7 @@ const CaseForm: React.FC = () => {
 
 				<FormRow separator={false} title={i18n.translate('steps')}>
 					<InputSelect
+						defaultOption={false}
 						{...inputProps}
 						className="col-2 ml-auto"
 						name="stepsType"

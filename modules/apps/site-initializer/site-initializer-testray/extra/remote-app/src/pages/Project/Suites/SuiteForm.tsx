@@ -42,7 +42,7 @@ type SuiteFormData = {
 
 const SuiteForm = () => {
 	const {
-		form: {formState, onClose, onSubmit},
+		form: {onClose, onSubmit},
 	} = useFormActions();
 
 	const {setTabs} = useHeader({shouldUpdate: false});
@@ -65,7 +65,7 @@ const SuiteForm = () => {
 	} = useForm<SuiteFormData>({
 		defaultValues: context.testraySuite
 			? context.testraySuite
-			: {smartSuite: false, ...formState},
+			: {smartSuite: false},
 		resolver: yupResolver(yupSchema.suite),
 	});
 
@@ -156,7 +156,7 @@ const SuiteForm = () => {
 				<ClayButton.Group spaced>
 					<ClayButton
 						displayType="secondary"
-						onClick={() => onClose(`/project/${projectId}/cases`)}
+						onClick={() => onClose()}
 					>
 						{i18n.translate('close')}
 					</ClayButton>

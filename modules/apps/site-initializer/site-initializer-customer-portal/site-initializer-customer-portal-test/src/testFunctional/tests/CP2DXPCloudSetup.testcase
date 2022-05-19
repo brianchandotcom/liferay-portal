@@ -55,7 +55,7 @@ definition {
 		CustomerPortal.clickOnSkipForNowButton();
 
 		CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
-	
+
 		CP2DXPCloudSetup.deleteObjectsForDXPCloud();
 	}
 

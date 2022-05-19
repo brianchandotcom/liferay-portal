@@ -14,13 +14,13 @@ definition {
 
 		//CustomerPortal.setUpForCP20();
 
-		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        CP2TeamMembers.deleteMemberInvitedViaAccounts();
+		CP2TeamMembers.deleteMemberInvitedViaAccounts();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -29,16 +29,16 @@ definition {
 
 			//CustomerPortal.tearDownForOktaAndSAML();
 
-			//CustomerPortal.customerPortalTearDown();
+			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
 	}
 
-    @description = "Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
-    @priority = "5"
-    test IfInvitedIsSeenOnAccountRoles {
-        Accounts.openAccountsAdmin();
+	@description = "Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+	@priority = "5"
+	test IfInvitedIsSeenOnAccountRoles {
+		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
@@ -58,16 +58,17 @@ definition {
 			rowEmail = "test01@liferay.com",
 			rowRole = "User");
 
-        CP2TeamMembers.clickTeamMembersSendInvitation();
+		CP2TeamMembers.clickTeamMembersSendInvitation();
 
-        Accounts.openAccountsAdmin();
+		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Navigator.gotoNavTab(navTab = "Users");
+		Navigator.gotoNavTab(navTab = "Users");
 
-        AssertElementPresent(
-            locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME",
-            email = "test01@liferay.com");
-    }
+		AssertElementPresent(
+			email = "test01@liferay.com",
+			locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+	}
+
 }

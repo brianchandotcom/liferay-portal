@@ -39,16 +39,12 @@ definition {
 		Click(locator1 = "CP2TeamMembers#SEND_INVITATIONS_BUTTON");
 	}
 
-	macro viewTeamMembersPage {
-		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
-	}
-
 	macro deleteMemberInvitedViaAccounts {
 		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
-        Navigator.gotoNavTab(navTab = "Users");
+		Navigator.gotoNavTab(navTab = "Users");
 
 		Accounts.goToEntryMenuItem(
 			menuItem = "Remove",
@@ -58,4 +54,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+
+	macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
+	}
+
 }

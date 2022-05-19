@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -116,7 +117,9 @@ public class PublicationsPortlet extends MVCPortlet {
 					companyId, RoleConstants.PUBLICATIONS_USER);
 
 				_resourcePermissionLocalService.addResourcePermission(
-					role.getCompanyId(), "com.liferay.change.tracking",
+					role.getCompanyId(),
+					_resourceActions.getPortletRootModelResource(
+						CTPortletKeys.PUBLICATIONS),
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(role.getCompanyId()), role.getRoleId(),
 					CTActionKeys.ADD_PUBLICATION);
@@ -193,6 +196,9 @@ public class PublicationsPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.web)(&(release.schema.version>=1.0.2)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

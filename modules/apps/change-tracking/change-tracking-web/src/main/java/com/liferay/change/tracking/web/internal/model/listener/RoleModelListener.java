@@ -53,7 +53,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 				"resource-actions/default.xml");
 
 			_resourcePermissionLocalService.addResourcePermission(
-				role.getCompanyId(), "com.liferay.change.tracking",
+				role.getCompanyId(),
+				_resourceActions.getPortletRootModelResource(
+					CTPortletKeys.PUBLICATIONS),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(role.getCompanyId()), role.getRoleId(),
 				CTActionKeys.ADD_PUBLICATION);

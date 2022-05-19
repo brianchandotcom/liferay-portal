@@ -48,10 +48,6 @@ const UserOutlet = () => {
 		return null;
 	}
 
-	if (myUserAccount) {
-		return <Outlet context={myUserAccount} />;
-	}
-
-	return null;
+	return <Outlet context={myUserAccount} />;
 };
 export default UserOutlet;

@@ -16,6 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
@@ -35,7 +36,7 @@ import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 
 const requirementFormDefault = {
-	componentId: '',
+	componentId: 0,
 	description: '',
 	descriptionType: '',
 	id: undefined,
@@ -45,7 +46,7 @@ const requirementFormDefault = {
 	summary: '',
 };
 
-type RequirementsForm = typeof requirementFormDefault;
+type RequirementsFormType = typeof requirementFormDefault;
 
 const descriptionTypes = [
 	{
@@ -57,7 +58,11 @@ const descriptionTypes = [
 		value: 'plaintext',
 	},
 ];
-const FormRow: React.FC<{title: string}> = ({children, title}) => (
+
+const FormRow: React.FC<{children: ReactNode; title: string}> = ({
+	children,
+	title,
+}) => (
 	<>
 		<ClayLayout.Row justify="start">
 			<ClayLayout.Col size={3} sm={12} xl={3}>
@@ -75,7 +80,7 @@ const FormRow: React.FC<{title: string}> = ({children, title}) => (
 
 const RequirementsForm: React.FC = () => {
 	const {
-		form: {formState, onClose, onSubmit},
+		form: {onClose, onSubmit},
 	} = useFormActions();
 	const {projectId} = useParams();
 
@@ -86,13 +91,13 @@ const RequirementsForm: React.FC = () => {
 		handleSubmit,
 		register,
 		watch,
-	} = useForm({
+	} = useForm<RequirementsFormType>({
 		defaultValues: context?.requirement
-			? {
+			? ({
 					...context?.requirement,
 					componentId: context?.requirement?.component?.id,
-			  }
-			: formState,
+			  } as any)
+			: requirementFormDefault,
 		resolver: yupResolver(yupSchema.requirement),
 	});
 
@@ -102,7 +107,7 @@ const RequirementsForm: React.FC = () => {
 
 	const testrayComponents = testrayComponentsData?.c?.components.items || [];
 
-	const _onSubmit = (form: RequirementsForm) => {
+	const _onSubmit = (form: RequirementsFormType) => {
 		onSubmit(
 			{...form, projectId},
 			{
@@ -186,9 +191,7 @@ const RequirementsForm: React.FC = () => {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() =>
-								onClose(`/project/${projectId}/cases`)
-							}
+							onClick={() => onClose()}
 						>
 							{i18n.translate('close')}
 						</ClayButton>

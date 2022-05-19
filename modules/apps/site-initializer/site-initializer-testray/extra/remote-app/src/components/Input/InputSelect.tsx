@@ -50,7 +50,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 			required={required}
 		>
 			<select
-				className={classNames(`form-control rounded-xs ${className}`)}
+				className={classNames('form-control rounded-xs', className)}
 				id={id}
 				{...otherProps}
 				{...register(name, {required})}

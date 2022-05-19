@@ -34,7 +34,7 @@ const Requirements = () => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: () => navigate(`create`),
+						addButton: () => navigate('create'),
 					}}
 					query={getRequirements}
 					tableProps={{

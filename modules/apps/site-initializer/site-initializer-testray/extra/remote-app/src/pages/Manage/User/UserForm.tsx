@@ -39,7 +39,7 @@ type userFormDefault = {
 	testrayUser: boolean;
 };
 
-const UserForm: React.FC = () => {
+const UserForm = () => {
 	const {data} = useQuery<TypePagination<'roles', Role>>(getLiferayRoles);
 
 	const roles = data?.roles.items || [];
@@ -79,7 +79,8 @@ const UserForm: React.FC = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		} else {
+		}
+		else {
 			newRoles = [...newRoles, Number(value)];
 		}
 
@@ -168,7 +169,9 @@ const UserForm: React.FC = () => {
 
 				<ClayLayout.Row justify="start">
 					<ClayLayout.Col size={12} sm={12} xl={3}>
-						<h5 className="font-weight-normal">Roles</h5>
+						<h5 className="font-weight-normal">
+							{i18n.translate('roles')}
+						</h5>
 					</ClayLayout.Col>
 
 					<ClayLayout.Col size={12} sm={12} xl={9}>
@@ -193,9 +196,7 @@ const UserForm: React.FC = () => {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() =>
-								onClose(`/project/${projectId}/cases`)
-							}
+							onClick={() => onClose()}
 						>
 							{i18n.translate('close')}
 						</ClayButton>

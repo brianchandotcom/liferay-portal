@@ -41,7 +41,7 @@ const Users: React.FC = () => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: () => navigate(`create`),
+						addButton: () => navigate('create'),
 					}}
 					query={getLiferayUserAccounts}
 					tableProps={{

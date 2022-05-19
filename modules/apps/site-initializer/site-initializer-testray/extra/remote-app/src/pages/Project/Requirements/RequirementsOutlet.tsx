@@ -22,12 +22,18 @@ import {
 } from 'react-router-dom';
 
 import Loading from '../../../components/Loading';
-import {TestrayRequirement, getRequirement} from '../../../graphql/queries';
+import {
+	TestrayProject,
+	TestrayRequirement,
+	getRequirement,
+} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import i18n from '../../../i18n';
 
 const RequirementsOutlet = () => {
-	const {testrayProject}: any = useOutletContext();
+	const {
+		testrayProject,
+	}: {testrayProject: TestrayProject} = useOutletContext();
 	const {caseId, projectId, requirementId} = useParams();
 	const {pathname} = useLocation();
 	const basePath = `/project/${projectId}/cases/${caseId}`;
@@ -97,11 +103,7 @@ const RequirementsOutlet = () => {
 		return null;
 	}
 
-	if (testrayRequirement) {
-		return <Outlet context={testrayRequirement} />;
-	}
-
-	return null;
+	return <Outlet context={testrayRequirement} />;
 };
 
 export default RequirementsOutlet;

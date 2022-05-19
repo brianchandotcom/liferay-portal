@@ -30,6 +30,7 @@ import {
 	TestrayCase,
 	TestrayCaseType,
 	TestrayComponent,
+	TestrayProject,
 	getCaseTypes,
 	getComponents,
 } from '../../../graphql/queries';
@@ -81,13 +82,19 @@ const FormRow: React.FC<{
 	</>
 );
 
-const CaseForm: React.FC = () => {
-	const {testrayProject}: any = useOutletContext();
+const CaseForm = () => {
+	const {
+		testrayCase,
+		testrayProject,
+	}: {
+		testrayCase: TestrayCase;
+		testrayProject: TestrayProject;
+	} = useOutletContext();
+
 	const {setHeading, setTabs} = useHeader({
 		shouldUpdate: false,
 	});
 
-	const context: {testrayCase?: TestrayCase} = useOutletContext();
 	const {data: testrayComponentsData} = useQuery<
 		CTypePagination<'components', TestrayComponent>
 	>(getComponents);
@@ -131,11 +138,11 @@ const CaseForm: React.FC = () => {
 		setValue,
 		watch,
 	} = useForm<CaseFormData>({
-		defaultValues: context?.testrayCase
+		defaultValues: testrayCase
 			? {
-					...context?.testrayCase,
-					caseTypeId: context.testrayCase.caseType?.id,
-					componentId: context.testrayCase.component?.id,
+					...testrayCase,
+					caseTypeId: testrayCase.caseType?.id,
+					componentId: testrayCase.component?.id,
 			  }
 			: {},
 		resolver: yupResolver(yupSchema.case),
@@ -224,9 +231,9 @@ const CaseForm: React.FC = () => {
 					title={i18n.translate('description')}
 				>
 					<InputSelect
-						defaultOption={false}
 						{...inputProps}
 						className="col-2 ml-auto"
+						defaultOption={false}
 						name="descriptionType"
 						options={descriptionTypes}
 						required={false}
@@ -246,9 +253,9 @@ const CaseForm: React.FC = () => {
 
 				<FormRow separator={false} title={i18n.translate('steps')}>
 					<InputSelect
-						defaultOption={false}
 						{...inputProps}
 						className="col-2 ml-auto"
+						defaultOption={false}
 						name="stepsType"
 						options={descriptionTypes}
 						required={false}
@@ -278,9 +285,7 @@ const CaseForm: React.FC = () => {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() =>
-								onClose(`/project/${projectId}/cases`)
-							}
+							onClick={() => onClose()}
 						>
 							{i18n.translate('close')}
 						</ClayButton>

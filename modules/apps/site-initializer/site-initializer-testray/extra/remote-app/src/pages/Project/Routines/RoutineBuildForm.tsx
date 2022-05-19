@@ -42,7 +42,7 @@ type RoutineBuildData = {
 	template: boolean;
 };
 
-const RoutineBuildForm: React.FC = () => {
+const RoutineBuildForm = () => {
 	const {data: routinesData} = useQuery<
 		CTypePagination<'routines', TestrayRoutine>
 	>(getRoutines);

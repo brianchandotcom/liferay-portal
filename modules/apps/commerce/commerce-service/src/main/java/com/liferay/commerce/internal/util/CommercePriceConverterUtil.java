@@ -54,7 +54,7 @@ public class CommercePriceConverterUtil {
 
 		BigDecimal discountPercentage = _ONE_HUNDRED;
 
-		if (!CommerceBigDecimalUtil.eq(discountedPrice, initialPrice)) {
+		if (CommerceBigDecimalUtil.gt(discountedPrice, BigDecimal.ZERO)) {
 			discountPercentage = _getDiscountPercentage(
 				discountedPrice, initialPrice, roundingMode);
 		}
@@ -74,6 +74,10 @@ public class CommercePriceConverterUtil {
 			BigDecimal price, boolean includeTax,
 			CommerceTaxCalculation commerceTaxCalculation)
 		throws PortalException {
+
+		if (CommerceBigDecimalUtil.isZero(price) && includeTax) {
+			return price;
+		}
 
 		List<CommerceTaxValue> commerceTaxValues =
 			commerceTaxCalculation.getCommerceTaxValues(

@@ -311,7 +311,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		Portlet.viewEmptyMessage(message = "There are no results.");
+		Portlet.viewEmptyMessage(message = "No structures were found.");
 	}
 
 	macro viewCP {

@@ -785,9 +785,7 @@ definition {
 
 		Refresh();
 
-		CommerceEntry.clickTableEntryEditButton(
-			entryName = "Money Order",
-			table = "Payment Methods");
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

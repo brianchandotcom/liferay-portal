@@ -806,12 +806,48 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search when press enter key on Default Sort"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchWithEnterKey {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152064",
+			objectName = "CustomObject152064",
+			pluralLabelName = "Custom Objects 152064");
 
-		// TODO LPS-152064 CanSearchWithEnterKey pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152064");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Modified Date") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		for (var columnName : list "Author,Creation Date,Modified Date") {
+			ObjectCustomViews.addDefaultSort(
+				columnOption = "${columnName}",
+				sortOption = "Ascending");
+		}
+
+		ObjectCustomViews.searchOnDefaultSort(colunmName = "Author");
+
+		ObjectCustomViews.assertColumnPresentOnDefaultSort(
+			colunmName = "Author",
+			sortingLabel = "Ascending");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to see the entries with default return"

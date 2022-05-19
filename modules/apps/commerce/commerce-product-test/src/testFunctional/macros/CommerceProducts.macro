@@ -108,4 +108,41 @@ definition {
 				productType = "${productType}",
 				productStatus = "${productStatusCode}");
 	}
+
+	macro duplicateProduct {	
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		if("${status}" != "Draft") {
+			AssertElementNotPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+		else {
+			AssertElementPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Duplicate",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		CommerceEntry.addProductsEntry(
+			productCatalog = "${productCatalog}",
+			productFullDescription = "Full Description for ${productName}",
+			productName = "Copy of ${productName}",
+			productShortDescription = "Short Description for ${productName}",
+			publishProduct = "false");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+	}
 }

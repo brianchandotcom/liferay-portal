@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/address-web": "*"
 	},
 	"name": "account-admin-web",
 	"scripts": {

@@ -22,14 +22,144 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8146. As a buyer, I want to add two or more or all products to my cart directly from the Shop by Diagram"
 	@priority = "4"
 	test AddMultipleSKUToTheCart {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8146 AddMultipleSKUToTheCart pending implementation
+		task ("Given a Buyer account is created") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And a Diagram with the "Type" set to "Default", an image (Commerce_Black.jpg) uploaded as "Diagram File" and 3 mapped pins, then disable ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93016A");
+
+			CommerceDiagram.addPin(
+				pinNumber = "3",
+				position = "0,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93017");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			var n = "1";
+
+			for (var key_inventoryName : list "Italy,United States - Northeast,United States - Southwest") {
+				Type(
+					locator1 = "CommerceEntry#INVENTORY_INPUT",
+					value1 = "0");
+
+				Click(
+					key_indexNumber = "${n}",
+					key_text = "Save",
+					locator1 = "Button#ANY_N");
+
+				var n = ${n} + 1;
+			}
+
+			Refresh();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Allow Back Orders",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickPublish();
+		}
+
+		task ("When a Buyer goes on the Product Details page of the product on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then the Buyer will be able to click the checkboxes on the right, below the "Mapped products" section") {
+			Check.checkToggleSwitch(locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SELECT_ALL_CHECKBOX");
+		}
+
+		task ("And the Buyer can add to the cart only the available products") {
+			var n = "2";
+
+			for (var key_productName : list "MIN93016A,MIN93017") {
+				AssertChecked.assertCheckedNotVisible(
+					key_pinNumber = "${n}",
+					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("And verify that the ABS Sensor checkbox is not clickable") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_pinNumber = "1",
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX_DISABLED");
+		}
 	}
 
 	@description = "[Please Update]"

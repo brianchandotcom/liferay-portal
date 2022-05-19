@@ -11,7 +11,6 @@
 
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-
 import {useEffect, useState} from 'react';
 import TablePagination from './Pagination';
 import TableSkeleton from './Skeleton';

@@ -241,7 +241,7 @@ const SetupAnalyticsCloudPage = ({
 								helper={i18n.translate(
 									'lowercase-letters-and-numbers-only-projec-ids-cannot-be-changed'
 								)}
-								label="workspace-name"
+								label={i18n.translate('workspace-name')}
 								name="activations.workspaceName"
 								placeholder="superbank1"
 								required

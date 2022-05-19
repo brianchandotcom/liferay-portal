@@ -15,6 +15,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 import i18n from '../../../../common/I18n';
 import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
+import getKebabCase from '../../utils/getKebabCase';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 	const [active, setActive] = useState(false);
@@ -89,7 +90,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 							: ''
 					}
 				>
-					{SUBSCRIPTIONS_STATUS.active}
+					{i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.active))}
 				</DropDown.Item>
 
 				<DropDown.Item
@@ -100,7 +101,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 							: ''
 					}
 				>
-					{SUBSCRIPTIONS_STATUS.expired}
+					{i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.expired))}
 				</DropDown.Item>
 
 				<DropDown.Item
@@ -111,7 +112,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 							: ''
 					}
 				>
-					{SUBSCRIPTIONS_STATUS.future}
+					{i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.future))}
 				</DropDown.Item>
 			</DropDown>
 		</div>

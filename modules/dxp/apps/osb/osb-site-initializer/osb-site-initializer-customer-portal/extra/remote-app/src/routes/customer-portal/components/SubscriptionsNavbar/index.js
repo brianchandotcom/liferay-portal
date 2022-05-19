@@ -15,7 +15,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import i18n from '../../../../common/I18n';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import {useCustomerPortal} from '../../context';
-import getKebabCase from '../../utils/getKebabCase';
 
 const SubscriptionDropDownMenu = ({
 	selectedSubscriptionGroup,
@@ -40,9 +39,7 @@ const SubscriptionDropDownMenu = ({
 						className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
 						displayType="unstyled"
 					>
-						{i18n.translate(
-							getKebabCase(selectedSubscriptionGroup)
-						)}
+						{selectedSubscriptionGroup}
 
 						<ClayIcon symbol="caret-bottom" />
 					</ClayButton>
@@ -62,7 +59,7 @@ const SubscriptionDropDownMenu = ({
 						}
 						value={subscriptionGroup.name}
 					>
-						{i18n.translate(getKebabCase(subscriptionGroup.name))}
+						{subscriptionGroup.name}
 					</DropDown.Item>
 				))}
 			</DropDown>
@@ -110,9 +107,7 @@ const SubscriptionsNavbar = ({
 							className="text-brand-primary"
 							key={subscriptionGroup.name}
 						>
-							{i18n.translate(
-								getKebabCase(subscriptionGroup.name)
-							)}
+							{subscriptionGroup.name}
 						</h5>
 					))}
 
@@ -135,11 +130,8 @@ const SubscriptionsNavbar = ({
 								<RoundedGroupButtons
 									groupButtons={subscriptionGroups.map(
 										(subscriptionGroup) => ({
-											label: `${i18n.translate(
-												getKebabCase(
-													subscriptionGroup.name
-												)
-											)}`,
+											label: subscriptionGroup.name,
+
 											value: subscriptionGroup.name,
 										})
 									)}

@@ -8,12 +8,10 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import i18n from '../../../common/I18n';
-
 const SLA_TYPES = {
-	gold: i18n.translate('gold'),
-	limited: i18n.translate('limited'),
-	platinum: i18n.translate('platinum'),
+	gold: 'Gold',
+	limited: 'Limited',
+	platinum: 'Platinum',
 };
 
 export {SLA_TYPES};

@@ -71,7 +71,7 @@ const SideMenu = () => {
 						setActive={menuUpdateStatus}
 						to={`${ACTIVATION_PATH}/${redirectPage}`}
 					>
-						{i18n.translate(getKebabCase(name))}
+						{name}
 					</MenuItem>
 				);
 			}),
@@ -85,7 +85,9 @@ const SideMenu = () => {
 	return (
 		<div className="bg-neutral-1 cp-side-menu mr-4 pl-4 pt-4">
 			<ul className="list-unstyled mr-2">
-				<MenuItem to="">{MENU_TYPES.overview}</MenuItem>
+				<MenuItem to="">
+					{i18n.translate(getKebabCase(MENU_TYPES.overview))}
+				</MenuItem>
 
 				<li>
 					<Button
@@ -111,7 +113,9 @@ const SideMenu = () => {
 							)
 						}
 					>
-						{MENU_TYPES.productActivation}
+						{i18n.translate(
+							getKebabCase(MENU_TYPES.productActivation)
+						)}
 					</Button>
 
 					<ul
@@ -128,7 +132,7 @@ const SideMenu = () => {
 				</li>
 
 				<MenuItem to={getKebabCase(MENU_TYPES.teamMembers)}>
-					{MENU_TYPES.teamMembers}
+					{i18n.translate(getKebabCase(MENU_TYPES.teamMembers))}
 				</MenuItem>
 			</ul>
 		</div>

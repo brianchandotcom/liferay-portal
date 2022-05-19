@@ -11,6 +11,7 @@
 
 import {ClayInput} from '@clayui/form';
 import {useMemo} from 'react';
+import i18n from '../../../../I18n';
 import {Input, Select} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {ROLE_TYPES} from '../../../../utils/constants';
@@ -65,7 +66,7 @@ const TeamMemberInputs = ({
 				<Input
 					disableError={id === 0 && disableError}
 					groupStyle="m-0"
-					label="Email"
+					label={i18n.translate('email')}
 					name={`invites[${id}].email`}
 					placeholder={placeholderEmail}
 					type="email"
@@ -78,7 +79,7 @@ const TeamMemberInputs = ({
 			<ClayInput.GroupItem className="m-0">
 				<Select
 					groupStyle="m-0"
-					label="Role"
+					label={i18n.translate('role')}
 					name={`invites[${id}].role.id`}
 					onChange={(event) => selectOnChange(event.target.value)}
 					options={optionsFormated}

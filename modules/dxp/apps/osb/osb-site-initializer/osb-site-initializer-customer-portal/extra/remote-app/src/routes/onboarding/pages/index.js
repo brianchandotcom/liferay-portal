@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../common/I18n';
 import InviteTeamMembersForm from '../../../common/containers/setup-forms/InviteTeamMembersForm';
 import SetupAnalyticsCloud from '../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
 import SetupDXPCloud from '../../../common/containers/setup-forms/SetupDXPCloudForm';
@@ -88,7 +89,7 @@ const Pages = () => {
 				<InviteTeamMembersForm
 					availableAdministratorAssets={availableAdministratorAssets}
 					handlePage={invitesPageHandle}
-					leftButton="Skip for now"
+					leftButton={i18n.translate('skip-for-now')}
 					project={project}
 					sessionId={sessionId}
 				/>
@@ -106,7 +107,7 @@ const Pages = () => {
 						}
 						dxpCloudPageHandle();
 					}}
-					leftButton="Skip for now"
+					leftButton={i18n.translate('skip-for-now')}
 					project={project}
 					subscriptionGroupId={
 						subscriptionDXPCloud?.accountSubscriptionGroupId
@@ -139,7 +140,7 @@ const Pages = () => {
 						}
 						analyticsCloudPageHandle();
 					}}
-					leftButton="Skip for now"
+					leftButton={i18n.translate('skip-for-now')}
 					project={project}
 					subscriptionGroupId={
 						subscriptionAnalyticsCloud?.accountSubscriptionGroupId

@@ -184,7 +184,6 @@ const Overview = () => {
 									{i18n.translate(
 										'no-subscriptions-match-these-criteria'
 									)}
-									.
 								</p>
 							)}
 						</div>

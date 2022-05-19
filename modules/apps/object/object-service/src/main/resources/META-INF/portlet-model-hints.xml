@@ -12,6 +12,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="active" type="boolean" />
+		<field name="conditionExpression" type="String" />
 		<field name="description" type="String" />
 		<field name="name" type="String" />
 		<field name="objectActionExecutorKey" type="String" />

@@ -55,6 +55,10 @@ public class ObjectActionTable extends BaseTable<ObjectActionTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ObjectActionTable, String> conditionExpression =
+		createColumn(
+			"conditionExpression", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, String> name = createColumn(

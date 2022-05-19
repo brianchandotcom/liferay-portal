@@ -53,6 +53,7 @@ public class ObjectActionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("active", isActive());
+		attributes.put("conditionExpression", getConditionExpression());
 		attributes.put("description", getDescription());
 		attributes.put("name", getName());
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
@@ -124,6 +125,13 @@ public class ObjectActionWrapper
 			setActive(active);
 		}
 
+		String conditionExpression = (String)attributes.get(
+			"conditionExpression");
+
+		if (conditionExpression != null) {
+			setConditionExpression(conditionExpression);
+		}
+
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
@@ -180,6 +188,16 @@ public class ObjectActionWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the condition expression of this object action.
+	 *
+	 * @return the condition expression of this object action
+	 */
+	@Override
+	public String getConditionExpression() {
+		return model.getConditionExpression();
 	}
 
 	/**
@@ -372,6 +390,16 @@ public class ObjectActionWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the condition expression of this object action.
+	 *
+	 * @param conditionExpression the condition expression of this object action
+	 */
+	@Override
+	public void setConditionExpression(String conditionExpression) {
+		model.setConditionExpression(conditionExpression);
 	}
 
 	/**

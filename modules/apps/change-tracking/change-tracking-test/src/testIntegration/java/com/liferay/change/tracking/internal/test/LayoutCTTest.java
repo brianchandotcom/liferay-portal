@@ -96,8 +96,8 @@ public class LayoutCTTest {
 				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
 
 			try (SafeCloseable safeCloseable2 =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
 				Assert.assertNull(
 					_layoutLocalService.fetchLayout(layout.getPlid()));
@@ -244,8 +244,8 @@ public class LayoutCTTest {
 			layout = _layoutLocalService.updateLayout(layout);
 
 			try (SafeCloseable safeCloseable2 =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
 				Layout productionLayout = _layoutLocalService.fetchLayout(
 					layout.getPlid());
@@ -898,8 +898,8 @@ public class LayoutCTTest {
 				_layoutLocalService.fetchLayout(layout.getPlid()));
 
 			try (SafeCloseable safeCloseable2 =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
 				Assert.assertEquals(
 					layout, _layoutLocalService.fetchLayout(layout.getPlid()));

@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -133,8 +132,7 @@ public class BasePersistenceRegistry {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			return transactionExecutor.execute(
 				_transactionAttributeAdapter,

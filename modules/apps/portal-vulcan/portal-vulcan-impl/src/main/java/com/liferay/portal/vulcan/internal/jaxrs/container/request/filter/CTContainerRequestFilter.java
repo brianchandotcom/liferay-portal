@@ -14,7 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -95,8 +94,7 @@ public class CTContainerRequestFilter implements ContainerRequestFilter {
 					message.put(
 						_CT_COLLECTION_SAFE_CLOSABLE,
 						CTCollectionThreadLocal.
-							setCTCollectionIdWithSafeCloseable(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION));
+							setProductionModeWithSafeCloseable());
 				}
 			}
 		}

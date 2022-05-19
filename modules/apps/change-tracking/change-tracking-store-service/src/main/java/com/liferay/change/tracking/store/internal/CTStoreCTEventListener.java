@@ -100,8 +100,8 @@ public class CTStoreCTEventListener implements CTEventListener {
 
 		if (!addOrModifiedCTEntries.isEmpty()) {
 			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
 				for (CTEntry ctEntry : addOrModifiedCTEntries) {
 					CTSContent ctsContent =
@@ -135,8 +135,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			for (long ctsContentId : ctsContentIds) {
 				CTSContent ctsContent = _ctsContentLocalService.fetchCTSContent(

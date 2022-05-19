@@ -94,8 +94,7 @@ public class CTSearchEventListener implements CTEventListener {
 			() -> {
 				try (SafeCloseable safeCloseable =
 						CTCollectionThreadLocal.
-							setCTCollectionIdWithSafeCloseable(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+							setProductionModeWithSafeCloseable()) {
 
 					for (Map.Entry<CTService<?>, List<CTEntry>> ctEntryEntry :
 							_getCTEntryEntries(ctCollectionId)) {

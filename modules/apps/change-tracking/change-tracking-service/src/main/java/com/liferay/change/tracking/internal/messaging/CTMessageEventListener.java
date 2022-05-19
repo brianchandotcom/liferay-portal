@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.internal.messaging;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.petra.lang.SafeCloseable;
@@ -43,8 +42,7 @@ public class CTMessageEventListener implements CTEventListener {
 
 				try (SafeCloseable safeCloseable =
 						CTCollectionThreadLocal.
-							setCTCollectionIdWithSafeCloseable(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+							setProductionModeWithSafeCloseable()) {
 
 					for (Message message : messages) {
 						_messageBus.sendMessage(

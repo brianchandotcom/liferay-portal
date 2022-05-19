@@ -55,7 +55,9 @@ export function SelectLayoutTree({
 
 	const selectedItemsRef = useRef(new Map());
 
-	const handleMultipleSelectionChange = (selection, item) => {
+	const handleMultipleSelectionChange = (item, selection) => {
+		selection.toggle(item.id);
+
 		if (!selection.has(item.id)) {
 			selectedItemsRef.current.set(item.id, {
 				groupId: item.groupId,
@@ -92,9 +94,7 @@ export function SelectLayoutTree({
 		}
 	};
 
-	const handleSingleSelectionChange = (event, item) => {
-		event.preventDefault();
-
+	const handleSingleSelection = (item) => {
 		const data = {
 			groupId: item.groupId,
 			id: item.id,
@@ -108,17 +108,50 @@ export function SelectLayoutTree({
 
 		setSelectionChange(new Set([item.id]));
 
+		Liferay.fire(itemSelectorSaveEvent, {
+			data,
+		});
+
+		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+			data,
+		});
+	};
+
+	const onClick = (event, item, selection) => {
+		event.preventDefault();
+
 		if (followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = item.url;
+
+			return;
+		}
+
+		if (item.disabled) {
+			return;
+		}
+
+		if (multiSelection) {
+			handleMultipleSelectionChange(item, selection);
 		}
 		else {
-			Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
+			handleSingleSelection(item);
+		}
+	};
 
-			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
+	const onKeyDownCapture = (event, item, selection) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.stopPropagation();
+
+			if (item.disabled) {
+				return;
+			}
+
+			if (multiSelection) {
+				handleMultipleSelectionChange(item, selection);
+			}
+			else {
+				handleSingleSelection(item);
+			}
 		}
 	};
 
@@ -134,22 +167,20 @@ export function SelectLayoutTree({
 			{(item, selection) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => {
-							event.preventDefault();
-
-							if (!multiSelection && !item.disabled) {
-								handleSingleSelectionChange(event, item);
-							}
-						}}
+						onClick={(event) => onClick(event, item, selection)}
+						onKeyDownCapture={(event) =>
+							onKeyDownCapture(event, item, selection)
+						}
 					>
 						{multiSelection && !item.disabled && (
 							<ClayCheckbox
 								onChange={() =>
 									handleMultipleSelectionChange(
-										selection,
-										item
+										item,
+										selection
 									)
 								}
+								tabIndex="-1"
 							/>
 						)}
 
@@ -163,25 +194,22 @@ export function SelectLayoutTree({
 							<ClayTreeView.Item
 								disabled={item.disabled}
 								expanderDisabled={false}
-								onClick={(event) => {
-									event.preventDefault();
-
-									if (!multiSelection && !item.disabled) {
-										handleSingleSelectionChange(
-											event,
-											item
-										);
-									}
-								}}
+								onClick={(event) =>
+									onClick(event, item, selection)
+								}
+								onKeyDownCapture={(event) =>
+									onKeyDownCapture(event, item, selection)
+								}
 							>
 								{multiSelection && !item.disabled && (
 									<ClayCheckbox
 										onChange={() =>
 											handleMultipleSelectionChange(
-												selection,
-												item
+												item,
+												selection
 											)
 										}
+										tabIndex="-1"
 									/>
 								)}
 

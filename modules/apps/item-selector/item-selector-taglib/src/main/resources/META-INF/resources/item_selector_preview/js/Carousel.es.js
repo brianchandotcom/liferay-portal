@@ -75,14 +75,16 @@ const InfoPanel = ({metadata}) => {
 
 	return (
 		<div className="info-panel sidenav-menu-slider">
-			<div className="sidebar-header">
-				<ClayTabs>{itemsHeader}</ClayTabs>
-			</div>
+			<div className="sidebar sidenav-menu">
+				<div className="sidebar-header">
+					<ClayTabs>{itemsHeader}</ClayTabs>
+				</div>
 
-			<div className="sidebar-body">
-				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-					{itemsContent}
-				</ClayTabs.Content>
+				<div className="sidebar-body">
+					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
+						{itemsContent}
+					</ClayTabs.Content>
+				</div>
 			</div>
 		</div>
 	);

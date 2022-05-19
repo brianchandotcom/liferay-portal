@@ -446,7 +446,9 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
-		WaitForPageLoad();
+		WaitForElementPresent(
+			key_title = "${productName}",
+			locator1 = "Header#H3_TITLE");
 
 		AssertElementPresent(
 			key_status = "Draft",
@@ -461,25 +463,13 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
-		if (!(isSet(compileDescription))) {
-			var compileDescription = "true";
-		}
-
-		if ("${compileDescription}" == "true") {
-			echo("compileDescription enabled");
-
+		if (!(isSet(compileDescription)) || "${compileDescription}" == "true") {
 			CommerceEntry.addProductDescription(
 				productFullDescription = "${productFullDescription}",
 				productShortDescription = "${productShortDescription}");
 		}
 
-		if (!(isSet(publishProduct))) {
-			var publishProduct = "true";
-		}
-
-		if ("${publishProduct}" == "true") {
-			echo("publishProduct enabled");
-
+		if (!(isSet(publishProduct)) || "${publishProduct}" == "true") {
 			CommerceEntry.publishEntry(status = "Approved");
 		}
 	}

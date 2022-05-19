@@ -73,6 +73,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class][${key_pinNumber}]//td[contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX</td>
 	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class][${key_pinNumber}]//td[contains(.,'${key_productName}')]/preceding-sibling::*//input[@type='checkbox']</td>
 	<td></td>
@@ -132,6 +137,21 @@
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME</td>
 	<td>//div[contains(@class,'diagram-tooltip')]//p//a[contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_VIEW</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//div//a[contains(text(),'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_QUANTITY</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//p[contains(text(),'Quantity')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_UNLINKED_PRODUCT_NAME</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//h4[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
 <!--DIAGRAM_SETTINGS-->

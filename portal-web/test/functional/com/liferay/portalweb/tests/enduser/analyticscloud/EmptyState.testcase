@@ -808,4 +808,130 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11121 | Test Summary: Empty state Segments page no/with segment with data source and property no data"
+	@priority = "2"
+	test CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to AC") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+		}
+
+		task ("Check the empty state and documentation link of segment list page") {
+			ACNavigation.goToSegments();
+
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
+
+			Close.closeWindow();
+		}
+
+		task ("Add a new dynamic segment") {
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "jobTitle");
+
+			ACSegments.editTextCriterion(textInput = "Doctor");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Add a new breakdown") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "jobTitle",
+				breakdownName = "Breakdown by Job Title");
+		}
+
+		task ("Check the empty state and documentation link of the segment membership card") {
+			for (var tabName : list "Overview,Membership") {
+				ACNavigation.switchTab(tabName = "${tabName}");
+
+				ACCards.viewCards(cardTitle = "Segment Membership");
+
+				ACUtils.viewGenericText(textValueList = "There is no data for segment membership.,Check back later to verify if data has been received from your data sources.");
+
+				ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about segment membership.");
+
+				SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+				ACUtils.viewGenericText(textValueList = "Documentation,Segment Membership Panel");
+
+				Close.closeWindow();
+			}
+		}
+
+		task ("Check the empty state and documentation link of the interests card") {
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACCards.viewCards(cardTitle = "Top Interests");
+
+			ACUtils.viewGenericText(textValueList = "There are no interests found.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Top Interests Panel");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+
+			ACCards.viewCards(cardTitle = "Interest Topics");
+
+			ACUtils.viewGenericText(textValueList = "There are no interests found.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Interests Tab");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the distribution card") {
+			for (var tabName : list "Overview,Distribution") {
+				ACNavigation.switchTab(tabName = "${tabName}");
+
+				ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.");
+
+				ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
+
+				SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+				ACUtils.viewGenericText(textValueList = "Documentation,Distribution Tab");
+
+				Close.closeWindow();
+			}
+		}
+	}
+
 }

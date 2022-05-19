@@ -894,4 +894,120 @@ definition {
 
 	}
 
+	@description = "COMMERCE-7790 | Verify if only first subscription product in wish list will be imported"
+	@priority = "3"
+	test AssertOnlyTheFirstSubscriptionProductInTheWishListIsImportedWhenTheOrderIsEmpty {
+		task ("Given admin user enable subscription in two products") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
+
+			CommerceEntry.activeProductPaymentSubscription(productName = "U-Joint");
+		}
+
+		task ("And given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,Torque Converters,ABS Sensor");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,Torque Converters,ABS Sensor",
+				wishListName = "Default");
+		}
+
+		task ("And given the buyer go to import a new order with subscription products from wish list") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("And given the buyer selects the wishlist") {
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("And given ABS Sensor status is 'OK' on the Preview") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
+		}
+
+		task ("And given Torque Converters status is 'Cart cannot contain both subscription and non-subscription products.' on the Preview") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "Cart cannot contain both subscription and non-subscription products.",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "",
+				unitPrice = "");
+		}
+
+		task ("And given U-Joint status is 'Your cart can contain only one subscription product.' on the Preview") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "Your cart can contain only one subscription product.",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "",
+				unitPrice = "");
+		}
+
+		task ("When the buyer clicks on 'Import'") {
+			Button.click(button = "Import");
+		}
+
+		task ("Then in order details only one product will be imported and displayed") {
+			SelectFrameTop();
+
+			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				productTotalPrice = "50.00");
+
+			CommerceOrders.viewOrderPrices(
+				subTotalPrice = "50.00",
+				deliveryPrice = "0.00",
+				taxPrice = "0.00",
+				totalPrice = "50.00");
+		}
+
+		task ("And then 2 products are not imported (U-Joint and Torque Convertes") {
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			AssertElementPresent(
+				key_productName = "Torque Converters",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
+	}
+
 }

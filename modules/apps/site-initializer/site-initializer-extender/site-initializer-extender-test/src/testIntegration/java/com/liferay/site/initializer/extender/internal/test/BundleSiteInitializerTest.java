@@ -628,8 +628,10 @@ public class BundleSiteInitializerTest {
 			"com.liferay.account.model.AccountEntry");
 
 		Assert.assertNotNull(expandoBridge);
-		Assert.assertNotNull(expandoBridge.getAttribute("Test Expando Column 1"));
-		Assert.assertNotNull(expandoBridge.getAttribute("Test Expando Column 2"));
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 1"));
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 2"));
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 	}
 

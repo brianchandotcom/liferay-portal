@@ -28,7 +28,7 @@ public class CTCollectionThreadLocal {
 	}
 
 	public static boolean isProductionMode() {
-		if (_ctCollectionId.get() == 0) {
+		if (_ctCollectionId.get() == _CT_COLLECTION_ID_PRODUCTION) {
 			return true;
 		}
 
@@ -53,7 +53,7 @@ public class CTCollectionThreadLocal {
 		CTCollectionIdSupplier ctCollectionIdSupplier = _ctCollectionIdSupplier;
 
 		if (ctCollectionIdSupplier == null) {
-			return 0;
+			return _CT_COLLECTION_ID_PRODUCTION;
 		}
 
 		return ctCollectionIdSupplier.getCTCollectionId();

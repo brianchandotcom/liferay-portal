@@ -44,7 +44,6 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutBox;
@@ -52,6 +51,10 @@ import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -78,16 +81,18 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,6 +117,7 @@ public class ObjectEntryDisplayContext {
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryManagerServicesTracker objectEntryManagerServicesTracker,
 		ObjectEntryService objectEntryService,
 		ObjectFieldBusinessTypeServicesTracker
 			objectFieldBusinessTypeServicesTracker,
@@ -124,6 +130,7 @@ public class ObjectEntryDisplayContext {
 		_ddmFormRenderer = ddmFormRenderer;
 		_itemSelector = itemSelector;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryManagerServicesTracker = objectEntryManagerServicesTracker;
 		_objectEntryService = objectEntryService;
 		_objectFieldBusinessTypeServicesTracker =
 			objectFieldBusinessTypeServicesTracker;
@@ -134,6 +141,9 @@ public class ObjectEntryDisplayContext {
 		_readOnly = readOnly;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
@@ -200,23 +210,31 @@ public class ObjectEntryDisplayContext {
 			return _objectEntry;
 		}
 
-		long objectEntryId = ParamUtil.getLong(
-			_objectRequestHelper.getRequest(), "objectEntryId");
+		String externalReferenceCode = ParamUtil.getString(
+			_objectRequestHelper.getRequest(), "externalReferenceCode");
 
-		if (_readOnly && (objectEntryId == 0L)) {
+		if (_readOnly && Validator.isNull(externalReferenceCode)) {
 			HttpServletRequest httpServletRequest =
 				_objectRequestHelper.getRequest();
 
-			objectEntryId = (long)httpServletRequest.getAttribute(
-				"objectEntryId");
+			externalReferenceCode = (String)httpServletRequest.getAttribute(
+				"externalReferenceCode");
 		}
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerServicesTracker.getObjectEntryManager(
+				objectDefinition.getStorageType());
+
 		try {
-			_objectEntry = _objectEntryService.fetchObjectEntry(objectEntryId);
+			_objectEntry = objectEntryManager.getObjectEntry(
+				_getDTOConverterContext(), externalReferenceCode,
+				_objectRequestHelper.getCompanyId(), objectDefinition, null);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
+				_log.warn(exception);
 			}
 		}
 
@@ -342,7 +360,7 @@ public class ObjectEntryDisplayContext {
 		throws PortalException {
 
 		return HashMapBuilder.put(
-			"objectEntryId", String.valueOf(_objectEntry.getObjectEntryId())
+			"objectEntryId", String.valueOf(_objectEntry.getId())
 		).put(
 			"objectRelationshipId",
 			() -> {
@@ -381,8 +399,11 @@ public class ObjectEntryDisplayContext {
 				return false;
 			}
 
+			ObjectDefinition objectDefinition = getObjectDefinition();
+
 			return !_objectEntryService.hasModelResourcePermission(
-				objectEntry, ActionKeys.UPDATE);
+				objectDefinition.getObjectDefinitionId(), objectEntry.getId(),
+				ActionKeys.UPDATE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -500,8 +521,8 @@ public class ObjectEntryDisplayContext {
 		ObjectEntry objectEntry = getObjectEntry();
 
 		if (objectEntry != null) {
-			objectFieldRenderingContext.setObjectEntryId(
-				objectEntry.getObjectEntryId());
+			objectFieldRenderingContext.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
 		}
 
 		objectFieldRenderingContext.setPortletId(
@@ -518,6 +539,8 @@ public class ObjectEntryDisplayContext {
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		boolean readOnly = _readOnly;
 
 		if (!readOnly) {
@@ -525,11 +548,10 @@ public class ObjectEntryDisplayContext {
 
 			if (objectEntry != null) {
 				readOnly = !_objectEntryService.hasModelResourcePermission(
-					objectEntry, ActionKeys.UPDATE);
+					objectDefinition.getObjectDefinitionId(),
+					objectEntry.getId(), ActionKeys.UPDATE);
 			}
 		}
-
-		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -689,7 +711,7 @@ public class ObjectEntryDisplayContext {
 	private DDMFormValues _getDDMFormValues(
 		DDMForm ddmForm, ObjectEntry objectEntry) {
 
-		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Object> values = objectEntry.getProperties();
 
 		if (values.isEmpty()) {
 			return null;
@@ -747,6 +769,12 @@ public class ObjectEntryDisplayContext {
 		return ddmFormValues;
 	}
 
+	private DTOConverterContext _getDTOConverterContext() {
+		return new DefaultDTOConverterContext(
+			false, null, null, _objectRequestHelper.getRequest(), null,
+			_themeDisplay.getLocale(), null, _themeDisplay.getUser());
+	}
+
 	private long _getGroupId() {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
@@ -780,7 +808,7 @@ public class ObjectEntryDisplayContext {
 			return PortletURLBuilder.create(
 				liferayPortletURL
 			).setParameter(
-				"objectEntryId", objectEntry.getObjectEntryId()
+				"externalReferenceCode", objectEntry.getExternalReferenceCode()
 			).setParameter(
 				"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
 			).buildString();
@@ -791,7 +819,7 @@ public class ObjectEntryDisplayContext {
 		).setMVCRenderCommandName(
 			"/object_entries/edit_object_entry"
 		).setParameter(
-			"objectEntryId", objectEntry.getObjectEntryId()
+			"externalReferenceCode", objectEntry.getExternalReferenceCode()
 		).setParameter(
 			"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
 		).buildString();
@@ -838,7 +866,7 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private List<DDMFormFieldValue> _getNestedDDMFormFieldValues(
-		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
+		List<DDMFormField> ddmFormFields, Map<String, Object> values) {
 
 		return TransformUtil.transform(
 			ddmFormFields,
@@ -900,9 +928,9 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private void _removeTimeFromDateString(
-		DDMFormField ddmFormField, Map<String, Serializable> values) {
+		DDMFormField ddmFormField, Map<String, Object> values) {
 
-		Serializable value = values.get(ddmFormField.getName());
+		Object value = values.get(ddmFormField.getName());
 
 		if (value == null) {
 			return;
@@ -917,7 +945,7 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private void _setDateDDMFormFieldValue(
-		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
+		List<DDMFormField> ddmFormFields, Map<String, Object> values) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (StringUtil.equals(ddmFormField.getType(), "date")) {
@@ -932,17 +960,23 @@ public class ObjectEntryDisplayContext {
 
 	private void _setDDMFormFieldValueValue(
 		String ddmFormFieldName, DDMFormFieldValue ddmFormFieldValue,
-		Map<String, Serializable> values) {
+		Map<String, Object> values) {
 
-		Serializable serializable = values.get(ddmFormFieldName);
+		Object value = values.get(ddmFormFieldName);
 
-		if (serializable == null) {
+		if (value == null) {
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
 		}
+		else if (value instanceof ListEntry) {
+			ListEntry listEntry = (ListEntry)value;
+
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(listEntry.getKey()));
+		}
 		else {
 			ddmFormFieldValue.setValue(
-				new UnlocalizedValue(String.valueOf(serializable)));
+				new UnlocalizedValue(String.valueOf(value)));
 		}
 	}
 
@@ -953,6 +987,8 @@ public class ObjectEntryDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;
+	private final ObjectEntryManagerServicesTracker
+		_objectEntryManagerServicesTracker;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldBusinessTypeServicesTracker
 		_objectFieldBusinessTypeServicesTracker;
@@ -964,5 +1000,6 @@ public class ObjectEntryDisplayContext {
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;
+	private final ThemeDisplay _themeDisplay;
 
 }

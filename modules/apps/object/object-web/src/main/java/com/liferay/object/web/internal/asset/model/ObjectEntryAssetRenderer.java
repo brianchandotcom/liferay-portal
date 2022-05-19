@@ -152,7 +152,7 @@ public class ObjectEntryAssetRenderer
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_objectEntryDisplayContextFactory.create(httpServletRequest, true));
 		httpServletRequest.setAttribute(
-			"objectEntryId", _objectEntry.getObjectEntryId());
+			"externalReferenceCode", _objectEntry.getExternalReferenceCode());
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}

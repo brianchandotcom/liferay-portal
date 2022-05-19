@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ObjectFieldRenderingContext {
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -42,10 +46,6 @@ public class ObjectFieldRenderingContext {
 		return _locale;
 	}
 
-	public long getObjectEntryId() {
-		return _objectEntryId;
-	}
-
 	public String getPortletId() {
 		return _portletId;
 	}
@@ -60,6 +60,10 @@ public class ObjectFieldRenderingContext {
 
 	public long getUserId() {
 		return _userId;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
 	}
 
 	public void setGroupId(long groupId) {
@@ -80,10 +84,6 @@ public class ObjectFieldRenderingContext {
 		_locale = locale;
 	}
 
-	public void setObjectEntryId(long objectEntryId) {
-		_objectEntryId = objectEntryId;
-	}
-
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 	}
@@ -100,11 +100,11 @@ public class ObjectFieldRenderingContext {
 		_userId = userId;
 	}
 
+	private String _externalReferenceCode;
 	private long _groupId;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private Locale _locale;
-	private long _objectEntryId;
 	private String _portletId;
 	private final Map<String, Object> _properties = new HashMap<>();
 	private long _userId;

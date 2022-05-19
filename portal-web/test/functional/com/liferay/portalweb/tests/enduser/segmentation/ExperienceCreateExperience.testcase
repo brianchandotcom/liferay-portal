@@ -54,6 +54,200 @@ definition {
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea1@liferay.com");
 	}
 
+	@description = "LPS-147302 Given there are several users segmented, one per segment
+	And there experiences created in a content page, one per user/segment
+	And the experiences are all over the default experience
+	When each user visits the content page
+	Then the user will see the correct experience"
+	@priority = "4"
+	test AddExperienceForDifferentUsers {
+		property portal.acceptance = "true";
+
+		task ("Create 2 more users") {
+			JSONUser.addUser(
+				jobTitle = "Test Engineer2",
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
+
+			JSONUser.addUser(
+				jobTitle = "Test Engineer3",
+				userEmailAddress = "userea3@liferay.com",
+				userFirstName = "userfn3",
+				userLastName = "userln3",
+				userScreenName = "usersn3");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea3@liferay.com");
+		}
+
+		task ("Uncheck Verify email for strangers") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Create a segment for each user") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User1",
+				text = "userfn1");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User2",
+				text = "userfn2");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User3",
+				text = "userfn3");
+		}
+
+		task ("Create an experience for each segment in the Content Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Default");
+
+			PageEditor.addExperience(
+				experienceName = "Experience User 1",
+				segmentName = "Segment With User1");
+
+			Button.clickPublish();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.changeExperience(newExperience = "Experience User 1");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "User 1");
+
+			PageEditor.prioritizeExperience(experienceName = "Experience User 1");
+
+			PageEditor.clickPublish();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "Experience User 2",
+				segmentName = "Segment With User2");
+
+			Button.clickPublish();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.changeExperience(newExperience = "Experience User 2");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "User 2");
+
+			PageEditor.prioritizeExperience(
+				experienceName = "Experience User 2",
+				key_index = "2");
+
+			Button.clickPublish();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "Experience User 3",
+				segmentName = "Segment With User3");
+
+			Button.clickPublish();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.changeExperience(newExperience = "Experience User 3");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "User 3");
+
+			PageEditor.prioritizeExperience(
+				experienceName = "Experience User 3",
+				key_index = "3");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Login with each user and check the correct experiece is shown") {
+			User.logoutAndLoginPG(
+				freeLogin = "true",
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "User 1");
+
+			User.logoutAndLoginPG(
+				freeLogin = "true",
+				userLoginEmailAddress = "userea2@liferay.com",
+				userLoginFullName = "userfn2 userln2");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "User 2");
+
+			User.logoutAndLoginPG(
+				freeLogin = "true",
+				userLoginEmailAddress = "userea3@liferay.com",
+				userLoginFullName = "userfn3 userln3");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "User 3");
+		}
+
+		task ("Delete users created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
+
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea3@liferay.com");
+		}
+	}
+
 	@description = "This is a use case for LPS-106776. When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
 	@priority = "5"
 	test AddNewAnyoneExperience {
@@ -267,198 +461,6 @@ definition {
 		}
 
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
-	}
-
-	@description = "LPS-147302 Given there are several users segmented, one per segment
-	And there experiences created in a content page, one per user/segment
-	And the experiences are all over the default experience
-	When each user visits the content page
-	Then the user will see the correct experience"
-	@priority = "4"
-	test AddExperienceForDifferentUsers {
-		property portal.acceptance = "true";
-
-		task ("Create 2 more users") {
-			JSONUser.addUser(
-				jobTitle = "Test Engineer2",
-				userEmailAddress = "userea2@liferay.com",
-				userFirstName = "userfn2",
-				userLastName = "userln2",
-				userScreenName = "usersn2");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea2@liferay.com");
-
-			JSONUser.addUser(
-				jobTitle = "Test Engineer3",
-				userEmailAddress = "userea3@liferay.com",
-				userFirstName = "userfn3",
-				userLastName = "userln3",
-				userScreenName = "usersn3");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea3@liferay.com");
-		}
-
-		task ("Uncheck Verify email for strangers") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "User Authentication",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		}
-
-		task ("Create a segment for each user") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User1",
-				text = "userfn1");
-
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User2",
-				text = "userfn2");
-			
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User3",
-				text = "userfn3");
-		}
-		
-		task ("Create an experience for each segment in the Content Page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-			
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Default");
-
-			PageEditor.addExperience(
-				experienceName = "Experience User 1",
-				segmentName = "Segment With User1");
-			
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 1");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "User 1");
-
-			PageEditor.prioritizeExperience(experienceName = "Experience User 1");
-
-			PageEditor.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addExperience(
-				experienceName = "Experience User 2",
-				segmentName = "Segment With User2");
-			
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 2");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "User 2");
-			
-			PageEditor.prioritizeExperience(
-				experienceName = "Experience User 2",
-				key_index = "2");
-
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addExperience(
-				experienceName = "Experience User 3",
-				segmentName = "Segment With User3");
-			
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 3");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "User 3");
-			
-			PageEditor.prioritizeExperience(experienceName = "Experience User 3",
-				key_index = "3");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Login with each user and check the correct experiece is shown") {
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea1@liferay.com",
-				userLoginFullName = "userfn1 userln1");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 1");
-
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea2@liferay.com",
-				userLoginFullName = "userfn2 userln2");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 2");
-
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea3@liferay.com",
-				userLoginFullName = "userfn3 userln3");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 3");
-		}
-
-		task ("Delete users created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea3@liferay.com");
-		}
 	}
 
 	@description = "This is a test for LPS-130309."

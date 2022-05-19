@@ -305,6 +305,13 @@ definition {
 		}
 	}
 
+	macro viewMappedProducts {
+		AssertElementPresent(
+			key_pinNumber = "${pinNumber}",
+			key_productName = "${productName}",
+			locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC");
+	}
+
 	macro viewPin {
 		Click(
 			key_pinNumber = "${pinNumber}",

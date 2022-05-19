@@ -18,10 +18,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
@@ -37,6 +43,8 @@ import org.junit.runner.RunWith;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Cristina González
  */
@@ -47,6 +55,62 @@ public class SegmentsConfigurationProviderTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetConfigurationURL() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER_ID, TestPropsValues.getUserId());
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		String configurationURL =
+			_segmentsConfigurationProvider.getConfigurationURL(
+				mockHttpServletRequest);
+
+		Assert.assertTrue(
+			configurationURL.contains(
+				"factoryPid=com.liferay.segments.configuration." +
+					"SegmentsCompanyConfiguration"));
+	}
+
+	@Test
+	public void testGetConfigurationURLWithoutPermission() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, user.getUserId());
+
+		try {
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setCompany(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()));
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			Assert.assertNull(
+				_segmentsConfigurationProvider.getConfigurationURL(
+					mockHttpServletRequest));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
 
 	@Test
 	public void testIsRoleSegmentationEnabled() throws Exception {
@@ -255,9 +319,15 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

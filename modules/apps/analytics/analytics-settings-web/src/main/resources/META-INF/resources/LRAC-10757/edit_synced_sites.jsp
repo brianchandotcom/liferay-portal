@@ -29,7 +29,7 @@ QADisplayContext qaDisplayContext = (QADisplayContext)request.getAttribute(Analy
 
 			<div class="multi-step-indicator">
 				<div class="multi-step-indicator-label">
-					<liferay-ui:message key="connect-analytics-cloud" />
+					<liferay-ui:message key="connect" />
 				</div>
 
 				<a class="multi-step-icon" data-multi-step-icon="1" href="#1"></a>

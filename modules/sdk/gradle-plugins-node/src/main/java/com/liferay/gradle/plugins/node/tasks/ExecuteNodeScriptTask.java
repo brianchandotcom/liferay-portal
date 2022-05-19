@@ -53,7 +53,13 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getScriptFile() {
-		return GradleUtil.toFile(getProject(), _scriptFile);
+		File file = GradleUtil.toFile(getProject(), _scriptFile);
+
+		if (file == null) {
+			return null;
+		}
+
+		return file;
 	}
 
 	public void setScriptFile(Object scriptFile) {

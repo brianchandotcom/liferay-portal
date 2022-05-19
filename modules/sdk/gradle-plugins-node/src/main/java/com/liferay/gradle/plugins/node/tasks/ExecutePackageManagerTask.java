@@ -111,7 +111,17 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getCacheDir() {
-		return GradleUtil.toFile(getProject(), _cacheDir);
+		File dir = GradleUtil.toFile(getProject(), _cacheDir);
+
+		if (dir == null) {
+			return null;
+		}
+
+		Project project = getProject();
+
+		project.mkdir(dir);
+
+		return dir;
 	}
 
 	@Input

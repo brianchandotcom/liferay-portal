@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -133,7 +134,17 @@ public class ExecuteNodeTask extends DefaultTask {
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getNodeDir() {
-		return _nodeExecutor.getNodeDir();
+		File dir = _nodeExecutor.getNodeDir();
+
+		if (dir == null) {
+			return null;
+		}
+
+		Project project = getProject();
+
+		project.mkdir(dir);
+
+		return dir;
 	}
 
 	@Input

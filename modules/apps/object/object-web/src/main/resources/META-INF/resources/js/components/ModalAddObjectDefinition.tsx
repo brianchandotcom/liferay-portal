@@ -27,6 +27,7 @@ import {
 	removeAllSpecialCharacters,
 } from '../utils/string';
 import Input from './Form/Input';
+import Select from './Form/Select';
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -47,15 +48,22 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 	apiURL,
 	observer,
 	onClose,
+	storageTypes,
 }) => {
 	const initialValues: TInitialValues = {
 		label: '',
 		name: undefined,
 		pluralLabel: '',
+		storageType: 'default',
 	};
 	const [error, setError] = useState<string>('');
 
-	const onSubmit = async ({label, name, pluralLabel}: TInitialValues) => {
+	const onSubmit = async ({
+		label,
+		name,
+		pluralLabel,
+		storageType,
+	}: TInitialValues) => {
 		const response = await fetch(apiURL, {
 			body: JSON.stringify({
 				label: {
@@ -67,6 +75,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 					[defaultLanguageId]: pluralLabel,
 				},
 				scope: 'company',
+				storageType,
 			}),
 			headers,
 			method: 'POST',
@@ -107,11 +116,19 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
 	});
+
+	const selectedStorageType = (storageType: string) => {
+		const selected = storageType.toLowerCase();
+
+		return storageTypes.findIndex(
+			(type) => type.toLowerCase() === selected
+		);
+	};
 
 	return (
 		<ClayModal observer={observer}>
@@ -154,6 +171,23 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 						required
 						value={values.name ?? normalizeName(values.label)}
 					/>
+
+					<Select
+						id="objectDefinitionStorageType"
+						label={Liferay.Language.get('storage-type')}
+						name="storageType"
+						onChange={({target: {value}}: any) => {
+							setValues({
+								...values,
+								storageType: storageTypes[value],
+							});
+						}}
+						options={storageTypes}
+						tooltip={Liferay.Language.get(
+							'object-definition-storage-type-tooltip'
+						)}
+						value={selectedStorageType(values.storageType)}
+					/>
 				</ClayModal.Body>
 
 				<ClayModal.Footer
@@ -181,17 +215,19 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	observer: any;
 	onClose: () => void;
+	storageTypes: string[];
 }
 
 type TInitialValues = {
 	label: string;
 	name?: string;
 	pluralLabel: string;
+	storageType: string;
 };
 
 type TNormalizeName = (str: string) => string;
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL, storageTypes}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -212,6 +248,7 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 					apiURL={apiURL}
 					observer={observer}
 					onClose={onClose}
+					storageTypes={storageTypes}
 				/>
 			)}
 		</ClayModalProvider>

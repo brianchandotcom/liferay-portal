@@ -410,14 +410,173 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8147. Verify all pin information mapping with mapped products, and a buyer can navigate from a diagram to a related diagram"
 	@priority = "4"
 	test VerifyAllPinTypeAndMappedProductInformation {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8147 VerifyAllPinTypeAndMappedProductInformation pending implementation
+		task ("Given a Buyer account is created") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And two Diagrams with the "Type" set to "Default", two images uploaded as "Diagram File", and three pins for "Diagram 1" and two mapped pins for "Diagram 2"") {
+			for (var num : list "1,2") {
+				CommerceJSONProductsAPI._addCommerceProduct(
+					catalogName = "Master",
+					productName = "Diagram${num}",
+					productType = "diagram");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Diagram1");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				diagram = "Diagram2",
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a Diagram");
+
+			CommerceDiagram.addPin(
+				label = "Test Product",
+				pinNumber = "3",
+				position = "0,100",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Diagram2");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram2");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "White",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93016A");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93017");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When a Buyer goes on the Product Details page of "Diagram 1" on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram1");
+		}
+
+		task ("Then if the Buyer clicks on a pin linked to MIN93015(ABS Sensor), the information that we can find inside are (SKU, Name, Quantity) and into the Mapped Product section (Pin number, SKU, Name)") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			for (var productName : list "MIN93015,ABS Sensor") {
+				CommerceDiagram.viewMappedProducts(
+					pinNumber = "1",
+					productName = "${productName}");
+			}
+		}
+
+		task ("And if the Buyer clicks on a pin linked to "Test Product", the information that we can find inside are (Name, Quantity) and into the Mapped Product section (Pin number, Name)") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "3");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "Test Product",
+				selectedType = "Not Linked to a Catalog");
+
+			CommerceDiagram.viewMappedProducts(
+				pinNumber = "3",
+				productName = "Test Product");
+		}
+
+		task ("And if the Buyer clicks on the pin linked the "Diagram 2", the information that we can find inside are (Name) and into the Mapped Product section (Pin number, Name)") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "Diagram2",
+				selectedType = "Linked to a Diagram");
+
+			CommerceDiagram.viewMappedProducts(
+				pinNumber = "2",
+				productName = "Diagram2");
+		}
+
+		task ("And if the Buyer clicks the "View" button, the Buyer will be redirected to the "Diagram 2" details page") {
+			Click(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_VIEW");
+
+			AssertElementPresent(
+				key_productName = "Diagram2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_NAME");
+		}
+
+		task ("And the Buyer can see the two pins on the "Diagram 2" detail page after the redirect") {
+			for (var pinNumber : list "1,2") {
+				AssertElementPresent(
+					key_pinNumber = "${pinNumber}",
+					locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+			}
+		}
 	}
 
 	@description = "COMMERCE-8265. Breadcrumb widget works with Product Details widget."

@@ -24,6 +24,7 @@ public class PrintedNoteUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterColumnType("CommerceOrder", "printedNote", "STRING null");
+
 		alterColumnType("CommerceOrderItem", "printedNote", "STRING null");
 	}
 

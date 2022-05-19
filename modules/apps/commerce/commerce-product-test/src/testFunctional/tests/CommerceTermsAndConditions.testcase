@@ -375,6 +375,11 @@ definition {
 			roleTitle = "Operations Manager",
 			userScreenName = "buyeruser");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
 		CommercePermissions.removeRegularRolePermission(
 			permission = "Manage Order Payment Terms",
 			roleTitle = "Operations Manager");

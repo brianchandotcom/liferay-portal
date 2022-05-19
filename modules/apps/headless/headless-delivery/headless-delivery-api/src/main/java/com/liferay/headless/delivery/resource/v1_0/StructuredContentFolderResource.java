@@ -100,6 +100,21 @@ public interface StructuredContentFolderResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteStructuredContentFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContentFolder
+			getSiteStructuredContentFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContentFolder
+			putSiteStructuredContentFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteStructuredContentFolderPermissionsPage(
 				Long siteId, String roleNames)

@@ -104,7 +104,7 @@ definition {
 				sortOption = "Ascending");
 		}
 
-		for (var columnName : list "${listColumnName}") {
+		for (var columnName : list "${listMetaData}") {
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
 				colunmName = "${columnName}",
 				sortingLabel = "Ascending");
@@ -1004,12 +1004,12 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
 
 		ObjectCustomViews.viewFieldsNameByPosition(
-			position = "1",
-			fieldName = "Entry A");
+			fieldName = "Entry A",
+			position = "1");
 
 		ObjectCustomViews.viewFieldsNameByPosition(
-			position = "3",
-			fieldName = "Entry C");
+			fieldName = "Entry C",
+			position = "3");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -1032,12 +1032,12 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
 
 		ObjectCustomViews.viewFieldsNameByPosition(
-			position = "1",
-			fieldName = "Entry C");
+			fieldName = "Entry C",
+			position = "1");
 
 		ObjectCustomViews.viewFieldsNameByPosition(
-			position = "3",
-			fieldName = "Entry A");
+			fieldName = "Entry A",
+			position = "3");
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user update the pre-order column"
@@ -1299,12 +1299,65 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user see entries of object with default sort defined"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewEntriesWithDefaultSort {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152058",
+			objectName = "CustomObject152058",
+			pluralLabelName = "Custom Objects 152058");
 
-		// TODO LPS-152058 CanViewEntriesWithDefaultSort pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152058");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152058");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject152058",
+				value = "Entry ${fieldEntry}");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152058");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addDefaultSort(
+			columnOption = "Custom Field",
+			sortOption = "Ascending");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152058");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			fieldName = "Entry A",
+			position = "1");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			fieldName = "Entry B",
+			position = "2");
 	}
 
 	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"

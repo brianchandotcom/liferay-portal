@@ -12,10 +12,21 @@
  * details.
  */
 
-import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelect, ClayToggle} from '@clayui/form';
 import React, {useState} from 'react';
 
-import FieldList, {ORDERS} from './FieldList';
+import FieldList from './FieldList';
+
+export const ORDERS = {
+	ASC: {
+		label: Liferay.Language.get('ascending'),
+		value: 'ascending',
+	},
+	DESC: {
+		label: Liferay.Language.get('descending'),
+		value: 'descending',
+	},
+};
 
 /**
  * Adds the possible order symbol (+/-) at the end of the indexed field name.
@@ -59,6 +70,61 @@ const removeOrderFromFieldName = (fieldName) => {
 		? fieldName.slice(0, -1)
 		: fieldName;
 };
+
+function Inputs({onChange, value}) {
+	const _handleChangeValue = (property) => (event) => {
+		onChange({[property]: event.target.value});
+	};
+
+	return (
+		<>
+			<ClayInput.GroupItem>
+				<label htmlFor="indexedFieldName">
+					{Liferay.Language.get('indexed-field-name')}
+				</label>
+
+				<ClayInput
+					id="indexedFieldName"
+					onChange={_handleChangeValue('field')}
+					type="text"
+					value={value.field}
+				/>
+			</ClayInput.GroupItem>
+
+			<ClayInput.GroupItem>
+				<label htmlFor="displayLabel">
+					{Liferay.Language.get('display-label')}
+				</label>
+
+				<ClayInput
+					id="displayLabel"
+					onChange={_handleChangeValue('label')}
+					type="text"
+					value={value.label}
+				/>
+			</ClayInput.GroupItem>
+
+			<ClayInput.GroupItem>
+				<label htmlFor="order">{Liferay.Language.get('order')}</label>
+
+				<ClaySelect
+					aria-label={Liferay.Language.get('select-order')}
+					id="order"
+					onChange={_handleChangeValue('order')}
+					value={value.order}
+				>
+					{Object.keys(ORDERS).map((key) => (
+						<ClaySelect.Option
+							key={ORDERS[key].value}
+							label={ORDERS[key].label}
+							value={ORDERS[key].value}
+						/>
+					))}
+				</ClaySelect>
+			</ClayInput.GroupItem>
+		</>
+	);
+}
 
 function SortConfigurationOptions({
 	fieldsInputName = '',
@@ -144,7 +210,16 @@ function SortConfigurationOptions({
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			<FieldList fields={fields} onChangeFields={setFields} />
+			<FieldList
+				initialValue={{
+					field: '',
+					label: '',
+					order: ORDERS.ASC.value,
+				}}
+				onChange={setFields}
+				renderInputs={(props) => <Inputs {...props} />}
+				value={fields}
+			/>
 		</div>
 	);
 }

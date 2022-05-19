@@ -14,9 +14,14 @@
 
 package com.liferay.object.internal.action.engine;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
+import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.internal.action.util.ObjectActionDataConverterUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -26,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -51,6 +57,33 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+	}
+
+	private boolean _evaluateConditionExpression(
+		String conditionExpression, JSONObject payloadJSONObject) {
+
+		if (Validator.isNull(conditionExpression)) {
+			return true;
+		}
+
+		try {
+			DDMExpression<Boolean> ddmExpression =
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						conditionExpression
+					).build());
+
+			ddmExpression.setVariables(
+				ObjectActionDataConverterUtil.convertPayloadJSONObject(
+					payloadJSONObject));
+
+			return ddmExpression.evaluate();
+		}
+		catch (DDMExpressionException ddmExpressionException) {
+			_log.error(ddmExpressionException);
+
+			return false;
 		}
 	}
 
@@ -91,6 +124,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				objectActionTriggerKey);
 
 		for (ObjectAction objectAction : objectActions) {
+			if (!_evaluateConditionExpression(
+					objectAction.getConditionExpression(), payloadJSONObject)) {
+
+				continue;
+			}
+
 			ObjectActionExecutor objectActionExecutor =
 				_objectActionExecutorRegistry.getObjectActionExecutor(
 					objectAction.getObjectActionExecutorKey());
@@ -103,6 +142,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectActionEngineImpl.class);
+
+	@Reference
+	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;

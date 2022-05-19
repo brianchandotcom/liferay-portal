@@ -685,14 +685,185 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8153. Verify the visibility rules"
 	@priority = "4"
 	test VerifyTheVisibilityRules {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8153 VerifyTheVisibilityRules pending implementation
+		task ("Given the Minium site with two buyer users, and an account group with the buyer A") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 1",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyera@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyerb@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User 2",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium");
+
+			AccountGroups.openAccountGroupsAdmin();
+
+			AccountGroups.addCP(accountGroupName = "Account Group");
+
+			Navigator.gotoNavTab(navTab = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "Account Group",
+				assigneeNames = "Commerce Account 1",
+				assigneeType = "Accounts");
+		}
+
+		task ("Given two Diagrams with the "Type" set to "Default," two images uploaded as "Diagram File"") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test 1",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test 2",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "White",
+				productType = "Diagram");
+
+			Button.clickPublish();
+		}
+
+		task ("And for Diagram Test 1, create two pins, where the first is linked to an SKU (MIN93015), and the second one is linked to a Diagram (Diagram Test 2)") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Diagram");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram Test 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				diagram = "Diagram Test 2",
+				pinNumber = "2",
+				position = "150,100",
+				selectType = "Linked to a Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And for Diagram Test 2, create a visibility rule") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Diagram");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram Test 2");
+
+			CommerceDiagram.setVisibility(
+				checkboxName = "Account Group",
+				name = "Account Groups",
+				webContentTitle = "Add Account Group Relation to Diagram Test 2");
+		}
+
+		task ("When the Buyer A goes on the Minimum catalog page and searches for "Diagram"") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyera@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram");
+		}
+
+		task ("Then Buyer A can see both Diagram Test 1 and 2,  and if Buyer A opens the Diagram Test 1 can see the two pins") {
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test 1");
+
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test 2");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test 1");
+
+			AssertElementPresent(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+			AssertElementPresent(
+				key_pinNumber = "2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+		}
+
+		task ("When the Buyer B goes on the Minimum catalog page and searches for "Diagram"") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyerb@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram");
+		}
+
+		task ("Then Buyer B can see only Diagram Test 1, and if Buyer B opens the Diagram 1 can see only one pin (MIN93015), the second one related to the diagram is not present") {
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test 1");
+
+			AssertElementNotPresent(
+				key_productName = "Diagram Test 2",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test 1");
+
+			AssertElementPresent(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+			AssertElementNotPresent(
+				key_pinNumber = "2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+		}
 	}
 
 	@description = "COMMERCE-8566. Tooltip pin information can be seen on the product with diagrams, if click the product name, it can redirect to the product details page."

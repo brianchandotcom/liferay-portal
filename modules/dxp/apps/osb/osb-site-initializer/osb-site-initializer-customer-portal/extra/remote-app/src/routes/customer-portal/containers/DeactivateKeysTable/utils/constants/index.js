@@ -26,7 +26,9 @@ export const DEACTIVATE_COLUMNS = [
 		accessor: 'keyType',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			description: i18n.translate('host-name-cluster-size'),
+			description: `${i18n.translate('host-name')} / ${i18n.translate(
+				'cluster-size'
+			)}`,
 			name: i18n.translate('key-type'),
 			noWrap: true,
 			styles: 'bg-transparent',

@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_TEXT_ORDER</td>
+	<td>xpath=(//*[text()='${key_textValue}'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_NAME_BUTTON</td>
 	<td>//div[contains(@class,'editor')]</td>
 	<td></td>

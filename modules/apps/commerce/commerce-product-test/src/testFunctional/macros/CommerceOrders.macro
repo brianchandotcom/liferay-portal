@@ -584,7 +584,7 @@ definition {
 
 		if (isSet(productDiscount)) {
 			AssertElementPresent(
-				key_productDiscount = "{productDiscount}",
+				key_productDiscount = "${productDiscount}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT");
 		}
 

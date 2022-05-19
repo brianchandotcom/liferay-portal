@@ -199,7 +199,7 @@ const TreeFilter = ({
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
-				<ClayLayout.ContainerFluid className="d-flex">
+				<ClayLayout.ContainerFluid className="d-flex px-4">
 					<div className="input-group">
 						<div className="input-group-item">
 							<input
@@ -228,11 +228,11 @@ const TreeFilter = ({
 
 			{!!selectedItemsCount && (
 				<ClayLayout.Container
-					className="tree-filter-count-feedback"
+					className="px-4 tree-filter-count-feedback"
 					containerElement="section"
 					fluid
 				>
-					<div className="align-items-center container d-flex justify-content-between p-0">
+					<div className="align-items-center container-fluid d-flex justify-content-between p-0">
 						<p className="m-0 text-2">
 							{selectedItemsCount + ' '}
 
@@ -253,7 +253,10 @@ const TreeFilter = ({
 			)}
 
 			<form name={`${portletNamespace}selectFilterFm`}>
-				<ClayLayout.ContainerFluid containerElement="fieldset">
+				<ClayLayout.ContainerFluid
+					className="px-4"
+					containerElement="fieldset"
+				>
 					<div
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}

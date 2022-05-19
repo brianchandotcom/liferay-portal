@@ -1,0 +1,21 @@
+Bundle-Name: Liferay Portal K8s Agent Testing Dependency
+Bundle-SymbolicName: com.liferay.portal.k8s.agent.testing.dependency
+Bundle-Version: 1.0.0
+Export-Package: io.fabric8.kubernetes.client.*;version=5.12.2
+Import-Package:\
+	!javax.annotation.meta,\
+	\
+	!org.junit.jupiter.api.extension,\
+	\
+	javax.*,\
+	\
+	org.junit.*,\
+	\
+	org.slf4j.*,\
+	\
+	org.w3c.dom.*,\
+	\
+	org.xml.sax
+-fixupmessages:\
+	Classes found in the wrong directory,\
+	Export

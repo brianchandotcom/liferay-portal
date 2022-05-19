@@ -68,6 +68,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT_SELECT_ALL_CHECKBOX</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class]//th//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class][${key_pinNumber}]//td[contains(.,'${key_productName}')]/preceding-sibling::*//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX_DISABLED</td>
+	<td>//div[contains(@class,'card')][contains(.,'Mapped Products')]//tr[@class][${key_pinNumber}]//td[contains(.,'${key_productName}')]/preceding-sibling::*//input[@disabled and @type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_IMAGE_SVG_SPECIFIC</td>
 	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='${key_imageItem}']</td>
 	<td></td>

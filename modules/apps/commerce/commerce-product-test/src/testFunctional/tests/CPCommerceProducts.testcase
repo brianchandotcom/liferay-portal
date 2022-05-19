@@ -1591,4 +1591,24 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckApprovedProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "0",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Approved Product",
+			status = "Approved",
+			productCatalog = "Master",
+			productName = "Approved Product");
+	}
 }

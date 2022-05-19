@@ -18,7 +18,7 @@ dependencies {
 	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	compileInclude group: "org.cryptacular", name: "cryptacular", version: "1.2.4"
 	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
-	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.1"
+	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.2"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 
 	compileOnly group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2"

@@ -117,7 +117,11 @@ const FileSizePerMimeType = ({
 		setSizesList(tempList);
 	};
 
-	const [sizesList, setSizesList] = useState(initialSizeList || [emptyRow()]);
+	const [sizesList, setSizesList] = useState(
+		initialSizeList && initialSizeList.length > 0
+			? initialSizeList
+			: [emptyRow()]
+	);
 
 	return (
 		<>

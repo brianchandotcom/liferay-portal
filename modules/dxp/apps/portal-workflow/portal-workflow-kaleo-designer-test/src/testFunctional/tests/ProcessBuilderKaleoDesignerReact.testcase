@@ -1236,12 +1236,57 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Duration of the Timer"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTimerDuration {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDuration";
 
-		// TODO CanEditTimerDuration pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer Action",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "1",
+			newTimer = "true",
+			scaleTypeOption = "Minute");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
+			durationValue = "1",
+			scaleTypeOption = "Minute");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			durationValue = "2",
+			scaleTypeOption = "Minute");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
+			durationValue = "2",
+			scaleTypeOption = "Minute");
+
+			
 	}
 
 	@description = "Verify that the user can edit the Name of the Timer"

@@ -203,6 +203,16 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
+	macro gotoTimer {
+		Click(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
+			value1 = "${propertyValue}");
+
+			
+	}
+
 	macro hideSidebarFields {
 		Click(
 			key_property = "${property}",
@@ -990,6 +1000,72 @@ definition {
 			key_nodeType = "${nodeType}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC",
 			value1 = "${nodeLabel}");
+	}
+
+	macro viewTimersInfo {
+		if (isSet(name)) {
+			AssertElementPresent(
+				key_inputOption = "Name",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${name}");
+		}
+
+		if (isSet(description)) {
+			AssertElementPresent(
+				key_inputOption = "Description",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${description}");
+		}
+
+		if (isSet(scaleTypeOption)) {
+			AssertElementPresent(
+				key_selectorField = "Scale",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+				value1 = "${scaleTypeOption}");
+		}
+
+		if (isSet(durationValue)) {
+			AssertElementPresent(
+				key_inputOption = "Duration",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${durationValue}");
+		}
+
+		if (isSet(actionTypeOption)) {
+			AssertElementPresent(
+				key_selectorField = "Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+				value1 = "${actionTypeOption}");
+		}
+
+		if (isSet(actionName)) {
+			AssertElementPresent(
+				key_inputOption = "Name*",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${actionName}");
+		}
+
+		if (isSet(actionDescription)) {
+			AssertElementPresent(
+				key_inputOption = "Description",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${actionDescription}");
+		}
+
+		if (isSet(actionsTemplateValue)) {
+			AssertElementPresent(
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
+				value1 = "${actionsTemplateValue}");
+		}
+
+		if (isSet(priorityValue)) {
+			AssertElementPresent(
+				key_inputOption = "Priority",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${priorityValue}");
+		}
+
+
 	}
 
 	macro viewTranslationDropdown {

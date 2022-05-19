@@ -1779,4 +1779,25 @@ definition {
 			productCatalog = "Master",
 			productName = "In Recycle Bin Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckAnyProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckAnyProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "9",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Any Product",
+			status = "Any",
+			productCatalog = "Master",
+			productName = "Any Product");
+	}
 }

@@ -61,7 +61,7 @@ definition {
 
 	macro assertColumnNotPresent {
 		AssertElementNotPresent(
-			key_columnName = "${colunmName}",
+			key_columnName = "${columnName}",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
@@ -79,13 +79,13 @@ definition {
 
 	macro assertColumnPresent {
 		AssertElementPresent(
-			key_columnName = "${colunmName}",
+			key_columnName = "${columnName}",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
 	macro assertColumnPresentOnDefaultSort {
 		AssertElementPresent(
-			key_columnName = "${colunmName}",
+			key_columnName = "${columnName}",
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
 
 		AssertTextEquals(
@@ -251,7 +251,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR",
-			value1 = "${colunmName}");
+			value1 = "${columnName}");
 	}
 
 	macro searchOnDefaultSort {
@@ -259,7 +259,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_BAR",
-			value1 = "${colunmName}");
+			value1 = "${columnName}");
 	}
 
 	macro searchOnViewBuilder {
@@ -267,7 +267,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
-			value1 = "${colunmName}");
+			value1 = "${columnName}");
 	}
 
 	macro selectAnyPermissions {
@@ -347,7 +347,7 @@ definition {
 
 	macro viewColumnsOrder {
 		AssertElementPresent(
-			key_columnName = "${colunmName}",
+			key_columnName = "${columnName}",
 			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 	}
@@ -385,14 +385,14 @@ definition {
 
 	macro viewOrdersOfTheColumns {
 		AssertVisible(
-			key_colunmName1 = "${colunmName}",
+			key_columnName1 = "${columnName}",
 			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
 	macro viewOrdersOfTheColumnsOnDefaultSort {
 		AssertElementPresent(
-			key_colunmName1 = "${colunmName}",
+			key_columnName1 = "${columnName}",
 			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT");
 	}

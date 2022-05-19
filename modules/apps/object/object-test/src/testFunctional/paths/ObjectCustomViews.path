@@ -102,7 +102,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_LIST_COLUMNS_BY_POSITION</td>
-		<td>//ul[@class='list-group show-quick-actions-on-hover']//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_colunmName1}')]</td>
+		<td>//ul[@class='list-group show-quick-actions-on-hover']//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_columnName1}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -202,7 +202,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_LIST_COLUMNS_BY_POSITION_ON_DEFAULT_SORT</td>
-		<td>//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_colunmName1}')]</td>
+		<td>//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_columnName1}')]</td>
 		<td></td>
 	</tr>
 	<tr>

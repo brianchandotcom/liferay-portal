@@ -66,7 +66,7 @@ definition {
 		ObjectCustomViews.saveColumnsModal();
 
 		for (var columnOption : list "Author,Creation Date") {
-			ObjectCustomViews.assertColumnPresent(colunmName = "${columnOption}");
+			ObjectCustomViews.assertColumnPresent(columnName = "${columnOption}");
 		}
 	}
 
@@ -295,7 +295,7 @@ definition {
 			sortOption = "Ascending");
 
 		ObjectCustomViews.assertColumnPresentOnDefaultSort(
-			colunmName = "Author",
+			columnName = "Author",
 			sortingLabel = "Ascending");
 	}
 
@@ -350,7 +350,7 @@ definition {
 
 		ObjectCustomViews.saveColumnsModal();
 
-		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
 		LexiconEntry.gotoAdd();
 
@@ -360,7 +360,7 @@ definition {
 
 		ObjectCustomViews.saveColumnsModal();
 
-		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
@@ -399,7 +399,7 @@ definition {
 
 		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
@@ -483,11 +483,11 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
 		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
@@ -550,35 +550,35 @@ definition {
 		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Modified Date",
+			columnName = "Modified Date",
 			position = "3");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Creation Date",
-			key_colunmName1 = "Author",
+			key_columnName1 = "Author",
 			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
 			value1 = "");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Modified Date",
+			columnName = "Modified Date",
 			position = "3");
 	}
 
@@ -735,11 +735,11 @@ definition {
 		}
 
 		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "2");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
@@ -750,11 +750,11 @@ definition {
 			value1 = "");
 
 		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "2");
 	}
 
@@ -800,11 +800,11 @@ definition {
 
 		ObjectCustomViews.saveColumnsModal();
 
-		ObjectCustomViews.searchOnViewBuilder(colunmName = "Author");
+		ObjectCustomViews.searchOnViewBuilder(columnName = "Author");
 
-		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
-		ObjectCustomViews.assertColumnNotPresent(colunmName = "Creation Date");
+		ObjectCustomViews.assertColumnNotPresent(columnName = "Creation Date");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
@@ -829,7 +829,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectCustomViews.searchOnAddColumnModal(colunmName = "Author");
+		ObjectCustomViews.searchOnAddColumnModal(columnName = "Author");
 
 		ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "Author");
 
@@ -900,10 +900,10 @@ definition {
 		}
 
 		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
-			ObjectCustomViews.searchOnDefaultSort(colunmName = "${columnName}");
+			ObjectCustomViews.searchOnDefaultSort(columnName = "${columnName}");
 
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
-				colunmName = "${columnName}",
+				columnName = "${columnName}",
 				sortingLabel = "Ascending");
 		}
 	}
@@ -1308,7 +1308,7 @@ definition {
 
 		ObjectCustomViews.saveColumnsModal();
 
-		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
 		Button.clickSave();
 
@@ -1717,7 +1717,7 @@ definition {
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Creation Date",
-			key_colunmName1 = "Author",
+			key_columnName1 = "Author",
 			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
@@ -1739,15 +1739,15 @@ definition {
 		WaitForPageLoad();
 
 		ObjectCustomViews.viewColumnsOrder(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "1");
 
 		ObjectCustomViews.viewColumnsOrder(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "2");
 
 		ObjectCustomViews.viewColumnsOrder(
-			colunmName = "ID",
+			columnName = "ID",
 			position = "3");
 	}
 
@@ -1795,23 +1795,23 @@ definition {
 		ObjectCustomViews.goToViewsBuilderTab();
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Author",
+			columnName = "Author",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Creation Date",
+			columnName = "Creation Date",
 			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Modified Date",
+			columnName = "Modified Date",
 			position = "3");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Workflow Status",
+			columnName = "Workflow Status",
 			position = "4");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "ID",
+			columnName = "ID",
 			position = "5");
 	}
 
@@ -1874,11 +1874,11 @@ definition {
 		ObjectCustomViews.goToViewsBuilderTab();
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Custom Field A",
+			columnName = "Custom Field A",
 			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			colunmName = "Custom Field B",
+			columnName = "Custom Field B",
 			position = "2");
 	}
 
@@ -2053,7 +2053,7 @@ definition {
 
 		ObjectCustomViews.saveColumnsModal();
 
-		ObjectCustomViews.searchOnViewBuilder(colunmName = "Teste");
+		ObjectCustomViews.searchOnViewBuilder(columnName = "Teste");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No Results Found");
 

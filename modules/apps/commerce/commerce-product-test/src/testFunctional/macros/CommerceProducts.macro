@@ -70,4 +70,42 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro addProductWithStatusViaAPI {
+			if("${productStatusCode}" == "0"){
+				var productName = "Approved Product";
+			}
+			else if ("${productStatusCode}" == "1"){
+				var productName = "Pending Product";
+			}
+			else if("${productStatusCode}" == "2"){
+				var productName = "Draft Product";
+			}
+			else if("${productStatusCode}" == "3"){
+				var productName = "Expired Product";
+			}
+			else if("${productStatusCode}" == "4"){
+				var productName = "Denied Product";
+			}
+			else if("${productStatusCode}" == "5"){
+				var productName = "Inactive Product";
+			}
+			else if("${productStatusCode}" == "6"){
+				var productName = "Incomplete Product";
+			}
+			else if("${productStatusCode}" == "7"){
+				var productName = "Scheduled Product";
+			}
+			else if("${productStatusCode}" == "8"){
+				var productName = "In Recycle Bin Product";
+			}
+			else {
+				var productName = "Any Product";
+			}
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "${catalogName}",
+				productName = "${productName}",
+				productType = "${productType}",
+				productStatus = "${productStatusCode}");
+	}
 }

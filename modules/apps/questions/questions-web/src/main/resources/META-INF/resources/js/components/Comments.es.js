@@ -99,7 +99,7 @@ export default withRouter(
 					<>
 						<ClayForm.Group small>
 							<DefaultQuestionsEditor
-								label={Liferay.Language.get('your-answer')}
+								label={Liferay.Language.get('your-comment')}
 								onContentLengthValid={setIsReplyButtonDisable}
 								ref={editorRef}
 							/>

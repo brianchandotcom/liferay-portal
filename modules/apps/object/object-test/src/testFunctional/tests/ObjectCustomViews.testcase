@@ -951,12 +951,93 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to sort the column entries as ascending or descending"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSortColumnEntries {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152060",
+			objectName = "CustomObject152060",
+			pluralLabelName = "Custom Objects 152060");
 
-		// TODO LPS-152060 CanSortColumnEntries pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152060");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152060");
+
+		for (var fieldEntry : list "A,B,C") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject152060",
+				value = "Entry ${fieldEntry}");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152060");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addDefaultSort(
+			columnOption = "Custom Field",
+			sortOption = "Ascending");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			position = "1",
+			fieldName = "Entry A");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			position = "3",
+			fieldName = "Entry C");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152060");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.editSortingType(
+			actualSort = "Ascending",
+			newSortOption = "Descending");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152060");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			position = "1",
+			fieldName = "Entry C");
+
+		ObjectCustomViews.viewFieldsNameByPosition(
+			position = "3",
+			fieldName = "Entry A");
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user update the pre-order column"

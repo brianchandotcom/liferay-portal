@@ -156,6 +156,24 @@ definition {
 			value1 = "${name}");
 	}
 
+	macro editSortingType {
+		Click(locator1 = "ObjectCustomViews#EDIT_COLUMNS_ON_DEFAULT_SORT");
+
+		DropdownMenuItem.click(menuItem = "Edit");
+
+		Click(
+			key_sorting = "${actualSort}",
+			locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+		Click(
+			key_sortOption = "${newSortOption}",
+			locator1 = "ObjectCustomViews#SORT_OPTION");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+	}
+
 	macro editSpecificColumn {
 		Click(
 			key_columnName = "${columnName}",
@@ -312,6 +330,13 @@ definition {
 			key_columnName = "${colunmName}",
 			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
+	}
+
+	macro viewFieldsNameByPosition {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_position = "${position}",
+			locator1 = "ObjectCustomViews#VIEW_FIELD_NAME_BY_POSITION");
 	}
 
 	macro viewOptionNotPresentInKebabMenu {

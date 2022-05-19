@@ -175,6 +175,21 @@
 		<td>//p[contains(@class,'list-group-text') and contains(text(),'${key_columnLabel}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_FIELD_NAME_BY_POSITION</td>
+		<td>//*[${key_position}]/div[contains(span,'${key_fieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>EDIT_COLUMNS_ON_DEFAULT_SORT</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']//../..//div[contains(@class,'dropdown')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>EDIT_SORTING</td>
+		<td>//input[(@placeholder='Choose an Option') and contains(@value,'${key_sorting}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

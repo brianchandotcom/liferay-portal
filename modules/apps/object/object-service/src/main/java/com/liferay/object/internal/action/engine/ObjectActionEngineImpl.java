@@ -80,6 +80,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		payloadJSONObject.put(
 			"companyId", companyId
 		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).put(
 			"userId", userId
 		);
 

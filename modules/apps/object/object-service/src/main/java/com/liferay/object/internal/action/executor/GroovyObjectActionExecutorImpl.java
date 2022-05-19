@@ -16,11 +16,11 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.internal.action.util.ObjectActionDataConverterUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -39,13 +39,10 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		Map<String, Object> inputObjects = new HashMap<>();
-
-		for (String key : payloadJSONObject.keySet()) {
-			inputObjects.put(key, payloadJSONObject.get(key));
-		}
-
-		_execute(inputObjects, parametersUnicodeProperties.get("script"));
+		_execute(
+			ObjectActionDataConverterUtil.convertPayloadJSONObject(
+				payloadJSONObject),
+			parametersUnicodeProperties.get("script"));
 	}
 
 	@Override

@@ -191,6 +191,33 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<aui:input disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff='<%= LanguageUtil.get(request, "hide-widget") %>' labelOn='<%= LanguageUtil.get(request, "show-widget") %>' name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
+
+			<clay:sheet-section>
+				<h3 class="sheet-subtitle">
+					<%= LanguageUtil.get(request, "integration") %>
+				</h3>
+
+				<clay:row>
+					<clay:col
+						md="11"
+					>
+						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="storageType" showEmptyOption="<%= false %>">
+							<aui:option label='<%= LanguageUtil.get(request, "salesforce") %>' selected="<%= true %>" value="" />
+							<%-- pegar lista de storageTypes --%>
+							<%-- <%
+							for (ObjectField objectField : objectFields) {
+							%>
+
+								<aui:option label="<%= objectField.getLabel(locale) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+
+							<%
+							}
+							%> --%>
+
+						</aui:select>
+					</clay:col>
+				</clay:row>
+			</clay:sheet-section>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

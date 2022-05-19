@@ -12,8 +12,12 @@
  * details.
  */
 
+type Key = string;
+type Value = string | number;
+
 export const searchUtil = {
-	in: (key: string, values: string[] | number[]) => {
+	eq: (key: Key, value: Value) => `${key} eq '${value}'`,
+	in: (key: Key, values: Value[]) => {
 		const operator = `${key} in ({values})`;
 
 		return operator

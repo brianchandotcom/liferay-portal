@@ -60,17 +60,7 @@ public class MVCCUpgradeProcess extends UpgradeProcess {
 					"Adding column %s to table %s", columnName, tableName));
 		}
 
-		if (!hasColumn(tableName, columnName)) {
-			alterTableAddColumn(tableName, columnName, columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableAddColumn(tableName, columnName, columnType);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

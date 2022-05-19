@@ -23,10 +23,7 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("FragmentEntryVersion", "icon")) {
-			alterTableAddColumn(
-				"FragmentEntryVersion", "icon", "VARCHAR(75) null");
-		}
+		alterTableAddColumn("FragmentEntryVersion", "icon", "VARCHAR(75) null");
 	}
 
 }

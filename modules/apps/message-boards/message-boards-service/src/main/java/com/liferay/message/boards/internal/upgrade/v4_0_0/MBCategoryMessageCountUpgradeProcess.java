@@ -23,7 +23,7 @@ public class MBCategoryMessageCountUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table MBCategory drop column messageCount");
+		alterTableDropColumn("MBCategory", "messageCount");
 	}
 
 }

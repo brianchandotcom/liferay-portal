@@ -24,10 +24,8 @@ public class UpgradeAssetVocabulary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AssetVocabulary", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"AssetVocabulary", "externalReferenceCode", "VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"AssetVocabulary", "externalReferenceCode", "VARCHAR(75)");
 
 		runSQL(
 			StringBundler.concat(

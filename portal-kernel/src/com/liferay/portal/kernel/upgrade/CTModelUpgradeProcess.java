@@ -91,18 +91,14 @@ public class CTModelUpgradeProcess extends UpgradeProcess {
 			primaryKeyColumnName2 = primaryKeyColumnNames[1];
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"alter table ", normalizedTableName,
-				" add ctCollectionId LONG default 0 not null"));
+		alterTableAddColumn(
+			normalizedTableName, "ctCollectionId", "LONG default 0 not null");
 
 		// Assume table is a mapping table
 
 		if (primaryKeyColumnName2 != null) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", normalizedTableName,
-					" add ctChangeType BOOLEAN default null"));
+			alterTableAddColumn(
+				normalizedTableName, "ctChangeType", "BOOLEAN default null");
 		}
 
 		removePrimaryKey(tableName);

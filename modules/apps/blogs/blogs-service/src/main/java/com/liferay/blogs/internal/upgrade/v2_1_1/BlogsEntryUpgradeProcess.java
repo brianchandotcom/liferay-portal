@@ -23,9 +23,7 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType("BlogsEntry", "title", "VARCHAR(150) null")) {
-			alterColumnType("BlogsEntry", "title", "VARCHAR(255) null");
-		}
+		alterColumnType("BlogsEntry", "title", "VARCHAR(255) null");
 	}
 
 }

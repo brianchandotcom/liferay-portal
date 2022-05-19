@@ -23,17 +23,11 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("LayoutSet", "headId")) {
-			alterTableDropColumn("LayoutSet", "headId");
-		}
+		alterTableDropColumn("LayoutSet", "headId");
 
-		if (hasColumn("LayoutSet", "head")) {
-			alterTableDropColumn("LayoutSet", "head");
-		}
+		alterTableDropColumn("LayoutSet", "head");
 
-		if (hasColumn("LayoutSet", "pageCount")) {
-			alterTableDropColumn("LayoutSet", "pageCount");
-		}
+		alterTableDropColumn("LayoutSet", "pageCount");
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutSetVersion)");
 	}

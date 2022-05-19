@@ -23,19 +23,11 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				"BatchEngineExportTask", "className", "VARCHAR(75) null")) {
+		alterColumnType(
+			"BatchEngineExportTask", "className", "VARCHAR(255) null");
 
-			alterColumnType(
-				"BatchEngineExportTask", "className", "VARCHAR(255) null");
-		}
-
-		if (hasColumnType(
-				"BatchEngineImportTask", "className", "VARCHAR(75) null")) {
-
-			alterColumnType(
-				"BatchEngineImportTask", "className", "VARCHAR(255) null");
-		}
+		alterColumnType(
+			"BatchEngineImportTask", "className", "VARCHAR(255) null");
 	}
 
 }

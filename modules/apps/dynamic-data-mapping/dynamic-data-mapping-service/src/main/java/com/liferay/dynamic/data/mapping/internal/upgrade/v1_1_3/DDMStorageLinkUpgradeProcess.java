@@ -28,9 +28,7 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DDMStorageLink", "structureVersionId")) {
-			alterTableAddColumn("DDMStorageLink", "structureVersionId", "LONG");
-		}
+		alterTableAddColumn("DDMStorageLink", "structureVersionId", "LONG");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(

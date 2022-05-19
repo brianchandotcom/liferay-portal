@@ -23,11 +23,8 @@ public class DDMFormInstanceRecordUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DDMFormInstanceRecord", "ipAddress")) {
-			runSQL(
-				"alter table DDMFormInstanceRecord add ipAddress VARCHAR(75) " +
-					"null");
-		}
+		alterTableAddColumn(
+			"DDMFormInstanceRecord", "ipAddress", "VARCHAR(75) null");
 	}
 
 }

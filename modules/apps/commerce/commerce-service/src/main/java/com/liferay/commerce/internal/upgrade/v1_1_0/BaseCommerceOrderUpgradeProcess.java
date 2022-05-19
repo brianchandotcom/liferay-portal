@@ -43,17 +43,7 @@ public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 					"Adding column %s to table %s", _columnName, _tableName));
 		}
 
-		if (!hasColumn(_tableName, _columnName)) {
-			alterTableAddColumn(_tableName, _columnName, _columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", _columnName,
-						_tableName));
-			}
-		}
+		alterTableAddColumn(_tableName, _columnName, _columnType);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

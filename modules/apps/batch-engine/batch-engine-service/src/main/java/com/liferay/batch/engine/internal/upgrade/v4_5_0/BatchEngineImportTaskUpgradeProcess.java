@@ -23,10 +23,8 @@ public class BatchEngineImportTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("BatchEngineImportTask", "importStrategy")) {
-			alterTableAddColumn(
-				"BatchEngineImportTask", "importStrategy", "INTEGER");
-		}
+		alterTableAddColumn(
+			"BatchEngineImportTask", "importStrategy", "INTEGER");
 	}
 
 }

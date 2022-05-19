@@ -24,15 +24,13 @@ public class JournalArticleExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("JournalArticle", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"JournalArticle", "externalReferenceCode", "VARCHAR(75)");
+		alterTableAddColumn(
+			"JournalArticle", "externalReferenceCode", "VARCHAR(75)");
 
-			runSQL(
-				"update JournalArticle set externalReferenceCode = articleId " +
-					"where externalReferenceCode is null or " +
-						"externalReferenceCode = ''");
-		}
+		runSQL(
+			"update JournalArticle set externalReferenceCode = articleId " +
+				"where externalReferenceCode is null or " +
+					"externalReferenceCode = ''");
 	}
 
 }

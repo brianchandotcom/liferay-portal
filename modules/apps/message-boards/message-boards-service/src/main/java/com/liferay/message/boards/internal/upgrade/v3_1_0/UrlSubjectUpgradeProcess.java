@@ -32,9 +32,7 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("MBMessage", "urlSubject")) {
-			alterTableAddColumn("MBMessage", "urlSubject", "VARCHAR(255) null");
-		}
+		alterTableAddColumn("MBMessage", "urlSubject", "VARCHAR(255) null");
 
 		try (SafeCloseable safeCloseable = addTempIndex(
 				"MBMessage", false, "subject", "messageId")) {

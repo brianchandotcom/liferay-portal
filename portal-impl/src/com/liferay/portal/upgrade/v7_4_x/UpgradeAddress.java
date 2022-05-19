@@ -23,46 +23,26 @@ public class UpgradeAddress extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("Address", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"Address", "externalReferenceCode", "VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"Address", "externalReferenceCode", "VARCHAR(75) null");
 
-		if (!hasColumn("Address", "description")) {
-			alterTableAddColumn("Address", "description", "STRING null");
-		}
+		alterTableAddColumn("Address", "description", "STRING null");
 
-		if (!hasColumn("Address", "latitude")) {
-			alterTableAddColumn("Address", "latitude", "DOUBLE");
-		}
+		alterTableAddColumn("Address", "latitude", "DOUBLE");
 
-		if (!hasColumn("Address", "longitude")) {
-			alterTableAddColumn("Address", "longitude", "DOUBLE");
-		}
+		alterTableAddColumn("Address", "longitude", "DOUBLE");
 
-		if (!hasColumn("Address", "name")) {
-			alterTableAddColumn("Address", "name", "VARCHAR(255) null");
-		}
+		alterTableAddColumn("Address", "name", "VARCHAR(255) null");
 
-		if (hasColumn("Address", "street1")) {
-			alterColumnType("Address", "street1", "VARCHAR(255) null");
-		}
+		alterColumnType("Address", "street1", "VARCHAR(255) null");
 
-		if (hasColumn("Address", "street2")) {
-			alterColumnType("Address", "street2", "VARCHAR(255) null");
-		}
+		alterColumnType("Address", "street2", "VARCHAR(255) null");
 
-		if (hasColumn("Address", "street3")) {
-			alterColumnType("Address", "street3", "VARCHAR(255) null");
-		}
+		alterColumnType("Address", "street3", "VARCHAR(255) null");
 
-		if (!hasColumn("Address", "validationDate")) {
-			alterTableAddColumn("Address", "validationDate", "DATE null");
-		}
+		alterTableAddColumn("Address", "validationDate", "DATE null");
 
-		if (!hasColumn("Address", "validationStatus")) {
-			alterTableAddColumn("Address", "validationStatus", "INTEGER");
-		}
+		alterTableAddColumn("Address", "validationStatus", "INTEGER");
 	}
 
 }

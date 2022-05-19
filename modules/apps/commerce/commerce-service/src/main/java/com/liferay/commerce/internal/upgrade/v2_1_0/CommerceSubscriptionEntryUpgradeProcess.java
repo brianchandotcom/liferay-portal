@@ -82,8 +82,7 @@ public class CommerceSubscriptionEntryUpgradeProcess
 			}
 		}
 
-		runSQL(
-			"alter table CommerceSubscriptionEntry drop column CPInstanceId");
+		alterTableDropColumn("CommerceSubscriptionEntry", "CPInstanceId");
 	}
 
 	private void _addIndexes(String tableName) throws Exception {

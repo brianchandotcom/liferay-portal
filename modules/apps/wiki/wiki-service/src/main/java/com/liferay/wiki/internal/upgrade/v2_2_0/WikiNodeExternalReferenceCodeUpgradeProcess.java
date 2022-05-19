@@ -24,15 +24,12 @@ public class WikiNodeExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("WikiNode", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"WikiNode", "externalReferenceCode", "VARCHAR(75)");
+		alterTableAddColumn("WikiNode", "externalReferenceCode", "VARCHAR(75)");
 
-			runSQL(
-				"update WikiNode set externalReferenceCode = " +
-					"CAST_TEXT(nodeId) where externalReferenceCode is null " +
-						"or externalReferenceCode = ''");
-		}
+		runSQL(
+			"update WikiNode set externalReferenceCode = CAST_TEXT(nodeId) " +
+				"where externalReferenceCode is null or " +
+					"externalReferenceCode = ''");
 	}
 
 }

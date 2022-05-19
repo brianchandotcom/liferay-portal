@@ -23,20 +23,11 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				"CPDefinitionVirtualSetting", "sampleUrl",
-				"VARCHAR(75) null")) {
+		alterColumnType(
+			"CPDefinitionVirtualSetting", "sampleUrl", "VARCHAR(255) null");
 
-			alterColumnType(
-				"CPDefinitionVirtualSetting", "sampleUrl", "VARCHAR(255) null");
-		}
-
-		if (hasColumnType(
-				"CPDefinitionVirtualSetting", "url", "VARCHAR(75) null")) {
-
-			alterColumnType(
-				"CPDefinitionVirtualSetting", "url", "VARCHAR(255) null");
-		}
+		alterColumnType(
+			"CPDefinitionVirtualSetting", "url", "VARCHAR(255) null");
 	}
 
 }

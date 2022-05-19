@@ -177,9 +177,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		if (!hasColumn("LayoutPageTemplateEntry", "plid")) {
-			alterTableAddColumn("LayoutPageTemplateEntry", "plid", "LONG");
-		}
+		alterTableAddColumn("LayoutPageTemplateEntry", "plid", "LONG");
 	}
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

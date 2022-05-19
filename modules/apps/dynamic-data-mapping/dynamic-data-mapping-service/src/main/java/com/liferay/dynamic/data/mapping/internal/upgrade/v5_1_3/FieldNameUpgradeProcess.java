@@ -23,9 +23,7 @@ public class FieldNameUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("DDMField", "fieldName", "TEXT null")) {
-			alterColumnType("DDMField", "fieldName", "TEXT null");
-		}
+		alterColumnType("DDMField", "fieldName", "TEXT null");
 	}
 
 }

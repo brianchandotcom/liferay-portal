@@ -23,9 +23,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DLFileEntryType", "scope")) {
-			alterTableAddColumn("DLFileEntryType", "scope", "INTEGER");
-		}
+		alterTableAddColumn("DLFileEntryType", "scope", "INTEGER");
 
 		runSQL("update DLFileEntryType set scope = 0");
 	}

@@ -46,14 +46,8 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 			});
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumnType(
-					"KaleoNotification", "notificationTypes",
-					"VARCHAR(255) null")) {
-
-				alterColumnType(
-					"KaleoNotification", "notificationTypes",
-					"VARCHAR(255) null");
-			}
+			alterColumnType(
+				"KaleoNotification", "notificationTypes", "VARCHAR(255) null");
 		}
 	}
 

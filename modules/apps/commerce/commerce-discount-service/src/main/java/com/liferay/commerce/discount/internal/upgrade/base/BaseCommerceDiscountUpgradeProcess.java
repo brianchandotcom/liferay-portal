@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.discount.internal.upgrade.base;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -37,17 +34,7 @@ public abstract class BaseCommerceDiscountUpgradeProcess
 					"Adding column %s to table %s", columnName, tableName));
 		}
 
-		if (!hasColumn(tableName, columnName)) {
-			alterTableAddColumn(tableName, columnName, columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableAddColumn(tableName, columnName, columnType);
 	}
 
 	@Override
@@ -62,19 +49,7 @@ public abstract class BaseCommerceDiscountUpgradeProcess
 					"Dropping column %s from table %s", columnName, tableName));
 		}
 
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s does not exist on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableDropColumn(tableName, columnName);
 	}
 
 	protected void renameColumn(
@@ -88,20 +63,7 @@ public abstract class BaseCommerceDiscountUpgradeProcess
 					newColumnName, tableName));
 		}
 
-		String newColumnSimpleName = StringUtil.extractFirst(
-			newColumnName, StringPool.SPACE);
-
-		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alterColumnName(tableName, oldColumnName, newColumnName);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", newColumnName,
-						tableName));
-			}
-		}
+		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

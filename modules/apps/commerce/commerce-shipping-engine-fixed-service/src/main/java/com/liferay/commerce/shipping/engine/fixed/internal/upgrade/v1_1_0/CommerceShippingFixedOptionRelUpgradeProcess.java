@@ -34,23 +34,9 @@ public class CommerceShippingFixedOptionRelUpgradeProcess
 					CommerceShippingFixedOptionRelImpl.TABLE_NAME));
 		}
 
-		if (!hasColumn(
-				CommerceShippingFixedOptionRelImpl.TABLE_NAME,
-				"commerceInventoryWarehouseId")) {
-
-			alterColumnName(
-				"CShippingFixedOptionRel", "commerceWarehouseId",
-				"commerceInventoryWarehouseId LONG");
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s",
-						"commerceInventoryWarehouseId",
-						CommerceShippingFixedOptionRelImpl.TABLE_NAME));
-			}
-		}
+		alterColumnName(
+			"CShippingFixedOptionRel", "commerceWarehouseId",
+			"commerceInventoryWarehouseId LONG");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

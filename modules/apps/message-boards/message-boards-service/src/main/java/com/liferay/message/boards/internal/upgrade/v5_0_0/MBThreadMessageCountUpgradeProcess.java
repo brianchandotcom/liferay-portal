@@ -23,7 +23,7 @@ public class MBThreadMessageCountUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table MBThread drop column messageCount");
+		alterTableDropColumn("MBThread", "messageCount");
 	}
 
 }

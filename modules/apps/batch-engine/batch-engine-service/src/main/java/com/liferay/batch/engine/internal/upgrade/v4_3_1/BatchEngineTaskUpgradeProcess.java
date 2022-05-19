@@ -23,15 +23,9 @@ public class BatchEngineTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("BatchEngineExportTask", "errorMessage")) {
-			alterColumnType(
-				"BatchEngineExportTask", "errorMessage", "TEXT null");
-		}
+		alterColumnType("BatchEngineExportTask", "errorMessage", "TEXT null");
 
-		if (hasColumn("BatchEngineImportTask", "errorMessage")) {
-			alterColumnType(
-				"BatchEngineImportTask", "errorMessage", "TEXT null");
-		}
+		alterColumnType("BatchEngineImportTask", "errorMessage", "TEXT null");
 	}
 
 }

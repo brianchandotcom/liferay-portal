@@ -16,10 +16,8 @@ package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,20 +82,7 @@ public class CPDefinitionLinkUpgradeProcess
 					newColumnName, tableName));
 		}
 
-		String newColumnSimpleName = StringUtil.extractFirst(
-			newColumnName, StringPool.SPACE);
-
-		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alterColumnName(tableName, oldColumnName, newColumnName);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", newColumnName,
-						tableName));
-			}
-		}
+		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

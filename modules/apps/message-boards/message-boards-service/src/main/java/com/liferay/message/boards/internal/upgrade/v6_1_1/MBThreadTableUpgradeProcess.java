@@ -23,9 +23,7 @@ public class MBThreadTableUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType("MBThread", "title", "VARCHAR(255) null")) {
-			alterColumnType("MBThread", "title", "VARCHAR(255) null");
-		}
+		alterColumnType("MBThread", "title", "VARCHAR(255) null");
 	}
 
 }

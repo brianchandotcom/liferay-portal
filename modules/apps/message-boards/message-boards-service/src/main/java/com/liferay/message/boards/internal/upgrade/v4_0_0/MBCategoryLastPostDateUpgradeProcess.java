@@ -23,7 +23,7 @@ public class MBCategoryLastPostDateUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table MBCategory drop column lastPostDate");
+		alterTableDropColumn("MBCategory", "lastPostDate");
 	}
 
 }

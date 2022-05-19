@@ -27,25 +27,15 @@ public class AppUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void updateModules() throws Exception {
-		if (!hasColumn("Marketplace_App", "title")) {
-			runSQL("alter table Marketplace_App add title VARCHAR(75)");
-		}
+		alterTableAddColumn("Marketplace_App", "title", "VARCHAR(75)");
 
-		if (!hasColumn("Marketplace_App", "description")) {
-			runSQL("alter table Marketplace_App add description STRING");
-		}
+		alterTableAddColumn("Marketplace_App", "description", "STRING");
 
-		if (!hasColumn("Marketplace_App", "category")) {
-			runSQL("alter table Marketplace_App add category VARCHAR(75)");
-		}
+		alterTableAddColumn("Marketplace_App", "category", "VARCHAR(75)");
 
-		if (!hasColumn("Marketplace_App", "iconURL")) {
-			runSQL("alter table Marketplace_App add iconURL STRING");
-		}
+		alterTableAddColumn("Marketplace_App", "iconURL", "STRING");
 
-		if (!hasColumn("Marketplace_App", "version")) {
-			runSQL("alter table Marketplace_App add version VARCHAR(75)");
-		}
+		alterTableAddColumn("Marketplace_App", "version", "VARCHAR(75)");
 	}
 
 }

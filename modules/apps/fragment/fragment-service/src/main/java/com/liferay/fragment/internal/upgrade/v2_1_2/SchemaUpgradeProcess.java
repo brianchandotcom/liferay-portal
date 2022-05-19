@@ -23,9 +23,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("FragmentEntry", "configuration")) {
-			runSQL("alter table FragmentEntry add configuration TEXT");
-		}
+		alterTableAddColumn("FragmentEntry", "configuration", "TEXT");
 	}
 
 }

@@ -23,13 +23,9 @@ public class VersionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("BatchEngineExportTask", "version")) {
-			alterTableDropColumn("BatchEngineExportTask", "version");
-		}
+		alterTableDropColumn("BatchEngineExportTask", "version");
 
-		if (hasColumn("BatchEngineImportTask", "version")) {
-			alterTableDropColumn("BatchEngineImportTask", "version");
-		}
+		alterTableDropColumn("BatchEngineImportTask", "version");
 	}
 
 }

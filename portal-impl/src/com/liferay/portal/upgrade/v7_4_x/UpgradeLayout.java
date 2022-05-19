@@ -25,9 +25,7 @@ public class UpgradeLayout extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL("update Layout set classNameId = 0 where classNameId is null");
 
-		if (!hasColumnType("Layout", "title", "TEXT null")) {
-			alterColumnType("Layout", "title", "TEXT null");
-		}
+		alterColumnType("Layout", "title", "TEXT null");
 	}
 
 }

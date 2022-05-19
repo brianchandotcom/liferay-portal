@@ -32,10 +32,8 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("SamlSpSession", "samlPeerBindingId")) {
-				alterTableAddColumn(
-					"SamlSpSession", "samlPeerBindingId", "LONG null");
-			}
+			alterTableAddColumn(
+				"SamlSpSession", "samlPeerBindingId", "LONG null");
 
 			runSQL(
 				StringBundler.concat(

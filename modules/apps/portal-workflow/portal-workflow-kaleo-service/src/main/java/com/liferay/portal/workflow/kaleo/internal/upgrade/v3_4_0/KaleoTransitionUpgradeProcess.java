@@ -23,9 +23,7 @@ public class KaleoTransitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("KaleoTransition", "label")) {
-			alterTableAddColumn("KaleoTransition", "label", "STRING null");
-		}
+		alterTableAddColumn("KaleoTransition", "label", "STRING null");
 	}
 
 }

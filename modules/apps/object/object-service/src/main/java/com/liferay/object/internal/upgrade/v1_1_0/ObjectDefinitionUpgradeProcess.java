@@ -23,9 +23,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ObjectDefinition", "portlet")) {
-			alterTableAddColumn("ObjectDefinition", "portlet", "BOOLEAN");
-		}
+		alterTableAddColumn("ObjectDefinition", "portlet", "BOOLEAN");
 	}
 
 }

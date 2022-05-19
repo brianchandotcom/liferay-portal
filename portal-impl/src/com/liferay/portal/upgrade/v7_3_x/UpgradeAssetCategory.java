@@ -29,11 +29,9 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AssetCategory", "treePath")) {
-			alterTableDropColumn("AssetCategory", "leftCategoryId");
-			alterTableDropColumn("AssetCategory", "rightCategoryId");
-			alterTableAddColumn("AssetCategory", "treePath", "STRING null");
-		}
+		alterTableDropColumn("AssetCategory", "leftCategoryId");
+		alterTableDropColumn("AssetCategory", "rightCategoryId");
+		alterTableAddColumn("AssetCategory", "treePath", "STRING null");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(

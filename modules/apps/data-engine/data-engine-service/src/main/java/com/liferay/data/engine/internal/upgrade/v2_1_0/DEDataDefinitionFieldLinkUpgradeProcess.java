@@ -23,20 +23,14 @@ public class DEDataDefinitionFieldLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DEDataDefinitionFieldLink", "createDate")) {
-			alterTableAddColumn(
-				"DEDataDefinitionFieldLink", "createDate", "DATE null");
-		}
+		alterTableAddColumn(
+			"DEDataDefinitionFieldLink", "createDate", "DATE null");
 
-		if (!hasColumn("DEDataDefinitionFieldLink", "modifiedDate")) {
-			alterTableAddColumn(
-				"DEDataDefinitionFieldLink", "modifiedDate", "DATE null");
-		}
+		alterTableAddColumn(
+			"DEDataDefinitionFieldLink", "modifiedDate", "DATE null");
 
-		if (!hasColumn("DEDataDefinitionFieldLink", "lastPublishDate")) {
-			alterTableAddColumn(
-				"DEDataDefinitionFieldLink", "lastPublishDate", "DATE null");
-		}
+		alterTableAddColumn(
+			"DEDataDefinitionFieldLink", "lastPublishDate", "DATE null");
 	}
 
 }

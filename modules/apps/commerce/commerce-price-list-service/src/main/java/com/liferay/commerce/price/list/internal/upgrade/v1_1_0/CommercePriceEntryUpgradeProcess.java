@@ -84,7 +84,7 @@ public class CommercePriceEntryUpgradeProcess
 
 		runSQL("drop index IX_2083879C on CommercePriceEntry");
 
-		runSQL("alter table CommercePriceEntry drop column CPInstanceId");
+		alterTableDropColumn("CommercePriceEntry", "CPInstanceId");
 	}
 
 	private void _addIndexes(String tableName) throws Exception {

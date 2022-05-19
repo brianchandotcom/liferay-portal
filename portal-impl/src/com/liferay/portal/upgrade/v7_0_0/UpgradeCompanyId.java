@@ -116,9 +116,7 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 		public void update(Connection connection) throws Exception {
 			super.update(connection);
 
-			if (!hasColumnType(getTableName(), "companyId", "LONG NOT NULL")) {
-				alterColumnType(getTableName(), "companyId", "LONG NOT NULL");
-			}
+			alterColumnType(getTableName(), "companyId", "LONG NOT NULL");
 		}
 
 	}

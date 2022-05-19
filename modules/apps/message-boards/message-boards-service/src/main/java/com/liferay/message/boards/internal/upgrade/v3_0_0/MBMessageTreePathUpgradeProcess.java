@@ -34,9 +34,7 @@ public class MBMessageTreePathUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("MBMessage", "treePath")) {
-			alterTableAddColumn("MBMessage", "treePath", "STRING null");
-		}
+		alterTableAddColumn("MBMessage", "treePath", "STRING null");
 
 		_populateTreePath();
 	}

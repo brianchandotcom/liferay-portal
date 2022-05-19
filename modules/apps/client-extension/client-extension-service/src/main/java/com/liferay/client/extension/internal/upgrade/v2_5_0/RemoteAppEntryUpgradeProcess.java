@@ -23,12 +23,9 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("RemoteAppEntry", "customElementUseESM")) {
-			alterTableAddColumn(
-				"RemoteAppEntry", "customElementUseESM", "BOOLEAN");
+		alterTableAddColumn("RemoteAppEntry", "customElementUseESM", "BOOLEAN");
 
-			runSQL("update RemoteAppEntry set customElementUseESM = [$FALSE$]");
-		}
+		runSQL("update RemoteAppEntry set customElementUseESM = [$FALSE$]");
 	}
 
 }

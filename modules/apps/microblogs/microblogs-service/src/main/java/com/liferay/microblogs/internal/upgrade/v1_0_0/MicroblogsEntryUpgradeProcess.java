@@ -31,14 +31,9 @@ public class MicroblogsEntryUpgradeProcess extends UpgradeProcess {
 
 	private void _updateMicroBlogsEntry() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (hasColumn("MicroblogsEntry", "creatorClassNameId") ||
-				hasColumn("MicroblogsEntry", "creatorClassPK")) {
-
-				return;
-			}
-
-			runSQL("alter table MicroblogsEntry add creatorClassNameId LONG");
-			runSQL("alter table MicroblogsEntry add creatorClassPK LONG");
+			alterTableAddColumn(
+				"MicroblogsEntry", "creatorClassNameId", "LONG");
+			alterTableAddColumn("MicroblogsEntry", "creatorClassPK", "LONG");
 
 			runSQL(
 				"update MicroblogsEntry set creatorClassNameId = " +

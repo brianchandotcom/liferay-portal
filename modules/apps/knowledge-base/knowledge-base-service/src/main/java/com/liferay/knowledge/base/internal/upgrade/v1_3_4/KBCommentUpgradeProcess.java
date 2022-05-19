@@ -43,7 +43,7 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 				KBCommentConstants.USER_RATING_DISLIKE +
 					" where helpful = FALSE");
 
-		runSQL("alter table KBComment drop column helpful");
+		alterTableDropColumn("KBComment", "helpful");
 	}
 
 	private void _upgradeSchema() throws Exception {

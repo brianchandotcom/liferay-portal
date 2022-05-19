@@ -23,10 +23,8 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DispatchTrigger", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"DispatchTrigger", "externalReferenceCode", "VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"DispatchTrigger", "externalReferenceCode", "VARCHAR(75) null");
 	}
 
 }

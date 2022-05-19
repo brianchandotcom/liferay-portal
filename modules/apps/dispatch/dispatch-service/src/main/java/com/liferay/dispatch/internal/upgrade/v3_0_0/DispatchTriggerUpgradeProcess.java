@@ -14,8 +14,6 @@
 
 package com.liferay.dispatch.internal.upgrade.v3_0_0;
 
-import com.liferay.dispatch.internal.upgrade.v2_0_0.util.DispatchTriggerTable;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -27,17 +25,6 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		String oldColumnName = "taskType";
 		String newColumnName = "taskExecutorType";
-
-		if (!hasColumn(DispatchTriggerTable.TABLE_NAME, oldColumnName)) {
-			if (hasColumn(DispatchTriggerTable.TABLE_NAME, newColumnName)) {
-				return;
-			}
-
-			throw new UpgradeException(
-				String.format(
-					"Unable to rename %s to %s in table %s", oldColumnName,
-					newColumnName, DispatchTriggerTable.TABLE_NAME));
-		}
 
 		alterColumnName(
 			"DispatchTrigger", oldColumnName,

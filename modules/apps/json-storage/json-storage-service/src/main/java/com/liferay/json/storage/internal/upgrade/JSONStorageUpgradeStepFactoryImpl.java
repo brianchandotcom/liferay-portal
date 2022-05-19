@@ -89,10 +89,7 @@ public class JSONStorageUpgradeStepFactoryImpl
 				}
 			}
 
-			runSQL(
-				StringBundler.concat(
-					"alter table ", _tableName, " drop column ",
-					_jsonColumnName));
+			alterTableDropColumn(_tableName, _jsonColumnName);
 		}
 
 		private JSONStorageUpgradeProcess(

@@ -23,10 +23,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("RemoteAppEntry", "friendlyURLMapping")) {
-			alterTableAddColumn(
-				"RemoteAppEntry", "friendlyURLMapping", "VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"RemoteAppEntry", "friendlyURLMapping", "VARCHAR(75)");
 	}
 
 }

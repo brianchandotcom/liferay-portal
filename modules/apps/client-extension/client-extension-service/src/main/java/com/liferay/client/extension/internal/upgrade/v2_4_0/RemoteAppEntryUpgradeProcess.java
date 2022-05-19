@@ -31,10 +31,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addExternalReferenceCodeColumn() throws Exception {
-		if (!hasColumn("RemoteAppEntry", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"RemoteAppEntry", "externalReferenceCode", "VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"RemoteAppEntry", "externalReferenceCode", "VARCHAR(75)");
 	}
 
 	private void _updateExternalReferenceCode() throws Exception {

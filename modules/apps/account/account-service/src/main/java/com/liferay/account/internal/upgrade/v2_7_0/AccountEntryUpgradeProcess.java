@@ -23,10 +23,8 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AccountEntry", "defaultCPaymentMethodKey")) {
-			alterTableAddColumn(
-				"AccountEntry", "defaultCPaymentMethodKey", "VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"AccountEntry", "defaultCPaymentMethodKey", "VARCHAR(75)");
 	}
 
 }

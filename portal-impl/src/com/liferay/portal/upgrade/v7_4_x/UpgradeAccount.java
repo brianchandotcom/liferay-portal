@@ -44,13 +44,9 @@ public class UpgradeAccount extends UpgradeProcess {
 		_addColumnToCompanyTable("type_", "VARCHAR(75) null");
 		_addColumnToCompanyTable("size_", "VARCHAR(75) null");
 
-		if (hasColumn("Company", "accountId")) {
-			alterTableDropColumn("Company", "accountId");
-		}
+		alterTableDropColumn("Company", "accountId");
 
-		if (hasColumn("Contact", "accountId")) {
-			alterTableDropColumn("Contact", "accountId");
-		}
+		alterTableDropColumn("Contact", "accountId");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update ListType set type_ = ? where type_ = ?")) {
@@ -170,9 +166,7 @@ public class UpgradeAccount extends UpgradeProcess {
 	private void _addColumnToCompanyTable(String columnName, String columnType)
 		throws Exception {
 
-		if (!hasColumn("Company", columnName)) {
-			alterTableAddColumn("Company", columnName, columnType);
-		}
+		alterTableAddColumn("Company", columnName, columnType);
 	}
 
 	private String _getUpdateClassNameIdClassPKSQL(String tableName) {

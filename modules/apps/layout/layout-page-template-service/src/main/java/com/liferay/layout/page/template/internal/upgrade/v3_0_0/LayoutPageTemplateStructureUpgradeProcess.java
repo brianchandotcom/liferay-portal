@@ -42,7 +42,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 	private void _alterTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("alter table LayoutPageTemplateStructure drop column data_");
+			alterTableDropColumn("LayoutPageTemplateStructure", "data_");
 		}
 	}
 

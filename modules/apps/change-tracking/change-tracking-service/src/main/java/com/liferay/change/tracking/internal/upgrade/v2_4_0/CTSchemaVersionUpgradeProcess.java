@@ -25,7 +25,7 @@ public class CTSchemaVersionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table CTCollection add schemaVersionId LONG");
+		alterTableAddColumn("CTCollection", "schemaVersionId", "LONG");
 
 		runSQL("update CTCollection set schemaVersionId = 0");
 

@@ -23,10 +23,7 @@ public class AccountGroupUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AccountGroup", "defaultAccountGroup")) {
-			alterTableAddColumn(
-				"AccountGroup", "defaultAccountGroup", "BOOLEAN");
-		}
+		alterTableAddColumn("AccountGroup", "defaultAccountGroup", "BOOLEAN");
 	}
 
 }

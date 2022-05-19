@@ -23,14 +23,9 @@ public class CalendarNotificationTemplateUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType(
-				"CalendarNotificationTemplate", "notificationTypeSettings",
-				"VARCHAR(150) null")) {
-
-			alterColumnType(
-				"CalendarNotificationTemplate", "notificationTypeSettings",
-				"VARCHAR(150) null");
-		}
+		alterColumnType(
+			"CalendarNotificationTemplate", "notificationTypeSettings",
+			"VARCHAR(150) null");
 	}
 
 }

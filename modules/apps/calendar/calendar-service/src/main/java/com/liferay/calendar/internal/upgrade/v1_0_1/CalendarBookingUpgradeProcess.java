@@ -29,9 +29,7 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 
 	private void _updateCalendarBooking() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("CalendarBooking", "vEventUid")) {
-				runSQL("alter table CalendarBooking add vEventUid STRING null");
-			}
+			alterTableAddColumn("CalendarBooking", "vEventUid", "STRING null");
 
 			runSQL(
 				"update CalendarBooking set vEventUid = uuid_ where " +

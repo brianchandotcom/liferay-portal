@@ -23,9 +23,7 @@ public class UpgradeLayoutStyleBookEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("Layout", "styleBookEntryId")) {
-			alterTableAddColumn("Layout", "styleBookEntryId", "LONG");
-		}
+		alterTableAddColumn("Layout", "styleBookEntryId", "LONG");
 
 		runSQL("update Layout set styleBookEntryId = 0");
 	}

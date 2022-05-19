@@ -30,13 +30,9 @@ public class UpgradeAssetEntryMappingTables extends UpgradeProcess {
 	private void _upgradeAssetEntryTableMapping(String tableName)
 		throws Exception {
 
-		if (hasColumn(tableName, "changeType")) {
-			runSQL("alter table " + tableName + " drop column changeType");
-		}
+		alterTableDropColumn(tableName, "changeType");
 
-		if (!hasColumn(tableName, "ctChangeType")) {
-			runSQL("alter table " + tableName + " add ctChangeType BOOLEAN");
-		}
+		alterTableAddColumn(tableName, "ctChangeType", "BOOLEAN");
 	}
 
 }

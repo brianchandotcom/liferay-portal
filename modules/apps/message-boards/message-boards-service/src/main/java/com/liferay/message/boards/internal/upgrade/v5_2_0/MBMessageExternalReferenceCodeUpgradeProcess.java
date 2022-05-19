@@ -28,10 +28,8 @@ public class MBMessageExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("MBMessage", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"MBMessage", "externalReferenceCode", "VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"MBMessage", "externalReferenceCode", "VARCHAR(75)");
 
 		_populateExternalReferenceCode();
 	}

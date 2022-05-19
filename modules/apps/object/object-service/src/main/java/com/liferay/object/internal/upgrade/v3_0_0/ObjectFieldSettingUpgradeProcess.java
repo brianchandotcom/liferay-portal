@@ -23,9 +23,7 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("ObjectFieldSetting", "required")) {
-			alterTableDropColumn("ObjectFieldSetting", "required");
-		}
+		alterTableDropColumn("ObjectFieldSetting", "required");
 	}
 
 }

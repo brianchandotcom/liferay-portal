@@ -14,12 +14,9 @@
 
 package com.liferay.commerce.internal.upgrade.base;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -36,17 +33,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 					"Adding column %s to table %s", columnName, tableName));
 		}
 
-		if (!hasColumn(tableName, columnName)) {
-			alterTableAddColumn(tableName, columnName, columnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterTableAddColumn(tableName, columnName, columnType);
 	}
 
 	protected void changeColumnType(
@@ -60,17 +47,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 					newColumnType, tableName));
 		}
 
-		if (hasColumn(tableName, columnName)) {
-			alterColumnType(tableName, columnName, newColumnType);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"No column %s exists on table %s", columnName,
-						tableName));
-			}
-		}
+		alterColumnType(tableName, columnName, newColumnType);
 	}
 
 	@Override
@@ -85,19 +62,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 					"Dropping column %s from table %s", columnName, tableName));
 		}
 
-		if (hasColumn(tableName, columnName)) {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", tableName, " drop column ", columnName));
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already does not exist on table %s",
-						columnName, tableName));
-			}
-		}
+		alterTableDropColumn(tableName, columnName);
 	}
 
 	protected void renameColumn(
@@ -111,20 +76,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 					tableName));
 		}
 
-		String newColumnSimpleName = StringUtil.extractFirst(
-			newColumnName, StringPool.SPACE);
-
-		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alterColumnName(tableName, oldColumnName, newColumnName);
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					String.format(
-						"Column %s already exists on table %s", newColumnName,
-						tableName));
-			}
-		}
+		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -23,7 +23,7 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table KBArticle add sourceURL STRING null");
+		alterTableAddColumn("KBArticle", "sourceURL", "STRING null");
 	}
 
 }

@@ -32,10 +32,8 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("SamlIdpSpSession", "samlPeerBindingId")) {
-				alterTableAddColumn(
-					"SamlIdpSpSession", "samlPeerBindingId", "LONG null");
-			}
+			alterTableAddColumn(
+				"SamlIdpSpSession", "samlPeerBindingId", "LONG null");
 
 			runSQL("delete from SamlPeerBinding");
 

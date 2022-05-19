@@ -24,15 +24,12 @@ public class KBFolderExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("KBFolder", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"KBFolder", "externalReferenceCode", "VARCHAR(75)");
+		alterTableAddColumn("KBFolder", "externalReferenceCode", "VARCHAR(75)");
 
-			runSQL(
-				"update KBFolder set externalReferenceCode = " +
-					"CAST_TEXT(kbFolderId) where externalReferenceCode is " +
-						"null or externalReferenceCode = ''");
-		}
+		runSQL(
+			"update KBFolder set externalReferenceCode = " +
+				"CAST_TEXT(kbFolderId) where externalReferenceCode is null " +
+					"or externalReferenceCode = ''");
 	}
 
 }

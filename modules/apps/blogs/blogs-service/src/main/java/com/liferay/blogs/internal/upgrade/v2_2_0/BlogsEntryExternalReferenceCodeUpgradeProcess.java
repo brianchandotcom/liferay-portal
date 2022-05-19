@@ -25,16 +25,14 @@ public class BlogsEntryExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("BlogsEntry", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"BlogsEntry", "externalReferenceCode", "VARCHAR(75)");
+		alterTableAddColumn(
+			"BlogsEntry", "externalReferenceCode", "VARCHAR(75)");
 
-			runSQL(
-				StringBundler.concat(
-					"update BlogsEntry set externalReferenceCode = ",
-					"CAST_TEXT(entryId) where externalReferenceCode is null ",
-					"or externalReferenceCode = ''"));
-		}
+		runSQL(
+			StringBundler.concat(
+				"update BlogsEntry set externalReferenceCode = ",
+				"CAST_TEXT(entryId) where externalReferenceCode is null or ",
+				"externalReferenceCode = ''"));
 	}
 
 }

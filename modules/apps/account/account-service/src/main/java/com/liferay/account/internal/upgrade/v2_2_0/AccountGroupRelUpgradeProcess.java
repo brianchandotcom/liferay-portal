@@ -37,21 +37,13 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AccountGroupRel", "userId")) {
-			runSQL("alter table AccountGroupRel add userId LONG");
-		}
+		alterTableAddColumn("AccountGroupRel", "userId", "LONG");
 
-		if (!hasColumn("AccountGroupRel", "userName")) {
-			runSQL("alter table AccountGroupRel add userName VARCHAR(75) null");
-		}
+		alterTableAddColumn("AccountGroupRel", "userName", "VARCHAR(75) null");
 
-		if (!hasColumn("AccountGroupRel", "createDate")) {
-			runSQL("alter table AccountGroupRel add createDate DATE null");
-		}
+		alterTableAddColumn("AccountGroupRel", "createDate", "DATE null");
 
-		if (!hasColumn("AccountGroupRel", "modifiedDate")) {
-			runSQL("alter table AccountGroupRel add modifiedDate DATE null");
-		}
+		alterTableAddColumn("AccountGroupRel", "modifiedDate", "DATE null");
 
 		_companyLocalService.forEachCompany(
 			company -> {

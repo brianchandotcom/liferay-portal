@@ -23,25 +23,15 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AccountEntry", "defaultBillingAddressId")) {
-			alterTableAddColumn(
-				"AccountEntry", "defaultBillingAddressId", "LONG");
-		}
+		alterTableAddColumn("AccountEntry", "defaultBillingAddressId", "LONG");
 
-		if (!hasColumn("AccountEntry", "defaultShippingAddressId")) {
-			alterTableAddColumn(
-				"AccountEntry", "defaultShippingAddressId", "LONG");
-		}
+		alterTableAddColumn("AccountEntry", "defaultShippingAddressId", "LONG");
 
-		if (!hasColumn("AccountEntry", "emailAddress")) {
-			alterTableAddColumn(
-				"AccountEntry", "emailAddress", "VARCHAR(254) null");
-		}
+		alterTableAddColumn(
+			"AccountEntry", "emailAddress", "VARCHAR(254) null");
 
-		if (!hasColumn("AccountEntry", "taxExemptionCode")) {
-			alterTableAddColumn(
-				"AccountEntry", "taxExemptionCode", "VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"AccountEntry", "taxExemptionCode", "VARCHAR(75) null");
 	}
 
 }

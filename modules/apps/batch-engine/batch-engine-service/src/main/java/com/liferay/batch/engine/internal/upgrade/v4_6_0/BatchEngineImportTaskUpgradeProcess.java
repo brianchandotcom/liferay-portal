@@ -23,11 +23,9 @@ public class BatchEngineImportTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("BatchEngineImportTask", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"BatchEngineImportTask", "externalReferenceCode",
-				"VARCHAR(75) null");
-		}
+		alterTableAddColumn(
+			"BatchEngineImportTask", "externalReferenceCode",
+			"VARCHAR(75) null");
 	}
 
 }

@@ -24,15 +24,12 @@ public class WikiPageExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("WikiPage", "externalReferenceCode")) {
-			alterTableAddColumn(
-				"WikiPage", "externalReferenceCode", "VARCHAR(75)");
+		alterTableAddColumn("WikiPage", "externalReferenceCode", "VARCHAR(75)");
 
-			runSQL(
-				"update WikiPage set externalReferenceCode = " +
-					"CAST_TEXT(resourcePrimKey) where externalReferenceCode " +
-						"is null or externalReferenceCode = ''");
-		}
+		runSQL(
+			"update WikiPage set externalReferenceCode = " +
+				"CAST_TEXT(resourcePrimKey) where externalReferenceCode is " +
+					"null or externalReferenceCode = ''");
 	}
 
 }

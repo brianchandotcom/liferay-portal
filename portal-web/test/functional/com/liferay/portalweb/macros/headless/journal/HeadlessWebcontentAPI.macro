@@ -89,7 +89,7 @@ definition {
 	}
 
 	macro _createStructuredContentDraft {
-		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title}");
+		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${priority},${title}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
@@ -113,6 +113,7 @@ definition {
         "repeatable": false
     }],
     "contentStructureId": "${ddmStructureId}",
+	"priority": "${priority}",
     "title": "${title}"
 	}
 		''';
@@ -158,11 +159,16 @@ definition {
 	}
 
 	macro createStructuredContentDraft {
+		if(!(isSet(priority))){
+			var priority = "";
+		}
+
 		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
 			label = "${label}",
 			name = "${name}",
+			priority = "${priority}",
 			title = "${title}");
 
 		return "${response}";

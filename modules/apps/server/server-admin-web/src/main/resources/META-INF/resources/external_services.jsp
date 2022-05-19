@@ -50,11 +50,11 @@
 					%>
 
 				</aui:fieldset>
+
+				<aui:button-row>
+					<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
+				</aui:button-row>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:fieldset>
 </div>
-
-<aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
-</aui:button-row>

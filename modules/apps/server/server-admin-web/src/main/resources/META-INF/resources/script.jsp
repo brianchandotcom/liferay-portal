@@ -47,8 +47,8 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 	<pre><%= HtmlUtil.escape(se.getMessage()) %></pre>
 </liferay-ui:error>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
+<div class="server-admin-tabs">
+	<aui:fieldset-group margin-bottom="0 !important" markupView="lexicon">
 		<aui:select name="language">
 
 			<%
@@ -69,25 +69,25 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 		</aui:select>
 
 		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
-	</aui:fieldset>
-</aui:fieldset-group>
 
-<c:if test="<%= Validator.isNotNull(scriptOutput) %>">
-	<b><liferay-ui:message key="output" /></b>
+		<aui:button-row>
+			<aui:button cssClass="save-server-button" data-cmd="runScript" value="execute" />
+		</aui:button-row>
+	</aui:fieldset-group>
 
-	<c:choose>
-		<c:when test='<%= output.equals("html") %>'>
-			<div><%= scriptOutput %></div>
-		</c:when>
-		<c:otherwise>
-			<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
-		</c:otherwise>
-	</c:choose>
-</c:if>
+	<c:if test="<%= Validator.isNotNull(scriptOutput) %>">
+		<b><liferay-ui:message key="output" /></b>
 
-<aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="runScript" value="execute" />
-</aui:button-row>
+		<c:choose>
+			<c:when test='<%= output.equals("html") %>'>
+				<div><%= scriptOutput %></div>
+			</c:when>
+			<c:otherwise>
+				<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
 
 <aui:script>
 	var <portlet:namespace />selectLanguage = document.getElementById(

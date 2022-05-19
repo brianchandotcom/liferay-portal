@@ -184,11 +184,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_addPortalBundles(_jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
 		synchronized (_topHeadResourcesServiceReferences) {
-			String contextPath = _portal.getPathContext();
 			String proxyPath = _portal.getPathProxy();
-
-			String unproxiedContextPath = contextPath.substring(
-				proxyPath.length());
 
 			for (ServiceReference<TopHeadResources>
 					topHeadResourcesServiceReference :
@@ -204,9 +200,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 					String unproxiedBundleContextPath =
 						bundleContextPath.substring(proxyPath.length());
 
-					String urlPrefix = StringBundler.concat(
-						proxyPath, unproxiedContextPath,
-						unproxiedBundleContextPath);
+					String urlPrefix = proxyPath + unproxiedBundleContextPath;
 
 					for (String jsResourcePath :
 							topHeadResources.getJsResourcePaths()) {

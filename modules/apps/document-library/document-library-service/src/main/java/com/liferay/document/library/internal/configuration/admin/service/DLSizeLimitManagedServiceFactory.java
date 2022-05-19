@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -166,7 +166,7 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	private Map<String, Long> _computeMimeTypeSizeLimit(
 		DLSizeLimitConfiguration dlSizeLimitConfiguration) {
 
-		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
+		Map<String, Long> mimeTypeSizeLimits = new LinkedHashMap<>();
 
 		for (String mimeTypeSizeLimit :
 				dlSizeLimitConfiguration.mimeTypeSizeLimit()) {

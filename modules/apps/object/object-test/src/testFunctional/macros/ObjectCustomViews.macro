@@ -65,6 +65,12 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
+	macro assertColumnNotPresentOnDefaultSort {
+		AssertElementNotPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
+	}
+
 	macro assertColumnNotVisibleOnAddColumnModal {
 		AssertNotVisible(
 			key_columnName = "${columnOption}",

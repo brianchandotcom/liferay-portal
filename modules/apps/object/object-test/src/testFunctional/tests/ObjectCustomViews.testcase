@@ -808,6 +808,8 @@ definition {
 	@description = "LPS-144472 - Verify it is possible to search when press enter key on Default Sort"
 	@priority = "4"
 	test CanSearchWithEnterKey {
+		var listColumns = "Author,Creation Date,Modified Date";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152064",
 			objectName = "CustomObject152064",
@@ -827,9 +829,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		for (var columnOption : list "Author,Creation Date,Modified Date") {
+		for (var columnName : list "${listColumns}") {
 			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
+				key_columnOption = "${columnName}",
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
 
@@ -837,7 +839,7 @@ definition {
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "Author,Creation Date,Modified Date") {
+		for (var columnName : list "${listColumns}") {
 			ObjectCustomViews.addDefaultSort(
 				columnOption = "${columnName}",
 				sortOption = "Ascending");
@@ -848,6 +850,10 @@ definition {
 		ObjectCustomViews.assertColumnPresentOnDefaultSort(
 			colunmName = "Author",
 			sortingLabel = "Ascending");
+
+		for (var columnNotPresent : list "Creation Date,Modified Date") {
+			ObjectCustomViews.assertColumnNotPresentOnDefaultSort(colunmName = "${columnNotPresent}");
+		}
 	}
 
 	@description = "LPS-144472 - Verify it is possible to see the entries with default return"

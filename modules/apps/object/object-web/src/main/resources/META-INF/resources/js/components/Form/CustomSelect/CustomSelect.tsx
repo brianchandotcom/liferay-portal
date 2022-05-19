@@ -29,6 +29,7 @@ export default function CustomSelect<T extends CustomItem = CustomItem>({
 	label,
 	onChange,
 	options,
+	placeholder = Liferay.Language.get('choose-an-option'),
 	required,
 	value,
 }: IProps<T>) {
@@ -50,7 +51,7 @@ export default function CustomSelect<T extends CustomItem = CustomItem>({
 					defaultValue={value}
 					disabled={disabled}
 					onClick={() => setActive((active) => !active)}
-					placeholder={Liferay.Language.get('choose-an-option')}
+					placeholder={placeholder}
 					ref={inputRef}
 					value={value}
 				/>
@@ -100,6 +101,7 @@ interface IProps<T extends CustomItem = CustomItem> {
 	label?: string;
 	onChange?: (selected: T) => void;
 	options: T[];
+	placeholder?: string;
 	required?: boolean;
 	value?: string | number | string[];
 }

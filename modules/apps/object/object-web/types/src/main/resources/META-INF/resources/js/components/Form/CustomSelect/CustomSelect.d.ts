@@ -24,6 +24,7 @@ export default function CustomSelect<T extends CustomItem = CustomItem>({
 	label,
 	onChange,
 	options,
+	placeholder,
 	required,
 	value,
 }: IProps<T>): JSX.Element;
@@ -41,6 +42,7 @@ interface IProps<T extends CustomItem = CustomItem> {
 	label?: string;
 	onChange?: (selected: T) => void;
 	options: T[];
+	placeholder?: string;
 	required?: boolean;
 	value?: string | number | string[];
 }

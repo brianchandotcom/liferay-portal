@@ -36,7 +36,7 @@ definition {
 		task ("Close the onboarding modal") {
 			ACUtils.closeModal();
 		}
-		
+
 		task ("Go to Assets") {
 			ACUtils.goToAssets();
 		}

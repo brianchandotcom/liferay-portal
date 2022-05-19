@@ -23,72 +23,41 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 <c:if test="<%= folderActionDisplayContext.isShowActions() %>">
 	<liferay-ui:icon-menu
 		direction="left-side"
-		dropdownCssClass='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) ? "dropdown-menu-indicator-start" : StringPool.BLANK %>'
+		dropdownCssClass="dropdown-menu-indicator-start"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
 		message='<%= LanguageUtil.get(request, "actions") %>'
 		showWhenSingleIcon="<%= true %>"
 	>
 		<c:if test="<%= folderActionDisplayContext.isDownloadFolderActionVisible() %>">
-			<c:choose>
-				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
-					<liferay-ui:icon
-						icon="download"
-						iconCssClass="dropdown-item-indicator-start"
-						markupView="lexicon"
-						message="download"
-						method="get"
-						url="<%= folderActionDisplayContext.getDownloadFolderURL() %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon
-						message="download"
-						method="get"
-						url="<%= folderActionDisplayContext.getDownloadFolderURL() %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				icon="download"
+				iconCssClass="dropdown-item-indicator-start"
+				markupView="lexicon"
+				message="download"
+				method="get"
+				url="<%= folderActionDisplayContext.getDownloadFolderURL() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
-			<c:choose>
-				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
-					<liferay-ui:icon
-						icon="pencil"
-						iconCssClass="dropdown-item-indicator-start"
-						markupView="lexicon"
-						message="edit"
-						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon
-						message="edit"
-						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				icon="pencil"
+				iconCssClass="dropdown-item-indicator-start"
+				markupView="lexicon"
+				message="edit"
+				url="<%= folderActionDisplayContext.getEditFolderURL() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">
-			<c:choose>
-				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
-					<liferay-ui:icon
-						icon="move-folder"
-						iconCssClass="dropdown-item-indicator-start"
-						markupView="lexicon"
-						message="move"
-						url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon
-						message="move"
-						url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				icon="move-folder"
+				iconCssClass="dropdown-item-indicator-start"
+				markupView="lexicon"
+				message="move"
+				url="<%= folderActionDisplayContext.getMoveFolderURL() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteExpiredTemporaryFileEntriesActionVisible() %>">
@@ -155,48 +124,26 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 			/>
 
-			<c:choose>
-				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
-					<liferay-ui:icon
-						icon="password-policies"
-						iconCssClass="dropdown-item-indicator-start"
-						markupView="lexicon"
-						message="permissions"
-						method="get"
-						url="<%= permissionsURL %>"
-						useDialog="<%= true %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon
-						message="permissions"
-						method="get"
-						url="<%= permissionsURL %>"
-						useDialog="<%= true %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				icon="password-policies"
+				iconCssClass="dropdown-item-indicator-start"
+				markupView="lexicon"
+				message="permissions"
+				method="get"
+				url="<%= permissionsURL %>"
+				useDialog="<%= true %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteFolderActionVisible() %>">
-			<c:choose>
-				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
-					<liferay-ui:icon
-						icon="trash"
-						iconCssClass="dropdown-item-indicator-start"
-						markupView="lexicon"
-						message="delete"
-						method="get"
-						url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon-delete
-						trash="<%= folderActionDisplayContext.isTrashEnabled() %>"
-						url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				icon="trash"
+				iconCssClass="dropdown-item-indicator-start"
+				markupView="lexicon"
+				message="delete"
+				method="get"
+				url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isPublishFolderActionVisible() %>">

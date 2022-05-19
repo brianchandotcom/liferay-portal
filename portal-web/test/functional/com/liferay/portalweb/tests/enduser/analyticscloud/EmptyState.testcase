@@ -591,4 +591,221 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11117 | Test Summary: Empty state Sites page with data source and property no data"
+	@priority = "2"
+	test CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to AC") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+		}
+
+		task ("Check empty state of tooltip in sites activities") {
+			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+
+			for (var type : list "Known,Anonymous,Total") {
+				AssertElementPresent(
+					key_value = "0",
+					key_visitors = "${type}",
+					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+			}
+		}
+
+		task ("Check the empty state and documentation link of the top pages card") {
+			ACCards.viewCards(cardTitle = "Top Pages");
+
+			for (var tabName : list "Visited Pages,Entrance Pages,Exit Pages") {
+				task ("Navigate between Search Terms tabs") {
+					ACNavigation.switchTabInCard(tabName = "${tabName}");
+				}
+
+				task ("Check the empty page status message") {
+					ACUtils.viewGenericTextInOrder(textValueList = "There are no visitors on the selected period.,Check back later to verify if data has been received from your data sources.,Learn more about pages.");
+				}
+			}
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about pages.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Top Pages");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the acquisitions card") {
+			ACCards.viewCards(cardTitle = "Acquisitions");
+
+			for (var tabName : list "Channels,Source | Medium,Referrers") {
+				task ("Navigate between Search Terms tabs") {
+					ACNavigation.switchTabInCard(tabName = "${tabName}");
+				}
+
+				task ("Check the empty page status message") {
+					ACUtils.viewGenericTextInOrder(textValueList = "There are no sessions on the selected period.,Check back later to verify if data has been received from your data sources.,Learn more about acquisitions.");
+				}
+			}
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about acquisitions.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Acquisitions");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the visitors by day and time card") {
+			ACCards.viewCards(cardTitle = "Visitors by Day and Time");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no visitors on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about visitors by day and time.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Visitors by Day and Time");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the search terms card") {
+			ACCards.viewCards(cardTitle = "Search Terms");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "There are no search terms on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about search terms.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the interests card") {
+			ACCards.viewCards(cardTitle = "Interests");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "There are no interests on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the sessions by location card") {
+			ACCards.viewCards(cardTitle = "Sessions by Location");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no sessions on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by location.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Sessions by Location");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the session technology card") {
+			ACCards.viewCards(cardTitle = "Session Technology");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "3",
+				textValueList = "There are no sessions on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by technology.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Session Technology");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the cohort analysis card") {
+			ACCards.viewCards(cardTitle = "Cohort Analysis");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "4",
+				textValueList = "There are no sessions on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about sessions by cohort analysis.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Cohort Analysis");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the page tab") {
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACUtils.viewGenericText(textValueList = "There are no pages found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about pages.");
+
+			SelectWindow(locator1 = "title=Pages — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Pages");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+
+			ACUtils.viewGenericText(textValueList = "There are no interests found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Search Terms and Interests");
+		}
+	}
+
 }

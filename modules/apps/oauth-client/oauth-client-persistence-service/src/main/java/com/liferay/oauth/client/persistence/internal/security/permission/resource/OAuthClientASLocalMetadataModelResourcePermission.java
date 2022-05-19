@@ -14,8 +14,8 @@
 
 package com.liferay.oauth.client.persistence.internal.security.permission.resource;
 
-import com.liferay.oauth.client.persistence.model.OAuthClientAuthServer;
-import com.liferay.oauth.client.persistence.service.OAuthClientAuthServerLocalService;
+import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
+import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,74 +30,82 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.oauth.client.persistence.model.OAuthClientAuthServer",
+	property = "model.class.name=com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata",
 	service = ModelResourcePermission.class
 )
-public class OAuthClientAuthServerModelResourcePermission
-	implements ModelResourcePermission<OAuthClientAuthServer> {
+public class OAuthClientASLocalMetadataModelResourcePermission
+	implements ModelResourcePermission<OAuthClientASLocalMetadata> {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long oAuthClientAuthServerId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			long oAuthClientASLocalMetadataId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, oAuthClientAuthServerId, actionId)) {
+		if (!contains(
+				permissionChecker, oAuthClientASLocalMetadataId, actionId)) {
+
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, OAuthClientAuthServer.class.getName(),
-				oAuthClientAuthServerId, actionId);
+				permissionChecker, OAuthClientASLocalMetadata.class.getName(),
+				oAuthClientASLocalMetadataId, actionId);
 		}
 	}
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker,
-			OAuthClientAuthServer oAuthClientAuthServer, String actionId)
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, oAuthClientAuthServer, actionId)) {
+		if (!contains(
+				permissionChecker, oAuthClientASLocalMetadata, actionId)) {
+
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, OAuthClientAuthServer.class.getName(),
-				oAuthClientAuthServer.getOAuthClientAuthServerId(), actionId);
+				permissionChecker, OAuthClientASLocalMetadata.class.getName(),
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+				actionId);
 		}
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long oAuthClientAuthServerId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			long oAuthClientASLocalMetadataId, String actionId)
 		throws PortalException {
 
 		return contains(
 			permissionChecker,
-			_oAuthClientAuthServerLocalService.getOAuthClientAuthServer(
-				oAuthClientAuthServerId),
+			_oAuthClientASLocalMetadataLocalService.
+				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId),
 			actionId);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker,
-			OAuthClientAuthServer oAuthClientAuthServer, String actionId)
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata,
+			String actionId)
 		throws PortalException {
 
 		if (permissionChecker.hasOwnerPermission(
-				oAuthClientAuthServer.getCompanyId(),
-				OAuthClientAuthServer.class.getName(),
-				oAuthClientAuthServer.getOAuthClientAuthServerId(),
-				oAuthClientAuthServer.getUserId(), actionId)) {
+				oAuthClientASLocalMetadata.getCompanyId(),
+				OAuthClientASLocalMetadata.class.getName(),
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+				oAuthClientASLocalMetadata.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			null, OAuthClientAuthServer.class.getName(),
-			oAuthClientAuthServer.getOAuthClientAuthServerId(), actionId);
+			null, OAuthClientASLocalMetadata.class.getName(),
+			oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+			actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return OAuthClientAuthServer.class.getName();
+		return OAuthClientASLocalMetadata.class.getName();
 	}
 
 	@Override
@@ -106,8 +114,8 @@ public class OAuthClientAuthServerModelResourcePermission
 	}
 
 	@Reference
-	private OAuthClientAuthServerLocalService
-		_oAuthClientAuthServerLocalService;
+	private OAuthClientASLocalMetadataLocalService
+		_oAuthClientASLocalMetadataLocalService;
 
 	@Reference(target = "(resource.name=com.liferay.oauth.client.persistence)")
 	private PortletResourcePermission _portletResourcePermission;

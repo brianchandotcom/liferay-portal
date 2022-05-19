@@ -19,8 +19,8 @@ package com.liferay.oauth.client.persistence.constants;
  */
 public class OAuthClientPersistenceActionKeys {
 
-	public static final String ACTION_ADD_OAUTH_CLIENT_AUTH_SERVER =
-		"ADD_OAUTH_CLIENT_AUTH_SERVER";
+	public static final String ACTION_ADD_OAUTH_CLIENT_AS_LOCAL_METADATA =
+		"ADD_OAUTH_CLIENT_AS_LOCAL_METADATA";
 
 	public static final String ACTION_ADD_OAUTH_CLIENT_ENTRY =
 		"ADD_OAUTH_CLIENT_ENTRY";

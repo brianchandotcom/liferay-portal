@@ -11,21 +11,21 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_OAUTH_CLIENT_AUTH_SERVER</action-key>
+				<action-key>ADD_OAUTH_CLIENT_AS_LOCAL_METADATA</action-key>
 				<action-key>ADD_OAUTH_CLIENT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_OAUTH_CLIENT_AUTH_SERVER</action-key>
+				<action-key>ADD_OAUTH_CLIENT_AS_LOCAL_METADATA</action-key>
 				<action-key>ADD_OAUTH_CLIENT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.oauth.client.persistence.model.OAuthClientAuthServer</model-name>
+		<model-name>com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_oauth_client_admin_web_internal_portlet_OAuthClientAdminPortlet</portlet-name>
 		</portlet-ref>

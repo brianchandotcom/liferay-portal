@@ -5487,6 +5487,10 @@ log.sanitizer.enabled=false</echo>
 	<target name="gradle-plugins-test-jdk8">
 		<run-batch-test>
 			<test-action>
+				<antcall inheritAll="false" target="compile" />
+
+				<antcall inheritAll="false" target="install-portal-snapshots" />
+
 				<for keepgoing="true" param="gradle.plugin.dir">
 					<path>
 						<dirset

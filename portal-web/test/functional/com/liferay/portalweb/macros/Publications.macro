@@ -364,10 +364,6 @@ definition {
 	}
 
 	macro viewPublicationOrderInHistory {
-		PublicationsNavigator.openPublicationsHistory();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		var resultOrder = "0";
 
 		for (var publicationName : list "${publicationList}") {

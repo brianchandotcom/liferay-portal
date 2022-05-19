@@ -14,11 +14,17 @@
 
 package com.liferay.segments.internal.configuration.provider;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -26,6 +32,10 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 import java.io.IOException;
 
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -44,6 +54,37 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SegmentsConfigurationProviderImpl
 	implements SegmentsConfigurationProvider {
+
+	@Override
+	public String getConfigurationURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_portal.getUser(httpServletRequest));
+
+		if (permissionChecker.isCompanyAdmin()) {
+			String configurationPid =
+				"com.liferay.segments.configuration." +
+					"SegmentsCompanyConfiguration";
+
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest,
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/configuration_admin/edit_configuration"
+			).setRedirect(
+				_portal.getCurrentCompleteURL(httpServletRequest)
+			).setParameter(
+				"factoryPid", configurationPid
+			).setParameter(
+				"pid", configurationPid
+			).buildString();
+		}
+
+		return null;
+	}
 
 	@Override
 	public boolean isRoleSegmentationEnabled() throws ConfigurationException {
@@ -136,6 +177,12 @@ public class SegmentsConfigurationProviderImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
+	private Portal _portal;
 
 	private volatile SegmentsConfiguration _segmentsConfiguration;
 

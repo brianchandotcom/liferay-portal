@@ -2183,12 +2183,15 @@ definition {
 
 		CommerceChannels.openChannelsAdmin();
 
-		CommerceNavigator.searchEntry(entryName = "Test Channel");
+		CommerceNavigator.searchEntry(entryName = "Minium");
 
-		AssertTextEquals(
-			key_rowNumber = "1",
-			locator1 = "CommerceNavigation#ENTRY_NAME_N",
-			value1 = "Test Channel");
+		AssertElementPresent(
+			key_entryName = "Minium",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
+
+		AssertElementNotPresent(
+			key_entryName = "Test Channel",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 
 		CommerceNavigator.searchEntry(entryName = "1111");
 

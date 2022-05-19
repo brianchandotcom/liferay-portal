@@ -1611,4 +1611,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Approved Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckPendingProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckPendingProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "1",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Pending Product",
+			status = "Pending",
+			productCatalog = "Master",
+			productName = "Pending Product");
+	}
 }

@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"@liferay/address-web": {
+				"/": ">=1.0.0"
+			}
+		}
+	}
+}

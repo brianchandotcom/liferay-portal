@@ -1252,52 +1252,6 @@ public class AssetVocabularyServiceHttp {
 		}
 	}
 
-	public static com.liferay.asset.kernel.model.AssetVocabulary
-			updateVocabulary(
-				HttpPrincipal httpPrincipal, long vocabularyId, String name,
-				String title, java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String settings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AssetVocabularyServiceUtil.class, "updateVocabulary",
-				_updateVocabularyParameterTypes30);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, vocabularyId, name, title, titleMap, descriptionMap,
-				settings, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.asset.kernel.model.AssetVocabulary)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		AssetVocabularyServiceHttp.class);
 
@@ -1408,12 +1362,6 @@ public class AssetVocabularyServiceHttp {
 		new Class[] {
 			long.class, String.class, java.util.Map.class, java.util.Map.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateVocabularyParameterTypes30 =
-		new Class[] {
-			long.class, String.class, String.class, java.util.Map.class,
-			java.util.Map.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

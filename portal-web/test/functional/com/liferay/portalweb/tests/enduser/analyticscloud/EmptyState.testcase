@@ -23,9 +23,16 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ACUtils.tearDownDXP();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}

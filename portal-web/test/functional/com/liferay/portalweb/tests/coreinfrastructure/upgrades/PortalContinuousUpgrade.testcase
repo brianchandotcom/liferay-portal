@@ -12,7 +12,6 @@ definition {
 	test AutoUpgradeFromLatest7413Update {
 		property database.bare.enabled = "true";
 		property skip.start.app.server = "true";
-		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
 		property testcase.url = "http://www.example.com";
 
@@ -23,11 +22,13 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
-		Portlet.startServer();
+		Portlet.startServer(keepOsGiState = "true");
 
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
 
 		User.firstLoginUI(
 			password = "test",
@@ -55,6 +56,8 @@ definition {
 			value1 = "prepare-upgrade-original-bundle-test-environment");
 
 		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
 
 		User.firstLoginUI(
 			password = "test",

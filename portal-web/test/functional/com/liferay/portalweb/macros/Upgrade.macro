@@ -2492,6 +2492,71 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	macro submitFormEntry {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1000");
+
+		FormFields.editText(
+			fieldName = "SingleLineText",
+			fieldValue = "SingleLineText Test");
+
+		FormFields.editTextMultiline(
+			fieldName = "MultilineText",
+			fieldValue = "MultilineText Test");
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Select 1");
+
+		FormFields.selectRadioOption(
+			fieldName = "SingleSelection",
+			radioOption = "Option 1");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "Grid",
+			optionColumnNumber = "1",
+			optionRowNumber = "1");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/1000");
+
+		FormFields.selectCheckboxOption(
+			checkboxOption = "Option 2",
+			fieldName = "MultipleSelection");
+
+		FormFields.viewUploadField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Upload",
+			uploadFileName = "Document_2.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "1000");
+	}
+
 	macro submitNewWorkflow {
 		Navigator.openURL();
 
@@ -4485,6 +4550,111 @@ definition {
 		}
 	}
 
+	macro viewFormEntry {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			fieldValue = "Paragraph body text.");
+
+		FormFields.viewLabel(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		FormFields.viewLabel(
+			fieldLabel = "SingleLineText",
+			fieldName = "SingleLineText");
+
+		FormFields.viewLabel(
+			fieldLabel = "MultilineText",
+			fieldName = "MultilineText");
+
+		FormFields.viewLabel(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		FormFields.viewLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		FormFields.viewLabel(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		FormFields.viewLabel(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "123");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Multiple Selection",
+			fieldValue = "Option 1, Option 2, Option 3");
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			fieldValue = "Paragraph body text.");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "SingleLineText",
+			fieldName = "SingleLineText",
+			fieldValue = "SingleLineText");
+
+		FormsAdmin.viewMultilineTextEntry(
+			fieldLabel = "MultilineText",
+			fieldName = "MultilineText",
+			fieldValue = "MultilineText");
+
+		FormsAdmin.viewSelectEntry(
+			fieldLabel = "Select from List",
+			fieldName = "SelectFromList",
+			selectOption = "Select 1");
+
+		FormsAdmin.viewRadioEntry(
+			fieldLabel = "Single Selection",
+			fieldName = "SingleSelection",
+			fieldValue = "Option 1");
+
+		FormFields.assertGridOptionChecked(
+			columnValue = "Option 1",
+			rowValue = "Option 1");
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			fieldValue = "05/02/2022");
+
+		FormsAdmin.viewUploadFile(
+			fieldLabel = "Upload",
+			fieldName = "Upload",
+			uploadFileName = "Document_1.jpg");
+	}
+
 	macro viewInstanceSettings {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
@@ -5573,6 +5743,56 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro viewUpdateFieldNameToFieldReference {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form");
+
+		FormFields.viewFieldReference(
+			fieldName = "Paragraph",
+			key_fieldReferenceValue = "Paragraph");
+
+		FormFields.viewFieldReference(
+			fieldName = "Numeric",
+			key_fieldReferenceValue = "Numeric");
+
+		FormFields.viewFieldReference(
+			fieldName = "SingleLineText",
+			key_fieldReferenceValue = "SingleLineText");
+
+		FormFields.viewFieldReference(
+			fieldName = "MultilineText",
+			key_fieldReferenceValue = "MultilineText");
+
+		FormFields.viewFieldReference(
+			fieldName = "SelectFromList",
+			key_fieldReferenceValue = "SelectFromList");
+
+		FormFields.viewFieldReference(
+			fieldName = "SingleSelection",
+			key_fieldReferenceValue = "SingleSelection");
+
+		FormFields.viewFieldReference(
+			fieldName = "Grid",
+			key_fieldReferenceValue = "Grid");
+
+		FormFields.viewFieldReference(
+			fieldName = "Date",
+			key_fieldReferenceValue = "Date");
+
+		FormFields.viewFieldReference(
+			fieldName = "MultipleSelection",
+			key_fieldReferenceValue = "MultipleSelection");
+
+		FormFields.viewFieldReference(
+			fieldName = "Upload",
+			key_fieldReferenceValue = "Upload");
+	}
+
 	macro viewUpgrade {
 		Navigator.gotoPage(pageName = "Web Content");
 
@@ -5838,6 +6058,27 @@ definition {
 			webContentTitle = "WC WebContent2 Title");
 
 		Upgrade.viewMatchingCalendarIndexesInPartitionedDatabase();
+	}
+
+	macro viewUploadFormEntry {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewUploadFile(
+			fieldLabel = "Upload",
+			fieldName = "Upload",
+			uploadFileName = "Document_1.jpg");
 	}
 
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {

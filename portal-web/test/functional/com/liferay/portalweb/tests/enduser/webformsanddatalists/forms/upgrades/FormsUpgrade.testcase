@@ -77,6 +77,33 @@ definition {
 	}
 
 	@priority = "5"
+	test CanSubmitFormEntryAfterUpgrade7110 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.1.10";
+
+		Upgrade.submitFormEntry();
+	}
+
+	@priority = "5"
+	test UpdateFieldNameToFieldReference7110 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewUpdateFieldNameToFieldReference();
+	}
+
+	@priority = "5"
+	test UploadFieldKeepsAllFilesAfterUpgrade7110 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewUploadFormEntry();
+	}
+
+	@priority = "5"
 	test ViewAndDeleteFormEntryAfterUpgrade704 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mariadb,mysql,postgresql";
@@ -98,6 +125,15 @@ definition {
 		property portal.version = "7.0.10.6";
 
 		Upgrade.viewAndDeleteFormEntry();
+	}
+
+	@priority = "5"
+	test ViewFormEntryAfterUpgrade7110 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewFormEntry();
 	}
 
 }

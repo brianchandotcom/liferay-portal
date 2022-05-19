@@ -11840,6 +11840,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContentFolder"]
         get:
+            operationId: getSiteStructuredContentFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -11858,8 +11859,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
             tags: ["StructuredContentFolder"]
         put:
+            operationId: putSiteStructuredContentFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

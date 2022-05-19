@@ -131,6 +131,21 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public JournalFolder getFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		JournalFolder folder =
+			journalFolderLocalService.getJournalFolderByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		_journalFolderModelResourcePermission.check(
+			getPermissionChecker(), folder, ActionKeys.VIEW);
+
+		return folder;
+	}
+
+	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 

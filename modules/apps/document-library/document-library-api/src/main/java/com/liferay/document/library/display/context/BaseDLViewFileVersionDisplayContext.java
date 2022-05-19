@@ -106,11 +106,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Menu getMenu() throws PortalException {
-		return parentDisplayContext.getMenu();
-	}
-
-	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		return parentDisplayContext.getToolbarItems();
 	}

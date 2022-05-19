@@ -100,23 +100,6 @@ public class SharingDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Menu getMenu() throws PortalException {
-		Menu menu = super.getMenu();
-
-		if (!_isShowShareAction() || !_sharingConfiguration.isEnabled()) {
-			return menu;
-		}
-
-		_addSharingUIItem(
-			menu.getMenuItems(),
-			_sharingMenuItemFactory.createShareMenuItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest));
-
-		return menu;
-	}
-
-	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 

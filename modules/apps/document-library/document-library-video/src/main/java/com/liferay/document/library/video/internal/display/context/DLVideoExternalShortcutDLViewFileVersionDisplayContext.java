@@ -84,15 +84,6 @@ public class DLVideoExternalShortcutDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Menu getMenu() throws PortalException {
-		Menu menu = super.getMenu();
-
-		DLVideoExternalShortcutUIItemsUtil.processUIItems(menu.getMenuItems());
-
-		return menu;
-	}
-
-	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 

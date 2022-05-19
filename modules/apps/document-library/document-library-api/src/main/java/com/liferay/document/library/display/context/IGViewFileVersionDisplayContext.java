@@ -27,9 +27,4 @@ import java.util.List;
 public interface IGViewFileVersionDisplayContext extends IGDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems();
-
-	public Menu getMenu() throws PortalException;
-
-	public List<MenuItem> getMenuItems() throws PortalException;
-
 }

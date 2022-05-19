@@ -26,7 +26,4 @@ import java.util.List;
 public interface DLViewFileEntryHistoryDisplayContext extends DLDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems() throws PortalException;
-
-	public Menu getMenu() throws PortalException;
-
 }

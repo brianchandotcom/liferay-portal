@@ -113,34 +113,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Menu getMenu() throws PortalException {
-		Menu menu = super.getMenu();
-
-		if (!isActionsVisible()) {
-			return menu;
-		}
-
-		// See LPS-79987
-
-		if (Validator.isNull(
-				_googleDocsMetadataHelper.getFieldValue(
-					GoogleDocsConstants.DDM_FIELD_NAME_URL))) {
-
-			return menu;
-		}
-
-		List<MenuItem> menuItems = menu.getMenuItems();
-
-		menuItems.removeIf(
-			menuItem -> Objects.equals(
-				menuItem.getKey(), "#edit-with-image-editor"));
-
-		_googleDocsUIItemsProcessor.processMenuItems(menuItems);
-
-		return menu;
-	}
-
-	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 

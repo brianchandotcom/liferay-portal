@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -245,20 +243,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Menu getMenu() throws PortalException {
-		Menu menu = new Menu();
-
-		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
-		menu.setMenuItems(_getMenuItems());
-		menu.setMessage(LanguageUtil.get(_resourceBundle, "actions"));
-		menu.setScroll(false);
-		menu.setShowWhenSingleIcon(true);
-
-		return menu;
-	}
-
-	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = new ArrayList<>();
 
@@ -438,50 +422,6 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return null;
-	}
-
-	private List<MenuItem> _getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		if (isActionsVisible()) {
-			_uiItemsBuilder.addDownloadMenuItem(menuItems);
-
-			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
-
-			_uiItemsBuilder.addEditMenuItem(menuItems);
-
-			_uiItemsBuilder.addEditImageItem(menuItems);
-
-			_uiItemsBuilder.addCheckoutMenuItem(menuItems);
-
-			_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
-
-			_uiItemsBuilder.addCheckinMenuItem(menuItems);
-
-			_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
-
-			_uiItemsBuilder.addMoveMenuItem(menuItems);
-
-			MenuItem menuItem = null;
-
-			if (!menuItems.isEmpty()) {
-				menuItem = menuItems.get(menuItems.size() - 1);
-			}
-
-			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
-
-			_uiItemsBuilder.addDeleteMenuItem(menuItems);
-
-			_uiItemsBuilder.addPublishMenuItem(menuItems, true);
-
-			if ((menuItem != null) &&
-				(menuItem != menuItems.get(menuItems.size() - 1))) {
-
-				menuItem.setSeparator(true);
-			}
-		}
-
-		return menuItems;
 	}
 
 	private void _handleError(

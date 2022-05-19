@@ -60,15 +60,6 @@ public class GoogleDocsUIItemsProcessor {
 		_insertEditInGoogleDropdownItem(dropdownItems);
 	}
 
-	public void processMenuItems(List<MenuItem> menuItems) {
-		_removeUnsupportedUIItems(menuItems);
-
-		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
-			new URLMenuItem(), menuItems);
-
-		urlMenuItem.setMethod("GET");
-	}
-
 	public void processToolbarItems(List<ToolbarItem> toolbarItems) {
 		_removeUnsupportedUIItems(toolbarItems);
 

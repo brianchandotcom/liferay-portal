@@ -51,11 +51,6 @@ public class BaseDLViewFileEntryHistoryDisplayContext
 		return parentDisplayContext.getActionDropdownItems();
 	}
 
-	@Override
-	public Menu getMenu() throws PortalException {
-		return parentDisplayContext.getMenu();
-	}
-
 	protected FileVersion fileVersion;
 
 }

@@ -139,46 +139,6 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return dropdownItems;
 	}
 
-	@Override
-	public Menu getMenu() throws PortalException {
-		if (!isActionsVisible() ||
-			!DLOpenerGoogleDriveMimeTypes.isGoogleMimeTypeSupported(
-				fileVersion.getMimeType()) ||
-			!_dlOpenerGoogleDriveManager.isConfigured(
-				fileVersion.getCompanyId()) ||
-			!_fileEntryModelResourcePermission.contains(
-				_permissionChecker, fileVersion.getFileEntry(),
-				ActionKeys.UPDATE)) {
-
-			return super.getMenu();
-		}
-
-		Menu menu = super.getMenu();
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		if (_isCheckedOutInGoogleDrive()) {
-			if (fileEntry.hasLock()) {
-				List<MenuItem> menuItems = menu.getMenuItems();
-
-				_updateCancelCheckoutAndCheckinMenuItems(menuItems);
-
-				_addEditInGoogleDocsUIItem(
-					menuItems, _createEditInGoogleDocsMenuItem(Constants.EDIT));
-			}
-
-			return menu;
-		}
-
-		if (!_isCheckedOutByAnotherUser(fileEntry)) {
-			_addEditInGoogleDocsUIItem(
-				menu.getMenuItems(),
-				_createEditInGoogleDocsMenuItem(Constants.CHECKOUT));
-		}
-
-		return menu;
-	}
-
 	private List<DropdownItem> _addEditInGoogleDocsDropdownItem(
 		List<DropdownItem> dropdownItems,
 		DropdownItem editInGoogleDocsDropdownItem) {

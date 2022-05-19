@@ -49,24 +49,6 @@ public class GoogleDocsIGViewFileVersionDisplayContext
 			httpServletRequest, googleDocsMetadataHelper);
 	}
 
-	@Override
-	public Menu getMenu() throws PortalException {
-		Menu menu = super.getMenu();
-
-		_googleDocsUIItemsProcessor.processMenuItems(menu.getMenuItems());
-
-		return menu;
-	}
-
-	@Override
-	public List<MenuItem> getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = super.getMenuItems();
-
-		_googleDocsUIItemsProcessor.processMenuItems(menuItems);
-
-		return menuItems;
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"D60D21C4-9626-4EDF-A658-336198DB4A34");
 

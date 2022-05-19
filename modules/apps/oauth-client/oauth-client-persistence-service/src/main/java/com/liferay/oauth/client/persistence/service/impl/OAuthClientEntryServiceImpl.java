@@ -44,7 +44,7 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerIssuer, String infoJSON,
+			long userId, String authServerWellKnownURI, String infoJSON,
 			String parametersJSON)
 		throws PortalException {
 
@@ -54,7 +54,7 @@ public class OAuthClientEntryServiceImpl
 			OAuthClientPersistenceActionKeys.ACTION_ADD_OAUTH_CLIENT_ENTRY);
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
-			userId, authServerIssuer, infoJSON, parametersJSON);
+			userId, authServerWellKnownURI, infoJSON, parametersJSON);
 	}
 
 	@Override
@@ -74,12 +74,12 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryLocalService.getOAuthClientEntry(
-				companyId, authServerIssuer, clientId);
+				companyId, authServerWellKnownURI, clientId);
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntry, ActionKeys.DELETE);
@@ -89,21 +89,15 @@ public class OAuthClientEntryServiceImpl
 	}
 
 	@Override
-	public List<OAuthClientEntry> getAuthServerIssuerOAuthClientEntries(
-		long companyId, String authServerIssuer) {
-
-		return oAuthClientEntryPersistence.filterFindByC_A(
-			companyId, authServerIssuer);
-	}
-
-	@Override
-	public List<OAuthClientEntry> getAuthServerTypeOAuthClientEntries(
-			long companyId, String authServerType)
+	public List<OAuthClientEntry>
+			getAuthServerWellKnownURISuffixOAuthClientEntries(
+				long companyId, String authServerType)
 		throws PortalException {
 
 		List<OAuthClientEntry> oAuthClientEntries =
-			oAuthClientEntryLocalService.getAuthServerTypeOAuthClientEntries(
-				companyId, authServerType);
+			oAuthClientEntryLocalService.
+				getAuthServerWellKnownURISuffixOAuthClientEntries(
+					companyId, authServerType);
 
 		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
 			_oAuthClientEntryModelResourcePermission.check(
@@ -128,12 +122,12 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerIssuer, String clientId)
+			long companyId, String authServerWellKnownURI, String clientId)
 		throws PortalException {
 
 		OAuthClientEntry oAuthClientEntry =
 			oAuthClientEntryLocalService.getOAuthClientEntry(
-				companyId, authServerIssuer, clientId);
+				companyId, authServerWellKnownURI, clientId);
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntry, ActionKeys.VIEW);
@@ -156,15 +150,16 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authServerIssuer, String infoJSON,
-			String parametersJSON)
+			long oAuthClientEntryId, String authServerWellKnownURI,
+			String infoJSON, String parametersJSON)
 		throws PortalException {
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntryId, ActionKeys.UPDATE);
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
-			oAuthClientEntryId, authServerIssuer, infoJSON, parametersJSON);
+			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
+			parametersJSON);
 	}
 
 	@Reference(

@@ -545,32 +545,6 @@ public class AssetVocabularyServiceTest {
 			StringUtil.toLowerCase(title), vocabulary.getName());
 	}
 
-	@Test(expected = DuplicateVocabularyException.class)
-	public void testUpdateDuplicateVocabulary() throws Exception {
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId(), "test1");
-
-		AssetTestUtil.addVocabulary(_group.getGroupId(), "test2");
-
-		_assetVocabularyLocalService.updateVocabulary(
-			vocabulary.getVocabularyId(), "test2", vocabulary.getTitle(),
-			vocabulary.getTitleMap(), vocabulary.getDescriptionMap(),
-			vocabulary.getSettings(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	@Test(expected = VocabularyNameException.class)
-	public void testUpdateEmptyNameVocabulary() throws Exception {
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId(), "test");
-
-		_assetVocabularyLocalService.updateVocabulary(
-			vocabulary.getVocabularyId(), StringPool.BLANK,
-			vocabulary.getTitle(), vocabulary.getTitleMap(),
-			vocabulary.getDescriptionMap(), vocabulary.getSettings(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

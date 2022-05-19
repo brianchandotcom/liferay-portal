@@ -25,6 +25,8 @@ ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getOb
 
 List<ObjectField> objectFields = (List<ObjectField>)request.getAttribute(ObjectWebKeys.OBJECT_FIELDS);
 
+String storageType = objectDefinition.getStorageType();
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -192,32 +194,23 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				</aui:field-wrapper>
 			</clay:sheet-section>
 
-			<clay:sheet-section>
-				<h3 class="sheet-subtitle">
-					<%= LanguageUtil.get(request, "integration") %>
-				</h3>
+			<c:if test='<%= !Objects.equals(storageType.toLowerCase(), "default") %>'>
+				<clay:sheet-section>
+					<h3 class="sheet-subtitle">
+						<%= LanguageUtil.get(request, "external-data-source") %>
+					</h3>
 
-				<clay:row>
-					<clay:col
-						md="11"
-					>
-						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="storageType" showEmptyOption="<%= false %>">
-							<aui:option label='<%= LanguageUtil.get(request, "salesforce") %>' selected="<%= true %>" value="" />
-							<%-- pegar lista de storageTypes --%>
-							<%-- <%
-							for (ObjectField objectField : objectFields) {
-							%>
-
-								<aui:option label="<%= objectField.getLabel(locale) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
-
-							<%
-							}
-							%> --%>
-
-						</aui:select>
-					</clay:col>
-				</clay:row>
-			</clay:sheet-section>
+					<clay:row>
+						<clay:col
+							md="11"
+						>
+							<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
+								<aui:option label="<%= LanguageUtil.get(request, storageType) %>" selected="<%= true %>" value="" />
+							</aui:select>
+						</clay:col>
+					</clay:row>
+				</clay:sheet-section>
+			</c:if>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

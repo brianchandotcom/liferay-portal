@@ -105,13 +105,29 @@ definition {
 	}
 
 	macro assertPinToolTipInfoInProduct {
-		AssertElementPresent(
-			key_sku = "${sku}",
-			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
+		if ("${selectedType}" == "Linked to a SKU") {
+			AssertElementPresent(
+				key_sku = "${sku}",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
 
-		AssertElementPresent(
-			key_productName = "${productName}",
-			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+			AssertElementPresent(
+				key_productName = "${productName}",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+
+			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_QUANTITY");
+		}
+		else if ("${selectedType}" == "Linked to a Diagram") {
+			AssertElementPresent(
+				key_sku = "${productName}",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
+		}
+		else if ("${selectedType}" == "Not Linked to a Catalog") {
+			AssertElementPresent(
+				key_productName = "${productName}",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_UNLINKED_PRODUCT_NAME");
+
+			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_QUANTITY");
+		}
 	}
 
 	macro assertPinToolTipNotOpen {

@@ -2,7 +2,7 @@
 definition {
 
 	property analytics.cloud.release = "true";
-	property analytics.cloud.upstream = "false";
+	property analytics.cloud.upstream = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";

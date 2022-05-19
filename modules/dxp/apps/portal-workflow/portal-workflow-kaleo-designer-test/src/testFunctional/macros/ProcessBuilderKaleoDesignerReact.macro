@@ -209,8 +209,6 @@ definition {
 			key_propertyValue = "${propertyValue}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
 			value1 = "${propertyValue}");
-
-			
 	}
 
 	macro hideSidebarFields {
@@ -1064,8 +1062,6 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
 				value1 = "${priorityValue}");
 		}
-
-
 	}
 
 	macro viewTranslationDropdown {

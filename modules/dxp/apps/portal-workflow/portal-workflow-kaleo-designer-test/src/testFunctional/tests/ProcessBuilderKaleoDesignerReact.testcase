@@ -1285,8 +1285,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
 			durationValue = "2",
 			scaleTypeOption = "Minute");
-
-			
 	}
 
 	@description = "Verify that the user can edit the Name of the Timer"

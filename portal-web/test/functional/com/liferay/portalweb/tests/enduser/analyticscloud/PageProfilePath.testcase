@@ -137,4 +137,58 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-8988 | Automation ID: LRAC-11059 | Test Summary: Create the page name with special characters makes the correct name appear in the path part of AC pages"
+	@priority = "3"
+	test CreatePageNameWithSpecialCharactersMakeCorrectNameAppearInPath {
+		task ("Create a site and a blog and add to a page") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Snúið Vinsælar þú");
+		}
+
+		task ("Connect AC to DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the page, then close the sessions") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Snúið Vinsælar þú",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Go to Pages tab, change time filter to last 24 hours and select the page") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACNavigation.openItem(itemName = "Snúið Vinsælar þú - Site Name - ${dataSourceName}");
+		}
+
+		task ("Go to the Path tab") {
+			ACNavigation.switchTab(tabName = "Path");
+		}
+
+		task ("Check if the page name is displayed correctly") {
+			AssertElementPresent(
+				key_pageName = "Snúið Vinsælar þú - Site Name - ${dataSourceName}",
+				locator1 = "ACSites#SITE_PATH");
+		}
+	}
+
 }

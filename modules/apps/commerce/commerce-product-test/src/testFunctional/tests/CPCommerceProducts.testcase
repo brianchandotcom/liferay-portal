@@ -1113,11 +1113,25 @@ definition {
 			productName = "Simple T-Shirt",
 			productType = "Simple");
 
+		AssertElementNotPresent(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "Simple T-Shirt 01");
 
 		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Convert To Draft",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		Click(locator1 = "Button#OK");
+
+		AssertElementPresent(
 			key_text = "Save as Draft",
 			locator1 = "Button#ANY");
 

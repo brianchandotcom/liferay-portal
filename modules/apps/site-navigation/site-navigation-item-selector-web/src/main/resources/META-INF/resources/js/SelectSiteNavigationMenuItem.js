@@ -52,14 +52,26 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 			return;
 		}
 
-		event.preventDefault();
-
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data: {
 				selectSiteNavigationMenuItemId: item.id,
 				selectSiteNavigationMenuItemName: item.name,
 			},
 		});
+	};
+
+	const onClick = (event, item) => {
+		event.preventDefault();
+
+		handleTreeViewSelectionChange(event, item);
+	};
+
+	const onKeyUp = (event, item) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+
+			handleTreeViewSelectionChange(event, item);
+		}
 	};
 
 	return (
@@ -93,11 +105,13 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 					{(item) => (
 						<ClayTreeView.Item>
 							<ClayTreeView.ItemStack
-								onClick={(event) => {
-									event.preventDefault();
-
-									handleTreeViewSelectionChange(event, item);
+								onClick={(event) => onClick(event, item)}
+								onKeyDownCapture={(event) => {
+									if (event.key === ' ' && item.disabled) {
+										event.stopPropagation();
+									}
 								}}
+								onKeyUp={(event) => onKeyUp(event, item)}
 							>
 								<ClayIcon symbol={item.icon} />
 
@@ -107,14 +121,12 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 							<ClayTreeView.Group items={item.children}>
 								{(item) => (
 									<ClayTreeView.Item
-										onClick={(event) => {
-											event.preventDefault();
-
-											handleTreeViewSelectionChange(
-												event,
-												item
-											);
-										}}
+										onClick={(event) =>
+											onClick(event, item)
+										}
+										onKeyUp={(event) =>
+											onKeyUp(event, item)
+										}
 									>
 										<ClayIcon symbol={item.icon} />
 

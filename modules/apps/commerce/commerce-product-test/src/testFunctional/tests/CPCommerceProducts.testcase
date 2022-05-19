@@ -1758,4 +1758,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Scheduled Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckInRecycleBinProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckInRecycleBinProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "8",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "In Recycle Bin Product",
+			status = "In Recycle Bin",
+			productCatalog = "Master",
+			productName = "In Recycle Bin Product");
+	}
 }

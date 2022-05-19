@@ -232,6 +232,20 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
+	macro searchColumnsOnModalDefaultSort {
+		Click(locator1 = "ObjectCustomViews#SELECT_COLUMN_ON_DEFAULT_SORT");
+
+		Type(
+			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
+			value1 = "${columnName}");
+
+		Click(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
+
+		AssertElementPresent(
+			key_columnName = "${columnName}",
+			locator1 = "ObjectCustomViews#VIEW_FIELDS_ON_DROPDOWN_ITEM");
+	}
+
 	macro searchOnAddColumnModal {
 		Click(locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR");
 

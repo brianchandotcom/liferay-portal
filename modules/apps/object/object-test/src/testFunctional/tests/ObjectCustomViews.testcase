@@ -837,12 +837,32 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to a New Default Sort modal"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchColumnOnNewDefaultSortModal {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152063",
+			objectName = "CustomObject152063",
+			pluralLabelName = "Custom Objects 152063");
 
-		// TODO LPS-152063 CanSearchColumnOnNewDefaultSortModal pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152063");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addNewDefaultSort();
+
+		ObjectCustomViews.searchColumnsOnModalDefaultSort(columnName = "Author");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to Default Sort"

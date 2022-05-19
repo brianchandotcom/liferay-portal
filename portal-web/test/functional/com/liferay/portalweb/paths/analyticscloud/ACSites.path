@@ -141,6 +141,11 @@
 	<td>//*[contains(@class,'table-hover')]//span[text()='${key_nameList}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SITE_PATH</td>
+	<td>//*[name()='svg']//*[@class='analytics-sankey-title text-truncated' and @y='0']//*[text()='${key_pageName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

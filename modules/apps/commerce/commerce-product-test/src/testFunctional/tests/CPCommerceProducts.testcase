@@ -1695,4 +1695,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Denied Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckInactiveProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "5",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Inactive Product",
+			status = "Inactive",
+			productCatalog = "Master",
+			productName = "Inactive Product");
+	}
 }

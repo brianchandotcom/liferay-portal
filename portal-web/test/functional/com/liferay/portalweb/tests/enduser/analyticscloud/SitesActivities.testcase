@@ -117,9 +117,8 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test AssertTotalAmountOfViewsInAllCards {
-
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		
+
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -164,7 +163,7 @@ definition {
 			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 		}
 
-		task ("Get views value"){
+		task ("Get views value") {
 			var current = ACSettings.getCurrentNumber(metricName = "Views");
 
 			ACTimeFilter.clickTimeFilterButton();
@@ -188,7 +187,6 @@ definition {
 				deviceName = "Desktop",
 				percentageValue = "100%");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8275 | Test Summary: Site Activity Card: Can filter graph by day"

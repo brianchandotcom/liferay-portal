@@ -184,7 +184,7 @@ const DropDown = memo(
 				accountKey
 			);
 
-			return `${Liferay.ThemeDisplay.getCanonicalURL()}/${hashLocation}`;
+			return `${Liferay.ThemeDisplay.getLayoutURL()}/${hashLocation}`;
 		}, []);
 
 		const getDropDownItems = useCallback(

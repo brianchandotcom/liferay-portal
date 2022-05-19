@@ -249,6 +249,8 @@ definition {
 
 		Button.click(button = "Submit");
 
+		Refresh();
+
 		Type(
 			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
 			value1 = "${discountAmount}");

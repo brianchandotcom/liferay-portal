@@ -1674,4 +1674,25 @@ definition {
 			productCatalog = "Master",
 			productName = "Expired Product");
 	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckDeniedProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			productStatusCode = "4",
+			catalogName = "Master",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");	
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Denied Product",
+			status = "Denied",
+			productCatalog = "Master",
+			productName = "Denied Product");
+	}
 }

@@ -23,12 +23,15 @@ import com.liferay.object.web.internal.object.definitions.constants.ObjectDefini
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +73,13 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "actions");
+	}
+
+	@Override
+	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
+		return Objects.equals(
+			StringUtil.toLowerCase(objectDefinition.getStorageType()),
+			"default");
 	}
 
 	@Override

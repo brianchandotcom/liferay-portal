@@ -27,10 +27,12 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.template.BaseDDMTemplateHandler;
 import com.liferay.dynamic.data.mapping.template.DDMTemplateVariableCodeHandler;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -119,6 +122,10 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		}
 
 		String[] restrictedVariables = getRestrictedVariables(language);
+
+		templateVariableGroups.put(
+			"journal-reserved",
+			_getJournalReservedTemplateVariableGroup(restrictedVariables));
 
 		TemplateVariableGroup journalUtilTemplateVariableGroup =
 			new TemplateVariableGroup("journal-util", restrictedVariables);
@@ -226,6 +233,78 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
 		return _templateVariableCodeHandler;
+	}
+
+	private TemplateVariableGroup _getJournalReservedTemplateVariableGroup(
+		String[] restrictedVariables) {
+
+		TemplateVariableGroup journalReservedTemplateVariableGroup =
+			new TemplateVariableGroup("journal", restrictedVariables);
+
+		journalReservedTemplateVariableGroup.addVariable(
+			"author-email-address", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
+			"data", StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"author-id", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"author-job-title", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"author-name", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"comments", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"create-date", Date.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"description", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"display-date", Date.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"id", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_ID, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"modified-date", Date.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"small-image-url", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"tags", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"title", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_TITLE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"url-title", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE, "data",
+			StringPool.BLANK);
+		journalReservedTemplateVariableGroup.addVariable(
+			"version", String.class, "reserved-article",
+			JournalStructureConstants.RESERVED_ARTICLE_VERSION, "data",
+			StringPool.BLANK);
+
+		journalReservedTemplateVariableGroup.setAutocompleteEnabled(false);
+
+		return journalReservedTemplateVariableGroup;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

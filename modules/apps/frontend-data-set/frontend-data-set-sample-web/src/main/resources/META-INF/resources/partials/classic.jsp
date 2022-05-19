@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Marko Cikos
- */
-public class FDSSampleFDSNames {
-
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
-
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
-
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
-
-}
+<frontend-data-set:classic-display
+	dataProviderKey="<%= FDSSampleFDSNames.CLASSIC %>"
+	id="<%= FDSSampleFDSNames.CLASSIC %>"
+	style="fluid"
+/>

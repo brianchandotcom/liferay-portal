@@ -12,20 +12,33 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+package com.liferay.frontend.data.set.sample.web.internal.model;
 
 /**
  * @author Marko Cikos
  */
-public class FDSSampleFDSNames {
+public class UserEntry {
 
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
+	public UserEntry(String emailAddress, String firstName, String lastName) {
+		_emailAddress = emailAddress;
+		_firstName = firstName;
+		_lastName = lastName;
+	}
 
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
+	public String getEmailAddress() {
+		return _emailAddress;
+	}
 
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
+	public String getFirstName() {
+		return _firstName;
+	}
+
+	public String getLastName() {
+		return _lastName;
+	}
+
+	private final String _emailAddress;
+	private final String _firstName;
+	private final String _lastName;
 
 }

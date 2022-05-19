@@ -28,7 +28,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 <clay:container-fluid>
 	<liferay-ui:tabs
-		names="customized,minimum"
+		names="customized,minimum,classic"
 		url="<%= portletURL.toString() %>"
 	>
 		<liferay-ui:section>
@@ -40,6 +40,12 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		<liferay-ui:section>
 			<c:if test='<%= tabs1.equals("minimum") %>'>
 				<liferay-util:include page="/partials/minimum.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+			</c:if>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<c:if test='<%= tabs1.equals("classic") %>'>
+				<liferay-util:include page="/partials/classic.jsp" servletContext="<%= pageContext.getServletContext() %>" />
 			</c:if>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

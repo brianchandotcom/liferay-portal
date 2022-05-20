@@ -63,7 +63,7 @@ public class Attachment implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Attachment.class, json);
 	}
 
-	@Schema(description = "Base64 enoded file")
+	@Schema(description = "Base64 encoded file")
 	public String getAttachment() {
 		return attachment;
 	}
@@ -87,7 +87,7 @@ public class Attachment implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "Base64 enoded file")
+	@GraphQLField(description = "Base64 encoded file")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 

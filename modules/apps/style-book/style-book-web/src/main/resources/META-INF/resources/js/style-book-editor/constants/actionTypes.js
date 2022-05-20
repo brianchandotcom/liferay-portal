@@ -12,6 +12,8 @@
  * details.
  */
 
+export const ADD_REDO_ACTION = 'ADD_REDO_ACTION';
+export const ADD_UNDO_ACTION = 'ADD_UNDO_ACTION';
 export const LOADING = 'LOADING';
 export const SET_DRAFT_STATUS = 'SET_DRAFT_STATUS';
 export const SET_PREVIEW_LAYOUT = 'SET_PREVIEW_LAYOUT';

@@ -13,6 +13,8 @@
  */
 
 import {
+	ADD_REDO_ACTION,
+	ADD_UNDO_ACTION,
 	LOADING,
 	SET_DRAFT_STATUS,
 	SET_PREVIEW_LAYOUT,
@@ -50,8 +52,7 @@ export default function reducer(state, action) {
 		}
 
 		case SET_TOKEN_VALUE: {
-			const {isUndo, name, value} = action;
-
+			const {isUndoAction, name, value} = action;
 			const nextUndoHistory = state.undoHistory || [];
 
 			const previousValue = {
@@ -66,9 +67,54 @@ export default function reducer(state, action) {
 					...state.frontendTokensValues,
 					[name]: value,
 				},
-				undoHistory: isUndo
-					? nextUndoHistory.slice(0, nextUndoHistory.length - 1)
-					: [...nextUndoHistory, {name, value: previousValue}],
+				...(!isUndoAction && {
+					undoHistory: [
+						...nextUndoHistory,
+						{name, value: previousValue},
+					],
+				}),
+			};
+		}
+
+		case ADD_UNDO_ACTION: {
+			const {name, value} = action;
+			const {frontendTokensValues, redoHistory, undoHistory} = state;
+
+			return {
+				...state,
+				redoHistory: [
+					...redoHistory,
+					{
+						name,
+						value: {
+							...value,
+							name: frontendTokensValues[name]?.name,
+							value: frontendTokensValues[name].value,
+						},
+					},
+				],
+				undoHistory: undoHistory.slice(0, undoHistory.length - 1),
+			};
+		}
+
+		case ADD_REDO_ACTION: {
+			const {name, value} = action;
+			const {frontendTokensValues, redoHistory, undoHistory} = state;
+
+			return {
+				...state,
+				redoHistory: redoHistory.slice(0, redoHistory.length - 1),
+				undoHistory: [
+					...undoHistory,
+					{
+						name,
+						value: {
+							...value,
+							name: frontendTokensValues[name]?.name,
+							value: frontendTokensValues[name].value,
+						},
+					},
+				],
 			};
 		}
 

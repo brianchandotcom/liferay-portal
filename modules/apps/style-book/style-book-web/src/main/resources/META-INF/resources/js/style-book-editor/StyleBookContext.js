@@ -16,6 +16,8 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useContext, useReducer} from 'react';
 
 import {
+	ADD_REDO_ACTION,
+	ADD_UNDO_ACTION,
 	LOADING,
 	SET_DRAFT_STATUS,
 	SET_PREVIEW_LAYOUT,
@@ -33,6 +35,7 @@ export const StyleBookStoreContext = React.createContext({
 	loading: true,
 	previewLayout: {},
 	previewLayoutType: null,
+	redoHistory: [],
 	undoHistory: [],
 });
 
@@ -46,6 +49,30 @@ export function StyleBookContextProvider({children, initialState}) {
 			</StyleBookStoreContext.Provider>
 		</StyleBookDispatchContext.Provider>
 	);
+}
+
+export function useAddUndoAction() {
+	const dispatch = useDispatch();
+
+	return (name, value) => {
+		dispatch({
+			name,
+			type: ADD_UNDO_ACTION,
+			value,
+		});
+	};
+}
+
+export function useAddRedoAction() {
+	const dispatch = useDispatch();
+
+	return (name, value) => {
+		dispatch({
+			name,
+			type: ADD_REDO_ACTION,
+			value,
+		});
+	};
 }
 
 export function useDispatch() {
@@ -72,6 +99,10 @@ export function usePreviewLayoutType() {
 	return useContext(StyleBookStoreContext).previewLayoutType;
 }
 
+export function useRedoHistory() {
+	return useContext(StyleBookStoreContext).redoHistory;
+}
+
 export function useUndoHistory() {
 	return useContext(StyleBookStoreContext).undoHistory;
 }
@@ -80,14 +111,14 @@ export function useSaveTokenValue() {
 	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
-	return (name, value, isUndo) => {
+	return (name, value, isUndoAction) => {
 		dispatch({
 			type: SET_DRAFT_STATUS,
 			value: DRAFT_STATUS.saving,
 		});
 
 		dispatch({
-			isUndo,
+			isUndoAction,
 			name,
 			type: SET_TOKEN_VALUE,
 			value,
@@ -141,12 +172,27 @@ export function useSetPreviewLayoutType() {
 }
 
 export function useOnUndo() {
+	const addUndoAction = useAddUndoAction();
 	const saveTokenValue = useSaveTokenValue();
 	const undoHistory = useUndoHistory();
 
 	return () => {
 		const [{name, value}] = undoHistory.slice(-1);
 
+		addUndoAction(name, value);
 		saveTokenValue(name, value, true);
+	};
+}
+
+export function useOnRedo() {
+	const addRedoAction = useAddRedoAction();
+	const saveTokenValue = useSaveTokenValue();
+	const redoHistory = useRedoHistory();
+
+	return () => {
+		const [{name, value}] = redoHistory.slice(-1);
+
+		addRedoAction(name, value);
+		saveTokenValue(name, value);
 	};
 }

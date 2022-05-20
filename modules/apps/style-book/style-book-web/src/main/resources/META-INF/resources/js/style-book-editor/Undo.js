@@ -16,9 +16,10 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useUndoHistory} from './StyleBookContext';
+import {useRedoHistory, useUndoHistory} from './StyleBookContext';
 
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
+	const redoHistory = useRedoHistory();
 	const undoHistory = useUndoHistory();
 
 	return (
@@ -38,6 +39,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('redo')}
 					className="btn-monospaced"
+					disabled={!redoHistory || !redoHistory.length}
 					displayType="secondary"
 					onClick={onRedo}
 					small

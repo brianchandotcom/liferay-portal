@@ -14,12 +14,19 @@
 
 package com.liferay.layout.content.page.editor.web.internal;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -29,10 +36,32 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
 /**
  * @author Lourdes Fernández Besada
  */
 public class LayoutContentPageEditorTestUtil {
+
+	public static JSONObject addPortletToLayout(
+			Layout layout, String portletId,
+			MVCActionCommand addPortletMVCActionCommand)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			getMockLiferayPortletActionRequest(
+				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
+				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
+
+		mockLiferayPortletActionRequest.addParameter("portletId", portletId);
+
+		return ReflectionTestUtil.invoke(
+			addPortletMVCActionCommand, "_processAddPortlet",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+	}
 
 	public static MockLiferayPortletActionRequest
 			getMockLiferayPortletActionRequest(
@@ -84,6 +113,32 @@ public class LayoutContentPageEditorTestUtil {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	public static void publishLayout(
+			Layout draftLayout, Layout layout,
+			MVCActionCommand publishLayoutMVCActionCommand)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(layout.getGroupId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			ReflectionTestUtil.invoke(
+				publishLayoutMVCActionCommand, "_publishLayout",
+				new Class<?>[] {
+					Layout.class, Layout.class, ServiceContext.class, long.class
+				},
+				draftLayout, layout, serviceContext,
+				TestPropsValues.getUserId());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 }

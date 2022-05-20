@@ -35,15 +35,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -52,9 +46,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,13 +72,6 @@ public class PublishLayoutMVCActionCommandTest {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
-		_serviceContext = new ServiceContext();
-
-		_serviceContext.setScopeGroupId(_group.getGroupId());
-		_serviceContext.setUserId(TestPropsValues.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@Test
@@ -113,12 +97,8 @@ public class PublishLayoutMVCActionCommandTest {
 
 		_assertNullPortletPreferences(layout.getPlid(), encodePortletId);
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_publishLayout",
-			new Class<?>[] {
-				Layout.class, Layout.class, ServiceContext.class, long.class
-			},
-			draftLayout, layout, _serviceContext, TestPropsValues.getUserId());
+		LayoutContentPageEditorTestUtil.publishLayout(
+			draftLayout, layout, _mvcActionCommand);
 
 		_assertNotNullPortletPreferences(
 			draftLayout.getPlid(), encodePortletId);
@@ -141,12 +121,8 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_publishLayout",
-			new Class<?>[] {
-				Layout.class, Layout.class, ServiceContext.class, long.class
-			},
-			draftLayout, layout, _serviceContext, TestPropsValues.getUserId());
+		LayoutContentPageEditorTestUtil.publishLayout(
+			draftLayout, layout, _mvcActionCommand);
 
 		_assertNullPortletPreferences(draftLayout.getPlid(), encodePortletId);
 
@@ -188,12 +164,8 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_publishLayout",
-			new Class<?>[] {
-				Layout.class, Layout.class, ServiceContext.class, long.class
-			},
-			draftLayout, layout, _serviceContext, TestPropsValues.getUserId());
+		LayoutContentPageEditorTestUtil.publishLayout(
+			draftLayout, layout, _mvcActionCommand);
 
 		layoutStructure = _getLayoutStructure(draftLayout);
 
@@ -222,20 +194,12 @@ public class PublishLayoutMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), layout.getPlid());
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			LayoutContentPageEditorTestUtil.getMockLiferayPortletActionRequest(
-				_company, _group, layout);
-
-		mockLiferayPortletActionRequest.addParameter(
-			"portletId",
-			LayoutContentPageEditorWebPortletKeys.
-				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
-
-		JSONObject processAddPortletJSONObject = ReflectionTestUtil.invoke(
-			_addPortletMVCActionCommand, "_processAddPortlet",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		JSONObject processAddPortletJSONObject =
+			LayoutContentPageEditorTestUtil.addPortletToLayout(
+				layout,
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+				_addPortletMVCActionCommand);
 
 		Assert.assertNotNull(processAddPortletJSONObject);
 
@@ -323,7 +287,5 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	private ServiceContext _serviceContext;
 
 }

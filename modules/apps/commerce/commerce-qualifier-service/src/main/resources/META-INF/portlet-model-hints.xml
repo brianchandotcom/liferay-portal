@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.qualifier.model.CommerceQualifierEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="commerceQualifierEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sourceClassNameId" type="long" />
+		<field name="sourceClassPK" type="long" />
+		<field name="targetClassNameId" type="long" />
+		<field name="targetClassPK" type="long" />
+	</model>
+</model-hints>

@@ -1,0 +1,215 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.qualifier.model.impl;
+
+import com.liferay.commerce.qualifier.model.CommerceQualifierEntry;
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+import java.util.Date;
+
+/**
+ * The cache model class for representing CommerceQualifierEntry in entity cache.
+ *
+ * @author Riccardo Alberti
+ * @generated
+ */
+public class CommerceQualifierEntryCacheModel
+	implements CacheModel<CommerceQualifierEntry>, Externalizable, MVCCModel {
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof CommerceQualifierEntryCacheModel)) {
+			return false;
+		}
+
+		CommerceQualifierEntryCacheModel commerceQualifierEntryCacheModel =
+			(CommerceQualifierEntryCacheModel)object;
+
+		if ((commerceQualifierEntryId ==
+				commerceQualifierEntryCacheModel.commerceQualifierEntryId) &&
+			(mvccVersion == commerceQualifierEntryCacheModel.mvccVersion)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, commerceQualifierEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(23);
+
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", commerceQualifierEntryId=");
+		sb.append(commerceQualifierEntryId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
+		sb.append(", sourceClassNameId=");
+		sb.append(sourceClassNameId);
+		sb.append(", sourceClassPK=");
+		sb.append(sourceClassPK);
+		sb.append(", targetClassNameId=");
+		sb.append(targetClassNameId);
+		sb.append(", targetClassPK=");
+		sb.append(targetClassPK);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@Override
+	public CommerceQualifierEntry toEntityModel() {
+		CommerceQualifierEntryImpl commerceQualifierEntryImpl =
+			new CommerceQualifierEntryImpl();
+
+		commerceQualifierEntryImpl.setMvccVersion(mvccVersion);
+		commerceQualifierEntryImpl.setCommerceQualifierEntryId(
+			commerceQualifierEntryId);
+		commerceQualifierEntryImpl.setCompanyId(companyId);
+		commerceQualifierEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			commerceQualifierEntryImpl.setUserName("");
+		}
+		else {
+			commerceQualifierEntryImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			commerceQualifierEntryImpl.setCreateDate(null);
+		}
+		else {
+			commerceQualifierEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			commerceQualifierEntryImpl.setModifiedDate(null);
+		}
+		else {
+			commerceQualifierEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		commerceQualifierEntryImpl.setSourceClassNameId(sourceClassNameId);
+		commerceQualifierEntryImpl.setSourceClassPK(sourceClassPK);
+		commerceQualifierEntryImpl.setTargetClassNameId(targetClassNameId);
+		commerceQualifierEntryImpl.setTargetClassPK(targetClassPK);
+
+		commerceQualifierEntryImpl.resetOriginalValues();
+
+		return commerceQualifierEntryImpl;
+	}
+
+	@Override
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
+		commerceQualifierEntryId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		sourceClassNameId = objectInput.readLong();
+
+		sourceClassPK = objectInput.readLong();
+
+		targetClassNameId = objectInput.readLong();
+
+		targetClassPK = objectInput.readLong();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(commerceQualifierEntryId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(sourceClassNameId);
+
+		objectOutput.writeLong(sourceClassPK);
+
+		objectOutput.writeLong(targetClassNameId);
+
+		objectOutput.writeLong(targetClassPK);
+	}
+
+	public long mvccVersion;
+	public long commerceQualifierEntryId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
+	public long sourceClassNameId;
+	public long sourceClassPK;
+	public long targetClassNameId;
+	public long targetClassPK;
+
+}

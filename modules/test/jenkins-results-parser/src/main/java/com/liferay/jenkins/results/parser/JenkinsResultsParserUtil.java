@@ -2153,6 +2153,20 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static String getJenkinsBuildResult(String buildURL) {
+		try {
+			JSONObject jsonObject = toJSONObject(
+				buildURL + "/api/json?tree=result", false);
+
+			return jsonObject.optString("result");
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+
+			return "ABORTED";
+		}
+	}
+
 	public static String getJenkinsMasterName(String jenkinsSlaveName) {
 		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 

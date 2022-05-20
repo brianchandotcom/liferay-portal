@@ -159,7 +159,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 
 						return onValueSelect({
 							classNameId,
-							classTypeId: type?.subtypes?.[0].value || '0',
+							classTypeId: type?.subtypes?.[0]?.value || '0',
 							formConfig: FORM_MAPPING_SOURCES.otherContentType,
 						});
 					}}

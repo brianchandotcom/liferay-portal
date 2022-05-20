@@ -63,6 +63,9 @@
 
 	.lfr-ddm-container {
 		background-color: #fff;
+		.form-group .input-checkbox-wrapper {
+			display: none;
+		}
 	}
 }
 

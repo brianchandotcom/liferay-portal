@@ -12,6 +12,17 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
+function openConfirm({message, onConfirm}) {
+	if (Liferay.FeatureFlags.enableCustomDialogs) {
+		openConfirmModal({message, onConfirm});
+	}
+	else if (confirm(message)) {
+		onConfirm(true);
+	}
+}
+
 export default function propsTransformer({
 	additionalProps: {deleteEntriesURL, inputId, inputValue},
 	portletNamespace,
@@ -21,33 +32,34 @@ export default function propsTransformer({
 		...props,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteEntries') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-entries'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (!form) {
-						return;
-					}
+							if (!form) {
+								return;
+							}
 
-					form.setAttribute('method', 'post');
+							form.setAttribute('method', 'post');
 
-					const inputElement = document.getElementById(
-						`${portletNamespace}${inputId}`
-					);
+							const inputElement = document.getElementById(
+								`${portletNamespace}${inputId}`
+							);
 
-					if (inputElement) {
-						inputElement.setAttribute('value', inputValue);
-					}
+							if (inputElement) {
+								inputElement.setAttribute('value', inputValue);
+							}
 
-					submitForm(form, deleteEntriesURL);
-				}
+							submitForm(form, deleteEntriesURL);
+						}
+					},
+				});
 			}
 		},
 	};

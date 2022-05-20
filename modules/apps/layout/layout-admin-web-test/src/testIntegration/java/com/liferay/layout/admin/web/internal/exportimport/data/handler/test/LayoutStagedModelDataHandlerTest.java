@@ -153,7 +153,7 @@ public class LayoutStagedModelDataHandlerTest
 			Layout layout = LayoutTestUtil.addTypePortletLayout(
 				stagingGroup.getGroupId());
 
-			LayoutTestUtil.addPortletToLayout(
+			String portletId = LayoutTestUtil.addPortletToLayout(
 				layout, _TEST_PORTLET_NAME,
 				HashMapBuilder.put(
 					"lfrScopeType", new String[] {"company"}
@@ -168,8 +168,7 @@ public class LayoutStagedModelDataHandlerTest
 				liveGroup.getCompanyId());
 
 			validatePortletAttributes(
-				layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
-				"company");
+				layout.getUuid(), portletId, company.getGroupId(), "company");
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -613,7 +612,9 @@ public class LayoutStagedModelDataHandlerTest
 		return bundleContext.registerService(
 			Portlet.class, new MVCPortlet(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"com.liferay.portlet.preferences-company-wide", "true"
+				"com.liferay.portlet.instanceable", "true"
+			).put(
+				"com.liferay.portlet.preferences-owned-by-group", "true"
 			).put(
 				"javax.portlet.name", _TEST_PORTLET_NAME
 			).build());

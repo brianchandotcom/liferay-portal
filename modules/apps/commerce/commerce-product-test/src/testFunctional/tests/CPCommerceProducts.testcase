@@ -375,9 +375,9 @@ definition {
 		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 	}
 
-	@description = "This is a test for COMMERCE-9191. CheckTheFirstStatusForSingleApproverWorkflow"
+	@description = "This is a test for COMMERCE-9191. CanCheckDraftProductStatusWithWorkflow"
 	@priority = "3"
-	test CheckTheFirstStatusForSingleApproverWorkflow {
+	test CanCheckDraftProductStatusWithWorkflow {
 		property portal.acceptance = "false";
 
 		ApplicationsMenu.gotoPortlet(
@@ -768,9 +768,9 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for COMMERCE-9190. DuplicateADraftProduct"
+	@description = "This is a test for COMMERCE-9190. CanCheckDraftProductDuplication"
 	@priority = "3"
-	test DuplicateADraftProduct {
+	test CanCheckDraftProductDuplication {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
@@ -804,9 +804,9 @@ definition {
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
-	@description = "This is a test for COMMERCE-9189. DuplicateAnApprovedProduct"
+	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
 	@priority = "3"
-	test DuplicateAnApprovedProduct {
+	test CanCheckApprovedProductDuplication {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
@@ -1066,9 +1066,9 @@ definition {
 		CommerceEntry.viewProductSkus(skusList = "6:10.00,12:20.00,24:30.00,48:40.00,112:50.00");
 	}
 
-	@description = "This is a test for COMMERCE-9181. SaveAsDraftAnAlreadyDraftProduct"
+	@description = "This is a test for COMMERCE-9181. CanCheckDraftProductSaveAsDraft"
 	@priority = "3"
-	test SaveAsDraftAnAlreadyDraftProduct {
+	test CanCheckDraftProductSaveAsDraft {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
@@ -1099,9 +1099,9 @@ definition {
 			value1 = "Simple T-Shirt 01");
 	}
 
-	@description = "This is a test for COMMERCE-9183. SaveAsDraftAnApprovedProduct"
+	@description = "This is a test for COMMERCE-9183. CanCheckApprovedProductSaveAsDraft"
 	@priority = "3"
-	test SaveAsDraftAnApprovedProduct {
+	test CanCheckApprovedProductSaveAsDraft {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
@@ -1541,9 +1541,9 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
-	@description = "This is a test for COMMERCE-9179. VerifyDraftStatus"
+	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
 	@priority = "3"
-	test VerifyDraftStatus {
+	test CanCheckDraftProductStatus {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
@@ -1566,9 +1566,9 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	@description = "This is a test for COMMERCE-9180. VerifyDraftStatusNormalWorkflow"
+	@description = "This is a test for COMMERCE-9180. CanCheckProductPublication"
 	@priority = "3"
-	test VerifyDraftStatusNormalWorkflow {
+	test CanCheckProductPublication {
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(

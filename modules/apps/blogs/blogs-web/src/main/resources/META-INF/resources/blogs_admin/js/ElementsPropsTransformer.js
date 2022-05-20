@@ -12,15 +12,22 @@
  * details.
  */
 
+import openConfirm from './openConfirm';
+
 const ACTIONS = {
 	delete(itemData, trashEnabled) {
 		const message = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
 		);
 
-		if (trashEnabled || confirm(message)) {
-			this.send(itemData.deleteURL);
-		}
+		openConfirm({
+			message,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed || trashEnabled) {
+					this.send(itemData.deleteURL);
+				}
+			},
+		});
 	},
 
 	permissions(itemData) {

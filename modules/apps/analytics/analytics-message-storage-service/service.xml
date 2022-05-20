@@ -3,6 +3,43 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.analytics.message.storage">
 	<namespace>Analytics</namespace>
+	<entity local-service="true" name="AnalyticsAssociationChange" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="analyticsAssociationChangeId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="associationClassName" type="String" />
+		<column name="associationClassPK" type="long" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="associationClassName" />
+		</finder>
+		<finder name="C_GtM_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
+			<finder-column name="associationClassName" />
+		</finder>
+		<finder name="C_A_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="associationClassName" />
+			<finder-column name="associationClassPK" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="AnalyticsDeleteMessage" remote-service="false">
 
 		<!-- PK fields -->

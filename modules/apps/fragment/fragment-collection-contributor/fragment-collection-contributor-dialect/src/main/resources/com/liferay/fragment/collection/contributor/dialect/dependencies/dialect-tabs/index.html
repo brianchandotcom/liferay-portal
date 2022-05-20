@@ -10,12 +10,12 @@
 			<ul class="nav nav-${configuration.tabStyle} ${configuration.tabDirection} ${(configuration.tabActiveBarPosition)}" role="tablist">
 				[#list 0..configuration.numberOfTabs-1 as i]
 					<li class="nav-item">
-						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">
+						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link navbar-text-truncate w-100" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">
 							[#if configuration.iconAlignment == 'left']
 								[@clay["icon"] symbol="${configuration.iconName}" /]
 							[/#if]
 
-							<span class="navbar-text-truncate" data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
+							<span data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
 								Tab ${i+1}
 							</span>
 

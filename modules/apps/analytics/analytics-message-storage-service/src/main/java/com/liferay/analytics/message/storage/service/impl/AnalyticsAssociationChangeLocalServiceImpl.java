@@ -14,8 +14,12 @@
 
 package com.liferay.analytics.message.storage.service.impl;
 
+import com.liferay.analytics.message.storage.model.AnalyticsAssociationChange;
 import com.liferay.analytics.message.storage.service.base.AnalyticsAssociationChangeLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +32,69 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AnalyticsAssociationChangeLocalServiceImpl
 	extends AnalyticsAssociationChangeLocalServiceBaseImpl {
+
+	public AnalyticsAssociationChange addAnalyticsAssociationChange(
+		long companyId, Date createDate, long userId,
+		String associationClassName, long associationClassPK, String className,
+		long classPK) {
+
+		AnalyticsAssociationChange analyticsAssociationChange =
+			analyticsAssociationChangePersistence.create(
+				counterLocalService.increment());
+
+		analyticsAssociationChange.setCompanyId(companyId);
+		analyticsAssociationChange.setCreateDate(createDate);
+		analyticsAssociationChange.setModifiedDate(createDate);
+		analyticsAssociationChange.setUserId(userId);
+		analyticsAssociationChange.setAssociationClassName(
+			associationClassName);
+		analyticsAssociationChange.setAssociationClassPK(associationClassPK);
+		analyticsAssociationChange.setClassName(className);
+		analyticsAssociationChange.setClassPK(classPK);
+
+		return analyticsAssociationChangePersistence.update(
+			analyticsAssociationChange);
+	}
+
+	@Override
+	public void deleteAnalyticsAssociationChanges(
+		long companyId, String associationClassName, long associationClassPK) {
+
+		analyticsAssociationChangePersistence.removeByC_A_A(
+			companyId, associationClassName, associationClassPK);
+	}
+
+	@Override
+	public List<AnalyticsAssociationChange> getAnalyticsAssociationChanges(
+		long companyId, Date modifiedDate, String associationClassName,
+		int start, int end) {
+
+		return analyticsAssociationChangePersistence.findByC_GtM_A(
+			companyId, modifiedDate, associationClassName, start, end);
+	}
+
+	@Override
+	public List<AnalyticsAssociationChange> getAnalyticsAssociationChanges(
+		long companyId, String associationClassName, int start, int end) {
+
+		return analyticsAssociationChangePersistence.findByC_A(
+			companyId, associationClassName, start, end);
+	}
+
+	@Override
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, Date modifiedDate, String associationClassName) {
+
+		return analyticsAssociationChangePersistence.countByC_GtM_A(
+			companyId, modifiedDate, associationClassName);
+	}
+
+	@Override
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, String associationClassName) {
+
+		return analyticsAssociationChangePersistence.countByC_A(
+			companyId, associationClassName);
+	}
+
 }

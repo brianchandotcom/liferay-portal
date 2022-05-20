@@ -30,218 +30,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: LRAC-10698 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
-	@ignore = "true"
-	@priority = "2"
-	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
-		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesWhenHasPropertyAndDataSourceButNoData";
-
-		// AC Refactor: Depends on bug fix (LRAC-11153) 
-
-		task ("Connect AC to DXP no data") {
-			ACUtils.launchDXP();
-
-			ACDXPSettings.connectAnalyticsCloud();
-
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Go to AC workspace") {
-			ACUtils.launchAC(workspaceName = "New AC Workspace");
-		}
-
-		task ("Go to Assets") {
-			ACNavigation.goToAssets();
-		}
-
-		task ("Go to Blogs, check empty state message") {
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about blogs.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about blogs.");
-
-			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Blogs");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Documents and Media Tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Documents and Media");
-
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about documents and media.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
-
-			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Documents and Media");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Forms Tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Forms");
-
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about forms.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
-
-			SelectWindow(locator1 = "title=Forms — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Forms");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Web Content Tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Web Content");
-
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about web content.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about web content.");
-
-			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Web Content");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Custom Tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Custom");
-
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about custom assets.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about custom assets.");
-
-			SelectWindow(locator1 = "title=Tracking Custom Assets — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Custom Assets");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Event Analysis, check empty state message") {
-			ACNavigation.goToEventAnalysis();
-
-			ACUtils.viewGenericText(textValueList ="There are no analysis found.,Create an analysis to get started.,Access our documentation to learn more.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
-
-			SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Segments, check empty state message") {
-			ACNavigation.goToSegments();
-
-			ACUtils.viewGenericText(textValueList ="There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
-
-			SelectWindow(locator1 = "title=Segments — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Individuals Overview, check empty state messages") {
-			ACNavigation.goToIndividuals();
-
-			ACUtils.viewGenericText(textValueList ="There is no data for active individuals.,Check back later to verify if data has been received from your data sources.,Learn more about active individuals.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about active individuals.");
-
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Active Individuals");
-
-			Close.closeWindow();
-
-			ACUtils.viewGenericText(textValueList ="There are no interests found.,Check back later to verify if data has been received from your data sources.,Learn more about interests.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
-
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
-
-			Close.closeWindow();
-		}
-
-		task ("Add a new breakdown") {
-			ACSegments.addBreakdownByAttribute(
-				attribute = "jobTitle",
-				breakdownName = "Breakdown by Job Title");
-		}
-
-		task ("Individual Overview distribution empty state message") {
-			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
-
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Interests tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Interests");
-
-			ACUtils.viewGenericText(textValueList ="There are no interests found.,Check back later to verify if data has been received from your data sources.,Learn more about interests.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
-
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Distribution tab, check empty state message") {
-			ACNavigation.switchTab(tabName = "Distribution");
-
-			ACUtils.viewGenericText(textValueList ="There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
-
-			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
-
-			Close.closeWindow();
-		}
-
-		task ("Go to Tests, check empty state message") {
-			ACNavigation.goToTests();
-
-			ACUtils.viewGenericTextInOrder(textValueList = "There are no tests found.");
-
-			for (var textValue : list "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.") {
-				AssertTextEquals.assertPartialText(
-					key_textValue = "${textValue}",
-					locator1 = "ACUtils#GENERIC_TEXT",
-					value1 = "${textValue}");
-			}
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about tests.");
-
-			SelectWindow(locator1 = "title=A/B Testing — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,A/B Testing");
-
-			Close.closeWindow();
-		}
-	}
-
 	@description = "Feature ID: LRAC-9248 | Automation ID: LRAC-10727 | Test Summary: Empty state of pages with no data source and no property"
 	@priority = "2"
 	test CheckAllMessagesRelatedToSettings {
@@ -394,6 +182,218 @@ definition {
 			SelectWindow(locator1 = "title=Data Control and Privacy — Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Data Control and Privacy");
+		}
+	}
+
+	@description = "Feature ID: LRAC-10698 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
+	@ignore = "true"
+	@priority = "2"
+	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesWhenHasPropertyAndDataSourceButNoData";
+
+		// AC Refactor: Depends on bug fix (LRAC-11153)
+
+		task ("Connect AC to DXP no data") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC workspace") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+		}
+
+		task ("Go to Assets") {
+			ACNavigation.goToAssets();
+		}
+
+		task ("Go to Blogs, check empty state message") {
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about blogs.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about blogs.");
+
+			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Blogs");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Documents and Media Tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Documents and Media");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about documents and media.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
+
+			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Documents and Media");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Forms Tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Forms");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about forms.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
+
+			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Forms");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Web Content Tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Web Content");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about web content.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about web content.");
+
+			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Web Content");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Custom Tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Custom");
+
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about custom assets.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about custom assets.");
+
+			SelectWindow(locator1 = "title=Tracking Custom Assets — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Custom Assets");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Event Analysis, check empty state message") {
+			ACNavigation.goToEventAnalysis();
+
+			ACUtils.viewGenericText(textValueList = "There are no analysis found.,Create an analysis to get started.,Access our documentation to learn more.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Segments, check empty state message") {
+			ACNavigation.goToSegments();
+
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Segments — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Segments");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Individuals Overview, check empty state messages") {
+			ACNavigation.goToIndividuals();
+
+			ACUtils.viewGenericText(textValueList = "There is no data for active individuals.,Check back later to verify if data has been received from your data sources.,Learn more about active individuals.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about active individuals.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Active Individuals");
+
+			Close.closeWindow();
+
+			ACUtils.viewGenericText(textValueList = "There are no interests found.,Check back later to verify if data has been received from your data sources.,Learn more about interests.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+
+			Close.closeWindow();
+		}
+
+		task ("Add a new breakdown") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "jobTitle",
+				breakdownName = "Breakdown by Job Title");
+		}
+
+		task ("Individual Overview distribution empty state message") {
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Interests tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Interests");
+
+			ACUtils.viewGenericText(textValueList = "There are no interests found.,Check back later to verify if data has been received from your data sources.,Learn more about interests.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Distribution tab, check empty state message") {
+			ACNavigation.switchTab(tabName = "Distribution");
+
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about distribution.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Breakdown");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to Tests, check empty state message") {
+			ACNavigation.goToTests();
+
+			ACUtils.viewGenericTextInOrder(textValueList = "There are no tests found.");
+
+			for (var textValue : list "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.") {
+				AssertTextEquals.assertPartialText(
+					key_textValue = "${textValue}",
+					locator1 = "ACUtils#GENERIC_TEXT",
+					value1 = "${textValue}");
+			}
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about tests.");
+
+			SelectWindow(locator1 = "title=A/B Testing — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,A/B Testing");
+
+			Close.closeWindow();
 		}
 	}
 

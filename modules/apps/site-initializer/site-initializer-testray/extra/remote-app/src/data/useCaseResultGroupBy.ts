@@ -13,68 +13,68 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {
 	FacetAggregation,
 	FacetAggregationQuery,
 	getCaseResultsAggregation,
 } from '../graphql/queries';
+import {Statuses, TEST_STATUS, chartColors} from '../util/constants';
 import {searchUtil} from '../util/search';
-
-enum Statuses {
-	PASSED = 'PASSED',
-	FAILED = 'FAILED',
-	BLOCKED = 'BLOCKED',
-	TEST_FIX = 'TEST FIX',
-	INCOMPLETE = 'INCOMPLETE',
-}
 
 function getStatusesMap(
 	facetAggregation: FacetAggregation | undefined
 ): Map<string, number> {
-	const facetValue: Map<string, number> = new Map();
+	const facetValueMap: Map<string, number> = new Map();
 
 	if (!facetAggregation?.facets) {
-		return facetValue;
+		return facetValueMap;
 	}
 
-	for (const facet of facetAggregation.facets.facetValues) {
-		facetValue.set(facet.term, facet.numberOfOccurrences);
+	for (const facet of facetAggregation.facets) {
+		for (const facetValue of facet.facetValues) {
+			facetValueMap.set(facetValue.term, facetValue.numberOfOccurrences);
+		}
 	}
 
-	return facetValue;
+	return facetValueMap;
 }
 
-const useCaseResultGroupBy = () => {
-	const buildId = 42702;
-
-	const {data} = useQuery<FacetAggregationQuery<'caseResultAggregation'>>(
-		getCaseResultsAggregation,
-		{
-			variables: {
-				aggregation: 'dueStatus',
-				filter: searchUtil.eq('buildId', buildId),
-			},
-		}
-	);
+const useCaseResultGroupBy = (buildId: number) => {
+	const {data, loading} = useQuery<
+		FacetAggregationQuery<'caseResultAggregation'>
+	>(getCaseResultsAggregation, {
+		variables: {
+			aggregation: 'dueStatus',
+			filter: searchUtil.eq('buildId', buildId),
+		},
+	});
 
 	const statuses = useMemo(
 		() => getStatusesMap(data?.caseResultAggregation),
 		[data?.caseResultAggregation]
 	);
 
-	const getStatusValue = (status: string) => statuses.get(status) || 0;
+	const getStatusValue = useCallback(
+		(status: string | number) => statuses.get(String(status)) || 0,
+		[statuses]
+	);
 
 	const donutColumns = [
-		[Statuses.PASSED, getStatusValue('0')],
-		[Statuses.FAILED, getStatusValue('1')],
-		[Statuses.BLOCKED, getStatusValue('2')],
-		[Statuses.TEST_FIX, getStatusValue('3')],
-		[Statuses.INCOMPLETE, getStatusValue('4')],
+		[Statuses.PASSED, getStatusValue(TEST_STATUS.Passed)],
+		[Statuses.FAILED, getStatusValue(TEST_STATUS.Failed)],
+		[Statuses.BLOCKED, getStatusValue(TEST_STATUS.Blocked)],
+		[Statuses.TEST_FIX, getStatusValue(TEST_STATUS['Test Fix'])],
+		[
+			Statuses.INCOMPLETE,
+			getStatusValue(TEST_STATUS.Untested) +
+				getStatusValue(TEST_STATUS['In Progress']),
+		],
 	];
 
 	return {
+		colors: chartColors,
 		donut: {
 			columns: donutColumns,
 			total: donutColumns
@@ -84,6 +84,7 @@ const useCaseResultGroupBy = () => {
 						Number(prevValue) + Number(currentValue)
 				),
 		},
+		ready: !loading && statuses.size,
 		statuses: Object.values(Statuses),
 	};
 };

@@ -12,18 +12,10 @@
  * details.
  */
 
-import {Statuses, chartColors} from '../util/constants';
+import {DATA_COLORS, Statuses} from '../util/constants';
 import {getRandomMaximumValue} from '../util/mock';
 
-const useTotalTestCases = () => {
-	const donutColumns = [
-		[Statuses.PASSED, 30529],
-		[Statuses.FAILED, 5374],
-		[Statuses.BLOCKED, 0],
-		[Statuses.TEST_FIX, 0],
-		[Statuses.INCOMPLETE, 21],
-	];
-
+const useBuildHistory = () => {
 	return {
 		barChart: {
 			columns: [
@@ -34,18 +26,15 @@ const useTotalTestCases = () => {
 				[Statuses.INCOMPLETE, ...getRandomMaximumValue(20, 100)],
 			],
 		},
-		colors: chartColors,
-		donut: {
-			columns: donutColumns,
-			total: donutColumns
-				.map(([, totalCase]) => totalCase)
-				.reduce(
-					(prevValue, currentValue) =>
-						Number(prevValue) + Number(currentValue)
-				),
+		colors: {
+			[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
+			[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
+			[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
+			[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
+			[Statuses.TEST_FIX]: DATA_COLORS['metrics.test-fix'],
 		},
 		statuses: Object.values(Statuses),
 	};
 };
 
-export default useTotalTestCases;
+export default useBuildHistory;

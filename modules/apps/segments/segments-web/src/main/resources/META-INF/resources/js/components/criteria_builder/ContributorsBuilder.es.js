@@ -40,6 +40,7 @@ class ContributorBuilder extends React.Component {
 		contributors: PropTypes.arrayOf(contributorShape),
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
+		isSegmentationEnabled: PropTypes.bool,
 		membersCount: PropTypes.number,
 		membersCountLoading: PropTypes.bool,
 		onAlertClose: PropTypes.func,
@@ -100,6 +101,7 @@ class ContributorBuilder extends React.Component {
 			contributors,
 			editing,
 			emptyContributors,
+			isSegmentationEnabled,
 			membersCount,
 			membersCountLoading,
 			onAlertClose,
@@ -118,10 +120,14 @@ class ContributorBuilder extends React.Component {
 			editing,
 		});
 
+		const sidebarClasses = getCN('criteria-builder-section-sidebar', {
+			'criteria-builder-section-sidebar--with-warning': !isSegmentationEnabled,
+		});
+
 		return (
 			<DndProvider backend={HTML5Backend}>
 				<div className={rootClasses}>
-					<div className="criteria-builder-section-sidebar">
+					<div className={sidebarClasses}>
 						<CriteriaSidebar
 							onTitleClicked={this._handleCriteriaEdit}
 							propertyGroups={propertyGroups}

@@ -5,6 +5,10 @@
 	margin-bottom: -35px;
 	width: 100%;
 
+	&--with-warning {
+		height: calc(100vh - #{$topHeaderHeightWithWarning});
+	}
+
 	.contributor-conjunction {
 		margin: 0 auto;
 		width: 120px;

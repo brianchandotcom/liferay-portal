@@ -267,6 +267,7 @@ class SegmentEdit extends Component {
 				contributors={contributors}
 				editing={editing}
 				emptyContributors={emptyContributors}
+				isSegmentationEnabled={this.props.isSegmentationEnabled}
 				membersCount={membersCount}
 				membersCountLoading={membersCountLoading}
 				onAlertClose={this._handleAlertClose}
@@ -460,6 +461,8 @@ class SegmentEdit extends Component {
 			<div
 				className={classNames('segment-edit-page-root', {
 					'segment-edit-page-root--has-alert': queryHasEmptyValues,
+					'segment-edit-page-root--with-warning': !this.props
+						.isSegmentationEnabled,
 				})}
 			>
 				<input

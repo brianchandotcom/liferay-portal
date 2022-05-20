@@ -72,6 +72,11 @@
 		visibility: hidden;
 		width: 0;
 		z-index: 10;
+
+		&--with-warning {
+			height: calc(100% - 177px);
+			top: 177px;
+		}
 	}
 
 	.drag-icon {

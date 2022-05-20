@@ -17,6 +17,7 @@ package com.liferay.petra.log4j.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,6 +67,10 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 	@Override
 	public void append(LogEvent logEvent) {
+		if (!_ENABLED) {
+			return;
+		}
+
 		RollingFileAppender rollingFileAppender =
 			_rollingFileAppenders.computeIfAbsent(
 				CompanyThreadLocal.getCompanyId(),
@@ -246,6 +251,9 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 		return rollingFileAppender;
 	}
+
+	private static final boolean _ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.COMPANY_LOG_ENABLED));
 
 	private final boolean _advertise;
 	private final String _advertiseUri;

@@ -448,6 +448,8 @@ public interface PropsKeys {
 	public static final String COMPANY_ENCRYPTION_KEY_SIZE =
 		"company.encryption.key.size";
 
+	public static final String COMPANY_LOG_ENABLED = "company.log.enabled";
+
 	public static final String COMPANY_LOGIN_PREPOPULATE_DOMAIN =
 		"company.login.prepopulate.domain";
 

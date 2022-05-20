@@ -142,17 +142,19 @@ export default withRouter(
 				_nodes = _nodes.map((node, index) => {
 					if (index === _nodes.length - 1) {
 						if (sectionTitle === ALL_SECTIONS_ID) {
-							return {
+							node = {
 								...node,
 								href: 'all',
-								subSections,
+								subSections: sections,
 								title: Liferay.Language.get('all-questions'),
 							};
 						}
 
 						return {
 							...node,
-							subSections,
+							subSections: node.subSections.length
+								? node.subSections
+								: subSections,
 						};
 					}
 

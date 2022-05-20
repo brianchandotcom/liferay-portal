@@ -95,6 +95,15 @@ definition {
 	}
 
 	@priority = "5"
+	test CanSubmitFormEntryAfterUpgrade7310 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.3.10";
+
+		Upgrade.submitFormEntry7310();
+	}
+
+	@priority = "5"
 	test UpdateFieldNameToFieldReference7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -126,6 +135,15 @@ definition {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
 		property portal.version = "7.2.10";
+
+		Upgrade.viewUploadFormEntry();
+	}
+
+	@priority = "5"
+	test UploadFieldKeepsAllFilesAfterUpgrade7310 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.3.10";
 
 		Upgrade.viewUploadFormEntry();
 	}
@@ -170,6 +188,15 @@ definition {
 		property portal.version = "7.2.10";
 
 		Upgrade.viewFormEntry();
+	}
+
+	@priority = "5"
+	test ViewFormEntryAfterUpgrade7310 {
+		property data.archive.type = "data-archive-form-entry";
+		property database.types = "mysql";
+		property portal.version = "7.3.10";
+
+		Upgrade.viewFormEntry7310();
 	}
 
 }

@@ -264,7 +264,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_OPTION_LABEL</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span | //fieldset//legend[text()='${key_fieldName}']/..//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,12 +275,12 @@
 <!--COLOR-->
 <tr>
 	<td>COLOR_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='Color']/..//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLOR_FIELD_BY_ROW</td>
-	<td>//div[contains(@class,'ddm-field-container')]//div[@class='ddm-field'][${key_rowNumber}]//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text']</td>
+	<td>//div[contains(@class,'ddm-field-container')]//div[@class='ddm-field'][${key_rowNumber}]//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text'] | //div[@class='ddm-field']//div//label[text()='${key_fieldName}']/..//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>COLOR_PICKER</td>
-	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div[contains(@class,'color-picker')]//button[contains(@class,'clay-color-btn')]</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div[contains(@class,'color-picker')]//button[contains(@class,'clay-color-btn')] | //div//label[text()='${key_fieldLabel}']/..//button[contains(@class,'clay-color-btn')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -326,7 +326,7 @@
 </tr>
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='${key_fieldName}']/..//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -456,7 +456,7 @@
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_CHECKED</td>
-	<td>//div[contains(@data-field-name,'Grid')]//input[contains(@aria-label,'Row: ${key_rowValue}, Column: ${key_columnValue}') and @checked]</td>
+	<td>//div[contains(@data-field-name,'Grid')]//input[contains(@aria-label,'Row: ${key_rowValue}, Column: ${key_columnValue}') and @checked] | //fieldset//legend[text()='Grid']/..//input[contains(@aria-label,'Row: Option 1, Column: Option 1') and @checked]</td>
 	<td></td>
 </tr>
 <tr>
@@ -471,7 +471,7 @@
 </tr>
 <tr>
 	<td>GRID_RADIO_OPTIONS</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@aria-label, '${key_optionNumber}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@aria-label, '${key_optionNumber}')] | //fieldset//legend[text()='${key_fieldName}']/..//input[contains(@aria-label, '${key_optionNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -502,12 +502,12 @@
 <!--RADIO-->
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span | //fieldset//legend[text()='${key_fieldName}']/..//span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RADIO_OPTION_CHECKED</td>
-	<td>//label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="checked" and contains(@name,'${key_fieldName}')] | //label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="" and contains(@name,'${key_fieldName}')]</td>
+	<td>//label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="checked" and contains(@name,'${key_fieldName}')] | //label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="" and contains(@name,'${key_fieldName}')] | //fieldset//legend[text()='${key_fieldName}']/..//span[text()='${key_radioOption}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -601,7 +601,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//p[text()='${key_fieldLabel}'] | //div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-group')]//input</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//p[text()='${key_fieldLabel}'] | //div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-group')]//input | //div//div[contains(@class,'form-group')]//label[text()='${key_fieldName}']/..//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -656,7 +656,7 @@
 </tr>
 <tr>
 	<td>TEXT_MULTILINE_FIELD</td>
-	<td>//textarea[contains(@name,'${key_fieldName}')]</td>
+	<td>//textarea[contains(@name,'${key_fieldName}')] | //div//label[text()='${key_fieldName}']/..//textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -1046,7 +1046,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')] | //div[@class='ddm-field']//label[text()='${key_fieldName}']/..//input[contains(@id,'inputFile')] | //div[@class='ddm-field']//label[text()='${key_fieldName}']/..//input[@class='form-control field']</td>
 	<td></td>
 </tr>
 <tr>
@@ -1071,7 +1071,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_ON_WIDGET</td>
-	<td>//div[@class='ddm-field'][1]//button[contains(text(),'Select')]</td>
+	<td>//div[@class='ddm-field'][1]//button[contains(text(),'Select')] | //div[@class='ddm-field'][1]//label[text()='Image']/..//button[contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1101,7 +1101,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FILE_NAME</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')] | //div//label[text()='${key_fieldName}']/..//h4[contains(.,'Document_1.jpg')]</td>
 	<td></td>
 </tr>
 <tr>

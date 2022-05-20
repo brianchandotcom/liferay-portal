@@ -2557,6 +2557,74 @@ definition {
 			fieldValue = "1000");
 	}
 
+	macro submitFormEntry7310 {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.selectColorFromColorPicker(
+			colorValue = "FF0D0D",
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1000");
+
+		FormFields.editText(
+			fieldName = "SingleLineText",
+			fieldValue = "SingleLineText Test");
+
+		FormFields.editTextMultiline(
+			fieldName = "MultilineText",
+			fieldValue = "MultilineText Test");
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Select 1");
+
+		FormFields.selectRadioOption(
+			fieldName = "Single Selection",
+			radioOption = "Option 1");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "Grid",
+			optionColumnNumber = "1",
+			optionRowNumber = "1");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/1000");
+
+		FormFields.selectCheckboxOption(
+			checkboxOption = "Option 2",
+			fieldName = "Multiple Selection");
+
+		Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "1000");
+	}
+
 	macro submitNewWorkflow {
 		Navigator.openURL();
 
@@ -4653,6 +4721,155 @@ definition {
 			fieldLabel = "Upload",
 			fieldName = "Upload",
 			uploadFileName = "Document_1.jpg");
+	}
+
+	macro viewFormEntry7310 {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewLabel(
+			fieldLabel = "Paragraph",
+			fieldName = "Paragraph");
+
+		FormFields.viewParagraphFieldTextBody(fieldValue = "Paragraph body text.");
+
+		FormFields.viewLabel(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		FormFields.viewLabel(
+			fieldLabel = "SingleLineText",
+			fieldName = "SingleLineText");
+
+		FormFields.viewLabel(
+			fieldLabel = "MultilineText",
+			fieldName = "MultilineText");
+
+		FormFields.viewLabel(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		FormFields.viewLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		FormFields.viewLabel(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		FormFields.viewLabel(
+			fieldLabel = "Grid",
+			fieldName = "Grid");
+
+		FormFields.viewLabel(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		FormFields.viewLabel(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		FormFields.viewLabel(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		FormFields.viewLabel(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		FormFields.viewLabel(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Status",
+			fieldValue = "Approved");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "123");
+
+		FormsAdmin.viewImageTableEntry();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Multiple Selection",
+			fieldValue = "Option 1, Option 2, Option 3");
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewLabel(
+			fieldLabel = "Paragraph",
+			fieldName = "Paragraph");
+
+		FormFields.viewParagraphFieldTextBody(fieldValue = "Paragraph body text.");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "SingleLineText",
+			fieldName = "SingleLineText",
+			fieldValue = "SingleLineText");
+
+		FormsAdmin.viewMultilineTextEntry(
+			fieldLabel = "MultilineText",
+			fieldName = "MultilineText",
+			fieldValue = "MultilineText");
+
+		FormsAdmin.viewSelectEntry(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List",
+			selectOption = "Select 1");
+
+		FormsAdmin.viewRadioEntry(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection",
+			fieldValue = "Option 1");
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			fieldValue = "05/02/2022");
+
+		FormFields.assertGridOptionChecked(
+			columnValue = "Option 1",
+			rowValue = "Option 1");
+
+		FormsAdmin.viewUploadFile(
+			fieldLabel = "Upload",
+			fieldName = "Upload",
+			uploadFileName = "Document_1.jpg");
+
+		FormsAdmin.viewImageEntry(
+			fieldDescription = "",
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		FormFields.viewRichTextValue(
+			fieldName = "Rich Text",
+			fieldValue = "Rich text body.");
+
+		FormsAdmin.viewColorEntry(
+			fieldLabel = "Color",
+			fieldName = "Color",
+			fieldValue = "#FF0D0D");
+
+		FormFields.viewLabel(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
 	}
 
 	macro viewInstanceSettings {

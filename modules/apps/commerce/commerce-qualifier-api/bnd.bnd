@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Qualifier API
+Bundle-SymbolicName: com.liferay.commerce.qualifier.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.qualifier.exception,\
+	com.liferay.commerce.qualifier.metadata,\
+	com.liferay.commerce.qualifier.model,\
+	com.liferay.commerce.qualifier.search.context,\
+	com.liferay.commerce.qualifier.service,\
+	com.liferay.commerce.qualifier.service.persistence,\
+	com.liferay.commerce.qualifier.util
+Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

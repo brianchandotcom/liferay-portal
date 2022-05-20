@@ -272,7 +272,7 @@ export default class Blogs {
 
 	_getValuesByName(name) {
 		const nodes = document.querySelectorAll(
-			`input[name=${this._config.namespace + name}]`
+			`input[name^=${this._config.namespace}${name}]`
 		);
 
 		return [...nodes].map((node) => node.value);

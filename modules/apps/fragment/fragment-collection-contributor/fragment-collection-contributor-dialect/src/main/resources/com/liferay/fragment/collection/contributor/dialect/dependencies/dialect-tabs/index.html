@@ -12,9 +12,7 @@
 					<li class="nav-item">
 						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">
 							[#if configuration.iconAlignment == 'left']
-								<span>
-									[@clay["icon"] symbol="${configuration.iconName}" /]
-								</span>
+								[@clay["icon"] symbol="${configuration.iconName}" /]
 							[/#if]
 
 							<span class="navbar-text-truncate" data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
@@ -22,9 +20,7 @@
 							</span>
 
 							[#if configuration.iconAlignment == 'right']
-								<span>
-									[@clay["icon"] symbol="${configuration.iconName}" /]
-								</span>
+								[@clay["icon"] symbol="${configuration.iconName}" /]
 							[/#if]
 						</button>
 					</li>

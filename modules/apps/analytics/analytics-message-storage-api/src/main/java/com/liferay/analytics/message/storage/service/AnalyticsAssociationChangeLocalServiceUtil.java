@@ -62,6 +62,16 @@ public class AnalyticsAssociationChangeLocalServiceUtil {
 			analyticsAssociationChange);
 	}
 
+	public static AnalyticsAssociationChange addAnalyticsAssociationChange(
+		long companyId, java.util.Date createDate, long userId,
+		String associationClassName, long associationClassPK, String className,
+		long classPK) {
+
+		return getService().addAnalyticsAssociationChange(
+			companyId, createDate, userId, associationClassName,
+			associationClassPK, className, classPK);
+	}
+
 	/**
 	 * Creates a new analytics association change with the primary key. Does not add the analytics association change to the database.
 	 *
@@ -119,6 +129,13 @@ public class AnalyticsAssociationChangeLocalServiceUtil {
 
 		return getService().deleteAnalyticsAssociationChange(
 			analyticsAssociationChangeId);
+	}
+
+	public static void deleteAnalyticsAssociationChanges(
+		long companyId, String associationClassName, long associationClassPK) {
+
+		getService().deleteAnalyticsAssociationChanges(
+			companyId, associationClassName, associationClassPK);
 	}
 
 	/**
@@ -261,6 +278,23 @@ public class AnalyticsAssociationChangeLocalServiceUtil {
 		return getService().getAnalyticsAssociationChanges(start, end);
 	}
 
+	public static List<AnalyticsAssociationChange>
+		getAnalyticsAssociationChanges(
+			long companyId, java.util.Date modifiedDate,
+			String associationClassName, int start, int end) {
+
+		return getService().getAnalyticsAssociationChanges(
+			companyId, modifiedDate, associationClassName, start, end);
+	}
+
+	public static List<AnalyticsAssociationChange>
+		getAnalyticsAssociationChanges(
+			long companyId, String associationClassName, int start, int end) {
+
+		return getService().getAnalyticsAssociationChanges(
+			companyId, associationClassName, start, end);
+	}
+
 	/**
 	 * Returns the number of analytics association changes.
 	 *
@@ -268,6 +302,21 @@ public class AnalyticsAssociationChangeLocalServiceUtil {
 	 */
 	public static int getAnalyticsAssociationChangesCount() {
 		return getService().getAnalyticsAssociationChangesCount();
+	}
+
+	public static int getAnalyticsAssociationChangesCount(
+		long companyId, java.util.Date modifiedDate,
+		String associationClassName) {
+
+		return getService().getAnalyticsAssociationChangesCount(
+			companyId, modifiedDate, associationClassName);
+	}
+
+	public static int getAnalyticsAssociationChangesCount(
+		long companyId, String associationClassName) {
+
+		return getService().getAnalyticsAssociationChangesCount(
+			companyId, associationClassName);
 	}
 
 	public static

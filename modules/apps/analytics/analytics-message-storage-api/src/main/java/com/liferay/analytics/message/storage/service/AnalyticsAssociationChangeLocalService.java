@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -75,6 +76,11 @@ public interface AnalyticsAssociationChangeLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AnalyticsAssociationChange addAnalyticsAssociationChange(
 		AnalyticsAssociationChange analyticsAssociationChange);
+
+	public AnalyticsAssociationChange addAnalyticsAssociationChange(
+		long companyId, Date createDate, long userId,
+		String associationClassName, long associationClassPK, String className,
+		long classPK);
 
 	/**
 	 * Creates a new analytics association change with the primary key. Does not add the analytics association change to the database.
@@ -121,6 +127,9 @@ public interface AnalyticsAssociationChangeLocalService
 	public AnalyticsAssociationChange deleteAnalyticsAssociationChange(
 			long analyticsAssociationChangeId)
 		throws PortalException;
+
+	public void deleteAnalyticsAssociationChanges(
+		long companyId, String associationClassName, long associationClassPK);
 
 	/**
 	 * @throws PortalException
@@ -235,6 +244,15 @@ public interface AnalyticsAssociationChangeLocalService
 	public List<AnalyticsAssociationChange> getAnalyticsAssociationChanges(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnalyticsAssociationChange> getAnalyticsAssociationChanges(
+		long companyId, Date modifiedDate, String associationClassName,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnalyticsAssociationChange> getAnalyticsAssociationChanges(
+		long companyId, String associationClassName, int start, int end);
+
 	/**
 	 * Returns the number of analytics association changes.
 	 *
@@ -242,6 +260,14 @@ public interface AnalyticsAssociationChangeLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsAssociationChangesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, Date modifiedDate, String associationClassName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, String associationClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

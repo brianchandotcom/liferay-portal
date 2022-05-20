@@ -60,6 +60,20 @@ public class AnalyticsAssociationChangeLocalServiceWrapper
 			addAnalyticsAssociationChange(analyticsAssociationChange);
 	}
 
+	@Override
+	public
+		com.liferay.analytics.message.storage.model.AnalyticsAssociationChange
+			addAnalyticsAssociationChange(
+				long companyId, java.util.Date createDate, long userId,
+				String associationClassName, long associationClassPK,
+				String className, long classPK) {
+
+		return _analyticsAssociationChangeLocalService.
+			addAnalyticsAssociationChange(
+				companyId, createDate, userId, associationClassName,
+				associationClassPK, className, classPK);
+	}
+
 	/**
 	 * Creates a new analytics association change with the primary key. Does not add the analytics association change to the database.
 	 *
@@ -129,6 +143,15 @@ public class AnalyticsAssociationChangeLocalServiceWrapper
 
 		return _analyticsAssociationChangeLocalService.
 			deleteAnalyticsAssociationChange(analyticsAssociationChangeId);
+	}
+
+	@Override
+	public void deleteAnalyticsAssociationChanges(
+		long companyId, String associationClassName, long associationClassPK) {
+
+		_analyticsAssociationChangeLocalService.
+			deleteAnalyticsAssociationChanges(
+				companyId, associationClassName, associationClassPK);
 	}
 
 	/**
@@ -302,6 +325,30 @@ public class AnalyticsAssociationChangeLocalServiceWrapper
 			getAnalyticsAssociationChanges(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsAssociationChange>
+			getAnalyticsAssociationChanges(
+				long companyId, java.util.Date modifiedDate,
+				String associationClassName, int start, int end) {
+
+		return _analyticsAssociationChangeLocalService.
+			getAnalyticsAssociationChanges(
+				companyId, modifiedDate, associationClassName, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsAssociationChange>
+			getAnalyticsAssociationChanges(
+				long companyId, String associationClassName, int start,
+				int end) {
+
+		return _analyticsAssociationChangeLocalService.
+			getAnalyticsAssociationChanges(
+				companyId, associationClassName, start, end);
+	}
+
 	/**
 	 * Returns the number of analytics association changes.
 	 *
@@ -311,6 +358,25 @@ public class AnalyticsAssociationChangeLocalServiceWrapper
 	public int getAnalyticsAssociationChangesCount() {
 		return _analyticsAssociationChangeLocalService.
 			getAnalyticsAssociationChangesCount();
+	}
+
+	@Override
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, java.util.Date modifiedDate,
+		String associationClassName) {
+
+		return _analyticsAssociationChangeLocalService.
+			getAnalyticsAssociationChangesCount(
+				companyId, modifiedDate, associationClassName);
+	}
+
+	@Override
+	public int getAnalyticsAssociationChangesCount(
+		long companyId, String associationClassName) {
+
+		return _analyticsAssociationChangeLocalService.
+			getAnalyticsAssociationChangesCount(
+				companyId, associationClassName);
 	}
 
 	@Override

@@ -117,20 +117,32 @@ public class AnalyticsAssociationChangeModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ASSOCIATIONCLASSNAME_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 2L;
+	public static final long ASSOCIATIONCLASSPK_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ANALYTICSASSOCIATIONCHANGEID_COLUMN_BITMASK = 4L;
+	public static final long ANALYTICSASSOCIATIONCHANGEID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -466,6 +478,15 @@ public class AnalyticsAssociationChangeModelImpl
 		_associationClassName = associationClassName;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalAssociationClassName() {
+		return getColumnOriginalValue("associationClassName");
+	}
+
 	@Override
 	public long getAssociationClassPK() {
 		return _associationClassPK;
@@ -478,6 +499,16 @@ public class AnalyticsAssociationChangeModelImpl
 		}
 
 		_associationClassPK = associationClassPK;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalAssociationClassPK() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("associationClassPK"));
 	}
 
 	@Override

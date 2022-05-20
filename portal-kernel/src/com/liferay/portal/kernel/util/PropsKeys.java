@@ -1414,9 +1414,6 @@ public interface PropsKeys {
 
 	public static final String LIFERAY_HOME = "liferay.home";
 
-	public static final String LIFERAY_LIB_GLOBAL_SHARED_DIR =
-		"liferay.lib.global.shared.dir";
-
 	public static final String LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR =
 		"liferay.shielded.container.lib.portal.dir";
 

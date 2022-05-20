@@ -1180,9 +1180,6 @@ public class PropsValues {
 	public static final String LIFERAY_HOME = PropsUtil.get(
 		PropsKeys.LIFERAY_HOME);
 
-	public static final String LIFERAY_LIB_GLOBAL_SHARED_DIR = PropsUtil.get(
-		PropsKeys.LIFERAY_LIB_GLOBAL_SHARED_DIR);
-
 	public static final String LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
 

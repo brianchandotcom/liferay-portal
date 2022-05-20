@@ -39,8 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.Servlet;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -353,17 +351,6 @@ public class PropsUtil {
 
 		SystemProperties.set(
 			PropsKeys.DEFAULT_LIFERAY_HOME, _getDefaultLiferayHome());
-
-		// Global shared lib directory
-
-		String globalSharedLibDir = _getLibDir(Servlet.class);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Global shared lib directory " + globalSharedLibDir);
-		}
-
-		SystemProperties.set(
-			PropsKeys.LIFERAY_LIB_GLOBAL_SHARED_DIR, globalSharedLibDir);
 
 		// Portal shielded container lib directory
 

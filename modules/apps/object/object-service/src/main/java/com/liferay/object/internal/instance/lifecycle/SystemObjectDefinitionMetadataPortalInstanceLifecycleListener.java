@@ -20,6 +20,7 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.object.constants.ObjectSAPConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
+import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -203,6 +204,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build());
+
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(
@@ -211,6 +213,21 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata),
 				null);
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-146754"))) {
+
+				_bundleContext.registerService(
+					ObjectRelatedModelsProvider.class,
+					new SystemObjectMtoMObjectRelatedModelsProviderImpl(
+						objectDefinition, _objectDefinitionLocalService,
+						_objectFieldLocalService,
+						_objectRelationshipLocalService,
+						_persistedModelLocalServiceRegistry,
+						systemObjectDefinitionMetadata),
+					null);
+			}
+
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(

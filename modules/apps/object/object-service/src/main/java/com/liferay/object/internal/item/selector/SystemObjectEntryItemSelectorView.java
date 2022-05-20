@@ -296,7 +296,9 @@ public class SystemObjectEntryItemSelectorView
 					objectRelatedModelsProvider.getUnrelatedModels(
 						_themeDisplay.getCompanyId(),
 						_themeDisplay.getScopeGroupId(), _objectDefinition,
-						ParamUtil.getLong(_portletRequest, "objectFieldId"));
+						ParamUtil.getLong(_portletRequest, "objectEntryId"),
+						ParamUtil.getLong(
+							_portletRequest, "objectRelationshipId"));
 
 				searchContainer.setResultsAndTotal(
 					() -> baseModels, baseModels.size());

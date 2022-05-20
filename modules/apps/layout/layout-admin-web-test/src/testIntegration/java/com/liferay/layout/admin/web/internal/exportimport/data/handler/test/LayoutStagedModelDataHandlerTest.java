@@ -26,23 +26,26 @@ import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycle
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.layout.test.util.LayoutContentPageEditorTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -56,11 +59,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -69,6 +72,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -105,23 +109,28 @@ public class LayoutStagedModelDataHandlerTest
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesLocalServiceUtil.addPortletPreferences(
-					stagingGroup.getCompanyId(),
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-					_TEST_PORTLET_NAME, null, null);
+			Layout draftLayout = layout.fetchDraftLayout();
 
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferenceValueLocalServiceUtil.getPreferences(
-					portletPreferences);
+			String portletId = _addPortletToLayout(draftLayout);
+
+			PortletPreferencesIds portletPreferencesIds =
+				_portletPreferencesFactory.getPortletPreferencesIds(
+					draftLayout.getCompanyId(), draftLayout.getGroupId(), 0,
+					draftLayout.getPlid(), portletId);
+
+			PortletPreferences jxPortletPreferences =
+				_portletPreferencesLocalService.fetchPreferences(
+					portletPreferencesIds);
 
 			jxPortletPreferences.setValue("lfrScopeType", "company");
 
-			PortletPreferencesLocalServiceUtil.updatePreferences(
-				portletPreferences.getOwnerId(),
-				portletPreferences.getOwnerType(), portletPreferences.getPlid(),
-				portletPreferences.getPortletId(), jxPortletPreferences);
+			_portletPreferencesLocalService.updatePreferences(
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(),
+				portletPreferencesIds.getPlid(),
+				portletPreferencesIds.getPortletId(), jxPortletPreferences);
+
+			LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, layout);
@@ -132,8 +141,7 @@ public class LayoutStagedModelDataHandlerTest
 				liveGroup.getCompanyId());
 
 			validatePortletAttributes(
-				layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
-				"company");
+				layout.getUuid(), portletId, company.getGroupId(), "company");
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -593,6 +601,22 @@ public class LayoutStagedModelDataHandlerTest
 		}
 	}
 
+	private String _addPortletToLayout(Layout layout) throws Exception {
+		JSONObject processAddPortletJSONObject =
+			LayoutContentPageEditorTestUtil.addPortletToLayout(
+				layout, _TEST_PORTLET_NAME);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {
 		return FriendlyURLEntryLocalServiceUtil.getFriendlyURLEntries(
 			layout.getGroupId(),
@@ -622,5 +646,11 @@ public class LayoutStagedModelDataHandlerTest
 
 	private static final String _TEST_PORTLET_NAME =
 		"com_liferay_test_portlet_TestPortlet";
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

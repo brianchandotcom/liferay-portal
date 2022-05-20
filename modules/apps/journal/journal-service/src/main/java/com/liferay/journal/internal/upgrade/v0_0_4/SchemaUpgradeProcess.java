@@ -41,12 +41,12 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 		alterColumnType("JournalArticle", "description", "TEXT null");
 
 		alterColumnName(
-			"JournalFeed", "structureId", "DDMStructureKey TEXT null");
+			"JournalFeed", "structureId", "DDMStructureKey VARCHAR(75) null");
 		alterColumnName(
-			"JournalFeed", "templateId", "DDMTemplateKey TEXT null");
+			"JournalFeed", "templateId", "DDMTemplateKey VARCHAR(75) null");
 		alterColumnName(
 			"JournalFeed", "rendererTemplateId",
-			"DDMRendererTemplateKey TEXT null");
+			"DDMRendererTemplateKey VARCHAR(75) null");
 		alterColumnType("JournalFeed", "targetPortletId", "VARCHAR(200) null");
 	}
 

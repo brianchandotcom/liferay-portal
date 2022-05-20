@@ -14,11 +14,13 @@
 
 package com.liferay.client.extension.internal.upgrade;
 
-import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,28 +38,33 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 
 				@Override
 				protected void doUpgrade() throws Exception {
-					DBInspector dbInspector = new DBInspector(connection);
+					Release remoteAppRelease =
+						_releaseLocalService.fetchRelease(
+							"com.liferay.remote.app.service");
 
-					if (!dbInspector.hasTable("RemoteAppEntry")) {
+					if (remoteAppRelease == null) {
 						return;
 					}
 
-					for (Class<?> clazz : _classes) {
-						UpgradeProcess upgradeProcess =
-							(UpgradeProcess)clazz.newInstance();
+					Release clientExtensionRelease =
+						_releaseLocalService.fetchRelease(
+							_BUNDLE_SYMBOLIC_NAME);
 
-						upgradeProcess.upgrade();
-					}
+					_releaseLocalService.deleteRelease(clientExtensionRelease);
+
+					remoteAppRelease.setServletContextName(
+						"com.liferay.client.extension.service");
+
+					_releaseLocalService.updateRelease(remoteAppRelease);
 				}
 
 			});
 	}
 
-	private final Class<?>[] _classes = {
-		com.liferay.client.extension.internal.upgrade.v3_0_0.
-			ClassNamesUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v3_0_0.
-			ClientExtensionEntryUpgradeProcess.class
-	};
+	private static final String _BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.client.extension.service";
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

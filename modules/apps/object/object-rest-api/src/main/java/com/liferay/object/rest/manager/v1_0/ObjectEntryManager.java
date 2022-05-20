@@ -45,7 +45,7 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry addOrUpdateObjectEntry(
-			DTOConverterContext dtoConverterContext,
+			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception;

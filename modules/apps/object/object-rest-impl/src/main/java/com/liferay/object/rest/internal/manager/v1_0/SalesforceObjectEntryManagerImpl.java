@@ -60,7 +60,7 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
-			DTOConverterContext dtoConverterContext,
+			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {

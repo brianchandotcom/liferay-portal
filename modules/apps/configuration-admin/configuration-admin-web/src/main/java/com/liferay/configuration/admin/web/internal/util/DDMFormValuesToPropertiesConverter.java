@@ -190,8 +190,10 @@ public class DDMFormValuesToPropertiesConverter {
 		String defaultValue, int type, Object value) {
 
 		if ((_locationVariableResolver == null) ||
-			!_locationVariableResolver.isLocationVariable(
-				defaultValue, LocationVariableProtocol.RESOURCE)) {
+			(!_locationVariableResolver.isLocationVariable(
+				defaultValue, LocationVariableProtocol.RESOURCE) &&
+			 !_locationVariableResolver.isLocationVariable(
+				 defaultValue, LocationVariableProtocol.LANGUAGE))) {
 
 			return false;
 		}

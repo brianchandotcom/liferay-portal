@@ -110,10 +110,9 @@ definition {
 
 			Portlet.expandTree();
 
-			AssertClick.assertPartialTextClickAt(
+			Click(
 				key_nodeName = "${pageName}",
-				locator1 = "Treeview#NODE_UNSELECTED",
-				value1 = "${pageName}");
+				locator1 = "Treeview#NODE_UNSELECTED");
 		}
 
 		if (isSet(entryExternalURL)) {

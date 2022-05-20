@@ -1390,9 +1390,9 @@ definition {
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Blog");
+		SearchPortlets.searchWidget(searchTerm = "&quot;Test Blog&quot;");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Blog");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Test Blog&quot;");
 
 		User.logoutPG();
 

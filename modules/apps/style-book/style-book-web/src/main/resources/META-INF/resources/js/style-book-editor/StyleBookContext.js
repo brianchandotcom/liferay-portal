@@ -77,6 +77,11 @@ export function useSaveTokenValue() {
 
 	return (name, value) => {
 		dispatch({
+			type: SET_DRAFT_STATUS,
+			value: DRAFT_STATUS.saving,
+		});
+
+		dispatch({
 			name,
 			type: SET_TOKEN_VALUE,
 			value,

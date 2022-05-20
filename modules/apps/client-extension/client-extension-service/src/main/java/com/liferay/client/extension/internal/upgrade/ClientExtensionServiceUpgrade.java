@@ -16,9 +16,11 @@ package com.liferay.client.extension.internal.upgrade;
 
 import com.liferay.client.extension.internal.upgrade.v3_0_0.ClassNamesUpgradeProcess;
 import com.liferay.client.extension.internal.upgrade.v3_0_0.ClientExtensionEntryUpgradeProcess;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -67,5 +69,10 @@ public class ClientExtensionServiceUpgrade implements UpgradeStepRegistrator {
 			"2.5.0", "3.0.0", new ClassNamesUpgradeProcess(),
 			new ClientExtensionEntryUpgradeProcess());
 	}
+
+	@Reference(
+		target = "(!(release.bundle.symbolic.name=com.liferay.remote.app.service))"
+	)
+	private Release _release;
 
 }

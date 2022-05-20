@@ -48,21 +48,18 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 
 					Release clientExtensionRelease =
 						_releaseLocalService.fetchRelease(
-							_BUNDLE_SYMBOLIC_NAME);
+							"com.liferay.client.extension.service");
 
-					_releaseLocalService.deleteRelease(clientExtensionRelease);
+					clientExtensionRelease.setSchemaVersion(
+						remoteAppRelease.getSchemaVersion());
 
-					remoteAppRelease.setServletContextName(
-						"com.liferay.client.extension.service");
+					_releaseLocalService.updateRelease(clientExtensionRelease);
 
-					_releaseLocalService.updateRelease(remoteAppRelease);
+					_releaseLocalService.deleteRelease(remoteAppRelease);
 				}
 
 			});
 	}
-
-	private static final String _BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.client.extension.service";
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

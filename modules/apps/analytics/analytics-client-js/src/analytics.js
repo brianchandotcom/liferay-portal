@@ -129,23 +129,17 @@ class Analytics {
 		ENV.Analytics.create = Analytics.create;
 		ENV.Analytics.dispose = Analytics.dispose;
 
-		let email = '';
-		let name = '';
-
 		if (
 			Liferay &&
 			Liferay.ThemeDisplay &&
 			Liferay.ThemeDisplay.getUserEmailAddress &&
 			Liferay.ThemeDisplay.getUserName
 		) {
-			email = Liferay.ThemeDisplay.getUserEmailAddress();
-			name = Liferay.ThemeDisplay.getUserName();
+			self.setIdentity({
+				email: Liferay.ThemeDisplay.getUserEmailAddress(),
+				name: Liferay.ThemeDisplay.getUserName(),
+			});
 		}
-
-		self.setIdentity({
-			email,
-			name,
-		});
 
 		return self;
 	}
@@ -284,10 +278,14 @@ class Analytics {
 			return;
 		}
 
+		if (!identity.email) {
+			return console.error(
+				'Unable to send identity message due invalid email'
+			);
+		}
+
 		const hashedIdentity = {
-			emailAddressHashed: identity.email
-				? hash(identity.email.toLowerCase())
-				: '',
+			emailAddressHashed: hash(identity.email.toLowerCase()),
 		};
 
 		this.config.identity = hashedIdentity;

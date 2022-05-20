@@ -78,6 +78,17 @@ public interface AbsolutePortalURLBuilder {
 	public ComboRequestAbsolutePortalURLBuilder forComboRequest();
 
 	/**
+	 * Returns a URL builder for an ECMAScript module.
+	 *
+	 * @param  webContextPath the context path where the module lives
+	 * @param  esModulePath the module path (e.g. /js/index.js)
+	 * @return a URL builder for ESM scripts
+	 * @review
+	 */
+	public ESModuleAbsolutePortalURLBuilder forESModule(
+		String webContextPath, String esModulePath);
+
+	/**
 	 * Returns a URL builder for portal images. Image resources live in {@code
 	 * com.liferay.portal.kernel.util.Portal#PATH_IMAGE}.
 	 *

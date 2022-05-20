@@ -32,7 +32,9 @@ public class URLUtil {
 
 		boolean hasQueryString = false;
 
-		for (String string : sb.getStrings()) {
+		for (int i = 0; i < sb.index(); i++) {
+			String string = sb.stringAt(i);
+
 			if (string.contains(StringPool.QUESTION)) {
 				hasQueryString = true;
 

@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.analytics.message.storage.model.AnalyticsAssociationChange">
+		<field name="mvccVersion" type="long" />
+		<field name="analyticsAssociationChangeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="associationClassName" type="String" />
+		<field name="associationClassPK" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+	</model>
 	<model name="com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage">
 		<field name="mvccVersion" type="long" />
 		<field name="analyticsDeleteMessageId" type="long" />

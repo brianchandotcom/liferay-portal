@@ -42,12 +42,11 @@ definition {
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-				Pause(locator1 = "3000");
+				Portlet.expandTree();
 
-				AssertClick.assertPartialTextClickAt(
+				Click(
 					key_nodeName = "${linkPageName}",
-					locator1 = "Treeview#NODE_UNSELECTED",
-					value1 = "${linkPageName}");
+					locator1 = "Treeview#NODE_UNSELECTED");
 
 				SelectFrameTop();
 			}

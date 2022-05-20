@@ -47,7 +47,7 @@ public class BuildFactory {
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
 				jobVariant = JenkinsResultsParserUtil.getBuildParameter(
-					url, "JOB_VARIANT");
+					url, "JOB_VARIANT", parentBuild);
 			}
 
 			if ((jobVariant != null) && jobVariant.contains("cucumber")) {
@@ -83,7 +83,7 @@ public class BuildFactory {
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
 				jobVariant = JenkinsResultsParserUtil.getBuildParameter(
-					url, "JOB_VARIANT");
+					url, "JOB_VARIANT", parentBuild);
 			}
 
 			if ((jobVariant != null) &&

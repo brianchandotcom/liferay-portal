@@ -2925,17 +2925,25 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected Set<String> getJobParameterNames() {
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 
-		try {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						getJobURL(), "/api/json?tree=actions[",
-						"parameterDefinitions[name,type,value]]")));
+		String urlSuffix = "api/json";
+
+		if (archiveFileExists(urlSuffix)) {
+			jsonObject = new JSONObject(getArchiveFileContent(urlSuffix));
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to get build JSON", ioException);
+		else {
+			try {
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						JenkinsResultsParserUtil.combine(
+							getJobURL(), "/api/json?tree=actions[",
+							"parameterDefinitions[name,type,value]]")));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to get build JSON", ioException);
+			}
 		}
 
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");

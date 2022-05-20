@@ -116,6 +116,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -1150,7 +1151,7 @@ public class JenkinsResultsParserUtil {
 	public static String getBuildArtifactURL(
 		String buildURL, String artifactName) {
 
-		Matcher matcher = _topLevelBuildURLPattern.matcher(buildURL);
+		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
 		matcher.find();
 
@@ -1185,7 +1186,7 @@ public class JenkinsResultsParserUtil {
 			topLevelBuildURL = "";
 		}
 
-		Matcher matcher = _topLevelBuildURLPattern.matcher(topLevelBuildURL);
+		Matcher matcher = _buildURLPattern.matcher(topLevelBuildURL);
 
 		if (matcher.find()) {
 			buildNumber = matcher.group("buildNumber");
@@ -1215,7 +1216,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getBuildID(String topLevelBuildURL) {
-		Matcher matcher = _topLevelBuildURLPattern.matcher(topLevelBuildURL);
+		Matcher matcher = _buildURLPattern.matcher(topLevelBuildURL);
 
 		matcher.find();
 
@@ -1248,7 +1249,14 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getBuildParameter(String buildURL, String key) {
-		Map<String, String> buildParameters = getBuildParameters(buildURL);
+		return getBuildParameter(buildURL, key, null);
+	}
+
+	public static String getBuildParameter(
+		String buildURL, String key, Build parentBuild) {
+
+		Map<String, String> buildParameters = getBuildParameters(
+			buildURL, parentBuild);
 
 		if (buildParameters.containsKey(key)) {
 			return buildParameters.get(key);
@@ -1259,21 +1267,60 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Map<String, String> getBuildParameters(String buildURL) {
+		return getBuildParameters(buildURL, null);
+	}
+
+	public static Map<String, String> getBuildParameters(
+		String buildURL, Build parentBuild) {
+
 		if (!buildURL.endsWith("/")) {
 			buildURL += "/";
 		}
 
-		String buildParametersURL = getLocalURL(
-			combine(buildURL, "api/json?tree=actions[parameters[name,value]]"));
+		JSONObject jsonObject = null;
 
-		try {
-			JSONObject jsonObject = toJSONObject(buildParametersURL);
+		if (parentBuild != null) {
+			Matcher matcher = _buildURLPattern.matcher(buildURL);
 
-			return JenkinsAPIUtil.getBuildParameters(jsonObject);
+			if (matcher.find()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(parentBuild.getArchiveRootDir());
+				sb.append("/");
+				sb.append(parentBuild.getArchiveName());
+				sb.append("/");
+				sb.append(matcher.group("masterHostname"));
+				sb.append("/");
+				sb.append(matcher.group("jobName"));
+				sb.append("/");
+				sb.append(matcher.group("buildNumber"));
+				sb.append("/api/json");
+
+				File file = new File(sb.toString());
+
+				if (file.exists()) {
+					try {
+						jsonObject = new JSONObject(read(file));
+					}
+					catch (IOException | JSONException exception) {
+					}
+				}
+			}
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+
+		if (jsonObject == null) {
+			String buildParametersURL = getLocalURL(
+				buildURL + "api/json?tree=actions[parameters[name,value]]");
+
+			try {
+				jsonObject = toJSONObject(buildParametersURL);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
+
+		return JenkinsAPIUtil.getBuildParameters(jsonObject);
 	}
 
 	public static Properties getBuildProperties() throws IOException {
@@ -5746,6 +5793,10 @@ public class JenkinsResultsParserUtil {
 	private static final Hashtable<Object, Object> _buildProperties =
 		new Hashtable<>();
 	private static String[] _buildPropertiesURLs;
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		"http(?:|s):\\/\\/(?<masterHostname>test-(?<cohortNumber>[\\d]{1})-" +
+			"(?<masterNumber>[\\d]{1,2})).*(?:|\\.liferay\\.com)\\/+job\\/+" +
+				"(?<jobName>[\\w\\W]*?)\\/+(?<buildNumber>[0-9]*)");
 	private static Boolean _ciNode;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
@@ -5799,10 +5850,6 @@ public class JenkinsResultsParserUtil {
 	};
 
 	private static final Set<String> _timeStamps = new HashSet<>();
-	private static final Pattern _topLevelBuildURLPattern = Pattern.compile(
-		"http(?:|s):\\/\\/(?<masterHostname>test-(?<cohortNumber>[\\d]{1})-" +
-			"(?<masterNumber>[\\d]{1,2})).*(?:|\\.liferay\\.com)\\/+job\\/+" +
-				"(?<jobName>[\\w\\W]*?)\\/+(?<buildNumber>[0-9]*)");
 	private static final Pattern _urlQueryStringPattern = Pattern.compile(
 		"\\&??(\\w++)=([^\\&]*)");
 	private static final File _userHomeDir = new File(

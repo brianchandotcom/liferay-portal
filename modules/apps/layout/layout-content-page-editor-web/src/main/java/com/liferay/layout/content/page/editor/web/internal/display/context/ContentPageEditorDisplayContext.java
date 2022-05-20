@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
@@ -136,6 +137,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
@@ -196,6 +198,7 @@ public class ContentPageEditorDisplayContext {
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
 		SegmentsExperienceManager segmentsExperienceManager,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		StagingGroupHelper stagingGroupHelper) {
 
 		_commentManager = commentManager;
@@ -210,6 +213,7 @@ public class ContentPageEditorDisplayContext {
 		_pageEditorConfiguration = pageEditorConfiguration;
 		_renderResponse = renderResponse;
 		_segmentsExperienceManager = segmentsExperienceManager;
+		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceTracker = infoItemServiceTracker;
@@ -487,6 +491,8 @@ public class ContentPageEditorDisplayContext {
 
 					return group.isPrivateLayoutsEnabled();
 				}
+			).put(
+				"isSegmentationEnabled", _isSegmentationEnabled()
 			).put(
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
@@ -2282,6 +2288,16 @@ public class ContentPageEditorDisplayContext {
 		return !publishedLayout.isPrivateLayout();
 	}
 
+	private boolean _isSegmentationEnabled() {
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				themeDisplay.getCompanyGroupId());
+		}
+		catch (ConfigurationException configurationException) {
+			return false;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
@@ -2312,6 +2328,7 @@ public class ContentPageEditorDisplayContext {
 	private Layout _publishedLayout;
 	private String _redirect;
 	private final RenderResponse _renderResponse;
+	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private Long _segmentsExperienceId;
 	private final SegmentsExperienceManager _segmentsExperienceManager;
 	private List<Map<String, Object>> _sidebarPanels;

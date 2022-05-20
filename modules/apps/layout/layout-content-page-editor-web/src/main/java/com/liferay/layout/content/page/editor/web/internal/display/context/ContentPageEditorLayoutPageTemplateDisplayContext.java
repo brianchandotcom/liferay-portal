@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -89,6 +90,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		boolean pageIsDisplayPage, PortletRequest portletRequest,
 		RenderResponse renderResponse,
 		SegmentsExperienceManager segmentsExperienceManager,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		StagingGroupHelper stagingGroupHelper) {
 
 		super(
@@ -98,7 +100,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			fragmentRendererTracker, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse,
-			segmentsExperienceManager, stagingGroupHelper);
+			segmentsExperienceManager, segmentsConfigurationProvider,
+			stagingGroupHelper);
 
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;

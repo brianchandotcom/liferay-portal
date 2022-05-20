@@ -456,15 +456,29 @@ const ExperiencesSelectorHeader = ({
 				</p>
 			)}
 
-			<ClayAlert
-				className="mx-0"
-				displayType="warning"
-				title={Liferay.Language.get('warning')}
-			>
-				{Liferay.Language.get(
-					'changes-to-experiences-are-applied-immediately'
-				)}
-			</ClayAlert>
+			{!config.isSegmentationEnabled ? (
+				<ClayAlert className="mx-0" displayType="warning">
+					<strong className="lead">
+						{Liferay.Language.get(
+							'experiences-can-not-be-displayed-because-segmentation-is-disabled'
+						)}
+					</strong>
+
+					{Liferay.Language.get(
+						'to-enable-segmentation-go-to-system-settings-segments-segments-service'
+					)}
+				</ClayAlert>
+			) : (
+				<ClayAlert
+					className="mx-0"
+					displayType="warning"
+					title={Liferay.Language.get('warning')}
+				>
+					{Liferay.Language.get(
+						'changes-to-experiences-are-applied-immediately'
+					)}
+				</ClayAlert>
+			)}
 		</>
 	);
 };

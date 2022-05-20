@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
@@ -112,6 +113,7 @@ public class ContentPageLayoutEditorDisplayContext
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
 		SegmentsExperienceManager segmentsExperienceManager,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		StagingGroupHelper stagingGroupHelper) {
 
 		super(
@@ -121,7 +123,8 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentRendererTracker, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse,
-			segmentsExperienceManager, stagingGroupHelper);
+			segmentsExperienceManager, segmentsConfigurationProvider,
+			stagingGroupHelper);
 	}
 
 	@Override

@@ -275,7 +275,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 					filterParser.parse(filterString));
 
 			return _predicateExpressionConvert.convert(
-				oDataFilter.getExpression(), locale, entityModel,
+				entityModel, oDataFilter.getExpression(), locale,
 				_objectDefinition.getObjectDefinitionId());
 		}
 		catch (Exception exception) {

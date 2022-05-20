@@ -59,12 +59,12 @@ public class PredicateExpressionVisitorImpl
 	implements ExpressionVisitor<Object> {
 
 	public PredicateExpressionVisitorImpl(
-		Format format, Locale locale, EntityModel entityModel,
+		EntityModel entityModel, Format format, Locale locale,
 		long objectDefinitionId, ObjectTableProvider objectTableProvider) {
 
+		_entityModel = entityModel;
 		_format = format;
 		_locale = locale;
-		_entityModel = entityModel;
 		_objectDefinitionId = objectDefinitionId;
 		_objectTableProvider = objectTableProvider;
 	}
@@ -95,11 +95,10 @@ public class PredicateExpressionVisitorImpl
 
 		return lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
-				_format, _locale,
 				_getLambdaEntityModel(
 					lambdaFunctionExpression.getVariableName(),
 					(CollectionEntityField)entityFieldsMap.get(
-						collectionPropertyExpression.getName())),
+						collectionPropertyExpression.getName())), _format, _locale,
 				_objectDefinitionId, _objectTableProvider));
 	}
 

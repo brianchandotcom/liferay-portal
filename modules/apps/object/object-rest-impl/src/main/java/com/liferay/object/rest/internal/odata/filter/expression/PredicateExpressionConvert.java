@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 public class PredicateExpressionConvert {
 
 	public Predicate convert(
-			Expression expression, Locale locale, EntityModel entityModel,
-			long objectDefinitionId)
+		EntityModel entityModel, Expression expression, Locale locale,
+		long objectDefinitionId)
 		throws ExpressionVisitException {
 
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
@@ -46,7 +46,7 @@ public class PredicateExpressionConvert {
 
 		return (Predicate)expression.accept(
 			new PredicateExpressionVisitorImpl(
-				format, locale, entityModel, objectDefinitionId,
+				entityModel, format, locale, objectDefinitionId,
 				_objectTableProvider));
 	}
 

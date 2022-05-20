@@ -197,7 +197,7 @@ describe('SelectFileExtension', () => {
 
 		expect(getByText('1 item-selected')).toBeInTheDocument();
 		const clearButton = container.querySelector(
-			'.tree-filter-count-feedback .btn'
+			'.tree-filter-count-feedback .tree-filter-clear-selected'
 		);
 		fireEvent.click(clearButton);
 		expect(queryByText('1 item-selected')).not.toBeInTheDocument();

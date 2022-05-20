@@ -16,6 +16,7 @@ import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
 import {getApplicationsStatus} from '../../../common/services/Application';
+import {setFirstLetterUpperCase} from '../../../common/utils';
 import {CONSTANTS} from '../../../common/utils/constants';
 
 export default function () {
@@ -61,36 +62,48 @@ export default function () {
 				reviewed: '#4C84FF',
 				underwriting: '#B5CDFE',
 			};
+
 			const cols = [
-				[CONSTANTS.STATUS.OPEN, getTotalCount(openApplicationsResults)],
+				[
+					CONSTANTS.STATUS.OPEN,
+					getTotalCount(openApplicationsResults),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.OPEN),
+				],
 				[
 					CONSTANTS.STATUS.INCOMPLETE,
 					getTotalCount(incompleteApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.INCOMPLETE),
 				],
 				[
 					CONSTANTS.STATUS.QUOTED,
 					getTotalCount(quotedApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.QUOTED),
 				],
 				[
 					CONSTANTS.STATUS.UNDERWRITING,
 					getTotalCount(underwritingApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.UNDERWRITING),
 				],
 				[
 					CONSTANTS.STATUS.REVIEWED,
 					getTotalCount(reviewedApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.REVIEWED),
 				],
 				[
 					CONSTANTS.STATUS.REJECTED,
 					getTotalCount(rejectedApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.REJECTED),
 				],
 				[
 					CONSTANTS.STATUS.BOUND,
 					getTotalCount(boundApplicationsResult),
+					setFirstLetterUpperCase(CONSTANTS.STATUS.BOUND),
 				],
 			];
 
 			const columns = cols.filter((col) => col[1] > 0);
-			setChartData({...chartData, ...{colors, columns: []}});
+
+			setChartData({...chartData, ...{colors, columns}});
 
 			const title = columns
 				.map((array) => array[1])

@@ -14,6 +14,7 @@
 
 import {gql} from '@apollo/client';
 
+import {UserAccount} from './liferayUserAccount';
 import {TestrayCase} from './testrayCase';
 
 export type TestrayCaseResult = {
@@ -28,6 +29,7 @@ export type TestrayCaseResult = {
 	errors: string;
 	id: number;
 	startDate: string;
+	user?: UserAccount;
 };
 
 export const getCaseResultsAggregation = gql`
@@ -60,7 +62,7 @@ export const getCaseResults = gql`
 		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case,component.team,build.productVersion,build.routine,run&nestedFieldsDepth=3"
+				path: "caseresults?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3"
 			) {
 			items {
 				assignedUserId
@@ -103,6 +105,15 @@ export const getCaseResults = gql`
 				startDate
 				run: r_runToCaseResult_c_run {
 					externalReferencePK
+				}
+				user: r_userToCaseResults_user {
+					objectDefinitionId
+					emailAddress
+					givenName
+					modifiedDate
+					additionalName
+					createDate
+					externalReferenceCode
 				}
 			}
 			lastPage

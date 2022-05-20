@@ -98,7 +98,8 @@ function main() {
 				activeTabPanel(item);
 			}
 		});
-	} else {
+	}
+	else {
 		tabItemSelected = tabItems[this.tabIndex];
 		tabItems.forEach(function (item, i) {
 			activeTab(tabItems[this.tabIndex]);

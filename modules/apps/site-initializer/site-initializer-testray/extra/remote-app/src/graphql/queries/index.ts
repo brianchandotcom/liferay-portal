@@ -25,7 +25,7 @@ export type FacetAggregation = {
 			numberOfOccurrences: number;
 			term: string;
 		}[];
-	};
+	}[];
 };
 
 export type FacetAggregationQuery<ObjectKey extends string> = {

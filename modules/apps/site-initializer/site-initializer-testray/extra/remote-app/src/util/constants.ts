@@ -20,6 +20,22 @@ export const DATA_COLORS = {
 	'metrics.test-fix': '#59BBFC',
 };
 
+export enum Statuses {
+	PASSED = 'PASSED',
+	FAILED = 'FAILED',
+	BLOCKED = 'BLOCKED',
+	TEST_FIX = 'TEST FIX',
+	INCOMPLETE = 'INCOMPLETE',
+}
+
+export const chartColors = {
+	[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
+	[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
+	[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
+	[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
+	[Statuses.TEST_FIX]: DATA_COLORS['metrics.test-fix'],
+};
+
 export const LABEL_GREATER_THAN_99 = '> 99';
 export const LABEL_LESS_THAN_1 = '< 1';
 

@@ -3,7 +3,7 @@
 exports[`SegmentEdit renders 1`] = `
 <DocumentFragment>
   <div
-    class="segment-edit-page-root"
+    class="segment-edit-page-root segment-edit-page-root--with-warning"
   >
     <input
       name="active"
@@ -89,7 +89,55 @@ exports[`SegmentEdit renders 1`] = `
     </div>
     <div
       class="form-body"
-    />
+    >
+      <div
+        class="mx-0 alert alert-fluid alert-warning"
+        role="alert"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="alert-autofit-row autofit-row"
+          >
+            <div
+              class="autofit-col"
+            >
+              <div
+                class="autofit-section"
+              >
+                <span
+                  class="alert-indicator"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#warning-full"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="autofit-col autofit-col-expand"
+            >
+              <div
+                class="autofit-section"
+              >
+                <strong
+                  class="lead"
+                >
+                  segmentation-is-disabled
+                </strong>
+                to-enable-segmentation-go-to-system-settings-segments-segments-service
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -97,7 +145,7 @@ exports[`SegmentEdit renders 1`] = `
 exports[`SegmentEdit renders with edit buttons if the user has update permissions 1`] = `
 <DocumentFragment>
   <div
-    class="segment-edit-page-root"
+    class="segment-edit-page-root segment-edit-page-root--with-warning"
   >
     <input
       name="active"
@@ -263,7 +311,55 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
     </div>
     <div
       class="form-body"
-    />
+    >
+      <div
+        class="mx-0 alert alert-fluid alert-warning"
+        role="alert"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="alert-autofit-row autofit-row"
+          >
+            <div
+              class="autofit-col"
+            >
+              <div
+                class="autofit-section"
+              >
+                <span
+                  class="alert-indicator"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#warning-full"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="autofit-col autofit-col-expand"
+            >
+              <div
+                class="autofit-section"
+              >
+                <strong
+                  class="lead"
+                >
+                  segmentation-is-disabled
+                </strong>
+                to-enable-segmentation-go-to-system-settings-segments-segments-service
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -271,7 +367,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
 exports[`SegmentEdit renders with given values 1`] = `
 <DocumentFragment>
   <div
-    class="segment-edit-page-root"
+    class="segment-edit-page-root segment-edit-page-root--with-warning"
   >
     <input
       name="active"
@@ -438,10 +534,57 @@ exports[`SegmentEdit renders with given values 1`] = `
       class="form-body"
     >
       <div
+        class="mx-0 alert alert-fluid alert-warning"
+        role="alert"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="alert-autofit-row autofit-row"
+          >
+            <div
+              class="autofit-col"
+            >
+              <div
+                class="autofit-section"
+              >
+                <span
+                  class="alert-indicator"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#warning-full"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="autofit-col autofit-col-expand"
+            >
+              <div
+                class="autofit-section"
+              >
+                <strong
+                  class="lead"
+                >
+                  segmentation-is-disabled
+                </strong>
+                to-enable-segmentation-go-to-system-settings-segments-segments-service
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
         class="contributor-builder-root editing"
       >
         <div
-          class="criteria-builder-section-sidebar"
+          class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
         >
           <div
             class="criteria-sidebar-root"
@@ -761,7 +904,7 @@ exports[`SegmentEdit renders with given values 1`] = `
 exports[`SegmentEdit renders without edit buttons if the user does not have update permissions 1`] = `
 <DocumentFragment>
   <div
-    class="segment-edit-page-root"
+    class="segment-edit-page-root segment-edit-page-root--with-warning"
   >
     <input
       name="active"
@@ -847,7 +990,55 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
     </div>
     <div
       class="form-body"
-    />
+    >
+      <div
+        class="mx-0 alert alert-fluid alert-warning"
+        role="alert"
+      >
+        <div
+          class="container"
+        >
+          <div
+            class="alert-autofit-row autofit-row"
+          >
+            <div
+              class="autofit-col"
+            >
+              <div
+                class="autofit-section"
+              >
+                <span
+                  class="alert-indicator"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-warning-full"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#warning-full"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="autofit-col autofit-col-expand"
+            >
+              <div
+                class="autofit-section"
+              >
+                <strong
+                  class="lead"
+                >
+                  segmentation-is-disabled
+                </strong>
+                to-enable-segmentation-go-to-system-settings-segments-segments-service
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

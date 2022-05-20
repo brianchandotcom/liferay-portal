@@ -6,7 +6,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
     class="contributor-builder-root editing"
   >
     <div
-      class="criteria-builder-section-sidebar"
+      class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
     >
       <div
         class="criteria-sidebar-root"
@@ -793,7 +793,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
     class="contributor-builder-root"
   >
     <div
-      class="criteria-builder-section-sidebar"
+      class="criteria-builder-section-sidebar criteria-builder-section-sidebar--with-warning"
     >
       <div
         class="criteria-sidebar-root"

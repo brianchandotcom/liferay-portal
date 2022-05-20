@@ -101,7 +101,16 @@ definition {
 				NavItem.click(navItem = "${scope}");
 			}
 
-			LexiconCard.clickCard(card = "${previewItem}");
+			if ("${previewType}" == "Pages") {
+				Portlet.expandTree();
+
+				Click(
+					key_nodeName = "${previewItem}",
+					locator1 = "Treeview#NODE_UNSELECTED");
+			}
+			else {
+				LexiconCard.clickCard(card = "${previewItem}");
+			}
 
 			SelectFrameTop();
 		}

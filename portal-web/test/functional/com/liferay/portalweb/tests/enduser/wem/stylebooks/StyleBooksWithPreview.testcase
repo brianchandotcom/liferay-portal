@@ -1216,7 +1216,8 @@ definition {
 		task ("View the Showing 4 of 5 Items shown in dropdown menu of preview item selector then change the preview item to the first widget page") {
 			StyleBooks.selectPreviewItem(
 				caption = "Showing 4 of 5 Items",
-				previewItem = "Widget Page Name 1");
+				previewItem = "Widget Page Name 1",
+				previewType = "Pages");
 		}
 
 		task ("Change Body Color of Body in General form") {

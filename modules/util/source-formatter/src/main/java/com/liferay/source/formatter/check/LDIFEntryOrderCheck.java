@@ -96,7 +96,7 @@ public class LDIFEntryOrderCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _attributePattern = Pattern.compile(
-		"(?<=(\\A|\n)).+:[\\s\\S]*?(?=\n.+:|\\Z)");
+		"(?<=(\\A|\n)).+?:[\\s\\S]*?(?=\n.+:|\\Z)");
 
 	private static class AttributeComparator implements Comparator<String> {
 

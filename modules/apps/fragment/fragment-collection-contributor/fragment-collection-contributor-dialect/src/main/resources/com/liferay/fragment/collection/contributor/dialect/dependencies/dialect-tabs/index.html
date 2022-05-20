@@ -1,8 +1,10 @@
 <div class="component-tabs [#if (configuration.tabDirection == 'nav-vertical')]d-flex[/#if]">
 	<nav class="navbar navbar-collapse-absolute navbar-expand-md p-0">
-		<button aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="collapsed navbar-toggler navbar-toggler-link nav nav-${configuration.tabStyle} ${configuration.tabDirection} ${(configuration.tabActiveBarPosition)} p-0" data-toggle="collapse">
-			<span class="active nav-link navbar-text-truncate">Tab 1</span>
-		</button>
+		<div class="d-md-none nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}">
+			<button aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="active collapsed nav-link navbar-toggler navbar-toggler-link" data-toggle="collapse">
+				<span class="navbar-text-truncate">Tab 1</span>
+			</button>
+		</div>
 
 		<div class="collapse navbar-collapse" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
 			<ul class="nav nav-${configuration.tabStyle} ${configuration.tabDirection} ${(configuration.tabActiveBarPosition)}" role="tablist">

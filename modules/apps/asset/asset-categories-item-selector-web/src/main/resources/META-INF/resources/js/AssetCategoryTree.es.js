@@ -17,36 +17,18 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useMemo, useRef, useState} from 'react';
 
-function performFilter(value, tree) {
-	const getItems = (previous, item) => {
-		if (!item.vocabulary && item.name.toLowerCase().indexOf(value) !== -1) {
-			const immutableItem = {...item};
-
-			if (Array.isArray(immutableItem.children)) {
-				immutableItem.children = immutableItem.children.reduce(
-					getItems,
-					[]
-				);
-			}
-
-			previous.push(immutableItem);
-
-			return previous;
+const nodeByName = (items, name) => {
+	return items.reduce(function reducer(acc, item) {
+		if (item.name?.toLowerCase().includes(name.toLowerCase())) {
+			acc.push(item);
+		}
+		else if (item.children) {
+			acc.concat(item.children.reduce(reducer, acc));
 		}
 
-		if (Array.isArray(item.children)) {
-			const children = item.children.reduce(getItems, []);
-
-			if (children.length) {
-				previous.push({...item, children});
-			}
-		}
-
-		return previous;
-	};
-
-	return tree.reduce(getItems, []);
-}
+		return acc;
+	}, []);
+};
 
 export function AssetCategoryTree({
 	filterQuery,
@@ -63,12 +45,14 @@ export function AssetCategoryTree({
 			return items;
 		}
 
-		return performFilter(filterQuery.toLowerCase(), [...items]);
+		return nodeByName(items, filterQuery);
 	}, [items, filterQuery]);
 
 	const selectedItemsRef = useRef(new Map());
 
-	const handleMultipleSelectionChange = (selection, item) => {
+	const handleMultipleSelectionChange = (item, selection) => {
+		selection.toggle(item.id);
+
 		if (!selection.has(item.id)) {
 			selectedItemsRef.current.set(item.id, {
 				className: item.className,
@@ -94,9 +78,7 @@ export function AssetCategoryTree({
 		});
 	};
 
-	const handleSingleSelectionChange = (event, item) => {
-		event.preventDefault();
-
+	const handleSingleSelectionChange = (item) => {
 		Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
 			data: {
 				className: item.className,
@@ -105,6 +87,39 @@ export function AssetCategoryTree({
 				title: item.name,
 			},
 		});
+	};
+
+	const onClick = (event, item, selection) => {
+		event.preventDefault();
+
+		if (item.disabled) {
+			return;
+		}
+
+		if (multiSelection) {
+			handleMultipleSelectionChange(item, selection);
+		}
+		else {
+			handleSingleSelectionChange(item);
+		}
+	};
+
+	const onKeyDownCapture = (event, item, selection) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+			event.stopPropagation();
+
+			if (item.disabled) {
+				return;
+			}
+
+			if (multiSelection) {
+				handleMultipleSelectionChange(item, selection);
+			}
+			else {
+				handleSingleSelectionChange(item);
+			}
+		}
 	};
 
 	return (
@@ -119,10 +134,9 @@ export function AssetCategoryTree({
 			{(item, selection) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) =>
-							!multiSelection &&
-							!item.disabled &&
-							handleSingleSelectionChange(event, item)
+						onClick={(event) => onClick(event, item, selection)}
+						onKeyDownCapture={(event) =>
+							onKeyDownCapture(event, item, selection)
 						}
 					>
 						{multiSelection && !item.disabled && (
@@ -133,6 +147,7 @@ export function AssetCategoryTree({
 										item
 									)
 								}
+								tabIndex="-1"
 							/>
 						)}
 
@@ -145,9 +160,10 @@ export function AssetCategoryTree({
 						{(item) => (
 							<ClayTreeView.Item
 								onClick={(event) =>
-									!multiSelection &&
-									!item.disabled &&
-									handleSingleSelectionChange(event, item)
+									onClick(event, item, selection)
+								}
+								onKeyDownCapture={(event) =>
+									onKeyDownCapture(event, item, selection)
 								}
 							>
 								{multiSelection && !item.disabled && (
@@ -158,6 +174,7 @@ export function AssetCategoryTree({
 												item
 											)
 										}
+										tabIndex="-1"
 									/>
 								)}
 

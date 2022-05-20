@@ -33,7 +33,14 @@ definition {
 	}
 
 	tearDown {
-		PortalInstances.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Manager");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Employee");
+		}
 	}
 
 	@description = "Nested fields in oneToMany relationship"

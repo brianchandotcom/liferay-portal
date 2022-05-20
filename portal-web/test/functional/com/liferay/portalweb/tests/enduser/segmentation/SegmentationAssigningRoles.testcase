@@ -351,7 +351,7 @@ definition {
 
 	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings
 	When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen
-	Then a message will show: 'Warning: Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service'."
+	Then a message will show: 'Warning: Assigning roles by segment is disabled. To enable, go to Instance Settings.'."
 	@priority = "3"
 	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CheckMessageSegmentationByRolesDisabledInstanceSettings";
@@ -385,7 +385,7 @@ definition {
 			AssertTextPresent(
 				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
 				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+				value1 = "Assigning roles by segment is disabled. To enable, go to Instance Settings.");
 		}
 	}
 
@@ -504,7 +504,7 @@ definition {
 			AssertTextPresent(
 				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
 				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+				value1 = "Assigning roles by segment is disabled. To enable, go to Instance Settings.");
 		}
 	}
 
@@ -687,7 +687,7 @@ definition {
 			AssertTextNotPresent(
 				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
 				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+				value1 = "Assigning roles by segment is disabled. To enable, go to Instance Settings.");
 		}
 	}
 

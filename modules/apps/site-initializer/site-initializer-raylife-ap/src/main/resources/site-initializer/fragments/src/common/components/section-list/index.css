@@ -1,0 +1,17 @@
+.section-list-container .section-box.border-bottom-dashed:not(:last-child) {
+	border-bottom: 1px dashed #d3d3d4;
+	padding-bottom: 10px;
+}
+
+.section-list-container .section-content .subsection-container {
+	cursor: pointer;
+}
+
+.section-list-container .section-box .section-header {
+	font-weight: 900 !important;
+}
+
+.section-list-container .subsection-container .arrow-icon svg {
+	height: 20px !important;
+	width: 20px !important;
+}

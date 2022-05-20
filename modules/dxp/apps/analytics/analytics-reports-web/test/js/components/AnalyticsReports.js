@@ -36,6 +36,10 @@ APIService.getAnalyticsReportsData.mockResolvedValue({
 	},
 });
 
+jest.mock('data-engine-js-components-web', () => ({
+	useFeatureFlag: () => ({['LPS-149256']: false}),
+}));
+
 describe('AnalyticsReports', () => {
 	afterEach(() => {
 		jest.clearAllMocks();

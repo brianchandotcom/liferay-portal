@@ -1,7 +1,0 @@
-{
-	"cacheable": true,
-	"fragmentEntryKey": "radio",
-	"icon": "radio-button",
-	"name": "radio",
-	"type": "input"
-}

@@ -378,7 +378,7 @@ definition {
 		task ("Go to Tests, check empty state message") {
 			ACNavigation.goToTests();
 
-			ACUtils.viewGenericTextInOrder(textValueList = "There are no tests found.");
+			ACUtils.viewGenericText(textValueList = "There are no tests found.");
 
 			for (var textValue : list "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.") {
 				AssertTextEquals.assertPartialText(

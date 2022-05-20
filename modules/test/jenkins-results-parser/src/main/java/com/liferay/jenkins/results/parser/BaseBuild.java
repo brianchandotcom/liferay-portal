@@ -1803,10 +1803,14 @@ public abstract class BaseBuild implements Build {
 
 		Build parentBuild = getParentBuild();
 
+		if (parentBuild == null) {
+			return;
+		}
+
 		String parentBuildStatus = parentBuild.getStatus();
 
 		if (!parentBuildStatus.equals("running") ||
-			!JenkinsResultsParserUtil.isCINode()) {
+			!JenkinsResultsParserUtil.isCINode() || fromCompletedBuild) {
 
 			return;
 		}
@@ -2446,6 +2450,12 @@ public abstract class BaseBuild implements Build {
 
 		if ((topLevelBuild == null) || topLevelBuild.fromArchive) {
 			return;
+		}
+
+		int x = consoleText.indexOf("stop-current-job:");
+
+		if (x != -1) {
+			consoleText = consoleText.substring(0, x);
 		}
 
 		if (consoleText.contains(getReinvokedMessage())) {

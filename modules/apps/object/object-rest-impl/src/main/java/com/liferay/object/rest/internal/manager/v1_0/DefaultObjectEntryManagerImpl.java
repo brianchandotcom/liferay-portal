@@ -24,6 +24,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionConvert;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -31,12 +32,8 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -45,9 +42,8 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -61,7 +57,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
@@ -77,7 +72,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -249,11 +243,11 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 				for (Map.Entry<Object, Long> entry1 :
 						aggregationCountMap.entrySet()) {
 
+					Long value = entry1.getValue();
+
 					facetValues.add(
 						new Facet.FacetValue(
-							entry1.getValue(
-							).intValue(),
-							String.valueOf(entry1.getKey())));
+							value.intValue(), String.valueOf(entry1.getKey())));
 				}
 
 				facets.add(new Facet(entry.getKey(), facetValues));
@@ -281,6 +275,21 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			facets, items, pagination,
 			_objectEntryLocalService.getValuesListCount(
 				objectDefinition.getObjectDefinitionId(), search, predicate));
+	}
+
+	@Override
+	public Page<ObjectEntry> getObjectEntries(
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			String filterString, Pagination pagination, String search, Sort[] sorts)
+		throws Exception {
+
+		return getObjectEntries(
+			companyId, objectDefinition, scopeKey, aggregation,
+			dtoConverterContext,
+			toPredicate(
+				filterString, dtoConverterContext.getLocale(), objectDefinition),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -314,6 +323,30 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry);
+	}
+
+	public Predicate toPredicate(
+		String filterString, Locale locale, ObjectDefinition objectDefinition) {
+
+		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()));
+
+			FilterParser filterParser = _filterParserProvider.provide(
+				entityModel);
+
+			Filter oDataFilter = new Filter(filterParser.parse(filterString));
+
+			return _predicateExpressionConvert.convert(
+				oDataFilter.getExpression(), locale, entityModel,
+				objectDefinition.getObjectDefinitionId());
+		}
+		catch (Exception exception) {
+			System.out.println(exception.getMessage());
+		}
+
+		return null;
 	}
 
 	@Override
@@ -501,14 +534,14 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 		return values;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultObjectEntryManagerImpl.class);
-
 	@Reference
 	private Aggregations _aggregations;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -520,16 +553,19 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
-	private ObjectRelationshipService _objectRelationshipService;
-
-	@Reference
 	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private PredicateExpressionConvert _predicateExpressionConvert;
 
 	@Reference
 	private Queries _queries;

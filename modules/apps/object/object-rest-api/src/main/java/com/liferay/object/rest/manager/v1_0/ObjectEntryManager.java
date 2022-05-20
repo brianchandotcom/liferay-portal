@@ -70,6 +70,12 @@ public interface ObjectEntryManager {
 			Sort[] sorts)
 		throws Exception;
 
+	public Page<ObjectEntry> getObjectEntries(
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			String filterString, Pagination pagination, String search, Sort[] sorts)
+		throws Exception;
+
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId)

@@ -18,8 +18,8 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -93,7 +93,8 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			Filter filter, Pagination pagination, String search, Sort[] sorts)
+			Predicate predicate, Pagination pagination, String search,
+			Sort[] sorts)
 		throws Exception {
 
 		return null;

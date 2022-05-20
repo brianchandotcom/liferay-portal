@@ -2828,6 +2828,14 @@ public class JenkinsResultsParserUtil {
 		return Math.min(start, end) + (int)Math.floor(size * randomDouble);
 	}
 
+	public static long getRandomValue(long start, long end) {
+		long size = Math.abs(end - start) + 1;
+
+		double randomDouble = Math.random();
+
+		return Math.min(start, end) + (int)Math.floor(size * randomDouble);
+	}
+
 	public static List<JenkinsSlave> getReachableJenkinsSlaves(
 		List<JenkinsMaster> jenkinsMasters, Integer targetSlaveCount) {
 

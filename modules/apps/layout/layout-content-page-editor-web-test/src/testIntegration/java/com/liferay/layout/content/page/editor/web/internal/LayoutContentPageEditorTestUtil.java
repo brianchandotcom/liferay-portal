@@ -36,18 +36,27 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Lourdes Fernández Besada
  */
 public class LayoutContentPageEditorTestUtil {
 
-	public static JSONObject addPortletToLayout(
-			Layout layout, String portletId,
-			MVCActionCommand addPortletMVCActionCommand)
+	public static JSONObject addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
+
+		MVCActionCommand addPortletMVCActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/add_portlet");
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			getMockLiferayPortletActionRequest(
@@ -87,6 +96,28 @@ public class LayoutContentPageEditorTestUtil {
 		return mockLiferayPortletActionRequest;
 	}
 
+	public static MVCActionCommand getMVCActionCommand(String mvcCommandName) {
+		try {
+			Bundle bundle = FrameworkUtil.getBundle(
+				LayoutContentPageEditorTestUtil.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			Collection<ServiceReference<MVCActionCommand>>
+				mvcActionCommandReferences = bundleContext.getServiceReferences(
+					MVCActionCommand.class,
+					"(mvc.command.name=" + mvcCommandName + ")");
+
+			Iterator<ServiceReference<MVCActionCommand>> iterator =
+				mvcActionCommandReferences.iterator();
+
+			return bundleContext.getService(iterator.next());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	public static ThemeDisplay getThemeDisplay(
 			Company company, Group group, Layout layout)
 		throws Exception {
@@ -115,10 +146,11 @@ public class LayoutContentPageEditorTestUtil {
 		return themeDisplay;
 	}
 
-	public static void publishLayout(
-			Layout draftLayout, Layout layout,
-			MVCActionCommand publishLayoutMVCActionCommand)
+	public static void publishLayout(Layout draftLayout, Layout layout)
 		throws Exception {
+
+		MVCActionCommand publishLayoutMVCActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/publish_layout");
 
 		ServiceContext serviceContext = new ServiceContext();
 

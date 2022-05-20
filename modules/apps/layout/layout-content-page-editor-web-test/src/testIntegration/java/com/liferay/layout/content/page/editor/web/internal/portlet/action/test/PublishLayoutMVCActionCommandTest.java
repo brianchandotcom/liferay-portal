@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -97,8 +96,7 @@ public class PublishLayoutMVCActionCommandTest {
 
 		_assertNullPortletPreferences(layout.getPlid(), encodePortletId);
 
-		LayoutContentPageEditorTestUtil.publishLayout(
-			draftLayout, layout, _mvcActionCommand);
+		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
 
 		_assertNotNullPortletPreferences(
 			draftLayout.getPlid(), encodePortletId);
@@ -121,8 +119,7 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		LayoutContentPageEditorTestUtil.publishLayout(
-			draftLayout, layout, _mvcActionCommand);
+		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
 
 		_assertNullPortletPreferences(draftLayout.getPlid(), encodePortletId);
 
@@ -164,8 +161,7 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		LayoutContentPageEditorTestUtil.publishLayout(
-			draftLayout, layout, _mvcActionCommand);
+		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
 
 		layoutStructure = _getLayoutStructure(draftLayout);
 
@@ -198,8 +194,7 @@ public class PublishLayoutMVCActionCommandTest {
 			LayoutContentPageEditorTestUtil.addPortletToLayout(
 				layout,
 				LayoutContentPageEditorWebPortletKeys.
-					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
-				_addPortletMVCActionCommand);
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);
 
 		Assert.assertNotNull(processAddPortletJSONObject);
 
@@ -256,9 +251,6 @@ public class PublishLayoutMVCActionCommandTest {
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
-	@Inject(filter = "mvc.command.name=/layout_content_page_editor/add_portlet")
-	private MVCActionCommand _addPortletMVCActionCommand;
-
 	private Company _company;
 
 	@Inject
@@ -276,11 +268,6 @@ public class PublishLayoutMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject(
-		filter = "mvc.command.name=/layout_content_page_editor/publish_layout"
-	)
-	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

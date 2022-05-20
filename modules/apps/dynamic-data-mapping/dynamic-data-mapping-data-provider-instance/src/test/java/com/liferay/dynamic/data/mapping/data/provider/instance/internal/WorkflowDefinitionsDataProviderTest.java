@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -52,10 +52,17 @@ public class WorkflowDefinitionsDataProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_setUpLanguageUtil();
-
 		_workflowDefinitionsDataProvider =
 			new WorkflowDefinitionsDataProvider();
+
+		Mockito.when(
+			_language.get(_locale, "no-workflow")
+		).thenReturn(
+			"No Workflow"
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_workflowDefinitionsDataProvider, "_language", _language);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -169,18 +176,6 @@ public class WorkflowDefinitionsDataProviderTest {
 		);
 
 		_workflowDefinitionsDataProvider.getData(ddmDataProviderRequest);
-	}
-
-	private static void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
-
-		Mockito.when(
-			_language.get(_locale, "no-workflow")
-		).thenReturn(
-			"No Workflow"
-		);
 	}
 
 	private void _setUpWorkflowDefinition(

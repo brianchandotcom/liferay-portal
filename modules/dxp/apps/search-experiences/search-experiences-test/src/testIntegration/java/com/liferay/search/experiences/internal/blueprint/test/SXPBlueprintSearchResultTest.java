@@ -206,13 +206,13 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostContentsForTheCurrentLanguage() throws Exception {
 		_setUpJournalArticles(
-			new String[] {"Article", ""},
+			new String[] {"Article Article", ""},
 			new String[] {"Article beta en_US", "Article delta en_US"});
 
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		_setUpJournalArticles(
-			new String[] {"Article Article", ""},
+			new String[] {"Article Article Article", "Article"},
 			new String[] {"Article alpha es_ES", "Article omega es_ES"});
 
 		_updateElementInstancesJSON(
@@ -238,8 +238,8 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(null, null);
 
 		_assertSearch(
-			"[Article alpha es_ES, Article beta en_US, Article delta en_US, " +
-				"Article omega es_ES]");
+			"[Article alpha es_ES, Article beta en_US, Article omega es_ES, " +
+				"Article delta en_US]");
 	}
 
 	@Test

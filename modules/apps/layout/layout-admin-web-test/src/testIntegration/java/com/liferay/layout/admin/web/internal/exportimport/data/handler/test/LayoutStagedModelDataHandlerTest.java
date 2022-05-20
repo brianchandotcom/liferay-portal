@@ -70,7 +70,6 @@ import java.util.Objects;
 
 import javax.portlet.Portlet;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -94,79 +93,87 @@ public class LayoutStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceRegistration.unregister();
-	}
-
 	@Test
 	public void testCompanyScopedPortletOnContentLayoutHasCorrectAttributes()
 		throws Exception {
 
-		_registerTestPortlet();
+		ServiceRegistration<Portlet> serviceRegistration =
+			_registerTestPortlet();
 
-		initExport();
+		try {
+			initExport();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				_TEST_PORTLET_NAME, null, null);
+			PortletPreferences portletPreferences =
+				PortletPreferencesLocalServiceUtil.addPortletPreferences(
+					stagingGroup.getCompanyId(),
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					_TEST_PORTLET_NAME, null, null);
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			PortletPreferenceValueLocalServiceUtil.getPreferences(
-				portletPreferences);
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferenceValueLocalServiceUtil.getPreferences(
+					portletPreferences);
 
-		jxPortletPreferences.setValue("lfrScopeType", "company");
+			jxPortletPreferences.setValue("lfrScopeType", "company");
 
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),
-			portletPreferences.getPlid(), portletPreferences.getPortletId(),
-			jxPortletPreferences);
+			PortletPreferencesLocalServiceUtil.updatePreferences(
+				portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), portletPreferences.getPlid(),
+				portletPreferences.getPortletId(), jxPortletPreferences);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layout);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, layout);
 
-		initImport();
+			initImport();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			liveGroup.getCompanyId());
+			Company company = CompanyLocalServiceUtil.getCompany(
+				liveGroup.getCompanyId());
 
-		validatePortletAttributes(
-			layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
-			"company");
+			validatePortletAttributes(
+				layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
+				"company");
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
 	public void testCompanyScopedPortletOnPortletLayoutHasCorrectAttributes()
 		throws Exception {
 
-		_registerTestPortlet();
+		ServiceRegistration<Portlet> serviceRegistration =
+			_registerTestPortlet();
 
-		initExport();
+		try {
+			initExport();
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			stagingGroup.getGroupId());
+			Layout layout = LayoutTestUtil.addTypePortletLayout(
+				stagingGroup.getGroupId());
 
-		LayoutTestUtil.addPortletToLayout(
-			layout, _TEST_PORTLET_NAME,
-			HashMapBuilder.put(
-				"lfrScopeType", new String[] {"company"}
-			).build());
+			LayoutTestUtil.addPortletToLayout(
+				layout, _TEST_PORTLET_NAME,
+				HashMapBuilder.put(
+					"lfrScopeType", new String[] {"company"}
+				).build());
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layout);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, layout);
 
-		initImport();
+			initImport();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			liveGroup.getCompanyId());
+			Company company = CompanyLocalServiceUtil.getCompany(
+				liveGroup.getCompanyId());
 
-		validatePortletAttributes(
-			layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
-			"company");
+			validatePortletAttributes(
+				layout.getUuid(), _TEST_PORTLET_NAME, company.getGroupId(),
+				"company");
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -597,13 +604,13 @@ public class LayoutStagedModelDataHandlerTest
 			layout.getPlid());
 	}
 
-	private void _registerTestPortlet() {
+	private ServiceRegistration<Portlet> _registerTestPortlet() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LayoutStagedModelDataHandlerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
+		return bundleContext.registerService(
 			Portlet.class, new MVCPortlet(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.preferences-company-wide", "true"
@@ -614,7 +621,5 @@ public class LayoutStagedModelDataHandlerTest
 
 	private static final String _TEST_PORTLET_NAME =
 		"com_liferay_test_portlet_TestPortlet";
-
-	private static ServiceRegistration<Portlet> _serviceRegistration;
 
 }

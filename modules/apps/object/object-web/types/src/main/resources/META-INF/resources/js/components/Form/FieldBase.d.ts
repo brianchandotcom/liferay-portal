@@ -13,6 +13,7 @@
  */
 
 import {ReactNode} from 'react';
+import './FieldBase.scss';
 export default function FieldBase({
 	children,
 	className,
@@ -22,6 +23,7 @@ export default function FieldBase({
 	id,
 	label,
 	required,
+	tooltip,
 	warningMessage,
 }: IProps): JSX.Element;
 interface IProps {
@@ -33,6 +35,7 @@ interface IProps {
 	id?: string;
 	label?: string;
 	required?: boolean;
+	tooltip?: string;
 	warningMessage?: string;
 }
 export {};

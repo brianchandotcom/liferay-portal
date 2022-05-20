@@ -24,6 +24,7 @@ interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	label: string;
 	options?: string[];
 	required?: boolean;
+	tooltip?: string;
 }
 
 export default function Select({
@@ -36,6 +37,7 @@ export default function Select({
 	onChange,
 	options,
 	required,
+	tooltip,
 	...otherProps
 }: ISelectProps) {
 	return (
@@ -47,6 +49,7 @@ export default function Select({
 			id={id}
 			label={label}
 			required={required}
+			tooltip={tooltip}
 		>
 			<ClaySelect
 				{...otherProps}

@@ -20,6 +20,7 @@ interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	label: string;
 	options?: string[];
 	required?: boolean;
+	tooltip?: string;
 }
 export default function Select({
 	className,
@@ -31,6 +32,7 @@ export default function Select({
 	onChange,
 	options,
 	required,
+	tooltip,
 	...otherProps
 }: ISelectProps): JSX.Element;
 export {};

@@ -14,10 +14,12 @@
 
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {FieldFeedback} from 'data-engine-js-components-web';
 import React, {ReactNode} from 'react';
 
+import './FieldBase.scss';
 function RequiredMask() {
 	return (
 		<>
@@ -41,6 +43,7 @@ export default function FieldBase({
 	id,
 	label,
 	required,
+	tooltip,
 	warningMessage,
 }: IProps) {
 	return (
@@ -56,6 +59,20 @@ export default function FieldBase({
 
 					{required && <RequiredMask />}
 				</label>
+			)}
+
+			{tooltip && (
+				<>
+					&nbsp;
+					<ClayTooltipProvider>
+						<span data-tooltip-align="top" title={tooltip}>
+							<ClayIcon
+								className="lfr-objects__field-base-tooltip-icon"
+								symbol="question-circle-full"
+							/>
+						</span>
+					</ClayTooltipProvider>
+				</>
 			)}
 
 			{children}
@@ -78,5 +95,6 @@ interface IProps {
 	id?: string;
 	label?: string;
 	required?: boolean;
+	tooltip?: string;
 	warningMessage?: string;
 }

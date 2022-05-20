@@ -1102,6 +1102,24 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/document_library/error.jsp");
 		}
 		else {
+			if (cmd.equals(Constants.ADD_DYNAMIC)) {
+				JSONObject jsonObject;
+
+				if (exception instanceof PortalException) {
+					jsonObject = _multipleUploadResponseHandler.onFailure(
+						actionRequest, (PortalException)exception);
+				}
+				else {
+					jsonObject = _multipleUploadResponseHandler.onFailure(
+						actionRequest, new PortalException(exception));
+				}
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
+
+				hideDefaultErrorMessage(actionRequest);
+			}
+
 			throw exception;
 		}
 	}

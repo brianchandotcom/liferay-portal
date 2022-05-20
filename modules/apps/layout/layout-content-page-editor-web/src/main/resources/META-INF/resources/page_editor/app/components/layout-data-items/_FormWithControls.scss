@@ -1,0 +1,6 @@
+.page-editor__form {
+	button:disabled,
+	input:disabled {
+		pointer-events: none;
+	}
+}

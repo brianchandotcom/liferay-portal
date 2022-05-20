@@ -30,7 +30,11 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 	);
 
 	return (
-		<form onSubmit={(event) => event.preventDefault()} ref={ref}>
+		<form
+			className="page-editor__form"
+			onSubmit={(event) => event.preventDefault()}
+			ref={ref}
+		>
 			<ContainerWithControls {...rest} item={item}>
 				{isEmpty || !isMapped ? (
 					<FormEmptyState isMapped={isMapped} />

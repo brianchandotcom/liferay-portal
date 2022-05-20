@@ -33,6 +33,7 @@ export const StyleBookStoreContext = React.createContext({
 	loading: true,
 	previewLayout: {},
 	previewLayoutType: null,
+	undoHistory: [],
 });
 
 export function StyleBookContextProvider({children, initialState}) {
@@ -71,17 +72,22 @@ export function usePreviewLayoutType() {
 	return useContext(StyleBookStoreContext).previewLayoutType;
 }
 
+export function useUndoHistory() {
+	return useContext(StyleBookStoreContext).undoHistory;
+}
+
 export function useSaveTokenValue() {
 	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
-	return (name, value) => {
+	return (name, value, isUndo) => {
 		dispatch({
 			type: SET_DRAFT_STATUS,
 			value: DRAFT_STATUS.saving,
 		});
 
 		dispatch({
+			isUndo,
 			name,
 			type: SET_TOKEN_VALUE,
 			value,
@@ -132,4 +138,15 @@ export function useSetPreviewLayoutType() {
 
 	return (layoutType) =>
 		dispatch({layoutType, type: SET_PREVIEW_LAYOUT_TYPE});
+}
+
+export function useOnUndo() {
+	const saveTokenValue = useSaveTokenValue();
+	const undoHistory = useUndoHistory();
+
+	return () => {
+		const [{name, value}] = undoHistory.slice(-1);
+
+		saveTokenValue(name, value, true);
+	};
 }

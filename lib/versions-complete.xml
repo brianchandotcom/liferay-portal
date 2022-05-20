@@ -4316,17 +4316,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.tika.jar!istack-commons-runtime.jar</file-name>
-				<version>3.0.7</version>
-				<project-name>istack common utility code runtime</project-name>
-				<project-url>http://www.oracle.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>https://glassfish.java.net/public/CDDL+GPL_1_1.html, https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.tika.jar!java-libpst.jar</file-name>
 				<version>0.8.1</version>
 				<project-name>java-libpst</project-name>
@@ -4335,17 +4324,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tika.jar!jaxb-runtime.jar</file-name>
-				<version>2.3.1</version>
-				<project-name>JAXB Implementation</project-name>
-				<licenses>
-					<license>
-						<license-name>CDDL+GPL License</license-name>
-						<license-url>http://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5170,18 +5148,6 @@
 					<license>
 						<license-name>GNU Lesser General Public Licence</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-codec.jar</file-name>
-				<version>1.13</version>
-				<project-name>Apache Commons Codec</project-name>
-				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

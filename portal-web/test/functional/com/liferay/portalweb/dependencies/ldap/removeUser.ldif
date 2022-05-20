@@ -1,4 +1,4 @@
 dn: cn=testgroup,dc=example,dc=com
 changetype: modify
-delete:uniqueMember
+delete: uniqueMember
 uniqueMember: cn=testUser,dc=example,dc=com

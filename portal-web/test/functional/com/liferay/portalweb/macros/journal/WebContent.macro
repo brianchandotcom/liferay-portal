@@ -1133,10 +1133,18 @@ definition {
 
 				Portlet.expandTree();
 
-				AssertClick.assertPartialTextClickAt(
+				Click(
 					key_nodeName = "${pageName}",
-					locator1 = "Treeview#NODE_UNSELECTED",
-					value1 = "${pageName}");
+					locator1 = "Treeview#NODE_UNSELECTED");
+			}
+			else if ("${pageType}" == "Pages") {
+				Navigator.gotoNavItem(navItem = "Pages");
+
+				Portlet.expandTree();
+
+				Click(
+					key_nodeName = "${pageName}",
+					locator1 = "Treeview#NODE_UNSELECTED");
 			}
 			else {
 				if (IsElementNotPresent(key_navItem = "${pageType}", locator1 = "NavBar#NAV_ITEM_LINK")) {

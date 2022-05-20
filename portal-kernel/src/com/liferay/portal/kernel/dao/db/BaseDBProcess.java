@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -224,6 +225,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.alterTableDropColumn(connection, tableName, columnName);
 	}
 
+	protected void alterTableName(String tableName, String newTableName)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"alter_table_name ", tableName, StringPool.SPACE,
+				newTableName));
+	}
+
 	protected boolean doHasTable(String tableName) throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
@@ -237,6 +247,10 @@ public abstract class BaseDBProcess implements DBProcess {
 		DB db = DBManagerUtil.getDB();
 
 		return db.dropIndexes(connection, tableName, columnName);
+	}
+
+	protected void dropTable(String tableName) throws Exception {
+		runSQL("DROP_TABLE_IF_EXISTS(" + tableName + ")");
 	}
 
 	protected Connection getConnection() throws Exception {

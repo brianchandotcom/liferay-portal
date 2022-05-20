@@ -25,13 +25,14 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("RemoteAppEntry", "remoteAppEntryId")) {
 			alterColumnName(
-				"RemoteAppEntry", "remoteAppEntryId", "clientExtensionEntryId");
+				"RemoteAppEntry", "remoteAppEntryId",
+				"clientExtensionEntryId LONG");
 		}
 
 		if (hasTable("RemoteAppEntry")) {
-			runSQL("DROP_TABLE_IF_EXISTS(ClientExtensionEntry)");
+			dropTable("ClientExtensionEntry");
 
-			runSQL("alter_table_name RemoteAppEntry ClientExtensionEntry");
+			alterTableName("RemoteAppEntry", "ClientExtensionEntry");
 		}
 
 		runSQL(

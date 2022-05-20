@@ -134,7 +134,7 @@ components:
             properties:
                 attachment:
                     description:
-                        Base64 enoded file
+                        Base64 encoded file
                     type: string
                 cdnEnabled:
                     type: boolean

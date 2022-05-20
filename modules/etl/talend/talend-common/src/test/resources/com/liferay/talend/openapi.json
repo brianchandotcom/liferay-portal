@@ -4,7 +4,7 @@
 			"Attachment": {
 				"properties": {
 					"attachment": {
-						"description": "Base64 enoded file",
+						"description": "Base64 encoded file",
 						"type": "string"
 					},
 					"displayDate": {

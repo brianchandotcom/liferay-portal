@@ -939,7 +939,9 @@ AUI.add(
 						);
 
 						if (error) {
-							message = responseData.message;
+							message =
+								responseData.message ||
+								Liferay.Language.get('unexpected-error');
 						}
 						else {
 							message =

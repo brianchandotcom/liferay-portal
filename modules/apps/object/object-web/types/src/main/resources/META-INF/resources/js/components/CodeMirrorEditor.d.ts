@@ -12,6 +12,7 @@
  * details.
  */
 
+import 'codemirror/addon/display/autorefresh';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/foldgutter.css';
 import 'codemirror/addon/display/placeholder';

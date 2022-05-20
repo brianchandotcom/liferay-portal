@@ -12,6 +12,8 @@
  * details.
  */
 
+import 'codemirror/addon/display/autorefresh';
+
 import 'codemirror/addon/fold/foldgutter';
 
 import 'codemirror/addon/fold/foldgutter.css';
@@ -39,6 +41,7 @@ export default function CodeMirrorEditor({
 
 	useEffect(() => {
 		const editor = CodeMirror(editorWrapperRef.current as HTMLDivElement, {
+			autoRefresh: true,
 			foldGutter: true,
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
 			inputStyle: 'contenteditable',

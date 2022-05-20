@@ -12,38 +12,22 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
 
-import {CustomItem} from './Form/CustomSelect/CustomSelect';
-import ObjectActionFormBase from './ObjectActionFormBase';
-
-export default function EditObjectAction({
-	objectAction: {id, ...values},
+import {FormError} from '../../../hooks/useForm';
+import {CustomItem} from '../../Form/CustomSelect/CustomSelect';
+export default function ActionBuilder({
+	errors,
 	objectActionExecutors,
 	objectActionTriggers,
-	readOnly,
-}: IProps) {
-	return (
-		<ObjectActionFormBase
-			objectAction={values}
-			objectActionExecutors={objectActionExecutors}
-			objectActionTriggers={objectActionTriggers}
-			readOnly={readOnly}
-			requestParams={{
-				method: 'PUT',
-				url: `/o/object-admin/v1.0/object-actions/${id}`,
-			}}
-			successMessage={Liferay.Language.get(
-				'the-object-action-was-updated-successfully'
-			)}
-			title={Liferay.Language.get('action')}
-		/>
-	);
-}
-
+	setValues,
+	values,
+}: IProps): JSX.Element;
 interface IProps {
-	objectAction: ObjectAction;
+	errors: FormError<ObjectAction & ObjectActionParameters>;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
-	readOnly?: boolean;
+	setValues: (values: Partial<ObjectAction>) => void;
+	values: Partial<ObjectAction>;
 }
+export {};

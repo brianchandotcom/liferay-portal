@@ -466,16 +466,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ACTION_WHEN_TYPE</td>
-		<td>//label[contains(text(),'When')]/..//input</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>ACTION_THEN_TYPE</td>
-		<td>//label[contains(text(),'Then')]/..//input</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>ACTION_URL_FIELD</td>
 		<td>//input[@name='url']</td>
 		<td></td>

@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>ObjectAction</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead><tr><td rowspan="1" colspan="3">ObjectAction</td></tr></thead>
+<tbody>
+	<tr>
+		<td>SELECT_ACTION_TYPE</td>
+		<td>//input[@placeholder="Choose an Action"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_TRIGGER</td>
+		<td>//input[@placeholder="Choose a Trigger"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TAB_ACTION_BUILDER</td>
+		<td>//button[contains(.,'Action Builder')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TAB_BASIC_INFO</td>
+		<td>//button[contains(.,'Basic Info')]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -790,20 +790,18 @@ definition {
 			}
 		}
 
+		Click(locator1 = "ObjectAction#TAB_ACTION_BUILDER");
+
 		if (isSet(whenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
+			Click(locator1 = "ObjectAction#SELECT_TRIGGER");
 
 			Click(
 				key_type = "${whenAction}",
 				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
 		}
 
-		ScrollWebElementIntoView(
-			key_text = "Save",
-			locator1 = "Button#ANY");
-
 		if (isSet(thenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
+			Click(locator1 = "ObjectAction#SELECT_ACTION_TYPE");
 
 			Click(
 				key_type = "${thenAction}",

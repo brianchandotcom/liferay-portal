@@ -12,17 +12,38 @@
  * details.
  */
 
-/// <reference types="react" />
+import React from 'react';
 
-import {CustomItem} from './Form/CustomSelect/CustomSelect';
-export default function AddObjectAction({
-	apiURL,
+import {CustomItem} from '../Form/CustomSelect/CustomSelect';
+import ObjectAction from './index';
+
+export default function EditObjectAction({
+	objectAction: {id, ...values},
 	objectActionExecutors,
 	objectActionTriggers,
-}: IProps): JSX.Element;
+	readOnly,
+}: IProps) {
+	return (
+		<ObjectAction
+			objectAction={values}
+			objectActionExecutors={objectActionExecutors}
+			objectActionTriggers={objectActionTriggers}
+			readOnly={readOnly}
+			requestParams={{
+				method: 'PUT',
+				url: `/o/object-admin/v1.0/object-actions/${id}`,
+			}}
+			successMessage={Liferay.Language.get(
+				'the-object-action-was-updated-successfully'
+			)}
+			title={Liferay.Language.get('action')}
+		/>
+	);
+}
+
 interface IProps {
-	apiURL: string;
+	objectAction: ObjectAction;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	readOnly?: boolean;
 }
-export {};

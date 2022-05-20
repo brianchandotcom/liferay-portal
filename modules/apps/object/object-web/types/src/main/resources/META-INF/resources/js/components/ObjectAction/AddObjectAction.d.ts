@@ -14,17 +14,15 @@
 
 /// <reference types="react" />
 
-import {CustomItem} from './Form/CustomSelect/CustomSelect';
-export default function EditObjectAction({
-	objectAction: {id, ...values},
+import {CustomItem} from '../Form/CustomSelect/CustomSelect';
+export default function AddObjectAction({
+	apiURL,
 	objectActionExecutors,
 	objectActionTriggers,
-	readOnly,
 }: IProps): JSX.Element;
 interface IProps {
-	objectAction: ObjectAction;
+	apiURL: string;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
-	readOnly?: boolean;
 }
 export {};

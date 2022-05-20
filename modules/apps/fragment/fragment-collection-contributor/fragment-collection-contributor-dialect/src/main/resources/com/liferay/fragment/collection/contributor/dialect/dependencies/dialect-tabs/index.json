@@ -20,7 +20,7 @@
 					"dataType": "string",
 					"defaultValue": "underline",
 					"description": "tab-style",
-					"label": "Tab Style",
+					"label": "tab-style",
 					"name": "tabStyle",
 					"type": "select",
 					"typeOptions": {

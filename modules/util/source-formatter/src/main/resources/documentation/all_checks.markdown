@@ -267,7 +267,8 @@ JavaVerifyUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.markdo
 JavaXMLSecurityCheck | [Security](security_checks.markdown#security-checks) | .java | Finds possible XXE or Quadratic Blowup security vulnerabilities. |
 JavadocCheck | [Javadoc](javadoc_checks.markdown#javadoc-checks) | .java | Performs several checks on javadoc. |
 [JavadocStyleCheck](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocStyle) | [Javadoc](javadoc_checks.markdown#javadoc-checks) | .java | Validates Javadoc comments to help ensure they are well formed. |
-LDIFEntryOrderCheck | [Styling](styling_checks.markdown#styling-checks) | | Checks the order of entries and attributes in `.ldif` file. |
+LDIFEntryOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .ldif | Checks the order of entries and attributes in `.ldif` file. |
+LDIFWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .ldif | Finds missing and unnecessary whitespace. |
 LFRBuildContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .lfrbuild-* | Finds `.lfrbuild*` files that are not empty. |
 LFRBuildReadmeCheck | [Documentation](documentation_checks.markdown#documentation-checks) | .lfrbuild-* | Checks that `.lfrbuild*` files are documented in a marker file. |
 LPS42924Check | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where `PortalUtil.getClassName*` (instead of calling `classNameLocalService` directly). |

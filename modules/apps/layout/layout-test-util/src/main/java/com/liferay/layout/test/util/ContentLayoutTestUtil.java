@@ -50,7 +50,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Lourdes Fernández Besada
  */
-public class LayoutContentPageEditorTestUtil {
+public class ContentLayoutTestUtil {
 
 	public static JSONObject addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
@@ -99,7 +99,7 @@ public class LayoutContentPageEditorTestUtil {
 	public static MVCActionCommand getMVCActionCommand(String mvcCommandName) {
 		try {
 			Bundle bundle = FrameworkUtil.getBundle(
-				LayoutContentPageEditorTestUtil.class);
+				ContentLayoutTestUtil.class);
 
 			BundleContext bundleContext = bundle.getBundleContext();
 

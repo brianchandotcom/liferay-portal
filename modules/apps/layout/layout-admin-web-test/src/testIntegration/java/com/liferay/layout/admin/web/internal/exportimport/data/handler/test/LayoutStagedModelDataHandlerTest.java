@@ -26,7 +26,7 @@ import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycle
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
-import com.liferay.layout.test.util.LayoutContentPageEditorTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -130,7 +130,7 @@ public class LayoutStagedModelDataHandlerTest
 				portletPreferencesIds.getPlid(),
 				portletPreferencesIds.getPortletId(), jxPortletPreferences);
 
-			LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, layout);
@@ -600,7 +600,7 @@ public class LayoutStagedModelDataHandlerTest
 
 	private String _addPortletToLayout(Layout layout) throws Exception {
 		JSONObject processAddPortletJSONObject =
-			LayoutContentPageEditorTestUtil.addPortletToLayout(
+			ContentLayoutTestUtil.addPortletToLayout(
 				layout, _TEST_PORTLET_NAME);
 
 		JSONObject fragmentEntryLinkJSONObject =

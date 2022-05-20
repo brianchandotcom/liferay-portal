@@ -20,7 +20,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.web.internal.portlet.constants.LayoutContentPageEditorWebPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.test.util.LayoutContentPageEditorTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -96,7 +96,7 @@ public class PublishLayoutMVCActionCommandTest {
 
 		_assertNullPortletPreferences(layout.getPlid(), encodePortletId);
 
-		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		_assertNotNullPortletPreferences(
 			draftLayout.getPlid(), encodePortletId);
@@ -119,7 +119,7 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		_assertNullPortletPreferences(draftLayout.getPlid(), encodePortletId);
 
@@ -161,7 +161,7 @@ public class PublishLayoutMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layoutStructure.toString());
 
-		LayoutContentPageEditorTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		layoutStructure = _getLayoutStructure(draftLayout);
 
@@ -191,7 +191,7 @@ public class PublishLayoutMVCActionCommandTest {
 				_group.getGroupId(), layout.getPlid());
 
 		JSONObject processAddPortletJSONObject =
-			LayoutContentPageEditorTestUtil.addPortletToLayout(
+			ContentLayoutTestUtil.addPortletToLayout(
 				layout,
 				LayoutContentPageEditorWebPortletKeys.
 					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET);

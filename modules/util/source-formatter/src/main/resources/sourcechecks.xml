@@ -1166,6 +1166,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of entries and attributes in `.ldif` file." />
 		</check>
+		<check name="LDIFWhitespaceCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary whitespace." />
+		</check>
 	</source-processor>
 	<source-processor name="LFRBuildSourceProcessor">
 		<check name="LFRBuildContentCheck">

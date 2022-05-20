@@ -21,133 +21,101 @@ definition {
 			publishProduct = "${publishProduct}");
 	}
 
-	macro deleteEntries {
-		Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-		if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
-		}
-		else {
-			ClickNoError(locator1 = "Button#DELETE");
-		}
-
-		if (isSet(deleteMessage)) {
-			Confirm(value1 = "${deleteMessage}");
-		}
-	}
-
-	macro deleteProductsEntry {
-		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		CommerceEntry.clickNoError(menuItem = "Delete");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-	}
-
-	macro moveCatalogEntriesToRecycleBin {
-		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
-	}
-
-	macro openProductsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
-			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet");
-
-		WaitForVisible(locator1 = "Button#PLUS");
-	}
-
-	macro searchProduct {
-		Type(
-			locator1 = "CommerceNavigation#SEARCH_FIELD",
-			value1 = "${search}");
-
-		KeyPress(
-			locator1 = "CommerceNavigation#SEARCH_FIELD",
-			value1 = "\RETURN");
-	}
-
 	macro addProductWithStatusViaAPI {
-			if("${productStatusCode}" == "0"){
-				var productName = "Approved Product";
-			}
-			else if ("${productStatusCode}" == "1"){
-				var productName = "Pending Product";
-			}
-			else if("${productStatusCode}" == "2"){
-				var productName = "Draft Product";
-			}
-			else if("${productStatusCode}" == "3"){
-				var productName = "Expired Product";
-			}
-			else if("${productStatusCode}" == "4"){
-				var productName = "Denied Product";
-			}
-			else if("${productStatusCode}" == "5"){
-				var productName = "Inactive Product";
-			}
-			else if("${productStatusCode}" == "6"){
-				var productName = "Incomplete Product";
-			}
-			else if("${productStatusCode}" == "7"){
-				var productName = "Scheduled Product";
-			}
-			else if("${productStatusCode}" == "8"){
-				var productName = "In Recycle Bin Product";
-			}
-			else {
-				var productName = "Any Product";
-			}
-
-			CommerceJSONProductsAPI._addCommerceProduct(
-				catalogName = "${catalogName}",
-				productName = "${productName}",
-				productType = "${productType}",
-				productStatus = "${productStatusCode}");
-	}
-
-	macro duplicateProduct {	
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		if("${status}" != "Draft") {
-			AssertElementNotPresent(
-				key_text = "Save as Draft",
-				locator1 = "Button#ANY");
+		if ("${productStatusCode}" == "0") {
+			var productName = "Approved Product";
+		}
+		else if ("${productStatusCode}" == "1") {
+			var productName = "Pending Product";
+		}
+		else if ("${productStatusCode}" == "2") {
+			var productName = "Draft Product";
+		}
+		else if ("${productStatusCode}" == "3") {
+			var productName = "Expired Product";
+		}
+		else if ("${productStatusCode}" == "4") {
+			var productName = "Denied Product";
+		}
+		else if ("${productStatusCode}" == "5") {
+			var productName = "Inactive Product";
+		}
+		else if ("${productStatusCode}" == "6") {
+			var productName = "Incomplete Product";
+		}
+		else if ("${productStatusCode}" == "7") {
+			var productName = "Scheduled Product";
+		}
+		else if ("${productStatusCode}" == "8") {
+			var productName = "In Recycle Bin Product";
 		}
 		else {
-			AssertElementPresent(
-				key_text = "Save as Draft",
-				locator1 = "Button#ANY");
+			var productName = "Any Product";
 		}
+
+		CommerceJSONProductsAPI._addCommerceProduct(
+			catalogName = "${catalogName}",
+			productName = "${productName}",
+			productStatus = "${productStatusCode}",
+			productType = "${productType}");
+	}
+
+	macro approvePendingProduct {
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		Click(
+			key_text = "${userFirstName} ${userLastName} sent you a Commerce Product for review in the workflow.",
+			locator1 = "Link#ANY");
 
 		Click(
 			key_itemName = "",
 			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 		Click(
-			key_optionValue = "Duplicate",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+			key_menuItem = "Assign to Me",
+			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 
-		CommerceEntry.addProductsEntry(
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Button.click(button = "Done");
+
+		SelectFrameTop();
+
+		if (isSet(approveRequest) && ("${approveRequest}" == "true")) {
+			Click(
+				key_itemName = "",
+				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+			Click(
+				key_menuItem = "Approve",
+				locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+			Button.click(button = "Done");
+		}
+	}
+
+	macro checkProductStatusAfterDuplicationAndConvertionToDraft {
+		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+
+		CommerceProducts.duplicateProduct(
 			productCatalog = "${productCatalog}",
-			productFullDescription = "Full Description for ${productName}",
-			productName = "Copy of ${productName}",
-			productShortDescription = "Short Description for ${productName}",
-			publishProduct = "false");
+			productName = "${productName}",
+			status = "${status}");
 
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		Click(locator1 = "Icon#BACK");
 
+		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+
+		CommerceProducts.convertProductToDraft(status = "${status}");
 	}
 
 	macro convertProductToDraft {
-
 		if ("${status}" == "Draft") {
 			AssertElementPresent(
 				key_text = "Save as Draft",
@@ -198,63 +166,78 @@ definition {
 		}
 	}
 
-	macro checkProductStatusAfterDuplicationAndConvertionToDraft {
+	macro deleteEntries {
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
-		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+		if (IsElementPresent(locator1 = "Button#TRASH_ENABLED")) {
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+		}
+		else {
+			ClickNoError(locator1 = "Button#DELETE");
+		}
 
-		CommerceNavigator.gotoEntry(entryName = "${entryName}");
-
-		CommerceProducts.duplicateProduct(
-			status = "${status}",
-			productCatalog = "${productCatalog}",
-			productName = "${productName}");
-
-		Click(locator1 = "Icon#BACK");
-
-		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
-
-		CommerceNavigator.gotoEntry(entryName = "${entryName}");
-
-		CommerceProducts.convertProductToDraft(status = "${status}");
-
+		if (isSet(deleteMessage)) {
+			Confirm(value1 = "${deleteMessage}");
+		}
 	}
 
-	macro approvePendingProduct {
+	macro deleteProductsEntry {
+		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+		CommerceEntry.clickNoError(menuItem = "Delete");
 
-		Click(
-			key_text = "${userFirstName} ${userLastName} sent you a Commerce Product for review in the workflow.",
-			locator1 = "Link#ANY");
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	macro disableProductSingleApproverWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Commerce Product");
+	}
+
+	macro duplicateProduct {
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		if ("${status}" != "Draft") {
+			AssertElementNotPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+		else {
+			AssertElementPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
 
 		Click(
 			key_itemName = "",
 			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 		Click(
-			key_menuItem = "Assign to Me",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+			key_optionValue = "Duplicate",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+		CommerceEntry.addProductsEntry(
+			productCatalog = "${productCatalog}",
+			productFullDescription = "Full Description for ${productName}",
+			productName = "Copy of ${productName}",
+			productShortDescription = "Short Description for ${productName}",
+			publishProduct = "false");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Button.click(button = "Done");
-
-		SelectFrameTop();
-
-		if ((isSet(approveRequest)) && "${approveRequest}" == "true") {
-			Click(
-				key_itemName = "",
-				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-			Click(
-				key_menuItem = "Approve",
-				locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
-
-			Button.click(button = "Done");
-		}
-
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
 	macro enableProductSingleApproverWorkflow {
@@ -270,16 +253,28 @@ definition {
 			workflowResourceValue = "Commerce Product");
 	}
 
-	macro disableProductSingleApproverWorkflow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+	macro moveCatalogEntriesToRecycleBin {
+		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "No Workflow",
-			workflowResourceValue = "Commerce Product");
+		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 	}
+
+	macro openProductsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet");
+
+		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
+	macro searchProduct {
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "${search}");
+
+		KeyPress(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "\RETURN");
+	}
+
 }

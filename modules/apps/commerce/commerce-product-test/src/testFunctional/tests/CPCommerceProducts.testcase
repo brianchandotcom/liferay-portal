@@ -375,6 +375,340 @@ definition {
 		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 	}
 
+	@description = "This is a test for COMMERCE-9251. CanCheckAnyProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckAnyProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "9",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Any Product",
+			productCatalog = "Master",
+			productName = "Any Product",
+			status = "Any");
+	}
+
+	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
+	@priority = "3"
+	test CanCheckApprovedProductDuplication {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Duplicate",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		CommerceEntry.addProductsEntry(
+			productCatalog = "Master",
+			productFullDescription = "",
+			productName = "Copy of Simple T-Shirt",
+			productShortDescription = "",
+			publishProduct = "false");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+	}
+
+	@description = "This is a test for COMMERCE-9183. CanCheckApprovedProductSaveAsDraft"
+	@priority = "3"
+	test CanCheckApprovedProductSaveAsDraft {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		AssertElementNotPresent(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Convert To Draft",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		Click(locator1 = "Button#OK");
+
+		AssertElementPresent(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckApprovedProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "0",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Approved Product",
+			productCatalog = "Master",
+			productName = "Approved Product",
+			status = "Approved");
+	}
+
+	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "categorymanager@liferay.com",
+			userFirstName = "Category",
+			userLastName = "Manager",
+			userScreenName = "categorymanager",
+			userSiteMembership = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "categorymanager");
+
+		CommerceProducts.enableProductSingleApproverWorkflow();
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Button.click(button = "Submit for Publication");
+
+		AssertElementPresent(
+			key_status = "Pending (Created)",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.approvePendingProduct(
+			approveRequest = "true",
+			userFirstName = "Category",
+			userLastName = "Manager");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Simple T-Shirt",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			status = "Approved");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckDeniedProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "4",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Denied Product",
+			productCatalog = "Master",
+			productName = "Denied Product",
+			status = "Denied");
+	}
+
+	@description = "This is a test for COMMERCE-9190. CanCheckDraftProductDuplication"
+	@priority = "3"
+	test CanCheckDraftProductDuplication {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Duplicate",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		CommerceEntry.addProductsEntry(
+			productCatalog = "Master",
+			productFullDescription = "",
+			productName = "Copy of Simple T-Shirt",
+			productShortDescription = "",
+			publishProduct = "false");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+	}
+
+	@description = "This is a test for COMMERCE-9181. CanCheckDraftProductSaveAsDraft"
+	@priority = "3"
+	test CanCheckDraftProductSaveAsDraft {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+
+		Click(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+	}
+
+	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
+	@priority = "3"
+	test CanCheckDraftProductStatus {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		AssertElementPresent(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+	}
+
 	@description = "This is a test for COMMERCE-9191. CanCheckDraftProductStatusWithWorkflow"
 	@priority = "3"
 	test CanCheckDraftProductStatusWithWorkflow {
@@ -414,6 +748,431 @@ definition {
 				workflowDefinition = "No Workflow",
 				workflowResourceValue = "Commerce Product");
 		}
+	}
+
+	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
+	@priority = "3"
+	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Click(locator1 = "Icon#BACK");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Simple T-Shirt");
+
+		Button.clickSubmitButton();
+
+		AssertElementNotPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		CommerceEntry.publishEntry(status = "Approved");
+
+		Click(locator1 = "Icon#BACK");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Simple T-Shirt");
+
+		Button.clickSubmitButton();
+
+		AssertElementPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckDraftProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckDraftProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "2",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Draft Product",
+			productCatalog = "Master",
+			productName = "Draft Product",
+			status = "Draft");
+	}
+
+	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "categorymanager@liferay.com",
+			userFirstName = "Category",
+			userLastName = "Manager",
+			userScreenName = "categorymanager",
+			userSiteMembership = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "categorymanager");
+
+		CommerceProducts.enableProductSingleApproverWorkflow();
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Simple T-Shirt",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			status = "Draft");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckExpiredProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "3",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Expired Product",
+			productCatalog = "Master",
+			productName = "Expired Product",
+			status = "Expired");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckInactiveProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "5",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Inactive Product",
+			productCatalog = "Master",
+			productName = "Inactive Product",
+			status = "Inactive");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckIncompleteProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "6",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Incomplete Product",
+			productCatalog = "Master",
+			productName = "Incomplete Product",
+			status = "Incomplete");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckInRecycleBinProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckInRecycleBinProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "8",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "In Recycle Bin Product",
+			productCatalog = "Master",
+			productName = "In Recycle Bin Product",
+			status = "In Recycle Bin");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckPendingProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckPendingProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "1",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Pending Product",
+			productCatalog = "Master",
+			productName = "Pending Product",
+			status = "Pending");
+	}
+
+	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "categorymanager@liferay.com",
+			userFirstName = "Category",
+			userLastName = "Manager",
+			userScreenName = "categorymanager",
+			userSiteMembership = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "categorymanager");
+
+		CommerceProducts.enableProductSingleApproverWorkflow();
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			compileDescription = "false",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple",
+			publishProduct = "false");
+
+		Button.click(button = "Submit for Publication");
+
+		AssertElementPresent(
+			key_status = "Pending (Created)",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.approvePendingProduct(
+			userFirstName = "Category",
+			userLastName = "Manager");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "categorymanager@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		AssertElementPresent(
+			key_status = "Pending (Review)",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		AssertElementPresent(
+			key_text = "Test Test",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Simple T-Shirt",
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			status = "Pending (Review)");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
+
+	@description = "This is a test for COMMERCE-9180. CanCheckProductPublication"
+	@priority = "3"
+	test CanCheckProductPublication {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+	}
+
+	@description = "This is a test for COMMERCE-9251. CanCheckScheduledProductStatusWorkflow"
+	@priority = "3"
+	test CanCheckScheduledProductWorkflowStatus {
+		property portal.acceptance = "false";
+
+		CommerceProducts.addProductWithStatusViaAPI(
+			catalogName = "Master",
+			productStatusCode = "7",
+			productType = "simple");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			entryName = "Scheduled Product",
+			productCatalog = "Master",
+			productName = "Scheduled Product",
+			status = "Scheduled");
 	}
 
 	@description = "This is a test for COMMERCE-6747. ConfigureGroupedProduct"
@@ -768,76 +1527,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for COMMERCE-9190. CanCheckDraftProductDuplication"
-	@priority = "3"
-	test CanCheckDraftProductDuplication {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Click(
-			key_itemName = "",
-			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-		Click(
-			key_optionValue = "Duplicate",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-		CommerceEntry.addProductsEntry(
-			productCatalog = "Master",
-			productFullDescription = "",
-			productName = "Copy of Simple T-Shirt",
-			productShortDescription = "",
-			publishProduct = "false");
-
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-	}
-
-	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
-	@priority = "3"
-	test CanCheckApprovedProductDuplication {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
-
-		Click(
-			key_itemName = "",
-			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-		Click(
-			key_optionValue = "Duplicate",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-		CommerceEntry.addProductsEntry(
-			productCatalog = "Master",
-			productFullDescription = "",
-			productName = "Copy of Simple T-Shirt",
-			productShortDescription = "",
-			publishProduct = "false");
-
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-	}
-
 	@description = "This is a test for COMMERCE-8425. DuplicateAProductAndVerifyIfSkuPriceIsUnique"
 	@priority = "3"
 	test DuplicateAProductAndVerifyIfSkuPriceIsUnique {
@@ -1064,84 +1753,6 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 		CommerceEntry.viewProductSkus(skusList = "6:10.00,12:20.00,24:30.00,48:40.00,112:50.00");
-	}
-
-	@description = "This is a test for COMMERCE-9181. CanCheckDraftProductSaveAsDraft"
-	@priority = "3"
-	test CanCheckDraftProductSaveAsDraft {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Type(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "Simple T-Shirt 01");
-
-		Click(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
-
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		AssertTextEquals(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "Simple T-Shirt 01");
-	}
-
-	@description = "This is a test for COMMERCE-9183. CanCheckApprovedProductSaveAsDraft"
-	@priority = "3"
-	test CanCheckApprovedProductSaveAsDraft {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
-
-		AssertElementNotPresent(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
-
-		Type(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "Simple T-Shirt 01");
-
-		Click(
-			key_itemName = "",
-			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-		Click(
-			key_optionValue = "Convert To Draft",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-		Click(locator1 = "Button#OK");
-
-		AssertElementPresent(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
-
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		AssertTextEquals(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "Simple T-Shirt 01");
 	}
 
 	test TranslateProductName {
@@ -1443,144 +2054,6 @@ definition {
 		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "U-Joint,Transmission Cooler Line Assembly,Torque Converters");
 	}
 
-	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
-	@priority = "3"
-	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
-		property portal.acceptance = "false";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceEntry.addAccountEntryUser(
-			accountName = "Commerce Account",
-			accountType = "Business",
-			agreeToTermsAndAnswerReminderQuery = "true",
-			createNewAccount = "true",
-			requireReset = "false",
-			userEmailAddress = "buyer@liferay.com",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userRole = "Buyer",
-			userScreenName = "buyeruser",
-			userSiteMembership = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Click(locator1 = "Icon#BACK");
-
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
-
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "buyer@liferay.com");
-
-		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Simple T-Shirt");
-
-		Button.clickSubmitButton();
-
-		AssertElementNotPresent(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
-
-		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
-
-		CommerceEntry.publishEntry(status = "Approved");
-
-		Click(locator1 = "Icon#BACK");
-
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
-
-		AssertElementPresent(
-			key_status = "Approved",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "buyer@liferay.com");
-
-		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Simple T-Shirt");
-
-		Button.clickSubmitButton();
-
-		AssertElementPresent(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-	}
-
-	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
-	@priority = "3"
-	test CanCheckDraftProductStatus {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		AssertElementPresent(
-			key_text = "Publish",
-			locator1 = "Button#ANY");
-
-		AssertElementPresent(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
-	}
-
-	@description = "This is a test for COMMERCE-9180. CanCheckProductPublication"
-	@priority = "3"
-	test CanCheckProductPublication {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
-	}
-
 	@description = "[Please Update]"
 	@ignore = "true"
 	@priority = "4"
@@ -1591,477 +2064,4 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckApprovedProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "0",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Approved Product",
-			status = "Approved",
-			productCatalog = "Master",
-			productName = "Approved Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckPendingProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckPendingProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "1",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Pending Product",
-			status = "Pending",
-			productCatalog = "Master",
-			productName = "Pending Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckDraftProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckDraftProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "2",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Draft Product",
-			status = "Draft",
-			productCatalog = "Master",
-			productName = "Draft Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckExpiredProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "3",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Expired Product",
-			status = "Expired",
-			productCatalog = "Master",
-			productName = "Expired Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckDeniedProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "4",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Denied Product",
-			status = "Denied",
-			productCatalog = "Master",
-			productName = "Denied Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckInactiveProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "5",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Inactive Product",
-			status = "Inactive",
-			productCatalog = "Master",
-			productName = "Inactive Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckIncompleteProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "6",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Incomplete Product",
-			status = "Incomplete",
-			productCatalog = "Master",
-			productName = "Incomplete Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckScheduledProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckScheduledProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "7",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Scheduled Product",
-			status = "Scheduled",
-			productCatalog = "Master",
-			productName = "Scheduled Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckInRecycleBinProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckInRecycleBinProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "8",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "In Recycle Bin Product",
-			status = "In Recycle Bin",
-			productCatalog = "Master",
-			productName = "In Recycle Bin Product");
-	}
-
-	@description = "This is a test for COMMERCE-9251. CanCheckAnyProductStatusWorkflow"
-	@priority = "3"
-	test CanCheckAnyProductWorkflowStatus {
-		property portal.acceptance = "false";
-
-		CommerceProducts.addProductWithStatusViaAPI(
-			productStatusCode = "9",
-			catalogName = "Master",
-			productType = "simple");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");	
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Any Product",
-			status = "Any",
-			productCatalog = "Master",
-			productName = "Any Product");
-	}
-
-	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
-	@priority = "3"
-	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow { 
-		property portal.acceptance = "false";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceEntry.addAccountEntryUser(
-			accountName = "Commerce Account",
-			accountType = "Business",
-			agreeToTermsAndAnswerReminderQuery = "true",
-			createNewAccount = "true",
-			requireReset = "false",
-			userEmailAddress = "categorymanager@liferay.com",
-			userFirstName = "Category",
-			userLastName = "Manager",
-			userScreenName = "categorymanager",
-			userSiteMembership = "Minium");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Category Manager",
-			userScreenName = "categorymanager");
-
-		CommerceProducts.enableProductSingleApproverWorkflow();
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "categorymanager@liferay.com");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Click(locator1 = "Icon#BACK");
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Simple T-Shirt",
-			status = "Draft",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceProducts.disableProductSingleApproverWorkflow();
-	}
-
-	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
-	@priority = "3"
-	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
-		property portal.acceptance = "false";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceEntry.addAccountEntryUser(
-			accountName = "Commerce Account",
-			accountType = "Business",
-			agreeToTermsAndAnswerReminderQuery = "true",
-			createNewAccount = "true",
-			requireReset = "false",
-			userEmailAddress = "categorymanager@liferay.com",
-			userFirstName = "Category",
-			userLastName = "Manager",
-			userScreenName = "categorymanager",
-			userSiteMembership = "Minium");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Category Manager",
-			userScreenName = "categorymanager");
-
-		CommerceProducts.enableProductSingleApproverWorkflow();
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "categorymanager@liferay.com");
-
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Button.click(button = "Submit for Publication");
-
-		AssertElementPresent(
-			key_status = "Pending (Created)",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceProducts.approvePendingProduct(
-			userFirstName = "Category",
-			userLastName = "Manager");
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "categorymanager@liferay.com");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
-
-		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
-
-		AssertElementPresent(
-			key_status = "Pending (Review)",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		AssertElementPresent(
-			key_text = "Test Test",
-			locator1 = "Button#ANY");
-
-		Click(locator1 = "Icon#BACK");
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Simple T-Shirt",
-			status = "Pending (Review)",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceProducts.disableProductSingleApproverWorkflow();
-	}
-
-	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
-	@priority = "3"
-	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow { 
-		property portal.acceptance = "false";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceEntry.addAccountEntryUser(
-			accountName = "Commerce Account",
-			accountType = "Business",
-			agreeToTermsAndAnswerReminderQuery = "true",
-			createNewAccount = "true",
-			requireReset = "false",
-			userEmailAddress = "categorymanager@liferay.com",
-			userFirstName = "Category",
-			userLastName = "Manager",
-			userScreenName = "categorymanager",
-			userSiteMembership = "Minium");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Category Manager",
-			userScreenName = "categorymanager");
-
-		CommerceProducts.enableProductSingleApproverWorkflow();
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "categorymanager@liferay.com");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			compileDescription = "false",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple",
-			publishProduct = "false");
-
-		Button.click(button = "Submit for Publication");
-
-		AssertElementPresent(
-			key_status = "Pending (Created)",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceProducts.approvePendingProduct(
-			approveRequest = "true",
-			userFirstName = "Category",
-			userLastName = "Manager");
-
-		User.logoutPG();
-
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "categorymanager@liferay.com");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
-
-		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
-
-		AssertElementPresent(
-			key_status = "Approved",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		Click(locator1 = "Icon#BACK");
-
-		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
-			entryName = "Simple T-Shirt",
-			status = "Approved",
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		CommerceProducts.disableProductSingleApproverWorkflow();
-	}
 }

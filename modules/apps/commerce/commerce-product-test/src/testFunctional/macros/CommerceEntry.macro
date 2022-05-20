@@ -463,13 +463,13 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
-		if (!(isSet(compileDescription)) || "${compileDescription}" == "true") {
+		if (!(isSet(compileDescription)) || ("${compileDescription}" == "true")) {
 			CommerceEntry.addProductDescription(
 				productFullDescription = "${productFullDescription}",
 				productShortDescription = "${productShortDescription}");
 		}
 
-		if (!(isSet(publishProduct)) || "${publishProduct}" == "true") {
+		if (!(isSet(publishProduct)) || ("${publishProduct}" == "true")) {
 			CommerceEntry.publishEntry(status = "Approved");
 		}
 	}

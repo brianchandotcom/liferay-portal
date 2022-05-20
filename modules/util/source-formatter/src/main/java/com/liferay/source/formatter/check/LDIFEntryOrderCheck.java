@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +59,9 @@ public class LDIFEntryOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortAttributes(String ldifEntry) {
+		AttributeComparator attributeComparator = new AttributeComparator(
+			ldifEntry);
+
 		Matcher matcher = _attributePattern.matcher(ldifEntry);
 
 		String previousAttribute = StringPool.BLANK;
@@ -74,7 +78,7 @@ public class LDIFEntryOrderCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (previousAttribute.compareTo(attribute) > 0) {
+			if (attributeComparator.compare(previousAttribute, attribute) > 0) {
 				ldifEntry = StringUtil.replaceFirst(
 					ldifEntry, attribute, previousAttribute,
 					attributeStartPosition);
@@ -93,5 +97,41 @@ public class LDIFEntryOrderCheck extends BaseFileCheck {
 
 	private static final Pattern _attributePattern = Pattern.compile(
 		"(?<=(\\A|\n)).+:[\\s\\S]*?(?=\n.+:|\\Z)");
+
+	private static class AttributeComparator implements Comparator<String> {
+
+		public AttributeComparator(String ldifEntry) {
+			_ldifEntry = ldifEntry;
+		}
+
+		@Override
+		public int compare(String attribute1, String attribute2) {
+			if (attribute1.startsWith("dn:") &&
+				_ldifEntry.contains("changetype: modify")) {
+
+				return -1;
+			}
+
+			if (attribute2.startsWith("dn:") &&
+				_ldifEntry.contains("changetype: modify")) {
+
+				return 1;
+			}
+
+			String[] attributeValuePair1 = attribute1.split(
+				StringPool.COLON, 2);
+			String[] attributeValuePair2 = attribute2.split(
+				StringPool.COLON, 2);
+
+			if (attributeValuePair1[0].compareTo(attributeValuePair2[0]) == 0) {
+				return attributeValuePair1[1].compareTo(attributeValuePair2[1]);
+			}
+
+			return attributeValuePair1[0].compareTo(attributeValuePair2[0]);
+		}
+
+		private final String _ldifEntry;
+
+	}
 
 }

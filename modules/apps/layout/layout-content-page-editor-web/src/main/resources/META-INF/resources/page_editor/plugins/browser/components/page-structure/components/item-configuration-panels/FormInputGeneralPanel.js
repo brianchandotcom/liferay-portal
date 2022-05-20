@@ -16,7 +16,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useMemo} from 'react';
 
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {
 	useDispatch,
 	useSelector,
@@ -194,17 +196,79 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
 	});
 
-	const filteredFields = useMemo(
-		() =>
-			fields
-				?.map((fieldset) => ({
+	const filteredFields = useSelectorCallback(
+		(state) => {
+			if (!fields) {
+				return fields;
+			}
+
+			let nextFields = fields;
+
+			const selectedFields = (() => {
+				const findFormItemId = (itemId) => {
+					const formItem = state.layoutData.items[itemId];
+
+					if (formItem?.type === LAYOUT_DATA_ITEM_TYPES.form) {
+						return itemId;
+					}
+					else if (formItem?.parentId) {
+						return findFormItemId(formItem.parentId);
+					}
+
+					return null;
+				};
+
+				const selectedFields = [];
+
+				const findSelectedFields = (itemId) => {
+					const inputItem = state.layoutData.items[itemId];
+
+					if (
+						inputItem?.itemId !== item.itemId &&
+						inputItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
+					) {
+						const {
+							editableValues,
+							fragmentEntryType,
+						} = selectFragmentEntryLink(state, inputItem);
+
+						if (
+							fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
+							editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR][
+								FIELD_ID_CONFIGURATION_KEY
+							]
+						) {
+							selectedFields.push(
+								editableValues[
+									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+								][FIELD_ID_CONFIGURATION_KEY]
+							);
+						}
+					}
+
+					inputItem?.children.forEach(findSelectedFields);
+				};
+
+				findSelectedFields(findFormItemId(item.itemId));
+
+				return selectedFields;
+			})();
+
+			nextFields = nextFields
+				.map((fieldset) => ({
 					...fieldset,
-					fields: fieldset.fields.filter((field) =>
-						ALLOWED_INPUT_TYPES[field.type]?.includes(inputType)
+					fields: fieldset.fields.filter(
+						(field) =>
+							ALLOWED_INPUT_TYPES[field.type]?.includes(
+								inputType
+							) && !selectedFields.includes(field.key)
 					),
 				}))
-				.filter((fieldset) => fieldset.fields.length),
-		[fields, inputType]
+				.filter((fieldset) => fieldset.fields.length);
+
+			return nextFields;
+		},
+		[item.itemId, fields, inputType]
 	);
 
 	if (!classNameId || !classTypeId) {

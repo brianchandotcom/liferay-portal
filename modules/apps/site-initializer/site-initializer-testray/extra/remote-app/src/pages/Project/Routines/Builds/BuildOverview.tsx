@@ -17,6 +17,7 @@ import {useRef} from 'react';
 
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
+import useCaseResultGroupBy from '../../../../data/useCaseResultGroupBy';
 import useTotalTestCases from '../../../../data/useTotalTestCases';
 import {TestrayBuild} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
@@ -29,6 +30,8 @@ type BuildOverviewProps = {
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const ref = useRef<any>();
+
+	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
 
 	const totalTestCases = useTotalTestCases();
 
@@ -96,40 +99,44 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				title={i18n.translate('total-test-cases')}
 			>
 				<div className="row">
-					<div className="col-2">
-						<ClayChart
-							data={{
-								colors: totalTestCases.colors,
-								columns: totalTestCases.donut.columns,
-								type: 'donut',
-							}}
-							donut={{
-								expand: false,
-								label: {
-									show: false,
-								},
-								legend: {
-									show: false,
-								},
-								title: totalTestCases.donut.total.toString(),
-								width: 15,
-							}}
-							legend={{show: false}}
-							onafterinit={() => {
-								getDonutLegend(ref.current, {
-									data: totalTestCases.donut.columns.map(
-										([name]) => name
-									),
-									elementId: 'testrayTotalMetricsGraphLegend',
-									total: totalTestCases.donut.total as number,
-								});
-							}}
-							ref={ref}
-							size={{
-								height: 200,
-							}}
-						/>
-					</div>
+					{totalTestCasesGroup.ready && (
+						<div className="col-2">
+							<ClayChart
+								data={{
+									colors: totalTestCasesGroup.colors,
+									columns: totalTestCasesGroup.donut.columns,
+									type: 'donut',
+								}}
+								donut={{
+									expand: false,
+									label: {
+										show: false,
+									},
+									legend: {
+										show: false,
+									},
+									title: totalTestCasesGroup.donut.total.toString(),
+									width: 15,
+								}}
+								legend={{show: false}}
+								onafterinit={() => {
+									getDonutLegend(ref.current, {
+										data: totalTestCasesGroup.donut.columns.map(
+											([name]) => name
+										),
+										elementId:
+											'testrayTotalMetricsGraphLegend',
+										total: totalTestCasesGroup.donut
+											.total as number,
+									});
+								}}
+								ref={ref}
+								size={{
+									height: 200,
+								}}
+							/>
+						</div>
+					)}
 
 					<div className="col-2">
 						<div id="testrayTotalMetricsGraphLegend" />

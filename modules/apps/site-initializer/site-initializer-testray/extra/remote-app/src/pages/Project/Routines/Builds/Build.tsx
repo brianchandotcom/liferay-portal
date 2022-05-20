@@ -81,15 +81,19 @@ const Build = () => {
 							value: i18n.translate('run'),
 						},
 						{
-							key: 'assignee',
-							render: (_: any, caseResult: TestrayCaseResult) =>
-								caseResult?.assignedUserId ? (
-									<Avatar />
+							key: 'user',
+							render: (_: any, caseResult: TestrayCaseResult) => {
+								return caseResult?.user ? (
+									<Avatar
+										displayName
+										name={caseResult.user.givenName}
+									/>
 								) : (
 									<AssignToMe
 										onClick={() => onAssignToMe(caseResult)}
 									/>
-								),
+								);
+							},
 							value: i18n.translate('assignee'),
 						},
 						{

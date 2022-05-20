@@ -19,7 +19,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import useTotalTestCases from '../../../data/useTotalTestCases';
+import useBuildHistory from '../../../data/useBuildHistory';
 import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {BUILD_STATUS} from '../../../util/constants';
@@ -30,7 +30,7 @@ import useRoutineActions from './useRoutineActions';
 
 const Routine = () => {
 	const {actionsRoutine, formModal} = useRoutineActions();
-	const {barChart, colors} = useTotalTestCases();
+	const {barChart, colors} = useBuildHistory();
 	const {routineId} = useParams();
 	const navigate = useNavigate();
 

@@ -368,7 +368,7 @@ public class ExportTranslationDisplayContext {
 				SegmentsExperienceLocalServiceUtil.getSegmentsExperiencesCount(
 					_groupId, _classNameId, classPK);
 
-			if (segmentsExperiencesCount >= 1) {
+			if (segmentsExperiencesCount > 1) {
 				return true;
 			}
 		}

@@ -26,6 +26,8 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import openConfirm from './openConfirm';
+
 const PublicationsSearchContainer = ({
 	ascending,
 	column,
@@ -768,9 +770,17 @@ export default function ChangeTrackingIndicator({
 		dropdownItems.push({
 			label: checkoutDropdownItem.label,
 			onClick: () =>
-				(!checkoutDropdownItem.confirmationMessage ||
-					confirm(checkoutDropdownItem.confirmationMessage)) &&
-				navigate(checkoutDropdownItem.href, true),
+				openConfirm({
+					message: checkoutDropdownItem.confirmationMessage,
+					onConfirm: (isConfirmed) => {
+						if (
+							isConfirmed ||
+							!checkoutDropdownItem.confirmationMessage
+						) {
+							navigate(checkoutDropdownItem.href, true);
+						}
+					},
+				}),
 			symbolLeft: checkoutDropdownItem.symbolLeft,
 		});
 	}

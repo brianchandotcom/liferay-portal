@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
@@ -170,6 +172,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 		Assert.assertEquals(_enLocale, predefinedValue.getDefaultLocale());
 		Assert.assertEquals("0", predefinedValue.getString(_enLocale));
+
+		_assertDDMFormFieldValidation(ddmFormField);
 	}
 
 	@Test
@@ -278,6 +282,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 		Assert.assertEquals(_enLocale, predefinedValue.getDefaultLocale());
 		Assert.assertEquals("0", predefinedValue.getString(_enLocale));
+
+		_assertDDMFormFieldValidation(ddmFormField);
 	}
 
 	@Test
@@ -563,6 +569,23 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		).thenReturn(
 			optionValues
 		);
+	}
+
+	private void _assertDDMFormFieldValidation(DDMFormField ddmFormField) {
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		Assert.assertNotNull(ddmFormFieldValidation);
+
+		DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
+			ddmFormFieldValidation.getDDMFormFieldValidationExpression();
+
+		Assert.assertNotNull(ddmFormFieldValidationExpression);
+
+		Assert.assertEquals(
+			ConfigurationModelToDDMFormConverter.
+				NUMBER_TYPE_VALUE_VALIDATION_EXPRESSION_NAME,
+			ddmFormFieldValidationExpression.getName());
 	}
 
 	private void _whenGetConfigurationDDMForm(

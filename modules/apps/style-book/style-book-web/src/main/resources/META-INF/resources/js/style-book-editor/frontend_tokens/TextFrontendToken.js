@@ -13,10 +13,12 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {useControlledState} from '@liferay/layout-content-page-editor-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {config} from '../config';
 import {useId} from '../useId';
 
 const debouncedOnValueSelect = debounce(
@@ -30,6 +32,7 @@ export default function TextFrontendToken({
 	value,
 }) {
 	const {label} = frontendToken;
+	const [nextValue, setNextValue] = useControlledState(value);
 
 	const id = useId();
 
@@ -37,14 +40,33 @@ export default function TextFrontendToken({
 		<ClayForm.Group small>
 			<label htmlFor={id}>{label}</label>
 
-			<ClayInput
-				defaultValue={value}
-				id={id}
-				onChange={(event) =>
-					debouncedOnValueSelect(onValueSelect, event.target.value)
-				}
-				type="text"
-			/>
+			{config.featureFlagLps142363 ? (
+				<ClayInput
+					id={id}
+					onBlur={() => {
+						if (nextValue !== value) {
+							onValueSelect(nextValue);
+						}
+					}}
+					onChange={(event) => {
+						setNextValue(event.target.value);
+					}}
+					type="text"
+					value={nextValue}
+				/>
+			) : (
+				<ClayInput
+					defaultValue={value}
+					id={id}
+					onChange={(event) =>
+						debouncedOnValueSelect(
+							onValueSelect,
+							event.target.value
+						)
+					}
+					type="text"
+				/>
+			)}
 		</ClayForm.Group>
 	);
 }

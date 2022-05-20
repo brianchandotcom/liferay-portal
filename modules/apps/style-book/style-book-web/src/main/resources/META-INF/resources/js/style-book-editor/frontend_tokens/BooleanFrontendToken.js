@@ -13,8 +13,11 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import {useControlledState} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import {config} from '../config';
 
 export default function BooleanFrontendToken({
 	frontendToken,
@@ -22,14 +25,28 @@ export default function BooleanFrontendToken({
 	value,
 }) {
 	const {label} = frontendToken;
+	const [nextValue, setNextValue] = useControlledState(value || false);
 
 	return (
 		<ClayForm.Group small>
-			<ClayCheckbox
-				defaultChecked={value || false}
-				label={label}
-				onChange={(event) => onValueSelect(event.target.checked)}
-			/>
+			{config.featureFlagLps142363 ? (
+				<ClayCheckbox
+					checked={nextValue}
+					label={label}
+					onChange={(event) => {
+						const nextValue = event.target.checked;
+
+						setNextValue(nextValue);
+						onValueSelect(nextValue);
+					}}
+				/>
+			) : (
+				<ClayCheckbox
+					defaultChecked={value || false}
+					label={label}
+					onChange={(event) => onValueSelect(event.target.checked)}
+				/>
+			)}
 		</ClayForm.Group>
 	);
 }

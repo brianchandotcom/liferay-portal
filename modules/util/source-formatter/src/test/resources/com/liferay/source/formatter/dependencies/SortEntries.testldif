@@ -23,3 +23,8 @@ objectClass: inetOrgPerson
 cn: notTestUser
 userPassword: test
 sn: lastName1
+
+changetype: modify
+delete:uniqueMember
+dn: cn=testgroup,dc=example,dc=com
+uniqueMember: cn=testUser,dc=example,dc=com

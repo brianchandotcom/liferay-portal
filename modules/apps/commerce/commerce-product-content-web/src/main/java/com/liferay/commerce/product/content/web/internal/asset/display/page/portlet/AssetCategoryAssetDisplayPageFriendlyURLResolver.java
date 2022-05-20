@@ -24,7 +24,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.web.internal.asset.display.page.portlet.helper.AssetDisplayPageFriendlyURLResolverHelper;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -84,9 +83,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(
-			_assetDisplayPageFriendlyURLResolverHelper.getURLSeparatorLength(
-				getURLSeparator()));
+		String urlTitle = friendlyURL.substring(getURLSeparator().length());
 
 		urlTitle = _friendlyURLNormalizer.normalizeWithEncoding(urlTitle);
 
@@ -153,9 +150,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(
-			_assetDisplayPageFriendlyURLResolverHelper.getURLSeparatorLength(
-				getURLSeparator()));
+		String urlTitle = friendlyURL.substring(getURLSeparator().length());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -356,10 +351,6 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private AssetDisplayPageFriendlyURLResolverHelper
-		_assetDisplayPageFriendlyURLResolverHelper;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

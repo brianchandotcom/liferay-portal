@@ -54,20 +54,6 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 	}
 
 	private final Class<?>[] _classes = {
-		com.liferay.client.extension.internal.upgrade.v1_0_1.
-			RemoteAppEntryUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_0_0.
-			RemoteAppEntryUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_1_0.
-			ResourcePermissionsUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_2_0.
-			RemoteAppEntryUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_3_0.
-			RemoteAppEntryUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_4_0.
-			RemoteAppEntryUpgradeProcess.class,
-		com.liferay.client.extension.internal.upgrade.v2_5_0.
-			RemoteAppEntryUpgradeProcess.class,
 		com.liferay.client.extension.internal.upgrade.v3_0_0.
 			ClassNamesUpgradeProcess.class,
 		com.liferay.client.extension.internal.upgrade.v3_0_0.

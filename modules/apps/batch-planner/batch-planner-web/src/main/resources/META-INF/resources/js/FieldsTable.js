@@ -101,7 +101,7 @@ function FieldsTable({portletNamespace}) {
 				variant="inline"
 			>
 				{Liferay.Language.get(
-					'check-out-fields-that-would-be-exported'
+					'select-fields-to-include-in-the-exported-file'
 				)}
 			</ClayAlert>
 

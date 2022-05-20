@@ -193,12 +193,20 @@ definition {
 
 		// AC Refactor: Depends on bug fix (LRAC-11153)
 
-		task ("Connect AC to DXP no data") {
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC no data") {
 			ACUtils.launchDXP();
 
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACUtils.closeAllSessionsAndWait();
+			ACDXPSettings.connectAnalyticsCloud();
 		}
 
 		task ("Go to AC workspace") {

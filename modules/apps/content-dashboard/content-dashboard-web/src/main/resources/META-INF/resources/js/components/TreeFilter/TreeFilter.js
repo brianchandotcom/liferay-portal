@@ -243,7 +243,11 @@ const TreeFilter = ({
 
 						<ClayLinkContext.Provider value={handleClearSelected}>
 							<div>
-								<ClayLink button="true" href="#">
+								<ClayLink
+									className="text-3 text-weight-semi-bold tree-filter-clear-selected"
+									displayType="secondary"
+									href="#"
+								>
 									{Liferay.Language.get('clear-all')}
 								</ClayLink>
 							</div>

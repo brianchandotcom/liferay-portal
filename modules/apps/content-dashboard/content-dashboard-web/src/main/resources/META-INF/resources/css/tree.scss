@@ -18,6 +18,10 @@
 		}
 	}
 
+	&-clear-selected {
+		color: $cadmin-gray-900;
+	}
+
 	&-loader {
 		top: 50%;
 		transform: translateY(-50%);

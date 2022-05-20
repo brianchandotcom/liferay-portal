@@ -83,7 +83,9 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(getURLSeparator().length());
+		String urlSeparator = getURLSeparator();
+
+		String urlTitle = friendlyURL.substring(urlSeparator.length());
 
 		urlTitle = _friendlyURLNormalizer.normalizeWithEncoding(urlTitle);
 
@@ -150,7 +152,9 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(getURLSeparator().length());
+		String urlSeparator = getURLSeparator();
+
+		String urlTitle = friendlyURL.substring(urlSeparator.length());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(

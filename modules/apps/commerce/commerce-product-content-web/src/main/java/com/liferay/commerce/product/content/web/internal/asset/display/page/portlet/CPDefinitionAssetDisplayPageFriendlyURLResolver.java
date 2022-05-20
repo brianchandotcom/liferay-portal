@@ -93,7 +93,9 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
-		String urlTitle = friendlyURL.substring(getURLSeparator().length());
+		String urlSeparator = getURLSeparator();
+
+		String urlTitle = friendlyURL.substring(urlSeparator.length());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -153,7 +155,9 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(getURLSeparator().length());
+		String urlSeparator = getURLSeparator();
+
+		String urlTitle = friendlyURL.substring(urlSeparator.length());
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(

@@ -224,7 +224,7 @@ definition {
 			AssertTextPresent(
 				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
 				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+				value1 = "Assigning roles by segment is disabled. To enable, go to Instance Settings > Segments > Segments Service.");
 		}
 	}
 

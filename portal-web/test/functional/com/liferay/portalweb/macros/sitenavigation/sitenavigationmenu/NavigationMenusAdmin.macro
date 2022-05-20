@@ -10,7 +10,9 @@ definition {
 		Portlet.expandTree();
 
 		for (var pageName : list "${pageNames}") {
-			Portlet.selectTreeNode(nodeName = "${pageName}");
+			Check.checkNotVisible(
+				key_nodeName = "${pageName}",
+				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 	}
 
@@ -200,7 +202,9 @@ definition {
 		Portlet.expandTree();
 
 		for (var pageName : list "${pageNames}") {
-			Portlet.selectTreeNode(nodeName = "${pageName}");
+			Check.checkNotVisible(
+				key_nodeName = "${pageName}",
+				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 
 		Button.click(button = "Select");
@@ -327,7 +331,9 @@ definition {
 				Portlet.expandTree();
 
 				for (var pageName : list "${pageNames}") {
-					Portlet.selectTreeNode(nodeName = "${pageName}");
+					Check.checkNotVisible(
+						key_nodeName = "${pageName}",
+						locator1 = "Treeview#NODE_CHECKBOX");
 				}
 
 				SelectFrameTop();

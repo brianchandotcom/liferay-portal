@@ -17,8 +17,8 @@ package com.liferay.layout.admin.web.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
@@ -42,9 +42,9 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -137,7 +137,7 @@ public class LayoutStagedModelDataHandlerTest
 
 			initImport();
 
-			Company company = CompanyLocalServiceUtil.getCompany(
+			Company company = _companyLocalService.getCompany(
 				liveGroup.getCompanyId());
 
 			validatePortletAttributes(
@@ -172,7 +172,7 @@ public class LayoutStagedModelDataHandlerTest
 
 			initImport();
 
-			Company company = CompanyLocalServiceUtil.getCompany(
+			Company company = _companyLocalService.getCompany(
 				liveGroup.getCompanyId());
 
 			validatePortletAttributes(
@@ -193,7 +193,7 @@ public class LayoutStagedModelDataHandlerTest
 		Layout linkedLayout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		List<LayoutFriendlyURL> linkedLayoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 				linkedLayout.getPlid());
 
 		addDependentStagedModel(
@@ -206,7 +206,7 @@ public class LayoutStagedModelDataHandlerTest
 			stagingGroup.getGroupId(), linkedLayout.getLayoutId());
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 				layout.getPlid());
 
 		_addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
@@ -246,21 +246,21 @@ public class LayoutStagedModelDataHandlerTest
 			PortletDataContextFactoryUtil.clonePortletDataContext(
 				portletDataContext));
 
-		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		_layoutLocalService.getLayoutByUuidAndGroupId(
 			linkedLayout.getUuid(), liveGroup.getGroupId(), false);
 
 		LayoutFriendlyURL linkedLayoutFriendlyURL =
 			linkedLayoutFriendlyURLs.get(0);
 
-		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+		_layoutFriendlyURLLocalService.getLayoutFriendlyURLByUuidAndGroupId(
 			linkedLayoutFriendlyURL.getUuid(), liveGroup.getGroupId());
 
-		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		_layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), liveGroup.getGroupId(), false);
 
 		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
 
-		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+		_layoutFriendlyURLLocalService.getLayoutFriendlyURLByUuidAndGroupId(
 			layoutFriendlyURL.getUuid(), liveGroup.getGroupId());
 	}
 
@@ -273,7 +273,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		String fileName = "PDF_Test.pdf";
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
@@ -282,7 +282,7 @@ public class LayoutStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		String stagingPreviewURL = DLURLHelperUtil.getPreviewURL(
+		String stagingPreviewURL = _dlURLHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 
 		addDependentStagedModel(
@@ -326,17 +326,15 @@ public class LayoutStagedModelDataHandlerTest
 				portletDataContext));
 
 		FileEntry importedFileEntry =
-			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			_dlAppLocalService.getFileEntryByUuidAndGroupId(
 				fileEntry.getUuid(), liveGroup.getGroupId());
 
-		String livePreviewURL = DLURLHelperUtil.getPreviewURL(
+		String livePreviewURL = _dlURLHelper.getPreviewURL(
 			importedFileEntry, importedFileEntry.getFileVersion(), null,
 			StringPool.BLANK);
 
-		Layout importedLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				layout.getUuid(), liveGroup.getGroupId(),
-				layout.isPrivateLayout());
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			importedLayout.getTypeSettingsProperties();
@@ -392,7 +390,7 @@ public class LayoutStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			uuid, group.getGroupId(), false);
 	}
 
@@ -432,17 +430,17 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout parentLayout = (Layout)dependentStagedModels.get(0);
 
-		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		_layoutLocalService.getLayoutByUuidAndGroupId(
 			parentLayout.getUuid(), group.getGroupId(), false);
 
 		List<LayoutFriendlyURL> parentLayoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 				parentLayout.getPlid());
 
 		LayoutFriendlyURL parentLayoutFriendlyURL =
 			parentLayoutFriendlyURLs.get(0);
 
-		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+		_layoutFriendlyURLLocalService.getLayoutFriendlyURLByUuidAndGroupId(
 			parentLayoutFriendlyURL.getUuid(), group.getGroupId());
 	}
 
@@ -458,9 +456,8 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = (Layout)stagedModel;
 
-		Layout importedLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
 
 		List<FriendlyURLEntry> layoutFriendlyURLEntries =
 			_getFriendlyURLEntries(layout);
@@ -591,7 +588,7 @@ public class LayoutStagedModelDataHandlerTest
 		throws Exception {
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 				layout.getPlid());
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
@@ -646,6 +643,21 @@ public class LayoutStagedModelDataHandlerTest
 
 	private static final String _TEST_PORTLET_NAME =
 		"com_liferay_test_portlet_TestPortlet";
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
+
+	@Inject
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private PortletPreferencesFactory _portletPreferencesFactory;

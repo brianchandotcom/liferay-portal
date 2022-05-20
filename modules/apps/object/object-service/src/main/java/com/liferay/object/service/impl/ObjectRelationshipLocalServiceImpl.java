@@ -534,8 +534,7 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		if (objectDefinition1.isSystem() &&
-			!Objects.equals(
-				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+			Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
 
 			throw new ObjectRelationshipTypeException(
 				"Invalid type for system object definition " +

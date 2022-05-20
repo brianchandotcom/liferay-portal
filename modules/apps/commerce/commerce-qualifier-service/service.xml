@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.commerce.qualifier" short-no-such-exception-enabled="false">
+	<author>Riccardo Alberti</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceQualifierEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceQualifierEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sourceClassNameId" type="long" />
+		<column name="sourceClassPK" type="long" />
+		<column name="targetClassNameId" type="long" />
+		<column name="targetClassPK" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="S_S" return-type="Collection">
+			<finder-column name="sourceClassNameId" />
+			<finder-column name="sourceClassPK" />
+		</finder>
+		<finder name="T_T" return-type="Collection">
+			<finder-column name="targetClassNameId" />
+			<finder-column name="targetClassPK" />
+		</finder>
+		<finder name="S_S_T" return-type="Collection">
+			<finder-column name="sourceClassNameId" />
+			<finder-column name="sourceClassPK" />
+			<finder-column name="targetClassNameId" />
+		</finder>
+		<finder name="S_T_T" return-type="Collection">
+			<finder-column name="sourceClassNameId" />
+			<finder-column name="targetClassNameId" />
+			<finder-column name="targetClassPK" />
+		</finder>
+		<finder name="S_S_T_T" return-type="CommerceQualifierEntry" unique="true">
+			<finder-column name="sourceClassNameId" />
+			<finder-column name="sourceClassPK" />
+			<finder-column name="targetClassNameId" />
+			<finder-column name="targetClassPK" />
+		</finder>
+	</entity>
+</service-builder>

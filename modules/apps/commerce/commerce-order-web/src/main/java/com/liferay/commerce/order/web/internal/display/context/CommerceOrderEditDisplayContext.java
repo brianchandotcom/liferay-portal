@@ -543,10 +543,19 @@ public class CommerceOrderEditDisplayContext {
 			return headerActionModels;
 		}
 
+		PortletURL portletURL = getTransitionOrderPortletURL();
+
+		if (currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) {
+
+			headerActionModels.add(
+				new HeaderActionModel(
+					"btn-primary", null, portletURL.toString(), null,
+					"create-shipment"));
+		}
+
 		List<CommerceOrderStatus> commerceOrderStatuses =
 			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
-
-		PortletURL portletURL = getTransitionOrderPortletURL();
 
 		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
 			if ((commerceOrderStatus.getKey() ==

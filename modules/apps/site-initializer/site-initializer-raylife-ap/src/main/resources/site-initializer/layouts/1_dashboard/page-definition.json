@@ -331,11 +331,10 @@
 																									{
 																										"definition": {
 																											"fragment": {
-																												"key": "fake-content"
+																												"key": "dashboard-whats-new"
 																											},
 																											"fragmentConfig": {
-																												"fakeContentId": "fake content",
-																												"height": "269px"
+																												"textColor": ""
 																											},
 																											"fragmentFields": [
 																											],

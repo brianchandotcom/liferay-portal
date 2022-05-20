@@ -1,0 +1,21 @@
+.dashboard-whats-new-container
+	.dashboard-whats-new-header
+	.dashboard-whats-new-title::after {
+	background-color: var(--primary);
+	content: '';
+	display: block;
+	height: 1px;
+	margin-top: 6px;
+	position: absolute;
+	width: 19px;
+}
+
+.dashboard-whats-new-container .dashboard-whats-new-subtext {
+	margin-top: 50px;
+}
+
+.dashboard-whats-new-container .dashboard-whats-new-header .settings-icon svg {
+	cursor: pointer;
+	height: 20px !important;
+	width: 20px !important;
+}

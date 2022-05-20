@@ -52,6 +52,7 @@ export default function DatePicker({
 	const maskRef = useRef();
 	const {
 		clayFormat,
+		firstDayOfWeek,
 		isDateTime,
 		momentFormat,
 		placeholder,
@@ -63,6 +64,7 @@ export default function DatePicker({
 		const isDateTime = type === 'date_time';
 		const momentLocale = moment().locale(locale ?? defaultLanguageId);
 		const dateFormat = momentLocale.localeData().longDateFormat('L');
+		const firstDayOfWeek = momentLocale.localeData().firstDayOfWeek();
 		const time = momentLocale.localeData().longDateFormat('LT');
 
 		let momentFormat = dateFormat;
@@ -93,6 +95,7 @@ export default function DatePicker({
 
 		return {
 			clayFormat,
+			firstDayOfWeek,
 			isDateTime,
 			momentFormat,
 			placeholder,
@@ -243,6 +246,7 @@ export default function DatePicker({
 				dateFormat={clayFormat}
 				dir={dir}
 				disabled={readOnly}
+				firstDayOfWeek={firstDayOfWeek}
 				months={months}
 				onBlur={onBlur}
 				onFocus={onFocus}

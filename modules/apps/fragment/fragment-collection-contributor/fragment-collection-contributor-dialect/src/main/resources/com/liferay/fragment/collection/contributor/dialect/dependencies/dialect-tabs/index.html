@@ -1,4 +1,4 @@
-<div class="component-tabs [#if (configuration.tabDirection == 'nav-vertical')]d-flex[/#if]">
+<div class="[#if (configuration.tabDirection == 'nav-vertical')]align-items-md-start d-md-flex[/#if]">
 	<nav class="navbar navbar-collapse-absolute navbar-expand-md p-0">
 		<div class="d-md-none nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}">
 			<button aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="active collapsed nav-link navbar-toggler navbar-toggler-link" data-toggle="collapse">
@@ -8,8 +8,8 @@
 			</button>
 		</div>
 
-		<div class="collapse navbar-collapse" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
-			<ul class="nav nav-${configuration.tabStyle} ${configuration.tabDirection} ${(configuration.tabActiveBarPosition)}" role="tablist">
+		<div class="bg-white collapse navbar-collapse p-0" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
+			<ul class="navbar-nav nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}" role="tablist">
 				[#list 0..configuration.numberOfTabs-1 as i]
 					<li class="nav-item">
 						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link navbar-text-truncate w-100" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">

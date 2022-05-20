@@ -23,27 +23,17 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
-
-String exceptionErrorMessage = null;
 %>
 
 <div class="translation">
 	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
-		<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>">
-
-			<%
-			exceptionErrorMessage = LanguageUtil.get(request, "please-enter-a-file-with-a-valid-xliff-file-extension");
-			%>
-
-		</liferay-ui:error>
-
 		<span aria-hidden="true" class="loading-animation"></span>
 
 		<react:component
 			module="js/import-translation/ImportTranslation"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"errorMessage", exceptionErrorMessage
+					"errorMessage", importTranslationDisplayContext.getErrorMessage()
 				).put(
 					"portletResource", ParamUtil.getString(request, "portletResource")
 				).put(

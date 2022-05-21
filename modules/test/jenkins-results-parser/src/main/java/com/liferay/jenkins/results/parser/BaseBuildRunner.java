@@ -139,7 +139,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 				retries++;
 
 				String command = JenkinsResultsParserUtil.combine(
-					"time rsync -Ipqrs --chmod=go=rx --timeout=1200 ",
+					"time timeout 1200 rsync -Ipqrs --chmod=go=rx ",
 					JenkinsResultsParserUtil.getCanonicalPath(file), " ",
 					_buildData.getTopLevelMasterHostname(), "::usercontent/",
 					userContentRelativePath);

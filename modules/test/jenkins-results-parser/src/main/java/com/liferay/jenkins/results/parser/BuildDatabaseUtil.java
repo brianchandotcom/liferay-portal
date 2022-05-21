@@ -171,7 +171,7 @@ public class BuildDatabaseUtil {
 
 				if (JenkinsResultsParserUtil.isOSX()) {
 					commands[1] = JenkinsResultsParserUtil.combine(
-						"rsync -Iq --timeout=1200 \"root@", distNode, ":",
+						"timeout 1200 rsync -Iq \"root@", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
 						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
@@ -208,7 +208,7 @@ public class BuildDatabaseUtil {
 				}
 				else {
 					commands[1] = JenkinsResultsParserUtil.combine(
-						"rsync -Iq --timeout=1200 \"", distNode, ":",
+						"timeout 1200 rsync -Iq \"", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
 						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(

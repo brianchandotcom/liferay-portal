@@ -12,30 +12,15 @@
  * details.
  */
 
-import openConfirm from './modals/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onActionButtonClick(event, {item}) {
-			if (item?.data?.action === 'deleteFeeds') {
-				openConfirm({
-					message: Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-this'
-					),
-					onConfirm: (isConfirmed) => {
-						if (isConfirmed) {
-							const form = document.getElementById(
-								`${portletNamespace}fm`
-							);
-
-							if (form) {
-								submitForm(form);
-							}
-						}
-					},
-				});
-			}
-		},
-	};
+function openConfirm({message, onConfirm}) {
+	if (Liferay.FeatureFlags.enableCustomDialogs) {
+		openConfirmModal({message, onConfirm});
+	}
+	else if (confirm(message)) {
+		onConfirm(true);
+	}
 }
+
+export default openConfirm;

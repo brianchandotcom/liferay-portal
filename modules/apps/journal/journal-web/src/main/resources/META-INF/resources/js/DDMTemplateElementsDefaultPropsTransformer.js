@@ -14,15 +14,18 @@
 
 import {openModal} from 'frontend-js-web';
 
+import openConfirm from './modals/openConfirm';
+
 const ACTIONS = {
 	deleteDDMTemplate(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteDDMTemplateURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed &&
+				submitForm(document.hrefFm, itemData.deleteDDMTemplateURL),
+		});
 	},
 
 	permissionsDDMTemplate(itemData) {

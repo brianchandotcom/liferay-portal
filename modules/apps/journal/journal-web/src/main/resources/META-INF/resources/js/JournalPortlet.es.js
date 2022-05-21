@@ -15,6 +15,7 @@
 import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
+import openConfirm from './modals/openConfirm';
 
 const AUTO_SAVE_DELAY = 1500;
 
@@ -213,24 +214,28 @@ export default function _JournalPortlet({
 	const handleResetValuesButtonClick = (event) => {
 		publishingLock.lock();
 
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-reset-the-default-values'
-				)
-			)
-		) {
-			if (editingDefaultValues) {
-				actionInput.value = articleId
-					? '/journal/update_data_engine_default_values'
-					: '/journal/add_data_engine_default_values';
-			}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-reset-the-default-values'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					if (editingDefaultValues) {
+						actionInput.value = articleId
+							? '/journal/update_data_engine_default_values'
+							: '/journal/add_data_engine_default_values';
+					}
 
-			submitForm(document.hrefFm, event.currentTarget.dataset.url);
-		}
-		else {
-			publishingLock.unlock();
-		}
+					submitForm(
+						document.hrefFm,
+						event.currentTarget.dataset.url
+					);
+				}
+				else {
+					publishingLock.unlock();
+				}
+			},
+		});
 	};
 
 	const showAlert = (message) => {

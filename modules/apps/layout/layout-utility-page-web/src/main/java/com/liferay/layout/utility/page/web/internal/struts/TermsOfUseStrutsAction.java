@@ -15,6 +15,7 @@
 package com.liferay.layout.utility.page.web.internal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -39,6 +40,10 @@ public class TermsOfUseStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		httpServletRequest.setAttribute(
+			TermsOfUseContentProvider.class.getName(),
+			_termsOfUseContentProvider);
+
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/terms_of_use/terms_of_use.jsp");
@@ -52,5 +57,8 @@ public class TermsOfUseStrutsAction implements StrutsAction {
 		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private TermsOfUseContentProvider _termsOfUseContentProvider;
 
 }

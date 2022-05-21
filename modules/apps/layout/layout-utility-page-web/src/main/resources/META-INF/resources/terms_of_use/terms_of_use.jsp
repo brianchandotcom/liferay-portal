@@ -23,7 +23,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
 }
 
-TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderUtil.getTermsOfUseContentProvider();
+TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider)request.getAttribute(TermsOfUseContentProvider.class.getName());
 %>
 
 <div class="mt-4 sheet sheet-lg">

@@ -64,7 +64,6 @@
 
 		<action path="/portal/sitemap" type="com.liferay.portal.action.SitemapAction" />
 		<action forward="portal.status" path="/portal/status" />
-		<action forward="portal.terms_of_use" path="/portal/terms_of_use" />
 
 		<!--<action path="/portal/test" type="com.liferay.portal.action.TestAction">
 			<forward name="portal.test" path="portal.test" />

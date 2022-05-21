@@ -68,11 +68,6 @@
 		<put name="content" value="/portal/status.jsp" />
 	</definition>
 
-	<definition extends="portal" name="portal.terms_of_use">
-		<put name="title" value="terms-of-use" />
-		<put name="content" value="/portal/terms_of_use.jsp" />
-	</definition>
-
 	<definition extends="portal" name="portal.test">
 		<put name="title" value="test" />
 		<put name="content" value="/portal/test.jsp" />

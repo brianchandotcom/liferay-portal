@@ -24,6 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FDSTableSchemaBuilder {
 
+	public FDSTableSchemaBuilder add(FDSTableSchemaField fdsTableSchemaField);
+
 	public FDSTableSchemaBuilder add(String fieldName);
 
 	public FDSTableSchemaBuilder add(String fieldName, String label);

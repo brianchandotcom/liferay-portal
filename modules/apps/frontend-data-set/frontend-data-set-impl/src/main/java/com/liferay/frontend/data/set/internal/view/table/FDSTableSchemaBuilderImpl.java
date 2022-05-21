@@ -29,6 +29,14 @@ import java.util.Map;
 public class FDSTableSchemaBuilderImpl implements FDSTableSchemaBuilder {
 
 	@Override
+	public FDSTableSchemaBuilder add(FDSTableSchemaField fdsTableSchemaField) {
+		_fdsTableSchemaFieldsMap.put(
+			fdsTableSchemaField.getFieldName(), fdsTableSchemaField);
+
+		return this;
+	}
+
+	@Override
 	public FDSTableSchemaBuilder add(String fieldName) {
 		addFDSTableSchemaField(fieldName);
 

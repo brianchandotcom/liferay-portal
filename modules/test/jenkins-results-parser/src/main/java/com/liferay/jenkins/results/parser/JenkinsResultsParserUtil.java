@@ -2158,6 +2158,10 @@ public class JenkinsResultsParserUtil {
 			JSONObject jsonObject = toJSONObject(
 				buildURL + "/api/json?tree=result", false);
 
+			if (!jsonObject.has("result") || jsonObject.isNull("result")) {
+				return null;
+			}
+
 			return jsonObject.optString("result");
 		}
 		catch (IOException ioException) {

@@ -13,17 +13,3 @@
  * details.
  */
 --%>
-
-<%@ include file="/init.jsp" %>
-
-<p>
-	<span>
-		<liferay-ui:message key="placeholder-terms-of-use" />
-	</span>
-</p>
-
-<p>
-	<span>
-		<liferay-ui:message key="you-must-configure-terms-of-use" />
-	</span>
-</p>

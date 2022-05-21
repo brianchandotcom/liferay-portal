@@ -14,12 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
-
-String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
+String referer = ParamUtil.getString(request, WebKeys.REFERER, PortalUtil.getCurrentURL(request));
 
 if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) {
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
@@ -38,7 +36,22 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderU
 			</div>
 
 			<div class="autofit-col">
-				<%@ include file="/html/portal/select_language.jspf" %>
+				<div class="float-right">
+
+					<%
+					String updateLanguageFormAction = HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
+
+					String updateLanguageRedirect = HttpComponentsUtil.addParameter(PortalUtil.getCurrentURL(request), "ticketKey", ParamUtil.getString(request, "ticketKey"));
+
+					updateLanguageFormAction = HttpComponentsUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
+					%>
+
+					<liferay-ui:language
+						formAction="<%= updateLanguageFormAction %>"
+						languageId="<%= themeDisplay.getLanguageId() %>"
+						languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -58,7 +71,7 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderU
 
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portal/terms_of_use_default.jsp" />
+					<liferay-util:include page="/terms_of_use/terms_of_use_default.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
 		</div>

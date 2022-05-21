@@ -45,10 +45,6 @@ apply plugin: "com.liferay.poshi.runner"
 apply plugin: "com.liferay.poshi.runner.resources.defaults"
 
 poshiRunner {
-	if (project.hasProperty("poshiRunnerExtProperties")) {
-		poshiPropertiesFile = new File(projectDir.parentFile, project.properties["poshiRunnerExtProperties"])
-	}
-
 	openCVVersion = "2.4.10-0.10"
 }
 

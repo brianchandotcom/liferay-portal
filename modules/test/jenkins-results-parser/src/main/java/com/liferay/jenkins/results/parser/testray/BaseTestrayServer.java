@@ -217,8 +217,16 @@ public abstract class BaseTestrayServer implements TestrayServer {
 					}
 				}
 
+				String gcpResultFileContent = Dom4JUtil.format(
+					rootElement, false);
+
+				gcpResultFileContent = gcpResultFileContent.replaceAll(
+					"(<property name=\"testray.testcase.warnings\" " +
+						"value=\"\\d+\")>\\s+<\\/property>",
+					"$1/>");
+
 				JenkinsResultsParserUtil.write(
-					gcpResultFile, Dom4JUtil.format(rootElement, false));
+					gcpResultFile, gcpResultFileContent);
 			}
 			catch (DocumentException | IOException exception) {
 			}

@@ -22,6 +22,8 @@ import {RulesSupport, capitalize} from 'data-engine-js-components-web';
 import {LangUtil, OPERATOR_OPTIONS_TYPES} from 'data-engine-taglib';
 import React, {useMemo} from 'react';
 
+import openConfirm from '../openConfirm';
+
 import './RuleList.scss';
 
 const LOGICAL_OPERATOR = {
@@ -430,18 +432,20 @@ const ListItem = ({
 							},
 							{
 								label: Liferay.Language.get('delete'),
-								onClick: () => {
-									if (
-										!isNestedCondition ||
-										window.confirm(
-											Liferay.Language.get(
-												'you-cannot-create-rules-with-nested-functions.-are-you-sure-you-want-to-delete-this-rule'
-											)
-										)
-									) {
-										onDelete();
-									}
-								},
+								onClick: () =>
+									openConfirm({
+										message: Liferay.Language.get(
+											'you-cannot-create-rules-with-nested-functions.-are-you-sure-you-want-to-delete-this-rule'
+										),
+										onConfirm: (isConfirmed) => {
+											if (
+												isConfirmed ||
+												!isNestedCondition
+											) {
+												onDelete();
+											}
+										},
+									}),
 							},
 						]}
 						trigger={

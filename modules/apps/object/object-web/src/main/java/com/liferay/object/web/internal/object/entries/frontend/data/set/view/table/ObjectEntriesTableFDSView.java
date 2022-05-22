@@ -138,7 +138,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldName,
 		String label, boolean sortable) {
 
-		FDSTableSchemaField fdsTableSchemaField = null;
+		FDSTableSchemaField fdsTableSchemaField = new FDSTableSchemaField();
 
 		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
@@ -146,25 +146,33 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			StringFDSTableSchemaField stringFDSTableSchemaField =
-				fdsTableSchemaBuilder.addFDSTableSchemaField(
-					StringFDSTableSchemaField.class, fieldName, label);
+				new StringFDSTableSchemaField();
 
+			stringFDSTableSchemaField.setFieldName(fieldName);
+			stringFDSTableSchemaField.setLabel(label);
 			stringFDSTableSchemaField.setTruncate(true);
+
+			fdsTableSchemaBuilder.add(stringFDSTableSchemaField);
 
 			fdsTableSchemaField = stringFDSTableSchemaField;
 		}
 		else if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DATE)) {
 			DateFDSTableSchemaField dateFDSTableSchemaField =
-				fdsTableSchemaBuilder.addFDSTableSchemaField(
-					DateFDSTableSchemaField.class, fieldName, label);
+				new DateFDSTableSchemaField();
 
+			dateFDSTableSchemaField.setFieldName(fieldName);
 			dateFDSTableSchemaField.setFormat("short");
+			dateFDSTableSchemaField.setLabel(label);
+
+			fdsTableSchemaBuilder.add(dateFDSTableSchemaField);
 
 			fdsTableSchemaField = dateFDSTableSchemaField;
 		}
 		else {
-			fdsTableSchemaField = fdsTableSchemaBuilder.addFDSTableSchemaField(
-				fieldName, label);
+			fdsTableSchemaField.setFieldName(fieldName);
+			fdsTableSchemaField.setLabel(label);
+
+			fdsTableSchemaBuilder.add(fdsTableSchemaField);
 
 			if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
 				fdsTableSchemaField.setContentRenderer("boolean");
@@ -181,7 +189,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField.setSortable(true);
 		}
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField(fdsTableSchemaField);
+		fdsTableSchemaBuilder.add(fdsTableSchemaField);
 	}
 
 	private void _addNonbjectField(

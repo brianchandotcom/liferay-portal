@@ -145,6 +145,10 @@
 			<category name="Styling" />
 			<description name="Sorts definition keys in `.config` files." />
 		</check>
+		<check name="ConfigWhitespaceCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary whitespace." />
+		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace." />

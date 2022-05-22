@@ -149,10 +149,6 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace." />
 		</check>
-		<check name="WhitespaceCheck">
-			<category name="Styling" />
-			<description name="Finds missing and unnecessary whitespace." />
-		</check>
 	</source-processor>
 	<source-processor name="CQLSourceProcessor">
 		<check name="CQLKeywordCheck">

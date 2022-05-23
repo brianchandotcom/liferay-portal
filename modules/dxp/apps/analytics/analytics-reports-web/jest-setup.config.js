@@ -21,3 +21,7 @@ window.Liferay.Util.sub = function (string, data) {
 
 	return string.replace(REGEX_SUB, data);
 };
+
+window.Liferay.FeatureFlags = {
+	'LPS-149256': false,
+};

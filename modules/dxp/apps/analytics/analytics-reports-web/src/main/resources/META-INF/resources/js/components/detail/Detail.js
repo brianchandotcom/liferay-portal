@@ -12,7 +12,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useFeatureFlag} from 'data-engine-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -46,8 +45,6 @@ export default function Detail({
 	const chartDispatch = useContext(ChartDispatchContext);
 
 	const storeDispatch = useContext(StoreDispatchContext);
-
-	const flags = useFeatureFlag();
 
 	const currentPageMocked = {
 		data: {
@@ -133,7 +130,7 @@ export default function Detail({
 					{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
 						currentPage.view === TRAFFIC_CHANNELS.PAID) &&
 						currentPageMocked.data.countrySearch.length > 0 &&
-						(flags['LPS-149256'] ? (
+						(Liferay.FeatureFlags['LPS-149256'] ? (
 							<CountriesDetail
 								currentPage={currentPageMocked}
 								handleDetailPeriodChange={

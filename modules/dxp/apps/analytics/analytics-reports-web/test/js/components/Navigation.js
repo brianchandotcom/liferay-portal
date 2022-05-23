@@ -19,10 +19,6 @@ import {StoreContextProvider} from '../../../src/main/resources/META-INF/resourc
 
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock('data-engine-js-components-web', () => ({
-	useFeatureFlag: () => ({['LPS-149256']: false}),
-}));
-
 const mockEndpoints = {
 	analyticsReportsHistoricalReadsURL: '/o/analyticsReportsHistoricalReadsURL',
 	analyticsReportsHistoricalViewsURL: '/o/analyticsReportsHistoricalViewsURL',

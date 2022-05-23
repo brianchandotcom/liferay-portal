@@ -20128,6 +20128,7 @@ public class LayoutPersistenceImpl
 		ctStrictColumnNames.add("themeId");
 		ctStrictColumnNames.add("colorSchemeId");
 		ctStrictColumnNames.add("styleBookEntryId");
+		ctStrictColumnNames.add("faviconFileEntryId");
 		ctStrictColumnNames.add("css");
 		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("masterLayoutPlid");

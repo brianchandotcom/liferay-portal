@@ -666,14 +666,11 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		int maxRetestAmount = _getMaxRetestAmount();
 
 		if ((retestAmountInt < 0) || (retestAmountInt > maxRetestAmount)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
-			sb.append(" must be between 0 and ");
-			sb.append(maxRetestAmount);
-			sb.append(".");
-
-			failBuildRunner(sb.toString());
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					_NAME_BUILD_PARAMETER_RETEST_AMOUNT,
+					" must be between 0 and ", String.valueOf(maxRetestAmount),
+					"."));
 		}
 	}
 

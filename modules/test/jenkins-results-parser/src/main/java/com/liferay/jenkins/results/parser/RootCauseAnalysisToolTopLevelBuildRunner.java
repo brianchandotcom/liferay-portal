@@ -515,7 +515,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		int retestAmount = _getRetestAmount();
 
-		if ((retestAmount != 1) 
+		if (retestAmount != 1) {
 			allowedPortalBranchSHAs = 1;
 		}
 

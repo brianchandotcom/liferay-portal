@@ -49,7 +49,8 @@ public class ObjectTableProviderImpl implements ObjectTableProvider {
 			objectDefinition.getDBTableName());
 	}
 
-	// TODO I think we don't need this class, I actually copied this mathod in the local service, maybe we can avoit this class
+	// TODO I think we don't need this class, I actually copied this
+	//  method in the local service, maybe we can avoit this class
 
 	@Override
 	public Table getTable(long objectDefinitionId, String objectFieldName)

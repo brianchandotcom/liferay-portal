@@ -98,8 +98,8 @@ public class PredicateExpressionVisitorImpl
 				_getLambdaEntityModel(
 					lambdaFunctionExpression.getVariableName(),
 					(CollectionEntityField)entityFieldsMap.get(
-						collectionPropertyExpression.getName())), _format, _locale,
-				_objectDefinitionId, _objectTableProvider));
+						collectionPropertyExpression.getName())),
+				_format, _locale, _objectDefinitionId, _objectTableProvider));
 	}
 
 	@Override

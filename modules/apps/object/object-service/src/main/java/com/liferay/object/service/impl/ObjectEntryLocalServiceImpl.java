@@ -113,7 +113,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1140,29 +1139,6 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectEntryId()));
 	}
 
-	private DLFolder _getDLFolder(
-		long companyId, long groupId, String portletId,
-		ServiceContext serviceContext, boolean showFilesInDocumentsAndMedia,
-		String storageDLFolderPath, long userId) {
-
-		Long dlFolderId = null;
-
-		if (showFilesInDocumentsAndMedia) {
-			dlFolderId = _getStorageDLFolderId(
-				companyId, groupId, serviceContext, storageDLFolderPath);
-		}
-		else {
-			dlFolderId = _getObjectRepositoryFolderId(
-				companyId, groupId, portletId, serviceContext, userId);
-		}
-
-		if (dlFolderId == null) {
-			return null;
-		}
-
-		return _dlFolderLocalService.fetchDLFolder(dlFolderId);
-	}
-
 	private Predicate _fillSearch(
 			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException {
@@ -1192,6 +1168,29 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return predicate;
+	}
+
+	private DLFolder _getDLFolder(
+		long companyId, long groupId, String portletId,
+		ServiceContext serviceContext, boolean showFilesInDocumentsAndMedia,
+		String storageDLFolderPath, long userId) {
+
+		Long dlFolderId = null;
+
+		if (showFilesInDocumentsAndMedia) {
+			dlFolderId = _getStorageDLFolderId(
+				companyId, groupId, serviceContext, storageDLFolderPath);
+		}
+		else {
+			dlFolderId = _getObjectRepositoryFolderId(
+				companyId, groupId, portletId, serviceContext, userId);
+		}
+
+		if (dlFolderId == null) {
+			return null;
+		}
+
+		return _dlFolderLocalService.fetchDLFolder(dlFolderId);
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(

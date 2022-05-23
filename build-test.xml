@@ -10405,6 +10405,22 @@ ${update.properties}</echo>
 			</else>
 		</if>
 
+		<local name="invoker.filter.helper.log.level" />
+
+		<if>
+			<or>
+				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10" />
+				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10.1" />
+				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10.3" />
+			</or>
+			<then>
+				<property name="invoker.filter.helper.log.level" value="" />
+			</then>
+			<else>
+				<property name="invoker.filter.helper.log.level"><![CDATA[<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />]]></property>
+			</else>
+		</if>
+
 		<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <Configuration strict="true">
 	${log4j.appenders}
@@ -10415,7 +10431,7 @@ ${update.properties}</echo>
 
 		<Logger level="DEBUG" name="com.liferay.portal.equinox.log.bridge.internal" />
 
-		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
+		${invoker.filter.helper.log.level}
 
 		<Logger level="${release.local.service.impl.log.level}" name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
 

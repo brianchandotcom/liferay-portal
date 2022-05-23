@@ -17,7 +17,6 @@ package com.liferay.document.library.item.selector.web.internal.folder;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLSelectFolderDisplayContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -27,7 +26,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
@@ -49,7 +46,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -61,7 +57,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -165,17 +160,9 @@ public class DLFolderItemSelectorView
 				(HttpServletRequest)servletRequest, portletURL, repositoryId,
 				itemSelectorCriterion.getSelectedFolderId(),
 				itemSelectorCriterion.getSelectedRepositoryId(),
-				_isShowGroupSelector(itemSelectorCriterion)));
+				itemSelectorCriterion.isShowGroupSelector()));
 
 		requestDispatcher.include(servletRequest, servletResponse);
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_ffFolderItemSelectorGroupSelectorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFolderItemSelectorGroupSelectorConfiguration.class,
-				properties);
 	}
 
 	private Folder _fetchFolder(long folderId) {
@@ -226,16 +213,6 @@ public class DLFolderItemSelectorView
 		return repository.getGroupId();
 	}
 
-	private boolean _isShowGroupSelector(
-		FolderItemSelectorCriterion itemSelectorCriterion) {
-
-		if (!_ffFolderItemSelectorGroupSelectorConfiguration.enabled()) {
-			return false;
-		}
-
-		return itemSelectorCriterion.isShowGroupSelector();
-	}
-
 	private static final List<String> _portletIds = Arrays.asList(
 		DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, DLPortletKeys.DOCUMENT_LIBRARY);
 	private static final List<ItemSelectorReturnType>
@@ -248,14 +225,8 @@ public class DLFolderItemSelectorView
 	@Reference
 	private DLAppService _dlAppService;
 
-	private volatile FFFolderItemSelectorGroupSelectorConfiguration
-		_ffFolderItemSelectorGroupSelectorConfiguration;
-
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

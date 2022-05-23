@@ -338,6 +338,13 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 	}
 
+	macro viewFieldsEntryByPosition {
+		AssertElementPresent(
+			key_entryName = "${entryName}",
+			key_position = "${position}",
+			locator1 = "ObjectCustomViews#VIEW_FIELDS_ENTRY_BY_POSITION");
+	}
+
 	macro viewFieldsNameByPosition {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",

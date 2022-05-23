@@ -920,12 +920,65 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to see the entries with default return"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSeeEntriesWithDefaultReturn {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152065",
+			objectName = "CustomObject152065",
+			pluralLabelName = "Custom Objects 152065");
 
-		// TODO LPS-152065 CanSeeEntriesWithDefaultReturn pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152065");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152065");
+
+		for (var letter : list "A,Z,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject152065",
+				value = "Entry ${letter}");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152065");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addDefaultSort(
+			columnOption = "Custom Field",
+			sortOption = "Ascending");
+
+		Button.clickSave();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152065");
+
+		ObjectCustomViews.viewFieldsEntryByPosition(
+			entryName = "Entry A",
+			position = "1");
+
+		ObjectCustomViews.viewFieldsEntryByPosition(
+			entryName = "Entry Z",
+			position = "2");
+
+		ObjectCustomViews.viewFieldsEntryByPosition(
+			entryName = "Entry B",
+			position = "3");
 	}
 
 	@description = "LPS-147792 - Verify that the new column name will be displayed on the entries list"

@@ -43,6 +43,11 @@
 <tr>
 	<td>SELECTED_TABLE_PAGINATION</td>
 	<td>//li[contains(@class,'page-item active')]//button[contains(.,'${key_pageNumber}')]</td>
+		<td></td>
+</tr>
+<tr>
+	<td>VIEW_DISABLED_ENTRY</td>
+	<td>//label[contains(text(),'${key_entryName}')]/..//select[@class='form-control disabled']</td>
 	<td></td>
 </tr>
 <tr>

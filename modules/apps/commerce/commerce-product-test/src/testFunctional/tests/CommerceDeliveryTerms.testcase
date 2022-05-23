@@ -14,65 +14,94 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-    @description = "COMMERCE-9315. User can create a Delivery Term"
+	@description = "COMMERCE-9315. User can create a Delivery Term"
 	@priority = "3"
 	test CanCreateDeliveryTerm {
-        task ("Given the Sales Manager navigates to the Terms and Conditions page") {
-            CommerceNavigator.gotoPortlet(
+		task ("Given the Sales Manager navigates to the Terms and Conditions page") {
+			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
-        }
+		}
 
-        task ("When the Sales Manager creates a new entry with 'Delivery Term' Type") {
-            CommercePaymentTerms.addTermsAndCondition(
+		task ("When the Sales Manager creates a new entry with 'Delivery Term' Type") {
+			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
 				valuePosition = "0.0");
 
-            CommercePaymentTerms.openTermsAndConditionAdmin();
-        }
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+		}
 
-        task ("Then a new Term is successfully created") {
-            CommercePaymentTerms.viewTermsAndConditionEntry(
+		task ("Then a new Term is successfully created") {
+			CommercePaymentTerms.viewTermsAndConditionEntry(
 				termsAndConditionActiveStatus = "No",
 				termsAndConditionName = "Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
 				valuePosition = "0");
-        }
-    }
+		}
+	}
+
+	@description = "COMMERCE-9317. User can delete a Delivery Term"
+	@priority = "3"
+	test CanDeleteDeliveryTerm {
+		task ("Given an existing Delivery Terms entry") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "0.0");
+
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+		}
+
+		task ("When the Sales Manager tries to delete a Delivery Terms entry") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Delete",
+				termsAndConditionName = "Terms and Condition Entry");
+		}
+
+		task ("Then the entry is successfully removed") {
+			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry");
+		}
+	}
 
 	@description = "COMMERCE-9316. User can edit a Delivery Term"
 	@priority = "3"
 	test CanEditDeliveryTerm {
 		task ("Given the Sales Manager navigates to the Terms and Conditions page") {
-            CommerceNavigator.gotoPortlet(
+			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
-        }
+		}
 
-        task ("When the Sales Manager navigates to that entry details page") {
-            CommercePaymentTerms.addTermsAndCondition(
+		task ("When the Sales Manager navigates to that entry details page") {
+			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
 				valuePosition = "0.0");
 
-            CommercePaymentTerms.openTermsAndConditionAdmin();
-        }
-		
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+		}
+
 		task ("And the Sales Manager edit the fields on the page") {
 			CommercePaymentTerms.gotoEntryMenuItem(
-				termsAndConditionName = "Terms and Condition Entry",
-				menuItem = "Edit");
+				menuItem = "Edit",
+				termsAndConditionName = "Terms and Condition Entry");
 
 			CommercePaymentTerms.editTermsAndCondition(
 				termsAndConditionName = "Edited Terms and Condition Entry",
 				valuePosition = "1.0");
 		}
-		
+
 		task ("But the Type field cannot be edited") {
 			AssertElementPresent(
-				locator1 = "CommerceEntry#VIEW_DISABLED_ENTRY",
-				key_entryName = "Type");
+				key_entryName = "Type",
+				locator1 = "CommerceEntry#VIEW_DISABLED_ENTRY");
 		}
 
 		task ("Then the fields are successfully updated") {
@@ -86,50 +115,21 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9317. User can delete a Delivery Term"
-	@priority = "3"
-	test CanDeleteDeliveryTerm {
-		task ("Given an existing Delivery Terms entry") {
-            CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Terms and Conditions");
-				
-            CommercePaymentTerms.addTermsAndCondition(
-				termsAndConditionName = "Terms and Condition Entry",
-				termsAndConditionType = "Delivery Terms",
-				valuePosition = "0.0");
-
-            CommercePaymentTerms.openTermsAndConditionAdmin();
-        }
-		
-		task ("When the Sales Manager tries to delete a Delivery Terms entry") {
-			CommercePaymentTerms.openTermsAndConditionAdmin();
-
-			CommercePaymentTerms.gotoEntryMenuItem(
-				termsAndConditionName = "Terms and Condition Entry",
-				menuItem = "Delete");
-		}
-		
-		task ("Then the entry is successfully removed") {
-			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry");
-		}
-	}
-
 	@description = "COMMERCE-9318. User can not add Delivery Terms with same priority"
 	@priority = "3"
 	test DeliveryTermMustBeUnique {
 		task ("Given an existing Delivery Terms entry with priority set as '1.0'") {
-            CommerceNavigator.gotoPortlet(
+			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
-				
-            CommercePaymentTerms.addTermsAndCondition(
+
+			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
 				valuePosition = "1.0");
 
-            CommercePaymentTerms.openTermsAndConditionAdmin();
-        }
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+		}
 
 		task ("When the Sales Manager adds a new 'Delivery Terms' entry with priority set as '1.0'") {
 			CommercePaymentTerms.addTermsAndCondition(
@@ -142,4 +142,5 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid priority.");
 		}
 	}
+
 }

@@ -21,6 +21,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -365,7 +367,7 @@ public class PredicateExpressionVisitorImpl
 				_objectDefinitionId, columnName);
 		}
 		catch (PortalException portalException) {
-			portalException.printStackTrace();
+			_log.error(portalException);
 		}
 
 		return null;
@@ -387,6 +389,9 @@ public class PredicateExpressionVisitorImpl
 
 		return column.like(entityField.getFilterableValue(fieldValue) + "*");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PredicateExpressionVisitorImpl.class);
 
 	private final EntityModel _entityModel;
 	private final Format _format;

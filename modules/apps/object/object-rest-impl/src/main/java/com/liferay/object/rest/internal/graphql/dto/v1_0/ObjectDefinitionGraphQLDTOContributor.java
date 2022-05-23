@@ -25,6 +25,8 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -293,7 +295,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 				_objectDefinition.getObjectDefinitionId());
 		}
 		catch (Exception exception) {
-			System.out.println(exception.getMessage());
+			_log.error(exception);
 		}
 
 		return null;
@@ -383,6 +385,9 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return objectEntry;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionGraphQLDTOContributor.class);
 
 	private static final Map<String, Class<?>> _typedClasses =
 		HashMapBuilder.<String, Class<?>>put(

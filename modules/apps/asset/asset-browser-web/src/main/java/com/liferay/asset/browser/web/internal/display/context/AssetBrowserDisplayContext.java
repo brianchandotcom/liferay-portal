@@ -364,7 +364,7 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_subtypeSelectionId = ParamUtil.getLong(
-			_httpServletRequest, "subtypeSelectionId");
+			_httpServletRequest, "subtypeSelectionId", -1);
 
 		return _subtypeSelectionId;
 	}

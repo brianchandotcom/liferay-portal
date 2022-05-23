@@ -4990,9 +4990,12 @@ definition {
 	}
 
 	macro viewNoSearchResults {
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+		ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+		AssertClick(
+			key_navItem = "Content Page Name",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Content Page Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Awesome Button");
 

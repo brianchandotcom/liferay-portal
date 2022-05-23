@@ -1144,19 +1144,8 @@ AUI.add(
 								}
 							);
 
-							var entriesContainer = instance.get(
-								'entriesContainer'
-							);
-
-							if (
-								!validFilesLength &&
-								!searchContainer.getSize()
-							) {
-								instance._showEmptyResultsMessage(
-									entriesContainer.one(
-										SELECTOR_SEARCH_CONTAINER
-									)
-								);
+							if (!validFilesLength) {
+								instance._showEmptyResultsMessage();
 							}
 						}
 
@@ -1247,8 +1236,24 @@ AUI.add(
 					}
 				},
 
-				_showEmptyResultsMessage(searchContainer) {
-					var id = searchContainer.getAttribute('id');
+				_showEmptyResultsMessage() {
+					var instance = this;
+
+					var searchContainer = instance._getSearchContainer();
+					var entriesContainer = instance.get('entriesContainer');
+
+					if (
+						searchContainer.getSize() ||
+						entriesContainer
+							.all(SELECTOR_ENTRY_DISPLAY_STYLE)
+							.size()
+					) {
+						return;
+					}
+
+					var id = entriesContainer
+						.one(SELECTOR_SEARCH_CONTAINER)
+						.getAttribute('id');
 
 					var emptyResultsMessage = document.getElementById(
 						`${id}EmptyResultsMessage`

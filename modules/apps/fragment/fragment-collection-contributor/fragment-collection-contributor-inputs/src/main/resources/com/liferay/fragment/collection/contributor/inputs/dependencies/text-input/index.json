@@ -10,8 +10,7 @@
 					"name": "placeholder",
 					"type": "text"
 				}
-			],
-			"label": "text-input-options"
+			]
 		}
 	]
 }

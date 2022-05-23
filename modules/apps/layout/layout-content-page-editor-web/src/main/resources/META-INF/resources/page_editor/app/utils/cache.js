@@ -16,6 +16,7 @@ const cache = {};
 
 export const CACHE_KEYS = {
 	formFields: 'formFields',
+	itemTypes: 'itemTypes',
 };
 
 export const CACHE_STATUS = {

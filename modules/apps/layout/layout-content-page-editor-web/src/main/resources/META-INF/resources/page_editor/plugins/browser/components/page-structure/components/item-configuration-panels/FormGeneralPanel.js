@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
@@ -26,6 +26,8 @@ import {
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import {CACHE_KEYS} from '../../../../../../app/utils/cache';
+import useCache from '../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../common/components/Collapse';
 import {CommonStyles} from './CommonStyles';
 
@@ -120,21 +122,24 @@ function MappingSource({item, onValueSelect}) {
 }
 
 function OtherTypeMapping({item, onValueSelect}) {
-	const [availableItemTypes, setItemTypes] = useState([]);
+	const itemTypes = useCache({
+		fetcher: () => InfoItemService.getAvailableInfoItemFormProviders(),
+		key: [CACHE_KEYS.itemTypes],
+	});
 
-	useEffect(() => {
-		InfoItemService.getAvailableInfoItemFormProviders().then(
-			(itemTypes) => {
-				setItemTypes([
-					{
-						label: Liferay.Language.get('none'),
-						value: '',
-					},
-					...itemTypes,
-				]);
-			}
-		);
-	}, []);
+	const availableItemTypes = useMemo(
+		() =>
+			itemTypes
+				? [
+						{
+							label: Liferay.Language.get('none'),
+							value: '',
+						},
+						...itemTypes,
+				  ]
+				: [],
+		[itemTypes]
+	);
 
 	const selectedItemType = availableItemTypes.find(
 		({value}) => value === item.config.classNameId

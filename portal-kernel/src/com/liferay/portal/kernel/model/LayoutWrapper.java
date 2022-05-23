@@ -76,6 +76,7 @@ public class LayoutWrapper
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
+		attributes.put("faviconFileEntryId", getFaviconFileEntryId());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
@@ -289,6 +290,12 @@ public class LayoutWrapper
 
 		if (masterLayoutPlid != null) {
 			setMasterLayoutPlid(masterLayoutPlid);
+		}
+
+		Long faviconFileEntryId = (Long)attributes.get("faviconFileEntryId");
+
+		if (faviconFileEntryId != null) {
+			setFaviconFileEntryId(faviconFileEntryId);
 		}
 
 		String layoutPrototypeUuid = (String)attributes.get(
@@ -662,6 +669,16 @@ public class LayoutWrapper
 	@Override
 	public java.util.List<Portlet> getEmbeddedPortlets(long groupId) {
 		return model.getEmbeddedPortlets(groupId);
+	}
+
+	/**
+	 * Returns the favicon file entry ID of this layout.
+	 *
+	 * @return the favicon file entry ID of this layout
+	 */
+	@Override
+	public long getFaviconFileEntryId() {
+		return model.getFaviconFileEntryId();
 	}
 
 	/**
@@ -2012,6 +2029,16 @@ public class LayoutWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setDescriptionMap(descriptionMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the favicon file entry ID of this layout.
+	 *
+	 * @param faviconFileEntryId the favicon file entry ID of this layout
+	 */
+	@Override
+	public void setFaviconFileEntryId(long faviconFileEntryId) {
+		model.setFaviconFileEntryId(faviconFileEntryId);
 	}
 
 	/**

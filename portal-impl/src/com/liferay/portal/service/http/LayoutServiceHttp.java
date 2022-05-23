@@ -1826,7 +1826,7 @@ public class LayoutServiceHttp {
 			boolean hidden,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			boolean hasIconImage, byte[] iconBytes, long masterLayoutPlid,
-			long styleBookEntryId,
+			long styleBookEntryId, long faviconFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1839,7 +1839,8 @@ public class LayoutServiceHttp {
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId,
 				localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
 				robotsMap, type, hidden, friendlyURLMap, hasIconImage,
-				iconBytes, masterLayoutPlid, styleBookEntryId, serviceContext);
+				iconBytes, masterLayoutPlid, styleBookEntryId,
+				faviconFileEntryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -2469,7 +2470,7 @@ public class LayoutServiceHttp {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, String.class,
 			boolean.class, java.util.Map.class, boolean.class, byte[].class,
-			long.class, long.class,
+			long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutParameterTypes45 =

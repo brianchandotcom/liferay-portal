@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>USER_ICON_SIDEBAR</td>
-	<td>//div[contains(@class, 'dropdown')]//span[contains(., 'Test Test')]</td>
+	<td>//div[contains(@class, 'testray-avatar-dropdown')]//span[contains(., 'Test Test')]</td>
 	<td></td>
 </tr>
 <tr>

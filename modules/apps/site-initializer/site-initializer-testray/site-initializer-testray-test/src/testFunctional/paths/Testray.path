@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_PROJECT</td>
-	<td>//td[contains(text(),'${key_value}')]</td>
+	<td>//div[contains(@class ,'testray-body')]//td[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>RESULTS_SIDEBAR</td>
-	<td>//span[contains(text(),'Results')]</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//a[contains(@class, 'testray-sidebar-item') and contains(., 'Results')]</td>
 	<td></td>
 </tr>
 <tr>

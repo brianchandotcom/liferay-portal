@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>TESTRAY_LOGO_SIDEBAR</td>
-	<td>//a[contains(@class,'testray-logo')]</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//div[contains(@class, 'testray-logo')]</td>
 	<td></td>
 </tr>
 <tr>

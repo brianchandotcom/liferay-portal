@@ -77,7 +77,9 @@ const INPUT_COMMON_CONFIGURATION = [
 		typeOptions: {displayType: 'toggle'},
 	},
 	{
-		defaultValue: '',
+		defaultValue: Liferay.Language.get(
+			'guide-your-users-to-fill-in-the-field-by-adding-a-help-text-here'
+		),
 		label: Liferay.Language.get('help-text'),
 		localizable: true,
 		name: HELP_TEXT_CONFIGURATION_KEY,

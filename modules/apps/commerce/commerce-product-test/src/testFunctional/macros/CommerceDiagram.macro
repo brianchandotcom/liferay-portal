@@ -1,5 +1,40 @@
 definition {
 
+	macro addAccountGroups {
+		Click(
+			key_name = "Account Groups",
+			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+
+		ClickNoError.clickNoMouseOver(
+			key_webContentTitle = "Add Account Group Relation to ${productName}",
+			locator1 = "Button#BUTTON_PLUS_PRODUCT_VISIBILITY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(selectAll)) {
+			Click(locator1 = "Checkbox#SELECT_ALL");
+		}
+		else {
+			for (var accountGroupName : list "${accountGroupNames}") {
+				Check(
+					key_checkboxName = "${accountGroupName}",
+					locator1 = "Checkbox#ENABLE_CHECKBOX");
+			}
+		}
+
+		SelectFrameTop();
+
+		Button.click(button = "Add");
+
+		SelectFrameTop();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addPin {
 		var key_pinNumber = "${pinNumber}";
 

@@ -129,10 +129,11 @@ public class AssetListEntryLocalServiceImpl
 				continue;
 			}
 
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					assetListEntryId, assetEntryId, segmentsEntryId,
-					serviceContext);
+			assetListEntryAssetEntryRels.add(
+				_assetListEntryAssetEntryRelLocalService.
+					addAssetListEntryAssetEntryRel(
+						assetListEntryId, assetEntryId, segmentsEntryId,
+						serviceContext));
 		}
 
 		// Asset list entry

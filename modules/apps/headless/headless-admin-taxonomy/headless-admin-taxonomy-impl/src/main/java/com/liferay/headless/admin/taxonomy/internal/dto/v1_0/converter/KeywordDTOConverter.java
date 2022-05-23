@@ -82,7 +82,7 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 						Hits hits = _assetEntryLocalService.search(
 							assetTag.getCompanyId(),
 							new long[] {assetTag.getGroupId()},
-							assetTag.getUserId(), null, 0, null, null, null,
+							assetTag.getUserId(), null, -1, null, null, null,
 							null, assetTag.getName(), true,
 							new int[] {
 								WorkflowConstants.STATUS_APPROVED,

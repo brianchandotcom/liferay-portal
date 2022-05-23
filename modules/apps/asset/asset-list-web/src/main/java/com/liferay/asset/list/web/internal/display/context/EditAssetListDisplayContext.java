@@ -1361,7 +1361,7 @@ public class EditAssetListDisplayContext {
 		}
 	}
 
-	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
+	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = -1;
 
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;

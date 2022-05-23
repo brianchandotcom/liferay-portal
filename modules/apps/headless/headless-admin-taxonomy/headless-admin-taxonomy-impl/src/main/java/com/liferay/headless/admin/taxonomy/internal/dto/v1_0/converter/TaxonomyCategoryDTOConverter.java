@@ -148,7 +148,7 @@ public class TaxonomyCategoryDTOConverter
 					(int)_assetEntryLocalService.searchCount(
 						assetCategory.getCompanyId(),
 						new long[] {assetCategory.getGroupId()},
-						assetCategory.getUserId(), null, 0, null,
+						assetCategory.getUserId(), null, -1, null,
 						String.valueOf(assetCategory.getCategoryId()), null,
 						false, false,
 						new int[] {

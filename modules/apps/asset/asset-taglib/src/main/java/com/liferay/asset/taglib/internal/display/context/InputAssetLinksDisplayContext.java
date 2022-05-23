@@ -395,7 +395,7 @@ public class InputAssetLinksDisplayContext {
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
 		PortletURL assetBrowserPortletURL =
-			_getAssetEntryItemSelectorPortletURL(assetRendererFactory, 0);
+			_getAssetEntryItemSelectorPortletURL(assetRendererFactory, -1);
 
 		if (assetBrowserPortletURL != null) {
 			selectorEntryData.put("href", assetBrowserPortletURL.toString());

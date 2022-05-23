@@ -1995,4 +1995,107 @@ definition {
 
 	}
 
+	@description = "Verify if Input Mask On Decimal With Decimal Places is working correctly"
+	@priority = "5"
+	test InputMaskOnDecimalWithDecimalPlaces {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "2");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "0");
+
+		Click(locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "2");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "11");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "1");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0.0000000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0,0000000");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "5");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0.00000");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "5.00000000");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "5.00000");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "4,321.12345");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "4321.12345");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "4321.12345");
+
+
+	}
+
 }

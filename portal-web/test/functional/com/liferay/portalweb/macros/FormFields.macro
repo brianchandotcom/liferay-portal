@@ -1106,6 +1106,14 @@ definition {
 			MenuItem.click(menuItem = "${decimalSeparator}");
 		}
 
+		if (isSet(decimalPlaces)) {
+			
+
+			Type(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "${decimalPlaces}");
+		}
+
 		if (isSet(prefix)) {
 			var inputMask = "${prefix}";
 			var maskOption = "Prefix";

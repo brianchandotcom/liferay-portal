@@ -73,8 +73,9 @@ public class LayoutSetModelImpl
 		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
 		{"logoId", Types.BIGINT}, {"themeId", Types.VARCHAR},
-		{"colorSchemeId", Types.VARCHAR}, {"css", Types.CLOB},
-		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"colorSchemeId", Types.VARCHAR}, {"faviconFileEntryId", Types.BIGINT},
+		{"css", Types.CLOB}, {"settings_", Types.CLOB},
+		{"layoutSetPrototypeUuid", Types.VARCHAR},
 		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
 	};
 
@@ -93,6 +94,7 @@ public class LayoutSetModelImpl
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("faviconFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeUuid", Types.VARCHAR);
@@ -100,7 +102,7 @@ public class LayoutSetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSetId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,primary key (layoutSetId, ctCollectionId))";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSetId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,faviconFileEntryId LONG,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,primary key (layoutSetId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
@@ -314,6 +316,11 @@ public class LayoutSetModelImpl
 		attributeSetterBiConsumers.put(
 			"colorSchemeId",
 			(BiConsumer<LayoutSet, String>)LayoutSet::setColorSchemeId);
+		attributeGetterFunctions.put(
+			"faviconFileEntryId", LayoutSet::getFaviconFileEntryId);
+		attributeSetterBiConsumers.put(
+			"faviconFileEntryId",
+			(BiConsumer<LayoutSet, Long>)LayoutSet::setFaviconFileEntryId);
 		attributeGetterFunctions.put("css", LayoutSet::getCss);
 		attributeSetterBiConsumers.put(
 			"css", (BiConsumer<LayoutSet, String>)LayoutSet::setCss);
@@ -567,6 +574,21 @@ public class LayoutSetModelImpl
 
 	@JSON
 	@Override
+	public long getFaviconFileEntryId() {
+		return _faviconFileEntryId;
+	}
+
+	@Override
+	public void setFaviconFileEntryId(long faviconFileEntryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_faviconFileEntryId = faviconFileEntryId;
+	}
+
+	@JSON
+	@Override
 	public String getCss() {
 		if (_css == null) {
 			return "";
@@ -740,6 +762,7 @@ public class LayoutSetModelImpl
 		layoutSetImpl.setLogoId(getLogoId());
 		layoutSetImpl.setThemeId(getThemeId());
 		layoutSetImpl.setColorSchemeId(getColorSchemeId());
+		layoutSetImpl.setFaviconFileEntryId(getFaviconFileEntryId());
 		layoutSetImpl.setCss(getCss());
 		layoutSetImpl.setSettings(getSettings());
 		layoutSetImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
@@ -775,6 +798,8 @@ public class LayoutSetModelImpl
 			this.<String>getColumnOriginalValue("themeId"));
 		layoutSetImpl.setColorSchemeId(
 			this.<String>getColumnOriginalValue("colorSchemeId"));
+		layoutSetImpl.setFaviconFileEntryId(
+			this.<Long>getColumnOriginalValue("faviconFileEntryId"));
 		layoutSetImpl.setCss(this.<String>getColumnOriginalValue("css"));
 		layoutSetImpl.setSettings(
 			this.<String>getColumnOriginalValue("settings_"));
@@ -911,6 +936,8 @@ public class LayoutSetModelImpl
 		if ((colorSchemeId != null) && (colorSchemeId.length() == 0)) {
 			layoutSetCacheModel.colorSchemeId = null;
 		}
+
+		layoutSetCacheModel.faviconFileEntryId = getFaviconFileEntryId();
 
 		layoutSetCacheModel.css = getCss();
 
@@ -1056,6 +1083,7 @@ public class LayoutSetModelImpl
 	private long _logoId;
 	private String _themeId;
 	private String _colorSchemeId;
+	private long _faviconFileEntryId;
 	private String _css;
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
@@ -1101,6 +1129,7 @@ public class LayoutSetModelImpl
 		_columnOriginalValues.put("logoId", _logoId);
 		_columnOriginalValues.put("themeId", _themeId);
 		_columnOriginalValues.put("colorSchemeId", _colorSchemeId);
+		_columnOriginalValues.put("faviconFileEntryId", _faviconFileEntryId);
 		_columnOriginalValues.put("css", _css);
 		_columnOriginalValues.put("settings_", _settings);
 		_columnOriginalValues.put(
@@ -1152,13 +1181,15 @@ public class LayoutSetModelImpl
 
 		columnBitmasks.put("colorSchemeId", 1024L);
 
-		columnBitmasks.put("css", 2048L);
+		columnBitmasks.put("faviconFileEntryId", 2048L);
 
-		columnBitmasks.put("settings_", 4096L);
+		columnBitmasks.put("css", 4096L);
 
-		columnBitmasks.put("layoutSetPrototypeUuid", 8192L);
+		columnBitmasks.put("settings_", 8192L);
 
-		columnBitmasks.put("layoutSetPrototypeLinkEnabled", 16384L);
+		columnBitmasks.put("layoutSetPrototypeUuid", 16384L);
+
+		columnBitmasks.put("layoutSetPrototypeLinkEnabled", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -1875,4 +1875,69 @@ definition {
 
 	}
 
+	@description = "Verify if unput mask on decimal with thousand separator with predefined value"
+	@priority = "5"
+	test InputMaskOnDecimalWithThousandSeparatorWithPredefinedValue {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
+
+		FormFields.editFieldPredefined(key_fieldReference = "5'000.00");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "5'000.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "5'000.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "100000");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "100'000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "100'000");
+
+	}
+
 }

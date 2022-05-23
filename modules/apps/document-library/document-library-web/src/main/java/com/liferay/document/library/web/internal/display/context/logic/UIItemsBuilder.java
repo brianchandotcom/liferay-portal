@@ -1231,6 +1231,21 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createViewVersionDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getRenderURL(
+					"/document_library/view_file_entry", _getRedirect())
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString()
+		).setIcon(
+			"view"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "view[action]")
+		).build();
+	}
+
 	public MenuItem getCheckinMenuItem() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			_getActionURL(
@@ -1448,6 +1463,14 @@ public class UIItemsBuilder {
 		}
 
 		return false;
+	}
+
+	public boolean isViewVersionActionAvailable() {
+		if (_fileShortcut != null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private UIItemsBuilder(

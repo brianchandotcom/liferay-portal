@@ -71,6 +71,9 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 					DropdownItemListBuilder.add(
 						_uiItemsBuilder::isDownloadActionAvailable,
 						_uiItemsBuilder.createDownloadDropdownItem()
+					).add(
+						_uiItemsBuilder::isViewVersionActionAvailable,
+						_uiItemsBuilder.createViewVersionDropdownItem()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

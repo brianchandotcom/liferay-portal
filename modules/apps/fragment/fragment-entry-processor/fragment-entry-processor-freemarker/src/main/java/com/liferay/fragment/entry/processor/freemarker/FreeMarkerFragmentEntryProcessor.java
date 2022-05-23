@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
-import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
@@ -25,6 +24,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -155,7 +157,11 @@ public class FreeMarkerFragmentEntryProcessor
 			).build());
 
 		if (_isInputFragmentEntryType(fragmentEntryLink)) {
-			template.put("input", _toInputTemplateNode(fragmentEntryLink));
+			template.put(
+				"input",
+				_toInputTemplateNode(
+					fragmentEntryLink,
+					fragmentEntryProcessorContext.getLocale()));
 		}
 
 		template.prepareTaglib(
@@ -305,37 +311,42 @@ public class FreeMarkerFragmentEntryProcessor
 	}
 
 	private InputTemplateNode _toInputTemplateNode(
-		FragmentEntryLink fragmentEntryLink) {
+		FragmentEntryLink fragmentEntryLink, Locale locale) {
 
-		String inputHelpText =
-			(String)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					fragmentEntryLink.getEditableValues(), "inputHelpText",
-					FragmentConfigurationFieldDataType.STRING);
+		String inputHelpText = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputHelpText", "string", "", true, "text"),
+				locale));
 
-		String inputLabel =
-			(String)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					fragmentEntryLink.getEditableValues(), "inputLabel",
-					FragmentConfigurationFieldDataType.STRING);
+		String inputLabel = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputLabel", "string", "", true, "text"),
+				locale));
 
-		boolean inputRequired =
-			(boolean)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					fragmentEntryLink.getEditableValues(), "inputRequired",
-					FragmentConfigurationFieldDataType.BOOLEAN);
+		boolean inputRequired = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputRequired", "boolean", "false", false, "checkbox"),
+				locale));
 
-		boolean inputShowHelpText =
-			(boolean)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					fragmentEntryLink.getEditableValues(), "inputShowHelpText",
-					FragmentConfigurationFieldDataType.BOOLEAN);
+		boolean inputShowHelpText = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputShowHelpText", "boolean", "true", false, "checkbox"),
+				locale));
 
-		boolean inputShowLabel =
-			(boolean)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					fragmentEntryLink.getEditableValues(), "inputShowLabel",
-					FragmentConfigurationFieldDataType.BOOLEAN);
+		boolean inputShowLabel = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputShowLabel", "boolean", "true", false, "checkbox"),
+				locale));
 
 		return new InputTemplateNode(
 			inputHelpText, inputLabel, "name", inputRequired, inputShowHelpText,

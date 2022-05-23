@@ -155,50 +155,7 @@ public class FreeMarkerFragmentEntryProcessor
 			).build());
 
 		if (_isInputFragmentEntryType(fragmentEntryLink)) {
-			String inputHelpText =
-				(String)
-					_fragmentEntryConfigurationParser.
-						getConfigurationFieldValue(
-							fragmentEntryLink.getEditableValues(),
-							"inputHelpText",
-							FragmentConfigurationFieldDataType.STRING);
-
-			String inputLabel =
-				(String)
-					_fragmentEntryConfigurationParser.
-						getConfigurationFieldValue(
-							fragmentEntryLink.getEditableValues(), "inputLabel",
-							FragmentConfigurationFieldDataType.STRING);
-
-			boolean inputRequired =
-				(boolean)
-					_fragmentEntryConfigurationParser.
-						getConfigurationFieldValue(
-							fragmentEntryLink.getEditableValues(),
-							"inputRequired",
-							FragmentConfigurationFieldDataType.BOOLEAN);
-
-			boolean inputShowHelpText =
-				(boolean)
-					_fragmentEntryConfigurationParser.
-						getConfigurationFieldValue(
-							fragmentEntryLink.getEditableValues(),
-							"inputShowHelpText",
-							FragmentConfigurationFieldDataType.BOOLEAN);
-
-			boolean inputShowLabel =
-				(boolean)
-					_fragmentEntryConfigurationParser.
-						getConfigurationFieldValue(
-							fragmentEntryLink.getEditableValues(),
-							"inputShowLabel",
-							FragmentConfigurationFieldDataType.BOOLEAN);
-
-			template.put(
-				"input",
-				new InputTemplateNode(
-					inputHelpText, inputLabel, "name", inputRequired,
-					inputShowHelpText, inputShowLabel, "type", "value"));
+			template.put("input", _toInputTemplateNode(fragmentEntryLink));
 		}
 
 		template.prepareTaglib(
@@ -345,6 +302,44 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return false;
+	}
+
+	private InputTemplateNode _toInputTemplateNode(
+		FragmentEntryLink fragmentEntryLink) {
+
+		String inputHelpText =
+			(String)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					fragmentEntryLink.getEditableValues(), "inputHelpText",
+					FragmentConfigurationFieldDataType.STRING);
+
+		String inputLabel =
+			(String)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					fragmentEntryLink.getEditableValues(), "inputLabel",
+					FragmentConfigurationFieldDataType.STRING);
+
+		boolean inputRequired =
+			(boolean)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					fragmentEntryLink.getEditableValues(), "inputRequired",
+					FragmentConfigurationFieldDataType.BOOLEAN);
+
+		boolean inputShowHelpText =
+			(boolean)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					fragmentEntryLink.getEditableValues(), "inputShowHelpText",
+					FragmentConfigurationFieldDataType.BOOLEAN);
+
+		boolean inputShowLabel =
+			(boolean)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					fragmentEntryLink.getEditableValues(), "inputShowLabel",
+					FragmentConfigurationFieldDataType.BOOLEAN);
+
+		return new InputTemplateNode(
+			inputHelpText, inputLabel, "name", inputRequired, inputShowHelpText,
+			inputShowLabel, "type", "value");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

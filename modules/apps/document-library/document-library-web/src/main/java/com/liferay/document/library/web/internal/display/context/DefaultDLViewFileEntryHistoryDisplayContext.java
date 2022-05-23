@@ -21,6 +21,7 @@ import com.liferay.document.library.web.internal.display.context.helper.DLPortle
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -55,6 +56,11 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 		_uiItemsBuilder = new UIItemsBuilder(
 			httpServletRequest, fileVersion, _resourceBundle, dlTrashHelper,
 			versioningStrategy, dlURLHelper);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		return null;
 	}
 
 	@Override

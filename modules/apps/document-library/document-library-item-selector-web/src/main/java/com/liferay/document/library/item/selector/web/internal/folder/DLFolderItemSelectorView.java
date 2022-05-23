@@ -64,7 +64,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration",
 	property = {
 		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_FOLDER_ITEM_SELECTOR_VIEW_KEY,
 		"item.selector.view.order:Integer=100"

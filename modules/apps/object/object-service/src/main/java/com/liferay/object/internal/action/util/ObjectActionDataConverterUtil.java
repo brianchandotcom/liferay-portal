@@ -49,10 +49,8 @@ public class ObjectActionDataConverterUtil {
 	private static Map<String, Object> _convertObjectEntryPayloadJSONObject(
 		JSONObject payloadJSONObject) {
 
-		JSONObject objectEntryJSONObject = payloadJSONObject.getJSONObject(
-			"objectEntry");
-
-		Map<String, Object> objectEntryMap = objectEntryJSONObject.toMap();
+		Map<String, Object> objectEntryMap =
+			(Map<String, Object>)payloadJSONObject.get("objectEntry");
 
 		Object values = objectEntryMap.get("values");
 
@@ -62,7 +60,8 @@ public class ObjectActionDataConverterUtil {
 			objectEntryMap.remove("values");
 		}
 
-		objectEntryMap.put("currentUserId", payloadJSONObject.get("userId"));
+		objectEntryMap.put(
+			"currentUserId", payloadJSONObject.getLong("userId"));
 
 		return objectEntryMap;
 	}

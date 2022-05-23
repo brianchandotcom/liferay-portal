@@ -93,6 +93,8 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 		"colorSchemeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Long> styleBookEntryId = createColumn(
 		"styleBookEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, Long> faviconFileEntryId = createColumn(
+		"faviconFileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Clob> css = createColumn(
 		"css", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Integer> priority = createColumn(

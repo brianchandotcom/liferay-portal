@@ -989,6 +989,20 @@ public interface LayoutModel
 	public void setStyleBookEntryId(long styleBookEntryId);
 
 	/**
+	 * Returns the favicon file entry ID of this layout.
+	 *
+	 * @return the favicon file entry ID of this layout
+	 */
+	public long getFaviconFileEntryId();
+
+	/**
+	 * Sets the favicon file entry ID of this layout.
+	 *
+	 * @param faviconFileEntryId the favicon file entry ID of this layout
+	 */
+	public void setFaviconFileEntryId(long faviconFileEntryId);
+
+	/**
 	 * Returns the css of this layout.
 	 *
 	 * @return the css of this layout

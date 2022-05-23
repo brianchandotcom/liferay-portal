@@ -62,6 +62,10 @@ public interface LayoutSetService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public void updateFaviconFileEntryId(
+			long groupId, boolean privateLayout, long faviconFileEntryId)
+		throws PortalException;
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *

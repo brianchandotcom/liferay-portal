@@ -768,6 +768,7 @@
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
 		<field name="styleBookEntryId" type="long" />
+		<field name="faviconFileEntryId" type="long" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -895,6 +896,7 @@
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
+		<field name="faviconFileEntryId" type="long" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>

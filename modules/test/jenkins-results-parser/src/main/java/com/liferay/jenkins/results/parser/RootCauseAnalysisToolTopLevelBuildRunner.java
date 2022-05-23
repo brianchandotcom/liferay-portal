@@ -523,7 +523,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS,
-					" can only reference ",
+					" may only reference ",
 					String.valueOf(allowedPortalBranchSHAs),
 					" portal branch SHAs"));
 		}

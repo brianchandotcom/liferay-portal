@@ -2098,4 +2098,113 @@ definition {
 
 	}
 
+	@description = "Verify if Input Mask On Decimal With Decimal Places With Predefined Value is working correctly"
+	@priority = "5"
+	test InputMaskOnDecimalWithDecimalPlacesWithPredefinedValue {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "2");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.20");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1,234.7654321");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "1234.7654321");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.23");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "1.23");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "1",
+			value = "1234.7654321");
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "2",
+			value = "1.23");
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric 2",
+			fieldValue = "3.21");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "1234.7654321");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric 2",
+			fieldValue = "3.21");
+
+		
+
+		
+
+		
+
+	}
+
 }

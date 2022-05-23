@@ -112,27 +112,27 @@
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_ELLIPSIS</td>
-	<td>//button[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-h')]</td>
+	<td>//span[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-h')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON</td>
-	<td>//button[contains(@class,'dropdown') and contains(.,'${key_topicName}')]</td>
+	<td>//div[contains(@class,'dropdown')]/span[contains(.,'${key_topicName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION</td>
-	<td>//div[contains(@class,'dropdown-menu')]//span[contains(.,'${key_topicName}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[contains(.,'${key_topicName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE</td>
-	<td>//li[contains(@class,'breadcrumb-item')][1]//button[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
+	<td>//li[contains(@class,'breadcrumb-item')][1]//div[contains(@class,'dropdown')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE</td>
-	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_topicName}')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
+	<td>//span[contains(@class,'dropdown-toggle') and contains(.,'${key_topicName}')]//*[name()='svg'][contains(@class,'caret-bottom')]</td>
 	<td></td>
 </tr>
 <tr>

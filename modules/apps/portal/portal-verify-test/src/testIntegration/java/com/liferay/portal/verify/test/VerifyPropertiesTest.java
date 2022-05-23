@@ -17,6 +17,7 @@ package com.liferay.portal.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.log.LogCapture;
@@ -58,11 +59,30 @@ public class VerifyPropertiesTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			SecurityException securityException1 = new SecurityException();
+
+			SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkExit(int status) {
+						throw securityException1;
+					}
+
+				};
+
+			swappableSecurityManager.install();
+
+			try {
+				VerifyProperties.verify();
+			}
+			catch (SecurityException securityException2) {
+				Assert.assertSame(securityException1, securityException2);
+			}
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
 			LogEntry logEntry = logEntries.get(0);
 
@@ -71,6 +91,14 @@ public class VerifyPropertiesTest {
 					"Portal property \"", migratedPortalKey,
 					"\" was migrated to the system property \"",
 					migratedPortalKey, "\""),
+				logEntry.getMessage());
+
+			logEntry = logEntries.get(1);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Stopping the server due to incorrect use of migrated ",
+					"Portal properties [", migratedPortalKey, "]"),
 				logEntry.getMessage());
 		}
 		finally {

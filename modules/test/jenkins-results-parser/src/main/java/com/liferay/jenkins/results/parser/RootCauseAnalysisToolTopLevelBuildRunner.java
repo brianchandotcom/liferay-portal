@@ -515,16 +515,8 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		int retestAmount = _getRetestAmount();
 
-		if ((retestAmount != 1) && (portalBranchSHACount > 1)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Invalid parameter input, ");
-			sb.append(
-				"when retesting there must only be one portal SHA provided.\n");
-			sb.append("Portal SHAs provided: ");
-			sb.append(portalBranchSHAs);
-
-			failBuildRunner(sb.toString());
+		if ((retestAmount != 1) 
+			allowedPortalBranchSHAs = 1;
 		}
 
 		if (portalBranchSHACount > allowedPortalBranchSHAs) {

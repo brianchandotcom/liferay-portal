@@ -14,6 +14,8 @@
 
 import {getCheckedCheckboxes} from 'frontend-js-web';
 
+import openConfirm from './openConfirm';
+
 export default function propsTransformer({
 	additionalProps: {deleteKBTemplatesURL},
 	portletNamespace,
@@ -23,39 +25,40 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteKBTemplates') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-templates'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-templates'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (!form) {
-						return;
-					}
+							if (!form) {
+								return;
+							}
 
-					form.setAttribute('method', 'post');
+							form.setAttribute('method', 'post');
 
-					const kbTemplateIds = form.querySelector(
-						`#${portletNamespace}kbTemplateIds`
-					);
+							const kbTemplateIds = form.querySelector(
+								`#${portletNamespace}kbTemplateIds`
+							);
 
-					if (kbTemplateIds) {
-						kbTemplateIds.setAttribute(
-							'value',
-							getCheckedCheckboxes(
-								form,
-								`${portletNamespace}allRowIds`
-							)
-						);
-					}
+							if (kbTemplateIds) {
+								kbTemplateIds.setAttribute(
+									'value',
+									getCheckedCheckboxes(
+										form,
+										`${portletNamespace}allRowIds`
+									)
+								);
+							}
 
-					submitForm(form, deleteKBTemplatesURL);
-				}
+							submitForm(form, deleteKBTemplatesURL);
+						}
+					},
+				});
 			}
 		},
 	};

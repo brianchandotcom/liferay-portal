@@ -3868,20 +3868,34 @@ definition {
 	test LanguageVersion {
 		property portal.acceptance = "true";
 
-		task ("Add Display Page and mark it as default") {
+		task ("Add Display Page") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
+		}
 
+		task ("Add mapped heading to Display Page") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			Button.clickPublish();
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+
+			Button.clickPublish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -3901,13 +3915,29 @@ definition {
 				currentTargetLocale = "ar-SA",
 				newTargetLocale = "es-ES");
 
+			Translations.viewBaseFields(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			Translations.translateFields(
+				webContentContent = "WC WebContent Contenido",
+				webContentDescription = "WC WebContent Descripción",
+				webContentTitle = "WC WebContent Título");
+
 			Button.clickPublish();
 		}
 
 		task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
 			ContentDashboard.goToContentDashboard();
 
-			WebContent.checkLanguage();
+			ContentDashboard.viewAssetsTranslatedVersion(language = "es-ES");
+		}
+
+		task ("Check view version of the page") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "WC WebContent Título");
 		}
 	}
 

@@ -864,6 +864,22 @@ definition {
 		}
 	}
 
+	macro assertNoZipFileFromTempFolder {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileName = StringUtil.split("**/${fileNamePattern}");
+
+		var tempFile = "${liferayHome}/${appServer}/temp/${fileName}";
+
+		var tempFileExists = FileUtil.exists("${tempFile}");
+
+		if ("${tempFileExists}" == "false") {
+			echo("There are no temporary zip files");
+		}
+		else {
+			fail("There is a temporary zip file");
+		}
+	}
+
 	macro cancelCheckoutCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

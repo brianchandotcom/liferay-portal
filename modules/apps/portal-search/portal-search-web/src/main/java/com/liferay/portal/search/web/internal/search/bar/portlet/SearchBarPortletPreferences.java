@@ -43,7 +43,7 @@ public interface SearchBarPortletPreferences {
 
 	public static final String
 		PREFERENCE_KEY_SUGGESTIONS_CONTRIBUTOR_CONFIGURATION =
-			"suggestionsContributorConfiguration";
+			"suggestionsContributorConfigurations";
 
 	public static final String PREFERENCE_KEY_SUGGESTIONS_DISPLAY_THRESHOLD =
 		"suggestionsDisplayThreshold";

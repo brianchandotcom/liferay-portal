@@ -22,10 +22,4 @@ declare module 'data-engine-js-components-web' {
 		helpMessage?: string;
 		warningMessage?: string;
 	}): JSX.Element;
-
-	function useFeatureFlag(): {
-		[key in Flags]: boolean;
-	};
 }
-
-type Flags = '';

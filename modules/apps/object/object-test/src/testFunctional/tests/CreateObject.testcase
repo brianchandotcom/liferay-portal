@@ -1712,35 +1712,6 @@ definition {
 		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Custom Object 42");
 	}
 
-	@description = "LPS-139160 - Verify it is not possible to delete an Object via API after it was published"
-	@priority = "4"
-	test CannotDeletePublishedObjectViaApi {
-		property portal.acceptance = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 43",
-			objectName = "CustomObject43",
-			pluralLabelName = "Custom Objects 43");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject43");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject43");
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object 43",
-			status = "Approved");
-	}
-
 	@description = "LPS-135400 - Verify it is not possible to delete a Relationship when an Object is published"
 	@priority = "5"
 	test CannotDeleteRelationshipWhenPublished {

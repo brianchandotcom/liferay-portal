@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -753,15 +754,17 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		_objectFieldLocalService.addSystemObjectField(
-			userId, objectDefinition.getObjectDefinitionId(), "Text",
-			ObjectEntryTable.INSTANCE.status.getName(),
-			ObjectEntryTable.INSTANCE.getTableName(),
-			_dbTypes.get(ObjectEntryTable.INSTANCE.status.getSQLType()), false,
-			false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				LanguageUtil.get(LocaleUtil.getDefault(), "status")),
-			"status", false);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+			_objectFieldLocalService.addSystemObjectField(
+				userId, objectDefinition.getObjectDefinitionId(), "Text",
+				ObjectEntryTable.INSTANCE.status.getName(),
+				ObjectEntryTable.INSTANCE.getTableName(),
+				_dbTypes.get(ObjectEntryTable.INSTANCE.status.getSQLType()), false,
+				false, null,
+				LocalizedMapUtil.getLocalizedMap(
+					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
+				"status", false);
+		}
 
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {

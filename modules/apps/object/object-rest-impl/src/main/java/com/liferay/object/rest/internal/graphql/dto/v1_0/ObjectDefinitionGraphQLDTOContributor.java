@@ -27,8 +27,10 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
@@ -172,16 +174,28 @@ public class ObjectDefinitionGraphQLDTOContributor
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
-			(Long)dtoConverterContext.getAttribute("companyId"),
-			_objectDefinition,
-			(String)dtoConverterContext.getAttribute("scopeKey"), aggregation,
-			dtoConverterContext,
-			toPredicate(
-				ParamUtil.getString(
-					dtoConverterContext.getHttpServletRequest(), "filter"),
-				dtoConverterContext.getLocale()),
-			pagination, search, sorts);
+		Page<ObjectEntry> page;
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+			page = _objectEntryManager.getObjectEntries(
+				(Long)dtoConverterContext.getAttribute("companyId"),
+				_objectDefinition,
+				(String)dtoConverterContext.getAttribute("scopeKey"),
+				aggregation, dtoConverterContext,
+				toPredicate(
+					ParamUtil.getString(
+						dtoConverterContext.getHttpServletRequest(), "filter"),
+					dtoConverterContext.getLocale()),
+				pagination, search, sorts);
+		}
+		else {
+			page = _objectEntryManager.getObjectEntries(
+				(Long)dtoConverterContext.getAttribute("companyId"),
+				_objectDefinition,
+				(String)dtoConverterContext.getAttribute("scopeKey"),
+				aggregation, dtoConverterContext, filter, pagination, search,
+				sorts);
+		}
 
 		Collection<ObjectEntry> items = page.getItems();
 

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
@@ -162,12 +163,18 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerServicesTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+			return objectEntryManager.getObjectEntries(
+				contextCompany.getCompanyId(), _objectDefinition, null,
+				aggregation, _getDTOConverterContext(null),
+				toPredicate(
+					ParamUtil.getString(contextHttpServletRequest, "filter")),
+				pagination, search, sorts);
+		}
+
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null),
-			toPredicate(
-				ParamUtil.getString(contextHttpServletRequest, "filter")),
-			pagination, search, sorts);
+			_getDTOConverterContext(null), filter, pagination, search, sorts);
 	}
 
 	@Override
@@ -206,12 +213,19 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerServicesTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+			return objectEntryManager.getObjectEntries(
+				contextCompany.getCompanyId(), _objectDefinition, scopeKey,
+				aggregation, _getDTOConverterContext(null),
+				toPredicate(
+					ParamUtil.getString(contextHttpServletRequest, "filter")),
+				pagination, search, sorts);
+		}
+
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-			aggregation, _getDTOConverterContext(null),
-			toPredicate(
-				ParamUtil.getString(contextHttpServletRequest, "filter")),
-			pagination, search, sorts);
+			aggregation, _getDTOConverterContext(null), filter, pagination,
+			search, sorts);
 	}
 
 	@Override

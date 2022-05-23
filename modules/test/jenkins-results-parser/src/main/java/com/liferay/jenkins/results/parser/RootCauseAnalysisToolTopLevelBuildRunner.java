@@ -198,7 +198,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				" GitHub URL"));
 	}
 
-	private Integer _getAllowedPortalBranchSHAs() {
+	private int _getAllowedPortalBranchSHAs() {
 		String allowedPortalBranchSHAs = getJobPropertyValue(
 			"allowed.portal.branch.shas");
 
@@ -256,7 +256,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return _COMMITS_GROUP_SIZE_MAX_DEFAULT;
 	}
 
-	private Integer _getMaxRetestAmount() {
+	private int _getMaxRetestAmount() {
 		String maxRetestAmount = getJobPropertyValue("maximum.retest.amount");
 
 		if ((maxRetestAmount == null) || maxRetestAmount.isEmpty()) {
@@ -490,16 +490,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return;
 		}
 
-		Integer allowedPortalBranchSHAs = _getAllowedPortalBranchSHAs();
+		int allowedPortalBranchSHAs = _getAllowedPortalBranchSHAs();
 
 		if (allowedPortalBranchSHAs == -1) {
 			return;
 		}
 
-		Integer portalBranchSHACount =
+		int portalBranchSHACount =
 			StringUtils.countMatches(portalBranchSHAs, ",") + 1;
 
-		Integer retestAmount = _getRetestAmount();
+		int retestAmount = _getRetestAmount();
 
 		if ((retestAmount != 1) && (portalBranchSHACount > 1)) {
 			StringBuilder sb = new StringBuilder();
@@ -675,7 +675,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		}
 	}
 
-	private static final Integer _COMMITS_GROUP_SIZE_MAX_DEFAULT = 5;
+	private static final int _COMMITS_GROUP_SIZE_MAX_DEFAULT = 5;
 
 	private static final String _NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL =
 		"JENKINS_GITHUB_URL";

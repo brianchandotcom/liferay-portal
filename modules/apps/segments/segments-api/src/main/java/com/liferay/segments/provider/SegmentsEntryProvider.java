@@ -106,4 +106,29 @@ public interface SegmentsEntryProvider {
 		return getSegmentsEntryIds(groupId, className, classPK, context);
 	}
 
+	/**
+	 * Returns IDs of the group's active segments entries that are related to
+	 * the entity under the given context.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  className the entity's class name
+	 * @param  classPK the primary key of the entity
+	 * @param  context the context
+	 * @param  filterSegmentsEntryIds the IDs of the segments entries that could
+	 *         be returner
+	 * @param  segmentsEntryIds the IDs of the group's active segments entries
+	 *         that are currently related to the entity under the given context
+	 * @return the IDs of the active segments entries related to the entity
+	 * @throws PortalException if a portal exception occurred
+	 * @review
+	 */
+	public default long[] getSegmentsEntryIds(
+			long groupId, String className, long classPK, Context context,
+			long[] filterSegmentsEntryIds, long[] segmentsEntryIds)
+		throws PortalException {
+
+		return getSegmentsEntryIds(
+			groupId, className, classPK, context, segmentsEntryIds);
+	}
+
 }

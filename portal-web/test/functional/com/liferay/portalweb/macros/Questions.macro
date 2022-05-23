@@ -632,8 +632,9 @@ definition {
 
 	macro replyToComment {
 		AssertClick(
-			locator1 = "Button#REPLY",
-			value1 = "Reply");
+			key_text = "Add Comment",
+			locator1 = "Button#ANY",
+			value1 = "Add Comment");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -644,8 +645,9 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
-			locator1 = "Button#REPLY_LAST",
-			value1 = "Reply");
+			key_text = "Add Comment",
+			locator1 = "Button#ANY_LAST",
+			value1 = "Add Comment");
 
 		if (isSet(repliedLabel)) {
 			AssertElementPresent(

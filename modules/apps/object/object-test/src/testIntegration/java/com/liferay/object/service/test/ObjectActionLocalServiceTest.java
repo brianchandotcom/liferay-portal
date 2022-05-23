@@ -185,6 +185,12 @@ public class ObjectActionLocalServiceTest {
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
 				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			"John",
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertNull(
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry"));
@@ -218,6 +224,12 @@ public class ObjectActionLocalServiceTest {
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
 				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			"John",
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
@@ -267,6 +279,12 @@ public class ObjectActionLocalServiceTest {
 				payloadJSONObject, "JSONObject/objectEntry",
 				"JSONObject/values", "Object/firstName"));
 		Assert.assertEquals(
+			"João",
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/firstName"));
+		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry",
@@ -314,6 +332,12 @@ public class ObjectActionLocalServiceTest {
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
 				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			"João",
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/firstName"));
 		Assert.assertNull(
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry"));

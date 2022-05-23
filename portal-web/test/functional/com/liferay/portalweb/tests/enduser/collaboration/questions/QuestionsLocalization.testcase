@@ -58,8 +58,6 @@ definition {
 				subTopicDescription = "トピック記述",
 				subTopicName = "${subTopicName}");
 
-			Questions.changeTopic(gotoParentTopic = "質問トピック");
-
 			Questions.changeTopic(
 				parentTopicName = "質問トピック",
 				subTopicName = "${subTopicName}");

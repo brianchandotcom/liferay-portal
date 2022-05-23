@@ -223,8 +223,6 @@ definition {
 			subTopicDescription = "SubTopicA Description",
 			subTopicName = "SubTopicA");
 
-		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
-
 		Questions.changeTopic(
 			parentTopicName = "Questions Test Category",
 			subTopicName = "SubTopicA");
@@ -1571,8 +1569,6 @@ definition {
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
-		Questions.viewNoTopicDropdownToggle(topicName = "Questions Test Category");
-
 		for (var num : list "1,2") {
 			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
 				categoryName = "Questions Test Category",
@@ -1617,7 +1613,9 @@ definition {
 			listedQuestions = "Question 2",
 			unlistedQuestions = "Question 1,Question 3");
 
-		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
+		Questions.changeTopic(
+			parentTopicName = "Questions Subcategory2",
+			subTopicName = "Questions Test Category");
 
 		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
 	}

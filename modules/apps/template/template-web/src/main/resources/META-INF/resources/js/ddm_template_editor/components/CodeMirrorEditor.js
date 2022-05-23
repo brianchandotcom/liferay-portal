@@ -53,6 +53,7 @@ export function CodeMirrorEditor({
 	autocompleteData,
 	content,
 	inputChannel,
+	mode,
 	onChange,
 }) {
 	const [editor, setEditor] = useState();
@@ -180,11 +181,6 @@ export function CodeMirrorEditor({
 				hint: variableStart || variableEnd ? hint : null,
 			});
 
-			editor.setOption('mode', {
-				globalVars: true,
-				name: 'ftl',
-			});
-
 			const handleEditorChange = (cm) => {
 				const {current} = getWordContext(cm);
 
@@ -200,6 +196,12 @@ export function CodeMirrorEditor({
 			};
 		}
 	}, [autocompleteData, editor]);
+
+	useEffect(() => {
+		if (editor) {
+			editor.setOption('mode', mode);
+		}
+	}, [editor, mode]);
 
 	useEffect(() => {
 		if (!editor) {
@@ -247,5 +249,6 @@ CodeMirrorEditor.propTypes = {
 	inputChannel: PropTypes.shape({
 		onData: PropTypes.func.isRequired,
 	}),
+	mode: PropTypes.object,
 	onChange: PropTypes.func.isRequired,
 };

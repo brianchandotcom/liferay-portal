@@ -109,6 +109,8 @@ public class EditDDMTemplateDisplayContext {
 				_ddmTemplateHelper.getAutocompleteJSON(
 					httpServletRequest, TemplateConstants.LANG_TYPE_FTL))
 		).put(
+			"mode", "text/html"
+		).put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
 				liferayPortletResponse

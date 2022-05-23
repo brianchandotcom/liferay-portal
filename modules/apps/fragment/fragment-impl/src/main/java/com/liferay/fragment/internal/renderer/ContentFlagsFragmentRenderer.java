@@ -117,7 +117,7 @@ public class ContentFlagsFragmentRenderer
 						fragmentEntryConfigurationParser.getFieldValue(
 							getConfiguration(fragmentRendererContext),
 							fragmentEntryLink.getEditableValues(),
-							"message"))));
+							fragmentRendererContext.getLocale(), "message"))));
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(

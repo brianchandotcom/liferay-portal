@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,11 +44,13 @@ public class MenuDisplayFragmentConfigurationParser {
 
 		String hoveredItemColor = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "hoveredItemColor"));
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "hoveredItemColor"));
 
 		String selectedItemColor = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "selectedItemColor"));
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "selectedItemColor"));
 
 		MenuDisplayFragmentConfiguration.Source source = _getSource(
 			configuration, editableValues);
@@ -77,7 +80,8 @@ public class MenuDisplayFragmentConfigurationParser {
 
 		String displayStyle = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "displayStyle"));
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "displayStyle"));
 
 		return DisplayStyle.parse(displayStyle);
 	}
@@ -87,7 +91,8 @@ public class MenuDisplayFragmentConfigurationParser {
 
 		String source = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "source"));
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "source"));
 
 		if (JSONUtil.isValid(source)) {
 			JSONObject jsonObject = _createJSONObject(source);
@@ -111,7 +116,8 @@ public class MenuDisplayFragmentConfigurationParser {
 	private int _getSublevels(String configuration, String editableValues) {
 		return GetterUtil.getInteger(
 			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "sublevels"));
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "sublevels"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

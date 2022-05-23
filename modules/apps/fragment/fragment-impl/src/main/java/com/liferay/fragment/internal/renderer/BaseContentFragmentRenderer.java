@@ -50,7 +50,8 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 		JSONObject jsonObject =
 			(JSONObject)fragmentEntryConfigurationParser.getFieldValue(
 				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(), "itemSelector");
+				fragmentEntryLink.getEditableValues(),
+				fragmentRendererContext.getLocale(), "itemSelector");
 
 		if ((jsonObject != null) && jsonObject.has("className") &&
 			jsonObject.has("classPK")) {

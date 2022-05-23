@@ -230,7 +230,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		return (JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),
-			fragmentEntryLink.getEditableValues(), "itemSelector");
+			fragmentEntryLink.getEditableValues(),
+			fragmentRendererContext.getLocale(), "itemSelector");
 	}
 
 	private Tuple _getTuple(

@@ -335,7 +335,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			configurationJSONObject =
 				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
 					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues());
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale());
 		}
 
 		content = _renderFragmentEntry(

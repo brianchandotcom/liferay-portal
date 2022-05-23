@@ -3,6 +3,7 @@ definition {
 
 	property app.server.types = "tomcat";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.upgrades = "false";
 	property portal.upstream = "true";

@@ -91,7 +91,7 @@ public class AssetEntryItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _showNonindexable;
 	private boolean _showScheduled;
 	private boolean _singleSelect;
-	private long _subtypeSelectionId;
+	private long _subtypeSelectionId = -1;
 	private String _typeSelection;
 
 }

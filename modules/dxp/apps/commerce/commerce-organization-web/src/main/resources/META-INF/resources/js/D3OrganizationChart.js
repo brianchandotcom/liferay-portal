@@ -40,6 +40,7 @@ import {
 	showChildren,
 	tree,
 } from './utils/index';
+import openConfirm from './utils/openConfirm';
 import {
 	fillAddButtons,
 	fillEntityNode,
@@ -447,9 +448,14 @@ class D3OrganizationChart {
 									target.data.name
 							  );
 
-					if (confirm(message)) {
-						this._moveNodes(nodesToBeMoved, target);
-					}
+					openConfirm({
+						message,
+						onConfirm: (isConfimed) => {
+							if (isConfimed) {
+								this._moveNodes(nodesToBeMoved, target);
+							}
+						},
+					});
 				}
 			});
 	}

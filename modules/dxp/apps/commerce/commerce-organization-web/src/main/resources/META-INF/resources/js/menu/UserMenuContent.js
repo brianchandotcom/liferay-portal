@@ -21,43 +21,51 @@ import {
 } from '../data/users';
 import {ACTION_KEYS} from '../utils/constants';
 import {hasPermission} from '../utils/index';
+import openConfirm from '../utils/openConfirm';
 
 export default function AccountMenuContent({closeMenu, data, parentData}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
-		if (
-			confirm(sub(Liferay.Language.get('x-will-be-deleted'), data.name))
-		) {
-			deleteUser(data.id).then(() => {
-				chartInstanceRef.current.deleteNodes([data], true);
+		openConfirm({
+			message: sub(
+				Liferay.Language.get('x-will-be-deleted'),
+				data.name
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					deleteUser(data.id).then(() => {
+						chartInstanceRef.current.deleteNodes([data], true);
 
-				closeMenu();
-			});
-		}
+						closeMenu();
+					});
+				}
+			},
+		});
 	}
 
 	function handleRemove() {
-		if (
-			confirm(
-				sub(
-					Liferay.Language.get('x-will-be-removed-from-x'),
-					data.name,
-					parentData.name
-				)
-			)
-		) {
-			const removeUser =
-				parentData.type === 'organization'
-					? removeUserFromOrganization
-					: removeUserFromAccount;
+		openConfirm({
+			message: sub(
+				Liferay.Language.get('x-will-be-removed-from-x'),
+				data.name,
+				parentData.name
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					const removeUser =
+						parentData.type === 'organization'
+							? removeUserFromOrganization
+							: removeUserFromAccount;
 
-			removeUser(data.emailAddress, parentData.id).then(() => {
-				chartInstanceRef.current.deleteNodes([data], false);
+					removeUser(data.emailAddress, parentData.id).then(() => {
+						chartInstanceRef.current.deleteNodes([data], false);
 
-				closeMenu();
-			});
-		}
+						closeMenu();
+					});
+				}
+			},
+		});
 	}
 
 	const actions = [];

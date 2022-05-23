@@ -123,6 +123,11 @@
 	<td>//div[contains(@class,'portlet-content')]//p[contains(text(),'${key_productDescription}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PUBLISHER_PORTLET_DIAGRAM_PRODUCT_LINKED_PRODUCT_NAME</td>
+	<td>//div[contains(@class,'product-publisher')]//div[contains(@class,'portlet-content')]//p//a[contains(@href,'${key_productName}')]</td>
+	<td></td>
+</tr>
 <!--DIAGRAM_PRODUCT_TOOLTIP-->
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP</td>

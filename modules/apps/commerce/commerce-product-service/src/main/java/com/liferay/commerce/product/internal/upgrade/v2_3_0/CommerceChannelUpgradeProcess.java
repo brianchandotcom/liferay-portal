@@ -26,7 +26,6 @@ public class CommerceChannelUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn("CommerceChannel", "priceDisplayType", "VARCHAR(75)");
-
 		addColumn("CommerceChannel", "discountsTargetNetPrice", "BOOLEAN");
 
 		runSQL(

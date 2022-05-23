@@ -25,6 +25,7 @@ public class CommerceShipmentExternalReferenceCodeUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceShipment", "externalReferenceCode", "VARCHAR(75)");
+
 		addColumn(
 			"CommerceShipmentItem", "externalReferenceCode", "VARCHAR(75)");
 	}

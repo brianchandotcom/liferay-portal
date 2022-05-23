@@ -26,35 +26,26 @@ public class CommerceOrderItemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrderItem", "parentCommerceOrderItemId", "LONG");
-
 		addColumn(
 			"CommerceOrderItem", "unitPriceWithTaxAmount", "DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "promoPriceWithTaxAmount", "DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "discountWithTaxAmount", "DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "finalPriceWithTaxAmount", "DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "discountPctLevel1WithTaxAmount",
 			"DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "discountPctLevel2WithTaxAmount",
 			"DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "discountPctLevel3WithTaxAmount",
 			"DECIMAL(30,16)");
-
 		addColumn(
 			"CommerceOrderItem", "discountPctLevel4WithTaxAmount",
 			"DECIMAL(30,16)");
-
 		addColumn("CommerceOrderItem", "commercePriceListId", "LONG");
 	}
 

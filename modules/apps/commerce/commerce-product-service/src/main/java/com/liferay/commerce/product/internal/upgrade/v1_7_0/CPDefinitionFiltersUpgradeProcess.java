@@ -25,7 +25,6 @@ public class CPDefinitionFiltersUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CPDefinition", "accountGroupFilterEnabled", "BOOLEAN");
-
 		addColumn("CPDefinition", "channelFilterEnabled", "BOOLEAN");
 
 		runSQL("update CPDefinition set channelFilterEnabled = [$TRUE$]");

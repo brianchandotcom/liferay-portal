@@ -27,7 +27,6 @@ public class CommerceOrderUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrder", "couponCode", "VARCHAR(75)");
-
 		addColumn("CommerceOrder", "lastPriceUpdateDate", "DATE");
 
 		if (hasColumn(

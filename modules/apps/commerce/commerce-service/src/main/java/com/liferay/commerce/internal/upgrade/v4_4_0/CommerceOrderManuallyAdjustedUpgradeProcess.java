@@ -25,6 +25,7 @@ public class CommerceOrderManuallyAdjustedUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrder", "manuallyAdjusted", "BOOLEAN");
+
 		addColumn("CommerceOrderItem", "manuallyAdjusted", "BOOLEAN");
 	}
 

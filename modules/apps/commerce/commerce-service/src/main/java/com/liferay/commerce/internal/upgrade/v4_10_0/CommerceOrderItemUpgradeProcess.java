@@ -31,38 +31,23 @@ public class CommerceOrderItemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrderItem", "deliveryMaxSubscriptionCycles", "LONG");
-
 		addColumn("CommerceOrderItem", "deliverySubscriptionLength", "INTEGER");
-
 		addColumn(
 			"CommerceOrderItem", "deliverySubscriptionType", "VARCHAR(75)");
-
 		addColumn(
 			"CommerceOrderItem", "deliverySubTypeSettings", "VARCHAR(75)");
-
 		addColumn("CommerceOrderItem", "depth", "DOUBLE");
-
 		addColumn("CommerceOrderItem", "freeShipping", "BOOLEAN");
-
 		addColumn("CommerceOrderItem", "height", "DOUBLE");
-
 		addColumn("CommerceOrderItem", "maxSubscriptionCycles", "LONG");
-
 		addColumn("CommerceOrderItem", "shipSeparately", "BOOLEAN");
-
 		addColumn("CommerceOrderItem", "shippable", "BOOLEAN");
-
 		addColumn("CommerceOrderItem", "shippingExtraPrice", "DOUBLE");
-
 		addColumn("CommerceOrderItem", "subscriptionLength", "INTEGER");
-
 		addColumn("CommerceOrderItem", "subscriptionType", "VARCHAR(75)");
-
 		addColumn(
 			"CommerceOrderItem", "subscriptionTypeSettings", "VARCHAR(75)");
-
 		addColumn("CommerceOrderItem", "weight", "DOUBLE");
-
 		addColumn("CommerceOrderItem", "width", "DOUBLE");
 
 		String updateCommerceOrderItemSQL = StringBundler.concat(

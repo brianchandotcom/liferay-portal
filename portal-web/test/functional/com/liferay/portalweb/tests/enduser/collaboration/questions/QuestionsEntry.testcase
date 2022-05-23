@@ -528,9 +528,7 @@ definition {
 
 		Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
 
-		Questions.deleteQuestion();
-
-		Questions.viewTopicDefault();
+		Questions.deleteQuestion(deleteInActivity = "true");
 	}
 
 	@description = "Validate if the user can delete a topic, it also covers LPS-128699."

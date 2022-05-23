@@ -396,6 +396,15 @@ definition {
 				locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
 				value1 = "${questionTitle}");
 		}
+		else if (isSet(deleteInActivity)) {
+			Click(
+				key_text = "Delete",
+				locator1 = "Questions#MODAL_ITEM_BUTTON");
+
+			AssertElementPresent(
+				key_emptyInfo = "The topic is not found.",
+				locator1 = "Questions#EMPTY_STATE_MESSAGE");
+		}
 		else {
 			Click(
 				key_text = "Delete",

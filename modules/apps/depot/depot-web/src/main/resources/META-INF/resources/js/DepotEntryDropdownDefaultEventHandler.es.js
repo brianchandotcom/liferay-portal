@@ -14,13 +14,20 @@
 
 import {DefaultEventHandler} from 'frontend-js-web';
 
-import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
+import openConfirm from './openConfirm.es';
 
 class DepotEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteDepotEntry(itemData) {
-		if (confirmDepotEntryDeletion()) {
-			submitForm(document.hrefFm, itemData.deleteDepotEntryURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'removing-an-asset-library-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-asset-library'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.deleteDepotEntryURL);
+				}
+			},
+		});
 	}
 
 	permissionsDepotEntry(itemData) {

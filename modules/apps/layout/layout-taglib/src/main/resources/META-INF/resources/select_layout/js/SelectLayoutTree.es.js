@@ -94,7 +94,7 @@ export function SelectLayoutTree({
 		}
 	};
 
-	const handleSingleSelection = (item) => {
+	const handleSingleSelection = (item, selection) => {
 		const data = {
 			groupId: item.groupId,
 			id: item.id,
@@ -106,14 +106,16 @@ export function SelectLayoutTree({
 			value: item.payload,
 		};
 
-		setSelectionChange(new Set([item.id]));
-
 		Liferay.fire(itemSelectorSaveEvent, {
 			data,
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data,
+		});
+
+		requestAnimationFrame(() => {
+			selection.toggle(item.id);
 		});
 	};
 
@@ -134,7 +136,7 @@ export function SelectLayoutTree({
 			handleMultipleSelectionChange(item, selection);
 		}
 		else {
-			handleSingleSelection(item);
+			handleSingleSelection(item, selection);
 		}
 	};
 

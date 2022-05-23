@@ -492,12 +492,10 @@ public class JournalArticleActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.putData(
 				"title",
-				LanguageUtil.get(_httpServletRequest, "delete-translations") +
-					StringPool.TRIPLE_PERIOD);
+				LanguageUtil.get(_httpServletRequest, "delete-translations"));
 
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "delete-translations") +
-					StringPool.TRIPLE_PERIOD);
+				LanguageUtil.get(_httpServletRequest, "delete-translations"));
 		};
 	}
 

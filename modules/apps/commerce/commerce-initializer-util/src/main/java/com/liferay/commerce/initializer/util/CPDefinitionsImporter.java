@@ -50,6 +50,7 @@ import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
@@ -86,6 +87,7 @@ import java.io.File;
 
 import java.math.BigDecimal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -167,8 +169,28 @@ public class CPDefinitionsImporter {
 				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
+			ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
+
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (expandoBridge == null) {
+				continue;
+			}
+
+			if (jsonObject.getString("customFields")!=null) {
+
+				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(jsonObject.getString("customFields"));
+
+				for (int j = 0; j < jsonArray2.length(); j++) {
+
+					JSONObject jsonObject2 = jsonArray2.getJSONObject(i);
+					expandoBridge.setAttributeDefault(jsonObject2.getString("name"), jsonObject.getDouble("data"));
+				}
+
+			}
 			cpDefinitions.add(cpDefinition);
-		}
+
+	}
 
 		return cpDefinitions;
 	}

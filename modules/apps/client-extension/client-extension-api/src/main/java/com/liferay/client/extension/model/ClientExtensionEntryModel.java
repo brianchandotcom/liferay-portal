@@ -503,6 +503,21 @@ public interface ClientExtensionEntryModel
 	public void setSourceCodeURL(String sourceCodeURL);
 
 	/**
+	 * Returns the theme jsur ls of this client extension entry.
+	 *
+	 * @return the theme jsur ls of this client extension entry
+	 */
+	@AutoEscape
+	public String getThemeJSURLs();
+
+	/**
+	 * Sets the theme jsur ls of this client extension entry.
+	 *
+	 * @param themeJSURLs the theme jsur ls of this client extension entry
+	 */
+	public void setThemeJSURLs(String themeJSURLs);
+
+	/**
 	 * Returns the type of this client extension entry.
 	 *
 	 * @return the type of this client extension entry

@@ -75,6 +75,18 @@ public class ClientExtensionEntryServiceWrapper
 
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
+			addThemeJSClientExtensionEntry(
+				String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String properties, String sourceCodeURL, String themeJSURLs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryService.addThemeJSClientExtensionEntry(
+			description, nameMap, properties, sourceCodeURL, themeJSURLs);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
 			deleteClientExtensionEntry(long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -134,6 +146,19 @@ public class ClientExtensionEntryServiceWrapper
 		return _clientExtensionEntryService.updateIFrameClientExtensionEntry(
 			clientExtensionEntryId, description, friendlyURLMapping, iFrameURL,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			updateThemeJSClientExtensionEntry(
+				long clientExtensionEntryId, String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String properties, String sourceCodeURL, String themeJSURLs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryService.updateThemeJSClientExtensionEntry(
+			clientExtensionEntryId, description, nameMap, properties,
+			sourceCodeURL, themeJSURLs);
 	}
 
 	@Override

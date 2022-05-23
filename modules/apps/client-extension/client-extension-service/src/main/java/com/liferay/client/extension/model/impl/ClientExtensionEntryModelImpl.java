@@ -94,9 +94,10 @@ public class ClientExtensionEntryModelImpl
 		{"friendlyURLMapping", Types.VARCHAR}, {"iFrameURL", Types.VARCHAR},
 		{"instanceable", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"portletCategoryName", Types.VARCHAR}, {"properties", Types.CLOB},
-		{"sourceCodeURL", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"sourceCodeURL", Types.VARCHAR}, {"themeJSURLs", Types.CLOB},
+		{"type_", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -124,6 +125,7 @@ public class ClientExtensionEntryModelImpl
 		TABLE_COLUMNS_MAP.put("portletCategoryName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("properties", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("sourceCodeURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("themeJSURLs", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -132,7 +134,7 @@ public class ClientExtensionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,customElementUseESM BOOLEAN,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,customElementUseESM BOOLEAN,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,themeJSURLs TEXT null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ClientExtensionEntry";
@@ -165,14 +167,20 @@ public class ClientExtensionEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLIENTEXTENSIONENTRYID_COLUMN_BITMASK = 8L;
+	public static final long CLIENTEXTENSIONENTRYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -417,6 +425,12 @@ public class ClientExtensionEntryModelImpl
 			"sourceCodeURL",
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setSourceCodeURL);
+		attributeGetterFunctions.put(
+			"themeJSURLs", ClientExtensionEntry::getThemeJSURLs);
+		attributeSetterBiConsumers.put(
+			"themeJSURLs",
+			(BiConsumer<ClientExtensionEntry, String>)
+				ClientExtensionEntry::setThemeJSURLs);
 		attributeGetterFunctions.put("type", ClientExtensionEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type",
@@ -985,6 +999,26 @@ public class ClientExtensionEntryModelImpl
 
 	@JSON
 	@Override
+	public String getThemeJSURLs() {
+		if (_themeJSURLs == null) {
+			return "";
+		}
+		else {
+			return _themeJSURLs;
+		}
+	}
+
+	@Override
+	public void setThemeJSURLs(String themeJSURLs) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_themeJSURLs = themeJSURLs;
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -1001,6 +1035,15 @@ public class ClientExtensionEntryModelImpl
 		}
 
 		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalType() {
+		return getColumnOriginalValue("type_");
 	}
 
 	@JSON
@@ -1345,6 +1388,7 @@ public class ClientExtensionEntryModelImpl
 			getPortletCategoryName());
 		clientExtensionEntryImpl.setProperties(getProperties());
 		clientExtensionEntryImpl.setSourceCodeURL(getSourceCodeURL());
+		clientExtensionEntryImpl.setThemeJSURLs(getThemeJSURLs());
 		clientExtensionEntryImpl.setType(getType());
 		clientExtensionEntryImpl.setStatus(getStatus());
 		clientExtensionEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -1404,6 +1448,8 @@ public class ClientExtensionEntryModelImpl
 			this.<String>getColumnOriginalValue("properties"));
 		clientExtensionEntryImpl.setSourceCodeURL(
 			this.<String>getColumnOriginalValue("sourceCodeURL"));
+		clientExtensionEntryImpl.setThemeJSURLs(
+			this.<String>getColumnOriginalValue("themeJSURLs"));
 		clientExtensionEntryImpl.setType(
 			this.<String>getColumnOriginalValue("type_"));
 		clientExtensionEntryImpl.setStatus(
@@ -1652,6 +1698,14 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.sourceCodeURL = null;
 		}
 
+		clientExtensionEntryCacheModel.themeJSURLs = getThemeJSURLs();
+
+		String themeJSURLs = clientExtensionEntryCacheModel.themeJSURLs;
+
+		if ((themeJSURLs != null) && (themeJSURLs.length() == 0)) {
+			clientExtensionEntryCacheModel.themeJSURLs = null;
+		}
+
 		clientExtensionEntryCacheModel.type = getType();
 
 		String type = clientExtensionEntryCacheModel.type;
@@ -1799,6 +1853,7 @@ public class ClientExtensionEntryModelImpl
 	private String _portletCategoryName;
 	private String _properties;
 	private String _sourceCodeURL;
+	private String _themeJSURLs;
 	private String _type;
 	private int _status;
 	private long _statusByUserId;
@@ -1859,6 +1914,7 @@ public class ClientExtensionEntryModelImpl
 		_columnOriginalValues.put("portletCategoryName", _portletCategoryName);
 		_columnOriginalValues.put("properties", _properties);
 		_columnOriginalValues.put("sourceCodeURL", _sourceCodeURL);
+		_columnOriginalValues.put("themeJSURLs", _themeJSURLs);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1930,15 +1986,17 @@ public class ClientExtensionEntryModelImpl
 
 		columnBitmasks.put("sourceCodeURL", 1048576L);
 
-		columnBitmasks.put("type_", 2097152L);
+		columnBitmasks.put("themeJSURLs", 2097152L);
 
-		columnBitmasks.put("status", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
 
-		columnBitmasks.put("statusByUserId", 8388608L);
+		columnBitmasks.put("status", 8388608L);
 
-		columnBitmasks.put("statusByUserName", 16777216L);
+		columnBitmasks.put("statusByUserId", 16777216L);
 
-		columnBitmasks.put("statusDate", 33554432L);
+		columnBitmasks.put("statusByUserName", 33554432L);
+
+		columnBitmasks.put("statusDate", 67108864L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

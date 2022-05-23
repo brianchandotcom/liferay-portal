@@ -78,7 +78,7 @@ public class ClientExtensionEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -122,6 +122,8 @@ public class ClientExtensionEntryCacheModel
 		sb.append(properties);
 		sb.append(", sourceCodeURL=");
 		sb.append(sourceCodeURL);
+		sb.append(", themeJSURLs=");
+		sb.append(themeJSURLs);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", status=");
@@ -262,6 +264,13 @@ public class ClientExtensionEntryCacheModel
 			clientExtensionEntryImpl.setSourceCodeURL(sourceCodeURL);
 		}
 
+		if (themeJSURLs == null) {
+			clientExtensionEntryImpl.setThemeJSURLs("");
+		}
+		else {
+			clientExtensionEntryImpl.setThemeJSURLs(themeJSURLs);
+		}
+
 		if (type == null) {
 			clientExtensionEntryImpl.setType("");
 		}
@@ -321,6 +330,7 @@ public class ClientExtensionEntryCacheModel
 		portletCategoryName = objectInput.readUTF();
 		properties = (String)objectInput.readObject();
 		sourceCodeURL = objectInput.readUTF();
+		themeJSURLs = (String)objectInput.readObject();
 		type = objectInput.readUTF();
 
 		status = objectInput.readInt();
@@ -438,6 +448,13 @@ public class ClientExtensionEntryCacheModel
 			objectOutput.writeUTF(sourceCodeURL);
 		}
 
+		if (themeJSURLs == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(themeJSURLs);
+		}
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -480,6 +497,7 @@ public class ClientExtensionEntryCacheModel
 	public String portletCategoryName;
 	public String properties;
 	public String sourceCodeURL;
+	public String themeJSURLs;
 	public String type;
 	public int status;
 	public long statusByUserId;

@@ -67,6 +67,7 @@ public class ClientExtensionEntryWrapper
 		attributes.put("portletCategoryName", getPortletCategoryName());
 		attributes.put("properties", getProperties());
 		attributes.put("sourceCodeURL", getSourceCodeURL());
+		attributes.put("themeJSURLs", getThemeJSURLs());
 		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -209,6 +210,12 @@ public class ClientExtensionEntryWrapper
 
 		if (sourceCodeURL != null) {
 			setSourceCodeURL(sourceCodeURL);
+		}
+
+		String themeJSURLs = (String)attributes.get("themeJSURLs");
+
+		if (themeJSURLs != null) {
+			setThemeJSURLs(themeJSURLs);
 		}
 
 		String type = (String)attributes.get("type");
@@ -591,6 +598,16 @@ public class ClientExtensionEntryWrapper
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
+	}
+
+	/**
+	 * Returns the theme jsur ls of this client extension entry.
+	 *
+	 * @return the theme jsur ls of this client extension entry
+	 */
+	@Override
+	public String getThemeJSURLs() {
+		return model.getThemeJSURLs();
 	}
 
 	/**
@@ -1076,6 +1093,16 @@ public class ClientExtensionEntryWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
+	}
+
+	/**
+	 * Sets the theme jsur ls of this client extension entry.
+	 *
+	 * @param themeJSURLs the theme jsur ls of this client extension entry
+	 */
+	@Override
+	public void setThemeJSURLs(String themeJSURLs) {
+		model.setThemeJSURLs(themeJSURLs);
 	}
 
 	/**

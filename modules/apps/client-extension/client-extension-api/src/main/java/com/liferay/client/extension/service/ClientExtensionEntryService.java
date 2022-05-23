@@ -67,6 +67,11 @@ public interface ClientExtensionEntryService extends BaseService {
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
+	public ClientExtensionEntry addThemeJSClientExtensionEntry(
+			String description, Map<Locale, String> nameMap, String properties,
+			String sourceCodeURL, String themeJSURLs)
+		throws PortalException;
+
 	public ClientExtensionEntry deleteClientExtensionEntry(
 			long clientExtensionEntryId)
 		throws PortalException;
@@ -96,6 +101,12 @@ public interface ClientExtensionEntryService extends BaseService {
 			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
+		throws PortalException;
+
+	public ClientExtensionEntry updateThemeJSClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String properties,
+			String sourceCodeURL, String themeJSURLs)
 		throws PortalException;
 
 }

@@ -128,7 +128,7 @@ public class BrowserModulesResolution {
 			).put(
 				"errors",
 				() -> {
-					if (_errors.size() > 0) {
+					if (!_errors.isEmpty()) {
 						List<String> sortedErrors = new ArrayList<>(_errors);
 
 						Collections.sort(sortedErrors);
@@ -158,7 +158,7 @@ public class BrowserModulesResolution {
 			).put(
 				"warnings",
 				() -> {
-					if (_warnings.size() > 0) {
+					if (!_warnings.isEmpty()) {
 						List<String> sortedWarnings = new ArrayList<>(
 							_warnings);
 

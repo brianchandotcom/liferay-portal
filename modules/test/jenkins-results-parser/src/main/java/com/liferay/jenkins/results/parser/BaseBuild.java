@@ -2615,7 +2615,7 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (status.equals("running")) {
-				if (badBuildNumbers.size() > 0) {
+				if (!badBuildNumbers.isEmpty()) {
 					sb.append(" ");
 
 					List<String> badBuildURLs = getBadBuildURLs();

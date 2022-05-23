@@ -34,7 +34,7 @@ public class UADInfoPanelDisplay {
 	}
 
 	public UADEntity<Object> getFirstUADEntity() {
-		if (_uadEntities.size() > 0) {
+		if (!_uadEntities.isEmpty()) {
 			return _uadEntities.get(0);
 		}
 
@@ -42,7 +42,7 @@ public class UADInfoPanelDisplay {
 	}
 
 	public String getSubtitle(Locale locale) {
-		if (_uadEntities.size() == 0) {
+		if (_uadEntities.isEmpty()) {
 			if (_uadDisplay != null) {
 				return UADLanguageUtil.getApplicationName(_uadDisplay, locale);
 			}
@@ -59,7 +59,7 @@ public class UADInfoPanelDisplay {
 	}
 
 	public String getTitle(Locale locale) {
-		if (_uadEntities.size() == 0) {
+		if (_uadEntities.isEmpty()) {
 			if (!_hierarchyView || !_topLevelView) {
 				return _uadDisplay.getTypeName(locale);
 			}

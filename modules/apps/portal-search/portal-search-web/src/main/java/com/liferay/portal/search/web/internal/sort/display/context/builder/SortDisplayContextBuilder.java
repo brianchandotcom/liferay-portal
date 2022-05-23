@@ -118,7 +118,7 @@ public class SortDisplayContextBuilder {
 	}
 
 	protected String getParameterValue() {
-		if (_selectedFields.size() > 0) {
+		if (!_selectedFields.isEmpty()) {
 			return _selectedFields.get(_selectedFields.size() - 1);
 		}
 

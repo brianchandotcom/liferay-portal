@@ -3,9 +3,29 @@
 		margin-bottom: 0;
 	}
 
+	.options-container {
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
 	.search-bar {
 		.form-group.input-group-item {
 			margin-bottom: 0;
+		}
+	}
+
+	.search-bar-configuration-suggestions {
+		.form-group-autofit {
+			margin-bottom: 1rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.size-input {
+			max-width: 136px;
 		}
 	}
 

@@ -399,7 +399,7 @@ public class StripFilter extends BasePortalFilter {
 
 		if (length == -1) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Missing />");
+				_log.warn("Missing >");
 			}
 
 			outputOpenTag(oldCharBuffer, writer, _MARKER_INPUT_OPEN);
@@ -711,7 +711,7 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final String _ENSURE_CONTENT_LENGTH = "ensureContentLength";
 
-	private static final String _MARKER_INPUT_CLOSE = "/>";
+	private static final String _MARKER_INPUT_CLOSE = ">";
 
 	private static final int[] _MARKER_INPUT_CLOSE_NEXTS =
 		KMPSearch.generateNexts(_MARKER_INPUT_CLOSE);

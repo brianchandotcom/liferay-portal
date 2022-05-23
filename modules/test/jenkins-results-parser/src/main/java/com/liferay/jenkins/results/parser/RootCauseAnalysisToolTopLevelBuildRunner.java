@@ -198,17 +198,17 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				" GitHub URL"));
 	}
 
-	private int _getAllowedPortalBranchSHAs() {
-		String allowedPortalBranchSHAs = getJobPropertyValue(
+	private int _getAllowedPortalBranchSHACount() {
+		String allowedPortalBranchSHACount = getJobPropertyValue(
 			"allowed.portal.branch.shas");
 
-		if ((allowedPortalBranchSHAs == null) ||
-			allowedPortalBranchSHAs.isEmpty()) {
+		if ((allowedPortalBranchSHACount == null) ||
+			allowedPortalBranchSHACount.isEmpty()) {
 
 			return -1;
 		}
 
-		return Integer.valueOf(allowedPortalBranchSHAs);
+		return Integer.valueOf(allowedPortalBranchSHACount);
 	}
 
 	private String _getBatchName() {
@@ -247,7 +247,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private int _getMaxCommitGroupCount() {
-		int maxCommitGroupCount = _getAllowedPortalBranchSHAs();
+		int maxCommitGroupCount = _getAllowedPortalBranchSHACount();
 
 		if (maxCommitGroupCount != -1) {
 			return maxCommitGroupCount;
@@ -504,9 +504,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return;
 		}
 
-		int allowedPortalBranchSHAs = _getAllowedPortalBranchSHAs();
+		int allowedPortalBranchSHACount = _getAllowedPortalBranchSHACount();
 
-		if (allowedPortalBranchSHAs == -1) {
+		if (allowedPortalBranchSHACount == -1) {
 			return;
 		}
 
@@ -516,15 +516,15 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		int retestAmount = _getRetestAmount();
 
 		if (retestAmount != 1) {
-			allowedPortalBranchSHAs = 1;
+			allowedPortalBranchSHACount = 1;
 		}
 
-		if (portalBranchSHACount > allowedPortalBranchSHAs) {
+		if (portalBranchSHACount > allowedPortalBranchSHACount) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS,
 					" may only reference ",
-					String.valueOf(allowedPortalBranchSHAs),
+					String.valueOf(allowedPortalBranchSHACount),
 					" portal branch SHAs"));
 		}
 

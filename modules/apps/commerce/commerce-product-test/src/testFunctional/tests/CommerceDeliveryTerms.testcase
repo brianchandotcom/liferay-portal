@@ -1,0 +1,44 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+    @description = "COMMERCE-9315. User can create a Delivery Term"
+	@priority = "3"
+	test CanCreateDeliveryTerm {
+        task ("Given the Sales Manager navigates to the Terms and Conditions page") {
+            CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+        }
+
+        task ("When the Sales Manager creates a new entry with 'Delivery Term' Type") {
+            CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "0.0");
+
+            CommercePaymentTerms.openTermsAndConditionAdmin();
+        }
+
+        task ("Then a new Term is successfully created") {
+            CommercePaymentTerms.viewTermsAndConditionEntry(
+				termsAndConditionActiveStatus = "No",
+				termsAndConditionName = "Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "0");
+        }
+    }
+
+}

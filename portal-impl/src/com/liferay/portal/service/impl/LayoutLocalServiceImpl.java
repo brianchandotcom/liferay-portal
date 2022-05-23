@@ -2657,6 +2657,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  iconBytes the byte array of the layout's new icon image
 	 * @param  masterLayoutPlid the primary key of the master layout
 	 * @param  styleBookEntryId the primary key of the style book entrys
+	 * @param  faviconFileEntryId the file entry ID of the layout's new favicon
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date and expando bridge attributes for the layout.
 	 *         For layouts that are linked to a layout prototype, attributes
@@ -2677,7 +2678,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, boolean hidden, Map<Locale, String> friendlyURLMap,
 			boolean hasIconImage, byte[] iconBytes, long masterLayoutPlid,
-			long styleBookEntryId, ServiceContext serviceContext)
+			long styleBookEntryId, long faviconFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -2731,6 +2733,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setStyleBookEntryId(styleBookEntryId);
 		layout.setMasterLayoutPlid(masterLayoutPlid);
+		layout.setFaviconFileEntryId(faviconFileEntryId);
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
@@ -2843,7 +2846,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, long layoutId,
 			String typeSettings, byte[] iconBytes, String themeId,
 			String colorSchemeId, long styleBookEntryId, String css,
-			long masterLayoutPlid)
+			long masterLayoutPlid, long faviconFileEntryId)
 		throws PortalException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
@@ -2865,6 +2868,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setStyleBookEntryId(styleBookEntryId);
 		layout.setCss(css);
 		layout.setMasterLayoutPlid(masterLayoutPlid);
+		layout.setFaviconFileEntryId(faviconFileEntryId);
 
 		PortalUtil.updateImageId(
 			layout, iconBytes != null, iconBytes, "iconImageId", 0, 0, 0);

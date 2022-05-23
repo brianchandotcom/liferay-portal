@@ -14,6 +14,8 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
+import openConfirm from '../../admin/js/openConfirm';
+
 export default function propsTransformer({
 	additionalProps: {revokeOauthAuthorizationsURL},
 	portletNamespace,
@@ -23,29 +25,30 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'removeAccess') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-remove-access-for-the-selected-entries'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-remove-access-for-the-selected-entries'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								oAuth2AuthorizationIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: revokeOauthAuthorizationsURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										oAuth2AuthorizationIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: revokeOauthAuthorizationsURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

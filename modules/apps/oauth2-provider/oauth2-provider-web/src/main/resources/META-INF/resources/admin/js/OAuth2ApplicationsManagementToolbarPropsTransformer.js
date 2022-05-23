@@ -14,6 +14,8 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
+import openConfirm from './openConfirm';
+
 export default function propsTransformer({
 	additionalProps: {deleteOAuth2ApplicationsURL},
 	portletNamespace,
@@ -23,29 +25,30 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'deleteOAuth2Applications') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries-this-action-revokes-all-authorizations-and-associated-tokens'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openConfirm({
+					message: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-entries-this-action-revokes-all-authorizations-and-associated-tokens'
+					),
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							const form = document.getElementById(
+								`${portletNamespace}fm`
+							);
 
-					if (form) {
-						postForm(form, {
-							data: {
-								oAuth2ApplicationIds: getCheckedCheckboxes(
-									form,
-									`${portletNamespace}allRowIds`
-								),
-							},
-							url: deleteOAuth2ApplicationsURL,
-						});
-					}
-				}
+							if (form) {
+								postForm(form, {
+									data: {
+										oAuth2ApplicationIds: getCheckedCheckboxes(
+											form,
+											`${portletNamespace}allRowIds`
+										),
+									},
+									url: deleteOAuth2ApplicationsURL,
+								});
+							}
+						}
+					},
+				});
 			}
 		},
 	};

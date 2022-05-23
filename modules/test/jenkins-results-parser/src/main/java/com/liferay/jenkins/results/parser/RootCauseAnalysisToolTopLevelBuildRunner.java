@@ -263,7 +263,14 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return -1;
 		}
 
-		return Integer.valueOf(maxRetestAmount);
+		try {
+			return Integer.valueOf(maxRetestAmount);
+		}
+		catch (NumberFormatException numberFormatException) {
+			numberFormatException.printStackTrace();
+
+			return -1;
+		}
 	}
 
 	private List<String> _getPortalBranchSHAs() {
@@ -366,7 +373,14 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return 1;
 		}
 
-		return Integer.parseInt(retestAmount);
+		try {
+			return Integer.parseInt(retestAmount);
+		}
+		catch (NumberFormatException numberFormatException) {
+			numberFormatException.printStackTrace();
+
+			return 1;
+		}
 	}
 
 	private List<String> _getTestList() {

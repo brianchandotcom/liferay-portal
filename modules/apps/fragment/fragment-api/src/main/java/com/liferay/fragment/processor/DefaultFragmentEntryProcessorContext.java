@@ -15,6 +15,7 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemIdentifier;
 
 import java.util.Locale;
@@ -60,6 +61,11 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
+	public Optional<InfoForm> getInfoFormOptional() {
+		return Optional.ofNullable(_infoForm);
+	}
+
+	@Override
 	public Locale getLocale() {
 		return _locale;
 	}
@@ -102,6 +108,10 @@ public class DefaultFragmentEntryProcessorContext
 		_fragmentElementId = fragmentElementId;
 	}
 
+	public void setInfoForm(InfoForm infoForm) {
+		_infoForm = infoForm;
+	}
+
 	public void setPreviewClassNameId(long previewClassNameId) {
 		_previewClassNameId = previewClassNameId;
 	}
@@ -126,6 +136,7 @@ public class DefaultFragmentEntryProcessorContext
 	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private InfoForm _infoForm;
 	private final Locale _locale;
 	private final String _mode;
 	private long _previewClassNameId;

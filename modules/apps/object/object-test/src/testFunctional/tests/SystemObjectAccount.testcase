@@ -215,12 +215,47 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is possible to choose by Type Field on entries, when Title Field is Type"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewTypeOnFieldEntry {
+		Accounts.openAccountsAdmin();
 
-		// TODO LPS-153526 CanViewTypeOnFieldEntry pending implementation
+		Accounts.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153526",
+			objectName = "CustomObject153526",
+			pluralLabelName = "Custom Objects 153526");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject153526",
+			type = "One to Many");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153526");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+
+		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "business");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+
+		ObjectPortlet.viewEntry(entry = "business");
 	}
 
 	@description = "LPS-151765 - Verify if is possible to edit Title Field the System Object Account"

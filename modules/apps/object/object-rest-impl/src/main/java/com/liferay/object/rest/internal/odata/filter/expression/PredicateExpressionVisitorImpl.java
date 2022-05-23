@@ -159,7 +159,7 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	@Override
-	public Object visitListExpressionOperation(
+	public Predicate visitListExpressionOperation(
 			ListExpression.Operation operation, Object left, List<Object> right)
 		throws ExpressionVisitException {
 
@@ -168,7 +168,10 @@ public class PredicateExpressionVisitorImpl
 
 			objects = right.toArray(objects);
 
-			return ((Column)left).in(objects);
+			com.liferay.petra.sql.dsl.expression.Expression<Object> column =
+				(com.liferay.petra.sql.dsl.expression.Expression<Object>)left;
+
+			return column.in(objects);
 		}
 
 		throw new UnsupportedOperationException(
@@ -326,8 +329,10 @@ public class PredicateExpressionVisitorImpl
 			return Optional.of(predicate);
 		}
 
+		EntityField entityField = (EntityField)left;
+
 		Column<?, Object> leftColumn = (Column<?, Object>)_getColumn(
-			((EntityField)left).getFilterableName(locale));
+			entityField.getFilterableName(locale));
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			predicate = leftColumn.eq(right);

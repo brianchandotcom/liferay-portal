@@ -30,6 +30,7 @@ import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroup
 import com.liferay.commerce.account.internal.upgrade.v4_0_0.CommerceAccountOrganizationRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v5_0_0.CommerceAccountUserRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v9_3_0.CommerceAccountRoleUpgradeProcess;
+import com.liferay.commerce.account.internal.upgrade.v9_4_0.AccountGroupUpgradeProcess;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -154,6 +155,10 @@ public class CommerceAccountUpgradeStepRegistrator
 			new CommerceAccountRoleUpgradeProcess(
 				_companyLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService));
+
+		registry.register(
+			"9.3.0", "9.4.0",
+			new AccountGroupUpgradeProcess(_resourceLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");

@@ -198,7 +198,7 @@
 <!--LINK-->
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
-	<td>//div[@class='sidenav-content']//div[contains(.,'suggestion')]</td>
+	<td>//div[contains(@class,'sidenav-content')]//div[contains(.,'suggestion')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,14 +67,13 @@ public interface ObjectEntryManager {
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination, String search, Sort[] sorts)
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			Predicate predicate, Pagination pagination, String search,
+			Pagination pagination, Predicate predicate, String search,
 			Sort[] sorts)
 		throws Exception;
 

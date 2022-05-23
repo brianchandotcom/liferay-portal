@@ -166,10 +166,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
 			return objectEntryManager.getObjectEntries(
 				contextCompany.getCompanyId(), _objectDefinition, null,
-				aggregation, _getDTOConverterContext(null),
+				aggregation, _getDTOConverterContext(null), pagination,
 				toPredicate(
 					ParamUtil.getString(contextHttpServletRequest, "filter")),
-				pagination, search, sorts);
+				search, sorts);
 		}
 
 		return objectEntryManager.getObjectEntries(
@@ -216,10 +216,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
 			return objectEntryManager.getObjectEntries(
 				contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-				aggregation, _getDTOConverterContext(null),
+				aggregation, _getDTOConverterContext(null), pagination,
 				toPredicate(
 					ParamUtil.getString(contextHttpServletRequest, "filter")),
-				pagination, search, sorts);
+				search, sorts);
 		}
 
 		return objectEntryManager.getObjectEntries(

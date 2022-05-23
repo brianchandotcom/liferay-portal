@@ -183,12 +183,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 				(Long)dtoConverterContext.getAttribute("companyId"),
 				_objectDefinition,
 				(String)dtoConverterContext.getAttribute("scopeKey"),
-				aggregation, dtoConverterContext,
+				aggregation, dtoConverterContext, pagination,
 				toPredicate(
 					ParamUtil.getString(
 						dtoConverterContext.getHttpServletRequest(), "filter"),
 					dtoConverterContext.getLocale()),
-				pagination, search, sorts);
+				search, sorts);
 		}
 		else {
 			page = _objectEntryManager.getObjectEntries(

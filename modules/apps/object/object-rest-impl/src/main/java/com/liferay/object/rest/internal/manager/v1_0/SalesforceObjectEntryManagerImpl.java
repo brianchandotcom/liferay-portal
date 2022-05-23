@@ -104,7 +104,7 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			Predicate predicate, Pagination pagination, String search,
+			Pagination pagination, Predicate predicate, String search,
 			Sort[] sorts)
 		throws Exception {
 

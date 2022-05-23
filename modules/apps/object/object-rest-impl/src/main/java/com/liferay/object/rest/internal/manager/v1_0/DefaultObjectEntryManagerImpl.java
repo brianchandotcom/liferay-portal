@@ -286,7 +286,7 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
-			Predicate predicate, Pagination pagination, String search,
+			Pagination pagination, Predicate predicate, String search,
 			Sort[] sorts)
 		throws Exception {
 
@@ -380,11 +380,11 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
 			return getObjectEntries(
 				companyId, objectDefinition, scopeKey, aggregation,
-				dtoConverterContext,
+				dtoConverterContext, pagination,
 				toPredicate(
 					filterString, dtoConverterContext.getLocale(),
 					objectDefinition),
-				pagination, search, sorts);
+				search, sorts);
 		}
 
 		return getObjectEntries(

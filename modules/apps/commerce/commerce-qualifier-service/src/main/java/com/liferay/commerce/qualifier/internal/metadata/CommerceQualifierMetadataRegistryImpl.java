@@ -16,11 +16,8 @@ package com.liferay.commerce.qualifier.internal.metadata;
 
 import com.liferay.commerce.qualifier.metadata.CommerceQualifierMetadata;
 import com.liferay.commerce.qualifier.metadata.CommerceQualifierMetadataRegistry;
-import com.liferay.commerce.qualifier.util.CommerceQualifierUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,18 +78,6 @@ public class CommerceQualifierMetadataRegistryImpl
 					bundleContext.ungetService(serviceReference);
 				}
 			});
-
-		try {
-			Field field = CommerceQualifierUtil.class.getDeclaredField(
-				"_commerceQualifierMetadataRegistry");
-
-			field.setAccessible(true);
-
-			field.set(null, this);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Deactivate

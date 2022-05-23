@@ -90,6 +90,8 @@ public class FrontendIconsResourcePackRepository {
 	public void deleteFrontendIconsResourcePack(long companyId, String name)
 		throws PortalException {
 
+		name = StringUtil.toUpperCase(name);
+
 		Company company = _companyLocalService.getCompany(companyId);
 
 		Folder folder = _getFolder(company);
@@ -102,6 +104,8 @@ public class FrontendIconsResourcePackRepository {
 
 	public FrontendIconsResourcePack getFrontendIconsResourcePack(
 		long companyId, String name) {
+
+		name = StringUtil.toUpperCase(name);
 
 		try {
 			Company company = _companyLocalService.getCompany(companyId);

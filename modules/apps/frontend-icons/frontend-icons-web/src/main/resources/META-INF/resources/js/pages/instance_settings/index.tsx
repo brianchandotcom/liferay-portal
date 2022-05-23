@@ -160,8 +160,9 @@ export default function InstanceIconConfiguration({
 									<ClayDropDownWithItems
 										items={[
 											{
-												label:
-													'Add Icons Pack from spritemap',
+												label: Liferay.Language.get(
+													'add-icon-pack-from-spritemap'
+												),
 												onClick: () =>
 													setAddModal({
 														existingIconPackName: iconPackName,
@@ -170,8 +171,9 @@ export default function InstanceIconConfiguration({
 													}),
 											},
 											{
-												label:
-													'Add Icons Pack from existing icons',
+												label: Liferay.Language.get(
+													'add-icon-pack-from-existing-icons'
+												),
 												onClick: () =>
 													setAddModal({
 														existingIconPackName: iconPackName,
@@ -186,7 +188,9 @@ export default function InstanceIconConfiguration({
 												displayType="secondary"
 												small
 											>
-												Add Icons
+												{Liferay.Language.get(
+													'add-icons'
+												)}
 											</ClayButton>
 										}
 									/>
@@ -225,12 +229,14 @@ export default function InstanceIconConfiguration({
 															: ''
 													}
 												>
-													<ClayIcon
-														spritemap={`${getSpritemapPath(
-															iconPackName
-														)}?${referenceTime}`}
-														symbol={icon.name}
-													/>
+													<svg
+														className="lexicon-icon"
+														role="presentation"
+													>
+														<use
+															xlinkHref={`/o/icons/${iconPackName}.svg?${referenceTime}#${icon.name}`}
+														></use>
+													</svg>
 
 													<span className="list-group-card-item-text">
 														{icon.name}
@@ -275,7 +281,9 @@ export default function InstanceIconConfiguration({
 				<ClayDropDownWithItems
 					items={[
 						{
-							label: 'Add Icon Pack from spritemap',
+							label: Liferay.Language.get(
+								'add-icon-pack-from-spritemap'
+							),
 							onClick: () =>
 								setAddModal({
 									uploadSpritemap: true,
@@ -283,7 +291,9 @@ export default function InstanceIconConfiguration({
 								}),
 						},
 						{
-							label: 'Add Icon Pack from existing icons',
+							label: Liferay.Language.get(
+								'add-icon-pack-from-existing-icons'
+							),
 							onClick: () =>
 								setAddModal({
 									uploadSpritemap: false,

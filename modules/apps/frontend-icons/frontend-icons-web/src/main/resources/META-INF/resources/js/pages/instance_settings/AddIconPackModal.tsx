@@ -26,6 +26,13 @@ import {getSpritemapPath} from '../../index';
 
 import type {IIconPack, IIconPacks} from '../../types';
 
+function flattenArray(arr: any[]): any[] {
+	return arr.reduce(
+		(acc, val) => acc.concat(Array.isArray(val) ? flattenArray(val) : val),
+		[]
+	);
+}
+
 interface IProps {
 	existingIconPackName?: string;
 	icons: IIconPacks;
@@ -142,6 +149,8 @@ export default function AddIconPackModal({
 		? handleUploadSpritemapSubmit
 		: handleSelectIconsSubmit;
 
+	const errorNameTaken = !existingIconPackName && !!icons[iconPackName];
+
 	return visible ? (
 		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header withTitle>
@@ -154,7 +163,9 @@ export default function AddIconPackModal({
 						event.preventDefault();
 					}}
 				>
-					<ClayForm.Group>
+					<ClayForm.Group
+						className={errorNameTaken ? 'has-error' : ''}
+					>
 						<label htmlFor={portletNamespace + 'name'}>
 							{Liferay.Language.get('pack-name')}
 						</label>
@@ -162,13 +173,28 @@ export default function AddIconPackModal({
 						<ClayInput
 							name={portletNamespace + 'name'}
 							onChange={(event) =>
-								setIconPackName(event.target.value)
+								setIconPackName(
+									event.target.value.toUpperCase()
+								)
 							}
-							placeholder="Name"
+							placeholder={Liferay.Language.get('name')}
 							readOnly={!!existingIconPackName}
 							type="text"
 							value={iconPackName}
 						/>
+
+						{errorNameTaken && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									{`${Liferay.Util.sub(
+										Liferay.Language.get(
+											'x-is-already-the-name-of-an-icon-pack'
+										),
+										[iconPackName]
+									)}`}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 					</ClayForm.Group>
 
 					{uploadSpritemap ? (
@@ -199,7 +225,9 @@ export default function AddIconPackModal({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={loading}
+							disabled={
+								loading || !iconPackName || errorNameTaken
+							}
 							onClick={() => {
 								handleSubmit();
 							}}
@@ -248,80 +276,126 @@ function IconPicker({
 		[icons]
 	);
 
+	const existingIconNamesInPack = existingIconPackName
+		? icons[existingIconPackName].icons.map((item) => item.name)
+		: [];
+
 	return (
 		<ClayPanel.Group className="mt-4">
 			{Object.entries(icons)
 				.filter(
 					([iconPackName]) => iconPackName !== existingIconPackName
 				)
-				.map(([iconPackName, {icons}]) => (
-					<div className="d-flex" key={iconPackName}>
-						<ClayPanel
-							collapsable
-							displayTitle={`${iconPackName} (${icons?.length})`}
-							displayType="secondary"
-							showCollapseIcon={true}
-							style={{flex: 1}}
-						>
-							<ClayPanel.Body className="list-group-card">
-								<ul className="list-group">
-									{icons?.map((icon) => (
-										<li
-											className="list-group-card-item w-25"
-											key={icon.name}
-										>
-											<ClayButton
-												className={classNames({
-													'bg-light': selectedIcons[
-														iconPackName
-													]?.includes(icon.name),
-												})}
-												displayType={null}
-												onClick={() => {
-													const selectedIconsFromCurrentPackName =
-														selectedIcons[
-															iconPackName
-														] || [];
+				.map(([iconPackName, {icons}]) => {
+					const selectedIconsFromPack =
+						selectedIcons[iconPackName] || [];
 
-													const isSelected = selectedIconsFromCurrentPackName.includes(
-														icon.name
-													);
+					const totalSelectedIconsFromPack =
+						selectedIconsFromPack.length;
 
-													onSelectedIconsChange({
-														...selectedIcons,
-														[iconPackName]: isSelected
-															? selectedIconsFromCurrentPackName.filter(
-																	(
-																		selectedIcon
-																	) =>
-																		selectedIcon !==
-																		icon.name
-															  )
-															: [
-																	...selectedIconsFromCurrentPackName,
-																	icon.name,
-															  ],
-													});
-												}}
+					return (
+						<div className="d-flex" key={iconPackName}>
+							<ClayPanel
+								collapsable
+								displayTitle={
+									<span className="d-flex">
+										{`${iconPackName} (${icons.length})`}
+
+										{!!totalSelectedIconsFromPack && (
+											<b className="ml-auto">
+												{Liferay.Util.sub(
+													Liferay.Language.get(
+														'x-icons-selected'
+													),
+													[totalSelectedIconsFromPack]
+												)}
+											</b>
+										)}
+									</span>
+								}
+								displayType="secondary"
+								showCollapseIcon={true}
+								style={{flex: 1}}
+							>
+								<ClayPanel.Body className="list-group-card">
+									<ul className="list-group">
+										{icons?.map((icon) => (
+											<li
+												className="list-group-card-item w-25"
+												key={icon.name}
 											>
-												<ClayIcon
-													spritemap={`${getSpritemapPath(
-														iconPackName
-													)}?${referenceTime}`}
-													symbol={icon.name}
-												/>
+												<ClayButton
+													className={classNames({
+														'bg-light': selectedIcons[
+															iconPackName
+														]?.includes(icon.name),
+													})}
+													displayType={null}
+													onClick={() => {
+														const isSelected = selectedIconsFromPack.includes(
+															icon.name
+														);
 
-												<span className="list-group-card-item-text">
-													{icon.name}
-												</span>
-											</ClayButton>
-										</li>
-									))}
-								</ul>
-							</ClayPanel.Body>
-						</ClayPanel>
-					</div>
-				))}
+														const selectedIconNames = flattenArray(
+															Object.values(
+																selectedIcons
+															)
+														);
+
+														if (
+															!isSelected &&
+															(selectedIconNames.includes(
+																icon.name
+															) ||
+																existingIconNamesInPack.includes(
+																	icon.name
+																))
+														) {
+															alert(
+																Liferay.Language.get(
+																	'icon-name-already-exists-in-pack'
+																)
+															);
+
+															return;
+														}
+
+														onSelectedIconsChange({
+															...selectedIcons,
+															[iconPackName]: isSelected
+																? selectedIconsFromPack.filter(
+																		(
+																			selectedIcon
+																		) =>
+																			selectedIcon !==
+																			icon.name
+																  )
+																: [
+																		...selectedIconsFromPack,
+																		icon.name,
+																  ],
+														});
+													}}
+												>
+													<ClayIcon
+														spritemap={`${getSpritemapPath(
+															iconPackName
+														)}?${referenceTime}`}
+														symbol={icon.name}
+													/>
+
+													<span className="list-group-card-item-text">
+														{icon.name}
+													</span>
+												</ClayButton>
+											</li>
+										))}
+									</ul>
+								</ClayPanel.Body>
+							</ClayPanel>
+						</div>
+					);
+				})}
 		</ClayPanel.Group>
 	);
 }

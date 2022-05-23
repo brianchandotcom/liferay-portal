@@ -108,7 +108,7 @@ export default function DeleteIconModal({
 
 						<ClayInput
 							name={portletNamespace + 'name'}
-							placeholder="Name"
+							placeholder={Liferay.Language.get('name')}
 							readOnly
 							type="text"
 							value={iconPackName}
@@ -122,7 +122,7 @@ export default function DeleteIconModal({
 
 						<ClayInput
 							name={portletNamespace + 'icon'}
-							placeholder="Icon"
+							placeholder={Liferay.Language.get('icon')}
 							readOnly
 							type="text"
 							value={selectedIcon}

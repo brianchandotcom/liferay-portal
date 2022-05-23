@@ -63,6 +63,24 @@ public final class CommandLogger {
 		}
 	}
 
+	public void ocularCommand(Element element, SyntaxLogger syntaxLogger)
+		throws PoshiRunnerLoggerException {
+		System.out.println("in command logger ocular command");
+		if (!_isCurrentCommand(element)) {
+			return;
+		}
+
+		try {
+			_commandElement = null;
+
+			_ocularLineGroupLoggerElement(lineGroupLoggerElement);
+		}
+		catch(Throwable throwable){
+			throw new PoshiRunnerLoggerException(
+					throwable.getMessage(), throwable);
+		}
+	}
+
 	public String getCommandLogText() {
 		return _commandLogLoggerElement.toString();
 	}
@@ -196,6 +214,36 @@ public final class CommandLogger {
 	}
 
 	protected LoggerElement lineGroupLoggerElement;
+
+	private void _ocularLineGroupLoggerElement(
+			LoggerElement lineGroupLoggerElement)
+		throws Exception {
+
+		System.out.println("in ocular line group element");
+
+		lineGroupLoggerElement.addClassName("failed");
+
+		lineGroupLoggerElement.addClassName("ocular");
+
+		lineGroupLoggerElement.addChildLoggerElement(
+				_getErrorDetailsContainerLoggerElement());
+
+		LoggerElement childContainerLoggerElement =
+				lineGroupLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> runLineLoggerElements =
+				childContainerLoggerElement.loggerElements("li");
+
+		if (!runLineLoggerElements.isEmpty()) {
+			LoggerElement runLineLoggerElement = runLineLoggerElements.get(
+					runLineLoggerElements.size() - 1);
+
+			System.out.println(runLineLoggerElement);
+
+			runLineLoggerElement.addClassName("error-line");
+		}
+
+	}
 
 	private void _failLineGroupLoggerElement(
 			LoggerElement lineGroupLoggerElement)

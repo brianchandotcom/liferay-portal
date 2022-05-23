@@ -524,16 +524,33 @@ public class PoshiRunnerExecutor {
 				PoshiStackTraceUtil.popStackTrace();
 
 				if (_functionExecuteElement == executeElement) {
-					PoshiStackTraceUtil.setCurrentElement(executeElement);
+					String attributeValue = executeElement.attributeValue(
+						"function");
 
-					SummaryLogger.failSummary(
-						_functionExecuteElement, throwable.getMessage(),
-						_poshiLogger.getDetailsLinkId());
+					if (attributeValue.equals("OcularAssertElementImage")) {
+						PoshiStackTraceUtil.setCurrentElement(executeElement);
 
-					_poshiLogger.failCommand(_functionExecuteElement);
+						SummaryLogger.failSummary(
+								_functionExecuteElement, throwable.getMessage(),
+								_poshiLogger.getDetailsLinkId());
 
-					_functionExecuteElement = null;
-					_functionWarningMessage = null;
+						_poshiLogger.ocularCommand(_functionExecuteElement);
+
+						_functionExecuteElement = null;
+						_functionWarningMessage = null;
+					}
+					else {
+						PoshiStackTraceUtil.setCurrentElement(executeElement);
+
+						SummaryLogger.failSummary(
+							_functionExecuteElement, throwable.getMessage(),
+							_poshiLogger.getDetailsLinkId());
+
+						_poshiLogger.failCommand(_functionExecuteElement);
+
+						_functionExecuteElement = null;
+						_functionWarningMessage = null;
+					}
 				}
 
 				throw throwable;

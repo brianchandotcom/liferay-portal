@@ -175,6 +175,19 @@ public class PoshiLogger {
 			syntaxLoggerElement, _commandLogger.lineGroupLoggerElement);
 	}
 
+	public void ocularCommand(Element element) throws PoshiRunnerLoggerException{
+		System.out.println("in poshi logger ocular command");
+		_commandLogger.failCommand(element, _syntaxLogger);
+
+		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
+
+		syntaxLoggerElement.setAttribute("data-status01", "fail");
+	}
+
+	public void ocularCommand(Element element, SyntaxLogger syntaxLogger) throws PoshiRunnerLoggerException{
+
+	}
+
 	public void takeScreenshotCommand(Element element)
 		throws PoshiRunnerLoggerException {
 

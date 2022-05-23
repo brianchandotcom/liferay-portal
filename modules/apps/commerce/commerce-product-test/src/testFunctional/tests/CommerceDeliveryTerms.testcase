@@ -86,4 +86,33 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9317. User can delete a Delivery Term"
+	@priority = "3"
+	test CanDeleteDeliveryTerm {
+		task ("Given an existing Delivery Terms entry") {
+            CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+				
+            CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "0.0");
+
+            CommercePaymentTerms.openTermsAndConditionAdmin();
+        }
+		
+		task ("When the Sales Manager tries to delete a Delivery Terms entry") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				termsAndConditionName = "Terms and Condition Entry",
+				menuItem = "Delete");
+		}
+		
+		task ("Then the entry is successfully removed") {
+			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry");
+		}
+	}
+
 }

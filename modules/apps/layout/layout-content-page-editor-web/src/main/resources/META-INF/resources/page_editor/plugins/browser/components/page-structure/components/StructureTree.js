@@ -22,6 +22,7 @@ import hasDropZoneChild from '../../../../../app/components/layout-data-items/ha
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
@@ -272,6 +273,26 @@ function getNameInfo(item) {
 	return null;
 }
 
+function fragmentIsMapped(item, fragmentEntryLinks) {
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
+		return formIsMapped(item);
+	}
+	else if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+		const {editableValues, fragmentEntryType} = fragmentEntryLinks[
+			item.config.fragmentEntryLinkId
+		];
+
+		return fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
+			? Boolean(
+					editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]
+						.inputFieldId
+			  )
+			: false;
+	}
+
+	return false;
+}
+
 function isItemHidden(item, selectedViewportSize) {
 	const responsiveConfig = getResponsiveConfig(
 		item.config,
@@ -518,10 +539,7 @@ function visit(
 		id: item.itemId,
 		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
-		mapped:
-			item.type === LAYOUT_DATA_ITEM_TYPES.form
-				? formIsMapped(item)
-				: false,
+		mapped: fragmentIsMapped(item, fragmentEntryLinks),
 		name: selectLayoutDataItemLabel({fragmentEntryLinks}, item),
 		nameInfo: getNameInfo(item),
 		onHoverNode,

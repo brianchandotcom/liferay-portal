@@ -1380,13 +1380,7 @@ definition {
 		else {
 			WaitForElementNotPresent(locator1 = "Staging#PROCESS_IN_PROGRESS");
 
-			WaitForElementNotPresent(
-				key_title = "Current",
-				locator1 = "Staging#PROCESS_GROUP_TITLE");
-
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_SUCCESSFUL",
-				value1 = "Successful");
+			Staging.viewSuccessResult();
 		}
 
 		if (isSet(validateErrorMessage)) {

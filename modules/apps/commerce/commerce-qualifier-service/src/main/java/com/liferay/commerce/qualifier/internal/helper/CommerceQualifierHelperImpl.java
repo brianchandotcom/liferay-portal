@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceQualifierHelperImpl implements CommerceQualifierHelper {
 
-	public CommerceQualifierEntryTable getCommerceQualifierTableAlias(
+	public CommerceQualifierEntryTable getAliasCommerceQualifierEntryTable(
 		String sourceClassName, String targetClassName) {
 
 		return CommerceQualifierEntryTable.INSTANCE.as(

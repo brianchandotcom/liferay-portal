@@ -21,7 +21,7 @@ import com.liferay.commerce.qualifier.model.CommerceQualifierEntryTable;
  */
 public interface CommerceQualifierHelper {
 
-	public CommerceQualifierEntryTable getCommerceQualifierTableAlias(
+	public CommerceQualifierEntryTable getAliasCommerceQualifierEntryTable(
 		String sourceClassName, String targetClassName);
 
 }

@@ -454,22 +454,24 @@ public class CommerceQualifierEntryLocalServiceImpl
 		Predicate subpredicate = null;
 
 		for (String allowedTargetClassName : allowedTargetClassNames) {
-			CommerceQualifierEntryTable tableAlias =
-				_commerceQualifierHelper.getCommerceQualifierTableAlias(
+			CommerceQualifierEntryTable aliasCommerceQualifierEntryTable =
+				_commerceQualifierHelper.getAliasCommerceQualifierEntryTable(
 					sourceCommerceQualifierMetadata.getModelClassName(),
 					allowedTargetClassName);
 
 			joinStep = joinStep.leftJoinOn(
-				tableAlias,
+				aliasCommerceQualifierEntryTable,
 				_getPredicate(
-					tableAlias.sourceClassNameId,
+					aliasCommerceQualifierEntryTable.sourceClassNameId,
 					sourceCommerceQualifierMetadata.getModelClassName(),
-					tableAlias.sourceClassPK,
+					aliasCommerceQualifierEntryTable.sourceClassPK,
 					sourceCommerceQualifierMetadata.getPrimaryKeyColumn(),
-					tableAlias.targetClassNameId, allowedTargetClassName));
+					aliasCommerceQualifierEntryTable.targetClassNameId,
+					allowedTargetClassName));
 
 			Predicate targetPredicate = _getTargetPredicate(
-				tableAlias.commerceQualifierEntryId, tableAlias.targetClassPK,
+				aliasCommerceQualifierEntryTable.commerceQualifierEntryId,
+				aliasCommerceQualifierEntryTable.targetClassPK,
 				targetAttributes.get(allowedTargetClassName));
 
 			if (subpredicate == null) {

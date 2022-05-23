@@ -153,7 +153,7 @@ public class CPDefinitionsImporter {
 	}
 
 	public List<CPDefinition> importCPDefinitions(
-			JSONArray jsonArray, String assetVocabularyName,
+			JSONArray jsonArray1, String assetVocabularyName,
 			long catalogGroupId, long commerceChannelId,
 			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
 			String imageDependenciesPath, long scopeGroupId, long userId)
@@ -161,30 +161,31 @@ public class CPDefinitionsImporter {
 
 		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
 
-		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray.length());
+		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray1.length());
 
-		for (int i = 0; i < jsonArray.length(); i++) {
+		for (int i = 0; i < jsonArray1.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
-				jsonArray.getJSONObject(i), assetVocabularyName, catalogGroupId,
+				jsonArray1.getJSONObject(i), assetVocabularyName, catalogGroupId,
 				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
 			ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
 
 			if (expandoBridge == null) {
 				continue;
 			}
 
-			if (jsonObject.getString("customFields")!=null) {
+			if (jsonObject1.getString("customFields")!=null) {
 
-				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(jsonObject.getString("customFields"));
+				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(jsonObject1.getString("customFields"));
 
 				for (int j = 0; j < jsonArray2.length(); j++) {
 
 					JSONObject jsonObject2 = jsonArray2.getJSONObject(i);
-					expandoBridge.setAttributeDefault(jsonObject2.getString("name"), jsonObject.getDouble("data"));
+					JSONObject jsonObject3 = (JSONObject) jsonObject2.get("customValue");
+					expandoBridge.setAttribute(jsonObject2.getString("name"), (Serializable) jsonObject3.get("data"));
 				}
 
 			}

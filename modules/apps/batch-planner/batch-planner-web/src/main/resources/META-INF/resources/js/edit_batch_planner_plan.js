@@ -28,14 +28,6 @@ const HEADERS = new Headers({
 	'x-csrf-token': window.Liferay.authToken,
 });
 
-function trimPackage(name) {
-	if (!name || name.lastIndexOf('.') < 0) {
-		return name;
-	}
-
-	return name.substr(name.lastIndexOf('.') + 1);
-}
-
 function handleOverrideExistingRecordsCheckbox(namespace) {
 	const overrideExistingRecordsCheckbox = document.querySelector(
 		`#${namespace}allowUpdate`
@@ -50,6 +42,14 @@ function handleOverrideExistingRecordsCheckbox(namespace) {
 
 		ignoreBlankFieldCheckbox.checked = false;
 	});
+}
+
+function trimPackage(name) {
+	if (!name || name.lastIndexOf('.') < 0) {
+		return name;
+	}
+
+	return name.substr(name.lastIndexOf('.') + 1);
 }
 
 export default function ({

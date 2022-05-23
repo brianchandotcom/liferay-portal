@@ -21,6 +21,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.runtime.scripting.executor.GroovyScriptingExecutor;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -48,6 +49,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -84,21 +86,20 @@ public class ObjectActionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		_originalHttp = (Http)ReflectionTestUtil.getAndSetFieldValue(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_WEBHOOK),
-			"_http",
-			ProxyUtil.newProxyInstance(
-				Http.class.getClassLoader(), new Class<?>[] {Http.class},
-				(proxy, method, arguments) -> {
-					_argumentsList.add(arguments);
-
-					return null;
-				}));
+		_originalGroovyScriptingExecutor =
+			(GroovyScriptingExecutor)_getAndSetFieldValue(
+				GroovyScriptingExecutor.class, "_groovyScriptingExecutor",
+				ObjectActionExecutorConstants.KEY_GROOVY);
+		_originalHttp = (Http)_getAndSetFieldValue(
+			Http.class, "_http", ObjectActionExecutorConstants.KEY_WEBHOOK);
 	}
 
 	@After
 	public void tearDown() {
+		ReflectionTestUtil.setFieldValue(
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_GROOVY),
+			"_groovyScriptingExecutor", _originalGroovyScriptingExecutor);
 		ReflectionTestUtil.setFieldValue(
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				ObjectActionExecutorConstants.KEY_WEBHOOK),
@@ -353,6 +354,62 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectActionWithConditionExpression() throws Exception {
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			"equals(firstName, \"João\")", RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build());
+
+		// Add object entry with unsatisfied condition
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "John"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		Assert.assertNull(_argumentsList.poll());
+
+		// Add object entry with satisfied condition
+
+		objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "João"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		Object[] arguments = _argumentsList.poll();
+
+		Assert.assertEquals(
+			HashMapBuilder.putAll(
+				objectEntry.getModelAttributes()
+			).put(
+				"currentUserId", TestPropsValues.getUserId()
+			).put(
+				"firstName", "João"
+			).build(),
+			arguments[0]);
+		Assert.assertEquals(Collections.emptySet(), arguments[1]);
+		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+	}
+
+	@Test
 	public void testUpdateObjectAction() throws Exception {
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
@@ -409,6 +466,22 @@ public class ObjectActionLocalServiceTest {
 			objectAction.getParametersUnicodeProperties());
 	}
 
+	private Object _getAndSetFieldValue(
+		Class<?> clazz, String fieldName, String objectActionExecutorKey) {
+
+		return ReflectionTestUtil.getAndSetFieldValue(
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				objectActionExecutorKey),
+			fieldName,
+			ProxyUtil.newProxyInstance(
+				clazz.getClassLoader(), new Class<?>[] {clazz},
+				(proxy, method, arguments) -> {
+					_argumentsList.add(arguments);
+
+					return null;
+				}));
+	}
+
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
@@ -429,6 +502,7 @@ public class ObjectActionLocalServiceTest {
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
+	private GroovyScriptingExecutor _originalGroovyScriptingExecutor;
 	private Http _originalHttp;
 
 }

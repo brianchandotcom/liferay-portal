@@ -128,8 +128,18 @@ export function FormInputGeneralPanel({item}) {
 			);
 		}
 
+		const fieldSetsWithoutLabel =
+			fragmentEntryLinkRef.current.configuration?.fieldSets?.filter(
+				(fieldSet) => !fieldSet.configurationRole && !fieldSet.label
+			) ?? [];
+
+		nextFields = [
+			...nextFields,
+			...fieldSetsWithoutLabel.flatMap((fieldSet) => fieldSet.fields),
+		];
+
 		return nextFields;
-	}, [configurationValues]);
+	}, [configurationValues, fragmentEntryLinkRef]);
 
 	const handleValueSelect = (key, value) => {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];

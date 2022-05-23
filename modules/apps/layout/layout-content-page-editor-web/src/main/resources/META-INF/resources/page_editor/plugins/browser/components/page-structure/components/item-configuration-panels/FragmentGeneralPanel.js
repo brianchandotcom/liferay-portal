@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {
 	useDispatch,
@@ -46,7 +47,12 @@ export function FragmentGeneralPanel({item}) {
 
 	const fieldSets =
 		fragmentEntryLink.configuration?.fieldSets?.filter(
-			(fieldSet) => !fieldSet.configurationRole
+			({configurationRole, label}) =>
+				!configurationRole &&
+				!(
+					fragmentEntryLink.fragmentEntryType ===
+						FRAGMENT_ENTRY_TYPES.input && !label
+				)
 		) ?? [];
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);

@@ -35,60 +35,60 @@ definition {
 	@description = "COMMERCE-9323. The 'Checkout Requested Delivery Date' toggle is present and disabled"
 	@priority = "3"
 	test AssertCheckoutRequestDeliveryDateToggleIsPresentAndDisabled {
-        task ("When a channel's configuration page is reached") {
-            CommerceChannels.openChannelsAdmin();
+		task ("When a channel's configuration page is reached") {
+			CommerceChannels.openChannelsAdmin();
 
-            CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-        }
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
 
-        task ("Then the 'Checkout Requested Delivery Date' toggle is present in the 'Orders' card") {
-            AssertElementPresent(
-                key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
-                locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-        }
+		task ("Then the 'Checkout Requested Delivery Date' toggle is present in the 'Orders' card") {
+			AssertElementPresent(
+				key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 
-        task ("And the 'Checkout Requested Delivery Date' toggle is disabled by default") {
-            AssertNotChecked.assertNotCheckedNotVisible(
-                key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
-                locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-        }
-    }
+		task ("And the 'Checkout Requested Delivery Date' toggle is disabled by default") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
 
-    @description = "COMMERCE-9324. A buyer user can set the requested delivery date during the checkout process"
+	@description = "COMMERCE-9324. A buyer user can set the requested delivery date during the checkout process"
 	@priority = "3"
 	test CanSetDeliveryDate {
-        task ("Given Mnium channel's configuration page is reached") {
-            CommerceChannels.openChannelsAdmin();
+		task ("Given Mnium channel's configuration page is reached") {
+			CommerceChannels.openChannelsAdmin();
 
-            CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-        }
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
 
-        task ("And given the 'Checkout Requested Delivery Date' toggle is enabled") {
-            Check.checkToggleSwitch(
-                key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
-                locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-        }
+		task ("And given the 'Checkout Requested Delivery Date' toggle is enabled") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 
-        task ("And given the configuration is saved") {
-            Button.clickSave();
-        }
+		task ("And given the configuration is saved") {
+			Button.clickSave();
+		}
 
-        task ("When a checkout process is started by a user with role 'Buyer'") {
-            User.logoutPG();
+		task ("When a checkout process is started by a user with role 'Buyer'") {
+			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-        }
+		}
 
-        task ("And when an item is added to cart from Minium site") {
-            FrontStore.addInitializerProductToCart(
+		task ("And when an item is added to cart from Minium site") {
+			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
-        }
+		}
 
-        task ("And when the checkout process is started") {
+		task ("And when the checkout process is started") {
 			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.setAddress(
@@ -99,19 +99,20 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				shippingMethod = "Standard");
 
-            Click(locator1 = "Button#CONTINUE");
+			Click(locator1 = "Button#CONTINUE");
 
-            Click(
-                key_radioOption = "Standard",
-                locator1 = "CommerceEntry#RADIO_BUTTON");
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
 
-		    Click(locator1 = "Button#CONTINUE");
-        }
+			Click(locator1 = "Button#CONTINUE");
+		}
 
-        task ("Then the user can set a requested delivery date in the blank input when reaching checkout's 'Order Summary' step") {
+		task ("Then the user can set a requested delivery date in the blank input when reaching checkout's 'Order Summary' step") {
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateMonth = DateUtil.getCurrentMonth();
 			var displayDateYear = DateUtil.getCurrentYear();
+
 			var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 			Type(
@@ -119,14 +120,14 @@ definition {
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
 				value1 = "${displayDate}");
 
-            Click(locator1 = "Button#CONTINUE");
+			Click(locator1 = "Button#CONTINUE");
 		}
 
-        task ("And then the checkout process completes successfully ") {
-            AssertTextEquals(
-                locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-                value1 = "Success! Your order has been processed.");
-        }
-    }
+		task ("And then the checkout process completes successfully ") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
 
 }

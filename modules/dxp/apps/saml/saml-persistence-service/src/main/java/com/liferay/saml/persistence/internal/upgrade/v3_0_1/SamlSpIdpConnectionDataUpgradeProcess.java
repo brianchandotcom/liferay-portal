@@ -16,13 +16,12 @@ package com.liferay.saml.persistence.internal.upgrade.v3_0_1;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderedProperties;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.StringWriter;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -64,14 +63,18 @@ public class SamlSpIdpConnectionDataUpgradeProcess extends UpgradeProcess {
 				try (StringWriter stringWriter = new StringWriter()) {
 					userAttributeMappingsProperties.store(stringWriter, null);
 
-					runSQL(
-						StringBundler.concat(
-							"update SamlSpIdpConnection set ",
-							"userAttributeMappings = '",
-							stringWriter.toString(),
-							"' where samlSpIdpConnectionId = ",
-							GetterUtil.getString(
-								resultSet.getLong("samlSpIdpConnectionId"))));
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								"update SamlSpIdpConnection set " +
+									"userAttributeMappings = ? where " +
+										"samlSpIdpConnectionId =  ?")) {
+
+						preparedStatement.setString(1, stringWriter.toString());
+						preparedStatement.setLong(
+							2, resultSet.getLong("samlSpIdpConnectionId"));
+
+						preparedStatement.execute();
+					}
 				}
 			}
 		}

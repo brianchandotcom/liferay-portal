@@ -1436,11 +1436,11 @@ public class UIItemsBuilder {
 		int fileVersionsCount = _fileEntry.getFileVersionsCount(
 			WorkflowConstants.STATUS_APPROVED);
 
-		if (fileVersionsCount <= 1) {
-			return false;
+		if (fileVersionsCount > 1) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public boolean isDownloadActionAvailable() throws PortalException {
@@ -1536,11 +1536,7 @@ public class UIItemsBuilder {
 
 		String latestFileVersionVersion = latestFileVersion.getVersion();
 
-		if (latestFileVersionVersion.equals(_fileVersion.getVersion())) {
-			return false;
-		}
-
-		return true;
+		return !latestFileVersionVersion.equals(_fileVersion.getVersion());
 	}
 
 	public boolean isViewOriginalFileActionAvailable() {
@@ -1552,11 +1548,11 @@ public class UIItemsBuilder {
 	}
 
 	public boolean isViewVersionActionAvailable() {
-		if (_fileShortcut != null) {
-			return false;
+		if (_fileShortcut == null) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private UIItemsBuilder(

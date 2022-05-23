@@ -2315,8 +2315,6 @@ definition {
 	@description = "This ensures that assets stored in a depot can be published from the site DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishAssetFromSiteWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishAssetFromSiteWidget";
 
 		JSONFolder.addFolder(
@@ -2379,8 +2377,6 @@ definition {
 	@description = "This ensures that a document stored in a DM folder of asset library can be deleted and republished in DM widget when local staging is enabled."
 	@priority = "4"
 	test CanPublishDeletedDocumentFromFolderViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDeletedDocumentFromFolderViaWidget";
 
 		JSONFolder.addFolder(
@@ -2471,8 +2467,6 @@ definition {
 	@description = "This ensures that a document stored in an asset library can be deleted and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishDeletedDocumentViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDeletedDocumentViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -2556,8 +2550,6 @@ definition {
 	@description = "This ensures that an image stored in a DM folder of asset library can be deleted and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishDeletedImageFromFolderViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDeletedImageFromFolderViaWidget";
 
 		JSONFolder.addFolder(
@@ -2648,8 +2640,6 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be deleted and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishDeletedImageViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDeletedImageViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -2869,8 +2859,6 @@ definition {
 	@description = "This ensures that a document stored in a DM folder of asset library can be published in DM widget when remote staging is enabled."
 	@priority = "5"
 	test CanPublishDocumentFromFolderViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDocumentFromFolderViaWidget";
 
 		JSONFolder.addFolder(
@@ -2933,8 +2921,6 @@ definition {
 	@description = "This ensures that a document stored in an asset library can be published in DM widget when remote staging is enabled."
 	@priority = "5"
 	test CanPublishDocumentViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDocumentViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -2991,8 +2977,6 @@ definition {
 	@description = "This ensures that a document stored in a DM folder of asset library can be edited and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishEditedDocumentFromFolderViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishEditedDocumentFromFolderViaWidget";
 
 		JSONFolder.addFolder(
@@ -3083,8 +3067,6 @@ definition {
 	@description = "This ensures that a document stored in an asset library can be edited and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishEditedDocumentViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishEditedDocumentViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -3165,8 +3147,6 @@ definition {
 	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishEditedImageFromFolderViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishEditedImageFromFolderViaWidget";
 
 		JSONFolder.addFolder(
@@ -3257,8 +3237,6 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be edited and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishEditedImageViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishEditedImageViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -3339,8 +3317,6 @@ definition {
 	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishImageAfterChangingDepot {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageAfterChangingDepot";
 
 		JSONDepot.addDepot(
@@ -3450,8 +3426,6 @@ definition {
 	@description = "This ensures that the folders stored in an asset library can be changed and republished in DM widget when remote staging is enabled."
 	@priority = "4"
 	test CanPublishImageAfterChangingRootFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageAfterChangingRootFolder";
 
 		JSONFolder.addFolder(
@@ -3598,8 +3572,6 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be published in DM widget when remote staging is enabled."
 	@priority = "5"
 	test CanPublishImageViaWidget {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageViaWidget";
 
 		JSONDocument.addFileWithUploadedFile(

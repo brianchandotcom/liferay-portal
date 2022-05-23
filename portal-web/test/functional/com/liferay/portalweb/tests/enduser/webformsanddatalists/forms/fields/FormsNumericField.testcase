@@ -14,24 +14,24 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	// tearDown {
+	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+	// 	if ("${testPortalInstance}" == "true") {
+	// 		PortalInstances.tearDownCP();
+	// 	}
+	// 	else {
+	// 		Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
+	// 		ProductMenu.gotoPortlet(
+	// 			category = "Content & Data",
+	// 			portlet = "Forms");
 
-			FormsAdmin.teardownForms();
+	// 		FormsAdmin.teardownForms();
 
-			PagesAdmin.tearDownCP();
-		}
-	}
+	// 		PagesAdmin.tearDownCP();
+	// 	}
+	// }
 
 	@description = "This is a use case for LPS-75457, LPS-80246 and LPS-75393. Automate Numeric field with Decimal configurations."
 	@priority = "4"
@@ -1783,6 +1783,95 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132838 ValidationIsResetAfterChangingFieldType pending implementation
+
+	}
+
+	@description = "Verify if input mask on decimal with decimal separator is working on validation"
+	@priority = "4"
+	test InputMaskOnDecimalWithDecimalSeparatorIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		FormViewBuilder.checkSwitch(propertyName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1,00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1,00");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.00");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123.123");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1,00");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1,00");
+
+
 
 	}
 

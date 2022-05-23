@@ -42,6 +42,7 @@ const addPolicyEntryData = async ({firstName, lastName, price, product}) => {
 			name: `${firstName} ${lastName}`,
 			policyNumber: productId,
 			product,
+			r_applicationToPolicies_c_raylifeApplicationId: applicationId,
 		}),
 		method: 'POST',
 	});

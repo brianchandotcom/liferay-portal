@@ -306,7 +306,8 @@ public class SitesImpl implements Sites {
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
 				targetLayout.isHidden(), targetLayout.getFriendlyURLMap(),
 				layoutPrototypeLayout.isIconImage(), iconBytes,
-				layoutPrototypeLayout.getMasterLayoutPlid(), 0, serviceContext);
+				layoutPrototypeLayout.getMasterLayoutPlid(), 0, 0,
+				serviceContext);
 		}
 		finally {
 			if (originalLayoutPrototypeLinkEnabled == null) {

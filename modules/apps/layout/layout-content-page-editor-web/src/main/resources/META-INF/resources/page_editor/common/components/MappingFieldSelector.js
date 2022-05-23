@@ -39,7 +39,7 @@ export default function MappingFieldSelector({
 
 	return (
 		<ClayForm.Group
-			className={classNames('mt-3', {'has-warning': hasWarnings})}
+			className={classNames('mb-2 mt-3', {'has-warning': hasWarnings})}
 			small
 		>
 			<label htmlFor="mappingSelectorFieldSelect">

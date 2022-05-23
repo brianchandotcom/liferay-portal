@@ -23,7 +23,8 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -116,11 +117,13 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 				commerceOrderContentDisplayContext =
 					new CommerceOrderContentDisplayContext(
 						_commerceAddressService, _commerceChannelLocalService,
+						_commerceOrderHttpHelper,
 						_commerceOrderImporterTypeRegistry,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
 						_commerceOrderTypeService,
-						_commercePaymentMethodGroupRelService,
+						_commercePaymentMethodGroupRelLocalService,
+						_commercePaymentMethodRegistry,
 						_commerceShipmentItemService, _dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
@@ -211,8 +214,11 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
-	private CommercePaymentMethodGroupRelService
-		_commercePaymentMethodGroupRelService;
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

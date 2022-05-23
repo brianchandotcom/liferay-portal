@@ -17,9 +17,11 @@ package com.liferay.commerce.order.content.web.internal.portlet;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -106,11 +108,13 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 				commerceOrderContentDisplayContext =
 					new CommerceOrderContentDisplayContext(
 						_commerceAddressService, _commerceChannelLocalService,
+						_commerceOrderHttpHelper,
 						_commerceOrderImporterTypeRegistry,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
 						_commerceOrderTypeService,
-						_commercePaymentMethodGroupRelService,
+						_commercePaymentMethodGroupRelServiceService,
+						_commercePaymentMethodRegistry,
 						_commerceShipmentItemService, _dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
@@ -137,6 +141,9 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference
 	private CommerceOrderImporterTypeRegistry
 		_commerceOrderImporterTypeRegistry;
 
@@ -153,8 +160,11 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
-	private CommercePaymentMethodGroupRelService
-		_commercePaymentMethodGroupRelService;
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelServiceService;
+
+	@Reference
+	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

@@ -1003,6 +1003,51 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createCompareToDropdownItem() throws PortalException {
+		PortletURL viewFileEntryURL = _getRenderURL(
+			"/document_library/view_file_entry", _getRedirect());
+
+		return DropdownItemBuilder.putData(
+			"action", "compareTo"
+		).putData(
+			"selectFileVersionURL",
+			() -> {
+				PortletURL selectFileVersionURL = _getRenderURL(
+					"/document_library/select_file_version",
+					viewFileEntryURL.toString());
+
+				try {
+					selectFileVersionURL.setWindowState(
+						LiferayWindowState.POP_UP);
+				}
+				catch (WindowStateException windowStateException) {
+					throw new PortalException(windowStateException);
+				}
+
+				selectFileVersionURL.setParameter(
+					"version", _fileVersion.getVersion());
+
+				return selectFileVersionURL.toString();
+			}
+		).putData(
+			"compareVersionURL",
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/compare_versions", null)
+			).setBackURL(
+				_getCurrentURL()
+			).buildString()
+		).putData(
+			"namespace", _getNamespace()
+		).putData(
+			"jsNamespace", _getNamespace() + _fileVersion.getFileVersionId()
+		).putData(
+			"dialogTitle",
+			LanguageUtil.get(_httpServletRequest, "compare-versions")
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "compare-to")
+		).build();
+	}
+
 	public DropdownItem createDeleteDropdownItem() throws PortalException {
 		String cmd = null;
 
@@ -1362,6 +1407,11 @@ public class UIItemsBuilder {
 		}
 
 		return true;
+	}
+
+	public boolean isCompareToActionAvailable() {
+		return DocumentConversionUtil.isComparableVersion(
+			_fileVersion.getExtension());
 	}
 
 	public boolean isDeleteActionAvailable() throws PortalException {

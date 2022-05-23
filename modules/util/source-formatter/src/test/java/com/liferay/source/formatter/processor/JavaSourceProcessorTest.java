@@ -502,6 +502,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSizeIsZeroCheck() throws Exception {
+		test("SizeIsZero.testjava",
+			 "Use method '_testList.isEmpty()' instead",
+			 26);
+	}
+
+	@Test
 	public void testSortAnnotationParameters() throws Exception {
 		test("SortAnnotationParameters.testjava");
 	}

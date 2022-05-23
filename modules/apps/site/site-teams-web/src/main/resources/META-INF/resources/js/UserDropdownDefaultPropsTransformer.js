@@ -12,15 +12,20 @@
  * details.
  */
 
+import openConfirm from './openConfirm';
+
 const ACTIONS = {
 	deleteTeamUsers(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteTeamUsersURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, itemData.deleteTeamUsersURL);
+				}
+			},
+		});
 	},
 };
 

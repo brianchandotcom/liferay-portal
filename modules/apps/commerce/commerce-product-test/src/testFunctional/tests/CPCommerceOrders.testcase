@@ -238,14 +238,99 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "true"
+	@description = "COMMERCE-7983. A system admin can set order quantity to decimal."
 	@priority = "3"
 	test CanSetOrderQuantityToDecimal {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7983 CanSetOrderQuantityToDecimal Pending Implementation
+		task ("Given a minium site created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
 
+		task ("And an account associated with the site") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And a user with role Buyer") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And an order created by the user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the admin Orders page is reached by the admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("And the order detail page is opened") {
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+		}
+
+		task ("Then the admin can set a decimal quantity for the item via the opened order item's detail sidebar") {
+			CommerceOrders.editOrderItemDetails(
+				orderItemQuantity = "1.2",
+				orderItemSku = "MIN55861");
+		}
+
+		task ("And the right formatted quantity is displayed in the special column") {
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressZipCode = "Test Zip Code",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1.20",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"

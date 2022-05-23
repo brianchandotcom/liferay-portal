@@ -142,6 +142,7 @@ export default function InstanceIconConfiguration({
 					placeholder={Liferay.Language.get('search-icons')}
 					type="text"
 					value={searchQuery}
+					onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
 				/>
 			</label>
 

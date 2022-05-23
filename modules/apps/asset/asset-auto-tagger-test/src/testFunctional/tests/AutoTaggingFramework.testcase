@@ -313,4 +313,78 @@ definition {
 		AssetCategorization.viewNoTag(tagName = "carton");
 	}
 
+	@description = "This test asserts that Entry will not have its tags updated when updating the autotagging assets if auto tagging is enabled at instance scope but disabled at site scope."
+	@priority = "3"
+	test NoTagUpdatesAfterDiablingAutoTagsAtSiteLevel {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#NoTagUpdatesAfterDiablingAutoTagsAtSiteLevel";
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		AutoTagging.disableAutoTagging(
+			disableAutoTaggingFor = "Site Settings",
+			siteURLKey = "site-name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG",
+			updateAutoTags = "hidden");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewNoTagInfo(tagName = "carton,jersey");
+	}
+
+	@description = "This test asserts that Entry will not have its tags updated when updating the autotagging assets if auto tagging is disabled in Instance scope."
+	@priority = "3"
+	test NoTagUpdatesAfterDisablingAutoTagsAtInstanceLevel {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "AutoTaggingFramework#NoTagUpdatesAfterDisablingAutoTagsAtInstanceLevel";
+
+		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG",
+			updateAutoTags = "hidden");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewNoTagInfo(tagName = "carton,jersey");
+	}
+
 }

@@ -266,4 +266,161 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating an image."
+	@priority = "5"
+	test NoTagUpdatesForImageAfterDisablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForImageAfterDisablingUpdateAutoTags";
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG",
+			updateAutoTags = "disabled");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewTagInfo(tagName = "carton");
+
+		DMDocument.viewNoTagInfo(tagName = "jersey");
+	}
+
+	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a text document."
+	@priority = "5"
+	test NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		AutoTagging.viewUpdateAutoTagsSetting(
+			updateAutoTags = "disabled",
+			updateAutoTagsFor = "System Settings");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document TXT",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_4.txt");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document TXT",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AutoTagging.viewUpdateAutoTagsSetting(updateAutoTags = "disabled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Alice's Adventures in Wonderland.docx",
+			dmDocumentFileNameEdit = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document TXT");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document TXT",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT");
+
+		DMDocument.viewTagInfo(tagName = "herbert");
+
+		DMDocument.viewNoTagInfo(tagName = "adventures,alice");
+	}
+
+	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating an image."
+	@priority = "5"
+	test TagUpdatesForImageAfterEnablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForImageAfterEnablingUpdateAutoTags";
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AutoTagging.viewUpdateAutoTagsSetting();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewTagInfo(tagName = "carton,jersey");
+	}
+
+	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a text document."
+	@priority = "5"
+	test TagUpdatesForTextDMAfterEnablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForTextDMAfterEnablingUpdateAutoTags";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document TXT",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_4.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Alice's Adventures in Wonderland.docx",
+			dmDocumentFileNameEdit = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document TXT");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document TXT",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT");
+
+		DMDocument.viewTagInfo(tagName = "adventures,alice,herbert");
+	}
+
 }

@@ -130,7 +130,7 @@ export default function CollectionFilterConfigurationModal({
 							)}
 						>
 							<span className="mr-1">
-								{Liferay.Language.get('type')}:
+								{Liferay.Language.get('content-type')}:
 							</span>
 
 							{typeLabel}

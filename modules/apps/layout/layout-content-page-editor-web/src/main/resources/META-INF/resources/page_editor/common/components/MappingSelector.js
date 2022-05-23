@@ -182,7 +182,7 @@ export default function MappingSelectorWrapper({
 					)}
 				>
 					<span className="mr-1">
-						{Liferay.Language.get('type')}:
+						{Liferay.Language.get('content-type')}:
 					</span>
 
 					{collectionTypeLabels.itemType}
@@ -420,7 +420,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					)}
 				>
 					<span className="mr-1">
-						{Liferay.Language.get('type')}:
+						{Liferay.Language.get('content-type')}:
 					</span>
 
 					{typeLabel}

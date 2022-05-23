@@ -196,6 +196,34 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-146565. It asserts that an overridden language key filtered by 'Any Language' will still display all languages the key has translations for."
+	@priority = "3"
+	test CanSearchForLanguageKeyFilterByAnyLanguage {
+		task ("Given a new language key is created with three language override translations") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,fr-FR,es-ES",
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,El texto contiene error");
+		}
+
+		task ("When the user filters by 'Any Language' and searches for the new key") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
+
+			Search.searchCP(searchTerm = "text-contains-error");
+		}
+
+		task ("Then the key should appear and list all three languages it has translations for") {
+			AssertTextEquals(
+				key_languageKey = "text-contains-error",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "text-contains-error");
+
+			AssertTextEquals(
+				locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL",
+				value1 = "Languages With Override: es_ES, fr_FR, en_US");
+		}
+	}
+
 	@description = "This test asserts that searching for existing translations will yield accurate results."
 	@priority = "5"
 	test CanSearchForTranslations {

@@ -61,6 +61,14 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteEntry(long entryId) throws PortalException {
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(entryId);
+
+		super.deleteEntry(entryId);
+	}
+
+	@Override
 	public void deleteEntry(String className, long classPK)
 		throws PortalException {
 

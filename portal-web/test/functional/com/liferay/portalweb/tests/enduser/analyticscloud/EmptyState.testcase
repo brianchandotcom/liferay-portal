@@ -185,7 +185,7 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-10698 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
+	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
 	@ignore = "true"
 	@priority = "2"
 	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
@@ -248,7 +248,7 @@ definition {
 
 			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about forms.");
 
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about forms.");
 
 			SelectWindow(locator1 = "title=Forms — Liferay Learn");
 

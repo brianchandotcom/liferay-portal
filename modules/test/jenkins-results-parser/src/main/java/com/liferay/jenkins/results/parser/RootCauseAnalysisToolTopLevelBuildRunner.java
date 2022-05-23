@@ -651,7 +651,17 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return;
 		}
 
-		int retestAmountInt = Integer.parseInt(retestAmount);
+		int retestAmountInt = 0;
+
+		try {
+			retestAmountInt = Integer.parseInt(retestAmount);
+		}
+		catch (NumberFormatException numberFormatException) {
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					_NAME_BUILD_PARAMETER_RETEST_AMOUNT, " parameter value: \"",
+					retestAmount, "\" is not a number."));
+		}
 
 		int maxRetestAmount = _getMaxRetestAmount();
 

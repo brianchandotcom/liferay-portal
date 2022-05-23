@@ -1,0 +1,57 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property osgi.module.configuration.file.names = "com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-9323. The 'Checkout Requested Delivery Date' toggle is present and disabled"
+	@priority = "3"
+	test AssertCheckoutRequestDeliveryDateToggleIsPresentAndDisabled {
+        task ("When a channel's configuration page is reached") {
+            CommerceChannels.openChannelsAdmin();
+
+            CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+        }
+
+        task ("Then the 'Checkout Requested Delivery Date' toggle is present in the 'Orders' card") {
+            AssertElementPresent(
+                key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
+                locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+        }
+
+        task ("And the 'Checkout Requested Delivery Date' toggle is disabled by default") {
+            AssertNotChecked.assertNotCheckedNotVisible(
+                key_toggleSwitchLabel = "Requested Delivery Date at Checkout",
+                locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+        }
+    }
+
+}

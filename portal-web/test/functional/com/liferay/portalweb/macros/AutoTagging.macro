@@ -154,6 +154,50 @@ definition {
 			locator1 = "Message#INFO_SPECIFIC");
 	}
 
+	macro enableUpdateAutoTags {
+		if ("${enableUpdateAutoTagsFor}" == "System Settings") {
+			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
+
+			Click(
+				key_configurationName = "Asset Auto Tagging",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			FormFields.enableCheckbox(fieldName = "Update Auto Tags");
+		}
+		else if ("${enableUpdateAutoTagsFor}" == "Instance Settings") {
+			AutoTagging.openToAssetAutoTagging(configurationScope = "Instance Settings");
+
+			Click(
+				key_configurationName = "Asset Auto Tagging",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			FormFields.enableCheckbox(fieldName = "Update Auto Tags");
+		}
+		else if ("${enableUpdateAutoTagsFor}" == "Site Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings",
+				site = "${site}");
+
+			Click(
+				key_itemName = "Assets",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
+
+			Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro openToAssetAutoTagging {
 		var baseURL = PropsUtil.get("portal.url");
 
@@ -191,6 +235,32 @@ definition {
 		var baseURL = PropsUtil.get("portal.url");
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+	}
+
+	macro viewUpdateAutoTagsSetting {
+		if ("${updateAutoTagsFor}" == "System Settings") {
+			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
+
+			Click(
+				key_configurationName = "Asset Auto Tagging",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+		else {
+			Panel.expandPanel(panel = "Categorization");
+		}
+
+		if ("${updateAutoTags}" == "disabled") {
+			FormFields.viewCheckboxNotChecked(fieldName = "Update Auto Tags");
+		}
+		else if ("${updateAutoTags}" == "hidden") {
+			AssertElementNotPresent(
+				key_fieldName = "Update Auto Tags",
+				locator1 = "FormFields#CHECKBOX_LABEL");
+		}
+		else {
+			FormFields.viewCheckboxChecked(fieldName = "Update Auto Tags");
+		}
 	}
 
 }

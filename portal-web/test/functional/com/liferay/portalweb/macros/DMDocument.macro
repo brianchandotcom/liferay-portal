@@ -1628,6 +1628,22 @@ definition {
 			}
 		}
 
+		if (isSet(updateAutoTags)) {
+			Panel.expandPanel(panel = "Categorization");
+
+			if ("${updateAutoTags}" == "disabled") {
+				FormFields.disableCheckbox(fieldName = "Update Auto Tags");
+			}
+			else if ("${updateAutoTags}" == "hidden") {
+				AssertElementNotPresent(
+					key_fieldName = "Update Auto Tags",
+					locator1 = "FormFields#CHECKBOX_LABEL");
+			}
+			else {
+				FormFields.enableCheckbox(fieldName = "Update Auto Tags");
+			}
+		}
+
 		if (isSet(checkedOut)) {
 			Click(locator1 = "Button#SAVE");
 		}

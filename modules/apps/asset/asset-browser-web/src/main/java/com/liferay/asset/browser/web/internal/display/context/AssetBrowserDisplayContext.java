@@ -102,7 +102,7 @@ public class AssetBrowserDisplayContext {
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
 			long[] subtypeSelectionIds = ArrayUtil.filter(
-				new long[] {getSubtypeSelectionId()}, id -> id > 0);
+				new long[] {getSubtypeSelectionId()}, id -> id >= 0);
 
 			assetBrowserSearch.setResultsAndTotal(
 				() -> AssetEntryLocalServiceUtil.getEntries(

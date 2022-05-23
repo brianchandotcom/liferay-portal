@@ -1067,7 +1067,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		searchContext.setAttribute("status", statuses);
 
-		if (classTypeId > 0) {
+		if (classTypeId >= 0) {
 			searchContext.setClassTypeIds(new long[] {classTypeId});
 		}
 

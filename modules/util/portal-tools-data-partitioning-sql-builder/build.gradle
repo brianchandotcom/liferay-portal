@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
-	compileInclude group: "com.zaxxer", name: "HikariCP", version: "2.4.1"
+	compileInclude group: "com.zaxxer", name: "HikariCP", version: "4.0.3"
 
 	compileOnly fileTree(dir: "third-party", include: "*.jar")
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"

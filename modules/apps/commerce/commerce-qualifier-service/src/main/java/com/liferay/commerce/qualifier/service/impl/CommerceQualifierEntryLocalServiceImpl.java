@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.qualifier.service.impl;
 
+import com.liferay.commerce.qualifier.helper.CommerceQualifierHelper;
 import com.liferay.commerce.qualifier.metadata.CommerceQualifierMetadata;
 import com.liferay.commerce.qualifier.metadata.CommerceQualifierMetadataRegistry;
 import com.liferay.commerce.qualifier.model.CommerceQualifierEntry;
 import com.liferay.commerce.qualifier.model.CommerceQualifierEntryTable;
 import com.liferay.commerce.qualifier.search.context.CommerceQualifierSearchContext;
 import com.liferay.commerce.qualifier.service.base.CommerceQualifierEntryLocalServiceBaseImpl;
-import com.liferay.commerce.qualifier.util.CommerceQualifierUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -455,7 +455,7 @@ public class CommerceQualifierEntryLocalServiceImpl
 
 		for (String allowedTargetClassName : allowedTargetClassNames) {
 			CommerceQualifierEntryTable tableAlias =
-				CommerceQualifierUtil.getCommerceQualifierTableAlias(
+				_commerceQualifierHelper.getCommerceQualifierTableAlias(
 					sourceCommerceQualifierMetadata.getModelClassName(),
 					allowedTargetClassName);
 
@@ -591,6 +591,9 @@ public class CommerceQualifierEntryLocalServiceImpl
 			primaryKeyColumn.isNull()
 		).withParentheses();
 	}
+
+	@Reference
+	private CommerceQualifierHelper _commerceQualifierHelper;
 
 	@Reference
 	private CommerceQualifierMetadataRegistry

@@ -60,6 +60,10 @@ public interface FragmentEntryConfigurationParser {
 		String value);
 
 	public Object getFieldValue(
+		String editableValues,
+		FragmentConfigurationField fragmentConfigurationField, Locale locale);
+
+	public Object getFieldValue(
 		String configuration, String editableValues, Locale locale,
 		String name);
 

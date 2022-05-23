@@ -680,7 +680,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			draftLayout.getType(), draftLayout.isHidden(),
 			draftLayout.getFriendlyURLMap(), draftLayout.getIconImage(), null,
 			draftLayout.getMasterLayoutPlid(),
-			draftLayout.getStyleBookEntryId(), serviceContext);
+			draftLayout.getStyleBookEntryId(),
+			draftLayout.getFaviconFileEntryId(), serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -692,7 +693,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layout.getRobotsMap(), layout.getType(), layout.isHidden(),
 			layout.getFriendlyURLMap(), layout.getIconImage(), null,
 			layout.getMasterLayoutPlid(), layout.getStyleBookEntryId(),
-			serviceContext);
+			layout.getFaviconFileEntryId(), serviceContext);
 
 		return layoutPageTemplateEntry;
 	}

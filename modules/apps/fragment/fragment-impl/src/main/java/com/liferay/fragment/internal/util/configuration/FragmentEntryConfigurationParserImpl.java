@@ -122,20 +122,6 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #getConfigurationJSONObject(String, String, Locale)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getConfigurationJSONObject(
-			String configuration, String editableValues)
-		throws JSONException {
-
-		return getConfigurationJSONObject(
-			configuration, editableValues, LocaleUtil.getMostRelevantLocale());
-	}
-
 	@Override
 	public JSONObject getConfigurationJSONObject(
 			String configuration, String editableValues, Locale locale)
@@ -387,20 +373,6 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #getFieldValue(String, String, Locale, String)}
-	 */
-	@Deprecated
-	@Override
-	public Object getFieldValue(
-		String configuration, String editableValues, String name) {
-
-		return getFieldValue(
-			configuration, editableValues, LocaleUtil.getMostRelevantLocale(),
-			name);
 	}
 
 	@Override

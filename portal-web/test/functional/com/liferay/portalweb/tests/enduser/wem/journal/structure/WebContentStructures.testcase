@@ -29,97 +29,115 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-77387."
+	@description = "This is a use case for LPS-77387. Add a structure when URL has locale."
 	@priority = "4"
-	test AddStructureViaLocaleURL {
-		property test.name.skip.portal.instance = "WebContentStructures#AddStructureViaLocaleURL";
+	test AddStructureWhenURLHasLocale {
+		task ("Given a Web Content admin inserts locale to URL") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		var portalURL = PropsUtil.get("portal.url");
+			Navigator.openSpecificURL(url = "${portalURL}/en/");
 
-		Navigator.openSpecificURL(url = "${portalURL}/en/");
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("When the Web Content admin adds a new structure") {
+			LexiconEntry.gotoAdd();
 
-		NavItem.gotoStructures();
+			WaitForElementPresent(locator1 = "Sidebar#FORM_BUILDER");
 
-		LexiconEntry.gotoAdd();
+			Navigator.ensureLocaleURL(locale = "en");
 
-		Pause(locator1 = "3000");
+			WebContentStructures.addName(structureName = "WC Structure Name");
 
-		Navigator.ensureLocaleURL(locale = "en");
+			Navigator.gotoSidebarTab(tabName = "Properties");
 
-		WebContentStructures.addName(structureName = "WC Structure Name");
+			PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
 
-		Navigator.gotoSidebarTab(tabName = "Properties");
+			SelectFrame(value1 = "relative=top");
 
-		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		SelectFrame(value1 = "relative=top");
+			WebContentStructures.saveCP();
+		}
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		task ("Then the Web Content admin should see only one structure created") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		AssertElementNotPresent(
-			key_ddlDataDefinitionName = "WC Structure Name",
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
+			AssertElementNotPresent(
+				key_ddlDataDefinitionName = "WC Structure Name",
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
+		}
 	}
 
-	@description = "This is a use case for LPS-82208 and LPS-89641."
+	@description = "This is a use case for LPS-82208 and LPS-89641. The user can not delete a strcuture that is used as reference on a Display Page Template."
 	@priority = "5"
 	test CannotDeleteStructureReferencedByDisplayPage {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Given a Web Content admin has a structure referenced by a display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(
-			contentType = "Web Content Article",
-			displayPageName = "Display Page Name",
-			subType = "WC Structure Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "WC Structure Name");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("When the Web Content admin tries to delete the structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentStructures.deleteCP(
-			structureName = "WC Structure Name",
-			webContentHasReference = "true");
+			WebContentStructures.deleteCP(
+				structureName = "WC Structure Name",
+				webContentHasReference = "true");
+		}
 
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		task ("Then the Web Content admin should see an error message") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:The structure cannot be deleted because it is required by one or more structure links.");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy",
-			rowEntry = "WC Structure Name");
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+		}
 
-		PortletEntry.inputName(name = "WC Structure Name Copy");
+		task ("When the Web Content admin makes a copy of new structure") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Copy",
+				rowEntry = "WC Structure Name");
 
-		AssertClick(
-			locator1 = "Button#COPY",
-			value1 = "Copy");
+			PortletEntry.inputName(name = "WC Structure Name Copy");
 
-		LexiconEntry.viewEntryName(rowEntry = "WC Structure Name");
+			AssertClick(
+				locator1 = "Button#COPY",
+				value1 = "Copy");
+		}
 
-		LexiconEntry.viewEntryName(rowEntry = "WC Structure Name Copy");
+		task ("Then the Web Content admin should see both structures") {
+			LexiconEntry.viewEntryName(rowEntry = "WC Structure Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "WC Structure Name Copy");
+		}
 	}
 
 	@description = "This is a use case for LPS-126248. Edit field reference of field options in structure editor."
@@ -206,51 +224,48 @@ definition {
 		}
 	}
 
+	@description = "The user can edit the default values for a structure with fieldsets"
 	@priority = "4"
-	test EditStructureDefaultValuesForFieldsets {
-		property testray.component.names = "Web Content Administration";
+	test EditStructureDefaultValuesBasedOnFieldset {
+		task ("Given a Web Content admin has a structure based on a fieldset") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure 1");
 
-		NavItem.gotoStructures();
+			DataEngine.addFields(fieldNameList = "Text,Rich Text,Image,Upload");
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure 1");
+			WebContentStructures.saveCP();
 
-		DataEngine.addFields(fieldNameList = "Text,Rich Text,Image,Upload");
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure 2");
 
-		WebContentStructures.saveCP(structureName = "WC Structure 1");
+			DataEngine.addFieldsetToBuilder(fieldsetName = "WC Structure 1");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			DataEngine.addField(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric");
 
-		NavItem.gotoStructures();
+			WebContentStructures.saveCP();
+		}
 
-		LexiconEntry.gotoAdd();
+		task ("When the Web Content admin defines the default values of structure") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure 2");
 
-		WebContentStructures.addName(structureName = "WC Structure 2");
+			WebContent.addWithStructureCP(webContentText = "Edited Text Field");
 
-		Navigator.gotoSidebarTab(tabName = "Properties");
+			PortletEntry.save();
+		}
 
-		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
+		task ("Then the default values of structure should be persisted") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure 2");
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "WC Structure 1");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		WebContentStructures.saveCP(structureName = "WC Structure 1");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure 2");
-
-		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
-
-		PortletEntry.save();
+			WebContent.viewWithStructureCP(
+				predefinedValue = "true",
+				webContentText = "Edited Text Field");
+		}
 	}
 
 	@description = "This is a use case for LRQA-61632 and LPS-76981. Can select different type pages in Link to Page field."
@@ -605,48 +620,52 @@ definition {
 		}
 	}
 
+	@description = "Validate global structure and template."
 	@priority = "4"
-	test ValidateDDMNavigation {
-		property test.name.skip.portal.instance = "WebContentStructures#ValidateDDMNavigation";
-		property testray.component.names = "Web Content Administration";
+	test ValidateGlobalTemplatesForBasicWebContent {
+		task ("Given a Web Content admin has a new template for Basic Web Content in global site") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "global");
 
-		SearchAdministration.executeReindex();
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Basic Web Content");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+			WebContentTemplates.addCP(
+				templateDescription = "Global WC Template Description",
+				templateName = "Global WC Template");
 
-		NavItem.gotoStructures();
+			WebContentTemplates.gotoTemplateEllipsisItem(
+				item = "Edit",
+				templateName = "Global WC Template");
 
-		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Basic Web Content");
+			Navigator.gotoBack();
+		}
 
-		WebContentTemplates.addCP(
-			templateDescription = "Test WC Template Description",
-			templateName = "Test WC Template");
+		task ("When the Web Content admin changes the display style to table") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		}
 
-		WebContentTemplates.gotoTemplateEllipsisItem(
-			item = "Edit",
-			templateName = "Test WC Template");
+		task ("Then the templates are shown as table entry") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Templates for Structure: Basic Web Content");
 
-		Navigator.gotoBack();
+			WebContentTemplates.viewTableEntryCP(
+				templateDescription = "Global WC Template Description",
+				templateName = "Global WC Template");
 
-		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: Basic Web Content");
+			WebContentTemplates.viewTableEntryCP(
+				templateDescription = "",
+				templateName = "Basic Web Content");
+		}
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		task ("When the Web Content admin navigates to Structures tab") {
+			NavItem.gotoStructures();
+		}
 
-		WebContentTemplates.viewTableEntryCP(
-			templateDescription = "Test WC Template Description",
-			templateName = "Test WC Template");
+		task ("Then the Web Content admin should see the Basic Web Content structure") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content");
 
-		WebContentTemplates.viewTableEntryCP(
-			templateDescription = "",
-			templateName = "Basic Web Content");
-
-		NavItem.gotoStructures();
-
-		SiteAdmin.viewPortletTitle(portletTitle = "Web Content");
-
-		WebContentStructures.viewTableEntryCP(
-			structureDescription = "Basic Web Content",
-			structureName = "Basic Web Content");
+			WebContentStructures.viewTableEntryCP(
+				structureDescription = "Basic Web Content",
+				structureName = "Basic Web Content");
+		}
 	}
 
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Structure with all possible fields."
@@ -704,49 +723,50 @@ definition {
 		}
 	}
 
+	@description = "The user can add a favorite structure in web content admin."
 	@priority = "4"
-	test ViewFavoriteStructure {
-		property testray.component.names = "Web Content Administration";
+	test ViewFavoriteStructureInWebContentAdmin {
+		task ("Given a Web Content admin has multiple structures") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			for (var n : list "1,2,3,4,5,6,7") {
+				WebContentStructures.addCP(structureName = "WC Structure Name ${n}");
 
-		NavItem.gotoStructures();
+				DataEngine.addField(
+					fieldFieldLabel = "Text",
+					fieldName = "Text");
 
-		var n = "0";
-
-		while ("${n}" != "15") {
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name ${n}");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP(structureName = "${structureName}");
-
-			var n = ${n} + 1;
+				WebContentStructures.saveCP();
+			}
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("When the Web Content admin navigates to more modal via plus icon in web content admin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 17");
-
-		for (var structureName : list "Basic Web Content,WC Structure Name 0,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9,WC Structure Name 10,WC Structure Name 11,WC Structure Name 12,WC Structure Name 13,WC Structure Name 14") {
-			WebContentStructures.viewStructuresViaMoreIFrame(structureName = "${structureName}");
+			WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 9");
 		}
 
-		WebContentStructures.viewNoFavoriteStructure();
+		task ("Then the Web Content admin should see the structures in more modal") {
+			for (var structureName : list "Basic Web Content,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7") {
+				WebContentStructures.viewStructuresViaMoreIFrame(structureName = "${structureName}");
+			}
 
-		WebContentStructures.addFavoriteStructure(structureName = "WC Structure Name 9");
+			WebContentStructures.viewNoFavoriteStructure();
+		}
 
-		WebContentStructures.viewFavoriteStructureViaIFrame(
-			indexNumber = "1",
-			structureName = "WC Structure Name 9");
+		task ("When the Web Content admin adds a structure to favorties") {
+			WebContentStructures.addFavoriteStructure(structureName = "WC Structure Name 5");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Then the Web Content admin should see the favorite structure in more modal and plus icon in web content admin") {
+			WebContentStructures.viewFavoriteStructureViaIFrame(
+				indexNumber = "1",
+				structureName = "WC Structure Name 5");
 
-		WebContentStructures.viewFavoriteStructureViaPlusButton(structureName = "WC Structure Name 9");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentStructures.viewFavoriteStructureViaPlusButton(structureName = "WC Structure Name 5");
+		}
 	}
 
 }

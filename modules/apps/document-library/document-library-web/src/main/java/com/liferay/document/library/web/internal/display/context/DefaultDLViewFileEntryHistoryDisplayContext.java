@@ -74,6 +74,9 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 					).add(
 						_uiItemsBuilder::isViewVersionActionAvailable,
 						_uiItemsBuilder.createViewVersionDropdownItem()
+					).add(
+						_uiItemsBuilder::isRevertToVersionActionAvailable,
+						_uiItemsBuilder.createRevertVersionDropdownItem()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

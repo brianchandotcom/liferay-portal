@@ -1215,6 +1215,24 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createRevertVersionDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.REVERT,
+					_getRenderURL(
+						"/document_library/view_file_entry", _getRedirect()
+					).toString())
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "revert")
+		).build();
+	}
+
 	public DropdownItem createViewOriginalFileDropdownItem() {
 		if (_fileShortcut == null) {
 			return null;
@@ -1451,6 +1469,24 @@ public class UIItemsBuilder {
 		String portletName = portletDisplay.getPortletName();
 
 		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isRevertToVersionActionAvailable() throws PortalException {
+		if ((_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
+			!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
+
+			return false;
+		}
+
+		FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
+
+		String latestFileVersionVersion = latestFileVersion.getVersion();
+
+		if (latestFileVersionVersion.equals(_fileVersion.getVersion())) {
 			return false;
 		}
 

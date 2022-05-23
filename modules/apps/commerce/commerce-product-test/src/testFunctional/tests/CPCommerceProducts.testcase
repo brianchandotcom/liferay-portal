@@ -457,7 +457,7 @@ definition {
 			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 		Click(
-			key_optionValue = "Convert To Draft",
+			key_optionValue = "Convert to Draft",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
 		Click(locator1 = "Button#OK");

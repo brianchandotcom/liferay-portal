@@ -126,7 +126,7 @@ definition {
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 			AssertElementNotPresent(
-				key_optionValue = "Convert To Draft",
+				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 		}
 		else {
@@ -139,7 +139,7 @@ definition {
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 			Click(
-				key_optionValue = "Convert To Draft",
+				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
 			Click(locator1 = "Button#CANCEL");
@@ -149,7 +149,7 @@ definition {
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 
 			Click(
-				key_optionValue = "Convert To Draft",
+				key_optionValue = "Convert to Draft",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
 			AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_CONVERT_TO_DRAFT_MODAL_MESSAGE");

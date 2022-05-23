@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>VALIDATE_CONVERT_TO_DRAFT_MODAL_MESSAGE</td>
-	<td>//div[@class='liferay-modal-body'][contains(text(),'Converting the product status to Draft will remove the product from the product catalog. Do you wish to proceed?')]</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'Converting the product status to draft will remove the product from the product catalog. Do you wish to proceed?')]</td>
 	<td></td>
 </tr>
 </tbody>

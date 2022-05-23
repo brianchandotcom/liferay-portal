@@ -622,4 +622,14 @@ definition {
 		}
 	}
 
+	macro viewAssetsTranslatedVersion {
+		ContentDashboard.openInfoPanelByDropdownMenu();
+
+		Panel.expandPanel(panel = "Details");
+
+		ClickNoError(
+			key_language = "${language}",
+			locator1 = "ContentDashboard#VIEW_TRANSLATED_ASSET_ICON");
+	}
+
 }

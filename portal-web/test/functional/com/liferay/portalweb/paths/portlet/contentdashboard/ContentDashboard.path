@@ -435,6 +435,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_TRANSLATED_ASSET_ICON</td>
+	<td>//div[contains(@class,'sidebar-section')] //div[contains(.,'${key_language}')] //div[a]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>X_AXIS_CATEGORIES_NAME</td>
 	<td>(//*[contains(@class, 'xAxis')] //*[contains(@class,'recharts-text')]/*)[${categoryIndex}]</td>
 	<td></td>

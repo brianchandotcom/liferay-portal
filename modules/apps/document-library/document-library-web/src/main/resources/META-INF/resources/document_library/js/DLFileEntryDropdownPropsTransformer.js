@@ -60,6 +60,16 @@ const ACTIONS = {
 		}
 	},
 
+	deleteVersion({deleteURL}) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(document.hrefFm, deleteURL);
+		}
+	},
+
 	editImage({fileEntryId, imageURL}, portletNamespace) {
 		window[`${portletNamespace}editWithImageEditor`]({
 			fileEntryId,

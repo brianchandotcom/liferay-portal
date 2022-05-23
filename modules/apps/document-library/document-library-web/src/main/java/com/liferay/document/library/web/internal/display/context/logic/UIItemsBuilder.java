@@ -1038,6 +1038,29 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createDeleteVersionDropdownItem() {
+		return DropdownItemBuilder.putData(
+			"action", "deleteVersion"
+		).putData(
+			"deleteURL",
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.DELETE,
+					_getRenderURL(
+						"/document_library/view_file_entry", _getRedirect()
+					).toString())
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString()
+		).setIcon(
+			"trash"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "delete")
+		).build();
+	}
+
 	public DropdownItem createDownloadDropdownItem() {
 		boolean appendVersion = true;
 
@@ -1316,6 +1339,25 @@ public class UIItemsBuilder {
 		}
 
 		return false;
+	}
+
+	public boolean isDeleteVersionActionAvailable() throws PortalException {
+		if ((_fileEntry == null) ||
+			(_fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
+			!_fileEntryDisplayContextHelper.hasDeletePermission() ||
+			!(_fileEntry.getModel() instanceof DLFileEntry)) {
+
+			return false;
+		}
+
+		int fileVersionsCount = _fileEntry.getFileVersionsCount(
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (fileVersionsCount <= 1) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isDownloadActionAvailable() throws PortalException {

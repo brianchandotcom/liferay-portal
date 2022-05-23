@@ -41,4 +41,49 @@ definition {
         }
     }
 
+	@description = "COMMERCE-9316. User can edit a Delivery Term"
+	@priority = "3"
+	test CanEditDeliveryTerm {
+		task ("Given the Sales Manager navigates to the Terms and Conditions page") {
+            CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+        }
+
+        task ("When the Sales Manager navigates to that entry details page") {
+            CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "0.0");
+
+            CommercePaymentTerms.openTermsAndConditionAdmin();
+        }
+		
+		task ("And the Sales Manager edit the fields on the page") {
+			CommercePaymentTerms.gotoEntryMenuItem(
+				termsAndConditionName = "Terms and Condition Entry",
+				menuItem = "Edit");
+
+			CommercePaymentTerms.editTermsAndCondition(
+				termsAndConditionName = "Edited Terms and Condition Entry",
+				valuePosition = "1.0");
+		}
+		
+		task ("But the Type field cannot be edited") {
+			AssertElementPresent(
+				locator1 = "CommerceEntry#VIEW_DISABLED_ENTRY",
+				key_entryName = "Type");
+		}
+
+		task ("Then the fields are successfully updated") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.viewTermsAndConditionEntry(
+				termsAndConditionActiveStatus = "No",
+				termsAndConditionName = "Edited Terms and Condition Entry",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "1");
+		}
+	}
+
 }

@@ -1266,6 +1266,12 @@ definition {
 		}
 	}
 
+	macro deleteDocumentLibraryFolder {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.delete("${liferayHome}/data/document_library");
+	}
+
 	macro deletePG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
@@ -1294,6 +1300,12 @@ definition {
 		AssertElementNotPresent(
 			key_mgDocumentTitle = "${mgDocumentTitle}",
 			locator1 = "MediaGallery#IMAGE_TITLE");
+	}
+
+	macro deleteTempFolder {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.delete("${liferayHome}/${appServer}/temp");
 	}
 
 	macro deleteVersion {

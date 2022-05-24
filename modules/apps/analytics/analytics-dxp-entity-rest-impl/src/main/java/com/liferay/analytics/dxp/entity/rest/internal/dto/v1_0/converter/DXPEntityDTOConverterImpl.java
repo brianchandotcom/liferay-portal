@@ -358,13 +358,17 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 		DXPEntity dxpEntity = new DXPEntity();
 
-		if (ArrayUtil.isNotEmpty(expandoFields)) {
-			dxpEntity.setExpandoFields(expandoFields);
+		if (expandoFields == null) {
+			expandoFields = new ExpandoField[0];
 		}
 
-		if (ArrayUtil.isNotEmpty(fields)) {
-			dxpEntity.setFields(fields);
+		dxpEntity.setExpandoFields(expandoFields);
+
+		if (fields == null) {
+			fields = new Field[0];
 		}
+
+		dxpEntity.setFields(fields);
 
 		dxpEntity.setId(id);
 		dxpEntity.setModifiedDate(modifiedDate);

@@ -432,6 +432,14 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet");
 	}
 
+	macro selectOrderFromAccountSelector {
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(
+			key_entryName = "${orderId}",
+			locator1 = "CommerceEntry#SEARCH_ORDER_ID_RESULT");
+	}
+	
 	macro viewOrdersDetails {
 		AssertElementPresent(
 			key_productSku = "${productSku}",

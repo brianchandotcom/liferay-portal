@@ -141,10 +141,8 @@
 	<classpathentry kind="lib" path="lib/portal/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxb-runtime.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxen.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jaxrs-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxws-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcl-over-slf4j.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jersey-common.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-json.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-proxetta.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-util.jar"/>

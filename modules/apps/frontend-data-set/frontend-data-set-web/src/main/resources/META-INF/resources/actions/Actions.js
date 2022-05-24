@@ -20,6 +20,7 @@ import FrontendDataSetContext from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import {formatActionURL} from '../utils/index';
 import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
+import openConfirm from '../utils/openConfirm';
 import ViewsContext from '../views/ViewsContext';
 import ActionsDropdown from './ActionsDropdown';
 import QuickActions from './QuickActions';
@@ -83,69 +84,72 @@ export function handleAction(
 		toggleItemInlineEdit,
 	}
 ) {
-	if (confirmationMessage && !confirm(confirmationMessage)) {
-		return;
-	}
+	openConfirm({
+		message: confirmationMessage,
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				if (target?.includes('modal')) {
+					event.preventDefault();
 
-	if (target?.includes('modal')) {
-		event.preventDefault();
+					if (target === MODAL_PERMISSIONS) {
+						openPermissionsModal(url);
+					}
+					else {
+						openModal({
+							size: resolveModalSize(target),
+							title,
+							url,
+						});
+					}
+				}
+				else if (target === 'sidePanel') {
+					event.preventDefault();
 
-		if (target === MODAL_PERMISSIONS) {
-			openPermissionsModal(url);
-		}
-		else {
-			openModal({
-				size: resolveModalSize(target),
-				title,
-				url,
-			});
-		}
-	}
-	else if (target === 'sidePanel') {
-		event.preventDefault();
+					highlightItems([itemId]);
+					openSidePanel({
+						size: size || 'lg',
+						title,
+						url,
+					});
+				}
+				else if (target === 'async' || target === 'headless') {
+					event.preventDefault();
 
-		highlightItems([itemId]);
-		openSidePanel({
-			size: size || 'lg',
-			title,
-			url,
-		});
-	}
-	else if (target === 'async' || target === 'headless') {
-		event.preventDefault();
+					setLoading(true);
+					executeAsyncItemAction(url, method)
+						.then(() => {
+							openToast({
+								message:
+									successMessage ||
+									Liferay.Language.get('action-completed'),
+								type: 'success',
+							});
+							setLoading(false);
+						})
+						.catch((_) => {
+							setLoading(false);
+						});
+				}
+				else if (target === 'inlineEdit') {
+					event.preventDefault();
 
-		setLoading(true);
-		executeAsyncItemAction(url, method)
-			.then(() => {
-				openToast({
-					message:
-						successMessage ||
-						Liferay.Language.get('action-completed'),
-					type: 'success',
-				});
-				setLoading(false);
-			})
-			.catch((_) => {
-				setLoading(false);
-			});
-	}
-	else if (target === 'inlineEdit') {
-		event.preventDefault();
+					toggleItemInlineEdit(itemId);
+				}
+				else if (target === 'blank') {
+					event.preventDefault();
 
-		toggleItemInlineEdit(itemId);
-	}
-	else if (target === 'blank') {
-		event.preventDefault();
+					window.open(url);
+				}
+				else if (onClick) {
+					event.preventDefault();
 
-		window.open(url);
-	}
-	else if (onClick) {
-		event.preventDefault();
-
-		event.target.setAttribute('onClick', onClick);
-		event.target.onclick();
-		event.target.removeAttribute('onClick');
-	}
+					event.target.setAttribute('onClick', onClick);
+					event.target.onclick();
+					event.target.removeAttribute('onClick');
+				}
+			}
+		},
+	});
 }
 function Actions({actions, itemData, itemId}) {
 	const context = useContext(FrontendDataSetContext);

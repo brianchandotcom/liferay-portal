@@ -595,6 +595,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ELIGIBILITY_ENTRY</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div[@class='dnd-td'][contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_CELL_BY_COLUMN_ORDER</td>
 	<td>//div[contains(@class,'title')]//*[text()='${key_entryName}']/../../../div[@class='dnd-td'][${key_columnNumber}]</td>
 	<td></td>

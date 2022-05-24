@@ -14,7 +14,6 @@
 
 package com.liferay.portal.company.log.internal.servlet;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -91,13 +91,13 @@ public class CompanyLogServlet extends HttpServlet {
 					pathArray);
 			}
 		}
-		catch (NoSuchFileEntryException noSuchFileEntryException) {
+		catch (FileNotFoundException fileNotFoundException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchFileEntryException);
+				_log.warn(fileNotFoundException);
 			}
 
 			_portal.sendError(
-				HttpServletResponse.SC_NOT_FOUND, noSuchFileEntryException,
+				HttpServletResponse.SC_NOT_FOUND, fileNotFoundException,
 				httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
@@ -156,7 +156,7 @@ public class CompanyLogServlet extends HttpServlet {
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 		else {
-			throw new NoSuchFileEntryException();
+			throw new FileNotFoundException();
 		}
 	}
 

@@ -33,52 +33,52 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 Map data = editAssetListDisplayContext.getData();
 %>
 
-
 <c:if test='<%= !(boolean)data.get("isSegmentationEnabled") %>'>
 	<clay:stripe
 		displayType="warning"
-		elementClasses="segmentation-is-disabled-warning"
-		message="segmentation-is-disabled.to-enable,-go-to-system-settings-segments-segments-service"
-		title="Warning"
-	/>
+	>
+		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-can-not-be-displayed-because-segmentation-is-disabled") %></strong>
+
+		<span><%= LanguageUtil.get(request, "to-enable-segmentation-go-to-system-settings-segments-segments-service") %></span>
+	</clay:stripe>
 </c:if>
 
-	<clay:container-fluid
-		cssClass="container-view"
-	>
+<clay:container-fluid
+	cssClass="container-view"
+>
 
-		<%
-		AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-		%>
+	<%
+	AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
+	%>
 
-		<clay:row>
-			<clay:col
-				lg="3"
-			>
-				<div>
-					<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+	<clay:row>
+		<clay:col
+			lg="3"
+		>
+			<div>
+				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
-					<react:component
-						module="js/components/VariationsNav/index"
-						props="<%= editAssetListDisplayContext.getData() %>"
-					/>
-				</div>
-			</clay:col>
+				<react:component
+					module="js/components/VariationsNav/index"
+					props="<%= editAssetListDisplayContext.getData() %>"
+				/>
+			</div>
+		</clay:col>
 
-			<clay:col
-				lg="9"
-			>
-				<c:choose>
-					<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
-						<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
-					</c:when>
-					<c:otherwise>
-						<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
-					</c:otherwise>
-				</c:choose>
-			</clay:col>
-		</clay:row>
-	</clay:container-fluid>
+		<clay:col
+			lg="9"
+		>
+			<c:choose>
+				<c:when test="<%= assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC %>">
+					<liferay-util:include page="/edit_asset_list_entry_dynamic.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/edit_asset_list_entry_manual.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
+		</clay:col>
+	</clay:row>
+</clay:container-fluid>
 
 <script>
 	<portlet:actionURL name="/asset_list/add_asset_list_entry_variation" var="addAssetListEntryVariationURL">

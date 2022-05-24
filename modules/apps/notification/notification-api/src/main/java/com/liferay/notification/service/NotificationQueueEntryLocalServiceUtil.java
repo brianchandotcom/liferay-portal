@@ -334,10 +334,10 @@ public class NotificationQueueEntryLocalServiceUtil {
 	}
 
 	public static NotificationQueueEntry updateSent(
-			long commerceNotificationQueueEntryId, boolean sent)
+			long notificationQueueEntryId, boolean sent)
 		throws PortalException {
 
-		return getService().updateSent(commerceNotificationQueueEntryId, sent);
+		return getService().updateSent(notificationQueueEntryId, sent);
 	}
 
 	public static NotificationQueueEntryLocalService getService() {

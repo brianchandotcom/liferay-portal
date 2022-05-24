@@ -381,11 +381,11 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.notification.model.NotificationQueueEntry updateSent(
-			long commerceNotificationQueueEntryId, boolean sent)
+			long notificationQueueEntryId, boolean sent)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.updateSent(
-			commerceNotificationQueueEntryId, sent);
+			notificationQueueEntryId, sent);
 	}
 
 	@Override

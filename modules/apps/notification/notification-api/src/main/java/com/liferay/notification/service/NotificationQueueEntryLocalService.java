@@ -292,7 +292,7 @@ public interface NotificationQueueEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationQueueEntry updateSent(
-			long commerceNotificationQueueEntryId, boolean sent)
+			long notificationQueueEntryId, boolean sent)
 		throws PortalException;
 
 }

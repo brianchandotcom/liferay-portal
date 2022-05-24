@@ -324,7 +324,9 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 				onValueSelect={(event) =>
 					onValueSelect(
 						FIELD_ID_CONFIGURATION_KEY,
-						event.target.value
+						event.target.value === 'unmapped'
+							? null
+							: event.target.value
 					)
 				}
 				value={configurationValues[FIELD_ID_CONFIGURATION_KEY] || ''}

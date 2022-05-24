@@ -306,4 +306,95 @@ definition {
 		return "${skuId}";
 	}
 
+	macro _updateCommerceProduct {
+		Variables.assertDefined(parameterList = "${productName}");
+
+		var baseURL = "${baseURL}";
+		var cpDefinitionId = CommerceJSONProductsAPI._getCPDefinitionId(productName = "${productName}");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(neverExpire))) {
+			var neverExpire = "true";
+		}
+
+		if (!(isSet(newFriendlyURL))) {
+			var newFriendlyURL = "";
+		}
+
+		if (!(isSet(newFullDescription))) {
+			var newFullDescription = "";
+		}
+
+		if (!(isSet(newMetaDescription))) {
+			var newMetaDescription = "";
+		}
+
+		if (!(isSet(newMetaKeyword))) {
+			var newMetaKeyword = "";
+		}
+
+		if (!(isSet(newMetaTitle))) {
+			var newMetaTitle = "";
+		}
+
+		if (!(isSet(newProductName))) {
+			var newProductName = "${productName}";
+		}
+
+		if (!(isSet(newShortDescription))) {
+			var newShortDescription = "";
+		}
+
+		if (!(isSet(published))) {
+			var published = "true";
+		}
+
+		var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
+		var displayDateHour = DateUtil.getFormattedCurrentDate("H");
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var expirationDateMinute = DateUtil.getFormattedCurrentDate("m");
+		var expirationDateHour = DateUtil.getFormattedCurrentDate("H");
+		var expirationDateDay = DateUtil.getCurrentDate();
+		var expirationDateYear = DateUtil.getCurrentYear();
+		var expirationDateMonth = DateUtil.getCurrentMonth();
+
+		if (isSet(increaseMinutes)) {
+			var expirationDateMinute = ${expirationDateMinute} + ${increaseMinutes};
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/commerce.cpdefinition/update-cp-definition \
+				-u test@liferay.com:test \
+				-d cpDefinitionId=${cpDefinitionId} \
+				-d nameMap={"en_US":"${newProductName}"} \
+				-d shortDescriptionMap={"en_US":"${newShortDescription}"} \
+				-d descriptionMap={"en_US":"${newFullDescription}"} \
+				-d urlTitleMap={"en_US":"${newFriendlyURL}"} \
+				-d metaTitleMap={"en_US":"${newMetaTitle}"} \
+				-d metaDescriptionMap={"en_US":"${newMetaDescription}"} \
+				-d metaKeywordsMap={"en_US":"${newMetaKeyword}"} \
+				-d ignoreSKUCombinations=true \
+				-d ddmStructureKey='' \
+				-d published=${published} \
+				-d displayDateMonth=${displayDateMonth} \
+				-d displayDateDay=${displayDateDay} \
+				-d displayDateYear=${displayDateYear} \
+				-d displayDateHour=${displayDateHour} \
+				-d displayDateMinute=${displayDateMinute} \
+				-d expirationDateMonth=${expirationDateMonth} \
+				-d expirationDateDay=${expirationDateDay} \
+				-d expirationDateYear=${expirationDateYear} \
+				-d expirationDateHour=${expirationDateHour} \
+				-d expirationDateMinute=${expirationDateMinute} \
+				-d neverExpire=${neverExpire}
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

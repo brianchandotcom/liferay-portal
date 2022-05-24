@@ -20,6 +20,7 @@ import {
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUE,
+	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 
 export default function reducer(state, action) {
@@ -99,6 +100,14 @@ export default function reducer(state, action) {
 						},
 					},
 				],
+			};
+		}
+
+		case UPDATE_UNDO_REDO_HISTORY: {
+			return {
+				...state,
+				redoHistory: action.redoHistory ?? state.redoHistory,
+				undoHistory: action.undoHistory ?? state.undoHistory,
 			};
 		}
 

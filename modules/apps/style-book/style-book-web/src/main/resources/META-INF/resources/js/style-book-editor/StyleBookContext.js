@@ -22,6 +22,7 @@ import {
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUE,
+	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import reducer from './reducer';
@@ -193,7 +194,7 @@ export function useOnRedo() {
 	const redoHistory = useRedoHistory();
 
 	return () => {
-		const [lastRedo] = redoHistory;
+		const [lastRedo, ...redos] = redoHistory;
 		const previousValue = frontendTokensValues[lastRedo.name];
 
 		internalSaveTokenValue({
@@ -202,6 +203,10 @@ export function useOnRedo() {
 			name: lastRedo.name,
 			value: lastRedo.value,
 		}).then(() => {
+			dispatch({
+				redoHistory: redos,
+				type: UPDATE_UNDO_REDO_HISTORY,
+			});
 			dispatch({
 				isRedo: true,
 				name: lastRedo.name,

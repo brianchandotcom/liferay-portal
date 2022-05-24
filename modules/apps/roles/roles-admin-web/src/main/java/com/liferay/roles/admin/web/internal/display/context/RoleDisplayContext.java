@@ -361,11 +361,12 @@ public class RoleDisplayContext {
 			return true;
 		}
 
-		if (isAccountRoleGroupScope() &&
-			((permission.getScope() == ResourceConstants.SCOPE_COMPANY) ||
-			 (permission.getScope() == ResourceConstants.SCOPE_GROUP))) {
+		if (isAccountRoleGroupScope()) {
+			if ((permission.getScope() == ResourceConstants.SCOPE_COMPANY) ||
+				(permission.getScope() == ResourceConstants.SCOPE_GROUP)) {
 
-			return true;
+				return true;
+			}
 		}
 		else if (permission.getScope() ==
 					ResourceConstants.SCOPE_GROUP_TEMPLATE) {

@@ -5209,8 +5209,8 @@ definition {
 	}
 
 	@description = "LPS-113248: When there are more than one experience(not default experience) with fragments mapped to different web contents, each experience will maintain its own mapping, even if the mapping is modified in any experience"
-	@priority = "4"
-	test MapFragmentsWithExperiences {
+	@priority = "5"
+	test MapFragmentMultipleExperiences {
 		task ("Create two Web Contents") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -5295,6 +5295,143 @@ definition {
 				fragmentName = "heading",
 				id = "element-text",
 				text = "WC Title 2");
+		}
+	}
+
+	@description = "LPS-113248: When there is more than one fragment mapped to a web content in a experience(not default experience), each fragment will display the field mapped to it"
+	@priority = "5"
+	test MapMultipleFragmentsBetweenExperiences {
+		task ("Create two Web Contents") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content 1",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+
+			JSONWebcontent.addWebContent(
+				content = "WC Content 2",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
+
+		task ("Add two fragments to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Map Heading fragment to web content") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 1",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map Paragraph fragment to web content") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 1",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Content");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Create a new Experience") {
+			PageEditor.addExperience(
+				experienceName = "New Experience Name",
+				segmentName = "Anyone");
+
+			Refresh();
+
+			PageEditor.changeExperience(newExperience = "New Experience Name");
+		}
+
+		task ("Map fragments to new experience") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 2",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC Title 2",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Content");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Chech the mapped value at first experience") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			ContentPages.changeExperience(experienceName = "Default");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "WC Title 1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "WC Content 1");
+		}
+
+		task ("Chech the mapped value at second experience") {
+			ContentPages.changeExperience(experienceName = "New Experience Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "WC Title 2");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "WC Content 2");
 		}
 	}
 

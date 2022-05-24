@@ -5,7 +5,7 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Upgrades Core Infrastructure";
+	property testray.main.component.name = "Upgrades Core";
 
 	@priority = "4"
 	test CompareUpgradedAndFreshDatabaseSchemas7310 {

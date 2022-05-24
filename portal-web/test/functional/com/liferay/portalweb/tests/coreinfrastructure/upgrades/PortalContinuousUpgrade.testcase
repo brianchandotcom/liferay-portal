@@ -7,7 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upgrades = "false";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Upgrades Core Infrastructure";
+	property testray.main.component.name = "Upgrades Core";
 
 	@priority = "4"
 	test AutoUpgradeFromLatest7413Update {

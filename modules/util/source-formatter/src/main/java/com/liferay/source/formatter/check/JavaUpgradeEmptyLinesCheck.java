@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
+public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -36,19 +35,13 @@ public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("UpgradeProcess.java")) {
-			return javaTerm.getContent();
+			return content;
 		}
 
-		return _fixUpgradeClass(javaTerm.getContent());
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_METHOD};
+		return _fixUpgradeClass(content);
 	}
 
 	private String _fixUpgradeClass(String content) {

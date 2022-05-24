@@ -4640,7 +4640,10 @@ tell application "Safari" to quit
 						</app-server-properties-update>
 
 						<if>
-							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+							<or>
+								<equals arg1="${app.server.weblogic.version.build}" arg2="12213" />
+								<equals arg1="${app.server.weblogic.version.build}" arg2="14110" />
+							</or>
 							<then>
 								<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
 							</then>
@@ -5841,7 +5844,7 @@ tell application "Safari" to quit
 				<equals arg1="@{app.server.type}" arg2="weblogic" />
 				<then>
 					<var name="app.server.dir" value="${app.server.parent.dir}/weblogic-@{app.server.version}" />
-					<var name="app.server.zip.name" value="fmw_@{app.server.version}.3.0_wls_quick_Disk1_1of1.zip" />
+					<var name="app.server.zip.name" value="${app.server.weblogic.zip.name}" />
 
 					<var name="app.server.bin.dir" value="${app.server.dir}/domains/liferay/bin" />
 					<var name="app.server.classes.portal.dir" value="${app.server.dir}/domains/liferay/autodeploy/ROOT/WEB-INF/classes" />
@@ -5850,15 +5853,7 @@ tell application "Safari" to quit
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/domains/liferay/autodeploy/ROOT/WEB-INF/lib/" />
 					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/domains/liferay/autodeploy/ROOT/WEB-INF/shielded-container-lib/" />
 
-					<propertyregex
-						input="@{app.server.version}"
-						override="true"
-						property="app.server.weblogic.major.version"
-						regexp="(\d+)\..*"
-						replace="\1"
-					/>
-
-					<var name="app.server.zip.url" value="http://download.oracle.com/otn/nt/middleware/${app.server.weblogic.major.version}c/@{app.server.version.build}/${app.server.zip.name}" />
+					<var name="app.server.zip.url" value="${app.server.weblogic.zip.url}" />
 				</then>
 			</if>
 

@@ -1143,27 +1143,29 @@ public class ObjectEntryLocalServiceImpl
 			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException {
 
-		if (Validator.isNotNull(search)) {
-			List<ObjectField> searchablefileds =
-				_objectFieldPersistence.findByODI_DBT_I(
-					objectDefinitionId, "String", true);
+		if (Validator.isNull(search)) {
+			return predicate;
+		}
 
-			for (ObjectField objectField : searchablefileds) {
-				Table<?> objectFieldTable =
-					_objectFieldLocalService.getObjectFieldTable(
-						objectDefinitionId, objectField.getName());
+		List<ObjectField> objectFields =
+			_objectFieldPersistence.findByODI_DBT_I(
+				objectDefinitionId, "String", true);
 
-				Column<?, ?> column = objectFieldTable.getColumn(
-					objectField.getDBColumnName());
+		for (ObjectField objectField : objectFields) {
+			Table<?> objectFieldTable =
+				_objectFieldLocalService.getObjectFieldTable(
+					objectDefinitionId, objectField.getName());
 
-				Predicate likePredicate = column.like("%" + search + "%");
+			Column<?, ?> column = objectFieldTable.getColumn(
+				objectField.getDBColumnName());
 
-				if (predicate == null) {
-					predicate = likePredicate;
-				}
-				else {
-					predicate = predicate.and(likePredicate);
-				}
+			Predicate likePredicate = column.like("%" + search + "%");
+
+			if (predicate == null) {
+				predicate = likePredicate;
+			}
+			else {
+				predicate = predicate.and(likePredicate);
 			}
 		}
 

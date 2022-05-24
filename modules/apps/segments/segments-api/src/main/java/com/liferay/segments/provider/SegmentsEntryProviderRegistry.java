@@ -39,8 +39,22 @@ public interface SegmentsEntryProviderRegistry {
 		return getSegmentsEntryIds(groupId, className, classPK, null);
 	}
 
-	public long[] getSegmentsEntryIds(
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getSegmentsEntryIds(long, String, long, Context, long[])}
+	 */
+	@Deprecated
+	public default long[] getSegmentsEntryIds(
 			long groupId, String className, long classPK, Context context)
+		throws PortalException {
+
+		return getSegmentsEntryIds(
+			groupId, className, classPK, context, new long[0]);
+	}
+
+	public long[] getSegmentsEntryIds(
+			long groupId, String className, long classPK, Context context,
+			long[] segmentEntryIds)
 		throws PortalException;
 
 	public SegmentsEntryProvider getSegmentsEntryProvider(String source);

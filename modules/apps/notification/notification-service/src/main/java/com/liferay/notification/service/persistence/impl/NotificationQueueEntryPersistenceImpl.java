@@ -51,6 +51,8 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Timestamp;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1120,6 +1122,540 @@ public class NotificationQueueEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_SENT_SENT_2 =
 		"notificationQueueEntry.sent = ?";
 
+	private FinderPath _finderPathWithPaginationFindByLtSentDate;
+	private FinderPath _finderPathWithPaginationCountByLtSentDate;
+
+	/**
+	 * Returns all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @return the matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByLtSentDate(Date sentDate) {
+		return findByLtSentDate(
+			sentDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @return the range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end) {
+
+		return findByLtSentDate(sentDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		return findByLtSentDate(sentDate, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notification queue entries
+	 */
+	@Override
+	public List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByLtSentDate;
+		finderArgs = new Object[] {
+			_getTime(sentDate), start, end, orderByComparator
+		};
+
+		List<NotificationQueueEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<NotificationQueueEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (NotificationQueueEntry notificationQueueEntry : list) {
+					if (sentDate.getTime() <=
+							notificationQueueEntry.getSentDate(
+							).getTime()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+			boolean bindSentDate = false;
+
+			if (sentDate == null) {
+				sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_1);
+			}
+			else {
+				bindSentDate = true;
+
+				sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindSentDate) {
+					queryPos.add(new Timestamp(sentDate.getTime()));
+				}
+
+				list = (List<NotificationQueueEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry findByLtSentDate_First(
+			Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = fetchByLtSentDate_First(
+			sentDate, orderByComparator);
+
+		if (notificationQueueEntry != null) {
+			return notificationQueueEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("sentDate<");
+		sb.append(sentDate);
+
+		sb.append("}");
+
+		throw new NoSuchNotificationQueueEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry fetchByLtSentDate_First(
+		Date sentDate,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		List<NotificationQueueEntry> list = findByLtSentDate(
+			sentDate, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry findByLtSentDate_Last(
+			Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = fetchByLtSentDate_Last(
+			sentDate, orderByComparator);
+
+		if (notificationQueueEntry != null) {
+			return notificationQueueEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("sentDate<");
+		sb.append(sentDate);
+
+		sb.append("}");
+
+		throw new NoSuchNotificationQueueEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	@Override
+	public NotificationQueueEntry fetchByLtSentDate_Last(
+		Date sentDate,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		int count = countByLtSentDate(sentDate);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<NotificationQueueEntry> list = findByLtSentDate(
+			sentDate, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
+	 */
+	@Override
+	public NotificationQueueEntry[] findByLtSentDate_PrevAndNext(
+			long notificationQueueEntryId, Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException {
+
+		NotificationQueueEntry notificationQueueEntry = findByPrimaryKey(
+			notificationQueueEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			NotificationQueueEntry[] array = new NotificationQueueEntryImpl[3];
+
+			array[0] = getByLtSentDate_PrevAndNext(
+				session, notificationQueueEntry, sentDate, orderByComparator,
+				true);
+
+			array[1] = notificationQueueEntry;
+
+			array[2] = getByLtSentDate_PrevAndNext(
+				session, notificationQueueEntry, sentDate, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected NotificationQueueEntry getByLtSentDate_PrevAndNext(
+		Session session, NotificationQueueEntry notificationQueueEntry,
+		Date sentDate,
+		OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+		boolean bindSentDate = false;
+
+		if (sentDate == null) {
+			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_1);
+		}
+		else {
+			bindSentDate = true;
+
+			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindSentDate) {
+			queryPos.add(new Timestamp(sentDate.getTime()));
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						notificationQueueEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<NotificationQueueEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the notification queue entries where sentDate &lt; &#63; from the database.
+	 *
+	 * @param sentDate the sent date
+	 */
+	@Override
+	public void removeByLtSentDate(Date sentDate) {
+		for (NotificationQueueEntry notificationQueueEntry :
+				findByLtSentDate(
+					sentDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(notificationQueueEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @return the number of matching notification queue entries
+	 */
+	@Override
+	public int countByLtSentDate(Date sentDate) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtSentDate;
+
+		Object[] finderArgs = new Object[] {_getTime(sentDate)};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
+
+			boolean bindSentDate = false;
+
+			if (sentDate == null) {
+				sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_1);
+			}
+			else {
+				bindSentDate = true;
+
+				sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindSentDate) {
+					queryPos.add(new Timestamp(sentDate.getTime()));
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LTSENTDATE_SENTDATE_1 =
+		"notificationQueueEntry.sentDate IS NULL";
+
+	private static final String _FINDER_COLUMN_LTSENTDATE_SENTDATE_2 =
+		"notificationQueueEntry.sentDate < ?";
+
 	public NotificationQueueEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1743,6 +2279,19 @@ public class NotificationQueueEntryPersistenceImpl
 			new String[] {Boolean.class.getName()}, new String[] {"sent"},
 			false);
 
+		_finderPathWithPaginationFindByLtSentDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
+			new String[] {
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"sentDate"}, true);
+
+		_finderPathWithPaginationCountByLtSentDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
+			new String[] {Date.class.getName()}, new String[] {"sentDate"},
+			false);
+
 		_setNotificationQueueEntryUtilPersistence(this);
 	}
 
@@ -1800,6 +2349,14 @@ public class NotificationQueueEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	private static Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
 
 	private static final String _SQL_SELECT_NOTIFICATIONQUEUEENTRY =
 		"SELECT notificationQueueEntry FROM NotificationQueueEntry notificationQueueEntry";

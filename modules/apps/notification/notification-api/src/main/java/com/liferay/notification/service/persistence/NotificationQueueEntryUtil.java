@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -481,6 +482,182 @@ public class NotificationQueueEntryUtil {
 	 */
 	public static int countBySent(boolean sent) {
 		return getPersistence().countBySent(sent);
+	}
+
+	/**
+	 * Returns all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @return the matching notification queue entries
+	 */
+	public static List<NotificationQueueEntry> findByLtSentDate(Date sentDate) {
+		return getPersistence().findByLtSentDate(sentDate);
+	}
+
+	/**
+	 * Returns a range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @return the range of matching notification queue entries
+	 */
+	public static List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end) {
+
+		return getPersistence().findByLtSentDate(sentDate, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entries
+	 */
+	public static List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		return getPersistence().findByLtSentDate(
+			sentDate, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sentDate the sent date
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notification queue entries
+	 */
+	public static List<NotificationQueueEntry> findByLtSentDate(
+		Date sentDate, int start, int end,
+		OrderByComparator<NotificationQueueEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByLtSentDate(
+			sentDate, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	public static NotificationQueueEntry findByLtSentDate_First(
+			Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationQueueEntryException {
+
+		return getPersistence().findByLtSentDate_First(
+			sentDate, orderByComparator);
+	}
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	public static NotificationQueueEntry fetchByLtSentDate_First(
+		Date sentDate,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtSentDate_First(
+			sentDate, orderByComparator);
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	public static NotificationQueueEntry findByLtSentDate_Last(
+			Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationQueueEntryException {
+
+		return getPersistence().findByLtSentDate_Last(
+			sentDate, orderByComparator);
+	}
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	public static NotificationQueueEntry fetchByLtSentDate_Last(
+		Date sentDate,
+		OrderByComparator<NotificationQueueEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtSentDate_Last(
+			sentDate, orderByComparator);
+	}
+
+	/**
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where sentDate &lt; &#63;.
+	 *
+	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param sentDate the sent date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
+	 */
+	public static NotificationQueueEntry[] findByLtSentDate_PrevAndNext(
+			long notificationQueueEntryId, Date sentDate,
+			OrderByComparator<NotificationQueueEntry> orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationQueueEntryException {
+
+		return getPersistence().findByLtSentDate_PrevAndNext(
+			notificationQueueEntryId, sentDate, orderByComparator);
+	}
+
+	/**
+	 * Removes all the notification queue entries where sentDate &lt; &#63; from the database.
+	 *
+	 * @param sentDate the sent date
+	 */
+	public static void removeByLtSentDate(Date sentDate) {
+		getPersistence().removeByLtSentDate(sentDate);
+	}
+
+	/**
+	 * Returns the number of notification queue entries where sentDate &lt; &#63;.
+	 *
+	 * @param sentDate the sent date
+	 * @return the number of matching notification queue entries
+	 */
+	public static int countByLtSentDate(Date sentDate) {
+		return getPersistence().countByLtSentDate(sentDate);
 	}
 
 	/**

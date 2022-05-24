@@ -259,6 +259,13 @@ public class NotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtSentDate() throws Exception {
+		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
+
+		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		NotificationQueueEntry newNotificationQueueEntry =
 			addNotificationQueueEntry();

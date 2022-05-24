@@ -18,8 +18,10 @@ import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPE
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -29,7 +31,14 @@ public class GroupModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Group> {
 
 	@Override
+	public Class<?> getModelClass() {
+		return Group.class;
+	}
+
+	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
+		super.onAfterRemove(group);
+
 		if (!analyticsConfigurationTracker.isActive() || !isTracked(group)) {
 			return;
 		}
@@ -40,6 +49,11 @@ public class GroupModelListener
 	}
 
 	@Override
+	protected Group getModel(Object classPK) {
+		return _groupLocalService.fetchGroup((long)classPK);
+	}
+
+	@Override
 	protected boolean isTracked(Group group) {
 		if (group.isSite()) {
 			return true;
@@ -47,5 +61,8 @@ public class GroupModelListener
 
 		return false;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

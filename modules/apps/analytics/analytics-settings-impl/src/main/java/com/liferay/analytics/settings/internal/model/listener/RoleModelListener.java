@@ -18,8 +18,10 @@ import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPE
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -29,6 +31,16 @@ public class RoleModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Role> {
 
 	@Override
+	public Class<?> getModelClass() {
+		return Role.class;
+	}
+
+	@Override
+	protected Role getModel(Object classPK) {
+		return _roleLocalService.fetchRole((long)classPK);
+	}
+
+	@Override
 	protected boolean isTracked(Role role) {
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			return true;
@@ -36,5 +48,8 @@ public class RoleModelListener
 
 		return false;
 	}
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

@@ -17,8 +17,10 @@ package com.liferay.analytics.settings.internal.model.listener;
 import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPEntityModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.TeamLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -26,4 +28,18 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ModelListener.class)
 public class TeamModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Team> {
+
+	@Override
+	public Class<?> getModelClass() {
+		return Team.class;
+	}
+
+	@Override
+	protected Team getModel(Object classPK) {
+		return _teamLocalService.fetchTeam((long)classPK);
+	}
+
+	@Reference
+	private TeamLocalService _teamLocalService;
+
 }

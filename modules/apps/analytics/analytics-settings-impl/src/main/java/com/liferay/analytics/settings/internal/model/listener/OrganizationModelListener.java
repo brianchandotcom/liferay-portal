@@ -18,8 +18,10 @@ import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPE
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -29,8 +31,15 @@ public class OrganizationModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Organization> {
 
 	@Override
+	public Class<?> getModelClass() {
+		return Organization.class;
+	}
+
+	@Override
 	public void onAfterRemove(Organization organization)
 		throws ModelListenerException {
+
+		super.onAfterRemove(organization);
 
 		if (!analyticsConfigurationTracker.isActive() ||
 			!isTracked(organization)) {
@@ -42,5 +51,13 @@ public class OrganizationModelListener
 			organization.getCompanyId(), "syncedOrganizationIds",
 			String.valueOf(organization.getOrganizationId()), null);
 	}
+
+	@Override
+	protected Organization getModel(Object classPK) {
+		return _organizationLocalService.fetchOrganization((long)classPK);
+	}
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 }

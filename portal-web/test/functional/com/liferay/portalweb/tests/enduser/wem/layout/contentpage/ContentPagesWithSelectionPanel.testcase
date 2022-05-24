@@ -1173,7 +1173,7 @@ definition {
 		task ("View the details of mapped web content in Mapping panel") {
 			AssertTextEquals(
 				locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
-				value1 = "Type:Web Content Article");
+				value1 = "Content Type:Web Content Article");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#MAPPING_PANEL_SUB_TYPE_LABEL",
@@ -1207,7 +1207,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageEditor#MAPPING_PANEL_TYPE_LABEL",
-				value1 = "Type:Asset");
+				value1 = "Content Type:Asset");
 		}
 	}
 

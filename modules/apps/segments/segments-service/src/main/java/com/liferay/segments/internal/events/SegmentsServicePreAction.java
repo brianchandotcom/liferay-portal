@@ -22,14 +22,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,10 +78,30 @@ public class SegmentsServicePreAction extends Action {
 		long classNameId, long classPK) {
 
 		try {
+			long[] segmentsExperienceIds =
+				_segmentsExperienceRequestProcessorRegistry.
+					getSegmentsExperienceIds(
+						httpServletRequest, httpServletResponse, groupId,
+						classNameId, classPK);
+
+			Set<Long> segmentsExperienceIdsSegmentsEntryIds = new HashSet<>();
+
+			for (long segmentsExperienceId : segmentsExperienceIds) {
+				SegmentsExperience segmentsExperience =
+					_segmentsExperienceLocalService.fetchSegmentsExperience(
+						segmentsExperienceId);
+
+				segmentsExperienceIdsSegmentsEntryIds.add(
+					segmentsExperience.getSegmentsEntryId());
+			}
+
 			long[] segmentsEntryIds =
 				_segmentsEntryRetriever.getSegmentsEntryIds(
 					groupId, userId,
-					_requestContextMapper.map(httpServletRequest));
+					_requestContextMapper.map(httpServletRequest),
+					ArrayUtil.toArray(
+						segmentsExperienceIdsSegmentsEntryIds.toArray(
+							new Long[0])));
 
 			return _segmentsExperienceRequestProcessorRegistry.
 				getSegmentsExperienceIds(

@@ -28,7 +28,7 @@ import java.util.TreeSet;
 /**
  * @author Peter Shin
  */
-public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
+public class PropertiesEnvironmentVariablesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
@@ -43,15 +43,16 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _formatPortalProperties(content);
+		return _formatPortalProperties(fileName, content);
 	}
 
 	private String _addEnvVariables(
-		String content, String commentsBlock, String environmentVariablesBlock,
-		String variablesContent, int lineNumber) {
+		String fileName, String content, String commentsBlock,
+		String environmentVariablesBlock, String variablesContent,
+		int lineNumber) {
 
 		Set<String> environmentVariables = _getEnvironmentVariables(
-			variablesContent);
+			fileName, variablesContent);
 
 		if (environmentVariables.isEmpty()) {
 			return content;
@@ -100,7 +101,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			getLineStartPos(content, lineNumber + 1));
 	}
 
-	private String _formatPortalProperties(String content) {
+	private String _formatPortalProperties(String fileName, String content) {
 		StringBundler commentBlockSB = new StringBundler();
 		StringBundler environmentVariablesBlockSB = new StringBundler();
 		StringBundler variablesContentSB = new StringBundler();
@@ -121,7 +122,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 			if (variablesContentSB.index() > 0) {
 				String newContent = _addEnvVariables(
-					content, commentBlockSB.toString(),
+					fileName, content, commentBlockSB.toString(),
 					environmentVariablesBlockSB.toString(),
 					variablesContentSB.toString(), lineNumber);
 
@@ -149,12 +150,12 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		}
 
 		return _addEnvVariables(
-			content, commentBlockSB.toString(),
+			fileName, content, commentBlockSB.toString(),
 			environmentVariablesBlockSB.toString(),
 			variablesContentSB.toString(), lineNumber);
 	}
 
-	private Set<String> _getEnvironmentVariables(String s) {
+	private Set<String> _getEnvironmentVariables(String fileName, String s) {
 		Set<String> environmentVariables = new TreeSet<>();
 
 		for (String line : StringUtil.splitLines(s)) {
@@ -172,9 +173,15 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			environmentVariables.add(
-				ToolsUtil.encodeEnvironmentProperty(
-					trimmedLine.substring(0, pos)));
+			String environmentVariable = ToolsUtil.encodeEnvironmentProperty(
+				trimmedLine.substring(0, pos));
+
+			if (fileName.endsWith("/system.properties")) {
+				environmentVariable = environmentVariable.replaceFirst(
+					"LIFERAY_", "SYSTEM_LIFERAY_");
+			}
+
+			environmentVariables.add(environmentVariable);
 		}
 
 		return environmentVariables;

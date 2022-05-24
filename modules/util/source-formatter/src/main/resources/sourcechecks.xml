@@ -1255,6 +1255,10 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
 		</check>
+		<check name="PropertiesEnvironmentVariablesCheck">
+			<category name="Documentation" />
+			<description name="Verifies that the environment property in the documentation matches the property name." />
+		</check>
 		<check name="PropertiesImportedFilesContentCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `imported-files.properties` file." />
@@ -1278,10 +1282,6 @@
 		<check name="PropertiesMultiLineValuesOrderCheck">
 			<category name="Styling" />
 			<description name="Verifies that property with multiple values is not on a single line." />
-		</check>
-		<check name="PropertiesPortalEnvironmentVariablesCheck">
-			<category name="Documentation" />
-			<description name="Verifies that the environment property in the documentation matches the property name." />
 		</check>
 		<check name="PropertiesPortalFileCheck">
 			<category name="Bug Prevention" />

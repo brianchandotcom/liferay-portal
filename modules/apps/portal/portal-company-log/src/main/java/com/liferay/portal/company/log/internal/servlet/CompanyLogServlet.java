@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -189,43 +190,54 @@ public class CompanyLogServlet extends HttpServlet {
 
 		printWriter.println("<html><body>");
 
-		_companyLocalService.forEachCompany(
-			company -> {
-				if (permissionChecker.isCompanyAdmin(company.getCompanyId())) {
-					File logFilesDir = new File(
-						StringBundler.concat(
-							StringUtil.replace(
-								PropsUtil.get(PropsKeys.LIFERAY_HOME), '\\',
-								'/'),
-							"/logs/companies/", company.getCompanyId()));
+		if (permissionChecker.isOmniadmin()) {
+			_companyLocalService.forEachCompany(
+				company -> _listCompanyLogFiles(
+					httpServletRequest, printWriter, company));
+		}
+		else {
+			User user = permissionChecker.getUser();
 
-					if (!logFilesDir.isDirectory()) {
-						return;
-					}
-
-					printWriter.println("<h1>" + company.getWebId() + "</h1>");
-					printWriter.println("<ul>");
-
-					for (File file : logFilesDir.listFiles()) {
-						String herf = StringBundler.concat(
-							_portal.getPortalURL(httpServletRequest),
-							_portal.getPathContext(), "/o/company-log/",
-							company.getCompanyId(), StringPool.SLASH,
-							file.getName());
-
-						printWriter.println(
-							"<li><a target=\"_self\" href=\"" + herf + "\">");
-
-						printWriter.println(file.getName());
-						printWriter.println("</a>");
-						printWriter.println("</li>");
-					}
-
-					printWriter.println("</ul>");
-				}
-			});
+			_listCompanyLogFiles(
+				httpServletRequest, printWriter,
+				_companyLocalService.getCompany(user.getCompanyId()));
+		}
 
 		printWriter.println("</body></html>");
+	}
+
+	private void _listCompanyLogFiles(
+		HttpServletRequest httpServletRequest, PrintWriter printWriter,
+		Company company) {
+
+		File logFilesDir = new File(
+			StringBundler.concat(
+				StringUtil.replace(
+					PropsUtil.get(PropsKeys.LIFERAY_HOME), '\\', '/'),
+				"/logs/companies/", company.getCompanyId()));
+
+		if (!logFilesDir.isDirectory()) {
+			return;
+		}
+
+		printWriter.println("<h1>" + company.getWebId() + "</h1>");
+		printWriter.println("<ul>");
+
+		for (File file : logFilesDir.listFiles()) {
+			String herf = StringBundler.concat(
+				_portal.getPortalURL(httpServletRequest),
+				_portal.getPathContext(), "/o/company-log/",
+				company.getCompanyId(), StringPool.SLASH, file.getName());
+
+			printWriter.println(
+				"<li><a target=\"_self\" href=\"" + herf + "\">");
+
+			printWriter.println(file.getName());
+			printWriter.println("</a>");
+			printWriter.println("</li>");
+		}
+
+		printWriter.println("</ul>");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

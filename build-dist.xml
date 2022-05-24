@@ -1609,6 +1609,45 @@ this task.
 		<set-weblogic-log-levels />
 	</target>
 
+	<target name="unzip-weblogic-custom-14110">
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
+			</not>
+			<then>
+				<trycatch>
+					<try>
+						<mkdir dir="${app.server.parent.dir}" />
+
+						<mirrors-get
+							dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+							src="http://files.liferay.com/private/apps/oracle/weblogicas/14/${app.server.weblogic.zip.name}"
+							verbose="true"
+						/>
+					</try>
+					<catch>
+						<fail>
+Please download the Weblogic custom zip file from
+http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/14 and
+place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
+this task.
+						</fail>
+					</catch>
+				</trycatch>
+			</then>
+		</if>
+
+		<delete dir="${app.server.weblogic.dir}" />
+
+		<unzip
+			dest="${app.server.weblogic.dir}"
+			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+		/>
+
+		<antcall target="install-weblogic14-setup-files" />
+
+	</target>
+
 	<target name="unzip-websphere">
 		<if>
 			<and>

@@ -13,6 +13,7 @@ components:
                 id:
                     type: string
                 modifiedDate:
+                    format: date
                     type: string
                 type:
                     type: string

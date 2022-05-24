@@ -233,6 +233,28 @@ definition {
 		return "${productsCount}";
 	}
 
+	macro _getCPDefinitionId {
+		Variables.assertDefined(parameterList = "${productName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+
+		var curl = '''
+			${baseURL}/api/jsonws/commerce.cpdefinition/fetch-cp-definition-by-c-product-id \
+			-u test@liferay.com:test \
+			-d cProductId=${productId}
+		''';
+
+		var cpDefinitionId = JSONCurlUtil.post("${curl}", "$..['CPDefinitionId']");
+
+		return "${cpDefinitionId}";
+	}
+
 	macro _getProductId {
 		if (isSet(productSKU)) {
 			var search = "${productSKU}";

@@ -186,6 +186,149 @@ public interface NotificationQueueEntryPersistence
 	public int countByNotificationTemplateId(long notificationTemplateId);
 
 	/**
+	 * Returns all the notification queue entries where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @return the matching notification queue entries
+	 */
+	public java.util.List<NotificationQueueEntry> findBySent(boolean sent);
+
+	/**
+	 * Returns a range of all the notification queue entries where sent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sent the sent
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @return the range of matching notification queue entries
+	 */
+	public java.util.List<NotificationQueueEntry> findBySent(
+		boolean sent, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sent the sent
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entries
+	 */
+	public java.util.List<NotificationQueueEntry> findBySent(
+		boolean sent, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the notification queue entries where sent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sent the sent
+	 * @param start the lower bound of the range of notification queue entries
+	 * @param end the upper bound of the range of notification queue entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notification queue entries
+	 */
+	public java.util.List<NotificationQueueEntry> findBySent(
+		boolean sent, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	public NotificationQueueEntry findBySent_First(
+			boolean sent,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException;
+
+	/**
+	 * Returns the first notification queue entry in the ordered set where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	public NotificationQueueEntry fetchBySent_First(
+		boolean sent,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
+	 */
+	public NotificationQueueEntry findBySent_Last(
+			boolean sent,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException;
+
+	/**
+	 * Returns the last notification queue entry in the ordered set where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
+	 */
+	public NotificationQueueEntry fetchBySent_Last(
+		boolean sent,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where sent = &#63;.
+	 *
+	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param sent the sent
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification queue entry
+	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
+	 */
+	public NotificationQueueEntry[] findBySent_PrevAndNext(
+			long notificationQueueEntryId, boolean sent,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationQueueEntry> orderByComparator)
+		throws NoSuchNotificationQueueEntryException;
+
+	/**
+	 * Removes all the notification queue entries where sent = &#63; from the database.
+	 *
+	 * @param sent the sent
+	 */
+	public void removeBySent(boolean sent);
+
+	/**
+	 * Returns the number of notification queue entries where sent = &#63;.
+	 *
+	 * @param sent the sent
+	 * @return the number of matching notification queue entries
+	 */
+	public int countBySent(boolean sent);
+
+	/**
 	 * Caches the notification queue entry in the entity cache if it is enabled.
 	 *
 	 * @param notificationQueueEntry the notification queue entry

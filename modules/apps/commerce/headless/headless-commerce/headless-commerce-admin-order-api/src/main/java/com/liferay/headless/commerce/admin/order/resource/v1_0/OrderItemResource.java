@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.order.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -58,6 +59,10 @@ public interface OrderItemResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<OrderItem> getOrderItemsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Response deleteOrderItemByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -70,6 +75,10 @@ public interface OrderItemResource {
 			String externalReferenceCode, OrderItem orderItem)
 		throws Exception;
 
+	public OrderItem putOrderItemByExternalReferenceCode(
+			String externalReferenceCode, OrderItem orderItem)
+		throws Exception;
+
 	public Response deleteOrderItem(Long id) throws Exception;
 
 	public Response deleteOrderItemBatch(
@@ -79,6 +88,13 @@ public interface OrderItemResource {
 	public OrderItem getOrderItem(Long id) throws Exception;
 
 	public Response patchOrderItem(Long id, OrderItem orderItem)
+		throws Exception;
+
+	public OrderItem putOrderItem(Long id, OrderItem orderItem)
+		throws Exception;
+
+	public Response putOrderItemBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(

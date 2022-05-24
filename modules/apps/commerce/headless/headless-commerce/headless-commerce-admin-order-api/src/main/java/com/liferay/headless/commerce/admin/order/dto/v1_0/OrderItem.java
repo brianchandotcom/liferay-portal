@@ -96,17 +96,17 @@ public class OrderItem implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, ?> getCustomFields() {
+	public CustomField[] getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(Map<String, ?> customFields) {
+	public void setCustomFields(CustomField[] customFields) {
 		this.customFields = customFields;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
-		UnsafeSupplier<Map<String, ?>, Exception> customFieldsUnsafeSupplier) {
+		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -121,7 +121,7 @@ public class OrderItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, ?> customFields;
+	protected CustomField[] customFields;
 
 	@DecimalMin("0")
 	@Schema(example = "10.1")
@@ -719,7 +719,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String options;
 
 	@Schema(example = "CAB-34098-789-N")
@@ -1265,7 +1265,17 @@ public class OrderItem implements Serializable {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(customFields));
+			sb.append("[");
+
+			for (int i = 0; i < customFields.length; i++) {
+				sb.append(String.valueOf(customFields[i]));
+
+				if ((i + 1) < customFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (decimalQuantity != null) {

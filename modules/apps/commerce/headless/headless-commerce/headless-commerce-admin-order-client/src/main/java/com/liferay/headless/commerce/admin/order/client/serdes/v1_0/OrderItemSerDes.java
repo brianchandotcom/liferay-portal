@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
 
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -78,7 +80,17 @@ public class OrderItemSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(orderItem.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < orderItem.getCustomFields().length; i++) {
+				sb.append(String.valueOf(orderItem.getCustomFields()[i]));
+
+				if ((i + 1) < orderItem.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (orderItem.getDecimalQuantity() != null) {
@@ -854,8 +866,13 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setCustomFields(
-						(Map)OrderItemSerDes.toMap(
-							(String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "decimalQuantity")) {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,15 +28,19 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -102,6 +108,42 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 
 		return _companyFallbackVirtualHostname;
+	}
+
+	@Override
+	public String getFavicon() {
+		if (_favicon != null) {
+			return _favicon;
+		}
+
+		if (getFaviconFileEntryId() == 0) {
+			return null;
+		}
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = DLAppServiceUtil.getFileEntry(getFaviconFileEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		_favicon = HtmlUtil.escape(
+			StringBundler.concat(
+				PortalUtil.getPathContext(), "/documents/",
+				fileEntry.getRepositoryId(), StringPool.SLASH,
+				fileEntry.getFolderId(), StringPool.SLASH,
+				URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
+				StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
+
+		return _favicon;
 	}
 
 	/**
@@ -421,6 +463,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@CacheField(propagateToInterface = true)
 	private String _companyFallbackVirtualHostname;
 
+	private String _favicon;
 	private UnicodeProperties _settingsUnicodeProperties;
 
 	@CacheField(propagateToInterface = true)

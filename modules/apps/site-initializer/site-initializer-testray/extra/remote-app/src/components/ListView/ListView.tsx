@@ -128,7 +128,7 @@ const ListView: React.FC<ListViewProps> = ({
 		return <Loading />;
 	}
 
-	const Pagination = () => (
+	const Pagination = (
 		<ClayPaginationBarWithBasicItems
 			activeDelta={pageSize}
 			activePage={page}
@@ -160,9 +160,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 			{!!items.length && (
 				<>
-					<div className="mt-4">
-						<Pagination />
-					</div>
+					<div className="mt-4">{Pagination}</div>
 
 					<Table
 						{...tableProps}
@@ -172,7 +170,7 @@ const ListView: React.FC<ListViewProps> = ({
 						selectedRows={selectedRows}
 					/>
 
-					<Pagination />
+					{Pagination}
 				</>
 			)}
 		</>

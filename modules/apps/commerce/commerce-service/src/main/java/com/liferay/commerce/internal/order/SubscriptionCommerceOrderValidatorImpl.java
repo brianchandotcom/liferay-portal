@@ -70,6 +70,12 @@ public class SubscriptionCommerceOrderValidatorImpl
 
 		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
+		if (commerceOrderItem.getCPInstanceId() ==
+				cpInstance.getCPInstanceId()) {
+
+			return new CommerceOrderValidatorResult(true);
+		}
+
 		CPSubscriptionInfo cpSubscriptionInfo =
 			cpInstance.getCPSubscriptionInfo();
 

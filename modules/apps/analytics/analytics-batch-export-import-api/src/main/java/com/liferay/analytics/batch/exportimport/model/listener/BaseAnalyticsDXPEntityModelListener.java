@@ -98,8 +98,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to add analytics model remove logger for model " +
-						model,
+					"Unable to add analytics delete message for model " + model,
 					exception);
 			}
 		}

@@ -44,9 +44,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.io.Serializable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -343,7 +340,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		dxpEntity.setId(id);
-		dxpEntity.setModifiedDate(_dateFormat.format(modifiedDate));
+		dxpEntity.setModifiedDate(modifiedDate);
 		dxpEntity.setType(type);
 
 		return dxpEntity;
@@ -351,9 +348,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DXPEntityDTOConverterImpl.class);
-
-	private static final DateFormat _dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;

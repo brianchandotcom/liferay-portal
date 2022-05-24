@@ -26,7 +26,12 @@ const getEndpoint = (type, externalReferenceCode) => {
 	return endpoints[type];
 };
 
-export default function ({HTMLElementId, externalReferenceCode, type}) {
+export default function ({
+	HTMLElementId,
+	externalReferenceCode,
+	namespace,
+	type,
+}) {
 	document
 		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {
@@ -34,7 +39,7 @@ export default function ({HTMLElementId, externalReferenceCode, type}) {
 
 			if (type === 'batchPlannerTemplate') {
 				const valueElement = document.getElementById(
-					externalReferenceCode
+					`${namespace}internalClassName`
 				);
 
 				externalReferenceCode =

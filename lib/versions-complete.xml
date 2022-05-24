@@ -7205,18 +7205,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jaxrs-api.jar</file-name>
-				<version>2.1</version>
-				<project-name>Java API for RESTful Web Services</project-name>
-				<project-url>http://jax-rs-spec.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jaxws-api.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>JAX-WS (JSR 224) API</project-name>
@@ -7239,18 +7227,6 @@
 						<license-name>MIT License</license-name>
 						<license-url>http://opensource.org/licenses/MIT</license-url>
 						<copyright-notice>Copyright (c) 2004-2007 QOS.ch</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jersey-common.jar</file-name>
-				<version>2.26</version>
-				<project-name>Jersey core common packages</project-name>
-				<project-url>https://jersey.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://oss.oracle.com/licenses/CDDL+GPL-1.1</license-url>
 					</license>
 				</licenses>
 			</library>

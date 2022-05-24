@@ -43,6 +43,9 @@
 		<finder name="Sent" return-type="Collection">
 			<finder-column name="sent" />
 		</finder>
+		<finder name="LtSentDate" return-type="Collection">
+			<finder-column comparator="&lt;" name="sentDate" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="NotificationTemplate" remote-service="true" uuid="true">
 

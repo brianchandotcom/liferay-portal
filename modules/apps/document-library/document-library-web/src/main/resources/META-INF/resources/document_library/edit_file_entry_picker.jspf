@@ -115,6 +115,16 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					'#<portlet:namespace />fm .lfr-ddm-form-container .ddm-field'
 				);
 
+				var urlTitleElement = document.getElementById(
+					'<portlet:namespace />urlTitle'
+				);
+
+				if (titleElement && titleElement.value) {
+					if (urlTitleElement && !urlTitleElement.value) {
+						urlTitleElement.value = titleElement.value.replace(/\.[^.]*$/, '');
+					}
+				}
+
 				Array.prototype.forEach.call(ddmFieldWrappers, (ddmFieldWrapper) => {
 					var fieldName = ddmFieldWrapper.dataset.fieldName;
 

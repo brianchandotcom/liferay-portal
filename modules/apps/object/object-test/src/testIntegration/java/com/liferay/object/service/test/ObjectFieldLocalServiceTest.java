@@ -320,7 +320,7 @@ public class ObjectFieldLocalServiceTest {
 		String[] reservedNames = {
 			"actions", "companyId", "createDate", "creator", "dateCreated",
 			"dateModified", "externalReferenceCode", "groupId", "id",
-			"lastPublishDate", "modifiedDate", "status", "statusByUserId",
+			"lastPublishDate", "modifiedDate", "statusByUserId",
 			"statusByUserName", "statusDate", "userId", "userName"
 		};
 

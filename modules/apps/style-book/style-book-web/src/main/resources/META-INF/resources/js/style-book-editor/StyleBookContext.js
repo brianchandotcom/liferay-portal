@@ -107,45 +107,61 @@ export function useUndoHistory() {
 	return useContext(StyleBookStoreContext).undoHistory;
 }
 
+function internalSaveTokenValue({dispatch, frontendTokensValues, name, value}) {
+	dispatch({
+		type: SET_DRAFT_STATUS,
+		value: DRAFT_STATUS.saving,
+	});
+
+	return saveDraft({...frontendTokensValues, [name]: value})
+		.then(() => {
+			dispatch({
+				type: SET_DRAFT_STATUS,
+				value: DRAFT_STATUS.draftSaved,
+			});
+
+			dispatch({
+				name,
+				type: SET_TOKEN_VALUE,
+				value,
+			});
+		})
+		.catch((error) => {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+
+			dispatch({
+				type: SET_DRAFT_STATUS,
+				value: DRAFT_STATUS.notSaved,
+			});
+
+			openToast({
+				message: error.message,
+				type: 'danger',
+			});
+		});
+}
+
 export function useSaveTokenValue() {
 	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
-	return (name, value, isUndoAction) => {
-		dispatch({
-			type: SET_DRAFT_STATUS,
-			value: DRAFT_STATUS.saving,
-		});
+	return (name, value) => {
+		const previousValue = frontendTokensValues[name];
 
-		dispatch({
-			isUndoAction,
+		internalSaveTokenValue({
+			dispatch,
+			frontendTokensValues,
 			name,
-			type: SET_TOKEN_VALUE,
 			value,
-		});
-
-		saveDraft({...frontendTokensValues, [name]: value})
-			.then(() => {
-				dispatch({
-					type: SET_DRAFT_STATUS,
-					value: DRAFT_STATUS.draftSaved,
-				});
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
-				dispatch({
-					type: SET_DRAFT_STATUS,
-					value: DRAFT_STATUS.notSaved,
-				});
-
-				openToast({
-					message: error.message,
-					type: 'danger',
-				});
+		}).then(() => {
+			dispatch({
+				name,
+				type: ADD_UNDO_ACTION,
+				value: previousValue,
 			});
+		});
 	};
 }
 

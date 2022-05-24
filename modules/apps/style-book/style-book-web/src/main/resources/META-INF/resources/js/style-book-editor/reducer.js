@@ -52,14 +52,7 @@ export default function reducer(state, action) {
 		}
 
 		case SET_TOKEN_VALUE: {
-			const {isUndoAction, name, value} = action;
-			const nextUndoHistory = state.undoHistory || [];
-
-			const previousValue = {
-				...value,
-				name: state.frontendTokensValues[name]?.name,
-				value: state.frontendTokensValues[name].value,
-			};
+			const {name, value} = action;
 
 			return {
 				...state,
@@ -67,12 +60,6 @@ export default function reducer(state, action) {
 					...state.frontendTokensValues,
 					[name]: value,
 				},
-				...(!isUndoAction && {
-					undoHistory: [
-						...nextUndoHistory,
-						{name, value: previousValue},
-					],
-				}),
 			};
 		}
 

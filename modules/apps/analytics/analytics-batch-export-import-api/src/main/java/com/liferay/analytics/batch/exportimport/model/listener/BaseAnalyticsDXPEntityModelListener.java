@@ -74,6 +74,10 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 		}
 	}
 
+	protected T getModel(Object classPK) {
+		return null;
+	}
+
 	protected boolean isTracked(T model) {
 		return true;
 	}

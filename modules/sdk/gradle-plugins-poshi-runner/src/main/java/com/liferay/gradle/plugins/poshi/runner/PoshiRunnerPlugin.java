@@ -273,11 +273,18 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(CopySpec copySpec) {
-								copySpec.from(
-									_getWebDriverBrowserBinary(
-										project,
-										_getPoshiProperties(
-											poshiRunnerExtension)));
+								File file = _getWebDriverBrowserBinaryFile(
+									project,
+									_getPoshiProperties(poshiRunnerExtension));
+
+								String fileName = file.getName();
+
+								if (fileName.endsWith(".zip")) {
+									copySpec.from(project.zipTree(file));
+								}
+								else {
+									copySpec.from(project.tarTree(file));
+								}
 
 								copySpec.into(webDriverDir);
 							}
@@ -434,9 +441,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDownloadWebDriverBrowserBinary(
-		Task copy, Properties poshiProperties) {
+		Task task, Properties poshiProperties) {
 
-		copy.onlyIf(
+		task.onlyIf(
 			new Spec<Task>() {
 
 				@Override
@@ -719,7 +726,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			sikuliConfiguration);
 	}
 
-	private FileTree _getWebDriverBrowserBinary(
+	private File _getWebDriverBrowserBinaryFile(
 		Project project, Properties poshiProperties) {
 
 		String url = null;
@@ -742,27 +749,12 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			throw new RuntimeException("Unable to get browser driver url");
 		}
 
-		File webDriverBrowserBinaryFile = null;
-
 		try {
-			webDriverBrowserBinaryFile = FileUtil.get(project, url, null);
+			return FileUtil.get(project, url, null);
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);
 		}
-
-		String webDriverBrowserBinaryFileName =
-			webDriverBrowserBinaryFile.getName();
-
-		if (webDriverBrowserBinaryFileName.endsWith(".tar.gz")) {
-			return project.tarTree(webDriverBrowserBinaryFile);
-		}
-
-		if (webDriverBrowserBinaryFileName.endsWith(".zip")) {
-			return project.zipTree(webDriverBrowserBinaryFile);
-		}
-
-		return null;
 	}
 
 	private String _getWebDriverBrowserBinaryName(Properties poshiProperties) {

@@ -70,7 +70,8 @@ const Suite = () => {
 	const getCaseParameters = (): CaseParameter => {
 		try {
 			return JSON.parse(testraySuite.caseParameters);
-		} catch (error) {
+		}
+		catch (error) {
 			return CaseParameterInitialState;
 		}
 	};

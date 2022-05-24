@@ -334,6 +334,68 @@
 		<app-server-properties-reset />
 	</target>
 
+	<target name="create-weblogic-domain">
+		<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
+
+		<echo file="${app.server.weblogic.dir}/remove-domain.sh">
+#/bin/sh
+
+if [ -d "${app.server.weblogic.instance.dir}" ]; then
+	rm -r ${app.server.weblogic.instance.dir}
+fi
+		</echo>
+
+		<exec executable="/bin/bash">
+			<arg value="${app.server.weblogic.dir}/remove-domain.sh" />
+		</exec>
+
+		<echo file="${app.server.weblogic.dir}/create-weblogic-domain.py">
+readTemplate('${app.server.weblogic.template.dir}/wls.jar')
+
+set('Name', '${app.server.weblogic.instance.name}')
+
+cd('/Security/%s/User/%s' % ('${app.server.weblogic.instance.name}', 'weblogic'))
+
+set('UserPassword', 'testing123')
+
+cd('/Servers/AdminServer')
+
+set('ListenAddress', '')
+set('ListenPort', 8080)
+
+writeDomain('${app.server.weblogic.instance.dir}')
+
+closeTemplate()
+		</echo>
+
+		<var name="source.command" value="source" />
+
+		<echo file="${app.server.weblogic.dir}/create-weblogic-domain.sh">
+			#!/bin/sh
+
+			export MW_HOME="${app.server.weblogic.dir}"
+			export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
+			export WL_HOME="${app.server.weblogic.wlserver.dir}"
+
+			${source.command} ${MW_HOME}/oracle/oracle_common/common/bin/commEnv.sh
+
+			export CLASSPATH=${FMWCONFIG_CLASSPATH}
+
+			${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py
+
+			echo finished executing create-weblogic-domain.py..
+		</echo>
+
+		<chmod
+			file="${app.server.weblogic.dir}/create-weblogic-domain.sh"
+			perm="744"
+		/>
+
+		<exec dir="${app.server.weblogic.dir}" executable="sh">
+			<arg value="create-weblogic-domain.sh" />
+		</exec>
+	</target>
+
 	<target name="dist">
 		<if>
 			<available file="${patching.tool.source.dir}" type="dir" />
@@ -1646,6 +1708,7 @@ this task.
 
 		<antcall target="install-weblogic14-setup-files" />
 
+		<antcall target="create-weblogic-domain" />
 	</target>
 
 	<target name="unzip-websphere">

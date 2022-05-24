@@ -16,6 +16,7 @@ package com.liferay.fragment.renderer;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.info.form.InfoForm;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,6 +68,11 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	@Override
 	public FragmentEntryLink getFragmentEntryLink() {
 		return _fragmentEntryLink;
+	}
+
+	@Override
+	public Optional<InfoForm> getInfoFormOptional() {
+		return Optional.ofNullable(_infoForm);
 	}
 
 	@Override
@@ -124,6 +130,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_displayObject = object;
 	}
 
+	public void setInfoForm(InfoForm infoForm) {
+		_infoForm = infoForm;
+	}
+
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
@@ -160,6 +170,7 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	private List<String> _collectionStyledLayoutStructureItemIds;
 	private Object _displayObject;
 	private final FragmentEntryLink _fragmentEntryLink;
+	private InfoForm _infoForm;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private String _mode = FragmentEntryLinkConstants.VIEW;
 	private long _previewClassNameId;

@@ -2207,4 +2207,96 @@ definition {
 
 	}
 
+	@description = "verify if Input Mask On Decimal With Decimal Places Is Working On Validation is working correctly"
+	@priority = "4"
+	test InputMaskOnDecimalWithDecimalPlacesIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "2");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.20");
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.00");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.200000000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.2000000");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.0000000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.0000000");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+
+
+	}
+
 }

@@ -16,7 +16,9 @@ package com.liferay.notification.internal.util;
 
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationHelper;
+import com.liferay.notification.util.NotificationTypeRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,8 +47,19 @@ public class NotificationHelperImpl implements NotificationHelper {
 	@Override
 	public void sendNotification(
 			long userId, NotificationTemplate notificationTemplate,
-			Object object)
+			String notificationTypeKey, Object object)
 		throws PortalException {
+
+		if (Validator.isBlank(notificationTypeKey)) {
+			return;
+		}
+
+		NotificationType notificationType =
+			_notificationTypeRegistry.getNotificationType(notificationTypeKey);
+
+		if (notificationType == null) {
+			return;
+		}
 
 		User user = _userLocalService.getUser(userId);
 
@@ -101,40 +114,43 @@ public class NotificationHelperImpl implements NotificationHelper {
 					}
 
 					_addNotificationQueueEntry(
-						notificationTemplate, fromName, toUserString,
-						toUserString, subject, body, object);
+						body, fromName, notificationTemplate, notificationType,
+						object, toUserString, toUserString, subject);
 				}
 				else {
 					_addNotificationQueueEntry(
-						userId, notificationTemplate, fromName, subject, body,
-						object);
+						userId, body, fromName, notificationTemplate,
+						notificationType, object, subject);
 				}
 			}
 			else {
 				_addNotificationQueueEntry(
-					userId, notificationTemplate, fromName, subject, body,
-					object);
+					userId, body, fromName, notificationTemplate,
+					notificationType, object, subject);
 			}
 		}
 	}
 
 	private void _addNotificationQueueEntry(
-			long userId, NotificationTemplate notificationTemplate,
-			String fromName, String subject, String body, Object object)
+			long userId, String body, String fromName,
+			NotificationTemplate notificationTemplate,
+			NotificationType notificationType, Object object, String subject)
 		throws PortalException {
 
 		_notificationQueueEntryLocalService.addNotificationQueueEntry(
 			userId, notificationTemplate.getNotificationTemplateId(),
 			notificationTemplate.getBcc(), body, notificationTemplate.getCc(),
-			_getClassName(object), _getClassPK(object),
-			notificationTemplate.getFrom(), fromName, 0, subject,
-			notificationTemplate.getTo(), notificationTemplate.getName());
+			notificationType.getClassName(object),
+			notificationType.getClassPK(object), notificationTemplate.getFrom(),
+			fromName, 0, subject, notificationTemplate.getTo(),
+			notificationTemplate.getName());
 	}
 
 	private void _addNotificationQueueEntry(
-			NotificationTemplate notificationTemplate, String fromName,
-			String toEmailAddress, String toFullName, String subject,
-			String body, Object object)
+			String body, String fromName,
+			NotificationTemplate notificationTemplate,
+			NotificationType notificationType, Object object,
+			String toEmailAddress, String toFullName, String subject)
 		throws PortalException {
 
 		User user = _userLocalService.getDefaultUser(
@@ -143,9 +159,9 @@ public class NotificationHelperImpl implements NotificationHelper {
 		_notificationQueueEntryLocalService.addNotificationQueueEntry(
 			user.getUserId(), notificationTemplate.getNotificationTemplateId(),
 			notificationTemplate.getBcc(), body, notificationTemplate.getCc(),
-			_getClassName(object), _getClassPK(object),
-			notificationTemplate.getFrom(), fromName, 0, subject,
-			toEmailAddress, toFullName);
+			notificationType.getClassName(object),
+			notificationType.getClassPK(object), notificationTemplate.getFrom(),
+			fromName, 0, subject, toEmailAddress, toFullName);
 	}
 
 	private String _formatString(String content) {
@@ -156,29 +172,15 @@ public class NotificationHelperImpl implements NotificationHelper {
 		return content;
 	}
 
-	private String _getClassName(Object object) {
-		Class<?> clazz = object.getClass();
-
-		return clazz.getName();
-	}
-
-	private long _getClassPK(Object object) {
-		if (!(object instanceof NotificationTemplate)) {
-			return 0;
-		}
-
-		NotificationTemplate notificationTemplate =
-			(NotificationTemplate)object;
-
-		return notificationTemplate.getPrimaryKey();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationHelperImpl.class);
 
 	@Reference
 	private NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
+
+	@Reference
+	private NotificationTypeRegistry _notificationTypeRegistry;
 
 	@Reference
 	private Portal _portal;

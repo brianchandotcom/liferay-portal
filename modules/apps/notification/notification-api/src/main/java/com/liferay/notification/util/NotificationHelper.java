@@ -24,7 +24,7 @@ public interface NotificationHelper {
 
 	public void sendNotification(
 			long userId, NotificationTemplate notificationTemplate,
-			Object object)
+			String notificationTypeKey, Object object)
 		throws PortalException;
 
 }

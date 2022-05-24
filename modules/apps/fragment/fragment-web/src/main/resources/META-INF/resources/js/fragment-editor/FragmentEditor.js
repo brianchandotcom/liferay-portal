@@ -226,10 +226,13 @@ const FragmentEditor = ({
 							</ClayTabs>
 						</div>
 
-						<div className="btn-group btn-group-nowrap float-right mt-1">
+						<div className="align-items-center btn-group btn-group-nowrap d-flex float-right">
 							{readOnly ? (
-								<span className="pr-3 pt-1 text-info">
-									<ClayIcon symbol="exclamation-circle" />
+								<span className="pr-3 text-info">
+									<ClayIcon
+										className="mr-2"
+										symbol="exclamation-circle"
+									/>
 
 									<span>
 										{Liferay.Language.get('read-only-view')}
@@ -239,12 +242,15 @@ const FragmentEditor = ({
 								<>
 									{propagationEnabled && (
 										<span
-											className="lfr-portal-tooltip pr-3 pt-1 text-info"
+											className="align-items-center d-flex lfr-portal-tooltip pr-3 text-info"
 											data-title={Liferay.Language.get(
 												'automatic-propagation-enabled-help'
 											)}
 										>
-											<ClayIcon symbol="exclamation-circle" />
+											<ClayIcon
+												className="mr-2"
+												symbol="exclamation-circle"
+											/>
 
 											<span>
 												{Liferay.Language.get(

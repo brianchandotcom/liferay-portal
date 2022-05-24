@@ -531,8 +531,8 @@ public class PoshiRunnerExecutor {
 						PoshiStackTraceUtil.setCurrentElement(executeElement);
 
 						SummaryLogger.failSummary(
-								_functionExecuteElement, throwable.getMessage(),
-								_poshiLogger.getDetailsLinkId());
+							_functionExecuteElement, throwable.getMessage(),
+							_poshiLogger.getDetailsLinkId());
 
 						_poshiLogger.ocularCommand(_functionExecuteElement);
 

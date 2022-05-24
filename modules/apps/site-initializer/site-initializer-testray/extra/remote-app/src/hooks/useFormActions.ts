@@ -12,6 +12,7 @@
  * details.
  */
 
+import {MutationOptions} from '@apollo/client';
 import {DocumentNode} from 'graphql';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -30,7 +31,16 @@ export type FormOptions = {
 	onClose: () => void;
 	onError: (error?: any) => void;
 	onSave: (param?: any) => void;
-	onSubmit: (data: any, options: OnSubmitOptions) => Promise<void>;
+	onSubmit: (
+		data: any,
+		onSubmitOptions: OnSubmitOptions,
+		mutationOptions?: Omit<MutationOptions, 'mutation'>
+	) => Promise<any>;
+	onSubmitAndSave: (
+		data: any,
+		onSubmitOptions: OnSubmitOptions,
+		mutationOptions?: Omit<MutationOptions, 'mutation'>
+	) => Promise<void>;
 };
 
 export type Form = {
@@ -73,7 +83,8 @@ const useFormActions = (): Form => {
 
 	const onSubmit = async (
 		data: any,
-		{createMutation, updateMutation}: OnSubmitOptions
+		{createMutation, updateMutation}: OnSubmitOptions,
+		options?: Omit<MutationOptions, 'mutation'>
 	) => {
 		const variables: any = {
 			data,
@@ -86,18 +97,25 @@ const useFormActions = (): Form => {
 		delete variables.data.id;
 
 		try {
-			await client.mutate({
+			return client.mutate({
 				mutation: variables.id ? updateMutation : createMutation,
 				variables,
+				...options,
 			});
-
-			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;
 		}
+	};
+
+	const onSubmitAndSave = async (
+		data: any,
+		onSubmitOptions: OnSubmitOptions,
+		options?: Omit<MutationOptions, 'mutation'>
+	) => {
+		await onSubmit(data, onSubmitOptions, options);
+		await onSave();
 	};
 
 	return {
@@ -123,6 +141,7 @@ const useFormActions = (): Form => {
 			onError,
 			onSave,
 			onSubmit,
+			onSubmitAndSave,
 		},
 	};
 };

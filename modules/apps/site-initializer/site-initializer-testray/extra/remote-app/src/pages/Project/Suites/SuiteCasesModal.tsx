@@ -136,7 +136,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	);
 };
 
-type State = {
+export type State = {
 	testrayCaseTypes: BoxItem[];
 	testrayComponents: BoxItem[];
 	testrayPriorities: BoxItem[];
@@ -145,18 +145,20 @@ type State = {
 	testrayTeams: BoxItem[];
 };
 
+export const initialState = {
+	testrayCaseTypes: [],
+	testrayComponents: [],
+	testrayPriorities: [],
+	testrayRequirements: [],
+	testraySubComponents: [],
+	testrayTeams: [],
+};
+
 const SuiteCasesModal: React.FC<SuiteCasesModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
 	type,
 }) => {
-	const [state, setState] = useState<State>({
-		testrayCaseTypes: [],
-		testrayComponents: [],
-		testrayPriorities: [],
-		testrayRequirements: [],
-		testraySubComponents: [],
-		testrayTeams: [],
-	});
+	const [state, setState] = useState<State>(initialState);
 
 	return (
 		<Modal

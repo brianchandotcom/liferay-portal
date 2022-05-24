@@ -12,17 +12,19 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import {CreateSuite, UpdateSuite} from '../../../graphql/mutations';
-import {TestraySuite} from '../../../graphql/queries';
+import {CreateSuiteCaseBatch} from '../../../graphql/mutations/testraySuiteCase';
+import {TestraySuite, getSuites} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
@@ -42,8 +44,10 @@ type SuiteFormData = {
 
 const SuiteForm = () => {
 	const {
-		form: {onClose, onSubmit},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
+
+	const [createSuiteCaseBatch] = useMutation(CreateSuiteCaseBatch);
 
 	const {setTabs} = useHeader({shouldUpdate: false});
 	const {projectId} = useParams();
@@ -78,8 +82,24 @@ const SuiteForm = () => {
 			{
 				createMutation: CreateSuite,
 				updateMutation: UpdateSuite,
-			}
-		);
+			},
+			{refetchQueries: [{query: getSuites}]}
+		)
+			.then((response) => {
+				const suiteId =
+					response.data?.createSuite?.id || context.testraySuite?.id;
+
+				return createSuiteCaseBatch({
+					variables: {
+						data: cases.map((caseId) => ({
+							caseId,
+							suiteId,
+						})),
+					},
+				});
+			})
+			.then(() => onSave())
+			.catch(() => onError());
 	};
 
 	const inputProps = {
@@ -91,7 +111,7 @@ const SuiteForm = () => {
 	const {modal} = useFormModal({
 		onSave: (value) => {
 			if (smartSuite) {
-				return setValue('caseParameters', value);
+				return setValue('caseParameters', JSON.stringify(value));
 			}
 
 			setCases(value);
@@ -100,13 +120,14 @@ const SuiteForm = () => {
 
 	return (
 		<Container className="container">
-			<Input label={i18n.translate('name')} name="name" {...inputProps} />
+			<Input {...inputProps} label={i18n.translate('name')} name="name" />
 
 			<Input
+				{...inputProps}
 				label={i18n.translate('description')}
 				name="description"
+				required={false}
 				type="textarea"
-				{...inputProps}
 			/>
 
 			<ClayCheckbox

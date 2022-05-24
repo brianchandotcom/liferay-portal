@@ -32,6 +32,7 @@ import {
 	TestrayComponent,
 	TestrayProject,
 	getCaseTypes,
+	getCases,
 	getComponents,
 } from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
@@ -154,6 +155,9 @@ const CaseForm = () => {
 			{
 				createMutation: CreateCase,
 				updateMutation: UpdateCase,
+			},
+			{
+				refetchQueries: [{query: getCases}],
 			}
 		);
 	};

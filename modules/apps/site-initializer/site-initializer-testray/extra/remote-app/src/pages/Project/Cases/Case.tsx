@@ -116,17 +116,14 @@ const Case = () => {
 							{
 								clickable: true,
 								key: 'product-version',
-								render: (_, {build}) => {
-									return build?.productVersion?.name;
-								},
+								render: (_, {build}) =>
+									build?.productVersion?.name,
 								value: i18n.translate('product-version'),
 							},
 							{
 								clickable: true,
 								key: 'run',
-								render: (run) => {
-									return run?.externalReferencePK;
-								},
+								render: (run) => run?.externalReferencePK,
 								size: 'lg',
 								value: i18n.translate('environment'),
 							},

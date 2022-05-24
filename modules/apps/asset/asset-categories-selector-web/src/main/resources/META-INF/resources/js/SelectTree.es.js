@@ -15,38 +15,20 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
-function performFilter(value, tree) {
-	const getItems = (previous, item) => {
-		if (!item.vocabulary && item.name.toLowerCase().indexOf(value) !== -1) {
-			const immutableItem = {...item};
-
-			if (Array.isArray(immutableItem.children)) {
-				immutableItem.children = immutableItem.children.reduce(
-					getItems,
-					[]
-				);
-			}
-
-			previous.push(immutableItem);
-
-			return previous;
+const nodeByName = (items, name) => {
+	return items.reduce(function reducer(acc, item) {
+		if (item.name?.toLowerCase().includes(name.toLowerCase())) {
+			acc.push(item);
+		}
+		else if (item.children) {
+			acc.concat(item.children.reduce(reducer, acc));
 		}
 
-		if (Array.isArray(item.children)) {
-			const children = item.children.reduce(getItems, []);
-
-			if (children.length) {
-				previous.push({...item, children});
-			}
-		}
-
-		return previous;
-	};
-
-	return tree.reduce(getItems, []);
-}
+		return acc;
+	}, []);
+};
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -58,25 +40,9 @@ function visit(nodes, callback) {
 	});
 }
 
-function computePreSelectedItems(items) {
-	const result = {};
-
-	visit(items, (item) => {
-		if (item.selected) {
-			result[item.id] = {
-				categoryId: item.vocabulary ? 0 : item.id,
-				nodePath: item.nodePath,
-				value: item.name,
-				vocabularyId: item.vocabulary ? item.id : 0,
-			};
-		}
-	});
-
-	return result;
-}
-
 export function SelectTree({
 	filterQuery,
+	inheritSelection,
 	itemSelectorSaveEvent,
 	items,
 	multiSelection,
@@ -87,67 +53,67 @@ export function SelectTree({
 		new Set(selectedCategoryIds)
 	);
 
-	const isComputePreSelectedRef = useRef(false);
-
-	const selectedItemsRef = useRef({});
-
 	const filteredItems = useMemo(() => {
 		if (!filterQuery) {
 			return items;
 		}
 
-		return performFilter(filterQuery.toLowerCase(), [...items]);
+		return nodeByName(items, filterQuery);
 	}, [items, filterQuery]);
 
-	const handleMultipleSelectionChange = (selection, item) => {
-		let selected = true;
+	const itemsById = useMemo(() => {
+		const flattenItems = {};
 
-		if (!selection.has(item.id)) {
-			selected = false;
-		}
+		visit(items, (item) => {
+			flattenItems[item.id] = item;
+		});
 
-		// Traverse the tree only once to get the pre-selected items. It is cheaper
-		// to control the unchecked state by iterating over the array instead of
-		// traversing the tree each change.
+		return flattenItems;
+	}, [items]);
 
-		if (!isComputePreSelectedRef.current) {
-			selectedItemsRef.current = {
-				...selectedItemsRef.current,
-				...computePreSelectedItems(items),
-			};
+	useEffect(() => {
+		const selectedItems = {};
 
-			isComputePreSelectedRef.current = true;
-		}
+		selectedKeys.forEach((key) => {
+			const item = itemsById[key];
 
-		selectedItemsRef.current = {
-			...selectedItemsRef.current,
-			[item.id]: {
+			if (item.disabled) {
+				return;
+			}
+
+			selectedItems[item.id] = {
 				categoryId: item.vocabulary ? 0 : item.id,
 				nodePath: item.nodePath,
-				unchecked: selected,
 				value: item.name,
 				vocabularyId: item.vocabulary ? item.id : 0,
-			},
-		};
+			};
+		});
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-			data: selectedItemsRef.current,
+			data: selectedItems,
 		});
-	};
+	}, [selectedKeys, itemsById, itemSelectorSaveEvent]);
 
-	const handleSingleSelectionChange = (event, item) => {
+	const onClick = (event, item, selection) => {
 		event.preventDefault();
 
-		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-			data: {
-				[item.id]: {
-					categoryId: item.vocabulary ? 0 : item.id,
-					nodePath: item.nodePath,
-					value: item.name,
-					vocabularyId: item.vocabulary ? item.id : 0,
-				},
-			},
-		});
+		if (!inheritSelection && item.disabled) {
+			return;
+		}
+
+		selection.toggle(item.id);
+	};
+
+	const onKeyDown = (event, item, selection) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+
+			if (!inheritSelection && item.disabled) {
+				return;
+			}
+
+			selection.toggle(item.id);
+		}
 	};
 
 	return (
@@ -156,26 +122,26 @@ export function SelectTree({
 			onItemsChange={(items) => onItems(items)}
 			onSelectionChange={(keys) => setSelectionChange(keys)}
 			selectedKeys={selectedKeys}
-			selectionMode={multiSelection ? 'multiple' : 'single'}
+			selectionMode={
+				inheritSelection
+					? 'multiple-recursive'
+					: multiSelection
+					? 'multiple'
+					: 'single'
+			}
 			showExpanderOnHover={false}
 		>
 			{(item, selection) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) =>
-							!multiSelection &&
-							!item.disabled &&
-							handleSingleSelectionChange(event, item)
-						}
+						onClick={(event) => onClick(event, item, selection)}
+						onKeyDown={(event) => onKeyDown(event, item, selection)}
 					>
-						{multiSelection && !item.disabled && (
+						{(inheritSelection ||
+							(multiSelection && !item.disabled)) && (
 							<ClayCheckbox
-								onChange={() =>
-									handleMultipleSelectionChange(
-										selection,
-										item
-									)
-								}
+								onChange={() => selection.toggle(item.id)}
+								tabIndex="-1"
 							/>
 						)}
 
@@ -188,19 +154,19 @@ export function SelectTree({
 						{(item) => (
 							<ClayTreeView.Item
 								onClick={(event) =>
-									!multiSelection &&
-									!item.disabled &&
-									handleSingleSelectionChange(event, item)
+									onClick(event, item, selection)
+								}
+								onKeyDown={(event) =>
+									onKeyDown(event, item, selection)
 								}
 							>
-								{multiSelection && !item.disabled && (
+								{(inheritSelection ||
+									(multiSelection && !item.disabled)) && (
 									<ClayCheckbox
 										onChange={() =>
-											handleMultipleSelectionChange(
-												selection,
-												item
-											)
+											selection.toggle(item.id)
 										}
+										tabIndex="-1"
 									/>
 								)}
 

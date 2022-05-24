@@ -16,107 +16,14 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {Treeview} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {SelectTree} from './SelectTree.es';
-
-function visit(nodes, callback) {
-	nodes.forEach((node) => {
-		callback(node);
-
-		if (node.children) {
-			visit(node.children, callback);
-		}
-	});
-}
-
-function getFilter(filterQuery) {
-	if (!filterQuery) {
-		return null;
-	}
-
-	const filterQueryLowerCase = filterQuery.toLowerCase();
-
-	return (node) =>
-		!node.vocabulary &&
-		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
-}
-
-function OldSelectTree({
-	filterQuery,
-	itemSelectorSaveEvent,
-	items,
-	multiSelection,
-}) {
-	const selectedNodesRef = useRef(null);
-
-	const handleSelectionChange = (selectedNodes) => {
-		const data = {};
-
-		// Mark newly selected nodes as selected.
-
-		visit(items, (node) => {
-			if (selectedNodes.has(node.id)) {
-				data[node.id] = {
-					categoryId: node.vocabulary ? 0 : node.id,
-					nodePath: node.nodePath,
-					value: node.name,
-					vocabularyId: node.vocabulary ? node.id : 0,
-				};
-			}
-		});
-
-		// Mark unselected nodes as unchecked.
-
-		if (selectedNodesRef.current) {
-			Object.entries(selectedNodesRef.current).forEach(([id, node]) => {
-				if (!selectedNodes.has(id)) {
-					data[id] = {
-						...node,
-						unchecked: true,
-					};
-				}
-			});
-		}
-
-		selectedNodesRef.current = data;
-
-		const openerWindow = Liferay.Util.getOpener();
-
-		openerWindow.Liferay.fire(itemSelectorSaveEvent, {data});
-	};
-
-	const initialSelectedNodeIds = useMemo(() => {
-		const selectedNodes = [];
-
-		visit(items, (node) => {
-			if (node.selected) {
-				selectedNodes.push(node.id);
-			}
-		});
-
-		return selectedNodes;
-	}, [items]);
-
-	return (
-		<Treeview
-			NodeComponent={Treeview.Card}
-			filter={getFilter(filterQuery)}
-			initialSelectedNodeIds={initialSelectedNodeIds}
-			multiSelection={multiSelection}
-			nodes={items}
-			onSelectedNodesChange={handleSelectionChange}
-		/>
-	);
-}
-
-const Tree = Liferay.FeatureFlags['LPS-144630'] ? SelectTree : OldSelectTree;
-
 function SelectCategory({
 	addCategoryURL,
+	inheritSelection,
 	itemSelectorSaveEvent,
 	moveCategory,
 	multiSelection,
@@ -188,8 +95,9 @@ function SelectCategory({
 						id={`${namespace}categoryContainer`}
 					>
 						{items.length > 0 ? (
-							<Tree
+							<SelectTree
 								filterQuery={filterQuery}
+								inheritSelection={inheritSelection}
 								itemSelectorSaveEvent={itemSelectorSaveEvent}
 								items={items}
 								multiSelection={multiSelection}

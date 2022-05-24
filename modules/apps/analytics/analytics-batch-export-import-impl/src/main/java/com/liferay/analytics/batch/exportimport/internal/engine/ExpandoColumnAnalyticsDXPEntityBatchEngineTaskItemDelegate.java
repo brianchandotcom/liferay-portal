@@ -16,7 +16,6 @@ package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.Serializable;
 
@@ -105,52 +103,23 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		DynamicQuery dynamicQuery = _expandoColumnLocalService.dynamicQuery();
 
-		Property nameProperty = PropertyFactoryUtil.forName("name");
 		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
 
 		if ((organizationExpandoTable != null) && (userExpandoTable != null)) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.or(
 					tableIdProperty.eq(organizationExpandoTable.getTableId()),
-					RestrictionsFactoryUtil.and(
-						tableIdProperty.eq(userExpandoTable.getTableId()),
-						nameProperty.in(
-							_getUserExpandoColumnNames(companyId)))));
+					tableIdProperty.eq(userExpandoTable.getTableId())));
 		}
 		else if (organizationExpandoTable != null) {
 			dynamicQuery.add(
 				tableIdProperty.eq(organizationExpandoTable.getTableId()));
 		}
 		else {
-			dynamicQuery.add(
-				RestrictionsFactoryUtil.and(
-					tableIdProperty.eq(userExpandoTable.getTableId()),
-					nameProperty.in(_getUserExpandoColumnNames(companyId))));
+			dynamicQuery.add(tableIdProperty.eq(userExpandoTable.getTableId()));
 		}
 
 		return buildDynamicQuery(companyId, dynamicQuery, filter);
-	}
-
-	private List<String> _getUserExpandoColumnNames(long companyId) {
-		List<String> expandoColumnNames = new ArrayList<>();
-
-		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
-
-		List<ExpandoColumn> defaultTableColumns =
-			_expandoColumnLocalService.getDefaultTableColumns(
-				companyId, User.class.getName());
-
-		for (ExpandoColumn defaultTableColumn : defaultTableColumns) {
-			if (ArrayUtil.contains(
-					analyticsConfiguration.syncedUserFieldNames(),
-					defaultTableColumn.getName())) {
-
-				expandoColumnNames.add(defaultTableColumn.getName());
-			}
-		}
-
-		return expandoColumnNames;
 	}
 
 	@Reference

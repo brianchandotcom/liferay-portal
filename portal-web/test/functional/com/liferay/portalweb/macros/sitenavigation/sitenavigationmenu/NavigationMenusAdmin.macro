@@ -188,32 +188,6 @@ definition {
 		Modal.save();
 	}
 
-	macro addPage {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		Click(locator1 = "Button#PLUS");
-
-		MenuItem.click(menuItem = "Page");
-
-		Pause(locator1 = "1000");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.expandTree();
-
-		for (var pageName : list "${pageNameList}") {
-			Check.checkNotVisible(
-				key_nodeName = "${pageName}",
-				locator1 = "Treeview#NODE_CHECKBOX");
-		}
-
-		Button.click(button = "Select");
-
-		Alert.viewSuccessMessage();
-
-		IFrame.selectTopFrame();
-	}
-
 	macro addTranslation {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 

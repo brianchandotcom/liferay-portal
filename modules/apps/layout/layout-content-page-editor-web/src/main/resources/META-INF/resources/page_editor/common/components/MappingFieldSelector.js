@@ -42,12 +42,11 @@ export default function MappingFieldSelector({
 			className={classNames('mb-2 mt-3', {'has-warning': hasWarnings})}
 			small
 		>
-			<label htmlFor="mappingSelectorFieldSelect">
+			<label htmlFor={mappingSelectorFieldSelectId}>
 				{Liferay.Language.get('field')}
 			</label>
 
 			<ClaySelect
-				aria-label={Liferay.Language.get('field')}
 				disabled={!(fields && !!fields.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}

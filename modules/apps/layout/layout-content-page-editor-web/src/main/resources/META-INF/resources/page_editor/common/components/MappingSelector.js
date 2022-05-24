@@ -365,12 +365,11 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		<>
 			{config.layoutType === LAYOUT_TYPES.display && (
 				<ClayForm.Group small>
-					<label htmlFor="mappingSelectorSourceSelect">
+					<label htmlFor={mappingSelectorSourceSelectId}>
 						{Liferay.Language.get('source')}
 					</label>
 
 					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('source')}
 						className="pr-4 text-truncate"
 						id={mappingSelectorSourceSelectId}
 						onChange={(event) => {

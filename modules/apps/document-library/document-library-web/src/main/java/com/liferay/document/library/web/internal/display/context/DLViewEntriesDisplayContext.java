@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 
@@ -138,6 +139,13 @@ public class DLViewEntriesDisplayContext {
 				permissionChecker, fileEntry, ActionKeys.VIEW)) {
 
 			availableActions.add("download");
+		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) &&
+			DLFileEntryPermission.contains(
+				permissionChecker, fileEntry, ActionKeys.PERMISSIONS)) {
+
+			availableActions.add("permissions");
 		}
 
 		return availableActions;

@@ -121,6 +121,7 @@ public class DLAdminManagementToolbarDisplayContext
 		DigitalSignatureConfiguration digitalSignatureConfiguration =
 			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
 				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
+		boolean enableBulkPermissions = _isEnableBulkPermissions();
 		boolean enableOnBulk = _isEnableOnBulk();
 		boolean stagedActions = _isStagedActions();
 		User user = _themeDisplay.getUser();
@@ -211,6 +212,16 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "checkout[document]"));
+				dropdownItem.setQuickAction(false);
+			}
+		).add(
+			() ->
+				stagedActions && !user.isDefaultUser() && enableBulkPermissions,
+			dropdownItem -> {
+				dropdownItem.putData("action", "permissions");
+				dropdownItem.setIcon("password-policies");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "permissions"));
 				dropdownItem.setQuickAction(false);
 			}
 		).build();
@@ -829,6 +840,14 @@ public class DLAdminManagementToolbarDisplayContext
 		return DLUtil.hasWorkflowDefinitionLink(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 			folderId, fileEntryTypeId);
+	}
+
+	private boolean _isEnableBulkPermissions() {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isEnableOnBulk() {

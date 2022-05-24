@@ -1023,33 +1023,45 @@
 					const confirmSelection =
 						currentTarget.dataset['confirmSelection'] === 'true';
 
-					if (
-						!confirmSelection ||
-						confirm(
-							currentTarget.dataset['confirmSelectionMessage']
-						)
-					) {
-						if (disableButton) {
-							selectorButtons.forEach((selectorButton) => {
-								selectorButton.disabled = false;
-							});
-
-							currentTarget.disabled = true;
+					const _openConfirm = ({message, onConfirm}) => {
+						if (Liferay.FeatureFlags.enableCustomDialogs) {
+							Liferay.Util.openConfirmModal({message, onConfirm});
 						}
-
-						const result = Util.getAttributes(
-							currentTarget,
-							'data-'
-						);
-
-						openingLiferay.fire(selectEventName, result);
-
-						const window = Util.getWindow();
-
-						if (window) {
-							window.hide();
+						else if (confirm(message)) {
+							onConfirm(true);
 						}
-					}
+					};
+
+					_openConfirm({
+						message:
+							currentTarget.dataset['confirmSelectionMessage'],
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed || !confirmSelection) {
+								if (disableButton) {
+									selectorButtons.forEach(
+										(selectorButton) => {
+											selectorButton.disabled = false;
+										}
+									);
+
+									currentTarget.disabled = true;
+								}
+
+								const result = Util.getAttributes(
+									currentTarget,
+									'data-'
+								);
+
+								openingLiferay.fire(selectEventName, result);
+
+								const window = Util.getWindow();
+
+								if (window) {
+									window.hide();
+								}
+							}
+						},
+					});
 				},
 				'.selector-button'
 			);

@@ -34,6 +34,7 @@ import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
+import openConfirm from '../../../../../../../app/utils/openConfirm';
 import {useId} from '../../../../../../../app/utils/useId';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
@@ -148,14 +149,20 @@ export function CollectionGeneralPanel({item}) {
 			}
 		);
 
-		return (
-			isLinkedToFilter &&
-			!confirm(
-				`${Liferay.Language.get(
-					'if-you-change-the-collection-you-unlink-the-collection-filter'
-				)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`
-			)
-		);
+		let result = false;
+
+		openConfirm({
+			message: `${Liferay.Language.get(
+				'if-you-change-the-collection-you-unlink-the-collection-filter'
+			)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`,
+			onConfirm: (isConfirmed) => {
+				if (!isConfirmed && isLinkedToFilter) {
+					result = true;
+				}
+			},
+		});
+
+		return result;
 	};
 
 	const handleConfigurationChanged = useCallback(

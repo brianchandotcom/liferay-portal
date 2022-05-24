@@ -321,7 +321,11 @@ definition {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 
 		if ("${item}" == "Page") {
-			if (isSet(pageNames)) {
+			if (isSet(customName)) {
+				NavigationMenusAdmin._editItemPage(name = "${customName}");
+			}
+
+			if (isSet(pageName)) {
 				Click(locator1 = "Button#CHOOSE");
 
 				Pause(locator1 = "1000");
@@ -330,20 +334,13 @@ definition {
 
 				Portlet.expandTree();
 
-				for (var pageName : list "${pageNames}") {
-					Check.checkNotVisible(
-						key_nodeName = "${pageName}",
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+				Click(
+					key_nodeName = "${pageName}",
+					locator1 = "Treeview#NODE_UNSELECTED");
 
 				SelectFrameTop();
 
 				Button.click(button = "Select");
-
-				IFrame.selectTopFrame();
-			}
-			else {
-				NavigationMenusAdmin._editItemPage(name = "${name}");
 			}
 		}
 		else if ("${item}" == "Submenu") {

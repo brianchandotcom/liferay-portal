@@ -359,7 +359,7 @@ definition {
 		task ("Add a page item") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Page Name");
+				pageNameList = "Test Page Name");
 		}
 
 		task ("Assert the page item was added") {
@@ -413,7 +413,7 @@ definition {
 		}
 
 		task ("Add a page item") {
-			NavigationMenusAdmin.addPage(pageNames = "Test Page Name");
+			NavigationMenusAdmin.addPage(pageNameList = "Test Page Name");
 		}
 
 		task ("Assert the page item was added") {
@@ -1034,9 +1034,9 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 
 			NavigationMenusAdmin.editItem(
+				customName = "Test Page Name 3",
 				item = "Page",
-				itemName = "Test Page Name 2",
-				name = "Test Page Name 3");
+				itemName = "Test Page Name 2");
 		}
 
 		task ("View the name of the second page item was successfully changed") {

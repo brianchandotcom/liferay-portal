@@ -85,7 +85,7 @@ definition {
 		task ("Add both content pages to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Template Content Page,Test Regular Content Page");
+				pageNameList = "Test Template Content Page,Test Regular Content Page");
 		}
 
 		task ("Add a URL item to the navigation menu") {

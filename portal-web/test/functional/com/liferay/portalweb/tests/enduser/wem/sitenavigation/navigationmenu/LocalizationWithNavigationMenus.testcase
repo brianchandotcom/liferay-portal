@@ -188,7 +188,7 @@ definition {
 
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Page Name");
+				pageNameList = "Test Page Name");
 		}
 
 		task ("Click on the page item to open the item sidebar") {

@@ -1149,4 +1149,92 @@ definition {
 			optionValue = "Option 1");
 	}
 
+	@description = "Verify that is possible to Collapse a Fields Group"
+	@priority = "3"
+	test CanBeCollapsedAndTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text ${language}");
+
+			
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric ${language}");
+
+			
+		}
+
+		DEBuilder.collapsibleFieldsGroup(fieldsGroup = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		
+
+		Form.viewExpandedCollapseButton();
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			Form.viewExpandedCollapseButton();
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text ${language}");
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric ${language}");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text ${language}");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric ${language}");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		}
+
+		
+	}
+
 }

@@ -1,8 +1,8 @@
 @component-name = "portal-security"
 definition {
 
-	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.release = "quarantine";
+	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Security";
 
 	setUp {
@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-42767. Service access policy smoke."
+	@description = "This is a use case for LRQA-42767. Service access policy smoke. Blocked by POSHI-354."
 	@priority = "5"
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";

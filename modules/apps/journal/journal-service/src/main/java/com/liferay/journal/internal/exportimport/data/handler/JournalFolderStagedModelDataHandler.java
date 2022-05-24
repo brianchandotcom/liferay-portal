@@ -198,8 +198,9 @@ public class JournalFolderStagedModelDataHandler
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = _journalFolderLocalService.addFolder(
-					userId, groupId, parentFolderId, name,
-					folder.getDescription(), serviceContext);
+					folder.getExternalReferenceCode(), userId, groupId,
+					parentFolderId, name, folder.getDescription(),
+					serviceContext);
 			}
 			else {
 				String name = _journalFolderLocalService.getUniqueFolderName(
@@ -217,8 +218,8 @@ public class JournalFolderStagedModelDataHandler
 				null, groupId, parentFolderId, folder.getName(), 2);
 
 			importedFolder = _journalFolderLocalService.addFolder(
-				userId, groupId, parentFolderId, name, folder.getDescription(),
-				serviceContext);
+				folder.getExternalReferenceCode(), userId, groupId,
+				parentFolderId, name, folder.getDescription(), serviceContext);
 		}
 
 		importedFolder.setRestrictionType(folder.getRestrictionType());

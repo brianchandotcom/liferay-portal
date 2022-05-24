@@ -677,14 +677,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		int retestAmount = _getRetestAmount();
 
 		if (retestAmount != 1) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Invalid parameter input, ");
-			sb.append("when retesting there must be no cherry-picked SHAs.\n");
-			sb.append("Cherry-picked SHAs provided: ");
-			sb.append(cherryPickSHAs);
-
-			failBuildRunner(sb.toString());
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					"Cherry-picked SHAs may not be used when retesting."));
 		}
 	}
 

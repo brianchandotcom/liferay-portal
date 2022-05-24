@@ -117,21 +117,24 @@ public class SegmentsEntryProviderRegistryImpl
 
 	@Override
 	public long[] getSegmentsEntryIds(
-			long groupId, String className, long classPK, Context context)
+			long groupId, String className, long classPK, Context context,
+			long[] segmentEntryIds)
 		throws PortalException {
 
-		long[] segmentsEntryIds = new long[0];
+		long[] finalSegmentsEntryIds = new long[0];
 
 		for (SegmentsEntryProvider segmentsEntryProvider :
 				_serviceTrackerList) {
 
-			segmentsEntryIds = ArrayUtil.append(
-				segmentsEntryIds,
+			finalSegmentsEntryIds = ArrayUtil.append(
+				finalSegmentsEntryIds,
 				segmentsEntryProvider.getSegmentsEntryIds(
-					groupId, className, classPK, context, segmentsEntryIds));
+					groupId, className, classPK, context, segmentEntryIds,
+					finalSegmentsEntryIds));
 		}
 
-		Set<Long> segmentsEntryIdsSet = SetUtil.fromArray(segmentsEntryIds);
+		Set<Long> segmentsEntryIdsSet = SetUtil.fromArray(
+			finalSegmentsEntryIds);
 
 		return ArrayUtil.toLongArray(segmentsEntryIdsSet);
 	}

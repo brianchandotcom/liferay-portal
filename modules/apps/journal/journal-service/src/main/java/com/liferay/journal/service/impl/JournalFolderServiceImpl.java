@@ -63,8 +63,23 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, ActionKeys.ADD_FOLDER);
 
 		return journalFolderLocalService.addFolder(
-			getUserId(), groupId, parentFolderId, name, description,
+			null, getUserId(), groupId, parentFolderId, name, description,
 			serviceContext);
+	}
+
+	@Override
+	public JournalFolder addFolder(
+			String externalReferenceCode, long groupId, long parentFolderId,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, parentFolderId, ActionKeys.ADD_FOLDER);
+
+		return journalFolderLocalService.addFolder(
+			externalReferenceCode, getUserId(), groupId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	@Override

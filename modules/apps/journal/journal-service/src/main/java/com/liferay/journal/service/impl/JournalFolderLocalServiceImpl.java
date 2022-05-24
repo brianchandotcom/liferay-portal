@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.exception.DuplicateJournalFolderExternalReferenceCodeException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.validation.JournalFolderModelValidator;
@@ -35,6 +36,7 @@ import com.liferay.journal.service.base.JournalFolderLocalServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.util.JournalValidator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -102,8 +104,20 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public JournalFolder addFolder(
-			long userId, long groupId, long parentFolderId, String name,
+		long userId, long groupId, long parentFolderId, String name,
 			String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			null, userId, groupId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	@Override
+	public JournalFolder addFolder(
+			String externalReferenceCode, long userId, long groupId,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Folder
@@ -116,11 +130,18 @@ public class JournalFolderLocalServiceImpl
 
 		long folderId = counterLocalService.increment();
 
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(folderId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		JournalFolder folder = journalFolderPersistence.create(folderId);
 
 		folder.setUuid(serviceContext.getUuid());
 		folder.setGroupId(groupId);
 		folder.setCompanyId(user.getCompanyId());
+		folder.setExternalReferenceCode(externalReferenceCode);
 		folder.setUserId(user.getUserId());
 		folder.setUserName(user.getFullName());
 		folder.setParentFolderId(parentFolderId);
@@ -1527,6 +1548,22 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return _getRestrictedAncestorFolder(folder.getParentFolder());
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		JournalFolder journalFolder = journalFolderPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (journalFolder != null) {
+			throw new DuplicateJournalFolderExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate structure content folder entry",
+					" external reference code ", externalReferenceCode,
+					" in group ", groupId));
+		}
 	}
 
 	@Reference

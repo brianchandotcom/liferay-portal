@@ -495,6 +495,7 @@
 		<exception>DuplicateArticleExternalReferenceCode</exception>
 		<exception>DuplicateArticleId</exception>
 		<exception>DuplicateFeedId</exception>
+		<exception>DuplicateFolderExternalReferenceCode</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>FeedContentField</exception>
 		<exception>FeedId</exception>

@@ -1552,4 +1552,75 @@ definition {
 			value = "678");
 	}
 
+	@description = "Verify that Options chosen for a Grid field inside a Fields Group persists"
+	@priority = "5"
+	test CanSelectGridOptionsInFieldsGroupTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Grid",
+			fieldName = "Grid",
+			targetFieldLabel = "Text");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Rows",
+			optionValueList = "Option 1,Option 2,Option 3,Option 4");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Columns",
+			optionValueList = "Option 1,Option 2,Option 3,Option 4");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		for (var index : list "1,2") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		for (var index : list "3,4") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		for (var index : list "1,2") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		for (var index : list "3,4") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+	}
+
 }

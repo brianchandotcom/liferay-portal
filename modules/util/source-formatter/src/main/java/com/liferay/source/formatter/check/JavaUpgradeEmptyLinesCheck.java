@@ -59,10 +59,10 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 
 				Matcher matcher2 = pattern2.matcher(methodCalls);
 
-				String previousMethodCallFirstParameter = StringPool.BLANK;
-				int previousMethodCallEndLineNumber = -1;
-				int startPos = matcher1.start();
 				int methodCallEndPosition = -1;
+				int previousMethodCallEndLineNumber = -1;
+				String previousMethodCallFirstParameter = StringPool.BLANK;
+				int startPos = matcher1.start();
 
 				while (matcher2.find()) {
 					String methodCall = JavaSourceUtil.getMethodCall(
@@ -103,11 +103,10 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 							content, StringPool.NEW_LINE, StringPool.BLANK,
 							startPos + methodCallEndPosition);
 					}
-					else if (!StringUtil.equals(
-								previousMethodCallFirstParameter,
-								firstParameter) &&
-							 ((previousMethodCallEndLineNumber + 2) !=
-								 lineNumber)) {
+
+					if (!StringUtil.equals(
+							previousMethodCallFirstParameter, firstParameter) &&
+						((previousMethodCallEndLineNumber + 2) != lineNumber)) {
 
 						return StringUtil.insert(
 							content, StringPool.NEW_LINE,

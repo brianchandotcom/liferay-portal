@@ -71,7 +71,13 @@ public class CompanyLogServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			_checkPermission(httpServletRequest);
+			PermissionChecker permissionChecker = _getPermissionChecker(
+				httpServletRequest);
+
+			if (!permissionChecker.isCompanyAdmin()) {
+				throw new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+			}
 
 			String path = HttpComponentsUtil.fixPath(
 				httpServletRequest.getPathInfo());
@@ -79,11 +85,13 @@ public class CompanyLogServlet extends HttpServlet {
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 			if (pathArray.length == 0) {
-				_listCompaniesLogFiles(httpServletRequest, httpServletResponse);
+				_listCompaniesLogFiles(
+					permissionChecker, httpServletRequest, httpServletResponse);
 			}
 			else if (pathArray.length == 2) {
 				_downloadLogFile(
-					httpServletRequest, httpServletResponse, pathArray);
+					permissionChecker, httpServletRequest, httpServletResponse,
+					pathArray);
 			}
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
@@ -105,26 +113,8 @@ public class CompanyLogServlet extends HttpServlet {
 		}
 	}
 
-	private void _checkPermission(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		User user = _portal.getUser(httpServletRequest);
-
-		if (user == null) {
-			throw new PrincipalException(
-				"The current user is not company admin");
-		}
-
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			throw new PrincipalException.MustBeCompanyAdmin(
-				permissionChecker.getUserId());
-		}
-	}
-
 	private void _downloadLogFile(
+			PermissionChecker permissionChecker,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String[] pathArray)
 		throws Exception {
@@ -136,10 +126,9 @@ public class CompanyLogServlet extends HttpServlet {
 				"No Company exists with the primary key " + companyId);
 		}
 
-		if (!_isViewCompanyAllowed(httpServletRequest, companyId)) {
-			throw new PrincipalException(
-				"The current user is not current company " + companyId +
-					" admin");
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		String fileName = pathArray[1];
@@ -174,17 +163,22 @@ public class CompanyLogServlet extends HttpServlet {
 		}
 	}
 
-	private boolean _isViewCompanyAllowed(
-			HttpServletRequest httpServletRequest, long companyId)
+	private PermissionChecker _getPermissionChecker(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_portal.getUser(httpServletRequest));
+		User user = _portal.getUser(httpServletRequest);
 
-		return permissionChecker.isCompanyAdmin(companyId);
+		if (user == null) {
+			throw new PrincipalException(
+				"The current user is not authenticated");
+		}
+
+		return _permissionCheckerFactory.create(user);
 	}
 
 	private void _listCompaniesLogFiles(
+			PermissionChecker permissionChecker,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -197,9 +191,7 @@ public class CompanyLogServlet extends HttpServlet {
 
 		_companyLocalService.forEachCompany(
 			company -> {
-				if (_isViewCompanyAllowed(
-						httpServletRequest, company.getCompanyId())) {
-
+				if (permissionChecker.isCompanyAdmin(company.getCompanyId())) {
 					File logFilesDir = new File(
 						StringBundler.concat(
 							StringUtil.replace(

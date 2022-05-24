@@ -359,7 +359,7 @@
 </tr>
 <tr>
 	<td>CHECKOUT_SUMMARY_PAYMENT_TERM</td>
-	<td>//div[contains(@class,'payment-term')]/div[contains(.,'${key_paymentTerm}')]</td>
+	<td>//div[contains(@class,'payment-method')][contains(.,'Payment Terms')]/div[contains(.,'${key_paymentTerm}')]</td>
 	<td></td>
 </tr>
 <tr>

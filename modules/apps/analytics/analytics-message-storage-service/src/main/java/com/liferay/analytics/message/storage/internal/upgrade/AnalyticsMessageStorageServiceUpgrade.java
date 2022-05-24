@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.storage.internal.upgrade;
 
 import com.liferay.analytics.message.storage.internal.upgrade.v1_1_0.util.AnalyticsDeleteMessageTable;
+import com.liferay.analytics.message.storage.internal.upgrade.v1_2_0.util.AnalyticsAssociationChangeTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +31,9 @@ public class AnalyticsMessageStorageServiceUpgrade
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0", AnalyticsDeleteMessageTable.create());
+
+		registry.register(
+			"1.1.0", "1.2.0", AnalyticsAssociationChangeTable.create());
 	}
 
 }

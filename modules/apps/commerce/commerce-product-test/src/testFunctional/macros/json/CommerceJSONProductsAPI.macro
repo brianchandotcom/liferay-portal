@@ -233,6 +233,33 @@ definition {
 		return "${productsCount}";
 	}
 
+	macro _getProductId {
+		if (isSet(productSKU)) {
+			var search = "${productSKU}";
+		}
+
+		if (isSet(productName)) {
+			var search = "${productName}";
+		}
+
+		var search = StringUtil.replace("${search}", " ", "%20");
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?search=%22${search}%22 \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var productId = JSONCurlUtil.get("${curl}", "$..['productId']");
+
+		return "${productId}";
+	}
+
 	macro _getSKUId {
 		Variables.assertDefined(parameterList = "${productSKU}");
 

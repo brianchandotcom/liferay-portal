@@ -33,6 +33,10 @@ const DISPLAY_SIZES = {
 };
 
 export function fieldIsDisabled(item, field) {
+	if (field.disabled) {
+		return true;
+	}
+
 	return (
 		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
 		item.config?.widthType === CONTAINER_WIDTH_TYPES.fixed &&

@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:list-type:list-type-api")
+	compileOnly project(":apps:notification:notification-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:object:object-runtime-api")

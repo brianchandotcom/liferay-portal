@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.notification.model,\
 	com.liferay.notification.service,\
 	com.liferay.notification.service.persistence,\
+	com.liferay.notification.type,\
 	com.liferay.notification.util

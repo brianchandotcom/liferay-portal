@@ -123,6 +123,8 @@ function ImportForm({
 			const newDBFields = getFieldsFromSchema(schema);
 
 			setDbFields(newDBFields);
+
+			toggleDownloadTemplateAlert(schema);
 		}
 
 		function handleFileSchemaUpdate({fileContent, schema}) {
@@ -137,6 +139,19 @@ function ImportForm({
 			}
 		}
 
+		function toggleDownloadTemplateAlert(schema) {
+			const downloadTemplateAlert = document.getElementById(
+				`${portletNamespace}downloadTemplateAlert`
+			);
+
+			if (schema) {
+				downloadTemplateAlert.classList.remove('hide');
+			}
+			else {
+				downloadTemplateAlert.classList.add('hide');
+			}
+		}
+
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
@@ -146,7 +161,7 @@ function ImportForm({
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 		};
-	}, []);
+	}, [portletNamespace]);
 
 	const formIsVisible = !!(
 		dbFields.optional.length + dbFields.required.length

@@ -66,30 +66,29 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							</clay:row>
 
 							<clay:alert
+								cssClass="hide"
 								displayType="info"
+								id='<%= liferayPortletResponse.getNamespace() + "downloadTemplateAlert" %>'
 								title="download-a-sample-file-for-this-entity"
 							>
 								<clay:link
 									cssClass="link-primary single-link"
-									disabled="<%= true %>"
 									href="#"
 									id='<%= liferayPortletResponse.getNamespace() + "downloadBatchPlannerPlanTemplate" %>'
 									label="download"
 								/>
-							</clay:alert>
 
-							<liferay-frontend:component
-								context='<%=
-									HashMapBuilder.<String, Object>put(
-										"externalReferenceCode", liferayPortletResponse.getNamespace() + "internalClassName"
-									).put(
-										"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadBatchPlannerPlanTemplate"
-									).put(
-										"type", "batchPlannerTemplate"
-									).build()
-								%>'
-								module="js/DownloadHelper"
-							/>
+								<liferay-frontend:component
+									context='<%=
+										HashMapBuilder.<String, Object>put(
+											"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadBatchPlannerPlanTemplate"
+										).put(
+											"type", "batchPlannerTemplate"
+										).build()
+									%>'
+									module="js/DownloadHelper"
+								/>
+							</clay:alert>
 
 							<div class="mt-2">
 								<clay:checkbox

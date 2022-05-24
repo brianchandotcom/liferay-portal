@@ -16,7 +16,6 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useContext, useReducer} from 'react';
 
 import {
-	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
 	LOADING,
 	SET_DRAFT_STATUS,
@@ -58,18 +57,6 @@ export function useAddUndoAction() {
 		dispatch({
 			name,
 			type: ADD_UNDO_ACTION,
-			value,
-		});
-	};
-}
-
-export function useAddRedoAction() {
-	const dispatch = useDispatch();
-
-	return (name, value) => {
-		dispatch({
-			name,
-			type: ADD_REDO_ACTION,
 			value,
 		});
 	};
@@ -201,14 +188,26 @@ export function useOnUndo() {
 }
 
 export function useOnRedo() {
-	const addRedoAction = useAddRedoAction();
-	const saveTokenValue = useSaveTokenValue();
+	const dispatch = useDispatch();
+	const frontendTokensValues = useFrontendTokensValues();
 	const redoHistory = useRedoHistory();
 
 	return () => {
-		const [{name, value}] = redoHistory.slice(-1);
+		const [lastRedo] = redoHistory;
+		const previousValue = frontendTokensValues[lastRedo.name];
 
-		addRedoAction(name, value);
-		saveTokenValue(name, value);
+		internalSaveTokenValue({
+			dispatch,
+			frontendTokensValues,
+			name: lastRedo.name,
+			value: lastRedo.value,
+		}).then(() => {
+			dispatch({
+				isRedo: true,
+				name: lastRedo.name,
+				type: ADD_UNDO_ACTION,
+				value: previousValue,
+			});
+		});
 	};
 }

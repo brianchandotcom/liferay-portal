@@ -50,11 +50,11 @@ import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
 import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriorityComparator;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -84,10 +84,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -165,33 +165,37 @@ public class CPDefinitionsImporter {
 
 		for (int i = 0; i < jsonArray1.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
-				jsonArray1.getJSONObject(i), assetVocabularyName, catalogGroupId,
-				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
+				jsonArray1.getJSONObject(i), assetVocabularyName,
+				catalogGroupId, commerceChannelId,
+				commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
 			ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
-			JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
 
 			if (expandoBridge == null) {
 				continue;
 			}
 
-			if (jsonObject1.getString("customFields")!=null) {
+			JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
 
-				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(jsonObject1.getString("customFields"));
+			if (jsonObject1.getString("customFields") != null) {
+				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(
+					jsonObject1.getString("customFields"));
 
 				for (int j = 0; j < jsonArray2.length(); j++) {
-
 					JSONObject jsonObject2 = jsonArray2.getJSONObject(i);
-					JSONObject jsonObject3 = (JSONObject) jsonObject2.get("customValue");
-					expandoBridge.setAttribute(jsonObject2.getString("name"), (Serializable) jsonObject3.get("data"));
+
+					JSONObject jsonObject3 = (JSONObject)jsonObject2.get(
+						"customValue");
+
+					expandoBridge.setAttribute(
+						jsonObject2.getString("name"),
+						(Serializable)jsonObject3.get("data"));
 				}
-
 			}
-			cpDefinitions.add(cpDefinition);
 
-	}
+			cpDefinitions.add(cpDefinition);
+		}
 
 		return cpDefinitions;
 	}

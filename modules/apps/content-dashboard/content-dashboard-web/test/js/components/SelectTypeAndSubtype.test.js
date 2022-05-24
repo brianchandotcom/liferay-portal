@@ -84,7 +84,9 @@ describe('SelectTypeAndSubtype', () => {
 		);
 
 		const {className} = getByRole('tree');
-		expect(className).toContain('treeview treeview-light');
+		expect(className).toContain(
+			'treeview show-quick-actions-on-hover treeview-light'
+		);
 
 		expect(
 			getByText('Document (3 items)', {exact: false})

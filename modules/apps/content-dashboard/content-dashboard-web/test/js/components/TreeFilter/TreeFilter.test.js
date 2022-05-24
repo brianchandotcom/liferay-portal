@@ -43,7 +43,9 @@ describe('SelectFileExtension', () => {
 		);
 
 		const {className} = getByRole('tree');
-		expect(className).toContain('treeview treeview-light');
+		expect(className).toContain(
+			'treeview show-quick-actions-on-hover treeview-light'
+		);
 
 		expect(
 			getByText('Web Content Article', {exact: false})

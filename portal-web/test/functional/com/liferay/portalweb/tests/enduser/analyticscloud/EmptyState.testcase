@@ -1193,4 +1193,72 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11122 | Test Summary: Empty state page with search bar and date range options"
+	@priority = "2"
+	test CheckSearchMessagesWithNoResults {
+		property test.name.skip.portal.instance = "EmptyState#CheckSearchMessagesWithNoResults";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to AC") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+		}
+
+		task ("Check search messages with no results found in page tab") {
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACUtils.searchBar(searchItem = "empty state");
+
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
+		}
+
+		task ("Check search messages with no results found in individuals page") {
+			ACNavigation.goToIndividuals();
+
+			for (var tabName : list "Known Individuals,Interests") {
+				ACNavigation.switchTab(tabName = "${tabName}");
+
+				ACUtils.searchBar(searchItem = "empty state");
+
+				ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
+			}
+		}
+
+		task ("Check search messages with no results found") {
+			for (var pageName : list "assets,event-analysis,segments,accounts,tests") {
+				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
+
+				ACUtils.searchBar(searchItem = "empty state");
+
+				ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
+			}
+		}
+
+		task ("Check search messages with no results found in settings") {
+			ACNavigation.goToSettings();
+
+			for (var settingsPageName : list "data-source,properties") {
+				ACSettings.goToSettingsNavigation(settingsNavigation = "${settingsPageName}");
+
+				ACUtils.searchBar(searchItem = "empty state");
+
+				ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
+			}
+		}
+	}
+
 }

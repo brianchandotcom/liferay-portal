@@ -95,7 +95,7 @@ public class FacetPermissionCharacteristicTest {
 			_groupA, TestPropsValues.getUserId());
 
 		_journalFolderA = JournalFolderServiceUtil.addFolder(
-			_groupA.getGroupId(), 0, RandomTestUtil.randomString(),
+			null, _groupA.getGroupId(), 0, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 
 		_journalArticleA = JournalTestUtil.addArticle(
@@ -111,7 +111,7 @@ public class FacetPermissionCharacteristicTest {
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
 		_journalFolderB = JournalFolderServiceUtil.addFolder(
-			_groupA.getGroupId(), 0, RandomTestUtil.randomString(),
+			null, _groupA.getGroupId(), 0, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 
 		_journalArticleB = JournalTestUtil.addArticle(

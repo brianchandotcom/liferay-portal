@@ -147,7 +147,7 @@ public class PermissionCheckerTest {
 		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
 
 		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
-			_user.getUserId(), _group.getGroupId(), 0,
+			null, _user.getUserId(), _group.getGroupId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -792,7 +792,7 @@ public class PermissionCheckerTest {
 			_user);
 
 		JournalFolder journalFolder = JournalFolderLocalServiceUtil.addFolder(
-			_user.getUserId(), _group.getGroupId(), 0,
+			null, _user.getUserId(), _group.getGroupId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 

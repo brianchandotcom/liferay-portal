@@ -47,6 +47,8 @@ public class AddFolderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		long parentFolderId = ParamUtil.getLong(
 			actionRequest, "parentFolderId");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -56,8 +58,8 @@ public class AddFolderMVCActionCommand extends BaseMVCActionCommand {
 			JournalFolder.class.getName(), actionRequest);
 
 		_journalFolderService.addFolder(
-			serviceContext.getScopeGroupId(), parentFolderId, name, description,
-			serviceContext);
+			externalReferenceCode, serviceContext.getScopeGroupId(),
+			parentFolderId, name, description, serviceContext);
 	}
 
 	@Reference

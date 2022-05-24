@@ -245,7 +245,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderLocalService.addFolder(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), "This is a test folder.",
 			serviceContext);

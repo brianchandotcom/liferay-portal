@@ -176,7 +176,7 @@ public class SXPBlueprintSearchResultTest {
 					"com.liferay.journal.model.JournalFolder")));
 
 		_journalFolder = JournalFolderServiceUtil.addFolder(
-			_group.getGroupId(), 0, "Folder cola", StringPool.BLANK,
+			null, _group.getGroupId(), 0, "Folder cola", StringPool.BLANK,
 			_serviceContext);
 
 		_setUpJournalArticles(
@@ -935,7 +935,7 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testHideByExactTermMatch() throws Exception {
 		_journalFolder = JournalFolderServiceUtil.addFolder(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
+			null, _group.getGroupId(), 0, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 
 		_setUpJournalArticles(
@@ -1113,7 +1113,7 @@ public class SXPBlueprintSearchResultTest {
 		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "hide");
 
 		_journalFolder = JournalFolderServiceUtil.addFolder(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
+			null, _group.getGroupId(), 0, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 
 		_setUpJournalArticles(

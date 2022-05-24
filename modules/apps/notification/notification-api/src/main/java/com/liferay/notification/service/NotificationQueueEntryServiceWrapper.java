@@ -37,6 +37,14 @@ public class NotificationQueueEntryServiceWrapper
 		_notificationQueueEntryService = notificationQueueEntryService;
 	}
 
+	@Override
+	public void deleteNotificationQueueEntry(long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationQueueEntryService.deleteNotificationQueueEntry(
+			notificationQueueEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -45,6 +53,15 @@ public class NotificationQueueEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _notificationQueueEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.notification.model.NotificationQueueEntry
+			resendNotificationQueueEntry(long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationQueueEntryService.resendNotificationQueueEntry(
+			notificationQueueEntryId);
 	}
 
 	@Override

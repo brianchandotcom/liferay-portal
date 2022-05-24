@@ -14,6 +14,9 @@
 
 package com.liferay.notification.service;
 
+import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for NotificationQueueEntry. This utility wraps
  * <code>com.liferay.notification.service.impl.NotificationQueueEntryServiceImpl</code> and is an
@@ -33,14 +36,28 @@ public class NotificationQueueEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationQueueEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void deleteNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		getService().deleteNotificationQueueEntry(notificationQueueEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static NotificationQueueEntry resendNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		return getService().resendNotificationQueueEntry(
+			notificationQueueEntryId);
 	}
 
 	public static NotificationQueueEntryService getService() {

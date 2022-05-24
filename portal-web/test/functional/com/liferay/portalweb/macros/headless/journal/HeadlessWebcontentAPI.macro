@@ -122,6 +122,41 @@ definition {
 		return "${curl}";
 	}
 
+	macro _editStructuredContentWithPriority {
+		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority},${structuredContentId}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-H accept: application/json \
+			-d
+					{
+    "contentFields": [{
+        "contentFieldValue": {
+            "data": "${data}"
+        },
+        "dataType": "string",
+        "label": "${label}",
+        "name": "${name}",
+        "nestedContentFields": [],
+        "repeatable": false
+    }],
+    "contentStructureId": "${ddmStructureId}",
+    "title": "${title}",
+	"priority": "${priority}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.put("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _filterStructuredContentWithPriority {
 		Variables.assertDefined(parameterList = "${filtervalue}");
 
@@ -141,12 +176,12 @@ definition {
 		return "${curl}";
 	}
 
-	macro assertPriorityFieldIsFilterWithDefaultValue {
-		var actualPriorityDefaultValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
+	macro assertPriorityFieldIsFilteredWithCorrectValue {
+		var actualPriorityValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
 
 		TestUtils.assertEquals(
-			actual = "${actualPriorityDefaultValue}",
-			expected = "${expectedPriorityDefaultValue}");
+			actual = "${actualPriorityValue}",
+			expected = "${expectedPriorityValue}");
 	}
 
 	macro assertPriorityFieldWithDefaultValue {
@@ -157,12 +192,46 @@ definition {
 			expected = "${expectedPriorityDefaultValue}");
 	}
 
+	macro assertProperNumberOfItems {
+		var actualTotalElement = JSONUtil.getWithJSONPath("${responseToParse}", "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = "${actualTotalElement}",
+			expected = "${expectedTotalElement}");
+	}
+
+	macro assertStructuredContentIdIsFilteredWithCorrectValue {
+		var editStructuredContentId = JSONUtil.getWithJSONPath("${editStructuredContentId}", "$.['id']");
+		var filterStructuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$..['items'][0].id");
+
+		TestUtils.assertEquals(
+			actual = "${filterStructuredContentId}",
+			expected = "${editStructuredContentId}");
+	}
+
 	macro createStructuredContentDraft {
 		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
 			label = "${label}",
 			name = "${name}",
+			title = "${title}");
+
+		return "${response}";
+	}
+
+	macro editStructuredContentWithPriority {
+		Variables.assertDefined(parameterList = "${responseToParse},${data},${ddmStructureId},${label},${name},${priority},${title}");
+
+		var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
+
+		var response = HeadlessWebcontentAPI._editStructuredContentWithPriority(
+			data = "${data}",
+			ddmStructureId = "${ddmStructureId}",
+			label = "${label}",
+			name = "${name}",
+			priority = "${priority}",
+			structuredContentId = "${structuredContentId}",
 			title = "${title}");
 
 		return "${response}";

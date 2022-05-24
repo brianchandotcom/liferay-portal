@@ -110,10 +110,8 @@
 /portal/jaxb-api.jar
 /portal/jaxb-runtime.jar
 /portal/jaxen.jar
-/portal/jaxrs-api.jar
 /portal/jaxws-api.jar
 /portal/jcl-over-slf4j.jar
-/portal/jersey-common.jar
 /portal/jhlabs-filters.jar
 /portal/jodd-json.jar
 /portal/jodd-proxetta.jar

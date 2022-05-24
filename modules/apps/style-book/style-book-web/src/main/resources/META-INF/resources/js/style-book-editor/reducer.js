@@ -84,21 +84,15 @@ export default function reducer(state, action) {
 
 		case ADD_REDO_ACTION: {
 			const {name, value} = action;
-			const {frontendTokensValues, redoHistory, undoHistory} = state;
 
 			return {
 				...state,
-				redoHistory: redoHistory.slice(0, redoHistory.length - 1),
-				undoHistory: [
-					...undoHistory,
+				redoHistory: [
 					{
 						name,
-						value: {
-							...value,
-							name: frontendTokensValues[name]?.name,
-							value: frontendTokensValues[name].value,
-						},
+						value,
 					},
+					...state.redoHistory,
 				],
 			};
 		}

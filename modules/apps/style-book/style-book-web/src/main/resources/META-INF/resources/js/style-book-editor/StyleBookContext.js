@@ -16,6 +16,7 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useContext, useReducer} from 'react';
 
 import {
+	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
 	LOADING,
 	SET_DRAFT_STATUS,
@@ -49,18 +50,6 @@ export function StyleBookContextProvider({children, initialState}) {
 			</StyleBookStoreContext.Provider>
 		</StyleBookDispatchContext.Provider>
 	);
-}
-
-export function useAddUndoAction() {
-	const dispatch = useDispatch();
-
-	return (name, value) => {
-		dispatch({
-			name,
-			type: ADD_UNDO_ACTION,
-			value,
-		});
-	};
 }
 
 export function useDispatch() {
@@ -176,15 +165,30 @@ export function useSetPreviewLayoutType() {
 }
 
 export function useOnUndo() {
-	const addUndoAction = useAddUndoAction();
-	const saveTokenValue = useSaveTokenValue();
+	const dispatch = useDispatch();
+	const frontendTokensValues = useFrontendTokensValues();
 	const undoHistory = useUndoHistory();
 
 	return () => {
-		const [{name, value}] = undoHistory.slice(-1);
+		const [lastUndo, ...undos] = undoHistory;
+		const previousValue = frontendTokensValues[lastUndo.name];
 
-		addUndoAction(name, value);
-		saveTokenValue(name, value, true);
+		internalSaveTokenValue({
+			dispatch,
+			frontendTokensValues,
+			name: lastUndo.name,
+			value: lastUndo.value,
+		}).then(() => {
+			dispatch({
+				type: UPDATE_UNDO_REDO_HISTORY,
+				undoHistory: undos,
+			});
+			dispatch({
+				name: lastUndo.name,
+				type: ADD_REDO_ACTION,
+				value: previousValue,
+			});
+		});
 	};
 }
 

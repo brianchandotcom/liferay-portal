@@ -41,6 +41,7 @@
 		<Logger level="WARN" name="com.liferay.portal.action.LayoutAction" />
 		<Logger level="WARN" name="com.liferay.portal.bean.BeanLocatorImpl" />
 		<Logger level="INFO" name="com.liferay.portal.bootstrap.ModuleFrameworkImpl" />
+		<Logger level="INFO" name="com.liferay.portal.bootstrap.log" />
 		<Logger level="INFO" name="com.liferay.portal.captcha.CaptchaImpl" />
 		<Logger level="INFO" name="com.liferay.portal.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.configuration.ConfigurationImpl" />

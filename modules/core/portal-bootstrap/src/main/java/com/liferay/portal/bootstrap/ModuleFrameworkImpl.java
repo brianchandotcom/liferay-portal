@@ -19,6 +19,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.bootstrap.log.BundleStartStopLogger;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
@@ -97,6 +98,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.ServiceRegistration;
@@ -208,6 +210,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			currentThread.setContextClassLoader(classLoader);
 		}
 
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		_bundleListener = new BundleStartStopLogger(bundleContext);
+
+		bundleContext.addBundleListener(_bundleListener);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialized the OSGi framework");
 		}
@@ -289,6 +297,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		_framework.stop();
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		bundleContext.removeBundleListener(_bundleListener);
 
 		frameworkEvent = _framework.waitForStop(timeout);
 
@@ -1728,6 +1740,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Arrays.asList(
 			PropsValues.MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES);
 
+	private BundleListener _bundleListener;
 	private Framework _framework;
 	private final Map
 		<ConfigurableApplicationContext, List<ServiceRegistration<?>>>

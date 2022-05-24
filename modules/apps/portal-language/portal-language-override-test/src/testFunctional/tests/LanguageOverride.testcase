@@ -196,7 +196,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-146565. It asserts that an overridden language key filtered by 'Any Language' will still display all languages the key has translations for."
+	@description = "This is a use case for LPS-146565. It asserts the language key filtered by 'Any Language' can be searched."
 	@priority = "3"
 	test CanSearchForLanguageKeyFilterByAnyLanguage {
 		task ("Given a new language key is created with three language override translations") {

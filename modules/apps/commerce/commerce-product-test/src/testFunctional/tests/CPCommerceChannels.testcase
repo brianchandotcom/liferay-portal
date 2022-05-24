@@ -1400,6 +1400,103 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
+	@description = "Verify users can configure payment method eligibility to specific payment terms."
+	@priority = "3"
+	test PaymentMethodEligibleForSpecificPaymentTerms {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given an active payment term") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(termsType = "Payment");
+		}
+
+		task ("And given multiple active payment methods") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Mercanet");
+		}
+
+		task ("And given one of the payment method's eligibility is set specifically to Payment Term 1") {
+			CommerceEntry.setEntryEligibility(
+				paymentMethod = "PayPal",
+				paymentTermsEligibility = "Payment Term 1");
+		}
+
+		task ("When the buyer checks out an order using the edited payment method") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then the payment term should be applied to the order") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "PayPal",
+				paymentTerm = "Payment Term 1",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer checks out an order using the non-edited payment method") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("The the payment term should not be applied to the order") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "Mercanet",
+				paymentTerm = "",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6198. RemoveCategoryDisplayPage"
 	@priority = "3"
 	test RemoveCategoryDisplayPage {

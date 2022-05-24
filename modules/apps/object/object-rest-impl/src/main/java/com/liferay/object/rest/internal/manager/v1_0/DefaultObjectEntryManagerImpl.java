@@ -650,8 +650,8 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			Filter oDataFilter = new Filter(filterParser.parse(filterString));
 
 			return _predicateExpressionConvert.convert(
-				entityModel, oDataFilter.getExpression(), locale,
-				objectDefinition.getObjectDefinitionId());
+				objectDefinition.getObjectDefinitionId(), entityModel,
+				oDataFilter.getExpression(), locale);
 		}
 		catch (Exception exception) {
 			System.out.println(exception.getMessage());

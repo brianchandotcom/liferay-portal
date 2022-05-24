@@ -351,9 +351,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 					filterParser.parse(filterString));
 
 			return _predicateExpressionConvert.convert(
-				entityModel, oDataFilter.getExpression(),
-				contextAcceptLanguage.getPreferredLocale(),
-				_objectDefinition.getObjectDefinitionId());
+				_objectDefinition.getObjectDefinitionId(), entityModel,
+				oDataFilter.getExpression(),
+				contextAcceptLanguage.getPreferredLocale());
 		}
 		catch (Exception exception) {
 			System.out.println(exception.getMessage());

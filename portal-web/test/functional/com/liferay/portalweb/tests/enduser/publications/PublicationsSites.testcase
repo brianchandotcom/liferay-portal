@@ -79,6 +79,11 @@ definition {
 
 	@priority = "4"
 	test PublishSiteCreatedInPublication {
+
+		// Workaround LPS-129369 and LPS-148424
+
+		property database.types = "db2,hypersonic,mariadb,mysql,postgresql,sqlserver";
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

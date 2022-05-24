@@ -143,9 +143,9 @@ definition {
 	@priority = "4"
 	test PublishNewMessageBoardThreadAndMessage {
 
-		// Workaround LPS-148424
+		// Workaround LPS-129369 and LPS-148424
 
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+		property database.types = "hypersonic,mariadb,mysql,postgresql,sqlserver";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

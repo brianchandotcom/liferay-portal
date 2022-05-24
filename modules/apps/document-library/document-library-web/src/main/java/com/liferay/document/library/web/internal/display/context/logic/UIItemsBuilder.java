@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -1363,7 +1364,8 @@ public class UIItemsBuilder {
 	public boolean isCancelCheckoutActionAvailable() throws PortalException {
 		if ((_fileShortcut != null) ||
 			!_fileEntryDisplayContextHelper.
-				isCancelCheckoutDocumentActionAvailable()) {
+				isCancelCheckoutDocumentActionAvailable() ||
+			!_isFileVersionContentTypeAllowed()) {
 
 			return false;
 		}
@@ -1373,7 +1375,8 @@ public class UIItemsBuilder {
 
 	public boolean isCheckinActionAvailable() throws PortalException {
 		if ((_fileShortcut != null) ||
-			!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
+			!_fileEntryDisplayContextHelper.isCheckinActionAvailable() ||
+			!_isFileVersionContentTypeAllowed()) {
 
 			return false;
 		}
@@ -1384,7 +1387,8 @@ public class UIItemsBuilder {
 	public boolean isCheckoutActionAvailable() throws PortalException {
 		if ((_fileShortcut != null) ||
 			!_fileEntryDisplayContextHelper.
-				isCheckoutDocumentActionAvailable()) {
+				isCheckoutDocumentActionAvailable() ||
+			!_isFileVersionContentTypeAllowed()) {
 
 			return false;
 		}
@@ -1445,6 +1449,10 @@ public class UIItemsBuilder {
 	}
 
 	public boolean isDownloadActionAvailable() throws PortalException {
+		if (!_isFileVersionContentTypeAllowed()) {
+			return false;
+		}
+
 		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
 	}
 
@@ -1897,6 +1905,18 @@ public class UIItemsBuilder {
 		}
 
 		return false;
+	}
+
+	private boolean _isFileVersionContentTypeAllowed() {
+		if (Objects.equals(
+				_fileVersion.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isFileVersionExportable(boolean latestVersion) {

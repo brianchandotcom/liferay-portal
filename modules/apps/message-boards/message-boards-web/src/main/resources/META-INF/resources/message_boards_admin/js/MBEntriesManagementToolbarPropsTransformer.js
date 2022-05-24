@@ -14,6 +14,8 @@
 
 import {postForm} from 'frontend-js-web';
 
+import openConfirm from '../../message_boards/js/openConfirm.es';
+
 export default function propsTransformer({
 	additionalProps: {
 		deleteEntriesCmd,
@@ -40,14 +42,19 @@ export default function propsTransformer({
 					'are-you-sure-you-want-to-delete-the-selected-entries'
 			  );
 
-		if (trashEnabled || confirm(message)) {
-			postForm(form, {
-				data: {
-					cmd: deleteEntriesCmd,
-				},
-				url: editEntryURL,
-			});
-		}
+		openConfirm({
+			message,
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed || trashEnabled) {
+					postForm(form, {
+						data: {
+							cmd: deleteEntriesCmd,
+						},
+						url: editEntryURL,
+					});
+				}
+			},
+		});
 	};
 
 	const lockEntries = () => {

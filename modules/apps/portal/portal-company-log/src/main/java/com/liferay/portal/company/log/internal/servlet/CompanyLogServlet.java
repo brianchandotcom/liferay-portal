@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hai Yu
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.company.log.internal.servlet.CompanyLogServlet",
 		"osgi.http.whiteboard.servlet.pattern=/company-log/*",

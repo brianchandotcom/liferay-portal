@@ -229,7 +229,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayCaseId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq ", testrayProjectId, " and name eq '",
+				"projectId eq '", testrayProjectId, "' and name eq '",
 				testrayCaseName, "'"),
 			"Case", objectEntryIdsKey);
 
@@ -249,7 +249,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					"caseNumber",
 					_increment(
 						companyId, "caseNumber",
-						"projectId eq " + testrayProjectId, "Case")
+						"projectId eq '" + testrayProjectId + "'", "Case")
 				).put(
 					"description",
 					testrayCasePropertiesMap.get("testray.testcase.description")
@@ -523,7 +523,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayBuildId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq ", testrayProjectId, " and name eq '",
+				"projectId eq '", testrayProjectId, "' and name eq '",
 				testrayBuildName, "'"),
 			"Build", objectEntryIdsKey);
 
@@ -705,7 +705,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayComponentId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq ", testrayProjectId, " and name eq '",
+				"projectId eq '", testrayProjectId, "' and name eq '",
 				testrayComponentName, "'"),
 			"Component", objectEntryIdsKey);
 
@@ -770,8 +770,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayFactorOptionId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"factorCategoryId eq ", testrayFactorCategoryId,
-				" and name eq '", testrayFactorOptionName, "'"),
+				"factorCategoryId eq '", testrayFactorCategoryId,
+				"' and name eq '", testrayFactorOptionName, "'"),
 			"FactorOption", objectEntryIdsKey);
 
 		if (testrayFactorOptionId != 0) {
@@ -861,7 +861,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayRoutineId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq ", testrayProjectId, " and name eq '",
+				"projectId eq '", testrayProjectId, "' and name eq '",
 				testrayRoutineName, "'"),
 			"Routine", objectEntryIdsKey);
 
@@ -934,8 +934,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayRunId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"buildId eq ", testrayBuildId, " and name eq '", testrayRunName,
-				"'"),
+				"buildId eq '", testrayBuildId, "' and name eq '",
+				testrayRunName, "'"),
 			"Run", objectEntryIdsKey);
 
 		if (testrayRunId != 0) {
@@ -956,7 +956,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"number",
 				_increment(
-					companyId, "number", "buildId eq " + testrayBuildId, "Run")
+					companyId, "number", "buildId eq '" + testrayBuildId + "'",
+					"Run")
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build());
@@ -988,7 +989,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayTeamId = _getObjectEntryId(
 			companyId,
 			StringBundler.concat(
-				"projectId eq ", testrayProjectId, " and name eq '",
+				"projectId eq '", testrayProjectId, "' and name eq '",
 				testrayTeamName, "'"),
 			"Team", objectEntryIdsKey);
 

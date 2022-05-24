@@ -381,7 +381,7 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			return getObjectEntries(
 				companyId, objectDefinition, scopeKey, aggregation,
 				dtoConverterContext, pagination,
-				toPredicate(
+				_toPredicate(
 					filterString, dtoConverterContext.getLocale(),
 					objectDefinition),
 				search, sorts);
@@ -427,30 +427,6 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry);
-	}
-
-	public Predicate toPredicate(
-		String filterString, Locale locale, ObjectDefinition objectDefinition) {
-
-		try {
-			EntityModel entityModel = new ObjectEntryEntityModel(
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()));
-
-			FilterParser filterParser = _filterParserProvider.provide(
-				entityModel);
-
-			Filter oDataFilter = new Filter(filterParser.parse(filterString));
-
-			return _predicateExpressionConvert.convert(
-				entityModel, oDataFilter.getExpression(), locale,
-				objectDefinition.getObjectDefinitionId());
-		}
-		catch (Exception exception) {
-			System.out.println(exception.getMessage());
-		}
-
-		return null;
 	}
 
 	@Override
@@ -658,6 +634,30 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 		}
 
 		return values;
+	}
+
+	private Predicate _toPredicate(
+		String filterString, Locale locale, ObjectDefinition objectDefinition) {
+
+		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()));
+
+			FilterParser filterParser = _filterParserProvider.provide(
+				entityModel);
+
+			Filter oDataFilter = new Filter(filterParser.parse(filterString));
+
+			return _predicateExpressionConvert.convert(
+				entityModel, oDataFilter.getExpression(), locale,
+				objectDefinition.getObjectDefinitionId());
+		}
+		catch (Exception exception) {
+			System.out.println(exception.getMessage());
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -2384,4 +2384,94 @@ definition {
 
 	}
 
+	@description = "verify if Input Mask Prefix And Suffix On Decimal With Decimal Separator is working correctly"
+	@priority = "4"
+	test InputMaskPrefixAndSuffixOnDecimalWithDecimalSeparator {
+		property portal.acceptance = "true";
+
+		
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(
+			prefix = "ABC123@$&*",
+			decimalSeparator = "0,00");
+
+		FormFields.viewWarningMessage(
+			fieldName = "Prefix or Suffix",
+			warningMessage = "The maximum length is 10 characters.");
+
+		FormFields.viewOptionSelected(optionSelected = "prefix");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+		FormFields.setInputMaskOnDecimal(suffix = "ABC123@$&*");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		AssertElementPresent(
+				key_affixValue = "ABC123@$&*",
+				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		AssertElementPresent(
+				key_affixValue = "ABC123@$&*",
+				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+
+
+	}
+
 }

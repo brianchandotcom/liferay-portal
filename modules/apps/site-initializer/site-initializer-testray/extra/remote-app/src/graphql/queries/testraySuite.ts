@@ -17,6 +17,7 @@ import {gql} from '@apollo/client';
 import {testraySuiteFragment} from '../fragments';
 
 export type TestraySuite = {
+	caseParameters: string;
 	creator: {
 		name: string;
 	};

@@ -14,22 +14,93 @@
 
 import {useOutletContext} from 'react-router-dom';
 
+import {BoxItem} from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import QATable from '../../../components/Table/QATable';
 import {
-	TestrayComponent,
+	APIResponse,
+	TestrayCase,
 	TestraySuite,
+	TypePagination,
 	getCases,
 } from '../../../graphql/queries';
+import {
+	TestraySuiteCase,
+	getSuiteCases,
+} from '../../../graphql/queries/testraySuiteCase';
 import i18n from '../../../i18n';
 import dayjs from '../../../util/date';
+import {SearchBuilder, searchUtil} from '../../../util/search';
+import {
+	State as CaseParameter,
+	initialState as CaseParameterInitialState,
+} from './SuiteCasesModal';
+
+const transformData = (
+	data:
+		| TypePagination<'cases', TestrayCase>
+		| TypePagination<'suitescaseses', TestraySuiteCase>
+): APIResponse<TestraySuiteCase> => {
+	const response: any =
+		(data as TypePagination<'cases', TestrayCase>)?.cases ||
+		(data as TypePagination<'suitescaseses', TestraySuiteCase>)
+			?.suitescaseses;
+
+	let items: TestraySuiteCase[] = response?.items || [];
+
+	if ((data as TypePagination<'cases', TestrayCase>)?.cases) {
+		items = response.items.map((item: TestrayCase) => ({
+			case: item,
+		}));
+	}
+
+	return {
+		...response,
+		items,
+	};
+};
 
 const Suite = () => {
 	const {
 		projectId,
 		testraySuite,
 	}: {projectId: number; testraySuite: TestraySuite} = useOutletContext();
+
+	const getCaseParameters = (): CaseParameter => {
+		try {
+			return JSON.parse(testraySuite.caseParameters);
+		} catch (error) {
+			return CaseParameterInitialState;
+		}
+	};
+
+	const caseParameters = getCaseParameters();
+
+	const getCaseParameterKey = (caseParameter: BoxItem[]) =>
+		caseParameter?.map(({label}) => label).join(', ');
+
+	const getCaseValues = (caseParameter: BoxItem[]) =>
+		caseParameter?.map(({value}) => value);
+
+	const getCaseFilters = () => {
+		if (!testraySuite.caseParameters) {
+			return searchUtil.eq('suiteId', testraySuite.id);
+		}
+
+		const searchBuilder = new SearchBuilder()
+			.in('caseTypeId', getCaseValues(caseParameters.testrayCaseTypes))
+			.or()
+			.in('componentId', getCaseValues(caseParameters.testrayComponents))
+			.or()
+			.in(
+				'componentId',
+				getCaseValues(caseParameters.testrayRequirements)
+			)
+			.build();
+
+		return searchBuilder;
+	};
 
 	return (
 		<>
@@ -60,56 +131,85 @@ const Suite = () => {
 				/>
 			</Container>
 
-			<Container
-				className="mt-4"
-				collapsable
-				title={i18n.translate('case-parameters')}
-			>
-				<QATable
-					items={[
-						{
-							title: i18n.translate('case-types'),
-							value: 'Manual Test',
-						},
-						{
-							title: i18n.translate('components'),
-							value: 'Deployment',
-						},
-						{
-							title: i18n.translate('subcomponents'),
-							value: '',
-						},
-						{title: i18n.translate('priority'), value: '5'},
-						{title: i18n.translate('requirements'), value: ''},
-					]}
-				/>
-			</Container>
+			{testraySuite.caseParameters && (
+				<Container
+					className="mt-4"
+					collapsable
+					title={i18n.translate('case-parameters')}
+				>
+					<QATable
+						items={[
+							{
+								title: i18n.translate('case-types'),
+								value: getCaseParameterKey(
+									caseParameters.testrayCaseTypes
+								),
+							},
+							{
+								title: i18n.translate('components'),
+								value: getCaseParameterKey(
+									caseParameters.testrayComponents
+								),
+							},
+							{
+								title: i18n.translate('subcomponents'),
+								value: getCaseParameterKey(
+									caseParameters.testraySubComponents
+								),
+							},
+							{
+								title: i18n.translate('priority'),
+								value: getCaseParameterKey(
+									caseParameters.testrayPriorities
+								),
+							},
+							{
+								title: i18n.translate('requirements'),
+								value: getCaseParameterKey(
+									caseParameters.testrayRequirements
+								),
+							},
+						]}
+					/>
+				</Container>
+			)}
 
 			<Container className="mt-4">
 				<ListView
-					query={getCases}
+					managementToolbarProps={{visible: false}}
+					query={
+						testraySuite.caseParameters ? getCases : getSuiteCases
+					}
 					tableProps={{
 						columns: [
 							{
 								key: 'priority',
+								render: (_, suiteCase: TestraySuiteCase) =>
+									suiteCase.case.priority,
 								value: i18n.translate('priority'),
 							},
 							{
 								key: 'component',
-								render: (component: TestrayComponent) =>
-									component?.name,
+								render: (_, suiteCase: TestraySuiteCase) =>
+									suiteCase.case.component?.name,
 								value: i18n.translate('component'),
 							},
 							{
 								clickable: true,
 								key: 'name',
-								value: i18n.translate('case-name'),
+								render: (_, suiteCase: TestraySuiteCase) =>
+									suiteCase.case?.name,
+								size: 'lg',
+								value: i18n.translate('case'),
 							},
 						],
-						navigateTo: ({id}) =>
-							`/project/${projectId}/cases/${id}`,
+						navigateTo: (suiteCase: TestraySuiteCase) =>
+							`/project/${projectId}/cases/${suiteCase.case.id}`,
 					}}
-					transformData={(data) => data?.cases}
+					transformData={transformData}
+					variables={{
+						filter: getCaseFilters(),
+					}}
 				/>
 			</Container>
 		</>

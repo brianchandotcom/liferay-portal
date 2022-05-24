@@ -14,17 +14,25 @@
 
 import {gql} from '@apollo/client';
 
-export const testraySuiteFragment = gql`
-	fragment SuiteFragment on C_Suite {
-		caseParameters
-		creator {
-			name
+export const CreateSuiteCaseBatch = gql`
+	mutation createSuiteCaseBatch($data: InputC_SuiteCase!) {
+		createSuiteCaseBatch(SuiteCase: $data)
+			@rest(
+				bodyKey: "SuiteCase"
+				bodySerializer: "suitecase"
+				method: "POST"
+				path: "suitescaseses/batch"
+				type: "C_SuiteCase"
+			) {
+			id
 		}
-		dateCreated
-		dateModified
-		description
-		id: suiteId
-		name
-		type
+	}
+`;
+
+export const DeleteSuiteCase = gql`
+	mutation deleteSuiteCase($id: Long) {
+		c {
+			deleteSuiteCase(suiteId: $id)
+		}
 	}
 `;

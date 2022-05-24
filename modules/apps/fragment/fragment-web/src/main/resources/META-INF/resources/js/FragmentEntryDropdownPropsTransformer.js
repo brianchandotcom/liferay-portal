@@ -12,9 +12,22 @@
  * details.
  */
 
-import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openSelectionModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 import openDeleteFragmentModal from './openDeleteFragmentModal';
+
+function openConfirm({message, onConfirm}) {
+	if (Liferay.FeatureFlags.enableCustomDialogs) {
+		openConfirmModal({message, onConfirm});
+	}
+	else if (confirm(message)) {
+		onConfirm(true);
+	}
+}
 
 const ACTIONS = {
 	copyFragmentEntry(
@@ -63,13 +76,16 @@ const ACTIONS = {
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
-		}
+		openConfirm({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
+				}
+			},
+		});
 	},
 
 	deleteFragmentEntry({deleteFragmentEntryURL}) {

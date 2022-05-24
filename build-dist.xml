@@ -1709,6 +1709,75 @@ this task.
 		<antcall target="install-weblogic14-setup-files" />
 
 		<antcall target="create-weblogic-domain" />
+
+		<execute dir="${app.server.weblogic.instance.dir}/nodemanager">
+			sed -i "s;SecureListener=.*;SecureListener=false;g" nodemanager.properties
+
+			sed -i "s;NativeVersionManager=.*;NativeVersionManager=false;g" nodemanager.properties
+		</execute>
+
+		<replace
+			file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+		>
+			<replacetoken><![CDATA[# Any changes to this script may be lost when adding extensions to this configuration.]]></replacetoken>
+			<replacevalue expandProperties="true">
+				<![CDATA[
+					# Any changes to this script may be lost when adding extensions to this configuration.
+					export DERBY_FLAG="false"
+					export JAVA_OPTIONS="${JAVA_OPTIONS} ${app.server.weblogic.jvm.args} -da:org.apache.lucene... -da:org.aspectj... "
+					export MW_HOME="${app.server.weblogic.dir}"
+					export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+		>
+			<replacefilter
+				token="$${app.server.weblogic.dir}"
+				value="${app.server.weblogic.dir}"
+			/>
+		</replace>
+
+		<copy
+			file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+			tofile="${app.server.weblogic.instance.dir}/stopWebLogic.sh"
+		/>
+
+		<replace
+			file="${app.server.weblogic.instance.dir}/stopWebLogic.sh"
+		>
+			<replacefilter
+				token="startWebLogic"
+				value="stopWebLogic"
+			/>
+		</replace>
+
+		<chmod
+			perm="a+x"
+		>
+			<fileset
+				dir="${app.server.weblogic.bin.dir}"
+			>
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+
+		<replace
+			file="${app.server.weblogic.instance.dir}/bin/setDomainEnv.sh"
+		>
+			<replacetoken><![CDATA[JAVA_PROPERTIES="${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacetoken>
+			<replacevalue><![CDATA[JAVA_PROPERTIES="-Dfile.encoding=utf8 ${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacevalue>
+		</replace>
+
+		<chmod
+			dir="${app.server.weblogic.instance.dir}"
+			includes="**/*.sh"
+			perm="744"
+		/>
+
+		<set-weblogic-log-levels />
 	</target>
 
 	<target name="unzip-websphere">

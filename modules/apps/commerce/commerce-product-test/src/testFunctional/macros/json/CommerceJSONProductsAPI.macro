@@ -159,6 +159,67 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addDiagramPin {
+		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
+
+		var baseURL = "${baseURL}";
+		var diagramProductId = CommerceJSONProductsAPI._getProductId(productName = "${diagram}");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if ("${pinType}" == "Linked to a SKU") {
+			Variables.assertDefined(parameterList = "${linkedSKU}");
+
+			var pinType = "sku";
+			var productId = CommerceJSONProductsAPI._getProductId(productSKU = "${linkedSKU}");
+			var sku = "${linkedSKU}";
+			var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${linkedSKU}");
+		}
+
+		if ("${pinType}" == "Not Linked to a Catalog") {
+			Variables.assertDefined(parameterList = "${label}");
+
+			var pinType = "external";
+			var productId = "0";
+			var sku = "${label}";
+			var skuId = "0";
+		}
+
+		if ("${pinType}" == "Linked to a Diagram") {
+			Variables.assertDefined(parameterList = "${linkedDiagram}");
+
+			var pinType = "diagram";
+			var productId = CommerceJSONProductsAPI._getProductId(productName = "${linkedDiagram}");
+			var sku = "";
+			var skuId = "0";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${diagramProductId}/pins \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+  			-H 'Content-Type: application/json' \
+  			-d '{
+  				  "mappedProduct": {
+					"customFields": [],
+					"productId": ${productId},
+					"quantity": ${quantity},
+					"sequence": "${position}",
+					"sku": "${sku}",
+					"skuId": ${skuId},
+					"type": "${pinType}"
+				  },
+				  "positionX": ${positionX},
+				  "positionY": ${positionY},
+				  "sequence": "${position}"
+				}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceProducts {
 		var baseURL = "${baseURL}";
 

@@ -35,6 +35,8 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 		<aui:script use="aui-tree-view">
 			var wikiPageList = A.one('.wiki-navigation-portlet-tree-menu .tree-menu');
 
+			wikiPageList.removeAttribute("hidden");
+
 			var treeView = new A.TreeView({
 				contentBox: wikiPageList,
 			}).render();
@@ -64,7 +66,7 @@ private String _buildTreeMenuHTML(List<MenuItem> menuItems, String curTitle, boo
 	StringBuilder sb = new StringBuilder();
 
 	if (isRoot) {
-		sb.append("<ul class=\"tree-menu\">");
+		sb.append("<ul class=\"tree-menu\" hidden>");
 	}
 
 	for (MenuItem menuItem : menuItems) {

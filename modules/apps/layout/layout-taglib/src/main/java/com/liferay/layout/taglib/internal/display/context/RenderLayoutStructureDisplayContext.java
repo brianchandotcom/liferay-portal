@@ -24,6 +24,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -476,8 +477,8 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
-		FragmentEntryLink fragmentEntryLink, String itemId,
-		int collectionElementIndex) {
+		int collectionElementIndex, FragmentEntryLink fragmentEntryLink,
+		InfoForm infoForm, String itemId) {
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -490,6 +491,7 @@ public class RenderLayoutStructureDisplayContext {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			defaultFragmentRendererContext.setInfoForm(infoForm);
 			defaultFragmentRendererContext.setMode(_mode);
 			defaultFragmentRendererContext.setPreviewClassNameId(
 				_getPreviewClassNameId());

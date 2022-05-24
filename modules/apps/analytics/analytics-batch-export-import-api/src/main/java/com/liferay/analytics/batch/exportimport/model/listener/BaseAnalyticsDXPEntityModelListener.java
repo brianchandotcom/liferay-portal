@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.batch.exportimport.model.listener;
 
+import com.liferay.analytics.message.storage.service.AnalyticsAssociationChangeLocalService;
 import com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
@@ -45,6 +46,36 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseAnalyticsDXPEntityModelListener
 	<T extends BaseModel<T>>
 		extends BaseModelListener<T> {
+
+	@Override
+	public void onAfterAddAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK)
+		throws ModelListenerException {
+
+		_addAnalyticsAssociationChange(
+			associationClassName, associationClassPK, classPK);
+	}
+
+	@Override
+	public void onAfterRemove(T model) throws ModelListenerException {
+		ShardedModel shardedModel = (ShardedModel)model;
+
+		analyticsAssociationChangeLocalService.
+			deleteAnalyticsAssociationChanges(
+				shardedModel.getCompanyId(), model.getModelClassName(),
+				(long)model.getPrimaryKeyObj());
+	}
+
+	@Override
+	public void onAfterRemoveAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK)
+		throws ModelListenerException {
+
+		_addAnalyticsAssociationChange(
+			associationClassName, associationClassPK, classPK);
+	}
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
@@ -140,6 +171,10 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 	}
 
 	@Reference
+	protected AnalyticsAssociationChangeLocalService
+		analyticsAssociationChangeLocalService;
+
+	@Reference
 	protected AnalyticsConfigurationTracker analyticsConfigurationTracker;
 
 	@Reference
@@ -154,6 +189,46 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private void _addAnalyticsAssociationChange(
+		String associationClassName, Object associationClassPK,
+		Object classPK) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
+			!analyticsConfigurationTracker.isActive()) {
+
+			return;
+		}
+
+		T model = getModel(classPK);
+
+		if (model == null) {
+			return;
+		}
+
+		try {
+			ShardedModel shardedModel = (ShardedModel)model;
+
+			long companyId = shardedModel.getCompanyId();
+
+			Class<?> modelClass = getModelClass();
+
+			analyticsAssociationChangeLocalService.
+				addAnalyticsAssociationChange(
+					companyId, new Date(),
+					userLocalService.getDefaultUserId(companyId),
+					associationClassName, (long)associationClassPK,
+					modelClass.getName(), (long)classPK);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to add analytics association change for model " +
+						model,
+					exception);
+			}
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAnalyticsDXPEntityModelListener.class);

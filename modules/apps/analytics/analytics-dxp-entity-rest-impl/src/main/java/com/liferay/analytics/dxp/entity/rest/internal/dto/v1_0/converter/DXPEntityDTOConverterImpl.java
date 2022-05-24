@@ -113,6 +113,22 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 	}
 
+	private List<String> _filterAttributeNames(
+		List<String> attributeNames, List<String> removeAttributeNames) {
+
+		List<String> filteredAttributeNames = new ArrayList<>();
+
+		for (String attributeName : attributeNames) {
+			if (removeAttributeNames.contains(attributeName)) {
+				continue;
+			}
+
+			filteredAttributeNames.add(attributeName);
+		}
+
+		return filteredAttributeNames;
+	}
+
 	private Map<String, Serializable> _getAttributes(
 		ExpandoBridge expandoBridge, List<String> includeAttributeNames) {
 
@@ -283,13 +299,15 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				_analyticsConfigurationTracker.getAnalyticsConfiguration(
 					user.getCompanyId());
 
-			_addFieldAttributes(
-				user.getContact(), fields,
-				ListUtil.fromArray(
-					analyticsConfiguration.syncedContactFieldNames()));
-
 			includeAttributeNames = ListUtil.fromArray(
 				analyticsConfiguration.syncedUserFieldNames());
+
+			_addFieldAttributes(
+				user.getContact(), fields,
+				_filterAttributeNames(
+					ListUtil.fromArray(
+						analyticsConfiguration.syncedContactFieldNames()),
+					includeAttributeNames));
 		}
 
 		_addFieldAttributes(baseModel, fields, includeAttributeNames);

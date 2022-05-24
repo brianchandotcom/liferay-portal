@@ -7536,7 +7536,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/hikaricp.jar</file-name>
-				<version>2.6.3</version>
+				<version>4.0.3</version>
 				<project-name>HikariCP</project-name>
 				<project-url>https://github.com/brettwooldridge/HikariCP</project-url>
 				<licenses>

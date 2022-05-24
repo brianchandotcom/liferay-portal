@@ -98,7 +98,14 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			Field field = new Field() {
 				{
 					name = entry.getKey();
+
 					value = entry.getValue();
+
+					if (value instanceof Date) {
+						Date date = (Date)value;
+
+						value = date.getTime();
+					}
 				}
 			};
 
@@ -165,7 +172,10 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					new Field() {
 						{
 							name = "modifiedDate";
-							value = expandoColumn.getModifiedDate();
+
+							Date modifiedDate = expandoColumn.getModifiedDate();
+
+							value = modifiedDate.getTime();
 						}
 					});
 				add(

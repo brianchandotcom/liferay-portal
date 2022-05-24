@@ -30,6 +30,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -140,6 +143,8 @@ definition {
 	@description = "Bug: LRAC-8988 | Automation ID: LRAC-11059 | Test Summary: Create the page name with special characters makes the correct name appear in the path part of AC pages"
 	@priority = "3"
 	test CreatePageNameWithSpecialCharactersMakeCorrectNameAppearInPath {
+		property analytics.cloud.upstream = "false";
+
 		task ("Create a site and a blog and add to a page") {
 			ACUtils.addSiteAndPage();
 

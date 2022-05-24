@@ -102,9 +102,14 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalFolderLocalServiceImpl
 	extends JournalFolderLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addFolder(String, long, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalFolder addFolder(
-		long userId, long groupId, long parentFolderId, String name,
+			long userId, long groupId, long parentFolderId, String name,
 			String description, ServiceContext serviceContext)
 		throws PortalException {
 

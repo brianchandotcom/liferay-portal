@@ -52,6 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addFolder(String, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalFolder addFolder(
 			long groupId, long parentFolderId, String name, String description,

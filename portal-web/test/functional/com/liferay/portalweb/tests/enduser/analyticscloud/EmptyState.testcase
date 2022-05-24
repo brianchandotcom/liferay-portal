@@ -1261,4 +1261,359 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11120 | Test Summary: Empty state Assets page with assets with data source and property no data"
+	@priority = "2"
+	test CheckAllAssetsMessagesWhenHasPropertyAndDataSource {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllAssetsMessagesWhenHasPropertyAndDataSource";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Create the pages and assets in DXP") {
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage(layoutName = "Blogs page");
+
+			for (var pageName : list "DM page,Forms page,WC page") {
+				ACUtils.addPage(layoutName = "${pageName}");
+			}
+
+			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs page");
+
+			ACUtils.createDMAndAddToPage(layoutName = "DM page");
+
+			ACUtils.createFormAndAddToPage(layoutName = "Forms page");
+
+			ACUtils.createWCAndAddToPage(layoutName = "WC page");
+		}
+
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "Blogs page",
+				siteName = "Site Name");
+		}
+
+		task ("View the documents and media page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "DM page",
+				siteName = "Site Name");
+		}
+
+		task ("View the form page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Form",
+				pageName = "Forms page",
+				siteName = "Site Name");
+		}
+
+		task ("View the web content page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				pageName = "WC page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC") {
+			ACUtils.launchAC(workspaceName = "New AC Workspace");
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Go to blogs") {
+			ACNavigation.goToAssets();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+		}
+
+		task ("Change all cards to last 30 days time filter") {
+			for (var cardName : list "Visitors Behavior,Views by Location,Views by Technology,Asset Appears On") {
+				ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
+
+				ACTimeFilter.setLast30Days();
+			}
+		}
+
+		task ("Check empty state of tooltip in visitors behavior") {
+			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+
+			AssertElementPresent(
+				key_value = "0",
+				key_visitors = "Views",
+				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+		}
+
+		task ("Check the empty state and documentation link of the views by location card") {
+			ACCards.viewCards(cardTitle = "Views by Location");
+
+			ACUtils.viewGenericText(textValueList = "There are no views on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by location.");
+
+			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the views by technology card") {
+			ACCards.viewCards(cardTitle = "Views by Technology");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no views on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by technology.");
+
+			SelectWindow(locator1 = "title=Blogs — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the Asset Appears On card") {
+			ACCards.viewCards(cardTitle = "Asset Appears On");
+
+			ACUtils.viewGenericText(textValueList = "There are no assets on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about assets.");
+
+			SelectWindow(locator1 = "title=Assets — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Assets");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the known individuals tab") {
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast30Days();
+
+			ACUtils.viewGenericText(textValueList = "There are no individuals found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about individuals.");
+
+			SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Individuals Dashboard");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to DM") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Change all cards to last 30 days time filter") {
+			for (var cardName : list "Visitors Behavior,Downloads by Location,Downloads by Technology") {
+				ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
+
+				ACTimeFilter.setLast30Days();
+			}
+		}
+
+		task ("Check empty state of tooltip in visitors behavior") {
+			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+
+			AssertElementPresent(
+				key_value = "0",
+				key_visitors = "Downloads",
+				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+		}
+
+		task ("Check the empty state and documentation link of the downloads by location card") {
+			ACCards.viewCards(cardTitle = "Downloads by Location");
+
+			ACUtils.viewGenericText(textValueList = "There are no downloads on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about downloads by location.");
+
+			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Downloads by Location");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the downloads by technology card") {
+			ACCards.viewCards(cardTitle = "Downloads by Technology");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no downloads on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about downloads by technology.");
+
+			SelectWindow(locator1 = "title=Documents and Media — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to forms") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Forms");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Created Form Name");
+		}
+
+		task ("Change all cards to last 30 days time filter") {
+			for (var cardName : list "Visitors Behavior,Submissions by Location,Submissions by Technology") {
+				ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
+
+				ACTimeFilter.setLast30Days();
+			}
+		}
+
+		task ("Check empty state of tooltip in visitors behavior") {
+			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+
+			AssertElementPresent(
+				key_value = "0",
+				key_visitors = "Submissions",
+				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+		}
+
+		task ("Check the empty state and documentation link of the submissions by location card") {
+			ACCards.viewCards(cardTitle = "Submissions by Location");
+
+			ACUtils.viewGenericText(textValueList = "There are no submissions on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about submissions by location.");
+
+			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Location");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the submissions by technology card") {
+			ACCards.viewCards(cardTitle = "Submissions by Technology");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no submissions on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about submissions by technology.");
+
+			SelectWindow(locator1 = "title=Forms — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Submissions by Technology");
+
+			Close.closeWindow();
+		}
+
+		task ("Go to web content") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+		}
+
+		task ("Change all cards to last 30 days time filter") {
+			for (var cardName : list "Visitors Behavior,Views by Location,Views by Technology") {
+				ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
+
+				ACTimeFilter.setLast30Days();
+			}
+		}
+
+		task ("Check empty state of tooltip in visitors behavior") {
+			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+
+			AssertElementPresent(
+				key_value = "0",
+				key_visitors = "Views",
+				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+		}
+
+		task ("Check the empty state and documentation link of the views by location card") {
+			ACCards.viewCards(cardTitle = "Views by Location");
+
+			ACUtils.viewGenericText(textValueList = "There are no views on the selected period.,Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by location.");
+
+			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Views by Location");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the empty state and documentation link of the views by technology card") {
+			ACCards.viewCards(cardTitle = "Views by Technology");
+
+			ACUtils.viewGenericTextInOrder(
+				index = "2",
+				textValueList = "There are no views on the selected period.");
+
+			ACUtils.viewGenericTextInOrder(textValueList = "Check back later to verify if data has been received from your data sources.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about views by technology.");
+
+			SelectWindow(locator1 = "title=Web Content — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
+
+			Close.closeWindow();
+		}
+	}
+
 }

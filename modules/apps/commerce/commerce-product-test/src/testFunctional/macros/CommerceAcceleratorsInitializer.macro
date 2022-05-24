@@ -176,6 +176,24 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Button.click(button = "Add Order");
+
+		if (isSet(orderType)) {
+			SelectFrame.selectFrameNoLoading(
+				key_src = "mode",
+				locator1 = "IFrame#IFRAME_SRC");
+
+			Select(
+				locator1 = "Select#TYPE",
+				value1 = "${orderType}");
+
+			Button.click(button = "Add Order");
+
+			WaitForElementPresent(
+				key_orderType = "${orderType}",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+
+			SelectFrame.selectFrameTop();
+		}
 	}
 
 	macro deactivateCommerceAccountViaFront {

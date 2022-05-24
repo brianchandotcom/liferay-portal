@@ -150,12 +150,47 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is possible to choose by Description Field on entries, when Title Field is Description"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDescriptionOnFieldEntry {
+		Accounts.openAccountsAdmin();
 
-		// TODO LPS-153528 CanViewDescriptionOnFieldEntry pending implementation
+		Accounts.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153528",
+			objectName = "CustomObject153528",
+			pluralLabelName = "Custom Objects 153528");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject153528",
+			type = "One to Many");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153528");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Description");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
+
+		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "Accounts Name Description for Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
+
+		ObjectPortlet.viewEntry(entry = "Accounts Name Description for Test");
 	}
 
 	@description = "LPS-151765 - Verify if there are the fields Name, Description and Type as default on System Object Account"
@@ -206,9 +241,9 @@ definition {
 			accountName = "Accounts Name for Test");
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153526",
-			objectName = "CustomObject153526",
-			pluralLabelName = "Custom Objects 153526");
+			labelName = "Custom Object 153527",
+			objectName = "CustomObject153527",
+			pluralLabelName = "Custom Objects 153527");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -218,10 +253,10 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject153526",
+			object = "CustomObject153527",
 			type = "One to Many");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153526");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153527");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -231,11 +266,11 @@ definition {
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
 		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "Accounts Name for Test");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
 		ObjectPortlet.viewEntry(entry = "Accounts Name for Test");
 	}

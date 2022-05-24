@@ -174,24 +174,23 @@ public class NotificationQueueEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationQueueEntry updateSent(
-			long commerceNotificationQueueEntryId, boolean sent)
+			long notificationQueueEntryId, boolean sent)
 		throws PortalException {
 
-		NotificationQueueEntry commerceNotificationQueueEntry =
+		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntryPersistence.findByPrimaryKey(
-				commerceNotificationQueueEntryId);
+				notificationQueueEntryId);
 
-		commerceNotificationQueueEntry.setSent(sent);
+		notificationQueueEntry.setSent(sent);
 
 		if (sent) {
-			commerceNotificationQueueEntry.setSentDate(new Date());
+			notificationQueueEntry.setSentDate(new Date());
 		}
 		else {
-			commerceNotificationQueueEntry.setSentDate(null);
+			notificationQueueEntry.setSentDate(null);
 		}
 
-		return notificationQueueEntryPersistence.update(
-			commerceNotificationQueueEntry);
+		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

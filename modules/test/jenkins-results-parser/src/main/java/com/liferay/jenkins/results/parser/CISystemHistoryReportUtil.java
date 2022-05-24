@@ -49,6 +49,8 @@ public class CISystemHistoryReportUtil {
 
 		writeAllDurationsJavaScriptFile();
 
+		writeBackupDurationsJavaScriptFile();
+
 		writeDateDurationsJavaScriptFiles(jobName, testSuiteName);
 
 		writeIndexHtmlFile();
@@ -63,6 +65,20 @@ public class CISystemHistoryReportUtil {
 
 		JenkinsResultsParserUtil.write(
 			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/all-durations.js"),
+			sb.toString());
+	}
+
+	protected static void writeBackupDurationsJavaScriptFile()
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (DurationReport durationReport : _getDurationReports()) {
+			sb.append(durationReport.getBackupDurationsJavaScriptContent());
+		}
+
+		JenkinsResultsParserUtil.write(
+			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/backup-durations.js"),
 			sb.toString());
 	}
 
@@ -111,6 +127,8 @@ public class CISystemHistoryReportUtil {
 		String content = JenkinsResultsParserUtil.read(indexHtmlFile);
 
 		StringBuilder sb = new StringBuilder();
+
+		sb.append("\t\t<script src=\"js/backup-durations.js\"></script>\n\n");
 
 		for (String dateString : _dateStrings) {
 			sb.append("\t\t<script src=\"js/durations-");
@@ -536,6 +554,30 @@ public class CISystemHistoryReportUtil {
 
 			return javascriptVarValue.replaceAll(
 				"\\\"([^\\\"]+_\\d{4}_\\d{2})\\\"", "$1");
+		}
+
+		public String getBackupDurationsJavaScriptContent() {
+			StringBuilder sb = new StringBuilder();
+
+			for (String durationsJavaScriptVarName :
+					getDurationsJavaScriptVarNames()) {
+
+				sb.append(durationsJavaScriptVarName);
+				sb.append(" = []\n");
+			}
+
+			for (String dateJavaScriptVarName : getDateJavaScriptVarNames()) {
+				sb.append(dateJavaScriptVarName);
+				sb.append(" = [\"");
+
+				sb.append(
+					dateJavaScriptVarName.replaceAll(
+						".+(\\d{4}_\\d{2})", "$1"));
+
+				sb.append("\"]\n");
+			}
+
+			return sb.toString();
 		}
 
 		public String getDateDurationsJavaScriptContent(

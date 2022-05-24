@@ -2299,4 +2299,89 @@ definition {
 
 	}
 
+	@description = "verify if Input Mask On Decimal With Thousand Separator Is Working On Validation is working correctly"
+	@priority = "4"
+	test InputMaskOnDecimalWithThousandSeparatorIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+				value1 = "2");
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.00");
+
+		AssertTextEquals(
+			key_fieldName = "Thousands Separator",
+			value1 = "None",
+			locator1 = "FormFields#SELECT_FIELD");
+
+		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
+
+		AssertTextEquals(
+			key_fieldName = "Thousands Separator",
+			value1 = "1'000",
+			locator1 = "FormFields#SELECT_FIELD");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "10000.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "10000.00");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "10'000.00");
+
+	}
+
 }

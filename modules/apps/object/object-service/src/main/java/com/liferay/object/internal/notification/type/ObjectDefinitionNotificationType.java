@@ -16,7 +16,7 @@ package com.liferay.object.internal.notification.type;
 
 import com.liferay.notification.type.NotificationType;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -25,10 +25,7 @@ import java.util.Locale;
  */
 public class ObjectDefinitionNotificationType implements NotificationType {
 
-	public ObjectDefinitionNotificationType(
-		String action, String key, String label) {
-
-		_action = action;
+	public ObjectDefinitionNotificationType(String key, String label) {
 		_key = key;
 		_label = label;
 	}
@@ -60,10 +57,9 @@ public class ObjectDefinitionNotificationType implements NotificationType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _label + " " + LanguageUtil.get(locale, _action);
+		return StringPool.BLANK;
 	}
 
-	private final String _action;
 	private final String _key;
 	private final String _label;
 

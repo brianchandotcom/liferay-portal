@@ -450,6 +450,81 @@ release was successful.</echo>
 		<echo file="tools/servers/tomcat/bin/setenv.bat">set "CATALINA_OPTS=%CATALINA_OPTS% ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
 	</target>
 
+	<target name="install-weblogic14-setup-files">
+		<echo file="${app.server.weblogic.dir}/oraInst.loc">
+inventory_loc=${app.server.weblogic.dir}/oraInventory
+inst_group=appserver
+		</echo>
+
+		<echo file="${app.server.weblogic.dir}/create_swap.sh">
+			<![CDATA[
+#!/bin/sh
+swapsize=1024
+grep -q "swapfile" /etc/fstab
+
+if [ $? -ne 0 ]; then
+        echo 'swapfile not found. Adding swapfile.'
+        fallocate -l ${swapsize}M /swapfile
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+        echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+else
+        echo 'swapfile found. No changes made.'
+fi
+
+cat /proc/swaps
+cat /proc/meminfo | grep Swap
+]]>
+		</echo>
+
+		<echo file="${app.server.weblogic.dir}/create_user.sh">
+			<![CDATA[
+#!/bin/bash
+if id appserver &>/dev/null; then
+        echo 'appserver user exists'
+else
+        echo 'appserver user not found'
+        sudo useradd appserver
+        echo -e "liferay123\nliferay123" | sudo passwd appserver
+        echo 'appserver user created'
+fi
+			]]>
+		</echo>
+
+		<echo file="${app.server.weblogic.dir}/install_weblogic.sh">
+			<![CDATA[
+#!/bin/bash
+export JAVA_HOME=/opt/java/jdk8-x64
+export PATH=$JAVA_HOME/bin:$PATH
+
+java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysPrereqs -silent ORACLE_BASE=${app.server.weblogic.dir} ORACLE_HOME=${app.server.weblogic.dir}/oracle JAVA_HOME=/opt/java/jdk8-x64 INVENTORY_LOCATION=${app.server.weblogic.dir}/oraInventory INSTALL_TYPE='Complete with Examples' -invPtrLoc ${app.server.weblogic.dir}/oraInst.loc
+			]]>
+		</echo>
+
+		<exec executable="/bin/bash">
+			<arg value="${app.server.weblogic.dir}/create_swap.sh" />
+		</exec>
+
+		<exec executable="/bin/bash">
+			<arg value="${app.server.weblogic.dir}/create_user.sh" />
+		</exec>
+
+		<execute dir="${app.server.weblogic.dir}">
+			rm -rf ${app.server.weblogic.dir}/oraInventory
+
+			mkdir ${app.server.weblogic.dir}/oraInventory
+
+			rm -rf ${app.server.weblogic.dir}/oracle
+
+			mkdir ${app.server.weblogic.dir}/oracle
+
+			sudo chown -R appserver: ${app.server.weblogic.dir}
+
+			su appserver -c "/bin/sh install_weblogic.sh"
+		</execute>
+	</target>
+
 	<target name="prepare-generated-files">
 		<antcall target="clean" />
 		<antcall target="start" />

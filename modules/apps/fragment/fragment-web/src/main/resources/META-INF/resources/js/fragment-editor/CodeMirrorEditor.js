@@ -266,7 +266,7 @@ const CodeMirrorEditor = ({
 				autoCloseTags: true,
 				autoRefresh: true,
 				extraKeys: {
-					'Ctrl-Space': 'autocomplete',
+					'Ctrl-Space': readOnly ? '' : 'autocomplete',
 				},
 				foldGutter: true,
 				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
@@ -284,7 +284,7 @@ const CodeMirrorEditor = ({
 				matchBrackets: true,
 				mode: {globalVars: true, name: MODES[mode].type},
 				readOnly,
-				showHint: true,
+				showHint: !readOnly,
 				tabSize: 2,
 				value: content,
 				viewportMargin: Infinity,
@@ -296,6 +296,7 @@ const CodeMirrorEditor = ({
 
 			codeMirror.on('keyup', (cm, event) => {
 				if (
+					!readOnly &&
 					!cm.state.completionActive &&
 					!AUTOCOMPLETE_EXCLUDED_KEYS.has(event.key)
 				) {

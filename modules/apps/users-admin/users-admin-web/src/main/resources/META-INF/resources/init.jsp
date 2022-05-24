@@ -112,7 +112,6 @@ page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@
-page import="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

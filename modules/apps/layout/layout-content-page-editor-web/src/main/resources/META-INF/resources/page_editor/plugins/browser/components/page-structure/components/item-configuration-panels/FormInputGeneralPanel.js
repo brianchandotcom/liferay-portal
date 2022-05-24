@@ -88,7 +88,7 @@ const INPUT_COMMON_CONFIGURATION = [
 ];
 
 function getTypeLabels(itemTypes, classNameId, classTypeId) {
-	if (!itemTypes) {
+	if (!itemTypes || !classNameId) {
 		return {};
 	}
 

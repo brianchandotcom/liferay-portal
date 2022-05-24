@@ -1,8 +1,10 @@
 @component-name = "portal-security"
 definition {
 
-	property portal.release = "true";
-	property portal.upstream = "true";
+	// Quarantine test due to POSHI-354.
+
+	property portal.release = "false";
+	property portal.upstream = "false";
 	property testray.main.component.name = "Security";
 
 	setUp {

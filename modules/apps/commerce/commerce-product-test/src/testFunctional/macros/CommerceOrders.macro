@@ -325,6 +325,13 @@ definition {
 				value1 = "${orderItemDeliveryGroup}");
 		}
 
+		if (isSet(orderItemMeasurementUnit)) {
+			Select(
+				key_fieldLabel = "Measurement Units",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${orderItemMeasurementUnit}");
+		}
+
 		Button.clickSave();
 
 		KeyPress(

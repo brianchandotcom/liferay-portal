@@ -2659,12 +2659,30 @@ definition {
 	}
 
 	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test NoZipFileIsCreatedIfDownloadResultsInError {
+		DMDocument.deleteTempFolder(appServer = "tomcat-9.0.56");
 
-		// TODO LPS-149394
+		for (var num : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title${num}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${num}.doc");
+		}
 
+		DMDocument.deleteDocumentLibraryFolder();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.downloadMultipleCP(dmDocumentTitleList = "DM Document Title1,DM Document Title2,DM Document Title3");
+
+		AssertConsoleTextPresent(value1 = "com.liferay.document.library.kernel.exception.NoSuchFileException");
+
+		DMDocument.assertNoZipFileFromTempFolder(
+			appServer = "tomcat-9.0.56",
+			fileNamePattern = "*.zip");
 	}
 
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."

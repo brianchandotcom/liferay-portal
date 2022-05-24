@@ -5,6 +5,7 @@
 /// <reference path="apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/liferay.d.ts" />
 
 declare module Liferay {
+	export const FeatureFlags: {[key: string]: boolean};
 	export function fire(type: string, context?: any): void;
 	export function on(
 		type: string,

@@ -13,7 +13,6 @@
  */
 
 declare module Liferay {
-	export const FeatureFlags: any;
 	namespace Address {
 
 		/* Returns a list of countries */

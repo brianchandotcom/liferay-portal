@@ -50,7 +50,7 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 
 	@Override
 	public long[] getSegmentsEntryIds(
-		long groupId, long userId, Context context) {
+		long groupId, long userId, Context context, long[] segmentEntryIds) {
 
 		try {
 			if (!_segmentsConfigurationProvider.isSegmentationEnabled(
@@ -79,7 +79,8 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 					try {
 						return _segmentsEntryProviderRegistry.
 							getSegmentsEntryIds(
-								groupId, User.class.getName(), userId, context);
+								groupId, User.class.getName(), userId, context,
+								segmentEntryIds);
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {

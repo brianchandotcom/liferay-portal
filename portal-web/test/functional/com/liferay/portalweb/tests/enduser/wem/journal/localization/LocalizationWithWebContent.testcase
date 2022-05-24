@@ -38,30 +38,24 @@ definition {
 	@description = "Add a localized web content via Web Content Display widget."
 	@priority = "4"
 	test AddLocalizedWebContent {
-		property testray.component.names = "Localization";
+		property testray.component.names = "Localization,Web Content Administration";
 
-		task ("Add a Web Content Display widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Web Content Display");
-		}
-
-		task ("Add a Language Selector widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Language Selector");
-		}
-
-		task ("Add a web content") {
+		task ("Given a site designer has a page where a Web Content Display widget displays a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
-		}
 
-		task ("Select the web content in Web Content Display") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -69,15 +63,13 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 			IFrame.closeFrame();
-		}
 
-		task ("View web content is shown in Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
 
-		task ("Translate the web content to Chinese") {
+		task ("When the site designer adds a Chinese translation to web content via Web Content Display") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "Edit Web Content",
 				webContentTitle = "Web Content Title");
@@ -91,7 +83,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("View web content is shwon in Chinese") {
+		task ("Then the site designer could view the translation after changing the user language to Chinese") {
 			LanguagePortlet.selectLanguagePG(
 				locale = "zh-CN",
 				textIcon = "中文-中国");
@@ -101,200 +93,196 @@ definition {
 				webContentTitle = "世界您好 Title");
 		}
 
-		task ("View web content is shown in English") {
+		task ("When the site designer changes the user language back to default") {
 			LanguagePortlet.tearDownLanguagePG();
+		}
 
+		task ("Then the site designer could view the web content in English") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
 	}
 
-	@description = "LPS-100416 - Non-Repeatable text fields show incorrect translation on label at first load."
+	@description = "This is a test for LPS-100416. Non-Repeatable text fields show incorrect translation on label at first load."
 	@priority = "4"
 	test AddNonRepeatableTextFieldWithTranslation {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Given a site designer has a translated web content structure with associated template") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+			DataEngine.addField(
+				fieldFieldLabel = "English",
+				fieldName = "Text");
 
-		DataEngine.addField(
-			fieldFieldLabel = "English",
-			fieldName = "Text");
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "English");
 
-		Click(
-			key_fieldFieldLabel = "English",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			WebContentStructures.addLocalization(
+				locale = "de-DE",
+				localization1Name = "Name der WC-Struktur");
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "English",
+				fieldFieldLabelEdit = "German");
 
-		Uncheck.uncheckToggleSwitch(
-			key_fieldName = "repeatable",
-			locator1 = "Checkbox#SWITCH");
+			WebContentStructures.saveCP();
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			NavItem.gotoTemplates();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateFieldNames = "English*",
+				templateName = "WC Template Name");
+		}
 
-		WebContentStructures.addLocalization(
-			locale = "de-DE",
-			localization1Name = "WC Structure German Name");
+		task ("When the site designer changes the default site language to German") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
 
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "English",
-			fieldFieldLabelEdit = "German");
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "German (Germany)");
+		}
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		task ("Then the site designer could view the German language as default on the web content at edit mode") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoTemplates();
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateFieldNames = "English",
-			templateName = "WC Template Name");
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+			PortletEntry.viewLocale(locale = "de-DE");
 
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "German (Germany)");
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "German");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("When the site designer changes the user language to English") {
+			PortletEntry.changeLocale(locale = "en-US");
+		}
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		task ("Then the site designer could view the English translation in the field label") {
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "English");
+		}
 
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+		task ("When the site designer changes the user language to German") {
+			PortletEntry.changeLocale(locale = "de-DE");
+		}
 
-		PortletEntry.viewLocale(locale = "de-DE");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "German",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		PortletEntry.changeLocale(locale = "en-US");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "English",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		PortletEntry.changeLocale(locale = "de-DE");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "German",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		task ("Then the site designer could view the German translation in the field label") {
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "German");
+		}
 	}
 
+	@description = "The User can add a web content with multiples translation and visualize it on the page."
 	@priority = "4"
-	test AddWCWithMultipleTranslations {
-		property test.name.skip.portal.instance = "LocalizationWithWebContent#AddWCWithMultipleTranslations";
+	test AddWebContentWithMultipleTranslations {
 		property testray.component.names = "Localization,Web Content Administration";
 
-		JSONWebcontent.addBasicWebContentLocalized(
-			contentMap = "en_US:WC Content,es_ES:WC Contenido,de_DE:WC Inhalt,fi_FI:WC Pitoisuus",
-			groupName = "Test Site Name",
-			titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko");
+		task ("Given the site designer has a page where a Web Content Display widget displays a web content with multiple translations") {
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:WC Content,es_ES:WC Contenido,de_DE:WC Inhalt,fi_FI:WC Pitoisuus",
+				groupName = "Test Site Name",
+				titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Web Content Display");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Language Selector");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
 
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 
-		LanguagePortlet.selectLanguagePG(
-			locale = "es_ES",
-			textIcon = "español-España");
+		task ("When the site designer opens the web content at edit mode via Web Content Display after change the user language to Espanish") {
+			LanguagePortlet.selectLanguagePG(
+				locale = "es_ES",
+				textIcon = "español-España");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC Contenido",
+				webContentTitle = "WC Titulo");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC Contenido",
-			webContentTitle = "WC Titulo");
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Editar contenido web",
+				webContentTitle = "WC Titulo");
+		}
 
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Editar contenido web",
-			webContentTitle = "WC Titulo");
+		task ("Then the site designer could view the web content in Spanish") {
+			PortletEntry.changeLocale(locale = "es-ES");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+			WebContent.viewCP(
+				webContentContent = "WC Contenido",
+				webContentTitle = "WC Titulo");
+		}
 
-		WebContent.viewCP(
-			webContentContent = "WC Contenido",
-			webContentTitle = "WC Titulo");
+		task ("When the site designer opens the web content at edit mode via Web Content Display after change the user language to German") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			LanguagePortlet.selectLanguagePG(
+				locale = "de-DE",
+				textIcon = "deutsch-Deutschland");
 
-		LanguagePortlet.selectLanguagePG(
-			locale = "de-DE",
-			textIcon = "deutsch-Deutschland");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC Inhalt",
+				webContentTitle = "WC Titel");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Webcontent bearbeiten",
+				webContentTitle = "WC Titel");
+		}
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC Inhalt",
-			webContentTitle = "WC Titel");
+		task ("Then the site designer could view the web content in German") {
+			PortletEntry.changeLocale(locale = "de-DE");
 
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Webcontent bearbeiten",
-			webContentTitle = "WC Titel");
+			WebContent.viewCP(
+				webContentContent = "WC Inhalt",
+				webContentTitle = "WC Titel");
+		}
 
-		PortletEntry.changeLocale(locale = "de-DE");
+		task ("When the site designer opens the web content at edit mode via Web Content Display after change the user language to Finnish") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		WebContent.viewCP(
-			webContentContent = "WC Inhalt",
-			webContentTitle = "WC Titel");
+			LanguagePortlet.selectLanguagePG(
+				locale = "fi-FI",
+				textIcon = "suomi-Suomi");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC Pitoisuus",
+				webContentTitle = "WC Otsikko");
 
-		LanguagePortlet.selectLanguagePG(
-			locale = "fi-FI",
-			textIcon = "suomi-Suomi");
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Muokkaa web-sisältöä",
+				webContentTitle = "WC Otsikko");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Then the site designer could view the web content in German Finnish") {
+			PortletEntry.changeLocale(locale = "fi-FI");
 
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC Pitoisuus",
-			webContentTitle = "WC Otsikko");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Muokkaa web-sisältöä",
-			webContentTitle = "WC Otsikko");
-
-		PortletEntry.changeLocale(locale = "fi-FI");
-
-		WebContent.viewCP(
-			webContentContent = "WC Pitoisuus",
-			webContentTitle = "WC Otsikko");
+			WebContent.viewCP(
+				webContentContent = "WC Pitoisuus",
+				webContentTitle = "WC Otsikko");
+		}
 	}
 
 	@description = "This is a use case for LRQA-61632. Add web content with translated Text field."
 	@priority = "4"
 	test AddWebContentWithTranslatedTextField {
-		task ("Add a structure with Text field") {
+		task ("Given a site designer has a structure with two texts fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -309,10 +297,10 @@ definition {
 				fieldFieldLabel = "Text2",
 				fieldName = "Text");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
-		task ("Add a web content based on new structure") {
+		task ("When the site designer adds a translated web content based on new structure") {
 			NavItem.click(navItem = "Web Content");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
@@ -320,16 +308,12 @@ definition {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			PortletEntry.inputTitle(title = "Web Content Title");
-		}
 
-		task ("Type content in Text field under en-US") {
 			Type(
 				key_fieldFieldLabel = "Text1",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "This is a Text field");
-		}
 
-		task ("Type content in Text field under es-ES") {
 			PortletEntry.changeLocale(locale = "es-ES");
 
 			Type(
@@ -340,7 +324,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert localized content are shown in published web content under Localization") {
+		task ("Then the site designer could view the translated web content at edit mode") {
 			WebContentAdmin.gotoEntry(entry = "Web Content Title");
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
@@ -364,35 +348,42 @@ definition {
 	@description = "This is a use case for LPS-114001. The placeholder values are the same as the default Language's value."
 	@priority = "4"
 	test AssertPlaceholderValuesSameAsTheDefaultLanguage {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Given the site designer has a not translated web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		WebContentNavigator.gotoAddCP();
+		task ("When the site designer changes the user language to Spanish on the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortletEntry.viewLocale(locale = "en-US");
+			WebContentAdmin.gotoEntry(entry = "Web Content Title");
 
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			PortletEntry.changeLocale(locale = "ca-ES");
+		}
 
-		PortletEntry.changeLocale(locale = "ca-ES");
+		task ("Then the site designer could view the web content in English since it was not translated to Spanish") {
+			WebContent.viewCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
 
-		WebContent.viewCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		task ("When the site designer changes the user language to Dutch after add a Chinese translation") {
+			PortletEntry.changeLocale(locale = "zh-CN");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+			WebContent.addCP(
+				webContentContent = "网页内容",
+				webContentTitle = "网页内容标题");
 
-		WebContent.addCP(
-			webContentContent = "网页内容",
-			webContentTitle = "网页内容标题");
+			PortletEntry.changeLocale(locale = "nl-NL");
+		}
 
-		PortletEntry.changeLocale(locale = "nl-NL");
-
-		WebContent.viewCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
+		task ("Then the site designer could view the web content in English since it was not translated to Dutch") {
+			WebContent.viewCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
 	}
 
 	@description = "This is a use case for LPS-83319. The user could change default language of web content after enable Changeable Default Language."
@@ -401,7 +392,12 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ChangeWebContentDefaultLanguage";
 
-		task ("Enable Changeable Default Language for Web Content") {
+		task ("Given the site designer has a translated web content in a site with Changeable Default Language for web content") {
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
+				groupName = "Test Site Name",
+				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -417,14 +413,7 @@ definition {
 				settingFieldName = "Changeable Default Language");
 		}
 
-		task ("Add a web content with translations") {
-			JSONWebcontent.addBasicWebContentLocalized(
-				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
-				groupName = "Test Site Name",
-				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
-		}
-
-		task ("Change the default language of web content to es-ES") {
+		task ("When the site designer changes the default user language of web content to es-ES") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -442,7 +431,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("View the default language of web content is es-ES") {
+		task ("Then the site designer could view the default user language of web content is es-ES") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			PortletEntry.viewLocale(locale = "es-ES");
@@ -458,18 +447,20 @@ definition {
 	@description = "This is a test for LPS-137902. The user can delete a localized content in the web content."
 	@priority = "4"
 	test DeleteLocalizedContent {
-		task ("Add a web content with English and Spanish translations") {
+		task ("Given the site designer has a translated web content") {
 			JSONWebcontent.addBasicWebContentLocalized(
 				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
 				groupName = "Test Site Name",
 				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
 		}
 
-		task ("View web content is localized to both languages") {
+		task ("When the site designer opens to web content at edit mode") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		}
 
+		task ("Then the site designer could view the translations on web content") {
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -481,13 +472,13 @@ definition {
 				webContentTitle = "Título del contenido web");
 		}
 
-		task ("Delete the Spanish translation in the content field") {
+		task ("When the site designer deletes the Spanish translation in the content field") {
 			WebContent.addCP(webContentContent = "");
 
 			PortletEntry.publish();
 		}
 
-		task ("View content field is empty in Spanish after publish") {
+		task ("Then the site designer could view the empty field for Spanish translation") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			PortletEntry.changeLocale(locale = "es-ES");
@@ -501,39 +492,37 @@ definition {
 	@description = "View available locales in Web Content Display with translation tools."
 	@priority = "4"
 	test ViewAvailableTranslations {
-		property testray.component.names = "Localization";
+		property testray.component.names = "Localization,Web Content Administration";
 
-		task ("Add a web content") {
+		task ("Given a site designer has a page where a Web Content Display widget displays a web content with tools translations enabled") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
-		}
 
-		task ("Add a Web Content Display widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				widgetName = "Web Content Display");
-		}
 
-		task ("Select the web content in Web Content Display") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
-			IFrame.closeFrame();
-		}
+			WebContentDisplayPortlet.configureSetup(userToolNameList = "Translations");
 
-		task ("View web content is shown in Web Content Display") {
+			WebContentDisplayPortlet.saveConfiguration();
+
+			IFrame.closeFrame();
+
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
 
-		task ("Add a Chinese localized name to web content via Web Content Display") {
+		task ("When the site designer adds a Chinese translation to web content via Web Content Displayt") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "Edit Web Content",
 				webContentTitle = "Web Content Title");
@@ -547,19 +536,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Enable translations tools in Web Content Display") {
-			Portlet.gotoPortletOptions(
-				portletName = "Web Content Display",
-				portletOption = "Configuration");
-
-			WebContentDisplayPortlet.configureSetup(userToolNameList = "Translations");
-
-			WebContentDisplayPortlet.saveConfiguration();
-
-			IFrame.closeFrame();
-		}
-
-		task ("View web content is shown in Chinese") {
+		task ("Then the site designer could view the translation after changing the user language to Chinese") {
 			LanguagePortlet.selectLanguagePG(
 				locale = "zh-cn",
 				portletName = "JournalContentPortlet",
@@ -570,12 +547,14 @@ definition {
 				webContentTitle = "世界您好 Title");
 		}
 
-		task ("View web content is shown in English") {
+		task ("When the site designer changes the user language to English") {
 			LanguagePortlet.selectLanguagePG(
 				locale = "en_US",
 				portletName = "JournalContentPortlet",
 				textIcon = "english-United States");
+		}
 
+		task ("Then the site designer could view the web content in English") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -586,43 +565,44 @@ definition {
 	@priority = "4"
 	test ViewChangedDefaultPortalLanguageViaWebContent {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
-		property testray.component.names = "Localization";
+		property testray.component.names = "Localization,Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Given a site designer has a web content with and without translation") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content 1",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
 
-		WebContentNavigator.gotoAddCP();
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Web Content Content 2,es_ES:Contenido de contenido web 2",
+				groupName = "Test Site Name",
+				titleMap = "en_US:Web Content Title 2,es_ES:Título del contenido web 2");
+		}
 
-		WebContent.addCP(
-			webContentContent = "Web Content Content 1",
-			webContentTitle = "Web Content Title 1");
+		task ("When the site designer changes the default portal language to Spanish") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
 
-		PortletEntry.publish();
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+		}
 
-		JSONWebcontent.addBasicWebContentLocalized(
-			contentMap = "en_US:Web Content Content 2,es_ES:Contenido de contenido web 2",
-			groupName = "Test Site Name",
-			titleMap = "en_US:Web Content Title 2,es_ES:Título del contenido web 2");
+		task ("Then the site designer can add a third web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+			WebContentNavigator.gotoAddCP();
 
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+			PortletEntry.viewLocale(
+				locale = "es-ES",
+				portletName = "Web Content");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContent.addCP(
+				webContentContent = "Web Content Content 3",
+				webContentTitle = "Web Content Title 3");
 
-		WebContentNavigator.gotoAddCP();
-
-		PortletEntry.viewLocale(
-			locale = "es-ES",
-			portletName = "Web Content");
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content 3",
-			webContentTitle = "Web Content Title 3");
-
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 	}
 
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."
@@ -754,31 +734,31 @@ definition {
 	@description = "This is a use case for LPS-141460. The Localized friendly URL of web content should not be autogenerated."
 	@priority = "4"
 	test ViewLocalizedFriendlyURLNotAutogenerated {
-		task ("Create a Web Content") {
+		task ("Given a site designer has a translated web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
-		}
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
-		task ("Add a translation for the title") {
 			PortletEntry.changeLocale(locale = "pt-BR");
 
-			WebContent.addCP(webContentTitle = "WC WebContent New Title");
+			WebContent.addCP(webContentTitle = "Título de contéudo web");
 
 			PortletEntry.publish();
 		}
 
-		task ("View localized friendly URL not autogenerated") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		task ("When the site designer opens the friendly URL panel of translated web content at edit mode") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			Panel.expandPanel(panel = "Friendly URL");
 
 			PortletEntry.changeLocale(locale = "pt-BR");
+		}
 
+		task ("Then the site designer could view the localized friendly URL is not autogenerated") {
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
 				locator1 = "TextInput#INPUT_ID",
@@ -789,7 +769,7 @@ definition {
 	@description = "This is a use case for LRQA-61632. View structure default value in translated Text field."
 	@priority = "4"
 	test ViewStructureDefaultValueInTranslatedTextField {
-		task ("Add a structure with Text field") {
+		task ("Given a site designer has a web content structure with custom default values to translated text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -800,10 +780,8 @@ definition {
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
-		}
+			WebContentStructures.saveCP();
 
-		task ("Add default value to translated Text field") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit Default Values",
 				rowEntry = "WC Structure Name");
@@ -822,16 +800,16 @@ definition {
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "Este es un campo de texto");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
-		task ("Add a web content based on new structure") {
+		task ("When the site designer adds a web content based on new structure") {
 			NavItem.click(navItem = "Web Content");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 		}
 
-		task ("Assert localized content are shown under Localization") {
+		task ("Then the site designer could view the translated text fields at edit mode") {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			AssertAttributeValue(

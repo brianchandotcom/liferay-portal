@@ -51,6 +51,7 @@ import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -967,6 +968,12 @@ public class ObjectEntryDisplayContext {
 		if (value == null) {
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+		}
+		else if (value instanceof FileEntry) {
+			FileEntry fileEntry = (FileEntry)value;
+
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(String.valueOf(fileEntry.getId())));
 		}
 		else if (value instanceof ListEntry) {
 			ListEntry listEntry = (ListEntry)value;

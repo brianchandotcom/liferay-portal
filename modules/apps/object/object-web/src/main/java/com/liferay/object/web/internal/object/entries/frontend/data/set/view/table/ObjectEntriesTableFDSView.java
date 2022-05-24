@@ -239,8 +239,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				objectField.getBusinessType(), null, objectField.getDBType(),
 				fdsTableSchemaBuilder,
 				_getFieldName(
-					objectField.getListTypeDefinitionId(),
-					objectField.getName()),
+					objectField.getBusinessType(), objectField.getName()),
 				label, objectField.isIndexed());
 		}
 		else if (Objects.equals(
@@ -271,7 +270,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					titleObjectField.getBusinessType(), null,
 					titleObjectField.getDBType(), fdsTableSchemaBuilder,
 					_getFieldName(
-						titleObjectField.getListTypeDefinitionId(),
+						titleObjectField.getBusinessType(),
 						StringBundler.concat(
 							StringUtil.replaceLast(
 								objectField.getName(), "Id", ""),
@@ -281,8 +280,12 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		}
 	}
 
-	private String _getFieldName(long listTypeDefinitionId, String fieldName) {
-		if (listTypeDefinitionId > 0) {
+	private String _getFieldName(String businessType, String fieldName) {
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
 			return fieldName + ".name";
 		}
 

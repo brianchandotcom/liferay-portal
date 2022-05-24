@@ -14,6 +14,8 @@
 
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -21,6 +23,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -332,10 +335,30 @@ public class ObjectEntryDTOConverter
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-					 Objects.equals(
-						 objectField.getBusinessType(),
-						 ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				Object value = values.get(objectField.getName());
+
+				DLFileEntry dlFileEntry =
+					_dLFileEntryLocalService.fetchDLFileEntry(
+						GetterUtil.getLong(value));
+
+				if (dlFileEntry == null) {
+					continue;
+				}
+
+				map.put(
+					objectFieldName,
+					new FileEntry() {
+						{
+							id = dlFileEntry.getFileEntryId();
+							name = dlFileEntry.getFileName();
+						}
+					});
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 				map.put(
 					objectFieldName,
@@ -474,6 +497,9 @@ public class ObjectEntryDTOConverter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDTOConverter.class);
+
+	@Reference
+	private DLFileEntryLocalService _dLFileEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

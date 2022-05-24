@@ -59,9 +59,67 @@ definition {
 		}
 
 		task ("Then the response body includes the default priority field") {
-			HeadlessWebcontentAPI.assertPriorityFieldIsFilterWithDefaultValue(
-				expectedPriorityDefaultValue = "0.0",
+			HeadlessWebcontentAPI.assertPriorityFieldIsFilteredWithCorrectValue(
+				expectedPriorityValue = "0.0",
 				responseToParse = "${responseToParse}");
+		}
+	}
+
+	@description = "StructuredContent can be filtered with a set priority"
+	@priority = "5"
+	test StructuredContentContainsUpdatedPriorityValueFilteredByEqualTo {
+		property portal.acceptance = "true";
+
+		task ("Given three web contents are created with default priority") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse1 = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title 1");
+			var responseToParse2 = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title 2");
+			var responseToParse3 = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title 3");
+		}
+
+		task ("Given edit a web content with different priorities") {
+			var editStructuredContentId = HeadlessWebcontentAPI.editStructuredContentWithPriority(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "1.3",
+				responseToParse = "${responseToParse2}",
+				title = "WC WebContent Title 2");
+		}
+
+		task ("When web contents are filtered with 1.3 priority") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentWithPriority(filtervalue = "priority%20eq%201.3");
+		}
+
+		task ("Then the response body only includes items with priority 1.3") {
+			HeadlessWebcontentAPI.assertPriorityFieldIsFilteredWithCorrectValue(
+				expectedPriorityValue = "1.3",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "1",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentAPI.assertStructuredContentIdIsFilteredWithCorrectValue(
+				editStructuredContentId = "${editStructuredContentId}",
+				responseToParse = "${response}");
 		}
 	}
 

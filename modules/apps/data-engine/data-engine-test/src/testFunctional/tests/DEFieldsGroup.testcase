@@ -1676,4 +1676,129 @@ definition {
 			optionValue = "Option 3");
 	}
 
+	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
+	@priority = "4"
+	test CanInputDataOnDuplicatedFieldTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Numeric");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+	
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+
+	
+	}
+
 }

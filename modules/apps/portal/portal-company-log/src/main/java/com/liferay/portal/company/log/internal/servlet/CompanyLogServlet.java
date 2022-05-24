@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
@@ -120,7 +121,7 @@ public class CompanyLogServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String[] pathArray)
 		throws Exception {
 
-		long companyId = Long.valueOf(pathArray[0]);
+		long companyId = GetterUtil.getLongStrict(pathArray[0]);
 
 		if (_companyLocalService.fetchCompanyById(companyId) == null) {
 			throw new NoSuchCompanyException(
@@ -224,13 +225,13 @@ public class CompanyLogServlet extends HttpServlet {
 		printWriter.println("<ul>");
 
 		for (File file : logFilesDir.listFiles()) {
-			String herf = StringBundler.concat(
+			String href = StringBundler.concat(
 				_portal.getPortalURL(httpServletRequest),
 				_portal.getPathContext(), "/o/company-log/",
 				company.getCompanyId(), StringPool.SLASH, file.getName());
 
 			printWriter.println(
-				"<li><a target=\"_self\" href=\"" + herf + "\">");
+				"<li><a target=\"_self\" href=\"" + href + "\">");
 
 			printWriter.println(file.getName());
 			printWriter.println("</a>");

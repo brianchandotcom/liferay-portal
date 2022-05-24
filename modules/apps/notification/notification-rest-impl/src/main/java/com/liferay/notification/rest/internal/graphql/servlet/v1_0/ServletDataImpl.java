@@ -16,6 +16,7 @@ package com.liferay.notification.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.notification.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.notification.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -38,9 +39,13 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setNotificationQueueEntryResourceComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects);
 		Mutation.setNotificationTemplateResourceComponentServiceObjects(
 			_notificationTemplateResourceComponentServiceObjects);
 
+		Query.setNotificationQueueEntryResourceComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects);
 		Query.setNotificationTemplateResourceComponentServiceObjects(
 			_notificationTemplateResourceComponentServiceObjects);
 	}
@@ -59,6 +64,10 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<NotificationQueueEntryResource>
+		_notificationQueueEntryResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NotificationTemplateResource>

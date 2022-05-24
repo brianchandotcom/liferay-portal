@@ -14,24 +14,24 @@ definition {
 		User.firstLoginPG();
 	}
 
-	// tearDown {
-	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	// 	if ("${testPortalInstance}" == "true") {
-	// 		PortalInstances.tearDownCP();
-	// 	}
-	// 	else {
-	// 		Navigator.openURL();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
 
-	// 		ProductMenu.gotoPortlet(
-	// 			category = "Content & Data",
-	// 			portlet = "Forms");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
 
-	// 		FormsAdmin.teardownForms();
+			FormsAdmin.teardownForms();
 
-	// 		PagesAdmin.tearDownCP();
-	// 	}
-	// }
+			PagesAdmin.tearDownCP();
+		}
+	}
 
 	@description = "This is a use case for LPS-75457, LPS-80246 and LPS-75393. Automate Numeric field with Decimal configurations."
 	@priority = "4"
@@ -1298,6 +1298,579 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "Verify if Input Mask On Decimal With Decimal Places is working correctly"
+	@priority = "5"
+	test InputMaskOnDecimalWithDecimalPlaces {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "2");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "0");
+
+		Click(locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "2");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "11");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "1");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0.0000000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0,0000000");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "5");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "0.00000");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "5.00000000");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "5.00000");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "4,321.12345");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "4321.12345");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "4321.12345");
+	}
+
+	@description = "verify if Input Mask On Decimal With Decimal Places Is Working On Validation is working correctly"
+	@priority = "4"
+	test InputMaskOnDecimalWithDecimalPlacesIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "2");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.20");
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.00");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.200000000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.2000000");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.0000000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.0000000");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+	}
+
+	@description = "Verify if Input Mask On Decimal With Decimal Places With Predefined Value is working correctly"
+	@priority = "5"
+	test InputMaskOnDecimalWithDecimalPlacesWithPredefinedValue {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "2");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "1.20");
+
+		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1,234.7654321");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "1234.7654321");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1.23");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "1.23");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "1",
+			value = "1234.7654321");
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "2",
+			value = "1.23");
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric 2",
+			fieldValue = "3.21");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "1234.7654321");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric 2",
+			fieldValue = "3.21");
+	}
+
+	@description = "Verify if input mask on decimal with decimal separator is working on validation"
+	@priority = "4"
+	test InputMaskOnDecimalWithDecimalSeparatorIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		FormViewBuilder.checkSwitch(propertyName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1,00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1,00");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
+
+		AssertTextEquals(
+			locator1 = "FormFields#VALIDATION_INPUT",
+			value1 = "1.00");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123.123");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1,00");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1,00");
+	}
+
+	@description = "Verify if Input Mask On Decimal With Thousand Separator is working correctly"
+	@priority = "5"
+	test InputMaskOnDecimalWithThousandSeparator {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1 000");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "5000");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "5 000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "5 000");
+	}
+
+	@description = "verify if Input Mask On Decimal With Thousand Separator Is Working On Validation is working correctly"
+	@priority = "4"
+	test InputMaskOnDecimalWithThousandSeparatorIsWorkingOnValidation {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		AssertTextEquals(
+			locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
+			value1 = "2");
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "1.00");
+
+		AssertTextEquals(
+			key_fieldName = "Thousands Separator",
+			locator1 = "FormFields#SELECT_FIELD",
+			value1 = "None");
+
+		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
+
+		AssertTextEquals(
+			key_fieldName = "Thousands Separator",
+			locator1 = "FormFields#SELECT_FIELD",
+			value1 = "1'000");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is Equal To",
+			validationErrorMessage = "Test Error",
+			validationInput = "10000.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1.0000000");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "10000.00");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "10'000.00");
+	}
+
+	@description = "Verify if unput mask on decimal with thousand separator with predefined value"
+	@priority = "5"
+	test InputMaskOnDecimalWithThousandSeparatorWithPredefinedValue {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
+
+		FormFields.editFieldPredefined(key_fieldReference = "5'000.00");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "5'000.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "5'000.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "100000");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "100'000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "100'000");
+	}
+
 	@description = "LRQA-70003 - Verify if the decimal input mask is working in the rules"
 	@priority = "5"
 	test InputMaskOnDecimalWorkingOnRules {
@@ -1519,6 +2092,166 @@ definition {
 		FormFields.viewLabel(
 			fieldLabel = "Numeric 2",
 			fieldName = "Numeric 2");
+	}
+
+	@description = "verify if Input Mask Prefix And Suffix On Decimal With Decimal Separator is working correctly"
+	@priority = "4"
+	test InputMaskPrefixAndSuffixOnDecimalWithDecimalSeparator {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(
+			decimalSeparator = "0,00",
+			prefix = "ABC123@$&*");
+
+		FormFields.viewWarningMessage(
+			fieldName = "Prefix or Suffix",
+			warningMessage = "The maximum length is 10 characters.");
+
+		FormFields.viewOptionSelected(optionSelected = "prefix");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+		FormFields.setInputMaskOnDecimal(suffix = "ABC123@$&*");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		AssertElementPresent(
+			key_affixValue = "ABC123@$&*",
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "10000,00");
+
+		AssertElementPresent(
+			key_affixValue = "ABC123@$&*",
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+	}
+
+	@description = "verify if Input Mask With Repeatable Option is working correctly"
+	@priority = "4"
+	test InputMaskWithRepeatableOption {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(
+			decimalSeparator = "0,00",
+			prefix = "ABC",
+			thousandsSeparator = "1.000");
+
+		FormFields.enableSwitch(fieldName = "Repeatable");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Numeric",
+			key_repeatableFieldsNumber = "1");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC",
+			inputMaskValue = "0,00");
+
+		FormFields.addRepeatableField(
+			key_fieldName = "Numeric",
+			key_repeatableFieldNumber = "1");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Numeric",
+			key_repeatableFieldsNumber = "1,2");
+
+		for (var number : list "1,2") {
+			FormFields.editRepeatingText(
+				fieldName = "Numeric",
+				fieldValue = "1,23",
+				fieldValueRepeat = "1,23");
+		}
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1,23");
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -1783,694 +2516,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132838 ValidationIsResetAfterChangingFieldType pending implementation
-
-	}
-
-	@description = "Verify if input mask on decimal with decimal separator is working on validation"
-	@priority = "4"
-	test InputMaskOnDecimalWithDecimalSeparatorIsWorkingOnValidation {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
-
-		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
-
-		FormViewBuilder.checkSwitch(propertyName = "Validation");
-
-		FormFields.editValidationTargetArgument(
-			validationArgument = "Is Equal To",
-			validationErrorMessage = "Test Error",
-			validationInput = "1,00");
-
-		AssertTextEquals(
-			locator1 = "FormFields#VALIDATION_INPUT",
-			value1 = "1,00");
-
-		ScrollBy(value1 = "0, 2000");
-
-		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
-
-		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
-
-		AssertTextEquals(
-			locator1 = "FormFields#VALIDATION_INPUT",
-			value1 = "1.00");
-
-		ScrollBy(value1 = "0, 2000");
-
-		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
-
-		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "123.123");
-
-		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "1,00");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "1,00");
-
-
-
-	}
-
-	@description = "Verify if unput mask on decimal with thousand separator with predefined value"
-	@priority = "5"
-	test InputMaskOnDecimalWithThousandSeparatorWithPredefinedValue {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
-
-		FormFields.editFieldPredefined(key_fieldReference = "5'000.00");
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
-			value1 = "5'000.00");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "5'000.00");
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "100000");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "100'000");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "100'000");
-
-	}
-
-	@description = "Verify if Input Mask On Decimal With Thousand Separator is working correctly"
-	@priority = "5"
-	test InputMaskOnDecimalWithThousandSeparator {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1 000");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "5000");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "5 000");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "5 000");
-
-	}
-
-	@description = "Verify if Input Mask On Decimal With Decimal Places is working correctly"
-	@priority = "5"
-	test InputMaskOnDecimalWithDecimalPlaces {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "2");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "0");
-
-		Click(locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "2");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "11");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "1");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
-
-		FormViewBuilder.assertPlaceholderTextFormField(
-			key_fieldLabel = "Numeric",
-			placeHolder = "0.0000000");
-
-		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
-
-
-		FormViewBuilder.assertPlaceholderTextFormField(
-			key_fieldLabel = "Numeric",
-			placeHolder = "0,0000000");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "5");
-
-		FormFields.setInputMaskOnDecimal(decimalSeparator = "0.00");
-
-		FormViewBuilder.assertPlaceholderTextFormField(
-			key_fieldLabel = "Numeric",
-			placeHolder = "0.00000");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "5.00000000");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "5.00000");
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "4,321.12345");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "4321.12345");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "4321.12345");
-
-
-	}
-
-	@description = "Verify if Input Mask On Decimal With Decimal Places With Predefined Value is working correctly"
-	@priority = "5"
-	test InputMaskOnDecimalWithDecimalPlacesWithPredefinedValue {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "2");
-
-		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
-
-		FormViewBuilder.validatePredefinedText(
-			fieldName = "Numeric",
-			fieldValue = "1.20");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
-
-		FormFields.editFieldPredefined(key_fieldReference = "1,234.7654321");
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
-			value1 = "1234.7654321");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "1",
-			fieldType = "Numeric");
-
-		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		FormFields.editFieldPredefined(key_fieldReference = "1.23");
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
-			value1 = "1.23");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.viewNumericFieldValue(
-			fieldName = "Numeric",
-			rowNumber = "1",
-			value = "1234.7654321");
-
-		FormFields.viewNumericFieldValue(
-			fieldName = "Numeric",
-			rowNumber = "2",
-			value = "1.23");
-
-		FormViewBuilder.editText(
-			fieldName = "Numeric 2",
-			fieldValue = "3.21");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Numeric",
-			fieldValue = "1234.7654321");
-
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Numeric 2",
-			fieldValue = "3.21");
-
-		
-
-		
-
-		
-
-	}
-
-	@description = "verify if Input Mask On Decimal With Decimal Places Is Working On Validation is working correctly"
-	@priority = "4"
-	test InputMaskOnDecimalWithDecimalPlacesIsWorkingOnValidation {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "2");
-
-		FormFields.editFieldPredefined(key_fieldReference = "1.2000");
-
-		FormViewBuilder.validatePredefinedText(
-			fieldName = "Numeric",
-			fieldValue = "1.20");
-
-		FormFields.enableCheckbox(fieldName = "Validation");
-
-		FormFields.editValidationTargetArgument(
-			validationArgument = "Is Equal To",
-			validationErrorMessage = "Test Error",
-			validationInput = "1.00");
-
-		AssertTextEquals(
-			locator1 = "FormFields#VALIDATION_INPUT",
-			value1 = "1.00");
-
-		FormFields.setInputMaskOnDecimal(decimalPlaces = "7");
-
-		FormFields.editFieldPredefined(key_fieldReference = "1.200000000");
-
-		FormViewBuilder.validatePredefinedText(
-			fieldName = "Numeric",
-			fieldValue = "1.2000000");
-
-		FormFields.editValidationTargetArgument(
-			validationArgument = "Is Equal To",
-			validationErrorMessage = "Test Error",
-			validationInput = "1.0000000");
-
-		AssertTextEquals(
-			locator1 = "FormFields#VALIDATION_INPUT",
-			value1 = "1.0000000");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "1.0000000");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "1.0000000");
-
-
-	}
-
-	@description = "verify if Input Mask On Decimal With Thousand Separator Is Working On Validation is working correctly"
-	@priority = "4"
-	test InputMaskOnDecimalWithThousandSeparatorIsWorkingOnValidation {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		AssertTextEquals(
-				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
-				value1 = "2");
-
-		FormFields.enableCheckbox(fieldName = "Validation");
-
-		FormFields.editValidationTargetArgument(
-			validationArgument = "Is Equal To",
-			validationErrorMessage = "Test Error",
-			validationInput = "1.00");
-
-		AssertTextEquals(
-			key_fieldName = "Thousands Separator",
-			value1 = "None",
-			locator1 = "FormFields#SELECT_FIELD");
-
-		FormFields.setInputMaskOnDecimal(thousandsSeparator = "1'000");
-
-		AssertTextEquals(
-			key_fieldName = "Thousands Separator",
-			value1 = "1'000",
-			locator1 = "FormFields#SELECT_FIELD");
-
-		FormFields.editValidationTargetArgument(
-			validationArgument = "Is Equal To",
-			validationErrorMessage = "Test Error",
-			validationInput = "10000.00");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "1.0000000");
-
-		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "10000.00");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "10'000.00");
-
-	}
-
-	@description = "verify if Input Mask Prefix And Suffix On Decimal With Decimal Separator is working correctly"
-	@priority = "4"
-	test InputMaskPrefixAndSuffixOnDecimalWithDecimalSeparator {
-		property portal.acceptance = "true";
-
-		
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		FormFields.selectRadioOption(
-			fieldName = "",
-			radioOption = "Decimal");
-
-		Form.gotoAdvancedTab();
-
-
-		FormFields.enableSwitch(fieldName = "Input Mask");
-
-		ScrollBy(value1 = "0, 2000");
-
-		FormFields.setInputMaskOnDecimal(
-			prefix = "ABC123@$&*",
-			decimalSeparator = "0,00");
-
-		FormFields.viewWarningMessage(
-			fieldName = "Prefix or Suffix",
-			warningMessage = "The maximum length is 10 characters.");
-
-		FormFields.viewOptionSelected(optionSelected = "prefix");
-
-		FormFields.viewNumericInputMask(
-			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
-
-		FormFields.setInputMaskOnDecimal(suffix = "ABC123@$&*");
-
-		FormFields.viewNumericInputMask(
-			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormFields.viewNumericInputMask(
-			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
-
-
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
-
-		AssertElementPresent(
-				key_affixValue = "ABC123@$&*",
-				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
-
-		AssertElementPresent(
-				key_affixValue = "ABC123@$&*",
-				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
-
 
 	}
 

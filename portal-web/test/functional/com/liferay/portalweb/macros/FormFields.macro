@@ -1107,8 +1107,6 @@ definition {
 		}
 
 		if (isSet(decimalPlaces)) {
-			
-
 			Type(
 				locator1 = "FormFields#INPUT_MASK_DECIMAL_PLACES",
 				value1 = "${decimalPlaces}");

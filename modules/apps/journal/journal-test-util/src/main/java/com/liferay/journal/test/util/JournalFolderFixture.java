@@ -80,7 +80,7 @@ public class JournalFolderFixture {
 		}
 
 		return _journalFolderLocalService.addFolder(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			parentFolderId, name, description, serviceContext);
 	}
 

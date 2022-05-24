@@ -1379,7 +1379,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	private JournalFolder _addJournalFolder() throws Exception {
 		return _journalFolderLocalService.addFolder(
-			_adminUser.getUserId(), _group.getGroupId(),
+			null, _adminUser.getUserId(), _group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_serviceContext);

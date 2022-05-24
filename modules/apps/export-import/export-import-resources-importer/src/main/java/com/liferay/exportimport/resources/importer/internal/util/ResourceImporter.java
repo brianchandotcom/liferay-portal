@@ -374,8 +374,8 @@ public class ResourceImporter extends FileSystemImporter {
 
 				if (journalFolder == null) {
 					journalFolder = journalFolderLocalService.addFolder(
-						userId, groupId, folderId, folderName, StringPool.BLANK,
-						serviceContext);
+						null, userId, groupId, folderId, folderName,
+						StringPool.BLANK, serviceContext);
 				}
 
 				addJournalArticles(

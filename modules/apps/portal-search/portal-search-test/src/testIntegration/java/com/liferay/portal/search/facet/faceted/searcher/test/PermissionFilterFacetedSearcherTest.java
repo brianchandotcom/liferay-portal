@@ -143,7 +143,7 @@ public class PermissionFilterFacetedSearcherTest
 		ServiceContext serviceContext = createServiceContext(group, user);
 
 		JournalFolder folder = journalFolderLocalService.addFolder(
-			user.getUserId(), group.getGroupId(), 0,
+			null, user.getUserId(), group.getGroupId(), 0,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		_folders.add(folder);

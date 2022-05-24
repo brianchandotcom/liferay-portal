@@ -63,7 +63,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
-import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -85,7 +84,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -316,16 +314,9 @@ public class ObjectEntryDisplayContext {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151676"))) {
-			infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				Collections.<ItemSelectorReturnType>singletonList(
-					new InfoItemItemSelectorReturnType()));
-		}
-		else {
-			infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				Collections.<ItemSelectorReturnType>singletonList(
-					new ObjectEntryItemSelectorReturnType()));
-		}
+		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new InfoItemItemSelectorReturnType()));
 
 		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 

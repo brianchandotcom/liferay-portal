@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.constants.ObjectSAPConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
-import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
@@ -46,10 +45,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -207,28 +204,14 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					"item.selector.view.order", 500
 				).build());
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-151676"))) {
-
-				_bundleContext.registerService(
-					ObjectRelatedModelsProvider.class,
-					new SystemObject1toMObjectRelatedModelsProviderImpl(
-						objectDefinition, _objectEntryLocalService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService,
-						_persistedModelLocalServiceRegistry,
-						systemObjectDefinitionMetadata),
-					null);
-			}
-			else {
-				_bundleContext.registerService(
-					ObjectRelatedModelsProvider.class,
-					new ObjectEntry1toMObjectRelatedModelsProviderImpl(
-						objectDefinition, _objectEntryLocalService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService),
-					null);
-			}
+			_bundleContext.registerService(
+				ObjectRelatedModelsProvider.class,
+				new SystemObject1toMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryLocalService,
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					_persistedModelLocalServiceRegistry,
+					systemObjectDefinitionMetadata),
+				null);
 
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,

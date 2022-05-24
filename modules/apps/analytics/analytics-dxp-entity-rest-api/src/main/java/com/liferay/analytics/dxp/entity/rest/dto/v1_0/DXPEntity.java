@@ -29,6 +29,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -143,17 +147,17 @@ public class DXPEntity implements Serializable {
 	protected String id;
 
 	@Schema
-	public String getModifiedDate() {
+	public Date getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(String modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 
 	@JsonIgnore
 	public void setModifiedDate(
-		UnsafeSupplier<String, Exception> modifiedDateUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
 
 		try {
 			modifiedDate = modifiedDateUnsafeSupplier.get();
@@ -168,7 +172,7 @@ public class DXPEntity implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String modifiedDate;
+	protected Date modifiedDate;
 
 	@Schema
 	public String getType() {
@@ -222,6 +226,9 @@ public class DXPEntity implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 		if (expandoFields != null) {
 			if (sb.length() > 1) {
@@ -286,7 +293,7 @@ public class DXPEntity implements Serializable {
 
 			sb.append("\"");
 
-			sb.append(_escape(modifiedDate));
+			sb.append(liferayToJSONDateFormat.format(modifiedDate));
 
 			sb.append("\"");
 		}

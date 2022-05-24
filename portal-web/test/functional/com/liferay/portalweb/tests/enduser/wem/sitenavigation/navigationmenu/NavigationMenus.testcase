@@ -413,7 +413,9 @@ definition {
 		}
 
 		task ("Add a page item") {
-			NavigationMenusAdmin.addPage(pageNameList = "Test Page Name");
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNameList = "Test Page Name");
 		}
 
 		task ("Assert the page item was added") {

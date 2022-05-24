@@ -95,6 +95,16 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 				_LEGACY_CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES));
 	}
 
+	@Test(timeout = 1000)
+	public void testReplacesImageTagsWithLongTitleWithSpaces()
+		throws Exception {
+
+		Assert.assertEquals(
+			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
+			_contentTransformer.transform(
+				_CONTENT_WITH_IMAGE_AND_LONG_TITLE_WITH_SPACES));
+	}
+
 	@Test
 	public void testReplacesImageTagsWithSingleQuotes() throws Exception {
 		Assert.assertEquals(
@@ -137,6 +147,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_CONTENT_PREFIX, "<img src=\"/documents/20138/0/sample.jpg",
 			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\" />",
 			_CONTENT_SUFFIX);
+
+	private static final String _CONTENT_WITH_IMAGE_AND_LONG_TITLE_WITH_SPACES =
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src=\"/documents/20138/0/sample.jpg",
+			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\" ",
+			"title=\"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 ",
+			"9 0 1 2 3 4 5 \" />", _CONTENT_SUFFIX);
 
 	private static final String _CONTENT_WITH_IMAGE_AND_NEWLINES =
 		StringBundler.concat(

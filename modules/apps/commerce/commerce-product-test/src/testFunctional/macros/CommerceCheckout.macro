@@ -294,10 +294,17 @@ definition {
 		}
 
 		if (isSet(paymentTerm)) {
-			AssertTextEquals(
-				key_paymentMethod = "${paymentTerm}",
-				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
-				value1 = "${paymentTerm}");
+			if ("${paymentTerm}" == "") {
+				AssertElementNotPresent(
+					key_paymentTerm = "",
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_TERM");
+			}
+			else {
+				AssertTextEquals(
+					key_paymentTerm = "${paymentTerm}",
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_TERM",
+					value1 = "${paymentTerm}");
+			}
 		}
 
 		if (isSet(deliveryTerm)) {

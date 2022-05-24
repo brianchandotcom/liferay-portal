@@ -326,7 +326,7 @@
 </tr>
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='${key_fieldName}']/..//input</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='Date']/..//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

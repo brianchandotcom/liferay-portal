@@ -1,5 +1,13 @@
 components:
     schemas:
+        FileEntry:
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
         ListEntry:
             properties:
                 key:

@@ -892,14 +892,128 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "true"
+	@description = "COMMERCE-7982. A system admin can edit order measurement unit."
 	@priority = "3"
 	test CanEditOrderMeasurementUnit {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7982 CanEditOrderMeasurementUnit Pending Implementation
+		task ("Given a minium site created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
 
+		task ("And an account associated with the site") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And a user with role Buyer") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And an order created by the user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the admin Orders page is reached by the admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("And the order detail page is opened") {
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+		}
+
+		task ("Then the admin can set any Unit of Measure by selecting it from a list via the opened order item's detail sidebar") {
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var orderItemMeasurementUnit : list ",inches,ounces,piece(s),Feet,pounds,meters,kilograms,millimeters,grams") {
+				Select(
+					key_fieldLabel = "Measurement Units",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${orderItemMeasurementUnit}");
+			}
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("And the chosen unit of measure is displayed next to the item's quantity in the order detail") {
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressZipCode = "Test Zip Code",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1.00 grams",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+
+		task ("Then the admin edits the UoM by choosing a different one via the opened order item's detail sidebar") {
+			CommerceOrders.editOrderItemDetails(
+				orderItemMeasurementUnit = "meters",
+				orderItemSku = "MIN55861");
+		}
+
+		task ("And the new UoM is displayed next to the item's quantity in the order detail") {
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressZipCode = "Test Zip Code",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1.00 meters",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"

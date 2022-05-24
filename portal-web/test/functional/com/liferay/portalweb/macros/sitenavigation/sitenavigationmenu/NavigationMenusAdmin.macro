@@ -9,7 +9,7 @@ definition {
 
 		Portlet.expandTree();
 
-		for (var pageName : list "${pageNames}") {
+		for (var pageName : list "${pageNameList}") {
 			Check.checkNotVisible(
 				key_nodeName = "${pageName}",
 				locator1 = "Treeview#NODE_CHECKBOX");
@@ -91,7 +91,7 @@ definition {
 
 		if ("${item}" == "Page") {
 			NavigationMenusAdmin._addItemPage(
-				pageNames = "${pageNames}",
+				pageNameList = "${pageNameList}",
 				privacy = "${privacy}");
 
 			Button.click(button = "Select");
@@ -201,7 +201,7 @@ definition {
 
 		Portlet.expandTree();
 
-		for (var pageName : list "${pageNames}") {
+		for (var pageName : list "${pageNameList}") {
 			Check.checkNotVisible(
 				key_nodeName = "${pageName}",
 				locator1 = "Treeview#NODE_CHECKBOX");

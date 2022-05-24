@@ -229,6 +229,8 @@ module.framework.properties.osgi.console=11312</echo>
 	</macrodef>
 
 	<macrodef name="deploy-osgi-modules">
+		<attribute default="" name="java.jdk.type" />
+		<attribute default="" name="java.jdk.version" />
 		<attribute name="osgi.modules" />
 
 		<sequential>
@@ -265,6 +267,98 @@ module.framework.properties.osgi.console=11312</echo>
 				</dirset>
 			</pathconvert>
 
+			<local name="gradlew.suffix" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<property name="gradlew.suffix" value="" />
+
+					<chmod
+						file="${project.dir}/gradlew${gradlew.suffix}"
+						perm="a+x"
+					/>
+				</then>
+				<else>
+					<property name="gradlew.suffix" value=".bat" />
+				</else>
+			</if>
+
+			<local name="java.jdk.home" />
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{java.jdk.type}" arg2="" />
+					</not>
+					<not>
+						<equals arg1="@{java.jdk.version}" arg2="" />
+					</not>
+				</and>
+				<then>
+					<get-java-jdk-home
+						type="@{java.jdk.type}"
+						version="@{java.jdk.version}"
+					/>
+				</then>
+				<else>
+					<condition property="java.jdk.home" value="${env.JAVA_HOME}">
+						<not>
+							<isset property="java.jdk.home" />
+						</not>
+					</condition>
+				</else>
+			</if>
+
+			<local name="java.jdk.opts" />
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{java.jdk.type}" arg2="" />
+					</not>
+					<not>
+						<equals arg1="@{java.jdk.version}" arg2="" />
+					</not>
+				</and>
+				<then>
+					<get-java-jdk-opts
+						type="@{java.jdk.type}"
+						version="@{java.jdk.version}"
+					/>
+				</then>
+				<else>
+					<condition else="${env.JAVA_OPTS}" property="java.jdk.opts" value="${env.ANT_OPTS}">
+						<and>
+							<isset property="env.ANT_OPTS" />
+							<isset property="env.JENKINS_HOME" />
+							<not>
+								<os family="windows" />
+							</not>
+						</and>
+					</condition>
+				</else>
+			</if>
+
+			<local name="path" />
+
+			<propertyregex
+				global="true"
+				input="${env.PATH}"
+				property="path"
+				regexp="${env.JAVA_HOME}"
+				replace="${java.jdk.home}"
+			/>
+
+			<echo></echo>
+			<echo>Build OSGi Modules: @{osgi.modules}</echo>
+
+			<execute>
+				${java.jdk.home}/bin/java -version
+			</execute>
+
+			<echo></echo>
+
 			<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
 				<sequential>
 					<local name="module.base.dir" />
@@ -272,23 +366,59 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<dirname file="@{osgi.module.path}" property="module.base.dir" />
 
-					<move
-						failonerror="false"
-						file="${module.base.dir}/settings.gradle"
-						tofile="${module.base.dir}/settings.gradle.temp"
-						verbose="true"
-					/>
+					<tstamp>
+						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+					</tstamp>
 
-					<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
-						<arg value="clean" />
-						<arg value="-Pnodejs.node.env=development" />
-					</gradle-execute>
+					<trycatch>
+						<try>
+							<move
+								failonerror="false"
+								file="${module.base.dir}/settings.gradle"
+								tofile="${module.base.dir}/settings.gradle.temp"
+								verbose="true"
+							/>
 
-					<move
-						failonerror="false"
-						file="${module.base.dir}/settings.gradle.temp"
-						tofile="${module.base.dir}/settings.gradle"
-					/>
+							<echo file="@{osgi.module.path}/${tstamp.value}.sh">
+								export PATH=${path}
+								export JAVA_HOME=${java.jdk.home}
+								export JAVA_OPTS='${java.jdk.opts}'
+
+								${project.dir}/gradlew${gradlew.suffix} \
+									\
+									-Pnodejs.node.env=development \
+									\
+									--max-workers=4 \
+									--profile \
+									--project-cache-dir=${project.dir}/.gradle \
+									--refresh-dependencies \
+									--stacktrace \
+									\
+									-Dapp.server.parent.dir=${app.server.parent.dir} \
+									-Dforced.cache.enabled=false \
+									-Dliferay.home=${liferay.home} \
+									-Dorg.gradle.internal.http.connectionTimeout=120000 \
+									-Dorg.gradle.internal.http.socketTimeout=120000 \
+									-Dorg.gradle.jvmargs='${java.jdk.opts}' \
+									\
+									clean \
+									deploy
+							</echo>
+
+							<exec dir="@{osgi.module.path}" executable="/bin/sh">
+								<arg line="${tstamp.value}.sh" />
+							</exec>
+						</try>
+						<finally>
+							<move
+								failonerror="false"
+								file="${module.base.dir}/settings.gradle.temp"
+								tofile="${module.base.dir}/settings.gradle"
+							/>
+
+							<delete failonerror="false" file="@{osgi.module.path}/${tstamp.value}.sh" />
+						</finally>
+					</trycatch>
 				</sequential>
 			</for>
 		</sequential>
@@ -828,6 +958,31 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<var name="java.jdk.home" unset="true" />
 
 					<property name="java.jdk.home" value="${java.home}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-java-jdk-opts">
+		<attribute default="${java.jdk.architecture}" name="architecture" />
+		<attribute default="oracle" name="type" />
+		<attribute default="${ant.java.version}" name="version" />
+
+		<sequential>
+			<var name="java.jdk.opts" unset="true" />
+
+			<propertycopy from="java.jdk.opts[@{version}][@{architecture}][@{type}]" property="java.jdk.opts" silent="true" />
+
+			<property name="java.jdk.opts" value="${java.home}" />
+
+			<if>
+				<not>
+					<available file="${java.jdk.opts}" />
+				</not>
+				<then>
+					<var name="java.jdk.opts" unset="true" />
+
+					<property name="java.jdk.opts" value="${java.home}" />
 				</then>
 			</if>
 		</sequential>

@@ -9592,6 +9592,7 @@ virtualHostname="localhost"
 			</not>
 			<then>
 				<get-testcase-property property.name="osgi.modules.includes" />
+				<get-testcase-property property.name="osgi.modules.includes.jdk11" />
 			</then>
 		</if>
 
@@ -9599,6 +9600,17 @@ virtualHostname="localhost"
 			<isset property="osgi.modules.includes" />
 			<then>
 				<deploy-osgi-modules osgi.modules="${osgi.modules.includes}" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="osgi.modules.includes.jdk11" />
+			<then>
+				<deploy-osgi-modules
+					java.jdk.type="oracle"
+					java.jdk.version="11"
+					osgi.modules="${osgi.modules.includes.jdk11}"
+				/>
 			</then>
 		</if>
 	</target>

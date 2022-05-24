@@ -23,7 +23,18 @@ import com.liferay.segments.context.Context;
  */
 public interface SegmentsEntryRetriever {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getSegmentsEntryIds(long, long, Context, long[])}
+	 */
+	@Deprecated
+	public default long[] getSegmentsEntryIds(
+		long groupId, long userId, Context context) {
+
+		return getSegmentsEntryIds(groupId, userId, context, new long[0]);
+	}
+
 	public long[] getSegmentsEntryIds(
-		long groupId, long userId, Context context);
+		long groupId, long userId, Context context, long[] segmentEntryIds);
 
 }

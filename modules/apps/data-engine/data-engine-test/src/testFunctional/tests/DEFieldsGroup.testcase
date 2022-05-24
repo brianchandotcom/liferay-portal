@@ -67,6 +67,83 @@ definition {
 		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
 	}
 
+	@description = "Verify that is possible to Collapse a Fields Group"
+	@priority = "3"
+	test CanBeCollapsedAndTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric ${language}");
+		}
+
+		DEBuilder.collapsibleFieldsGroup(fieldsGroup = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Form.viewExpandedCollapseButton();
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
+
+		DERenderer.clickCollapseFieldsGroup();
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			Form.viewExpandedCollapseButton();
+
+			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text ${language}");
+
+			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric ${language}");
+
+			DERenderer.clickCollapseFieldsGroup();
+
+			Form.viewCollapsedCollapseButton();
+
+			Form.viewFieldsGroupCollapsedField(fieldLabel = "Text ${language}");
+
+			Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric ${language}");
+
+			DERenderer.clickCollapseFieldsGroup();
+		}
+	}
+
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by adding a field from the sidebar into a field that is on the builder."
 	@priority = "5"
 	test CanBeCreated {
@@ -244,6 +321,82 @@ definition {
 			value = "123");
 	}
 
+	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group	"
+	@priority = "4"
+	test CanDataBeEditedInNewFieldsGroupTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123456");
+
+		Button.clickPublish();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.nestCreatedFields(
+			fieldLabel = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.waitForAutoSave();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123456");
+	}
+
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to delete a field inside a Fields Group."
 	@priority = "5"
 	test CanDeleteField {
@@ -410,6 +563,122 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Copy of Date");
+	}
+
+	@description = "Verify that is possible to edit data inputted on a Fields Group"
+	@priority = "5"
+	test CanEditDataOnFieldsGroup {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - edited");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "321");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN - edited");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "678");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - edited");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "321");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN - edited");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "678");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to edit Fields Group label"
@@ -786,6 +1055,123 @@ definition {
 			value = "09/06/2021");
 	}
 
+	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
+	@priority = "4"
+	test CanInputDataOnDuplicatedFieldTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Numeric");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+	}
+
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to edit data inputted on a Fields Group"
 	@priority = "5"
 	test CanInputtedDataBeEdited {
@@ -934,6 +1320,124 @@ definition {
 			value = "");
 	}
 
+	@description = "Verify that is possible to remove data from fields inside a Fields Group"
+	@priority = "5"
+	test CanRemoveDataOnFieldsGroup {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+	}
+
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove duplicated repeatable Fields Group"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
@@ -980,6 +1484,155 @@ definition {
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Fields Group",
 			index = "3");
+	}
+
+	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
+	@priority = "4"
+	test CanRemoveDuplicatedRepeatableFieldsGroupTranslated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Numeric");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "123456");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Text");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1 zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123456");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to remove a field from the Fields Group."
@@ -1108,450 +1761,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for Fields with Options inside a Fields Group persists"
-	@priority = "5"
-	test CanSelectOptionsInFieldsGroup {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DEBuilder.addFieldNested(
-			fieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection",
-			targetFieldLabel = "Text");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Multiple Selection",
-			optionValueList = "Option 1,Option 2,Option 3");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 1");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 1");
-	}
-
-	@description = "Verify that is possible to Collapse a Fields Group"
-	@priority = "3"
-	test CanBeCollapsedAndTranslated {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DEBuilder.addFieldNested(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
-
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text",
-				fieldFieldLabelEdit = "Text ${language}");
-
-			
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Numeric",
-				fieldFieldLabelEdit = "Numeric ${language}");
-
-			
-		}
-
-		DEBuilder.collapsibleFieldsGroup(fieldsGroup = "Fields Group");
-
-		WebContentStructures.saveCP();
-
-		
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		
-
-		Form.viewExpandedCollapseButton();
-
-		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text");
-
-		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
-
-		DERenderer.clickCollapseFieldsGroup();
-
-		Form.viewCollapsedCollapseButton();
-
-		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text");
-
-		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
-
-		DERenderer.clickCollapseFieldsGroup();
-
-		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
-
-			Form.viewExpandedCollapseButton();
-
-		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text ${language}");
-
-		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric ${language}");
-
-		DERenderer.clickCollapseFieldsGroup();
-
-		Form.viewCollapsedCollapseButton();
-
-		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text ${language}");
-
-		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric ${language}");
-
-		DERenderer.clickCollapseFieldsGroup();
-
-		}
-
-		
-	}
-
-	@description = "Verify that inputted data on a Fields Group persists"
-	@priority = "5"
-	test InputDataOnFieldsGroupPersists {
-
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "Text,Numeric");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-	}
-
-	@description = "Verify that is possible to remove data from fields inside a Fields Group"
-	@priority = "5"
-	test CanRemoveDataOnFieldsGroup {
-
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "Text,Numeric");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "");
-	}
-
-	@description = "Verify that is possible to edit data inputted on a Fields Group"
-	@priority = "5"
-	test CanEditDataOnFieldsGroup {
-
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "Text,Numeric");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "456");
-
-		PortletEntry.changeLocale(locale = "en-US");
-		
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - edited");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "321");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN - edited");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "678");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - edited");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "321");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field - zh-CN - edited");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			value = "678");
-	}
-
 	@description = "Verify that Options chosen for a Grid field inside a Fields Group persists"
 	@priority = "5"
 	test CanSelectGridOptionsInFieldsGroupTranslated {
@@ -1623,6 +1832,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for Fields with Options inside a Fields Group persists"
+	@priority = "5"
+	test CanSelectOptionsInFieldsGroup {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection",
+			targetFieldLabel = "Text");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+	}
+
 	@description = "Verify that Options chosen for Fields with Options inside a Fields Group persists"
 	@priority = "5"
 	test CanSelectOptionsInFieldsGroupTranslated {
@@ -1676,9 +1926,9 @@ definition {
 			optionValue = "Option 3");
 	}
 
-	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
-	@priority = "4"
-	test CanInputDataOnDuplicatedFieldTranslated {
+	@description = "Verify that inputted data on a Fields Group persists"
+	@priority = "5"
+	test InputDataOnFieldsGroupPersists {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -1687,275 +1937,67 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		DEBuilder.addFieldNested(
-			fieldLabel = "Numeric",
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
 
 		WebContentStructures.saveCP();
 
-		NavItem.gotoWebContent();
+		NavItem.click(navItem = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		DataEngine.addRepeatableField(fieldLabel = "Numeric");
-
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1");
+			value = "This is a Text field");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
 			value = "123");
-
-		
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
-
-	
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1 zh-CN");
+			value = "This is a Text field - zh-CN");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			value = "456");
 
-		
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2 zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
-
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1");
+			value = "This is a Text field");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
 			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2");
+			value = "This is a Text field - zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
 			value = "456");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1 zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2 zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
-
-	
-	}
-
-	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
-	@priority = "4"
-	test CanRemoveDuplicatedRepeatableFieldsGroupTranslated {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DEBuilder.addFieldNested(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DataEngine.addRepeatableField(fieldLabel = "Numeric");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
-
-		
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
-
-	
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1 zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
-
-		
-
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2 zh-CN");
-
-		DERenderer.inputDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1 zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "2",
-			value = "This is a Text field 2 zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.removeRepeatableField(fieldLabel = "Text");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DERenderer.assertDataInTextField(
-			fieldLabel = "Text",
-			index = "1",
-			value = "This is a Text field 1 zh-CN");
-
-		DERenderer.assertDataInNumericField(
-			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
-
-	
 	}
 
 }

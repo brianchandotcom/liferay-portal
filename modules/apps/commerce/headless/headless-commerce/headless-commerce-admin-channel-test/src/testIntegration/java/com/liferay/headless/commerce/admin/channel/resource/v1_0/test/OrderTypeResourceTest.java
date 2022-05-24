@@ -34,9 +34,6 @@ import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -62,11 +59,6 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addUser(testCompany);
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		PrincipalThreadLocal.setName(_user.getUserId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
@@ -278,6 +270,8 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		_commerceShippingFixedOptionQualifierLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -119,10 +119,13 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					'<portlet:namespace />urlTitle'
 				);
 
-				if (titleElement && titleElement.value) {
-					if (urlTitleElement && !urlTitleElement.value) {
-						urlTitleElement.value = titleElement.value.replace(/\.[^.]*$/, '');
-					}
+				if (
+					titleElement &&
+					titleElement.value &&
+					urlTitleElement &&
+					!urlTitleElement.value
+				) {
+					urlTitleElement.value = titleElement.value.replace(/\.[^.]*$/, '');
 				}
 
 				Array.prototype.forEach.call(ddmFieldWrappers, (ddmFieldWrapper) => {

@@ -53,20 +53,20 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 			Matcher matcher1 = pattern1.matcher(content);
 
 			while (matcher1.find()) {
-				String statement = matcher1.group();
+				String methodCalls = matcher1.group();
 
 				Pattern pattern2 = Pattern.compile("\\b" + methodName + "\\(");
 
-				Matcher matcher2 = pattern2.matcher(statement);
+				Matcher matcher2 = pattern2.matcher(methodCalls);
 
-				String preFirstParameter = StringPool.BLANK;
-				int preLineNumber = -1;
+				String previousMethodCallFirstParameter = StringPool.BLANK;
+				int previousMethodCallEndLineNumber = -1;
 				int startPos = matcher1.start();
-				int sqlEndPos = -1;
+				int methodCallEndPosition = -1;
 
 				while (matcher2.find()) {
 					String methodCall = JavaSourceUtil.getMethodCall(
-						statement, matcher2.start());
+						methodCalls, matcher2.start());
 
 					List<String> parameterList =
 						JavaSourceUtil.getParameterList(methodCall);
@@ -80,38 +80,47 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 						firstParameter = parameterList.get(0);
 					}
 
-					if (preLineNumber == -1) {
-						sqlEndPos = matcher2.start() + methodCall.length() + 1;
+					if (previousMethodCallEndLineNumber == -1) {
+						methodCallEndPosition =
+							matcher2.start() + methodCall.length() + 1;
 
-						preLineNumber = getLineNumber(statement, sqlEndPos);
+						previousMethodCallEndLineNumber = getLineNumber(
+							methodCalls, methodCallEndPosition);
 
-						preFirstParameter = firstParameter;
+						previousMethodCallFirstParameter = firstParameter;
 
 						continue;
 					}
 
-					int lineNumber = getLineNumber(statement, matcher2.start());
+					int lineNumber = getLineNumber(
+						methodCalls, matcher2.start());
 
-					if (StringUtil.equals(preFirstParameter, firstParameter) &&
-						((preLineNumber + 1) != lineNumber)) {
+					if (StringUtil.equals(
+							previousMethodCallFirstParameter, firstParameter) &&
+						((previousMethodCallEndLineNumber + 1) != lineNumber)) {
 
 						return StringUtil.replaceFirst(
 							content, StringPool.NEW_LINE, StringPool.BLANK,
-							startPos + sqlEndPos);
+							startPos + methodCallEndPosition);
 					}
 					else if (!StringUtil.equals(
-								preFirstParameter, firstParameter) &&
-							 ((preLineNumber + 2) != lineNumber)) {
+								previousMethodCallFirstParameter,
+								firstParameter) &&
+							 ((previousMethodCallEndLineNumber + 2) !=
+								 lineNumber)) {
 
 						return StringUtil.insert(
-							content, StringPool.NEW_LINE, startPos + sqlEndPos);
+							content, StringPool.NEW_LINE,
+							startPos + methodCallEndPosition);
 					}
 
-					sqlEndPos = matcher2.start() + methodCall.length() + 1;
+					methodCallEndPosition =
+						matcher2.start() + methodCall.length() + 1;
 
-					preLineNumber = getLineNumber(statement, sqlEndPos);
+					previousMethodCallEndLineNumber = getLineNumber(
+						methodCalls, methodCallEndPosition);
 
-					preFirstParameter = firstParameter;
+					previousMethodCallFirstParameter = firstParameter;
 				}
 			}
 		}

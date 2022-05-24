@@ -270,6 +270,12 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public NotificationQueueEntry resendNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException;
+
+	public void sendNotificationQueueEntries() throws Exception;
+
 	/**
 	 * Updates the notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -283,5 +289,10 @@ public interface NotificationQueueEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationQueueEntry updateNotificationQueueEntry(
 		NotificationQueueEntry notificationQueueEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public NotificationQueueEntry updateSent(
+			long commerceNotificationQueueEntryId, boolean sent)
+		throws PortalException;
 
 }

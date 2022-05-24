@@ -304,6 +304,18 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static NotificationQueueEntry resendNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		return getService().resendNotificationQueueEntry(
+			notificationQueueEntryId);
+	}
+
+	public static void sendNotificationQueueEntries() throws Exception {
+		getService().sendNotificationQueueEntries();
+	}
+
 	/**
 	 * Updates the notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -319,6 +331,13 @@ public class NotificationQueueEntryLocalServiceUtil {
 
 		return getService().updateNotificationQueueEntry(
 			notificationQueueEntry);
+	}
+
+	public static NotificationQueueEntry updateSent(
+			long commerceNotificationQueueEntryId, boolean sent)
+		throws PortalException {
+
+		return getService().updateSent(commerceNotificationQueueEntryId, sent);
 	}
 
 	public static NotificationQueueEntryLocalService getService() {

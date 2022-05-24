@@ -345,6 +345,20 @@ public class NotificationQueueEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationQueueEntry
+			resendNotificationQueueEntry(long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationQueueEntryLocalService.resendNotificationQueueEntry(
+			notificationQueueEntryId);
+	}
+
+	@Override
+	public void sendNotificationQueueEntries() throws Exception {
+		_notificationQueueEntryLocalService.sendNotificationQueueEntries();
+	}
+
 	/**
 	 * Updates the notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -363,6 +377,15 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 		return _notificationQueueEntryLocalService.updateNotificationQueueEntry(
 			notificationQueueEntry);
+	}
+
+	@Override
+	public com.liferay.notification.model.NotificationQueueEntry updateSent(
+			long commerceNotificationQueueEntryId, boolean sent)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationQueueEntryLocalService.updateSent(
+			commerceNotificationQueueEntryId, sent);
 	}
 
 	@Override

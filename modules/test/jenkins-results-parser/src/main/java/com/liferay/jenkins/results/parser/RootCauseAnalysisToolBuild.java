@@ -276,7 +276,9 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 						gitCommitGroups.add(gitCommitGroup);
 					}
 
-					gitCommitGroup.add(retestLocalGitCommit);
+					if (retestLocalGitCommit != null) {
+						gitCommitGroup.add(retestLocalGitCommit);
+					}
 				}
 
 				return gitCommitGroups;

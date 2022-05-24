@@ -53,27 +53,26 @@ public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 
 	private String _fixUpgradeClass(String content) {
 		for (String methodName : _DB_PROCESS_METHODS) {
-			Pattern pattern = Pattern.compile(
+			Pattern pattern1 = Pattern.compile(
 				"(\t*\\b" + methodName + "\\()[^;]+;(\n*\\1[^;]+;)+");
 
-			Matcher matcher = pattern.matcher(content);
+			Matcher matcher1 = pattern1.matcher(content);
 
-			while (matcher.find()) {
-				String statement = matcher.group();
+			while (matcher1.find()) {
+				String statement = matcher1.group();
 
-				Pattern sqlPattern = Pattern.compile(
-					"\\b" + methodName + "\\(");
+				Pattern pattern2 = Pattern.compile("\\b" + methodName + "\\(");
 
-				Matcher sqlMatcher = sqlPattern.matcher(statement);
+				Matcher matcher2 = pattern2.matcher(statement);
 
 				String preFirstParameter = StringPool.BLANK;
 				int preLineNumber = -1;
-				int startPos = matcher.start();
+				int startPos = matcher1.start();
 				int sqlEndPos = -1;
 
-				while (sqlMatcher.find()) {
+				while (matcher2.find()) {
 					String methodCall = JavaSourceUtil.getMethodCall(
-						statement, sqlMatcher.start());
+						statement, matcher2.start());
 
 					List<String> parameterList =
 						JavaSourceUtil.getParameterList(methodCall);
@@ -88,8 +87,7 @@ public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 					}
 
 					if (preLineNumber == -1) {
-						sqlEndPos =
-							sqlMatcher.start() + methodCall.length() + 1;
+						sqlEndPos = matcher2.start() + methodCall.length() + 1;
 
 						preLineNumber = getLineNumber(statement, sqlEndPos);
 
@@ -98,8 +96,7 @@ public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 						continue;
 					}
 
-					int lineNumber = getLineNumber(
-						statement, sqlMatcher.start());
+					int lineNumber = getLineNumber(statement, matcher2.start());
 
 					if (StringUtil.equals(preFirstParameter, firstParameter) &&
 						((preLineNumber + 1) != lineNumber)) {
@@ -116,7 +113,7 @@ public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 							content, StringPool.NEW_LINE, startPos + sqlEndPos);
 					}
 
-					sqlEndPos = sqlMatcher.start() + methodCall.length() + 1;
+					sqlEndPos = matcher2.start() + methodCall.length() + 1;
 
 					preLineNumber = getLineNumber(statement, sqlEndPos);
 

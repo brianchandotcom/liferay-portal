@@ -88,6 +88,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -1534,9 +1535,13 @@ public class UIItemsBuilder {
 
 		FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
 
-		String latestFileVersionVersion = latestFileVersion.getVersion();
+		if (Objects.equals(
+				latestFileVersion.getVersion(), _fileVersion.getVersion())) {
 
-		return !latestFileVersionVersion.equals(_fileVersion.getVersion());
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isViewOriginalFileActionAvailable() {

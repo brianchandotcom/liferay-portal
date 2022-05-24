@@ -96,7 +96,7 @@ definition {
 		NavigationMenusAdmin.editItem(
 			item = "Page",
 			itemName = "Test Page Name 1",
-			pageNames = "Test Page Name 2");
+			pageName = "Test Page Name 2");
 
 		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 2");
 	}

@@ -60,6 +60,8 @@ public class MariaDBDB extends MySQLDB {
 				runSQL(uniqueIndex.getDropSQL());
 			}
 		}
+
+		super.alterTableDropColumn(connection, tableName, columnName);
 	}
 
 }

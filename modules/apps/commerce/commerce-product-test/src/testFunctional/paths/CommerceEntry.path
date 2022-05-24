@@ -809,6 +809,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_MAPPED_PRODUCTS_RESULT</td>
+	<td>//div[@class='table-list-title']//p[contains(text(),'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ORDER_ID_RESULT</td>
 	<td>//p[@class='table-list-title' and contains(.,'${key_entryName}')]/a</td>
 	<td></td>

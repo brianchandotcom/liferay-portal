@@ -17,10 +17,15 @@ package com.liferay.portal.kernel.servlet.taglib.aui;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Iván Zaera Avellón
@@ -108,6 +113,44 @@ public class VariableUtil {
 		return module;
 	}
 
+	public static Map<String, String> parseRequire(String require) {
+		Map<String, String> map = new HashMap<>();
+
+		String[] requireParts = require.split(StringPool.COMMA);
+
+		for (String requirePart : requireParts) {
+			String[] nameAndAlias = _splitNameAlias(requirePart);
+
+			if (Validator.isNull(nameAndAlias[0])) {
+				continue;
+			}
+
+			String variable = null;
+
+			if (Validator.isNotNull(nameAndAlias[1])) {
+				variable = nameAndAlias[1];
+			}
+
+			map.put(nameAndAlias[0], variable);
+		}
+
+		return map;
+	}
+
+	private static String[] _splitNameAlias(String requirePart) {
+		requirePart = requirePart.trim();
+
+		String[] parts = _whitespacePattern.split(requirePart, 4);
+
+		if ((parts.length == 3) &&
+			StringUtil.equalsIgnoreCase(parts[1], "as")) {
+
+			return new String[] {parts[0], parts[2]};
+		}
+
+		return new String[] {requirePart, StringPool.BLANK};
+	}
+
 	private static final Set<String> _reservedWords = new HashSet<>(
 		Arrays.asList(
 			"arguments", "await", "break", "case", "catch", "class", "const",
@@ -117,5 +160,6 @@ public class VariableUtil {
 			"let", "new", "null", "package", "private", "protected", "public",
 			"return", "static", "super", "switch", "this", "throw", "true",
 			"try", "typeof", "var", "void", "while", "with", "yield"));
+	private static final Pattern _whitespacePattern = Pattern.compile("\\s+");
 
 }

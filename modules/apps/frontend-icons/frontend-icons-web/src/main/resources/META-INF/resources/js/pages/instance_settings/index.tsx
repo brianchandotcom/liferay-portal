@@ -15,13 +15,11 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
-import {getSpritemapPath} from '../../index';
 import AddIconPackModal from './AddIconPackModal';
 import DeleteIconModal from './DeleteIconModal';
 
@@ -139,10 +137,12 @@ export default function InstanceIconConfiguration({
 
 				<ClayInput
 					onChange={(event) => setSearchQuery(event.target.value)}
+					onKeyPress={(event) =>
+						event.key === 'Enter' && event.preventDefault()
+					}
 					placeholder={Liferay.Language.get('search-icons')}
 					type="text"
 					value={searchQuery}
-					onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
 				/>
 			</label>
 

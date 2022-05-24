@@ -26,8 +26,8 @@ import {getSpritemapPath} from '../../index';
 
 import type {IIconPack, IIconPacks} from '../../types';
 
-function flattenArray(arr: any[]): any[] {
-	return arr.reduce(
+function flattenArray(array: any[]): any[] {
+	return array.reduce(
 		(acc, val) => acc.concat(Array.isArray(val) ? flattenArray(val) : val),
 		[]
 	);

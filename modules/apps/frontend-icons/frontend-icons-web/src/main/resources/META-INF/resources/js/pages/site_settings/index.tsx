@@ -85,7 +85,9 @@ export default function SiteIconPackConfiguration({
 
 				<ClayInput
 					onChange={(event) => setSearchQuery(event.target.value)}
-					onKeyPress={(e) => e.key === 'Enter' && e.preventDefault()}
+					onKeyPress={(event) =>
+						event.key === 'Enter' && event.preventDefault()
+					}
 					placeholder={Liferay.Language.get('search-available-icons')}
 					type="text"
 					value={searchQuery}

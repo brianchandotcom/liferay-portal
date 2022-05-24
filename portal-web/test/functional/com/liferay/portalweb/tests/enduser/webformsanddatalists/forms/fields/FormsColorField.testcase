@@ -243,7 +243,7 @@ definition {
 			rowNumber = "2");
 
 		FormFields.editColorField(
-			colorValue = "FF0D0D",
+			colorValue = "ff0d0d",
 			fieldLabel = "Color",
 			fieldName = "Color",
 			rowNumber = "1");
@@ -254,7 +254,19 @@ definition {
 			fieldName = "Color",
 			rowNumber = "2");
 
-		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Color",
+			fieldValue = "ff0d0d, FF0D0D");
 	}
 
 	@description = "Verify that a Form can be submitted with the Color Field"

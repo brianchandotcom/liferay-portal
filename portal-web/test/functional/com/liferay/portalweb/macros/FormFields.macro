@@ -824,12 +824,6 @@ definition {
 		Click(
 			key_colorSwatchItem = "${colorValue}",
 			locator1 = "FormFields#COLOR_SWATCH_ITEM");
-
-		FormFields.viewColorField(
-			colorValue = "${colorValue}",
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}",
-			rowNumber = "${rowNumber}");
 	}
 
 	macro selectDataProviderInputType {

@@ -86,6 +86,13 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteNotificationQueueEntries(Date sentDate)
+		throws PortalException {
+
+		notificationQueueEntryPersistence.removeByLtSentDate(sentDate);
+	}
+
+	@Override
 	public NotificationQueueEntry deleteNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException {

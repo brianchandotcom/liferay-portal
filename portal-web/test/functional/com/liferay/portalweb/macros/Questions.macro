@@ -1077,9 +1077,7 @@ definition {
 
 		AssertVisible(locator1 = "Button#EDIT");
 
-		AssertVisible(locator1 = "Button#REPLY");
-
-		for (var text : list "Delete,Mark as answer") {
+		for (var text : list "Add Comment,Delete,Mark as Answer") {
 			AssertVisible(
 				key_text = "${text}",
 				locator1 = "Button#ANY");

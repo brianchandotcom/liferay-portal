@@ -88,4 +88,17 @@ export const bodySerializers: RestLink.Serializers = {
 			},
 			headers
 		),
+	suitecase: (suiteCases, headers) =>
+		serialize(
+			suiteCases.map(
+				({
+					caseId: r_caseToSuitesCases_c_caseId,
+					suiteId: r_suiteToSuitesCases_c_suiteId,
+				}: any) => ({
+					r_caseToSuitesCases_c_caseId,
+					r_suiteToSuitesCases_c_suiteId,
+				})
+			),
+			headers
+		),
 };

@@ -25,11 +25,12 @@ const Suites = () => {
 	const navigate = useNavigate();
 	const {projectId} = useParams();
 
-	const {actions} = useSuiteActions();
+	const {actions, formModal} = useSuiteActions();
 
 	return (
 		<Container title={i18n.translate('suites')}>
 			<ListView
+				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{addButton: () => navigate('create')}}
 				query={getSuites}
 				tableProps={{

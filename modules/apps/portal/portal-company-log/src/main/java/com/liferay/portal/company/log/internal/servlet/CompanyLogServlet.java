@@ -76,11 +76,6 @@ public class CompanyLogServlet extends HttpServlet {
 			PermissionChecker permissionChecker = _getPermissionChecker(
 				httpServletRequest);
 
-			if (!permissionChecker.isCompanyAdmin()) {
-				throw new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-			}
-
 			String path = HttpComponentsUtil.fixPath(
 				httpServletRequest.getPathInfo());
 
@@ -196,12 +191,16 @@ public class CompanyLogServlet extends HttpServlet {
 				company -> _listCompanyLogFiles(
 					httpServletRequest, printWriter, company));
 		}
-		else {
+		else if (permissionChecker.isCompanyAdmin()) {
 			User user = permissionChecker.getUser();
 
 			_listCompanyLogFiles(
 				httpServletRequest, printWriter,
 				_companyLocalService.getCompany(user.getCompanyId()));
+		}
+		else {
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		printWriter.println("</body></html>");

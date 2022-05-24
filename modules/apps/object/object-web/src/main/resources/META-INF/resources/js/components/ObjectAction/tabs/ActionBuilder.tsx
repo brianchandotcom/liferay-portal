@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm, {ClayToggle} from '@clayui/form';
 import React, {useMemo} from 'react';
 
 import {FormError} from '../../../hooks/useForm';
@@ -67,6 +68,44 @@ export default function ActionBuilder({
 					/>
 				</Card>
 			</Card>
+
+			{Liferay.FeatureFlags['LPS-152181'] && (
+				<Card title={Liferay.Language.get('condition')}>
+					<ClayForm.Group>
+						<ClayToggle
+							label={Liferay.Language.get('enable-condition')}
+							name="condition"
+							onToggle={(enable) =>
+								setValues({
+									conditionExpression: enable
+										? ''
+										: undefined,
+								})
+							}
+							toggled={
+								!(values.conditionExpression === undefined)
+							}
+						/>
+					</ClayForm.Group>
+
+					{values.conditionExpression !== undefined && (
+						<Input
+							feedbackMessage={Liferay.Language.get(
+								'use-expressions-to-create-a-condition'
+							)}
+							label={Liferay.Language.get('expression-builder')}
+							name="conditionExpression"
+							onChange={({target: {value}}) =>
+								setValues({conditionExpression: value})
+							}
+							placeholder={Liferay.Language.get(
+								'create-an-expression'
+							)}
+							value={values.conditionExpression as string}
+						/>
+					)}
+				</Card>
+			)}
 
 			<Card title={Liferay.Language.get('action')}>
 				<Card

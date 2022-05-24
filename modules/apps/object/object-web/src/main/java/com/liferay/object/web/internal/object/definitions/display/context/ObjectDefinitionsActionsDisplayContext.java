@@ -26,6 +26,7 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -136,7 +137,17 @@ public class ObjectDefinitionsActionsDisplayContext
 		return JSONUtil.put(
 			"active", objectAction.isActive()
 		).put(
-			"conditionExpression", objectAction.getConditionExpression()
+			"conditionExpression",
+			() -> {
+				String conditionExpression =
+					objectAction.getConditionExpression();
+
+				if (StringPool.BLANK.equals(conditionExpression)) {
+					return null;
+				}
+
+				return conditionExpression;
+			}
 		).put(
 			"description", objectAction.getDescription()
 		).put(

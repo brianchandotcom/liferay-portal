@@ -14,6 +14,7 @@
 
 interface ObjectAction {
 	active: boolean;
+	conditionExpression?: string;
 	description?: string;
 	id?: number;
 	name: string;

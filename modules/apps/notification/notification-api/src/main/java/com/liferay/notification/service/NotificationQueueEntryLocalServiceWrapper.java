@@ -98,6 +98,14 @@ public class NotificationQueueEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public void deleteNotificationQueueEntries(java.util.Date sentDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
+			sentDate);
+	}
+
 	/**
 	 * Deletes the notification queue entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

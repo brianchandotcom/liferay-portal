@@ -95,6 +95,12 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteNotificationQueueEntries(java.util.Date sentDate)
+		throws PortalException {
+
+		getService().deleteNotificationQueueEntries(sentDate);
+	}
+
 	/**
 	 * Deletes the notification queue entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

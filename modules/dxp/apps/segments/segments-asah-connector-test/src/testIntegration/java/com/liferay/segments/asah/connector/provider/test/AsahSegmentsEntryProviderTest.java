@@ -130,7 +130,7 @@ public class AsahSegmentsEntryProviderTest {
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId(),
-			context);
+			context, new long[0], new long[0]);
 
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 2,
@@ -141,6 +141,56 @@ public class AsahSegmentsEntryProviderTest {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId()
 				},
+				segmentsEntryIds));
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsWithSignedInUserAndFilterSegmentEntryIds()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			CriteriaSerializer.serialize(new Criteria()),
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			User.class.getName(), serviceContext);
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRel(
+			segmentsEntry1.getSegmentsEntryId(),
+			_portal.getClassNameId(User.class.getName()), _user1.getUserId(),
+			serviceContext);
+
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			CriteriaSerializer.serialize(new Criteria()),
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			User.class.getName(), serviceContext);
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRel(
+			segmentsEntry2.getSegmentsEntryId(),
+			_portal.getClassNameId(User.class.getName()), _user1.getUserId(),
+			serviceContext);
+
+		Context context = new Context();
+
+		context.put(Context.SIGNED_IN, Boolean.TRUE);
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId(),
+			context, new long[] {segmentsEntry1.getSegmentsEntryId()},
+			new long[0]);
+
+		Assert.assertTrue(
+			StringUtil.merge(segmentsEntryIds, StringPool.COMMA),
+			ArrayUtil.containsAll(
+				new long[] {segmentsEntry1.getSegmentsEntryId()},
 				segmentsEntryIds));
 	}
 

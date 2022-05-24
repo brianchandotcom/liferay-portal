@@ -458,7 +458,7 @@ AUI.add(
 						openDefinitionLinkNode
 					);
 
-					if (Liferay.FeatureFlags.enableCustomDialogs) {
+					if (Liferay.FeatureFlags['LPS-148659']) {
 						Liferay.Util.openConfirmModal({
 							message: Liferay.Language.get(
 								'you-have-unsaved-changes-do-you-want-to-proceed-without-saving'

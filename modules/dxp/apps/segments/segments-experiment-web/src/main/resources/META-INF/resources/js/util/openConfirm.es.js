@@ -12,7 +12,7 @@
 import {openConfirmModal} from 'frontend-js-web';
 
 function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags.enableCustomDialogs) {
+	if (Liferay.FeatureFlags['LPS-148659']) {
 		openConfirmModal({message, onConfirm});
 	}
 	else if (confirm(message)) {

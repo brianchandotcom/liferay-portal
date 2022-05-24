@@ -24,7 +24,7 @@ import SortableListItem from './SortableListItem';
 import {buildItemsPriorityURL} from './utils/index';
 
 function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags.enableCustomDialogs) {
+	if (Liferay.FeatureFlags['LPS-148659']) {
 		openConfirmModal({message, onConfirm});
 	}
 	else if (confirm(message)) {

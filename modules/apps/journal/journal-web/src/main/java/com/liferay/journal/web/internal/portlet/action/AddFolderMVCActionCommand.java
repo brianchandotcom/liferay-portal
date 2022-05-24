@@ -56,8 +56,8 @@ public class AddFolderMVCActionCommand extends BaseMVCActionCommand {
 			JournalFolder.class.getName(), actionRequest);
 
 		_journalFolderService.addFolder(
-			serviceContext.getScopeGroupId(), parentFolderId, name, description,
-			serviceContext);
+			null, serviceContext.getScopeGroupId(), parentFolderId, name,
+			description, serviceContext);
 	}
 
 	@Reference

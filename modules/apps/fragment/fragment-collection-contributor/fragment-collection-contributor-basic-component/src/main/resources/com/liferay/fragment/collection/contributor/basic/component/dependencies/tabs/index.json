@@ -5,8 +5,7 @@
 				{
 					"dataType": "int",
 					"defaultValue": "4",
-					"description": "number-of-tabs",
-					"label": "Number Of Tabs",
+					"label": "number-of-tabs",
 					"name": "numberOfTabs",
 					"type": "text",
 					"typeOptions": {

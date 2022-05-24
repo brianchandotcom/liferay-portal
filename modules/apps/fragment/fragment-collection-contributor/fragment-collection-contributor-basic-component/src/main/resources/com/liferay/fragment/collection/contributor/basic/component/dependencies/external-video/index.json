@@ -3,26 +3,26 @@
 		{
 			"fields": [
 				{
-					"label": "Video",
+					"label": "video",
 					"name": "video",
 					"type": "videoSelector"
 				},
 				{
 					"defaultValue": "",
-					"label": "Width",
+					"label": "width",
 					"name": "videoWidth",
 					"type": "text"
 				},
 				{
 					"defaultValue": "",
-					"label": "Height",
+					"label": "height",
 					"name": "videoHeight",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "flex-start",
-					"label": "Align",
+					"label": "align",
 					"name": "align",
 					"type": "select",
 					"typeOptions": {

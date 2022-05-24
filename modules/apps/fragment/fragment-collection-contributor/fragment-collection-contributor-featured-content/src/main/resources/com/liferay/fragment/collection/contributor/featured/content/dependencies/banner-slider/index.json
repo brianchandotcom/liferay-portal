@@ -5,8 +5,7 @@
 				{
 					"dataType": "int",
 					"defaultValue": "3",
-					"description": "number-of-slides",
-					"label": "Number of Slides",
+					"label": "number-of-slides",
 					"name": "numberOfSlides",
 					"type": "text",
 					"typeOptions": {

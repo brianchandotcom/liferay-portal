@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "normal",
-					"label": "Fixed Style",
+					"label": "fixed-style",
 					"name": "fixedStyle",
 					"type": "select",
 					"typeOptions": {
@@ -15,11 +15,11 @@
 								"value": ""
 							},
 							{
-								"label": "Top",
+								"label": "top",
 								"value": "banner-fixed-top"
 							},
 							{
-								"label": "Bottom",
+								"label": "bottom",
 								"value": "banner-fixed-bottom"
 							}
 						]

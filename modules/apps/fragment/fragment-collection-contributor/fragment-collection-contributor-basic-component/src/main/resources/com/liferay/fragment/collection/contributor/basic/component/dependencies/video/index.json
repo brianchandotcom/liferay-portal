@@ -4,50 +4,50 @@
 			"fields": [
 				{
 					"defaultValue": "",
-					"label": "URL",
+					"label": "url",
 					"name": "url",
 					"type": "text"
 				},
 				{
 					"defaultValue": false,
-					"label": "Autoplay",
+					"label": "autoplay",
 					"name": "autoPlay",
 					"type": "checkbox"
 				},
 				{
 					"defaultValue": false,
-					"label": "Loop",
+					"label": "loop",
 					"name": "loop",
 					"type": "checkbox"
 				},
 				{
 					"defaultValue": true,
-					"label": "Mute",
+					"label": "mute",
 					"name": "mute",
 					"type": "checkbox"
 				},
 				{
 					"defaultValue": false,
-					"label": "Hide controls",
+					"label": "hide-controls",
 					"name": "hideControls",
 					"type": "checkbox"
 				},
 				{
 					"defaultValue": "",
-					"label": "Width",
+					"label": "width",
 					"name": "videoWidth",
 					"type": "text"
 				},
 				{
 					"defaultValue": "",
-					"label": "Height",
+					"label": "height",
 					"name": "videoHeight",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "flex-start",
-					"label": "Align",
+					"label": "align",
 					"name": "align",
 					"type": "select",
 					"typeOptions": {

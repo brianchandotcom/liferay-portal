@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>NODE_CHECKBOX</td>
-	<td>//li[contains(@class,'treeview-item')][//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']]//input[@type = "checkbox"]</td>
+	<td>//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']/parent::div//preceding-sibling::div//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

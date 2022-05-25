@@ -19,7 +19,7 @@
 <div class="container-fluid container-xl mt-3">
 	<div class="alert alert-info center container-fluid">
 		<div class="mb-2 row-fluid">
-			<clay:icon symbol="info-circle" /> <strong class="lead"><liferay-ui:message key="info" /></strong>: <liferay-ui:message arguments="(sku, quantity, requestedDeliveryDate(Optional))" key="use-a-csv-file-with-the-following-format-x" translateArguments="<%= false %>" />
+			<clay:icon symbol="info-circle" /> <strong class="lead"><liferay-ui:message key="info" /></strong>: <liferay-ui:message arguments="(sku, quantity, requestedDeliveryDate)" key="use-a-csv-file-with-the-following-format-x" translateArguments="<%= false %>" />
 		</div>
 
 		<div class="row-fluid">

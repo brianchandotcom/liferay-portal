@@ -355,7 +355,7 @@ public class CommerceChannelDisplayContext
 		return portletURL;
 	}
 
-	public String getRequestedDeliveryDate() throws PortalException {
+	public String getRequestedDeliveryDateFormat() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
 		CommerceOrderImporterDateFormatConfiguration

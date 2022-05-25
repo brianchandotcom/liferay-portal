@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
@@ -25,6 +26,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -154,9 +156,45 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerServicesTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		return objectEntryManager.getObjectEntryRelatedObjectEntries(
-			_getDTOConverterContext(currentObjectEntryId), currentObjectEntryId,
-			_objectDefinition, objectRelationshipName, pagination);
+		Page<ObjectEntry> objectEntryPage =
+			objectEntryManager.getObjectEntryRelatedObjectEntries(
+				_getDTOConverterContext(currentObjectEntryId),
+				currentObjectEntryId, _objectDefinition, objectRelationshipName,
+				pagination);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		for (ObjectEntry item : objectEntryPage.getItems()) {
+			Map<String, Map<String, String>> itemActions = item.getActions();
+
+			for (Map.Entry<String, Map<String, String>> entry :
+					itemActions.entrySet()) {
+
+				Map<String, String> itemActionMap = entry.getValue();
+
+				String href = itemActionMap.get("href");
+
+				itemActionMap.put(
+					"href",
+					StringUtil.replace(
+						href,
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition.getPluralLabel(
+								contextAcceptLanguage.getPreferredLocale())),
+						StringUtil.lowerCaseFirstLetter(
+							objectDefinition2.getPluralLabel(
+								contextAcceptLanguage.getPreferredLocale()))));
+			}
+		}
+
+		return objectEntryPage;
 	}
 
 	@Override
@@ -428,6 +466,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipService _objectRelationshipService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

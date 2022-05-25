@@ -23,8 +23,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
-import selectCanUpdateFrameStyles from '../../../../../../app/selectors/selectCanUpdateFrameStyles';
-import selectCanUpdateItemStyles from '../../../../../../app/selectors/selectCanUpdateItemStyles';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet, fieldIsDisabled} from './FieldSet';
@@ -41,16 +39,11 @@ export function CommonStyles({
 		(state) => state.selectedViewportSize
 	);
 
-	const canUpdateItemStyles = useSelector(selectCanUpdateItemStyles);
-	const canUpdateFrameStyles = useSelector(selectCanUpdateFrameStyles);
-
-	if (!canUpdateItemStyles) {
-		return null;
-	}
+	const permissions = useSelector((state) => state.permissions);
 
 	let styles = filterCommonStyles({
-		canUpdateFrameStyles,
 		item,
+		permissions,
 		role,
 		styles: config.commonStyles,
 	});
@@ -128,7 +121,7 @@ CommonStyles.propTypes = {
 	item: PropTypes.object.isRequired,
 };
 
-function filterCommonStyles({canUpdateFrameStyles, item, role, styles}) {
+function filterCommonStyles({item, permissions, role, styles}) {
 	let nextStyles = styles.filter((fieldSet) =>
 		role === COMMON_STYLES_ROLES.general
 			? fieldSet.configurationRole === COMMON_STYLES_ROLES.general
@@ -150,11 +143,16 @@ function filterCommonStyles({canUpdateFrameStyles, item, role, styles}) {
 			});
 	}
 
+	// Filter styles based on permissions
+	// For UPDATE_LAYOUT_LIMTED and UPDATE_LAYOUT_BASIC we show the frame
+	// styles only in grid and container fragments.
+	// For UPDATE_LAYOUT_BASIC we only show the styles tab for grid and container fragments,
+	// allowing the user only to change paddings and margins
+
 	if (
 		item.type !== LAYOUT_DATA_ITEM_TYPES.container &&
 		item.type !== LAYOUT_DATA_ITEM_TYPES.row &&
-		role === COMMON_STYLES_ROLES.general &&
-		!canUpdateFrameStyles
+		!permissions.UPDATE
 	) {
 		nextStyles = nextStyles.map((fieldSet) => {
 			return {
@@ -163,15 +161,30 @@ function filterCommonStyles({canUpdateFrameStyles, item, role, styles}) {
 			};
 		});
 	}
+	else if (
+		!permissions.UPDATE &&
+		!permissions.UPDATE_LAYOUT_LIMITED &&
+		role === COMMON_STYLES_ROLES.styles
+	) {
+		nextStyles = nextStyles.map((fieldSet) => {
+			return {
+				...fieldSet,
+				styles: fieldSet.styles.filter((style) =>
+					isSpacingStyle(style)
+				),
+			};
+		});
+	}
 
 	return nextStyles;
 }
 
 function isSpacingFieldSet(fieldSet) {
-	return (
-		fieldSet.styles.every((field) => field.name.startsWith('margin')) ||
-		fieldSet.styles.every((field) => field.name.startsWith('padding'))
-	);
+	return fieldSet.styles.every((field) => isSpacingStyle(field));
+}
+
+function isSpacingStyle(style) {
+	return style.name.startsWith('margin') || style.name.startsWith('padding');
 }
 
 function isFrameStyle(style) {

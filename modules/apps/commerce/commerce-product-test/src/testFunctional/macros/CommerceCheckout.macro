@@ -171,6 +171,20 @@ definition {
 
 		if (isSet(paymentMethod)) {
 			if (IsElementPresent(key_label = "Payment Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+				if (isSet(defaultPaymentMethod)) {
+					AssertChecked(
+						key_radioOption = "${defaultPaymentMethod}",
+						locator1 = "CommerceEntry#RADIO_BUTTON");
+				}
+
+				if (isSet(notEligiblePaymentMethods)) {
+					for (var notEligiblePaymentMethod : list "${notEligiblePaymentMethods}") {
+						AssertElementNotPresent(
+							key_radioOption = "${notEligiblePaymentMethod}",
+							locator1 = "CommerceEntry#RADIO_BUTTON");
+					}
+				}
+
 				Click(
 					key_radioOption = "${paymentMethod}",
 					locator1 = "CommerceEntry#RADIO_BUTTON");

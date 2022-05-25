@@ -51,6 +51,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           <p
             class="c-mb-1 text-secondary"
+            data-qa-id="assetTypeInfo"
           >
             Web Content Article - Basic Web Content
           </p>

@@ -1,6 +1,7 @@
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = document.body.classList.contains('has-edit-mode-menu');
+const persistedTabKey = 'tabsFragment_' + fragmentNamespace + '_persistedTabId';
 const tabItems = [].slice.call(
 	fragmentElement.querySelectorAll(
 		'[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'
@@ -77,6 +78,10 @@ function openTabPanel(event, i) {
 		activeTabPanel(tabPanelItems[i]);
 
 		this.tabIndex = i;
+
+		if (configuration.persistSelectedTab) {
+			sessionStorage.setItem(persistedTabKey, i);
+		}
 	}
 }
 
@@ -116,6 +121,20 @@ function main() {
 		handleDropdown(event);
 	});
 	handleDropdownButtonName(tabItemSelected);
+
+	if (configuration.persistSelectedTab) {
+		const persistedTabIndex = Number(
+			sessionStorage.getItem(persistedTabKey)
+		);
+
+		if (
+			!isNaN(persistedTabIndex) &&
+			persistedTabIndex < configuration.numberOfTabs
+		) {
+			activeTab(tabItems[persistedTabIndex]);
+			activeTabPanel(tabPanelItems[persistedTabIndex]);
+		}
+	}
 }
 
 main();

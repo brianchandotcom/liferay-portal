@@ -342,7 +342,7 @@
 </tr>
 <tr>
 	<td>TAGS_POSITION</td>
-	<td>//div[contains(@class,'question-tags')][${key_position}]</td>
+	<td>xpath=(//div[contains(@class,'question-tags')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

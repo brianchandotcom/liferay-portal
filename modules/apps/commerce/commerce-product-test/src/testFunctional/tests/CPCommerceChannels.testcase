@@ -2197,6 +2197,52 @@ definition {
 			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
 	}
 
+	@description = "Verify users can set and edit payment term eligibility for payment methods."
+	@priority = "3"
+	test SetAndEditPaymentMethodTermElgibility {
+		property portal.acceptance = "false";
+
+		task ("Given an active payment term") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(termsType = "Payment");
+		}
+
+		task ("And given an active payment method") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+		}
+
+		task ("When the user sets the payment method's eligibility to a specific payment term") {
+			CommerceEntry.setEntryEligibility(
+				paymentMethod = "PayPal",
+				paymentTermsEligibility = "Payment Term 1");
+		}
+
+		task ("Then the payment term should be shown under Payment Terms in the eligibility tab") {
+			AssertElementPresent(
+				key_entryName = "payment-term-1",
+				key_table = "Payment Terms",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+		}
+
+		task ("When the user changes the payment method's eligibility to No Payment Terms") {
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
+				paymentMethod = "PayPal",
+				paymentTermsEligibility = "No Payment Terms");
+		}
+
+		task ("Then no payment terms should be shown in the eligibility tab") {
+			AssertElementNotPresent(
+				key_entryName = "",
+				key_table = "Payment Terms",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
 	@priority = "3"

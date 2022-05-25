@@ -74,8 +74,8 @@ public class OracleDB extends BaseDB {
 				connection, tableName, columnName, newColumnType);
 		}
 		catch (SQLException sqlException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isInfoEnabled()) {
+				_log.info(
 					StringBundler.concat(
 						"Attempting to upgrade table ", tableName,
 						" by adding a temporary column due to: ",

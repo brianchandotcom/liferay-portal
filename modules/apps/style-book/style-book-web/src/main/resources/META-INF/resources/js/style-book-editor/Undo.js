@@ -16,9 +16,16 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useRedoHistory, useUndoHistory} from './StyleBookContext';
+import {
+	useOnRedo,
+	useOnUndo,
+	useRedoHistory,
+	useUndoHistory,
+} from './StyleBookContext';
 
-export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
+export default function Undo() {
+	const onUndo = useOnUndo();
+	const onRedo = useOnRedo();
 	const redoHistory = useRedoHistory();
 	const undoHistory = useUndoHistory();
 

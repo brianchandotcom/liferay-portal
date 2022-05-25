@@ -21,12 +21,7 @@ import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
-import {
-	useDraftStatus,
-	useOnRedo,
-	useOnUndo,
-	usePreviewLayout,
-} from './StyleBookContext';
+import {useDraftStatus, usePreviewLayout} from './StyleBookContext';
 import Undo from './Undo';
 import UndoHistory from './UndoHistory';
 import {config} from './config';
@@ -40,8 +35,6 @@ const STATUS_TO_LABEL = {
 
 export default function Toolbar() {
 	const previewLayout = usePreviewLayout();
-	const onUndo = useOnUndo();
-	const onRedo = useOnRedo();
 
 	return (
 		<div className="management-bar navbar style-book-editor__toolbar">
@@ -65,7 +58,7 @@ export default function Toolbar() {
 
 					{config.featureFlagLps142363 ? (
 						<li className="nav-item">
-							<Undo onRedo={onRedo} onUndo={onUndo} />
+							<Undo />
 						</li>
 					) : null}
 

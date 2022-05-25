@@ -90,7 +90,7 @@ public class MyAccountPortlet extends MVCPortlet {
 		throws PortletException {
 
 		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(0)) {
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			return super.callActionMethod(actionRequest, actionResponse);
 		}

@@ -4042,6 +4042,42 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test covers LPS-154438."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewBlogsCoverImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154438
+
+	}
+
+	@description = "This test covers LPS-154439."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewBlogsSmallImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154439
+
+	}
+
+	@description = "This test covers LPS-154437."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewExternalVideoFromBlogsContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154437
+
+	}
+
+	@description = "This test covers LPS-154444."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154444
+
+	}
+
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling remote staging."
 	@priority = "5"
 	@refactordone
@@ -4068,6 +4104,33 @@ definition {
 		ItemSelector.viewEverywhereFilterResults(
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media");
+	}
+
+	@description = "This test covers LPS-154436."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154436
+
+	}
+
+	@description = "This test covers LPS-154440."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInDynamicCollectionViaAPAfterPublish {
+
+		// TODO LPS-154440
+
+	}
+
+	@description = "This test covers LPS-154443."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImagetInWCAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154443
+
 	}
 
 }

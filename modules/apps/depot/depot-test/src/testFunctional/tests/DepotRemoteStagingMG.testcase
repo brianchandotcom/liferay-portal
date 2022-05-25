@@ -739,4 +739,22 @@ definition {
 			staging = "true");
 	}
 
+	@description = "This test covers LPS-154442."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154442
+
+	}
+
+	@description = "This test covers LPS-154441."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154441
+
+	}
+
 }

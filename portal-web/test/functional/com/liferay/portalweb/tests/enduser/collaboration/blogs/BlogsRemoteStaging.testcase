@@ -161,6 +161,15 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-154403."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanPublishSmallImage {
+
+		// TODO LPS-154403
+
+	}
+
 	@description = "This test covers LPS-92488. It asserts that a replaced cover image displays properly in the remote site."
 	@priority = "5"
 	@refactordone
@@ -239,6 +248,42 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			uploadFileName = "Document_2.jpg");
+	}
+
+	@description = "This test covers LPS-154428."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154428
+
+	}
+
+	@description = "This test covers LPS-154402."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideotInContentFieldAfterPublish {
+
+		// TODO LPS-154402
+
+	}
+
+	@description = "This test covers LPS-154427."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154427
+
+	}
+
+	@description = "This test covers LPS-154429."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewSmallImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154429
+
 	}
 
 }

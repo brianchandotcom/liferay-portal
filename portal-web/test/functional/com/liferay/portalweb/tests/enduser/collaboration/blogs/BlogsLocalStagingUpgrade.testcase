@@ -1,0 +1,138 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.component.names = "Blogs";
+	property testray.main.component.name = "Upgrades Lima";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This test covers LPS-154449."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishExternalVideoFromContentFieldAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154449
+
+	}
+
+	@description = "This test covers LPS-154447."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageFromContentFieldAfterUpgradeFrom71105Archive {
+
+		// TODO LPS-154447
+
+	}
+
+	@description = "This test covers LPS-154446."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageFromContentFieldAfterUpgradeFrom72104Archive {
+
+		// TODO LPS-154446
+
+	}
+
+	@description = "This test covers LPS-154445."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageFromContentFieldAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154445
+
+	}
+
+	@description = "This test covers LPS-154448."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageFromContentFieldAfterUpgradeFrom701015Archive {
+
+		// TODO LPS-154448
+
+	}
+
+	@description = "This test covers LPS-154459."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom71105Archive {
+
+		// TODO LPS-154459
+
+	}
+
+	@description = "This test covers LPS-154458."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom72104Archive {
+
+		// TODO LPS-154458
+
+	}
+
+	@description = "This test covers LPS-154457."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154457
+
+	}
+
+	@description = "This test covers LPS-154460."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom701015Archive {
+
+		// TODO LPS-154460
+
+	}
+
+	@description = "This test covers LPS-154455."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishSmallImageAfterUpgradeFrom71105Archive {
+
+		// TODO LPS-154455
+
+	}
+
+	@description = "This test covers LPS-154454."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishSmallImageAfterUpgradeFrom72104Archive {
+
+		// TODO LPS-154454
+
+	}
+
+	@description = "This test covers LPS-154453."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishSmallImageAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154453
+
+	}
+
+	@description = "This test covers LPS-154456."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishSmallImageAfterUpgradeFrom701015Archive {
+
+		// TODO LPS-154456
+
+	}
+
+}

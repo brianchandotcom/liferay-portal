@@ -1051,4 +1051,31 @@ definition {
 			entryTitle = "New Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-154410."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154410
+
+	}
+
+	@description = "This test covers LPS-154409."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154409
+
+	}
+
+	@description = "This test covers LPS-154411."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewSmallImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154411
+
+	}
+
 }

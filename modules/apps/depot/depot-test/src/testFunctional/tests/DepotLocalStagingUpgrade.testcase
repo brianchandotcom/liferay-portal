@@ -1,0 +1,48 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.component.names = "Depot";
+	property testray.main.component.name = "Upgrades Lima";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This test covers LPS-154481."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishBlogSmallImageAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154481
+
+	}
+
+	@description = "This test covers LPS-154477."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154477
+
+	}
+
+	@description = "This test covers LPS-154485."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
+
+		// TODO LPS-154485
+
+	}
+
+}

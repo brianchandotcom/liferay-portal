@@ -597,6 +597,69 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
 	}
 
+	@description = "This test covers LPS-154415."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154415
+
+	}
+
+	@description = "This test covers LPS-154396."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideoInMGAfterPublish {
+
+		// TODO LPS-154396
+
+	}
+
+	@description = "This test covers LPS-154417."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154417
+
+	}
+
+	@description = "This test covers LPS-154413."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154413
+
+	}
+
+	@description = "This test covers LPS-154412."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154412
+
+	}
+
+	@description = "This test covers LPS-154414."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInMGAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154414
+
+	}
+
+	@description = "This test covers LPS-154416."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInWCAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154416
+
+	}
+
 	@description = "This is a use case for LPS-74621."
 	@priority = "3"
 	@refactorneeded

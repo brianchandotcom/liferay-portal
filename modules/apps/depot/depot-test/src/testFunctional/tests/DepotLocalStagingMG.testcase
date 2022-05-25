@@ -661,4 +661,40 @@ definition {
 			staging = "true");
 	}
 
+	@description = "This test covers LPS-154424."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154424
+
+	}
+
+	@description = "This test covers LPS-154400."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewExternalVideoAfterPublish {
+
+		// TODO LPS-154400
+
+	}
+
+	@description = "This test covers LPS-154397."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageAfterFriendlyURLIsUpdated {
+
+		// TODO LPS-154397
+
+	}
+
+	@description = "This test covers LPS-154423."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageAfterPublish {
+
+		// TODO LPS-154423
+
+	}
+
 }

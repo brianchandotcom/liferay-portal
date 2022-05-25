@@ -699,6 +699,16 @@ definition {
 			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
 	}
 
+	macro navigateFormPagesTopList {
+		var formPageNumber = "${key_formPageNumber}";
+		var formPageName = "${key_formPageName}";
+
+		Click(
+			key_formPageName = "${formPageName}",
+			key_formPageNumber = "${formPageNumber}",
+			locator1 = "Form#FORM_PAGE_TOP_LIST");
+	}
+
 	macro openToJavaScriptLoader {
 		var baseURL = PropsUtil.get("portal.url");
 
@@ -749,18 +759,6 @@ definition {
 		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		Form.assertFormWasPublished();
-	}
-
-	macro navigateFormPagesTopList {
-		var formPageNumber = "${key_formPageNumber}";
-		var formPageName = "${key_formPageName}";
-
-		Click(
-			locator1 = "Form#FORM_PAGE_TOP_LIST",
-			key_formPageNumber = "${formPageNumber}",
-			key_formPageName = "${formPageName}");
-
-		
 	}
 
 	macro reorderFields {

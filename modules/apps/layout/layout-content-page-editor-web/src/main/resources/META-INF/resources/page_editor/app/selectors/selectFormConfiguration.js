@@ -46,6 +46,7 @@ export default function selectFormConfiguration(item, layoutData) {
 				return {
 					classNameId: selectedMappingTypes?.type.id,
 					classTypeId: selectedMappingTypes?.subtype.id,
+					formId: parentItem.itemId,
 				};
 			}
 			else {

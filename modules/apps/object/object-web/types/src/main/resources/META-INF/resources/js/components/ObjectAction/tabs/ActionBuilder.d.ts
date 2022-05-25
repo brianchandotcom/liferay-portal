@@ -16,8 +16,10 @@
 
 import {FormError} from '../../../hooks/useForm';
 import {CustomItem} from '../../Form/CustomSelect/CustomSelect';
+import './ActionBuilder.scss';
 export default function ActionBuilder({
 	errors,
+	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
 	setValues,
@@ -25,6 +27,7 @@ export default function ActionBuilder({
 }: IProps): JSX.Element;
 interface IProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
+	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	setValues: (values: Partial<ObjectAction>) => void;

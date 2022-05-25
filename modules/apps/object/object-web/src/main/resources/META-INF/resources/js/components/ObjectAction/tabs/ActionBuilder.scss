@@ -1,0 +1,12 @@
+.lfr-object__action-builder {
+	&-then {
+		align-items: center;
+		display: flex;
+		gap: 2rem;
+		justify-content: center;
+	}
+
+	&-notification-then {
+		padding-bottom: 1.7rem;
+	}
+}

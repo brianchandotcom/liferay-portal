@@ -26,6 +26,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 		HashMapBuilder.<String, Object>put(
 			"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
 		).put(
+			"ffNotificationTemplates", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149050"))
+		).put(
 			"objectActionCodeEditorElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()
 		).put(
 			"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorsJSONArray()

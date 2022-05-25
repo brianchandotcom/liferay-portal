@@ -74,13 +74,13 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	protected void prepareInvocationBuildDataList() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
 
-		int retestAmount = _getRetestAmount();
+		int retestCount = _getRetestCount();
 
 		String downstreamJobName =
 			portalTopLevelBuildData.getJobName() + "-batch";
 
 		for (String portalBranchSHA : _getPortalBranchSHAs()) {
-			for (int i = 0; i < retestAmount; i++) {
+			for (int i = 0; i < retestCount; i++) {
 				BatchBuildData batchBuildData =
 					BuildDataFactory.newBatchBuildData(
 						null, downstreamJobName, null);
@@ -179,7 +179,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		_validateBuildParameterPortalBranchSHAs();
 		_validateBuildParameterPortalGitHubURL();
 		_validateBuildParameterPortalUpstreamBranchName();
-		_validateBuildParameterRetestAmount();
+		_validateBuildParameterRetestCount();
 		_validateBuildParameterRetestCherryPickSHA();
 	}
 
@@ -256,15 +256,15 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return _COMMITS_GROUP_SIZE_MAX_DEFAULT;
 	}
 
-	private int _getMaxRetestAmount() {
-		String maxRetestAmount = getJobPropertyValue("maximum.retest.amount");
+	private int _getMaxRetestCount() {
+		String maxRetestCount = getJobPropertyValue("maximum.retest.count");
 
-		if ((maxRetestAmount == null) || maxRetestAmount.isEmpty()) {
+		if ((maxRetestCount == null) || maxRetestCount.isEmpty()) {
 			return -1;
 		}
 
 		try {
-			return Integer.valueOf(maxRetestAmount);
+			return Integer.valueOf(maxRetestCount);
 		}
 		catch (NumberFormatException numberFormatException) {
 			numberFormatException.printStackTrace();
@@ -365,16 +365,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 	}
 
-	private int _getRetestAmount() {
-		String retestAmount = getBuildParameter(
-			_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
+	private int _getRetestCount() {
+		String retestCount = getBuildParameter(
+			_NAME_BUILD_PARAMETER_RETEST_COUNT);
 
-		if ((retestAmount == null) || retestAmount.isEmpty()) {
+		if ((retestCount == null) || retestCount.isEmpty()) {
 			return 1;
 		}
 
 		try {
-			return Integer.parseInt(retestAmount);
+			return Integer.parseInt(retestCount);
 		}
 		catch (NumberFormatException numberFormatException) {
 			numberFormatException.printStackTrace();
@@ -513,9 +513,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		int portalBranchSHACount =
 			StringUtils.countMatches(portalBranchSHAs, ",") + 1;
 
-		int retestAmount = _getRetestAmount();
+		int retestCount = _getRetestCount();
 
-		if (retestAmount != 1) {
+		if (retestCount != 1) {
 			allowedPortalBranchSHACount = 1;
 		}
 
@@ -635,33 +635,33 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		}
 	}
 
-	private void _validateBuildParameterRetestAmount() {
-		String retestAmount = getBuildParameter(
-			_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
+	private void _validateBuildParameterRetestCount() {
+		String retestCount = getBuildParameter(
+			_NAME_BUILD_PARAMETER_RETEST_COUNT);
 
-		if ((retestAmount == null) || retestAmount.isEmpty()) {
+		if ((retestCount == null) || retestCount.isEmpty()) {
 			return;
 		}
 
-		int retestAmountInt = 0;
+		int retestCountInt = 0;
 
 		try {
-			retestAmountInt = Integer.parseInt(retestAmount);
+			retestCountInt = Integer.parseInt(retestCount);
 		}
 		catch (NumberFormatException numberFormatException) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
-					_NAME_BUILD_PARAMETER_RETEST_AMOUNT, " parameter value: \"",
-					retestAmount, "\" is not a number."));
+					_NAME_BUILD_PARAMETER_RETEST_COUNT, " parameter value: \"",
+					retestCount, "\" is not a number."));
 		}
 
-		int maxRetestAmount = _getMaxRetestAmount();
+		int maxRetestCount = _getMaxRetestCount();
 
-		if ((retestAmountInt < 0) || (retestAmountInt > maxRetestAmount)) {
+		if ((retestCountInt < 0) || (retestCountInt > maxRetestCount)) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
-					_NAME_BUILD_PARAMETER_RETEST_AMOUNT,
-					" must be between 0 and ", String.valueOf(maxRetestAmount),
+					_NAME_BUILD_PARAMETER_RETEST_COUNT,
+					" must be between 0 and ", String.valueOf(maxRetestCount),
 					"."));
 		}
 	}
@@ -674,9 +674,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return;
 		}
 
-		int retestAmount = _getRetestAmount();
+		int retestCount = _getRetestCount();
 
-		if (retestAmount != 1) {
+		if (retestCount != 1) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					"Cherry-picked SHAs may not be used when retesting."));
@@ -708,8 +708,8 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME =
 			"PORTAL_UPSTREAM_BRANCH_NAME";
 
-	private static final String _NAME_BUILD_PARAMETER_RETEST_AMOUNT =
-		"RETEST_AMOUNT";
+	private static final String _NAME_BUILD_PARAMETER_RETEST_COUNT =
+		"RETEST_COUNT";
 
 	private static final Pattern _compareURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(

@@ -1539,41 +1539,7 @@ closeTemplate()
 	</target>
 
 	<target name="unzip-weblogic-custom-12213">
-		<if>
-			<not>
-				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
-			</not>
-			<then>
-				<trycatch>
-					<try>
-						<mkdir dir="${app.server.parent.dir}" />
-
-						<mirrors-get
-							dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-							src="http://files.liferay.com/private/apps/oracle/weblogicas/12/${app.server.weblogic.custom.zip.name}"
-							verbose="true"
-						/>
-					</try>
-					<catch>
-						<fail>
-.
-
-Please download the Weblogic custom zip file from
-http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/12 and
-place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
-this task.
-						</fail>
-					</catch>
-				</trycatch>
-			</then>
-		</if>
-
-		<delete dir="${app.server.weblogic.dir}" />
-
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-		/>
+		<antcall target="unzip-weblogic-zip-files" />
 
 		<if>
 			<os family="unix" />
@@ -1679,39 +1645,7 @@ this task.
 	</target>
 
 	<target name="unzip-weblogic-custom-14110">
-		<if>
-			<not>
-				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
-			</not>
-			<then>
-				<trycatch>
-					<try>
-						<mkdir dir="${app.server.parent.dir}" />
-
-						<mirrors-get
-							dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-							src="http://files.liferay.com/private/apps/oracle/weblogicas/14/${app.server.weblogic.zip.name}"
-							verbose="true"
-						/>
-					</try>
-					<catch>
-						<fail>
-Please download the Weblogic custom zip file from
-http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/14 and
-place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
-this task.
-						</fail>
-					</catch>
-				</trycatch>
-			</then>
-		</if>
-
-		<delete dir="${app.server.weblogic.dir}" />
-
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-		/>
+		<antcall target="unzip-weblogic-zip-files" />
 
 		<antcall target="install-weblogic14-setup-files" />
 
@@ -1785,6 +1719,52 @@ this task.
 		/>
 
 		<set-weblogic-log-levels />
+	</target>
+
+	<target name="unzip-weblogic-zip-files">
+		<if>
+			<equals arg1="${app.server.weblogic.version.build}" arg2="12213" />
+			<then>
+				<property name="app.server.zip" value="${app.server.weblogic.custom.zip.name}" />
+			</then>
+			<else>
+				<property name="app.server.zip" value="${app.server.weblogic.zip.name}" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
+			</not>
+			<then>
+				<trycatch>
+					<try>
+						<mkdir dir="${app.server.parent.dir}" />
+
+						<mirrors-get
+							dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+							src="http://files.liferay.com/private/apps/oracle/weblogicas/${app.server.weblogic.version.number}/${app.server.zip}"
+							verbose="true"
+						/>
+					</try>
+					<catch>
+						<fail>
+Please download the Weblogic custom zip file from
+http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/${app.server.weblogic.version.number} and
+place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
+this task.
+						</fail>
+					</catch>
+				</trycatch>
+			</then>
+		</if>
+
+		<delete dir="${app.server.weblogic.dir}" />
+
+		<unzip
+			dest="${app.server.weblogic.dir}"
+			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+		/>
 	</target>
 
 	<target name="unzip-websphere">

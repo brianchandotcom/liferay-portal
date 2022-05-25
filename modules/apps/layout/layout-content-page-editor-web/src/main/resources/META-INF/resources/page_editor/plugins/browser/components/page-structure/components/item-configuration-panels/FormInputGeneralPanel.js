@@ -121,6 +121,18 @@ export function FormInputGeneralPanel({item}) {
 		[item.itemId]
 	);
 
+	const {classNameId, classTypeId} = useSelectorCallback(
+		(state) =>
+			selectFormConfiguration(item, state.layoutData) ||
+			DEFAULT_FORM_CONFIGURATION,
+		[item.itemId]
+	);
+
+	const formFields = useCache({
+		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
+		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
+	});
+
 	const fields = useMemo(() => {
 		let nextFields = INPUT_COMMON_CONFIGURATION;
 
@@ -177,6 +189,11 @@ export function FormInputGeneralPanel({item}) {
 				>
 					<FormInputMappingOptions
 						configurationValues={configurationValues}
+						form={{
+							classNameId,
+							classTypeId,
+							fields: formFields,
+						}}
 						item={item}
 						onValueSelect={handleValueSelect}
 					/>
@@ -197,13 +214,13 @@ export function FormInputGeneralPanel({item}) {
 	);
 }
 
-function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
-	const {classNameId, classTypeId} = useSelectorCallback(
-		(state) =>
-			selectFormConfiguration(item, state.layoutData) ||
-			DEFAULT_FORM_CONFIGURATION,
-		[item.itemId]
-	);
+function FormInputMappingOptions({
+	configurationValues,
+	form,
+	item,
+	onValueSelect,
+}) {
+	const {classNameId, classTypeId, fields} = form;
 
 	const inputType = useSelectorCallback(
 		(state) => {
@@ -231,11 +248,6 @@ function FormInputMappingOptions({configurationValues, item, onValueSelect}) {
 		() => getTypeLabels(itemTypes, classNameId, classTypeId),
 		[itemTypes, classNameId, classTypeId]
 	);
-
-	const fields = useCache({
-		fetcher: () => FormService.getFormFields({classNameId, classTypeId}),
-		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
-	});
 
 	const filteredFields = useSelectorCallback(
 		(state) => {

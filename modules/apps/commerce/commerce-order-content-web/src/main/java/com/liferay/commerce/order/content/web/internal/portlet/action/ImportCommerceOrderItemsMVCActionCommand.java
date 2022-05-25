@@ -77,28 +77,16 @@ public class ImportCommerceOrderItemsMVCActionCommand
 		int importedRowsCount = 0;
 		int notImportedRowsCount = 0;
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
-		String commerceOrderImporterTypeKey = ParamUtil.getString(
-			actionRequest, "commerceOrderImporterTypeKey");
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		CommerceOrderImporterDateFormatConfiguration
-			commerceOrderImporterDateFormatConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceOrderImporterDateFormatConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceOrder.getGroupId(),
-						CommerceConstants.
-							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			commerceOrderImporterDateFormatConfiguration.
-				requestedDeliveryDateFormat());
+		String commerceOrderImporterTypeKey = ParamUtil.getString(
+			actionRequest, "commerceOrderImporterTypeKey");
 
 		try {
 			if (cmd.equals(Constants.IMPORT)) {
@@ -142,9 +130,23 @@ public class ImportCommerceOrderItemsMVCActionCommand
 										actionRequest));
 
 						try {
+							CommerceOrderImporterDateFormatConfiguration
+								commerceOrderImporterDateFormatConfiguration =
+									_configurationProvider.getConfiguration(
+										CommerceOrderImporterDateFormatConfiguration.class,
+										new GroupServiceSettingsLocator(
+											commerceOrder.getGroupId(),
+											CommerceConstants.
+												SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+							SimpleDateFormat simpleDateFormat =
+								new SimpleDateFormat(
+									commerceOrderImporterDateFormatConfiguration.
+										requestedDeliveryDateFormat());
+
 							String requestedDeliveryDate =
 								commerceOrderImporterItem.
-									getRequestedDeliveryDate();
+									getRequestedDeliveryDateString();
 
 							_commerceOrderItemService.
 								updateCommerceOrderItemDeliveryDate(

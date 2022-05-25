@@ -82,4 +82,34 @@ definition {
         }
     }
 
+	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
+	@priority = "3"
+	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
+        task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+        task ("When the discontinued product's product details page is reached") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+        }
+
+		task ("And when the replacement product's button is hit") {
+			Click(
+				locator1 = "Button#ANY",
+				key_text = "Replacement Product");
+        }
+
+        task ("Then the user is redirected to the replacement's product details page") {
+			FrontStore.assertProductDetails(
+				productName = "Test Simple Product Replacement",
+				productSKU = "SKU1001");
+        }
+
+    }
+
 }

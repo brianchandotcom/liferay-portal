@@ -14,13 +14,17 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.admin.constants;
 
+import com.liferay.search.experiences.constants.SXPPortletKeys;
+
 /**
  * @author Kevin Tan
  */
 public class SXPBlueprintAdminFDSNames {
 
-	public static final String SXP_BLUEPRINTS = "sxpBlueprints";
+	public static final String SXP_BLUEPRINTS =
+		SXPPortletKeys.SXP_BLUEPRINT_ADMIN + "-sxpBlueprints";
 
-	public static final String SXP_ELEMENTS = "sxpElements";
+	public static final String SXP_ELEMENTS =
+		SXPPortletKeys.SXP_BLUEPRINT_ADMIN + "-sxpElements";
 
 }

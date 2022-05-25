@@ -20,6 +20,7 @@ interface ObjectAction {
 	objectActionExecutorKey: string;
 	objectActionTriggerKey: string;
 	parameters?: {
+		notificationTemplateId?: number;
 		script?: string;
 		secret?: string;
 		url?: string;

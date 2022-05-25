@@ -21,6 +21,14 @@
 
 			<DirectWriteRolloverStrategy />
 		</Appender>
+
+		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" ignoreExceptions="false" name="COMPANY_LOG_ROUTING_TEXT_FILE" type="CompanyLogRouting">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n" type="PatternLayout" />
+
+			<TimeBasedTriggeringPolicy />
+
+			<DirectWriteRolloverStrategy />
+		</Appender>
 	</Appenders>
 
 	<Loggers>
@@ -284,6 +292,7 @@
 			<AppenderRef ref="CONSOLE" />
 			<AppenderRef ref="TEXT_FILE" />
 			<AppenderRef ref="XML_FILE" />
+			<AppenderRef ref="COMPANY_LOG_ROUTING_TEXT_FILE" />
 		</Root>
 	</Loggers>
 </Configuration>

@@ -1024,6 +1024,36 @@ definition {
 	}
 
 	macro setEntryEligibility {
+		if (isSet(paymentMethod)) {
+			CommerceEntry.clickTableEntryEditButton(
+				entryName = "${paymentMethod}",
+				table = "Payment Methods");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+		}
+
+		if (isSet(shippingMethod)) {
+			CommerceEntry.clickTableEntryEditButton(
+				entryName = "${shippingMethod}",
+				table = "Shipping Methods");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+			CommerceNavigator.gotoEntry(entryName = "${shippingOption}");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_panel = "Details",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+		}
+
 		if (isSet(accountGroupsEligibility)) {
 			var title = "Add Account Groups";
 
@@ -1078,64 +1108,100 @@ definition {
 		}
 
 		if (isSet(paymentTermsEligibility)) {
-			var title = "Add Payment Terms";
-
-			Click(
-				key_radioOption = "Specific Payment Terms",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			var paymentTermsEligibility = StringUtil.lowerCase("${paymentTermsEligibility}");
-
-			var paymentTermsEligibility = StringUtil.replace("${paymentTermsEligibility}", " ", "-");
-
-			for (var paymentTerm : list "${paymentTermsEligibility}") {
-				CommerceRelations.assignSingleRelationToEligibility(
-					entryName = "${paymentTerm}",
-					title = "${title}");
+			if ("${paymentTermsEligibility}" == "No Payment Terms") {
+				Click(
+					key_radioOption = "No Payment Terms",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+			else {
+				var title = "Add Payment Terms";
 
 				Click(
-					key_title = "${title}",
-					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+					key_radioOption = "Specific Payment Terms",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				var paymentTermsEligibility = StringUtil.lowerCase("${paymentTermsEligibility}");
+
+				var paymentTermsEligibility = StringUtil.replace("${paymentTermsEligibility}", " ", "-");
+
+				for (var paymentTerm : list "${paymentTermsEligibility}") {
+					CommerceRelations.assignSingleRelationToEligibility(
+						entryName = "${paymentTerm}",
+						title = "${title}");
+
+					Click(
+						key_title = "${title}",
+						locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+
+					WaitForElementPresent(
+						key_entryName = "${paymentTerm}",
+						key_table = "Payment Terms",
+						locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+				}
 			}
 		}
 
 		if (isSet(deliveryTermsEligibility)) {
-			var title = "Add Delivery Terms";
-
-			Click(
-				key_radioOption = "Specific Delivery Terms",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			var deliveryTermsEligibility = StringUtil.lowerCase("${deliveryTermsEligibility}");
-
-			var deliveryTermsEligibility = StringUtil.replace("${deliveryTermsEligibility}", " ", "-");
-
-			for (var deliveryTerm : list "${deliveryTermsEligibility}") {
-				CommerceRelations.assignSingleRelationToEligibility(
-					entryName = "${deliveryTerm}",
-					title = "${title}");
+			if ("${deliveryTermsEligibility}" == "No Delivery Terms") {
+				Click(
+					key_radioOption = "No Delivery Terms",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+			else {
+				var title = "Add Delivery Terms";
 
 				Click(
-					key_title = "${title}",
-					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+					key_radioOption = "Specific Delivery Terms",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				var deliveryTermsEligibility = StringUtil.lowerCase("${deliveryTermsEligibility}");
+
+				var deliveryTermsEligibility = StringUtil.replace("${deliveryTermsEligibility}", " ", "-");
+
+				for (var deliveryTerm : list "${deliveryTermsEligibility}") {
+					CommerceRelations.assignSingleRelationToEligibility(
+						entryName = "${deliveryTerm}",
+						title = "${title}");
+
+					Click(
+						key_title = "${title}",
+						locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+
+					WaitForElementPresent(
+						key_entryName = "${deliveryTerm}",
+						key_table = "Delivery Terms",
+						locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+				}
 			}
 		}
 
 		if (isSet(orderTypesEligibility)) {
-			var title = "Add Delivery Terms";
-
-			Click(
-				key_radioOption = "Specific Order Types",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			for (var orderType : list "${orderTypesEligibility}") {
-				CommerceRelations.assignSingleRelationToEligibility(
-					entryName = "${orderType}",
-					title = "${title}");
+			if ("${orderTypesEligibility}" == "All Order Types") {
+				Click(
+					key_radioOption = "All Order Types",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+			else {
+				var title = "Add Order Types";
 
 				Click(
-					key_title = "${title}",
-					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+					key_radioOption = "Specific Order Types",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				for (var orderType : list "${orderTypesEligibility}") {
+					CommerceRelations.assignSingleRelationToEligibility(
+						entryName = "${orderType}",
+						title = "${title}");
+
+					Click(
+						key_title = "${title}",
+						locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+
+					WaitForElementPresent(
+						key_entryName = "${orderType}",
+						key_table = "Order Types",
+						locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+				}
 			}
 		}
 

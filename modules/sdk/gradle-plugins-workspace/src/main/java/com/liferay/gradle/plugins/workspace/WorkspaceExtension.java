@@ -515,16 +515,16 @@ public class WorkspaceExtension {
 		return _productInfos.computeIfAbsent(
 			product,
 			key -> {
+				DownloadCommand downloadCommand = new DownloadCommand();
+
+				downloadCommand.setCacheDir(_workspaceCacheDir);
+				downloadCommand.setPassword(null);
+				downloadCommand.setToken(false);
+				downloadCommand.setUserName(null);
+				downloadCommand.setQuiet(true);
+
 				try {
-					DownloadCommand downloadCommand = new DownloadCommand();
-
-					downloadCommand.setCacheDir(_workspaceCacheDir);
-					downloadCommand.setPassword(null);
-					downloadCommand.setToken(false);
 					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
-					downloadCommand.setUserName(null);
-					downloadCommand.setQuiet(true);
-
 					downloadCommand.execute();
 
 					Path downloadPath = downloadCommand.getDownloadPath();
@@ -539,21 +539,38 @@ public class WorkspaceExtension {
 					}
 				}
 				catch (Exception exception1) {
-					try (InputStream inputStream =
-							WorkspaceExtension.class.getResourceAsStream(
-								"/.product_info.json");
-						JsonReader jsonReader = new JsonReader(
-							new InputStreamReader(inputStream))) {
+					try {
+						downloadCommand.setUrl(new URL(_CDN_PRODUCT_INFO_URL));
+						downloadCommand.execute();
 
-						Map<String, ProductInfo> productInfos =
-							_getProductInfos(jsonReader);
+						Path downloadPath = downloadCommand.getDownloadPath();
 
-						return productInfos.get(product);
+						try (JsonReader jsonReader = new JsonReader(
+								Files.newBufferedReader(downloadPath))) {
+
+							Map<String, ProductInfo> productInfos =
+								_getProductInfos(jsonReader);
+
+							return productInfos.get(product);
+						}
 					}
 					catch (Exception exception2) {
-						throw new GradleException(
-							"Unable to get product info for :" + product,
-							exception2);
+						try (InputStream inputStream =
+								WorkspaceExtension.class.getResourceAsStream(
+									"/.product_info.json");
+							JsonReader jsonReader = new JsonReader(
+								new InputStreamReader(inputStream))) {
+
+							Map<String, ProductInfo> productInfos =
+								_getProductInfos(jsonReader);
+
+							return productInfos.get(product);
+						}
+						catch (Exception exception3) {
+							throw new GradleException(
+								"Unable to get product info for :" + product,
+								exception3);
+						}
 					}
 				}
 			});
@@ -618,6 +635,9 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
+	private static final String _CDN_PRODUCT_INFO_URL =
+		"https://releases-cdn.liferay.com/tools/workspace/.product_info.json";
+
 	private static final String _DEFAULT_WORKSPACE_CACHE_DIR_NAME =
 		".liferay/workspace";
 
@@ -627,7 +647,7 @@ public class WorkspaceExtension {
 	private static final String _NODE_PACKAGE_MANAGER = "yarn";
 
 	private static final String _PRODUCT_INFO_URL =
-		"https://releases.liferay.com/tools/workspace/.product_info.json";
+		"https://releases-cdn.liferay.com/tools/workspace/.product_info.json";
 
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;

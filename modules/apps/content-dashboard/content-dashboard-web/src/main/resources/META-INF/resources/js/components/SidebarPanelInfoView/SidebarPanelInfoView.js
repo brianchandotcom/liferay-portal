@@ -104,7 +104,10 @@ const SidebarPanelInfoView = ({
 						</>
 					)}
 
-					<p className="c-mb-1 text-secondary" data-qa-id="assetTypeInfo">
+					<p
+						className="c-mb-1 text-secondary"
+						data-qa-id="assetTypeInfo"
+					>
 						{subType ? `${type} - ${subType}` : `${type}`}
 					</p>
 

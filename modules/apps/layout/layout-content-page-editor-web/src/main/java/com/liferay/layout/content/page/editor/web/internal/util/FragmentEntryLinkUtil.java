@@ -115,6 +115,7 @@ public class FragmentEntryLinkUtil {
 
 	public static JSONObject getFragmentEntryLinkJSONObject(
 			PortletRequest portletRequest, PortletResponse portletResponse,
+			DefaultFragmentRendererContext defaultFragmentRendererContext,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentEntryLink fragmentEntryLink,
 			FragmentCollectionContributorTracker
@@ -132,9 +133,6 @@ public class FragmentEntryLinkUtil {
 		themeDisplay.setIsolated(true);
 
 		try {
-			DefaultFragmentRendererContext defaultFragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
 			String languageId = ParamUtil.getString(
 				portletRequest, "languageId", themeDisplay.getLanguageId());
 
@@ -252,6 +250,25 @@ public class FragmentEntryLinkUtil {
 		finally {
 			themeDisplay.setIsolated(isolated);
 		}
+	}
+
+	public static JSONObject getFragmentEntryLinkJSONObject(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+			FragmentEntryLink fragmentEntryLink,
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentRendererController fragmentRendererController,
+			FragmentRendererTracker fragmentRendererTracker,
+			ItemSelector itemSelector, String portletId)
+		throws PortalException {
+
+		return getFragmentEntryLinkJSONObject(
+			portletRequest, portletResponse,
+			new DefaultFragmentRendererContext(fragmentEntryLink),
+			fragmentEntryConfigurationParser, fragmentEntryLink,
+			fragmentCollectionContributorTracker, fragmentRendererController,
+			fragmentRendererTracker, itemSelector, portletId);
 	}
 
 	private static FragmentEntry _getFragmentEntry(

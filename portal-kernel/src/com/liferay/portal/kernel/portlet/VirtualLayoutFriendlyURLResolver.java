@@ -76,12 +76,12 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			return mainPath;
 		}
 
-		String actualURL = PortalUtil.getActualURL(
-			group.getGroupId(), privateLayout, mainPath, layoutFriendlyURL,
-			params, requestContext);
-
 		return HttpComponentsUtil.addParameter(
-			HttpComponentsUtil.removeParameter(actualURL, "p_v_l_s_g_id"),
+			HttpComponentsUtil.removeParameter(
+				PortalUtil.getActualURL(
+					group.getGroupId(), privateLayout, mainPath,
+					layoutFriendlyURL, params, requestContext),
+				"p_v_l_s_g_id"),
 			"p_v_l_s_g_id", groupId);
 	}
 

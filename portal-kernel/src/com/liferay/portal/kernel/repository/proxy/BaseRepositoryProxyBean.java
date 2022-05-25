@@ -242,10 +242,9 @@ public class BaseRepositoryProxyBean
 			OrderByComparator<FileEntry> orderByComparator)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
-			folderId, status, start, end, orderByComparator);
-
-		return toFileEntryProxyBeans(fileEntries);
+		return toFileEntryProxyBeans(
+			_baseRepository.getFileEntries(
+				folderId, status, start, end, orderByComparator));
 	}
 
 	@Override
@@ -254,10 +253,9 @@ public class BaseRepositoryProxyBean
 			OrderByComparator<FileEntry> orderByComparator)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
-			folderId, start, end, orderByComparator);
-
-		return toFileEntryProxyBeans(fileEntries);
+		return toFileEntryProxyBeans(
+			_baseRepository.getFileEntries(
+				folderId, start, end, orderByComparator));
 	}
 
 	@Override
@@ -266,10 +264,9 @@ public class BaseRepositoryProxyBean
 			OrderByComparator<FileEntry> orderByComparator)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
-			folderId, documentTypeId, start, end, orderByComparator);
-
-		return toFileEntryProxyBeans(fileEntries);
+		return toFileEntryProxyBeans(
+			_baseRepository.getFileEntries(
+				folderId, documentTypeId, start, end, orderByComparator));
 	}
 
 	@Override
@@ -288,10 +285,9 @@ public class BaseRepositoryProxyBean
 			OrderByComparator<FileEntry> orderByComparator)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
-			folderId, mimeTypes, start, end, orderByComparator);
-
-		return toFileEntryProxyBeans(fileEntries);
+		return toFileEntryProxyBeans(
+			_baseRepository.getFileEntries(
+				folderId, mimeTypes, start, end, orderByComparator));
 	}
 
 	@Override
@@ -299,11 +295,9 @@ public class BaseRepositoryProxyBean
 			long folderId, int status, int start, int end)
 		throws PortalException {
 
-		List<RepositoryEntry> fileEntriesAndFileShortcuts =
+		return toObjectProxyBeans(
 			_baseRepository.getFileEntriesAndFileShortcuts(
-				folderId, status, start, end);
-
-		return toObjectProxyBeans(fileEntriesAndFileShortcuts);
+				folderId, status, start, end));
 	}
 
 	@Override
@@ -420,10 +414,10 @@ public class BaseRepositoryProxyBean
 			int end, OrderByComparator<Folder> orderByComparator)
 		throws PortalException {
 
-		List<Folder> folders = _baseRepository.getFolders(
-			parentFolderId, includeMountfolders, start, end, orderByComparator);
-
-		return toFolderProxyBeans(folders);
+		return toFolderProxyBeans(
+			_baseRepository.getFolders(
+				parentFolderId, includeMountfolders, start, end,
+				orderByComparator));
 	}
 
 	@Override
@@ -432,11 +426,10 @@ public class BaseRepositoryProxyBean
 			int start, int end, OrderByComparator<Folder> orderByComparator)
 		throws PortalException {
 
-		List<Folder> folders = _baseRepository.getFolders(
-			parentFolderId, status, includeMountfolders, start, end,
-			orderByComparator);
-
-		return toFolderProxyBeans(folders);
+		return toFolderProxyBeans(
+			_baseRepository.getFolders(
+				parentFolderId, status, includeMountfolders, start, end,
+				orderByComparator));
 	}
 
 	@Override
@@ -445,12 +438,10 @@ public class BaseRepositoryProxyBean
 			int end, OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<RepositoryEntry> foldersAndFileEntriesAndFileShortcuts =
+		return toObjectProxyBeans(
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, includeMountFolders, start, end,
-				orderByComparator);
-
-		return toObjectProxyBeans(foldersAndFileEntriesAndFileShortcuts);
+				orderByComparator));
 	}
 
 	@Override
@@ -460,12 +451,10 @@ public class BaseRepositoryProxyBean
 			OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<RepositoryEntry> foldersAndFileEntriesAndFileShortcuts =
+		return toObjectProxyBeans(
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, mimeTypes, includeMountFolders, start, end,
-				orderByComparator);
-
-		return toObjectProxyBeans(foldersAndFileEntriesAndFileShortcuts);
+				orderByComparator));
 	}
 
 	@Override

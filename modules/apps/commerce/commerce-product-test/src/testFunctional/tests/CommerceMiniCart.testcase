@@ -442,7 +442,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_cartItemSku = "MIN93015",
-				locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");	
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 		}
 	}
 

@@ -11,11 +11,18 @@ definition {
 	setUp {
 		CommerceConfiguration.commerceSetUp(minium = "true");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
 	}
 
 	tearDown {
@@ -347,26 +354,6 @@ definition {
 	test CanAssertDiagramThumbnailIntoSearchResults {
 		property portal.acceptance = "false";
 
-		task ("Given a Buyer account is created") {
-			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-				accountName = "Commerce Account",
-				emailAddress = "buyer@liferay.com",
-				role = "Buyer",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userScreenName = "buyeruser");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			CommerceLogin.editPasswordCP(
-				newPassword = "ttest",
-				requirePasswordReset = "true",
-				userScreenName = "buyeruser");
-		}
-
 		task ("And a Diagram with the "Type" set to "Default" has an image (Commerce_Black.jpg) uploaded as "Diagram File"") {
 			CommerceProducts.openProductsAdmin();
 
@@ -390,8 +377,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}

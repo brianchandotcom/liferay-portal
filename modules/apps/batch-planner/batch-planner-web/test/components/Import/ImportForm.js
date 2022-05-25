@@ -61,6 +61,15 @@ const fileContent = [
 ];
 
 describe('ImportForm', () => {
+	beforeEach(() => {
+		const mockDiv = document.createElement('div');
+		mockDiv.setAttribute(
+			'id',
+			`${BASE_PROPS.portletNamespace}downloadTemplateAlert`
+		);
+		document.body.appendChild(mockDiv);
+	});
+
 	afterEach(cleanup);
 
 	it('must render', () => {

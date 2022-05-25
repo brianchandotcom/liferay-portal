@@ -952,4 +952,107 @@ definition {
 		AssertElementPresent(locator1 = "Form#SUCCESS_PAGE_ADD");
 	}
 
+	@description = "Verify that Forms cannot navigate through pages when there is a validation error"
+	@priority = "5"
+	test CannotNavigateThroughThePagesWithValidationError {
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.editPageTitle(
+			formPageName = "Page 1",
+			formTitleNumber = "1");
+
+		Form.addTextField(formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page 2",
+			formTitleNumber = "2");
+
+		Form.addTextField(formPageNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page 3",
+			formTitleNumber = "3");
+
+		Form.addTextField(formPageNumber = "2");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 3");
+
+		Form.closeSidebar();
+
+		Click(
+			key_fieldFieldLabel = "Text Field 1",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.selectSelectOption(
+			fieldName = "If Input",
+			selectOption = "Contains");
+
+		FormFields.editText(
+			fieldName = "parameter",
+			fieldValue = "Test");
+
+		FormFields.editText(
+			fieldName = "errorMessage",
+			fieldValue = "Test Error");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text Field 1",
+			fieldValue = "Text");
+
+		AssertClick(
+			locator1 = "Button#NEXT",
+			value1 = "Next");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
+
+
+		FormFields.editText(
+			fieldName = "Text Field 1",
+			fieldValue = "Test Text");
+
+		Form.navigateFormPagesTopList(
+			formPageNumber = "2",
+			formPageName = "Page 2");
+
+		AssertTextEquals(
+			locator1 = "FormPortlet#FORM_PAGE",
+			key_formPageName = "Page 2",
+			value1 = "Page 2");
+
+		Form.navigateFormPagesTopList(
+			formPageNumber = "3",
+			formPageName = "Page 3");
+
+		AssertTextEquals(
+			locator1 = "FormPortlet#FORM_PAGE",
+			key_formPageName = "Page 3",
+			value1 = "Page 3");
+
+	}
+
 }

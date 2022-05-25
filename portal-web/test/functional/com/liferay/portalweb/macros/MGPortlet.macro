@@ -59,15 +59,17 @@ definition {
 			}
 
 			if ("${selectHomeFolder}" == "true") {
-				if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+				var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+				if (IsElementPresent(key_breadcrumbName = "${siteName}", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
 					AssertVisible(
 						key_text = "Select This Folder",
 						locator1 = "Button#ANY_DISABLED");
 
 					AssertClick(
-						key_breadcrumbName = "Home",
+						key_breadcrumbName = "${siteName}",
 						locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-						value1 = "Home");
+						value1 = "${siteName}");
 				}
 			}
 

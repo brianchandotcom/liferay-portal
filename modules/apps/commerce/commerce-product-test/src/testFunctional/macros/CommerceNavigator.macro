@@ -72,6 +72,14 @@ definition {
 			value1 = "${entryName}");
 	}
 
+	macro gotoMiniumAccountOrderDefaults {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/account-management");
+
+		CommerceNavigator.gotoEntry(entryName = "${accountName}");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Order Defaults");
+	}
+
 	macro gotoMiniumSidebarItem {
 		ScrollBy(value1 = "0, -1000");
 

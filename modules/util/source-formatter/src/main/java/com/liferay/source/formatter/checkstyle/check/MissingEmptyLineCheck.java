@@ -32,12 +32,20 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
-			TokenTypes.ASSIGN, TokenTypes.METHOD_CALL, TokenTypes.VARIABLE_DEF
+			TokenTypes.ASSIGN, TokenTypes.METHOD_CALL, TokenTypes.VARIABLE_DEF,
+			TokenTypes.INSTANCE_INIT
 		};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+
+		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
+			_checkMissingEmptyLineInInstanceInit(detailAST);
+
+			return;
+		}
+
 		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
 			_checkMissingEmptyLinesAroundMethodCall(detailAST);
 
@@ -471,6 +479,42 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			log(
 				nextExpressionStartLineNumber,
 				_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
+		}
+	}
+
+	private void _checkMissingEmptyLineInInstanceInit(DetailAST detailAST) {
+		DetailAST tmpDetailAST = detailAST.getFirstChild();
+
+		int preDetailASTType = -1;
+		int preDetailASTEndLineNo = -1;
+
+		while (tmpDetailAST != null) {
+			if (tmpDetailAST.getType() == TokenTypes.SLIST) {
+				tmpDetailAST = tmpDetailAST.getFirstChild();
+
+				continue;
+			}
+			else if (tmpDetailAST.getType() == TokenTypes.EXPR) {
+				DetailAST firstChildDetailAST = tmpDetailAST.getFirstChild();
+
+				if ((preDetailASTType == TokenTypes.ASSIGN) &&
+					(firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
+					((preDetailASTEndLineNo + 1) ==
+						firstChildDetailAST.getLineNo())) {
+
+					log(
+						preDetailASTEndLineNo,
+						_MSG_MISSING_EMPTY_LINE_LINE_NUMBER, "after",
+						preDetailASTEndLineNo);
+				}
+
+				preDetailASTType = firstChildDetailAST.getType();
+			}
+			else if (tmpDetailAST.getType() == TokenTypes.SEMI) {
+				preDetailASTEndLineNo = tmpDetailAST.getLineNo();
+			}
+
+			tmpDetailAST = tmpDetailAST.getNextSibling();
 		}
 	}
 

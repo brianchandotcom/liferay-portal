@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -176,12 +175,11 @@ public class ThemeUtil {
 			return null;
 		}
 
-		TemplateResource templateResource =
-			TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateConstants.LANG_TYPE_FTL, resourcePath);
-
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, restricted);
+			TemplateConstants.LANG_TYPE_FTL,
+			TemplateResourceLoaderUtil.getTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL, resourcePath),
+			restricted);
 
 		// FreeMarker variables
 

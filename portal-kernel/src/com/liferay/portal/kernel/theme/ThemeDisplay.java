@@ -1002,12 +1002,12 @@ public class ThemeDisplay
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
 		if (_urlMyAccount == null) {
-			String portletId = PortletProviderUtil.getPortletId(
-				PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-				PortletProvider.Action.VIEW);
-
 			_urlMyAccount = PortalUtil.getControlPanelPortletURL(
-				getRequest(), portletId, PortletRequest.RENDER_PHASE);
+				getRequest(),
+				PortletProviderUtil.getPortletId(
+					PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+					PortletProvider.Action.VIEW),
+				PortletRequest.RENDER_PHASE);
 		}
 
 		return _urlMyAccount;

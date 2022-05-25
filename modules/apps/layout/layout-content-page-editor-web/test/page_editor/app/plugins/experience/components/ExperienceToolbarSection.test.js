@@ -148,6 +148,11 @@ const mockConfig = {
 describe('ExperienceToolbarSection', () => {
 	beforeAll(() => {
 		Liferay.component = jest.fn();
+
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {},
+		};
 	});
 
 	afterEach(() => {

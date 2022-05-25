@@ -245,6 +245,13 @@ describe('Variants', () => {
 });
 
 describe('Review and Run test', () => {
+	beforeAll(() => {
+		window.Liferay = {
+			...Liferay,
+			FeatureFlags: {},
+		};
+	});
+
 	it('Can view review experiment modal', async () => {
 		const {findByText, getAllByDisplayValue, getByText} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment,

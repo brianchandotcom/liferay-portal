@@ -6,6 +6,22 @@
 			"Test Asset Category 1"
 		],
 		"description": "This is the description for Test Commerce Product.",
+		"customFields": [
+			{
+				"customValue": {
+					"data": 0.1
+				},
+				"dataType": "Decimal",
+				"name": "Test Expando Column 1"
+			},
+			{
+				"customValue": {
+					"data": "Test"
+				},
+				"dataType": "Text",
+				"name": "Test Expando Column 2"
+			}
+		],
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "TESTPROD001",

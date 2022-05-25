@@ -285,9 +285,9 @@ definition {
 	@description = "This ensures that an image in MG widget can be rendered correctly after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaMGAfterMovingToFoler {
+	test CanViewImageViaMGAfterMovingToFolder {
 
-		// TODO LPS-154374 CanViewImageViaMGAfterMovingToFoler pending implementation
+		// TODO LPS-154374 CanViewImageViaMGAfterMovingToFolder pending implementation
 
 	}
 

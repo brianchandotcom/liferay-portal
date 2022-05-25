@@ -400,27 +400,27 @@ definition {
 	@description = "This ensures that a depot image in DM widget can be rendered correctly on a connected site after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaDMWidgetAfterMovingToFoler {
+	test CanViewImageViaDMWidgetAfterMovingToFolder {
 
-		// TODO LPS-154382 CanViewImageViaDMAfterMovingToFoler pending implementation
+		// TODO LPS-154382 CanViewImageViaDMAfterMovingToFolder pending implementation
 
 	}
 
 	@description = "This ensures that a depot image in an image fragment can be rendered correctly on a connect site after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaImageFragmentAfterMovingToFoler {
+	test CanViewImageViaImageFragmentAfterMovingToFolder {
 
-		// TODO LPS-154383 CanViewImageViaImageFragmentAfterMovingToFoler pending implementation
+		// TODO LPS-154383 CanViewImageViaImageFragmentAfterMovingToFolder pending implementation
 
 	}
 
 	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaMGAfterMovingToFoler {
+	test CanViewImageViaMGAfterMovingToFolder {
 
-		// TODO LPS-154382 CanViewImageViaMGAfterMovingToFoler pending implementation
+		// TODO LPS-154382 CanViewImageViaMGAfterMovingToFolder pending implementation
 
 	}
 

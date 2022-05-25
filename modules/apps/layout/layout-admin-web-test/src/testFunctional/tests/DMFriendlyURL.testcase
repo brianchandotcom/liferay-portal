@@ -74,27 +74,27 @@ definition {
 	@description = "This ensures that an image in Asset Publisher can be rendered correctly after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaAPAfterMovingToFoler {
+	test CanViewImageViaAPAfterMovingToFolder {
 
-		// TODO LPS-154372 CanViewImageViaAPAfterMovingToFoler pending implementation
+		// TODO LPS-154372 CanViewImageViaAPAfterMovingToFolder pending implementation
 
 	}
 
 	@description = "This ensures that an image in DM widget can be rendered correctly after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaDMWidgetAfterMovingToFoler {
+	test CanViewImageViaDMWidgetAfterMovingToFolder {
 
-		// TODO LPS-154374 CanViewImageViaDMAfterMovingToFoler pending implementation
+		// TODO LPS-154374 CanViewImageViaDMAfterMovingToFolder pending implementation
 
 	}
 
 	@description = "This ensures that an image in an image fragment can be rendered correctly after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaImageFragmentAfterMovingToFoler {
+	test CanViewImageViaImageFragmentAfterMovingToFolder {
 
-		// TODO LPS-154375 CanViewImageViaImageFragmentAfterMovingToFoler pending implementation
+		// TODO LPS-154375 CanViewImageViaImageFragmentAfterMovingToFolder pending implementation
 
 	}
 

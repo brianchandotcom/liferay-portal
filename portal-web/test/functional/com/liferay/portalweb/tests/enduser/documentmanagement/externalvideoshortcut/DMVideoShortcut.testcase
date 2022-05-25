@@ -523,9 +523,9 @@ definition {
 	@description = "This ensures that an external video in an external video widget can be rendered correctly after moving it to a folder."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaVideoFragmentAfterMovingToFoler {
+	test CanViewImageViaVideoFragmentAfterMovingToFolder {
 
-		// TODO LPS-154375 CanViewImageViaVideoFragmentAfterMovingToFoler pending implementation
+		// TODO LPS-154375 CanViewImageViaVideoFragmentAfterMovingToFolder pending implementation
 
 	}
 

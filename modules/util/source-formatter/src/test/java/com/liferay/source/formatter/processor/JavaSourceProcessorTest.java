@@ -387,6 +387,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingEmptyLinesInInstanceInit() throws Exception {
+		test(
+			"MissingEmptyLinesInInstanceInit.testjava",
+			"There should be an empty line after line '27'",
+			27);
+	}
+
+	@Test
 	public void testMissingEmptyLinesBeforeMethodCalls() throws Exception {
 		test(
 			"MissingEmptyLinesBeforeMethodCalls.testjava",

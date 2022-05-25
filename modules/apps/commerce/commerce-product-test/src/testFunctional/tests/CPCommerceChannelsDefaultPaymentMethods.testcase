@@ -34,7 +34,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("When the user goes into the Order Defaults tab for an account in Minium account Management") {
-			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Test Account");
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
 		task ("And clicks on the Set Default Account Payment Methods button") {
@@ -487,14 +487,59 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify an account reverts to priority settings after an offline payment method that is set as default payment method for the account is removed"
+	@priority = "3"
 	test RemoveOfflinePaymentLinkedAsDefaultPaymentMethod {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannelsDefaultPaymentMethods#RemoveOfflinePaymentLinkedAsDefaultPaymentMethod";
 
-		// TODO COMMERCE-8542 RemoveOfflinePaymentLinkedAsDefaultPaymentMethod pending implementation
+		task ("Given a new offline payment method") {
+			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method");
+		}
 
+		task ("And given all payment methods are activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal,Test Offline Payment Method") {
+				CommerceChannels.editPaymentMethod(
+					active = "true",
+					paymentMethod = "${paymentMethod}");
+			}
+		}
+
+		task ("And given the offline payment method is set as default payment method for the Commerce Account") {
+			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+				accountName = "Commerce Account",
+				paymentMethod = "Test Offline Payment Method");
+		}
+
+		task ("When the user deletes the offline payment method") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Offline Payment Method Keys",
+				configurationScope = "System Scope");
+
+			SystemSettings.deleteConfigurationEntry(configurationEntry = "Test Offline Payment Method");
+
+			AssertElementNotPresent(
+				key_configurationEntry = "Test Offline Payment Method",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+		}
+
+		task ("And the user goes into the Order Defaults tab inside the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("Then the Default Account Commerce Payment Method should be 'Use Priority Settings'") {
+			AssertTextEquals(
+				key_defaultOption = "Default Account Commerce Payment Methods",
+				locator1 = "CommerceEntry#ACCOUNT_ORDER_DEFAULTS_ENTRY",
+				value1 = "Use Priority Settings");
+		}
 	}
 
 }

@@ -33,6 +33,7 @@ import java.util.Map;
 
 /**
  * @author Shuyang Zhou
+ * @author Igor Beslic
  */
 public class ItemClassIndexUtil {
 
@@ -44,14 +45,6 @@ public class ItemClassIndexUtil {
 
 				while (clazz != Object.class) {
 					for (Field field : clazz.getDeclaredFields()) {
-						Class<?> valueClass = field.getType();
-
-						if (!_isExportableValue(valueClass) &&
-							!isExportableArray(valueClass)) {
-
-							continue;
-						}
-
 						field.setAccessible(true);
 
 						String name = field.getName();
@@ -70,7 +63,7 @@ public class ItemClassIndexUtil {
 			});
 	}
 
-	public static boolean isExportableArray(Class<?> valueClass) {
+	public static boolean isSingleColumnAdoptableArray(Class<?> valueClass) {
 		if (!valueClass.isArray()) {
 			return false;
 		}
@@ -80,14 +73,28 @@ public class ItemClassIndexUtil {
 		String className = valueClass.getName();
 
 		try {
-			classLoader.loadClass(
+			Class<?> arrayedClass = classLoader.loadClass(
 				className.substring(2, className.length() - 1));
 
-			return true;
+			if (isSingleColumnAdoptableValue(arrayedClass)) {
+				return true;
+			}
+
+			return false;
 		}
 		catch (ClassNotFoundException classNotFoundException) {
 			return false;
 		}
+	}
+
+	public static boolean isSingleColumnAdoptableValue(Class<?> valueClass) {
+		if (!valueClass.isPrimitive() && !_objectTypes.contains(valueClass) &&
+			!Enum.class.isAssignableFrom(valueClass)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static ClassLoader _getClassLoader(Class<?> clazz) {
@@ -98,16 +105,6 @@ public class ItemClassIndexUtil {
 		}
 
 		return ItemClassIndexUtil.class.getClassLoader();
-	}
-
-	private static boolean _isExportableValue(Class<?> valueClass) {
-		if (!valueClass.isPrimitive() && !_objectTypes.contains(valueClass) &&
-			!Enum.class.isAssignableFrom(valueClass)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =

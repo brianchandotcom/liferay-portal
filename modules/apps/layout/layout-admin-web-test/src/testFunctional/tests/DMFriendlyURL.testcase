@@ -1,0 +1,110 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Document Management";
+	property testray.main.component.name = "Friendly URL Service";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that an image cannot be previewed when using a removed friendlyURL."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotPreviewImageWithRemovedFriendlyURL {
+
+		// TODO LPS-154399 CannotPreviewImageWithRemovedFriendlyURL pending implementation
+
+	}
+
+	@description = "This ensures that an image can be previewed after restoring the friendlyURL."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPreviewImageAfterRestoringFriendlyURL {
+
+		// TODO LPS-154399 CanPreviewImageAfterRestoringFriendlyURL pending implementation
+
+	}
+
+	@description = "This ensures that an image can be previewed after updating the friendlyURL."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPreviewImageAfterUpdatingFriendlyURL {
+
+		// TODO LPS-154399 CanPreviewImageAfterUpdatingFriendlyURL pending implementation
+
+	}
+
+	@description = "This ensures that an image in the WC content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInWCAfterMovingToFolder {
+
+		// TODO LPS-154377 CanViewImageInWCAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that an image in Asset Publisher can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaAPAfterMovingToFoler {
+
+		// TODO LPS-154372 CanViewImageViaAPAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that an image in DM widget can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaDMWidgetAfterMovingToFoler {
+
+		// TODO LPS-154374 CanViewImageViaDMAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that an image in an image fragment can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaImageFragmentAfterMovingToFoler {
+
+		// TODO LPS-154375 CanViewImageViaImageFragmentAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that the friendlyURL can be used when a user accesses a document template."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageWithTemplate {
+
+		// TODO LPS-154501 CanViewImageWithTemplate pending implementation
+
+	}
+
+}

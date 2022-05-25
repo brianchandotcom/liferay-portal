@@ -1077,4 +1077,13 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot image in Asset Publisher can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaAPAfterMovingToFoler {
+
+		// TODO LPS-154381 CanViewImageViaAPAfterMovingToFoler pending implementation
+
+	}
+
 }

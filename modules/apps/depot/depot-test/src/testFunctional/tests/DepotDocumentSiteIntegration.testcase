@@ -352,6 +352,96 @@ definition {
 			value1 = "DM Document Type Depot");
 	}
 
+	@description = "This ensures that a depot image in the KB content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInKBAfterMovingToFolder {
+
+		// TODO LPS-154384 CanViewImageInKBAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInMBAfterMovingToFolder {
+
+		// TODO LPS-154386 CanViewImageInMBAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInMBWithPublication {
+
+		// TODO LPS-154394 CanViewImageInMBWithPublication pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the WC content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInWCAfterMovingToFolder {
+
+		// TODO LPS-154385 CanViewImageInWCAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the WC content field can be rendered correctly on a connected site when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInWCWithPublication {
+
+		// TODO LPS-154393 CanViewImageInWCWithPublication pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in DM widget can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaDMWidgetAfterMovingToFoler {
+
+		// TODO LPS-154382 CanViewImageViaDMAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in an image fragment can be rendered correctly on a connect site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaImageFragmentAfterMovingToFoler {
+
+		// TODO LPS-154383 CanViewImageViaImageFragmentAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaMGAfterMovingToFoler {
+
+		// TODO LPS-154382 CanViewImageViaMGAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineImageAfterMovingToFolder {
+
+		// TODO LPS-154379 CanViewInlineImageAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineImageWithPublication {
+
+		// TODO LPS-154392 CanViewInlineImageWithPublication pending implementation
+
+	}
+
 	@description = "This ensures that the depot assets can be used through Related Assets on a connected site."
 	@priority = "4"
 	@refactordone
@@ -410,6 +500,15 @@ definition {
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
 			relatedAssetTitle = "WC WebContent Title,Document_1.doc");
+	}
+
+	@description = "This ensures that a depot image in the Blogs small image can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewSmallImageAfterMovingToFolder {
+
+		// TODO LPS-154380 CanViewSmallImageAfterMovingToFolder pending implementation
+
 	}
 
 }

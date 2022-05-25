@@ -490,6 +490,33 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 	}
 
+	@description = "This ensures that an image in the Blogs content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineImageAfterMovingToFolder {
+
+		// TODO LPS-154370 CanViewInlineImageAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that an image in the Blogs content field can be rendered correctly when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewInlineImageWithPublication {
+
+		// TODO LPS-154389 CanViewInlineImageWithPublication pending implementation
+
+	}
+
+	@description = "This ensures that an image in the Blogs small image can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewSmallImageAfterMovingToFolder {
+
+		// TODO LPS-154371 CanViewSmallImageAfterMovingToFolder pending implementation
+
+	}
+
 	@description = "This is a test for LPS-67276. It ensures that the success message for the cover image does not display after publishing with the empty required fields."
 	@priority = "4"
 	test SuccessMessageForCoverImageDoesNotDisplayAfterPublishingWithEmptyRequiredFields {

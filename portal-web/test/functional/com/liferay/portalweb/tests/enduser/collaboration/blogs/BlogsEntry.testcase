@@ -1334,6 +1334,24 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This ensures that an external video in the Blogs content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineVideoAfterMovingToFolder {
+
+		// TODO LPS-154370 CanViewInlineVideoAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that an external video in the Blogs content field can be rendered correctly when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewInlineVideoWithPublication {
+
+		// TODO LPS-154389 CanViewInlineVideoWithPublication pending implementation
+
+	}
+
 	@description = "This is a test for LPS-90966. It checks that the caption link will keep persisting."
 	@priority = "4"
 	test LinkToImageInCaptionPersistsAfterBeingAdded {

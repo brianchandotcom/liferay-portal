@@ -1,0 +1,46 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Document Management";
+	property testray.main.component.name = "Friendly URL Service";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "This ensures that an image in the WC content field can be rendered correctly when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewImageInWC {
+
+		// TODO LPS-154390 CanViewImageInWC pending implementation
+
+	}
+
+	@description = "This ensures that an external video in the WC content field can be rendered correctly when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewVideoInWC {
+
+		// TODO LPS-154390 CanViewVideoInWC pending implementation
+
+	}
+
+}

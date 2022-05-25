@@ -109,6 +109,60 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaVideoFragmentAfterMovingToFoler {
+
+		// TODO LPS-154383 CanViewImageViaVideoFragmentAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineVideoAfterMovingToFolder {
+
+		// TODO LPS-154379 CanViewInlineVideoAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewInlineVideoWithPublication {
+
+		// TODO LPS-154392 CanViewInlineVideoWithPublication pending implementation
+
+	}
+
+	@description = "This ensures that a depot external video in the KB content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewVideoInKBAfterMovingToFolder {
+
+		// TODO LPS-154384 CanViewVideoInKBAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connected site after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewVideoInWCAfterMovingToFolder {
+
+		// TODO LPS-154385 CanViewVideoInWCAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connect site when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewVideoInWCWithPublication {
+
+		// TODO LPS-154393 CanViewVideoInWCWithPublication pending implementation
+
+	}
+
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
 	@priority = "5"
 	@refactorneeded

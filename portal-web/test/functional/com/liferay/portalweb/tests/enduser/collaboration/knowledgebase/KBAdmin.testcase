@@ -640,6 +640,15 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInKBAfterMovingToFolder {
+
+		// TODO LPS-154376 CanViewImageInKBAfterMovingToFolder pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	@uitest
@@ -791,6 +800,15 @@ definition {
 		KBArticle.viewKBArticlePriorityCP(
 			kbArticleTitle = "Knowledge Base Article Parent Title 4",
 			kbPriority = "4.0");
+	}
+
+	@description = "This ensures that an external video in the KB content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewVideoInKBAfterMovingToFolder {
+
+		// TODO LPS-154376 CanViewVideoInKBAfterMovingToFolder pending implementation
+
 	}
 
 	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."

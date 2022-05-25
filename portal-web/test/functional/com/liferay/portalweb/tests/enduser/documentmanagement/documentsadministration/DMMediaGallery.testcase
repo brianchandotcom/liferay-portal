@@ -282,6 +282,15 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
 	}
 
+	@description = "This ensures that an image in MG widget can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaMGAfterMovingToFoler {
+
+		// TODO LPS-154374 CanViewImageViaMGAfterMovingToFoler pending implementation
+
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteFolderDocument {

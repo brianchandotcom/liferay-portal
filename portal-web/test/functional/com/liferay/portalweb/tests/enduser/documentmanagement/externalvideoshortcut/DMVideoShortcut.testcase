@@ -520,6 +520,24 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This ensures that an external video in an external video widget can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageViaVideoFragmentAfterMovingToFoler {
+
+		// TODO LPS-154375 CanViewImageViaVideoFragmentAfterMovingToFoler pending implementation
+
+	}
+
+	@description = "This ensures that an external video in the WC content field can be rendered correctly after moving it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewVideoInWCAfterMovingToFolder {
+
+		// TODO LPS-154377 CanViewVideoInWCAfterMovingToFolder pending implementation
+
+	}
+
 	@description = "This ensures that the video shortcut can be viewed with different views in the item selector."
 	@priority = "5"
 	@refactorneeded

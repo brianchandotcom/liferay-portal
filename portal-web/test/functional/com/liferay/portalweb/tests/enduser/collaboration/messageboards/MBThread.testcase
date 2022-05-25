@@ -675,6 +675,24 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This ensures that an image in the MB content field can be rendered correctly after it to a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewImageInThreadAfterMovingToFolder {
+
+		// TODO LPS-154378 CanViewImageInThreadAfterMovingToFolder pending implementation
+
+	}
+
+	@description = "This ensures that an image in the MB content field can be rendered correctly when publication is enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewImageInThreadWithPublication {
+
+		// TODO LPS-154391 CanViewImageInMBWithPublication pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test JavascriptIsNotExecutedInBBCodeBody {

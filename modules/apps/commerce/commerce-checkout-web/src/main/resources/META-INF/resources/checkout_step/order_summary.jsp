@@ -45,6 +45,8 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	totalCommerceDiscountValue = commerceOrderPrice.getTotalDiscountValueWithTaxAmount();
 	totalOrderCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
 }
+
+Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResultsMap();
 %>
 
 <div class="commerce-order-summary">
@@ -119,10 +121,6 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 								%>
 
 								<div class="list-group-subtitle"><%= HtmlUtil.escape(stringJoiner.toString()) %></div>
-
-								<%
-								Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResultsMap();
-								%>
 
 								<c:if test="<%= !commerceOrderValidatorResultsMap.isEmpty() %>">
 

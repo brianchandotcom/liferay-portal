@@ -10416,6 +10416,8 @@ ${update.properties}</echo>
 
 		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
 
+		<Logger level="INFO" name="com.liferay.portal.security.audit.router.internal.LoggingAuditMessageProcessor" />
+
 		<Logger level="${release.local.service.impl.log.level}" name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
 
 		<Logger level="${dialect.detector.log.level}" name="com.liferay.portal.spring.hibernate.DialectDetector" />

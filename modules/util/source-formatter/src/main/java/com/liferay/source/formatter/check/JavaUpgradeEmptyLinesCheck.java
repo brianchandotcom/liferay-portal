@@ -41,10 +41,6 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _fixUpgradeClass(content);
-	}
-
-	private String _fixUpgradeClass(String content) {
 		for (String methodName : _DB_PROCESS_METHODS) {
 			Pattern pattern1 = Pattern.compile(
 				"(?<=\n)(\t+\\b" + methodName + "\\(.+?\\);\n+)+",

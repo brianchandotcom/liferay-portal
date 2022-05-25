@@ -349,7 +349,7 @@ definition {
 	@description = "This is a test for COMMERCE-7870. CanChangeQuantityOfASubscriptionProductInMiniCart"
 	@priority = "4"
 	test CanChangeQuantityOfASubscriptionProductInMiniCart {
-	property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
 		task ("Given a Minium site with an account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -360,7 +360,7 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 		}
-		
+
 		task ("And given a product with subscription") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
@@ -378,7 +378,7 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-		
+
 		task ("When the product with description is added to the cart") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -397,7 +397,7 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 				value1 = "5");
 		}
-		
+
 		task ("Then the mini cart summary is updated according to the product quantity") {
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
@@ -411,13 +411,13 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
-				value1 = "$ 250.00");	
+				value1 = "$ 250.00");
 
 			AssertElementNotPresent(
 				key_cartItemSku = "MIN93015",
-				locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");		
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 		}
-		
+
 		task ("And when the product quantity is decreased") {
 			Type(
 				key_cartItemSku = "MIN93015",

@@ -33,6 +33,7 @@ const ACTIONS = {
 		portletNamespace
 	) {
 		openSelectionModal({
+			height: '70vh',
 			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
@@ -78,6 +79,7 @@ const ACTIONS = {
 				}
 			},
 			selectEventName: `${portletNamespace}selectCategory`,
+			size: 'md',
 			title: Liferay.Util.sub(
 				Liferay.Language.get('move-x'),
 				categoryTitle

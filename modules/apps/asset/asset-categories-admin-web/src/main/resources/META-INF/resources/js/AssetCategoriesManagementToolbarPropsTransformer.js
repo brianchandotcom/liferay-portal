@@ -51,6 +51,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 	const selectCategory = (itemData) => {
 		openSelectionModal({
+			height: '70vh',
 			iframeBodyCssClass: '',
 			onSelect(selectedItem) {
 				const category = selectedItem
@@ -65,6 +66,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			selectEventName: `${portletNamespace}selectCategory`,
+			size: 'md',
 			title: Liferay.Language.get('select-category'),
 			url: itemData?.categoriesSelectorURL,
 		});

@@ -143,6 +143,7 @@ function AssetVocabulariesCategoriesSelector({
 
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
+			height: '70vh',
 			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
@@ -166,6 +167,7 @@ function AssetVocabulariesCategoriesSelector({
 				}
 			},
 			selectEventName: eventName,
+			size: 'md',
 			title: label
 				? Liferay.Util.sub(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),

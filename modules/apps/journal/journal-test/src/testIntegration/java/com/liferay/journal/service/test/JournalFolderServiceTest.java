@@ -21,12 +21,15 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.exception.DuplicateFolderExternalReferenceCodeException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 
@@ -70,6 +75,9 @@ public class JournalFolderServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		_journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
 	}
 
 	@Test
@@ -161,6 +169,29 @@ public class JournalFolderServiceTest {
 				RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
 
 		Assert.assertTrue(ddmStructures.toString(), ddmStructures.isEmpty());
+	}
+
+	@Test
+	public void testAddJournalFolderWithExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		JournalFolder folder = addJournalFolder(externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, folder.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddJournalFolderWithoutExternalReferenceCode()
+		throws Exception {
+
+		JournalFolder folder = addJournalFolder(null);
+
+		Assert.assertEquals(
+			folder.getExternalReferenceCode(),
+			String.valueOf(folder.getFolderId()));
 	}
 
 	@Test
@@ -274,6 +305,32 @@ public class JournalFolderServiceTest {
 			spainFolder.getFolderId(),
 			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
 				madridFolder.getFolderId()));
+	}
+
+	@Test
+	public void testGetJournalFolderByExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		JournalFolder folder1 = addJournalFolder(externalReferenceCode);
+
+		JournalFolder folder2 =
+			JournalFolderLocalServiceUtil.
+				getJournalFolderByExternalReferenceCode(
+					_group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(
+			folder2.getExternalReferenceCode(), externalReferenceCode);
+
+		Assert.assertEquals(folder1.getFolderId(), folder2.getFolderId());
+	}
+
+	@Test(expected = DuplicateFolderExternalReferenceCodeException.class)
+	public void testJournalFolderWithExistingExternalReferenceCode()
+		throws Exception {
+
+		JournalFolder folder = addJournalFolder(RandomTestUtil.randomString());
+
+		addJournalFolder(folder.getExternalReferenceCode());
 	}
 
 	@Test
@@ -787,10 +844,26 @@ public class JournalFolderServiceTest {
 		Assert.assertEquals("Description 1", parentFolder.getDescription());
 	}
 
+	protected JournalFolder addJournalFolder(String externalReferenceCode)
+		throws Exception {
+
+		return _journalFolderFixture.addFolder(
+			externalReferenceCode,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private JournalFolderFixture _journalFolderFixture;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

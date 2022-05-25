@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.exception.DuplicateJournalFolderExternalReferenceCodeException;
+import com.liferay.journal.exception.DuplicateFolderExternalReferenceCodeException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.validation.JournalFolderModelValidator;
@@ -1563,7 +1563,7 @@ public class JournalFolderLocalServiceImpl
 			groupId, externalReferenceCode);
 
 		if (journalFolder != null) {
-			throw new DuplicateJournalFolderExternalReferenceCodeException(
+			throw new DuplicateFolderExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate structure content folder entry external",
 					"reference code ", externalReferenceCode, "in group ",

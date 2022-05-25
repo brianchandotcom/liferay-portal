@@ -107,7 +107,9 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		var subtotal = ${productUnitPrice} * ${productQuantity};
+		if (isSet(productUnitPrice) && isSet(productQuantity)) {
+			var subtotal = ${productUnitPrice} * ${productQuantity};
+		}
 
 		if (isSet(singleShippingOption)) {
 			if (isSet(shippingMethod)) {
@@ -223,7 +225,9 @@ definition {
 			subtotalValue = "${subtotal}",
 			totalValue = "${total}");
 
-		Click(locator1 = "Button#CONTINUE");
+		if (IsElementPresent(key_productName = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT")) {
+			Click(locator1 = "Button#CONTINUE");
+		}
 	}
 
 	macro setAddress {
@@ -264,7 +268,7 @@ definition {
 	}
 
 	macro viewCheckoutOrderSummary {
-		if (IsElementPresent(key_label = "Shipping Address", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+		if (IsElementPresent(key_addressInfo = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressName}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
@@ -314,25 +318,33 @@ definition {
 				value1 = "${deliveryTerm}");
 		}
 
-		AssertTextEquals.assertPartialText(
-			key_productName = "${productName}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
-			value1 = "${productName}");
+		if (isSet(productName)) {
+			AssertTextEquals.assertPartialText(
+				key_productName = "${productName}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
+				value1 = "${productName}");
+		}
 
-		AssertTextEquals(
-			key_productQuantity = "${productQuantity}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
-			value1 = "${productQuantity}");
+		if (isSet(productQuantity)) {
+			AssertTextEquals(
+				key_productQuantity = "${productQuantity}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
+				value1 = "${productQuantity}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_productPrice = "${productPrice}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE",
-			value1 = "${productPrice}");
+		if (isSet(productPrice)) {
+			AssertTextEquals.assertPartialText(
+				key_productPrice = "${productPrice}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE",
+				value1 = "${productPrice}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_subtotalValue = "${subtotalValue}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
-			value1 = "${subtotalValue}");
+		if (isSet(subtotalValue)) {
+			AssertTextEquals.assertPartialText(
+				key_subtotalValue = "${subtotalValue}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
+				value1 = "${subtotalValue}");
+		}
 
 		if (isSet(deliveryValue)) {
 			AssertTextEquals.assertPartialText(
@@ -348,10 +360,12 @@ definition {
 				value1 = "${taxValue}");
 		}
 
-		AssertTextEquals.assertPartialText(
-			key_totalValue = "${totalValue}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TOTAL",
-			value1 = "${totalValue}");
+		if (isSet(totalValue)) {
+			AssertTextEquals.assertPartialText(
+				key_totalValue = "${totalValue}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TOTAL",
+				value1 = "${totalValue}");
+		}
 	}
 
 }

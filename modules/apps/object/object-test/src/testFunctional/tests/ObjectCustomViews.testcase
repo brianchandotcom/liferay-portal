@@ -73,8 +73,6 @@ definition {
 	@description = "LPS-144472 - Verify if the user can add metadata columns to Default Sort"
 	@priority = "4"
 	test CanAddMetadataColumnsToDefaultSort {
-		var listMetaData = "Author,Creation Date,Modified Date,Workflow Status,ID";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152059",
 			objectName = "CustomObject152059",
@@ -91,6 +89,8 @@ definition {
 		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
 
 		ObjectCustomViews.goToViewsBuilderTab();
+
+		var listMetaData = "Author,Creation Date,Modified Date,Workflow Status,ID";
 
 		for (var columnName : list "${listMetaData}") {
 			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
@@ -808,8 +808,6 @@ definition {
 	@description = "LPS-144472 - Verify it is possible to search when press enter key on Default Sort"
 	@priority = "4"
 	test CanSearchWithEnterKey {
-		var listColumns = "Author,Creation Date,Modified Date";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152064",
 			objectName = "CustomObject152064",
@@ -828,6 +826,8 @@ definition {
 		ObjectCustomViews.goToViewsBuilderTab();
 
 		LexiconEntry.gotoAdd();
+
+		var listColumns = "Author,Creation Date,Modified Date";
 
 		for (var columnName : list "${listColumns}") {
 			Click.clickAtNotVisible(

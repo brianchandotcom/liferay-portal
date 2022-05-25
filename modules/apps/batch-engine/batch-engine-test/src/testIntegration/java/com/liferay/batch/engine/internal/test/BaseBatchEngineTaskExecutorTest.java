@@ -23,6 +23,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClause;
@@ -78,6 +79,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -408,11 +410,19 @@ public class BaseBatchEngineTaskExecutorTest {
 					null, "articleBody" + i, new Date(baseDate.getTime()),
 					false, false, null, null, null, null,
 					ServiceContextTestUtil.getServiceContext(
-						user.getCompanyId(), group.getGroupId(),
+						group.getCompanyId(), group.getGroupId(),
 						user.getUserId())));
 		}
 
 		return blogsEntries;
+	}
+
+	protected void assertBlogsEntriesCount() {
+		Assert.assertEquals(
+			ROWS_COUNT,
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	protected static final String[] FIELD_NAMES = {

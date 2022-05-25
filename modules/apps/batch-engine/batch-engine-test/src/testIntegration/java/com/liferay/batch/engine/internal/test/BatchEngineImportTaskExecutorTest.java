@@ -26,21 +26,25 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -366,8 +370,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testDeleteBlogPostingsFromCSVFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.DELETE,
@@ -380,8 +383,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testDeleteBlogPostingsFromJSONFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.DELETE,
@@ -394,8 +396,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testDeleteBlogPostingsFromJSONLFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.DELETE,
@@ -408,8 +409,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testDeleteBlogPostingsFromXLSFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.DELETE,
@@ -422,8 +422,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testUpdateBlogPostingsFromCSVFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.UPDATE,
@@ -436,8 +435,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testUpdateBlogPostingsFromJSONFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.UPDATE,
@@ -450,8 +448,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testUpdateBlogPostingsFromJSONLFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.UPDATE,
@@ -464,8 +461,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testUpdateBlogPostingsFromXLSFile() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+		assertBlogsEntriesCount();
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.UPDATE,
@@ -477,12 +473,13 @@ public class BatchEngineImportTaskExecutorTest
 	private void _assertCreatedBlogPostings() {
 		Assert.assertEquals(
 			ROWS_COUNT, _batchEngineImportTask.getProcessedItemsCount());
-		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+
+		assertBlogsEntriesCount();
 
 		List<BlogsEntry> blogsEntries = new ArrayList<>(
-			blogsEntryLocalService.getBlogsEntries(
-				0, blogsEntryLocalService.getBlogsEntriesCount()));
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
 
 		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
 
@@ -501,7 +498,11 @@ public class BatchEngineImportTaskExecutorTest
 	private void _assertDeletedBlogPostings() {
 		Assert.assertEquals(
 			ROWS_COUNT, _batchEngineImportTask.getProcessedItemsCount());
-		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+		Assert.assertEquals(
+			0,
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	private void _assertInvalidFileImportWithOnErrorContinueStrategy(
@@ -516,7 +517,9 @@ public class BatchEngineImportTaskExecutorTest
 			itemsCount, _batchEngineImportTask.getTotalItemsCount());
 		Assert.assertEquals(
 			itemsCount - invalidItemRowNumbers.size(),
-			blogsEntryLocalService.getBlogsEntriesCount());
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
 
 		List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
 			_batchEngineImportTaskErrorLocalService.
@@ -563,7 +566,11 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			invalidItemRowNumber, batchEngineImportTaskError.getItemIndex());
 
-		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
+		Assert.assertEquals(
+			0,
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -583,11 +590,15 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			ROWS_COUNT, _batchEngineImportTask.getProcessedItemsCount());
 		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+			ROWS_COUNT,
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_SCHEDULED)));
 
 		List<BlogsEntry> blogsEntries = new ArrayList<>(
-			blogsEntryLocalService.getBlogsEntries(
-				0, blogsEntryLocalService.getBlogsEntriesCount()));
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_SCHEDULED)));
 
 		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
 
@@ -684,7 +695,7 @@ public class BatchEngineImportTaskExecutorTest
 		for (int i = 0; i < ROWS_COUNT; i++) {
 			_createCSVRow(
 				sb, "alternativeHeadline" + i, "articleBody" + i,
-				dateFormat.format(new Date(_toTime(baseDate, i))),
+				dateFormat.format(new Date(_toTime(baseDate, i - 1000))),
 				"headline" + i, String.valueOf(siteId));
 		}
 
@@ -722,7 +733,7 @@ public class BatchEngineImportTaskExecutorTest
 			_createCSVRow(
 				sb, blogsEntry.getSubtitle() + i, blogsEntry.getContent() + i,
 				dateFormat.format(
-					new Date(_toTime(blogsEntry.getDisplayDate(), i))),
+					new Date(_toTime(blogsEntry.getDisplayDate(), i + 100))),
 				blogsEntry.getTitle() + i,
 				String.valueOf(blogsEntry.getEntryId()));
 		}
@@ -742,7 +753,8 @@ public class BatchEngineImportTaskExecutorTest
 			_createJSONRow(
 				sb, fieldNames[0], _toJSONValue("alternativeHeadline" + i),
 				fieldNames[1], _toJSONValue("articleBody" + i), fieldNames[2],
-				_toJSONValue(dateFormat.format(new Date(_toTime(baseDate, i)))),
+				_toJSONValue(
+					dateFormat.format(new Date(_toTime(baseDate, i - 1000)))),
 				fieldNames[3], _toJSONValue("headline" + i), fieldNames[4],
 				String.valueOf(siteId));
 
@@ -787,7 +799,8 @@ public class BatchEngineImportTaskExecutorTest
 			_createJSONRow(
 				sb, fieldNames[0], _toJSONValue("alternativeHeadline" + i),
 				fieldNames[1], _toJSONValue("articleBody" + i), fieldNames[2],
-				_toJSONValue(dateFormat.format(new Date(_toTime(baseDate, i)))),
+				_toJSONValue(
+					dateFormat.format(new Date(_toTime(baseDate, i - 1000)))),
 				fieldNames[3], _toJSONValue("headline" + i), fieldNames[4],
 				String.valueOf(siteId));
 
@@ -831,7 +844,8 @@ public class BatchEngineImportTaskExecutorTest
 				FIELD_NAMES[2],
 				_toJSONValue(
 					dateFormat.format(
-						new Date(_toTime(blogsEntry.getDisplayDate(), i)))),
+						new Date(
+							_toTime(blogsEntry.getDisplayDate(), i + 100)))),
 				FIELD_NAMES[3], _toJSONValue(blogsEntry.getTitle() + i), "id",
 				String.valueOf(blogsEntry.getEntryId()));
 
@@ -860,7 +874,8 @@ public class BatchEngineImportTaskExecutorTest
 				FIELD_NAMES[2],
 				_toJSONValue(
 					dateFormat.format(
-						new Date(_toTime(blogsEntry.getDisplayDate(), i)))),
+						new Date(
+							_toTime(blogsEntry.getDisplayDate(), i + 100)))),
 				FIELD_NAMES[3], _toJSONValue(blogsEntry.getTitle() + i), "id",
 				String.valueOf(blogsEntry.getEntryId()));
 
@@ -890,7 +905,7 @@ public class BatchEngineImportTaskExecutorTest
 			_createXLSRow(
 				sheet.createRow(i + 1), "alternativeHeadline" + i,
 				"articleBody" + i,
-				dateFormat.format(new Date(_toTime(baseDate, i))),
+				dateFormat.format(new Date(_toTime(baseDate, i - 1000))),
 				"headline" + i, siteId);
 		}
 
@@ -935,7 +950,7 @@ public class BatchEngineImportTaskExecutorTest
 				sheet.createRow(i + 1), blogsEntry.getSubtitle() + i,
 				blogsEntry.getContent() + i,
 				dateFormat.format(
-					new Date(_toTime(blogsEntry.getDisplayDate(), i))),
+					new Date(_toTime(blogsEntry.getDisplayDate(), i + 100))),
 				blogsEntry.getTitle() + i, blogsEntry.getEntryId());
 		}
 
@@ -958,13 +973,21 @@ public class BatchEngineImportTaskExecutorTest
 			int importStrategy)
 		throws Exception {
 
+		Map<String, Serializable> parameters = Collections.emptyMap();
+
+		if (batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) {
+			parameters = HashMapBuilder.<String, Serializable>put(
+				"siteId", (Serializable)String.valueOf(group.getGroupId())
+			).build();
+		}
+
 		_batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, user.getCompanyId(), user.getUserId(), _BATCH_SIZE, null,
+				null, group.getCompanyId(), user.getUserId(), _BATCH_SIZE, null,
 				BlogPosting.class.getName(), content, contentType,
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				fieldNameMappingMap, importStrategy,
-				batchEngineTaskOperation.name(), null, null);
+				batchEngineTaskOperation.name(), parameters, null);
 
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 	}

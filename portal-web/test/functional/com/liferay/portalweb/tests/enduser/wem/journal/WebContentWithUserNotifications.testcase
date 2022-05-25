@@ -89,7 +89,7 @@ definition {
 				asset = "Web Content",
 				content = "Web Content Content",
 				recipient = "userfn userln",
-				sender = "Test Test",
+				sender = "Joe Bloggs",
 				subject = "Web Content Title Edit");
 		}
 	}
@@ -124,7 +124,7 @@ definition {
 				asset = "Web Content",
 				content = "Web Content Content",
 				recipient = "userfn userln",
-				sender = "Test Test",
+				sender = "Joe Bloggs",
 				subject = "Web Content Title");
 		}
 	}
@@ -165,7 +165,7 @@ definition {
 				asset = "Web Content",
 				content = "Web Content Content",
 				recipient = "userfn userln",
-				sender = "Test Test",
+				sender = "Joe Bloggs",
 				subject = "Web Content Title was moved");
 		}
 	}

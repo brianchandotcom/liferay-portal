@@ -13,3 +13,34 @@
  * details.
  */
 --%>
+
+<%@ include file="/document_library/init.jsp" %>
+
+<clay:sheet>
+	<clay:sheet-header>
+		<h2>
+			<liferay-ui:message key="dl-size-limit-configuration-name" />
+		</h2>
+	</clay:sheet-header>
+
+	<clay:sheet-section>
+		<aui:input label="file-max-size" name="fileMaxSize" value="<%= 0 %>" />
+
+		<p class="text-muted">
+			<liferay-ui:message key="file-max-size-help" />
+		</p>
+	</clay:sheet-section>
+
+	<clay:sheet-section>
+		<span aria-hidden="true" class="loading-animation"></span>
+
+		<react:component
+			module="document_library/js/file-size-limit/FileSizeMimetypes"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"portletNamespace", liferayPortletResponse.getNamespace()
+				).build()
+			%>'
+		/>
+	</clay:sheet-section>
+</clay:sheet>

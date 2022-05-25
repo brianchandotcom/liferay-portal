@@ -23,7 +23,7 @@ describe('Liferay.Util.getLexiconIconTpl', () => {
 		const icon = getLexiconIconTpl('close', 'test-class');
 
 		expect(icon).toMatchInlineSnapshot(
-			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close test-class\\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"foo/clay/icons.svg#close\\" /></svg>"`
+			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close test-class\\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"/o/icons/pack/clay.svg#close\\" /></svg>"`
 		);
 	});
 
@@ -31,7 +31,7 @@ describe('Liferay.Util.getLexiconIconTpl', () => {
 		const icon = getLexiconIconTpl('close');
 
 		expect(icon).toMatchInlineSnapshot(
-			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close \\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"foo/clay/icons.svg#close\\" /></svg>"`
+			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close \\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"/o/icons/pack/clay.svg#close\\" /></svg>"`
 		);
 	});
 });

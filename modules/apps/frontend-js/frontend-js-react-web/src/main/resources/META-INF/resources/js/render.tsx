@@ -49,9 +49,11 @@ export default function render(
 ) {
 	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
-		const spritemap =
-			(window.Liferay as any).ThemeDisplay.getPathThemeImages() +
-			'/clay/icons.svg';
+
+		// Temporary workaround until frontend-icons-web is converted to ESM.
+		// We will replace with an import from frontend-icons-web later.
+
+		const spritemap = ((Liferay as any)._ICONS_ || {}).spritemap as string;
 
 		let {componentId} = renderData;
 

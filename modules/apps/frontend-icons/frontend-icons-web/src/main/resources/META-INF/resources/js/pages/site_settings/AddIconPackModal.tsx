@@ -127,7 +127,7 @@ export default function AddIconPackModal({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={loading}
+							disabled={loading || !selectedPacks.length}
 							onClick={() => {
 								handleSave();
 							}}

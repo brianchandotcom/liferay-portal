@@ -101,7 +101,7 @@
 			).put(
 				"sidebarPanels", sidebarPanels
 			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+				"spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay)
 			).put(
 				"submitButtonId", submitButtonId
 			).build()

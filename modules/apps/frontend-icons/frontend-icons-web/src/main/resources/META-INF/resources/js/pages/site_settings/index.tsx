@@ -75,7 +75,7 @@ export default function SiteIconPackConfiguration({
 			</ClayLayout.ContentRow>
 
 			<ClayLayout.ContentRow className="mb-2" containerElement="code">
-				{window.location.host + getSpritemapPath()}
+				{`/o/icons/site/${Liferay.ThemeDisplay.getSiteGroupId()}.svg`}
 			</ClayLayout.ContentRow>
 
 			<label className="form-control-label">

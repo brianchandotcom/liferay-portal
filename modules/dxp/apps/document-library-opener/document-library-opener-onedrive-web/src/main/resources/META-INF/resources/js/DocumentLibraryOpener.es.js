@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 import {
 	fetch,
 	navigate,
@@ -126,8 +127,7 @@ class DocumentLibraryOpener {
 					});
 				}
 			},
-			spritemap:
-				Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg',
+			spritemap: getSpritemapPath(),
 		});
 	}
 

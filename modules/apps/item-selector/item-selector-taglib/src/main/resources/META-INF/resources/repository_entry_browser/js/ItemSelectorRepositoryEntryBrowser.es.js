@@ -12,6 +12,7 @@
  * details.
  */
 
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 import {render} from '@liferay/frontend-js-react-web';
 import {ClayAlert} from 'clay-alert';
 import {
@@ -421,9 +422,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				closeable: true,
 				destroyOnHide: true,
 				message,
-				spritemap:
-					Liferay.ThemeDisplay.getPathThemeImages() +
-					'/clay/icons.svg',
+				spritemap: getSpritemapPath(),
 				style: 'danger',
 				title: '',
 				visible: true,

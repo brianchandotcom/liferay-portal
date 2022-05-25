@@ -154,8 +154,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		if (currentCommerceOrderStatus == null) {
 			return nextCommerceOrderStatuses;
 		}
-		else if (currentCommerceOrderStatus.getKey() ==
-					CommerceOrderConstants.ORDER_STATUS_ON_HOLD) {
+
+		if (currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_ON_HOLD) {
 
 			nextCommerceOrderStatuses.add(
 				_commerceOrderStatusRegistry.getCommerceOrderStatus(
@@ -170,40 +171,39 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		int currentOrderStatusIndex = commerceOrderStatuses.indexOf(
 			currentCommerceOrderStatus);
 
-		if (currentOrderStatusIndex != (commerceOrderStatuses.size() - 1)) {
-			CommerceOrderStatus nextCommerceOrderStatus = null;
+		if (currentOrderStatusIndex == (commerceOrderStatuses.size() - 1)) {
+			return nextCommerceOrderStatuses;
+		}
 
-			for (int i = currentOrderStatusIndex + 1;
-				 i < commerceOrderStatuses.size(); i++) {
+		CommerceOrderStatus nextCommerceOrderStatus = null;
 
-				if ((nextCommerceOrderStatus != null) &&
-					(nextCommerceOrderStatus.getPriority() >
-						currentCommerceOrderStatus.getPriority())) {
+		for (int i = currentOrderStatusIndex + 1;
+			 i < commerceOrderStatuses.size(); i++) {
 
-					break;
-				}
+			if ((nextCommerceOrderStatus != null) &&
+				(nextCommerceOrderStatus.getPriority() >
+					currentCommerceOrderStatus.getPriority())) {
 
-				nextCommerceOrderStatus = commerceOrderStatuses.get(i);
+				break;
 			}
 
-			for (CommerceOrderStatus commerceOrderStatus :
-					commerceOrderStatuses) {
+			nextCommerceOrderStatus = commerceOrderStatuses.get(i);
+		}
 
-				if ((commerceOrderStatus.isTransitionCriteriaMet(
-						commerceOrder) &&
-					 (((commerceOrderStatus.getPriority() ==
-						 CommerceOrderConstants.ORDER_STATUS_ANY) &&
-					   (currentCommerceOrderStatus.getKey() !=
-						   CommerceOrderConstants.ORDER_STATUS_OPEN)) ||
-					  (commerceOrderStatus.getPriority() ==
-						  nextCommerceOrderStatus.getPriority()))) ||
-					(!_commerceShippingHelper.isShippable(commerceOrder) &&
-					 commerceOrderStatus.isValidForOrder(commerceOrder) &&
-					 (commerceOrderStatus.getPriority() >
-						 currentCommerceOrderStatus.getPriority()))) {
+		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
+			if ((!_commerceShippingHelper.isShippable(commerceOrder) &&
+				 commerceOrderStatus.isValidForOrder(commerceOrder) &&
+				 (commerceOrderStatus.getPriority() >
+					 currentCommerceOrderStatus.getPriority())) ||
+				((((commerceOrderStatus.getPriority() ==
+					CommerceOrderConstants.ORDER_STATUS_ANY) &&
+				   (currentCommerceOrderStatus.getKey() !=
+					   CommerceOrderConstants.ORDER_STATUS_OPEN)) ||
+				  (commerceOrderStatus.getPriority() ==
+					  nextCommerceOrderStatus.getPriority())) &&
+				 commerceOrderStatus.isTransitionCriteriaMet(commerceOrder))) {
 
-					nextCommerceOrderStatuses.add(commerceOrderStatus);
-				}
+				nextCommerceOrderStatuses.add(commerceOrderStatus);
 			}
 		}
 

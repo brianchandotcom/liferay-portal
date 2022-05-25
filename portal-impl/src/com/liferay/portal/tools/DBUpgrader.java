@@ -380,7 +380,7 @@ public class DBUpgrader {
 	private static void _upgradePortal() throws Exception {
 		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 
-		checkReleaseState();
+		_checkReleaseStateForUpgrade();
 
 		int buildNumber = _getReleaseColumnValue("buildNumber");
 

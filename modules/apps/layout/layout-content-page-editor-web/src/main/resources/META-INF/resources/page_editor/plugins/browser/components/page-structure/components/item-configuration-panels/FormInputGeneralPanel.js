@@ -46,13 +46,14 @@ const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
+const REQUIRED_CONFIGURATION_KEY = 'inputRequired';
 const SHOW_HELP_TEXT_CONFIGURATION_KEY = 'inputShowHelpText';
 
 const INPUT_COMMON_CONFIGURATION = [
 	{
 		defaultValue: false,
 		label: Liferay.Language.get('mark-as-required'),
-		name: 'inputRequired',
+		name: REQUIRED_CONFIGURATION_KEY,
 		type: 'checkbox',
 	},
 	{
@@ -135,6 +136,12 @@ export function FormInputGeneralPanel({item}) {
 
 	const fields = useMemo(() => {
 		let nextFields = INPUT_COMMON_CONFIGURATION;
+
+		if (!configurationValues[FIELD_ID_CONFIGURATION_KEY]) {
+			nextFields = nextFields.filter(
+				(field) => field.name !== REQUIRED_CONFIGURATION_KEY
+			);
+		}
 
 		if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] === false) {
 			nextFields = nextFields.filter(

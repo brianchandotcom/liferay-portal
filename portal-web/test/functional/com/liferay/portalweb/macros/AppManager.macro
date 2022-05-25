@@ -14,6 +14,66 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 	}
 
+	macro filtersApp {
+		var key_filterName = "${filterName}";
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
+
+		WaitForElementPresent(
+			key_filterName = "${filterName}",
+			locator1 = "AppManager#APP_FILTER_LABEL");
+
+		if (isSet(filterBy)) {
+			Select(
+				locator1 = "AppManager#APP_FILTER_SELECT_DROP_DOWN_LIST",
+				value1 = "${filterBy}");
+		}
+
+		Click(locator1 = "AppManager#SEARCH_BUTTON");
+
+		AssertElementPresent(
+			key_filterBy = "${filterBy}",
+			locator1 = "AppManager#APP_FILTER_SELECTED_OPTION");
+	}
+
+	macro loginMarketplaceStore {
+		AssertElementPresent(
+			locator1 = "AppManager#MARKETPLACE_DESCRIPTION",
+			value1 = "Liferay Marketplace is an integral part of the Liferay platform experience for all users. Enterprise subscribers also have exclusive access to Liferay Subscription Apps through the Liferay Marketplace. Log in with your Liferay account to browse hundreds of apps to help you build your business or technical solution.");
+
+		AssertClick(
+			locator1 = "AppManager#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		var marketplaceClientId = PropsUtil.get("marketplace.email.address.6");
+
+		Type(
+			key_text = "Email Address",
+			locator1 = "AppManager#LOGIN_INPUT_FIELD",
+			value1 = "${marketplaceClientId}");
+
+		var marketplaceClientSecret = PropsUtil.get("marketplace.email.password.6");
+
+		Type(
+			key_text = "Password",
+			locator1 = "AppManager#LOGIN_INPUT_FIELD",
+			value1 = "${marketplaceClientSecret}");
+
+		AssertClick(
+			locator1 = "AppManager#APP_SUBMIT",
+			value1 = "Sign In");
+
+		AssertClick(
+			locator1 = "AppManager#APP_SUBMIT",
+			value1 = "Grant Access");
+
+		WaitForPageLoad();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
+
+		AssertElementPresent(locator1 = "AppManager#APP_RESULT_BOX");
+	}
+
 	macro uninstallApp {
 		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
 

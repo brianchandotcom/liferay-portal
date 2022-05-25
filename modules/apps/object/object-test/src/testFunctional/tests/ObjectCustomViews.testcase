@@ -847,6 +847,10 @@ definition {
 
 		ObjectCustomViews.searchOnDefaultSort(colunmName = "Author");
 
+		KeyPress(
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_BAR",
+			value1 = "\RETURN");
+
 		ObjectCustomViews.assertColumnPresentOnDefaultSort(
 			colunmName = "Author",
 			sortingLabel = "Ascending");

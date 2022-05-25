@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.json;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -208,6 +209,15 @@ public class JSONUtil {
 	}
 
 	public static boolean isValid(String json) {
+		json = json.trim();
+
+		if ((json.length() < 2) ||
+			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
+			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
+
+			return false;
+		}
+
 		try {
 			_createJSONObject(json);
 

@@ -35,6 +35,72 @@ definition {
 		}
 	}
 
+	@description = "This ensures that ser is redirected to the restored friendly URL when he accesses a blog display page URL with an old friendly URL after he restored a friendly URL."
+	@priority = "4"
+	test CanAcessDisplayPageWithOldFriendlyURLAfterRestoring {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Site Name");
+
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "site-name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "site-name");
+
+		for (var customURL : list "blogs-entry-title-edit,blogs-entry-title-edit-again") {
+			BlogsNavigator.openToEditEntryInSite(
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name",
+				siteURLKey = "site-name");
+
+			Panel.expandPanel(panel = "Configuration");
+
+			BlogsEntry.addCustomURL(customURL = "${customURL}");
+
+			PortletEntry.publish();
+		}
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsNavigator.gotoFriendlyURLHistory();
+
+		BlogsEntry.restoreOldFriendlyURL(
+			activeURL = "blogs-entry-title-edit-again",
+			oldFriendlyURL = "blogs-entry-title-edit",
+			restoredURL = "blogs-entry-title-edit");
+
+		PortletEntry.publish();
+
+		for (var friendlyURL : list "blogs-entry-title,blogs-entry-title-edit,blogs-entry-title-edit-again") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/b/${friendlyURL}");
+
+			AssertLocation(value1 = "${portalURL}/web/site-name/b/blogs-entry-title-edit");
+
+			AssertVisible(
+				key_entryContent = "Blogs Entry Content",
+				locator1 = "BlogsEntry#CONTENT");
+		}
+	}
+
 	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history."
 	@priority = "4"
 	test CanAddMultipleOldFriendlyURLs {

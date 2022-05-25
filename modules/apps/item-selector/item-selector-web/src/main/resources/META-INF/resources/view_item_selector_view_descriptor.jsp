@@ -47,6 +47,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 	>
 		<liferay-ui:search-container-row
 			className="Object"
+			keyProperty="<%= itemSelectorViewDescriptor.getKeyProperty() %>"
 			modelVar="entry"
 		>
 

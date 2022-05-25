@@ -119,9 +119,11 @@ definition {
 
 			Button.clickSave();
 
-			SelectFrame(locator1 = "Message#ERROR");
+			Click(locator1 = "Icon#TIMES");
 
-			Alert.viewErrorMessage(errorMessage = "An error occurred.");
+			AssertElementNotPresent(
+				key_tableEntry = "Text Update",
+				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			Refresh();
 		}

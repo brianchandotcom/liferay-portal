@@ -77,7 +77,7 @@ definition {
 
 		if (isSet(keywords)) {
 			Type(
-				locator1 = "ItemSelector#SEARCH_FIELD",
+				locator1 = "TextInput#SEARCH",
 				value1 = "${keywords}");
 		}
 		else {

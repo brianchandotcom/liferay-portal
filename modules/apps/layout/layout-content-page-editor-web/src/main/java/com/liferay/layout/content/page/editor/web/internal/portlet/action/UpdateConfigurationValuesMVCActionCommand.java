@@ -171,11 +171,12 @@ public class UpdateConfigurationValuesMVCActionCommand
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLink",
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				actionRequest, actionResponse,
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				_itemSelector, StringPool.BLANK));
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse), _itemSelector,
+				StringPool.BLANK));
 
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(

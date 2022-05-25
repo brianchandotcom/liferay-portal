@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -83,11 +84,12 @@ public class EditFragmentEntryLinkMVCActionCommand
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				actionRequest, actionResponse,
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				_itemSelector, StringPool.BLANK));
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse), _itemSelector,
+				StringPool.BLANK));
 	}
 
 	@Reference
@@ -111,5 +113,8 @@ public class EditFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -49,8 +49,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -114,7 +114,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	public static JSONObject getFragmentEntryLinkJSONObject(
-			PortletRequest portletRequest, PortletResponse portletResponse,
 			DefaultFragmentRendererContext defaultFragmentRendererContext,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentEntryLink fragmentEntryLink,
@@ -122,11 +121,14 @@ public class FragmentEntryLinkUtil {
 				fragmentCollectionContributorTracker,
 			FragmentRendererController fragmentRendererController,
 			FragmentRendererTracker fragmentRendererTracker,
-			ItemSelector itemSelector, String portletId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, ItemSelector itemSelector,
+			String portletId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		boolean isolated = themeDisplay.isIsolated();
 
@@ -134,7 +136,7 @@ public class FragmentEntryLinkUtil {
 
 		try {
 			String languageId = ParamUtil.getString(
-				portletRequest, "languageId", themeDisplay.getLanguageId());
+				httpServletRequest, "languageId", themeDisplay.getLanguageId());
 
 			defaultFragmentRendererContext.setLocale(
 				LocaleUtil.fromLanguageId(languageId));
@@ -185,14 +187,11 @@ public class FragmentEntryLinkUtil {
 
 			FragmentEntryLinkItemSelectorUtil.
 				addFragmentEntryLinkFieldsSelectorURL(
-					itemSelector,
-					PortalUtil.getHttpServletRequest(portletRequest),
-					configurationJSONObject);
+					itemSelector, httpServletRequest, configurationJSONObject);
 
 			String content = fragmentRendererController.render(
-				defaultFragmentRendererContext,
-				PortalUtil.getHttpServletRequest(portletRequest),
-				PortalUtil.getHttpServletResponse(portletResponse));
+				defaultFragmentRendererContext, httpServletRequest,
+				httpServletResponse);
 
 			return JSONUtil.put(
 				"configuration", configurationJSONObject
@@ -253,22 +252,23 @@ public class FragmentEntryLinkUtil {
 	}
 
 	public static JSONObject getFragmentEntryLinkJSONObject(
-			PortletRequest portletRequest, PortletResponse portletResponse,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentEntryLink fragmentEntryLink,
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentRendererController fragmentRendererController,
 			FragmentRendererTracker fragmentRendererTracker,
-			ItemSelector itemSelector, String portletId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, ItemSelector itemSelector,
+			String portletId)
 		throws PortalException {
 
 		return getFragmentEntryLinkJSONObject(
-			portletRequest, portletResponse,
 			new DefaultFragmentRendererContext(fragmentEntryLink),
 			fragmentEntryConfigurationParser, fragmentEntryLink,
 			fragmentCollectionContributorTracker, fragmentRendererController,
-			fragmentRendererTracker, itemSelector, portletId);
+			fragmentRendererTracker, httpServletRequest, httpServletResponse,
+			itemSelector, portletId);
 	}
 
 	private static FragmentEntry _getFragmentEntry(

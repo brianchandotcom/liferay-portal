@@ -62,6 +62,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -232,10 +233,12 @@ public class AddPortletMVCActionCommand
 		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, liferayRenderRequest);
 
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
 		LiferayRenderResponse liferayRenderResponse =
 			RenderResponseFactory.create(
-				_portal.getHttpServletResponse(actionResponse),
-				liferayRenderRequest);
+				httpServletResponse, liferayRenderRequest);
 
 		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE, liferayRenderResponse);
@@ -243,11 +246,11 @@ public class AddPortletMVCActionCommand
 		return jsonObject.put(
 			"fragmentEntryLink",
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				liferayRenderRequest, liferayRenderResponse,
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				_itemSelector, portletId));
+				httpServletRequest, httpServletResponse, _itemSelector,
+				portletId));
 	}
 
 	@Reference

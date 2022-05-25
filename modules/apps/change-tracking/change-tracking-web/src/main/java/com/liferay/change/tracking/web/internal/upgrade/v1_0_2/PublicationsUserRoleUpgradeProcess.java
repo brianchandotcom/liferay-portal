@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -33,19 +34,18 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 /**
  * @author Samuel Trong Tran
  */
 public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 
 	public PublicationsUserRoleUpgradeProcess(
+		CompanyLocalService companyLocalService,
 		ResourceActions resourceActions,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, UserLocalService userLocalService) {
 
+		_companyLocalService = companyLocalService;
 		_resourceActions = resourceActions;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -58,13 +58,8 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 			PublicationsUserRoleUpgradeProcess.class.getClassLoader(),
 			"resource-actions/default.xml");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				Role role = _roleLocalService.fetchRole(
 					companyId, RoleConstants.PUBLICATIONS_USER);
 
@@ -102,10 +97,10 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 					companyId, CTPortletKeys.PUBLICATIONS,
 					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 					role.getRoleId(), ActionKeys.VIEW);
-			}
-		}
+			});
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final ResourceActions _resourceActions;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;

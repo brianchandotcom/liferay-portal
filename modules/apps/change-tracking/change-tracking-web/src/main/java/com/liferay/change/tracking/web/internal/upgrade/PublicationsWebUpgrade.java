@@ -21,6 +21,7 @@ import com.liferay.change.tracking.web.internal.upgrade.v1_0_3.PublicationsConfi
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_4.PublicationsRolePermissionsUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_5.PublicationsAdminRoleNameUpgradeProcess;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -68,8 +69,9 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.1", "1.0.2",
 			new PublicationsUserRoleUpgradeProcess(
-				_resourceActions, _resourcePermissionLocalService,
-				_roleLocalService, _userLocalService));
+				_companyLocalService, _resourceActions,
+				_resourcePermissionLocalService, _roleLocalService,
+				_userLocalService));
 
 		registry.register(
 			"1.0.2", "1.0.3",
@@ -84,6 +86,9 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.4", "1.0.5", new PublicationsAdminRoleNameUpgradeProcess());
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

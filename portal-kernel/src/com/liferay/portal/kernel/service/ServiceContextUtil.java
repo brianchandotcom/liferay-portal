@@ -63,13 +63,10 @@ public class ServiceContextUtil {
 
 		// Asset
 
-		long[] assetCategoryIds = StringUtil.split(
-			jsonObject.getString("assetCategoryIds"), 0L);
-		String[] assetTagNames = StringUtil.split(
-			jsonObject.getString("assetTagNames"));
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetCategoryIds(
+			StringUtil.split(jsonObject.getString("assetCategoryIds"), 0L));
+		serviceContext.setAssetTagNames(
+			StringUtil.split(jsonObject.getString("assetTagNames")));
 
 		// Workflow
 

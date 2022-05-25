@@ -359,11 +359,8 @@ public class ServiceContextFactory {
 
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
-
-		String[] assetTagNames = ParamUtil.getStringValues(
-			httpServletRequest, "assetTagNames");
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetTagNames(
+			ParamUtil.getStringValues(httpServletRequest, "assetTagNames"));
 
 		// Workflow
 
@@ -522,11 +519,8 @@ public class ServiceContextFactory {
 
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
-
-		String[] assetTagNames = ParamUtil.getStringValues(
-			httpServletRequest, "assetTagNames");
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetTagNames(
+			ParamUtil.getStringValues(httpServletRequest, "assetTagNames"));
 
 		// Workflow
 

@@ -63,18 +63,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testFDSTableSchemaBuilder() throws Exception {
-		test(
-			"FDSTableSchemaBuilder.testjava",
-			new String[] {
-				"Use 'add' instead of 'addFDSTableSchemaField'",
-				"Use 'add' instead of 'addFDSTableSchemaField'",
-				"Use 'add' instead of 'addFDSTableSchemaField'"
-			},
-			new Integer[] {43, 47, 50});
-	}
-
-	@Test
 	public void testCollapseImports() throws Exception {
 		test("CollapseImports.testjava");
 	}

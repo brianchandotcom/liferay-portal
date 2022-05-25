@@ -75,14 +75,12 @@ public class ExportImportConfigurationUtil {
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		ExportImportConfiguration exportImportConfiguration =
+		return getExportImportConfigurationParameter(
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(
 					GetterUtil.getLong(
-						taskContextMap.get("exportImportConfigurationId")));
-
-		return getExportImportConfigurationParameter(
-			exportImportConfiguration, parameterName);
+						taskContextMap.get("exportImportConfigurationId"))),
+			parameterName);
 	}
 
 	public static String[] getExportImportConfigurationParameter(

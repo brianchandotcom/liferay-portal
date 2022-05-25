@@ -102,12 +102,13 @@ public class ExportImportDateUtil {
 			portletRequest, paramPrefix + "Minute");
 		int dateAmPm = ParamUtil.getInteger(
 			portletRequest, paramPrefix + "AmPm");
-		TimeZone timeZone = TimeZoneUtil.getTimeZone(
-			ParamUtil.getString(portletRequest, "timeZoneId"));
 
 		return getCalendar(
 			dateAmPm, dateYear, dateMonth, dateDay, dateHour, dateMinute,
-			themeDisplay.getLocale(), timeZone, timeZoneSensitive);
+			themeDisplay.getLocale(),
+			TimeZoneUtil.getTimeZone(
+				ParamUtil.getString(portletRequest, "timeZoneId")),
+			timeZoneSensitive);
 	}
 
 	public static DateRange getDateRange(
@@ -472,10 +473,9 @@ public class ExportImportDateUtil {
 				lastPublishDate = getLastPublishDate(portletPreferences);
 			}
 			else {
-				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					groupId, privateLayout);
-
-				lastPublishDate = getLastPublishDate(layoutSet);
+				lastPublishDate = getLastPublishDate(
+					LayoutSetLocalServiceUtil.getLayoutSet(
+						groupId, privateLayout));
 			}
 
 			if (lastPublishDate != null) {

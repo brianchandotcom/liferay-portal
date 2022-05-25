@@ -268,11 +268,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	public PortletDataHandlerControl[] getImportConfigurationControls(
 		Portlet portlet, ManifestSummary manifestSummary) {
 
-		String[] configurationPortletOptions =
+		return getImportConfigurationControls(
 			manifestSummary.getConfigurationPortletOptions(
-				portlet.getRootPortletId());
-
-		return getImportConfigurationControls(configurationPortletOptions);
+				portlet.getRootPortletId()));
 	}
 
 	@Override

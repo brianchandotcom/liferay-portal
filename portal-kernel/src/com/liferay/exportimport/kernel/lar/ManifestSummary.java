@@ -333,10 +333,8 @@ public class ManifestSummary implements Serializable {
 			 !referrerClassName.equals(
 				 StagedModelType.REFERRER_CLASS_NAME_ANY))) {
 
-			String manifestSummaryKey = getManifestSummaryKey(
-				className, referrerClassName);
-
-			return getModelAdditionCount(manifestSummaryKey);
+			return getModelAdditionCount(
+				getManifestSummaryKey(className, referrerClassName));
 		}
 
 		long modelAdditionCount = -1;
@@ -374,10 +372,8 @@ public class ManifestSummary implements Serializable {
 			 !referrerClassName.equals(
 				 StagedModelType.REFERRER_CLASS_NAME_ANY))) {
 
-			String manifestSummaryKey = getManifestSummaryKey(
-				className, referrerClassName);
-
-			return getModelDeletionCount(manifestSummaryKey);
+			return getModelDeletionCount(
+				getManifestSummaryKey(className, referrerClassName));
 		}
 
 		long modelDeletionCount = -1;

@@ -73,7 +73,7 @@ const ImportAndOverrideDataDefinitionModal = ({portletNamespace}) => {
 				{Liferay.Language.get('import-structure')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body className="pt-0 px-0">
 				<ClayForm
 					action={importAndOverrideStructureURL}
 					encType="multipart/form-data"
@@ -90,7 +90,7 @@ const ImportAndOverrideDataDefinitionModal = ({portletNamespace}) => {
 						)}
 					</ClayAlert>
 
-					<ClayForm.Group>
+					<ClayForm.Group className="pb-0 pt-5 px-4">
 						<label htmlFor={jsonFileInputId}>
 							{Liferay.Language.get('json-file')}
 						</label>

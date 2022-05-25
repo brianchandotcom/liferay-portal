@@ -112,12 +112,71 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify it is possible to add any translation for any Column Label"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTranslationToColumnLabel {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152069",
+			objectName = "CustomObject152069",
+			pluralLabelName = "Custom Objects 152069");
 
-		// TODO LPS-152069 CanAddTranslationToColumnLabel pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152069");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152069");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152069");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+
+		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
+
+		CreateObject.editLabel(labelName = "Campo Customizado");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+
+		ObjectCustomViews.goToDefaultSortTab();
+
+		ObjectCustomViews.addDefaultSort(
+			columnOption = "Custom Field",
+			sortOption = "Ascending");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject152069",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152069");
+
+		ObjectPortlet.assertColumnLabelEntries(columnLabelName = "Campo Customizado");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"

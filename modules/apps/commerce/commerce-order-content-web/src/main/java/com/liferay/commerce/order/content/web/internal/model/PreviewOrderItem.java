@@ -22,7 +22,7 @@ public class PreviewOrderItem {
 	public PreviewOrderItem(
 		String externalReferenceCode, String importStatus, String options,
 		String productName, int quantity, String replacingSKU,
-		String requestedDeliveryDate, int rowNumber, String sku,
+		String requestedDeliveryDateString, int rowNumber, String sku,
 		String totalPrice, String unitPrice) {
 
 		_externalReferenceCode = externalReferenceCode;
@@ -31,7 +31,7 @@ public class PreviewOrderItem {
 		_productName = productName;
 		_quantity = quantity;
 		_replacingSKU = replacingSKU;
-		_requestedDeliveryDate = requestedDeliveryDate;
+		_requestedDeliveryDateString = requestedDeliveryDateString;
 		_rowNumber = rowNumber;
 		_sku = sku;
 		_totalPrice = totalPrice;
@@ -62,8 +62,8 @@ public class PreviewOrderItem {
 		return _replacingSKU;
 	}
 
-	public String getRequestedDeliveryDate() {
-		return _requestedDeliveryDate;
+	public String getRequestedDeliveryDateString() {
+		return _requestedDeliveryDateString;
 	}
 
 	public int getRowNumber() {
@@ -88,7 +88,7 @@ public class PreviewOrderItem {
 	private final String _productName;
 	private final int _quantity;
 	private final String _replacingSKU;
-	private final String _requestedDeliveryDate;
+	private final String _requestedDeliveryDateString;
 	private final int _rowNumber;
 	private final String _sku;
 	private final String _totalPrice;

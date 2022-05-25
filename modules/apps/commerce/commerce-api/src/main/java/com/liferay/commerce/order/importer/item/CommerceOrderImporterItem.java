@@ -41,7 +41,7 @@ public interface CommerceOrderImporterItem {
 
 	public String getReplacingSKU();
 
-	public String getRequestedDeliveryDate();
+	public String getRequestedDeliveryDateString();
 
 	public String getSKU();
 

@@ -26,6 +26,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 	module="js/components/ObjectAction/EditObjectAction"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"getObjectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
+		).put(
 			"objectAction", objectDefinitionsActionsDisplayContext.getObjectActionJSONObject(objectAction)
 		).put(
 			"objectActionCodeEditorElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()

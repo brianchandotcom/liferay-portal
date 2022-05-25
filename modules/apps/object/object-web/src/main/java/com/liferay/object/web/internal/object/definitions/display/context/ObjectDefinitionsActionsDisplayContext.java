@@ -26,6 +26,7 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -200,6 +203,19 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		return (ObjectDefinition)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
+	public String getObjectDefinitionsRelationshipsURL() {
+		ResourceURL resourceURL = ResourceURLBuilder.createResourceURL(
+			objectRequestHelper.getLiferayPortletResponse()
+		).setResourceID(
+			"/object_definitions/get_object_definitions_relationships"
+		).buildResourceURL();
+
+		resourceURL.setParameter(
+			"objectDefinitionId", String.valueOf(getObjectDefinitionId()));
+
+		return resourceURL.toString();
 	}
 
 	@Override

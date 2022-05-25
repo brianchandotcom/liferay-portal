@@ -108,6 +108,12 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getClearFaviconButtonAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"faviconFileEntryTitleValue", _getClearFaviconButtonFileEntryTitle()
+		).build();
+	}
+
 	public Map<String, Object> getEditMasterLayoutButtonAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"editMasterLayoutURL",
@@ -307,6 +313,44 @@ public class LayoutLookAndFeelDisplayContext {
 		_hasStyleBooks = hasStyleBooks;
 
 		return _hasStyleBooks;
+	}
+
+	public boolean isClearFaviconButtonEnabled() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		if (selLayout.getFaviconFileEntryId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getClearFaviconButtonFileEntryTitle() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		if (hasEditableMasterLayout() &&
+			(selLayout.getMasterLayoutPlid() > 0)) {
+
+			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+				selLayout.getMasterLayoutPlid());
+
+			if ((masterLayout != null) &&
+				(masterLayout.getFaviconFileEntryId() > 0)) {
+
+				return LanguageUtil.get(
+					_httpServletRequest, "favicon-from-master");
+			}
+		}
+
+		LayoutSet layoutSet = selLayout.getLayoutSet();
+
+		if (layoutSet.getFaviconFileEntryId() > 0) {
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(), "favicon-from-x",
+				_layoutsAdminDisplayContext.getRootNodeName());
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

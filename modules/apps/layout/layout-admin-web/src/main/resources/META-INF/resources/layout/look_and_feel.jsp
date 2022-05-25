@@ -54,18 +54,36 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 			<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconFileEntryTitle"><%= layoutLookAndFeelDisplayContext.getFaviconFileEntryTitle() %></span>
 		</p>
 
-		<div class="button-holder">
-			<clay:button
-				additionalProps="<%=
-					layoutLookAndFeelDisplayContext.getChangeFaviconButtonAdditionalProps()
-				%>"
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "changeFaviconButton" %>'
-				label="change-favicon"
-				propsTransformer="js/layout/ChangeFaviconButtonPropsTransformer"
-				small="<%= true %>"
-			/>
-		</div>
+		<clay:content-row>
+			<clay:content-col
+				cssClass="mr-4"
+			>
+				<clay:button
+					additionalProps="<%=
+						layoutLookAndFeelDisplayContext.getChangeFaviconButtonAdditionalProps()
+					%>"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "changeFaviconButton" %>'
+					label="change-favicon"
+					propsTransformer="js/layout/ChangeFaviconButtonPropsTransformer"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+
+			<clay:content-col>
+				<clay:button
+					additionalProps="<%=
+						layoutLookAndFeelDisplayContext.getClearFaviconButtonAdditionalProps()
+					%>"
+					disabled="<%= !layoutLookAndFeelDisplayContext.isClearFaviconButtonEnabled() %>"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "clearFaviconButton" %>'
+					label="clear"
+					propsTransformer="js/layout/ClearFaviconButtonPropsTransformer"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+		</clay:content-row>
 	</clay:sheet-section>
 </c:if>
 

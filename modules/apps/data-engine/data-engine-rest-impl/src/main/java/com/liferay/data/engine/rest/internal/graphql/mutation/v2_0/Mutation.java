@@ -126,20 +126,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteDataDefinitionBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.deleteDataDefinitionBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
 	public DataDefinition patchDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
@@ -164,20 +150,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataDefinitionResource -> dataDefinitionResource.putDataDefinition(
 				dataDefinitionId, dataDefinition));
-	}
-
-	@GraphQLField
-	public Response updateDataDefinitionBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.putDataDefinitionBatch(
-					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -714,9 +686,6 @@ public class Mutation {
 		dataDefinitionResource.setContextUser(_user);
 		dataDefinitionResource.setGroupLocalService(_groupLocalService);
 		dataDefinitionResource.setRoleLocalService(_roleLocalService);
-
-		dataDefinitionResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(DataLayoutResource dataLayoutResource)

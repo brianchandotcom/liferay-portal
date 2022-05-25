@@ -104,6 +104,14 @@ definition {
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 	}
 
+	macro verifyConfigurationElementIsConfigured {
+		Audit.gotoSystemSettings(portlet = "${portlet}");
+
+		while (IsTextNotEqual(locator1 = "${element}", value1 = "${text}") && (maxIterations = "10")) {
+			Refresh();
+		}
+	}
+
 	macro viewAuditDetails {
 		var key_resourceAction = "${resourceAction}";
 		var key_resourceName = "${resourceName}";

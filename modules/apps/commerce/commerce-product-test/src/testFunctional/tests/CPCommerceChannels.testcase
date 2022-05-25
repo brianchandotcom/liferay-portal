@@ -1637,16 +1637,6 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test RemoveOfflinePaymentLinkedAsDefaultPaymentMethod {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8542 RemoveOfflinePaymentLinkedAsDefaultPaymentMethod pending implementation
-
-	}
-
 	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
 	@priority = "3"
 	test RemoveProductDisplayPage {

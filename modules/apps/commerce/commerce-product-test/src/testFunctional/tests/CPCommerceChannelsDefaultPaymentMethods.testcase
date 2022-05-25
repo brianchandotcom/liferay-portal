@@ -495,16 +495,6 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DeactivatePaymentMethodLinkedToAnAccount {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8545 DeactivatePaymentMethodLinkedToAnAccount pending implementation
-
-	}
-
 	@description = "Verify an account reverts to priority settings after an offline payment method that is set as default payment method for the account is removed"
 	@priority = "3"
 	test RemoveOfflinePaymentLinkedAsDefaultPaymentMethod {

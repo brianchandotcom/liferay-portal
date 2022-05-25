@@ -823,8 +823,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_card = "Login",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "Login",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrameTop();
 
@@ -1350,8 +1350,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_card = "Login",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "Login",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrameTop();
 
@@ -1404,8 +1404,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_card = "Login",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "Login",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrameTop();
 
@@ -1687,8 +1687,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_card = "Login",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "Login",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 

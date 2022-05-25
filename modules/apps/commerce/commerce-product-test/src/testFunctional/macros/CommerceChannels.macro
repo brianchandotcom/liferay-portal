@@ -38,8 +38,8 @@ definition {
 		Click(locator1 = "Treeview#NODE_COLLAPSED");
 
 		Click(
-			key_card = "${key_card}",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "${key_card}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 
@@ -58,8 +58,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_card = "${key_card}",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "${key_card}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 
@@ -131,7 +131,9 @@ definition {
 
 		CommerceNavigator.searchEntry(entryName = "${pageName}");
 
-		LexiconCard.clickCard(card = "${pageName}");
+		Click.mouseDownMouseUp(
+			key_nodeName = "${pageName}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 
@@ -167,11 +169,13 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		if (IsElementNotPresent(key_card = "${pageName}", locator1 = "Card#CARD")) {
+		if (IsElementNotPresent(key_nodeName = "${pageName}", locator1 = "Treeview#NODE_ITEM")) {
 			CommerceNavigator.searchEntry(entryName = "${pageName}");
 		}
 
-		LexiconCard.clickCard(card = "${pageName}");
+		Click.mouseDownMouseUp(
+			key_nodeName = "${pageName}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 
@@ -245,8 +249,8 @@ definition {
 		}
 
 		Click(
-			key_card = "${key_card}",
-			locator1 = "Card#CARD_TITLE");
+			key_nodeName = "${key_card}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
 

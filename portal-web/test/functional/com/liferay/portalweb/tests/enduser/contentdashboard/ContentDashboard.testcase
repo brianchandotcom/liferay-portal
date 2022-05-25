@@ -629,6 +629,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-151065 Given a Blog
+    When the user opens asset's Info Panel at Content Dashboard
+    Then 'Blogs Entry' text will be exhibit"
+	@priority = "3"
+	test BlogTypeInInfoPanel {
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Go to Content Dashboard and check the type in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
+				value1 = "Blogs Entry");
+		}
+	}
+
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the blog version labels are shown"
@@ -2317,6 +2345,43 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name 1");
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name 2");
+		}
+	}
+
+	@description = "LPS-151065 Given a Document asset using a New Document Type
+    When the user opens Info Panel at Content Dashboard
+    Then 'Document - ' and structure's name text will be exhibit"
+	@priority = "3"
+	test DocumentTypeInInfoPanel {
+		task ("Add a document type") {
+			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a document") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				textField = "DM Document Text");
+		}
+
+		task ("Navigate to Content Dashbaord") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Go to Content Dashboard and check the type in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
+				value1 = "Document - DM Document Type Name");
 		}
 	}
 
@@ -5203,6 +5268,50 @@ definition {
 			WaitForElementPresent(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
 
 			Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+		}
+	}
+
+	@description = "LPS-151065 Given a Web Content asset using a Web Content Structure
+    When the user opens Info Panel at Content Dashboard
+    Then 'Web Content Article -' and structure's name text will be exhibit"
+	@priority = "3"
+	test WebContentStructureTypeInInfoPanel {
+		task ("Create a web content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Create a web content based on the structure created") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to Content Dashbaord") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Go to Content Dashboard and check the type in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
+				value1 = "Web Content Article - WC Structure Name");
 		}
 	}
 

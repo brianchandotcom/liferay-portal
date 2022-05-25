@@ -280,6 +280,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL_ASSET_TYPE</td>
+	<td>//*[@data-qa-id='assetTypeInfo']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PANEL_AUTHOR</td>
 	<td>//span[contains(@class,'text-secondary') and contains (.,'${assetAuthor}')]</td>
 	<td></td>

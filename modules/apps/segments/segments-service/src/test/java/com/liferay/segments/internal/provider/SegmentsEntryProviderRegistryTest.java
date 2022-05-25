@@ -210,24 +210,6 @@ public class SegmentsEntryProviderRegistryTest {
 		Arrays.sort(segmentsEntryIds);
 
 		Assert.assertArrayEquals(segmentsEntryIds, actualSegmentsEntryIds);
-
-		Mockito.verify(
-			_serviceTrackerList, Mockito.times(1)
-		).iterator();
-
-		Mockito.verify(
-			segmentsEntryProvider1, Mockito.times(1)
-		).getSegmentsEntryIds(
-			Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-			Mockito.any(Context.class), Mockito.any(long[].class)
-		);
-
-		Mockito.verify(
-			segmentsEntryProvider2, Mockito.times(1)
-		).getSegmentsEntryIds(
-			Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-			Mockito.any(Context.class), Mockito.any(long[].class)
-		);
 	}
 
 	private SegmentsEntry _createSegmentsEntry(
@@ -299,7 +281,8 @@ public class SegmentsEntryProviderRegistryTest {
 			segmentsEntryProvider
 		).getSegmentsEntryIds(
 			Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-			Mockito.any(Context.class), Mockito.any(long[].class)
+			Mockito.any(Context.class), Mockito.any(long[].class),
+			Mockito.any(long[].class)
 		);
 
 		return segmentsEntryProvider;

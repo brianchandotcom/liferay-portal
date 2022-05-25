@@ -248,10 +248,8 @@ public class SocialActivityLocalServiceImpl
 		}
 
 		if (isLogActivity(activity)) {
-			long activityId = counterLocalService.increment(
-				SocialActivity.class.getName());
-
-			activity.setActivityId(activityId);
+			activity.setActivityId(
+				counterLocalService.increment(SocialActivity.class.getName()));
 
 			activity = socialActivityPersistence.update(activity);
 

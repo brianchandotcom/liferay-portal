@@ -2328,12 +2328,9 @@ public class SitesImpl implements Sites {
 
 		// Force propagation from site template to site. See LPS-48206.
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		mergeLayoutSetPrototypeLayouts(
+			GroupLocalServiceUtil.getGroup(groupId),
+			LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout));
 	}
 
 	private String _acquireLock(

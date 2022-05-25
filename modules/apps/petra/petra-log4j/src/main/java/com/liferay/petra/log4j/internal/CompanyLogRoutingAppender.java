@@ -14,14 +14,27 @@
 
 package com.liferay.petra.log4j.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.Serializable;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Core;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
 import org.apache.logging.log4j.core.appender.rolling.RolloverStrategy;
 import org.apache.logging.log4j.core.appender.rolling.TriggeringPolicy;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
@@ -49,6 +62,16 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 	@Override
 	public void append(LogEvent logEvent) {
+		RollingFileAppender rollingFileAppender =
+			_rollingFileAppenders.computeIfAbsent(
+				CompanyThreadLocal.getCompanyId(),
+				this::_createRollingFileAppender);
+
+		if (rollingFileAppender == null) {
+			return;
+		}
+
+		rollingFileAppender.append(logEvent);
 	}
 
 	public static class Builder
@@ -141,6 +164,46 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		_rolloverStrategy = rolloverStrategy;
 	}
 
+	private RollingFileAppender _createRollingFileAppender(long companyId) {
+		RollingFileAppender.Builder builder = RollingFileAppender.newBuilder();
+
+		LoggerContext loggerContext = (LoggerContext)LogManager.getContext();
+
+		builder.setConfiguration(loggerContext.getConfiguration());
+
+		builder.setName(companyId + StringPool.DASH + getName());
+		builder.setIgnoreExceptions(ignoreExceptions());
+		builder.setLayout(getLayout());
+		builder.withAdvertise(_advertise);
+		builder.withAdvertiseUri(_advertiseUri);
+		builder.withAppend(_append);
+		builder.withBufferedIo(_bufferedIo);
+		builder.withBufferSize(_bufferSize);
+		builder.withCreateOnDemand(_createOnDemand);
+		builder.withFileGroup(_fileGroup);
+		builder.withFileName(_fileName);
+		builder.withFileOwner(_fileOwner);
+		builder.withFilePattern(
+			StringBundler.concat(
+				StringUtil.replace(
+					PropsUtil.get(PropsKeys.LIFERAY_HOME), '\\', '/'),
+				"/logs/companies/", companyId, StringPool.SLASH,
+				StringUtil.extractLast(_filePattern, StringPool.SLASH)));
+		builder.withFilePermissions(_filePermissions);
+		builder.withImmediateFlush(_immediateFlush);
+		builder.withLocking(_locking);
+		builder.withStrategy(_rolloverStrategy);
+		builder.withPolicy(_triggeringPolicy);
+
+		RollingFileAppender rollingFileAppender = builder.build();
+
+		if (rollingFileAppender != null) {
+			rollingFileAppender.start();
+		}
+
+		return rollingFileAppender;
+	}
+
 	private final boolean _advertise;
 	private final String _advertiseUri;
 	private final boolean _append;
@@ -154,6 +217,8 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 	private final String _filePermissions;
 	private final boolean _immediateFlush;
 	private final boolean _locking;
+	private final Map<Long, RollingFileAppender> _rollingFileAppenders =
+		new ConcurrentHashMap<>();
 	private final RolloverStrategy _rolloverStrategy;
 	private final TriggeringPolicy _triggeringPolicy;
 

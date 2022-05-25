@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
-import com.liferay.cookies.configuration.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -64,11 +64,13 @@ public class CookiesBannerBottomJSPDynamicInclude
 		}
 
 		try {
-			CookiesBannerConfiguration cookiesBannerConfiguration =
-				_configurationProvider.getGroupConfiguration(
-					CookiesBannerConfiguration.class, group.getGroupId());
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration =
+					_configurationProvider.getGroupConfiguration(
+						CookiesPreferenceHandlingConfiguration.class,
+						group.getGroupId());
 
-			if (!cookiesBannerConfiguration.enabled()) {
+			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
 				return;
 			}
 		}

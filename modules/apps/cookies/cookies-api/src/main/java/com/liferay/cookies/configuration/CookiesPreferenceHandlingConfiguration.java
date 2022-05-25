@@ -17,7 +17,6 @@ package com.liferay.cookies.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Olivér Kecskeméty
@@ -26,29 +25,22 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	category = "cookies", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.cookies.configuration.CookiesBannerConfiguration",
-	localization = "content/Language", name = "cookie-banner-configuration-name"
+	id = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration",
+	localization = "content/Language",
+	name = "cookie-preference-handling-configuration-name"
 )
-public interface CookiesBannerConfiguration {
+public interface CookiesPreferenceHandlingConfiguration {
 
 	@Meta.AD(
-		deflt = "${language:cookies-banner-content}", name = "content",
+		deflt = "false", description = "cookie-enabled-help", name = "enabled",
 		required = false
 	)
-	public LocalizedValuesMap content();
-
-	@Meta.AD(name = "privacy-policy-link", required = false)
-	public String privacyPolicyLink();
+	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "${language:visit-our-privacy-policy}",
-		name = "link-display-text", required = false
+		deflt = "true", description = "cookie-explicit-consent-mode-help",
+		name = "cookie-explicit-consent-mode", required = false
 	)
-	public LocalizedValuesMap linkDisplayText();
-
-	@Meta.AD(
-		deflt = "true", name = "include-decline-all-button", required = false
-	)
-	public boolean includeDeclineAllButton();
+	public boolean explicitConsentMode();
 
 }

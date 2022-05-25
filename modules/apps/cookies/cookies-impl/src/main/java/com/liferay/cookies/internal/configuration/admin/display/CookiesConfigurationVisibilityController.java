@@ -15,7 +15,7 @@
 package com.liferay.cookies.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
-import com.liferay.cookies.configuration.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -31,7 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "configuration.pid=com.liferay.cookies.configuration.CookiesConsentConfiguration",
+	property = {
+		"configuration.pid=com.liferay.cookies.configuration.CookiesBannerConfiguration",
+		"configuration.pid=com.liferay.cookies.configuration.CookiesConsentConfiguration"
+	},
 	service = ConfigurationVisibilityController.class
 )
 public class CookiesConfigurationVisibilityController
@@ -42,26 +45,29 @@ public class CookiesConfigurationVisibilityController
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
 		try {
-			CookiesBannerConfiguration cookiesBannerConfiguration = null;
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration = null;
 
 			if (ExtendedObjectClassDefinition.Scope.COMPANY.equals(scope)) {
-				cookiesBannerConfiguration =
+				cookiesPreferenceHandlingConfiguration =
 					_configurationProvider.getCompanyConfiguration(
-						CookiesBannerConfiguration.class, (Long)scopePK);
+						CookiesPreferenceHandlingConfiguration.class,
+						(Long)scopePK);
 			}
 			else if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
-				cookiesBannerConfiguration =
+				cookiesPreferenceHandlingConfiguration =
 					_configurationProvider.getGroupConfiguration(
-						CookiesBannerConfiguration.class, (Long)scopePK);
+						CookiesPreferenceHandlingConfiguration.class,
+						(Long)scopePK);
 			}
 			else if (ExtendedObjectClassDefinition.Scope.SYSTEM.equals(scope)) {
-				cookiesBannerConfiguration =
+				cookiesPreferenceHandlingConfiguration =
 					_configurationProvider.getSystemConfiguration(
-						CookiesBannerConfiguration.class);
+						CookiesPreferenceHandlingConfiguration.class);
 			}
 
-			if (cookiesBannerConfiguration != null) {
-				return cookiesBannerConfiguration.enabled();
+			if (cookiesPreferenceHandlingConfiguration != null) {
+				return cookiesPreferenceHandlingConfiguration.enabled();
 			}
 		}
 		catch (ConfigurationException configurationException) {

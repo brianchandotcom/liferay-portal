@@ -14,14 +14,16 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,8 +76,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
-		String languageId = ParamUtil.getString(
-			actionRequest, "languageId", themeDisplay.getLanguageId());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -147,27 +146,14 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 					fragmentEntryLinkId, editableValuesJSONObject.toString());
 
-			DefaultFragmentRendererContext defaultFragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			defaultFragmentRendererContext.setLocale(
-				LocaleUtil.fromLanguageId(languageId));
-
-			defaultFragmentRendererContext.setMode(
-				FragmentEntryLinkConstants.EDIT);
-
 			fragmentEntryLinksJSONArray.put(
-				JSONUtil.put(
-					"content",
-					_fragmentRendererController.render(
-						defaultFragmentRendererContext,
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse))
-				).put(
-					"editableValues", editableValuesJSONObject
-				).put(
-					"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId)
-				));
+				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+					_fragmentEntryConfigurationParser, fragmentEntryLink,
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererController, _fragmentRendererTracker,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					_itemSelector, StringPool.BLANK));
 		}
 
 		try {
@@ -220,6 +206,10 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 		UpdateCollectionDisplayConfigMVCActionCommand.class);
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
@@ -227,6 +217,12 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

@@ -18,11 +18,8 @@ import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelec
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -64,7 +61,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -81,7 +78,6 @@ import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -89,7 +85,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1388,63 +1383,6 @@ public class ContentPageEditorDisplayContext {
 		return filteredFragmentEntries;
 	}
 
-	private Map<String, Object> _getFragmentEntry(
-		FragmentEntryLink fragmentEntryLink, FragmentEntry fragmentEntry,
-		String content) {
-
-		if (fragmentEntry != null) {
-			return HashMapBuilder.<String, Object>put(
-				"fragmentEntryId", fragmentEntry.getFragmentEntryId()
-			).put(
-				"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
-			).put(
-				"fragmentEntryType",
-				FragmentConstants.getTypeLabel(fragmentEntry.getType())
-			).put(
-				"icon", fragmentEntry.getIcon()
-			).put(
-				"name", fragmentEntry.getName()
-			).build();
-		}
-
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
-			FragmentRenderer fragmentRenderer =
-				_fragmentRendererTracker.getFragmentRenderer(
-					fragmentEntryLink.getRendererKey());
-
-			if (fragmentRenderer != null) {
-				return HashMapBuilder.<String, Object>put(
-					"fragmentEntryId", 0
-				).put(
-					"fragmentEntryKey", fragmentRenderer.getKey()
-				).put(
-					"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
-				).build();
-			}
-		}
-
-		String portletId = _getPortletId(content);
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.get(portletId);
-
-		if (portletConfig == null) {
-			return HashMapBuilder.<String, Object>put(
-				"fragmentEntryId", 0
-			).put(
-				"name", StringPool.BLANK
-			).build();
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"fragmentEntryId", 0
-		).put(
-			"name",
-			PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale())
-		).put(
-			"portletId", portletId
-		).build();
-	}
-
 	private List<String> _getFragmentEntryKeys() {
 		if (_fragmentEntryKeys != null) {
 			return _fragmentEntryKeys;
@@ -1477,7 +1415,7 @@ public class ContentPageEditorDisplayContext {
 
 	private JSONArray _getFragmentEntryLinkCommentsJSONArray(
 			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
+		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -1542,118 +1480,67 @@ public class ContentPageEditorDisplayContext {
 					getGroupId(), masterLayoutPageTemplateEntry.getPlid()));
 		}
 
-		boolean isolated = themeDisplay.isIsolated();
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			DefaultFragmentRendererContext defaultFragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		themeDisplay.setIsolated(true);
+			defaultFragmentRendererContext.
+				setCollectionStyledLayoutStructureItemIds(
+					LayoutStructureUtil.
+						getCollectionStyledLayoutStructureItemIds(
+							fragmentEntryLink.getFragmentEntryLinkId(),
+							_getLayoutStructure()));
 
-		try {
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				DefaultFragmentRendererContext fragmentRendererContext =
-					new DefaultFragmentRendererContext(fragmentEntryLink);
+			JSONObject jsonObject =
+				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+					defaultFragmentRendererContext,
+					_fragmentEntryConfigurationParser, fragmentEntryLink,
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererController, _fragmentRendererTracker,
+					httpServletRequest,
+					PortalUtil.getHttpServletResponse(_renderResponse),
+					_itemSelector, StringPool.BLANK);
 
-				fragmentRendererContext.
-					setCollectionStyledLayoutStructureItemIds(
-						LayoutStructureUtil.
-							getCollectionStyledLayoutStructureItemIds(
-								fragmentEntryLink.getFragmentEntryLinkId(),
-								_getLayoutStructure()));
-				fragmentRendererContext.setLocale(themeDisplay.getLocale());
-				fragmentRendererContext.setMode(
-					FragmentEntryLinkConstants.EDIT);
+			jsonObject.put(
+				"comments",
+				_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
+			).put(
+				"error",
+				() -> {
+					if (SessionErrors.contains(
+							httpServletRequest,
+							"fragmentEntryContentInvalid")) {
 
-				String content = _fragmentRendererController.render(
-					fragmentRendererContext, httpServletRequest,
-					PortalUtil.getHttpServletResponse(_renderResponse));
+						SessionErrors.clear(httpServletRequest);
 
-				String configuration =
-					_fragmentRendererController.getConfiguration(
-						fragmentRendererContext);
+						return true;
+					}
 
-				JSONObject configurationJSONObject =
-					JSONFactoryUtil.createJSONObject(configuration);
-
-				FragmentEntryLinkItemSelectorUtil.
-					addFragmentEntryLinkFieldsSelectorURL(
-						_itemSelector, httpServletRequest,
-						configurationJSONObject);
-
-				FragmentEntry fragmentEntry =
-					FragmentEntryServiceUtil.fetchFragmentEntry(
-						fragmentEntryLink.getFragmentEntryId());
-
-				if (fragmentEntry == null) {
-					Map<String, FragmentEntry> fragmentEntries =
-						_fragmentCollectionContributorTracker.
-							getFragmentEntries(themeDisplay.getLocale());
-
-					fragmentEntry = fragmentEntries.get(
-						fragmentEntryLink.getRendererKey());
+					return false;
 				}
+			).put(
+				"masterLayout",
+				layout.getMasterLayoutPlid() == fragmentEntryLink.getPlid()
+			);
 
-				Map<String, Object> fragmentEntryLinkMap =
-					HashMapBuilder.<String, Object>put(
-						"comments",
-						_getFragmentEntryLinkCommentsJSONArray(
-							fragmentEntryLink)
-					).put(
-						"configuration", configurationJSONObject
-					).put(
-						"content", content
-					).put(
-						"cssClass",
-						LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
-							fragmentEntryLink)
-					).put(
-						"defaultConfigurationValues",
-						_fragmentEntryConfigurationParser.
-							getConfigurationDefaultValuesJSONObject(
-								configuration)
-					).put(
-						"editableTypes",
-						EditableFragmentEntryProcessorUtil.getEditableTypes(
-							content)
-					).put(
-						"editableValues",
-						JSONFactoryUtil.createJSONObject(
-							fragmentEntryLink.getEditableValues())
-					).put(
-						"error",
-						() -> {
-							if (SessionErrors.contains(
-									httpServletRequest,
-									"fragmentEntryContentInvalid")) {
+			String portletId = _getPortletId(jsonObject.getString("content"));
 
-								SessionErrors.clear(httpServletRequest);
+			PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+				portletId);
 
-								return true;
-							}
-
-							return false;
-						}
-					).put(
-						"fragmentEntryLinkId",
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId())
-					).put(
-						"masterLayout",
-						layout.getMasterLayoutPlid() ==
-							fragmentEntryLink.getPlid()
-					).put(
-						"segmentsExperienceId",
-						String.valueOf(
-							fragmentEntryLink.getSegmentsExperienceId())
-					).putAll(
-						_getFragmentEntry(
-							fragmentEntryLink, fragmentEntry, content)
-					).build();
-
-				fragmentEntryLinksMap.put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					fragmentEntryLinkMap);
+			if (portletConfig != null) {
+				jsonObject.put(
+					"name",
+					PortalUtil.getPortletTitle(
+						portletId, themeDisplay.getLocale())
+				).put(
+					"portletId", portletId
+				);
 			}
-		}
-		finally {
-			themeDisplay.setIsolated(isolated);
+
+			fragmentEntryLinksMap.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				jsonObject);
 		}
 
 		LayoutStructure layoutStructure = _getLayoutStructure();

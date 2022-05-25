@@ -63,9 +63,18 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 				commerceOrderContentDisplayContext.getCommerceOrder();
 
 			if ((commerceOrder != null) && commerceOrder.isOpen()) {
-				_commerceOrderHttpHelper.setCurrentCommerceOrder(
-					_portal.getHttpServletRequest(renderRequest),
-					commerceOrder);
+				CommerceOrder currentCommerceOrder =
+					_commerceOrderHttpHelper.getCurrentCommerceOrder(
+						_portal.getHttpServletRequest(renderRequest));
+
+				if ((currentCommerceOrder == null) ||
+					(commerceOrder.getCommerceOrderId() !=
+						currentCommerceOrder.getCommerceOrderId())) {
+
+					_commerceOrderHttpHelper.setCurrentCommerceOrder(
+						_portal.getHttpServletRequest(renderRequest),
+						commerceOrder);
+				}
 			}
 
 			if (GetterUtil.getBoolean(

@@ -20,6 +20,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
 import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
@@ -102,6 +103,72 @@ public class AssetListEntryServiceTest {
 		_addAssetListEntry("Asset List Title");
 
 		_addAssetListEntry("Asset List Title");
+	}
+
+	@Test
+	public void testAssetEntrySelectionDontAddAssetEntryRelIfExist()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.addAssetListEntry(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		_assetListEntryService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry.getEntryId()}, 0, serviceContext);
+
+		int assetListEntriesAssetEntryRelsCount =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId());
+
+		_assetListEntryService.addAssetEntrySelection(
+			assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(), 0,
+			serviceContext);
+
+		Assert.assertEquals(
+			assetListEntriesAssetEntryRelsCount,
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId()));
+	}
+
+	@Test
+	public void testAssetEntrySelectionDontDuplicateAssetEntryRel()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.addAssetListEntry(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		_assetListEntryService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry.getEntryId(), assetEntry.getEntryId()}, 0,
+			serviceContext);
+
+		Assert.assertEquals(
+			1,
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId()));
 	}
 
 	@Test
@@ -344,6 +411,10 @@ public class AssetListEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
+
+	@Inject
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
 
 	@Inject
 	private AssetListEntryService _assetListEntryService;

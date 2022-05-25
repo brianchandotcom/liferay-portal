@@ -343,10 +343,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		String previewFilePath = getPreviewFilePath(
-			groupId, fileEntryId, fileVersionId, null);
-
-		DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, previewFilePath);
+		DLStoreUtil.deleteDirectory(
+			companyId, REPOSITORY_ID,
+			getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
 	}
 
 	protected void deleteThumbnail(
@@ -1089,13 +1088,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				FileVersion importedFileVersion =
 					importedFileEntry.getFileVersion();
 
-				String thumbnailFilePath = getThumbnailFilePath(
-					importedFileVersion, getThumbnailType(importedFileVersion),
-					index);
-
 				addFileToStore(
 					portletDataContext.getCompanyId(), THUMBNAIL_PATH,
-					thumbnailFilePath, inputStream);
+					getThumbnailFilePath(
+						importedFileVersion,
+						getThumbnailType(importedFileVersion), index),
+					inputStream);
 			}
 		}
 	}
@@ -1116,12 +1114,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				return;
 			}
 
-			String thumbnailFilePath = getThumbnailFilePath(
-				fileVersion, getThumbnailType(fileVersion), index);
-
 			addFileToStore(
 				portletDataContext.getCompanyId(), THUMBNAIL_PATH,
-				thumbnailFilePath, inputStream);
+				getThumbnailFilePath(
+					fileVersion, getThumbnailType(fileVersion), index),
+				inputStream);
 		}
 	}
 

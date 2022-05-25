@@ -1546,9 +1546,6 @@ public class ContentPageEditorDisplayContext {
 
 		themeDisplay.setIsolated(true);
 
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_renderResponse);
-
 		try {
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				DefaultFragmentRendererContext fragmentRendererContext =
@@ -1578,7 +1575,7 @@ public class ContentPageEditorDisplayContext {
 				FragmentEntryLinkItemSelectorUtil.
 					addFragmentEntryLinkFieldsSelectorURL(
 						_itemSelector, httpServletRequest,
-						liferayPortletResponse, configurationJSONObject);
+						configurationJSONObject);
 
 				FragmentEntry fragmentEntry =
 					FragmentEntryServiceUtil.fetchFragmentEntry(

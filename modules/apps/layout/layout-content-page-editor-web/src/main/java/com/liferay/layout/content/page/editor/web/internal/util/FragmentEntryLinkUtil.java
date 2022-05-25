@@ -193,7 +193,6 @@ public class FragmentEntryLinkUtil {
 				addFragmentEntryLinkFieldsSelectorURL(
 					itemSelector,
 					PortalUtil.getHttpServletRequest(portletRequest),
-					PortalUtil.getLiferayPortletResponse(portletResponse),
 					configurationJSONObject);
 
 			String content = fragmentRendererController.render(

@@ -221,12 +221,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			addSearchLayout(fullQueryBooleanFilter, searchContext);
 			addSearchUserId(fullQueryBooleanFilter, searchContext);
 
-			Map<String, Indexer<?>> entryClassNameIndexerMap =
-				_getEntryClassNameIndexerMap(
-					entryClassNames, searchContext.getSearchEngineId());
-
 			_addPreFilters(
-				fullQueryBooleanFilter, entryClassNameIndexerMap,
+				fullQueryBooleanFilter,
+				_getEntryClassNameIndexerMap(
+					entryClassNames, searchContext.getSearchEngineId()),
 				searchContext);
 
 			BooleanQuery fullQuery = createFullQuery(

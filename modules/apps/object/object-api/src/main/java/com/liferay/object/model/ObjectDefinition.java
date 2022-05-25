@@ -71,4 +71,6 @@ public interface ObjectDefinition
 
 	public boolean isApproved();
 
+	public boolean isDefaultStorageType();
+
 }

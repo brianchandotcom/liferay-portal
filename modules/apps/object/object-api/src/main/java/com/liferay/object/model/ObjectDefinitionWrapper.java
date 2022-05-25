@@ -708,6 +708,11 @@ public class ObjectDefinitionWrapper
 		return model.isApproved();
 	}
 
+	@Override
+	public boolean isDefaultStorageType() {
+		return model.isDefaultStorageType();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object definition is portlet.
 	 *

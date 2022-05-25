@@ -85,7 +85,7 @@ definition {
 		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 	}
 
-	@description = "REMOVE THIS"
+	@description = "Verify that all Cookie Consent portlet elements are present on the Cookie Consent Popup"
 	macro verifyAllElementsArePresent {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -104,7 +104,7 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
 	}
 
-	@description = "Verfiy that all Cookie Concent portlet elements are present"
+	@description = "Verify that all Cookie Consent portlet elements are present"
 	macro verifyAllElementsArePresentOnCookieConsentPortlet {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -119,7 +119,7 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
 	}
 
-	@description = "Verfiy that cookies are not presen with true as value"
+	@description = "Verify that cookies are not present with true as value"
 	macro verifyCookiesAreNotPresent {
 		CookieHelper.checkSelectedCookieIsNotPresent(
 			cookieName = "CONSENT_TYPE_PERFORMANCE",
@@ -138,7 +138,7 @@ definition {
 			expectedCookieValue = "true");
 	}
 
-	@description = "Verfiy that customized texts are present"
+	@description = "Verify that customized texts are present"
 	macro verifyCustomTextsArePresent {
 		Variables.assertDefined(parameterList = "${key_text}");
 

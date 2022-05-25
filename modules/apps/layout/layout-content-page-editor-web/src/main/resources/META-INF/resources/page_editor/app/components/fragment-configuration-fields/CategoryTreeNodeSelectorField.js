@@ -26,6 +26,7 @@ export function CategoryTreeNodeSelectorField({field, onValueSelect, value}) {
 	return (
 		<ItemSelector
 			eventName={eventName}
+			helpText={field.description}
 			itemSelectorURL={config.assetCategoryTreeNodeItemSelectorURL}
 			label={field.label}
 			modalProps={{height: '60vh', size: 'lg'}}

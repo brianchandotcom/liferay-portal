@@ -43,6 +43,7 @@ export function ItemSelectorField({field, onValueSelect, value}) {
 	return (
 		<>
 			<ItemSelector
+				helpText={field.description}
 				itemSelectorURL={typeOptions.infoItemSelectorURL}
 				label={field.label}
 				onItemSelect={(item) => {

@@ -26,6 +26,7 @@ export function VideoSelectorField({field, onValueSelect, value}) {
 	return (
 		<ItemSelector
 			eventName={eventName}
+			helpText={field.description}
 			itemSelectorURL={config.videoItemSelectorURL}
 			label={field.label}
 			modalProps={{height: '60vh', size: 'lg'}}

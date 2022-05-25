@@ -34,6 +34,7 @@ const DEFAULT_QUICK_MAPPED_INFO_ITEMS = [];
 export default function ItemSelector({
 	className,
 	eventName,
+	helpText,
 	itemSelectorURL,
 	label,
 	modalProps,
@@ -46,6 +47,7 @@ export default function ItemSelector({
 	showMappedItems = true,
 	transformValueCallback,
 }) {
+	const helpTextId = useId();
 	const itemSelectorInputId = useId();
 
 	const openModal = useCallback(() => {
@@ -196,6 +198,7 @@ export default function ItemSelector({
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
+						aria-describedby={helpTextId}
 						className={classNames({
 							'page-editor__item-selector__content-input': showEditControls,
 						})}
@@ -278,6 +281,12 @@ export default function ItemSelector({
 					</ClayInput.GroupItem>
 				)}
 			</ClayInput.Group>
+
+			{helpText ? (
+				<div className="mt-1 text-secondary" id={helpTextId}>
+					{helpText}
+				</div>
+			) : null}
 		</ClayForm.Group>
 	);
 }
@@ -285,6 +294,7 @@ export default function ItemSelector({
 ItemSelector.propTypes = {
 	className: PropTypes.string,
 	eventName: PropTypes.string,
+	helpText: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	modalProps: PropTypes.object,

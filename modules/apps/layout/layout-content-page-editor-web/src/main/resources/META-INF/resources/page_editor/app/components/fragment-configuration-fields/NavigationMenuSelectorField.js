@@ -41,6 +41,7 @@ export function NavigationMenuSelectorField({field, onValueSelect, value}) {
 	return (
 		<ItemSelector
 			eventName={eventName}
+			helpText={field.description}
 			itemSelectorURL={config.siteNavigationMenuItemSelectorURL}
 			label={field.label}
 			modalProps={{height: '60vh', size: 'lg'}}

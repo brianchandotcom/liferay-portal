@@ -96,6 +96,7 @@ const MultiSelect = ({
 	options,
 	value,
 }) => {
+	const helpTextId = useId();
 	const labelId = useId();
 
 	const [nextValue, setNextValue] = useControlledState(value);
@@ -142,6 +143,7 @@ const MultiSelect = ({
 	return (
 		<>
 			<label id={labelId}>{field.label}</label>
+
 			<ClayDropDown
 				active={active}
 				disabled={!!disabled}
@@ -149,6 +151,7 @@ const MultiSelect = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-describedby={helpTextId}
 						aria-labelledby={labelId}
 						className="form-control-select form-control-sm text-left w-100"
 						displayType="secondary"
@@ -168,11 +171,18 @@ const MultiSelect = ({
 					</ClayDropDown.Section>
 				))}
 			</ClayDropDown>
+
+			{field.description ? (
+				<div className="mt-1 small text-secondary" id={helpTextId}>
+					{field.description}
+				</div>
+			) : null}
 		</>
 	);
 };
 
 const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
+	const helpTextId = useId();
 	const inputId = useId();
 
 	const [nextValue, setNextValue] = useControlledState(value);
@@ -180,7 +190,9 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 	return (
 		<>
 			<label htmlFor={inputId}>{field.label}</label>
+
 			<ClaySelectWithOption
+				aria-describedby={helpTextId}
 				disabled={!!disabled}
 				id={inputId}
 				onChange={(event) => {
@@ -193,6 +205,12 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 				options={options}
 				value={nextValue}
 			/>
+
+			{field.description ? (
+				<div className="mt-1 small text-secondary" id={helpTextId}>
+					{field.description}
+				</div>
+			) : null}
 		</>
 	);
 };

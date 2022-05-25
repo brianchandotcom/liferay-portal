@@ -18,9 +18,12 @@ import React, {useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {useId} from '../../utils/useId';
 
 export function TextField({field, onValueSelect, value}) {
 	const [errorMessage, setErrorMessage] = useState('');
+	const helpTextId = useId();
+	const inputId = useId();
 
 	const [nextValue, setNextValue] = useControlledState(value);
 
@@ -30,10 +33,11 @@ export function TextField({field, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-			<label htmlFor={field.name}>{field.label}</label>
+			<label htmlFor={inputId}>{field.label}</label>
 
 			<ClayInput
-				id={field.name}
+				aria-describedby={helpTextId}
+				id={inputId}
 				onBlur={(event) => {
 					if (event.target.checkValidity()) {
 						setErrorMessage('');
@@ -69,6 +73,12 @@ export function TextField({field, onValueSelect, value}) {
 				value={nextValue || ''}
 				{...additionalProps}
 			/>
+
+			{field.description ? (
+				<div className="mt-1 small text-secondary" id={helpTextId}>
+					{field.description}
+				</div>
+			) : null}
 
 			{errorMessage && (
 				<ClayForm.FeedbackGroup>

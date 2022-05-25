@@ -21,8 +21,10 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
+import {useId} from '../../utils/useId';
 
 export function CheckboxField({disabled, field, onValueSelect, title, value}) {
+	const helpTextId = useId();
 	const [nextValue, setNextValue] = useControlledState(value || false);
 
 	const selectedViewportSize = useSelector(
@@ -61,6 +63,7 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 			>
 				{field.typeOptions?.displayType === 'toggle' ? (
 					<ClayToggle
+						aria-describedby={helpTextId}
 						containerProps={{className: 'mb-0'}}
 						disabled={disabled}
 						label={label}
@@ -69,6 +72,7 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 					/>
 				) : (
 					<ClayCheckbox
+						aria-describedby={helpTextId}
 						checked={checked}
 						containerProps={{className: 'mb-0'}}
 						disabled={disabled}
@@ -91,6 +95,12 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 						/>
 					)}
 			</div>
+
+			{field.description ? (
+				<div className="mt-1 small text-secondary" id={helpTextId}>
+					{field.description}
+				</div>
+			) : null}
 		</ClayForm.Group>
 	);
 }

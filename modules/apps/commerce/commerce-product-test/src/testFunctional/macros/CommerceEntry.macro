@@ -625,7 +625,7 @@ definition {
 		if ("${pageType}" == "Public") {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
-				value1 = "Pages > ${pageName}");
+				value1 = "Public Pages > ${pageName}");
 		}
 
 		if ("${pageType}" == "Private") {

@@ -12,28 +12,13 @@
  * details.
  */
 
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {getCacheItem, getCacheKey} from './cache';
-import getFragmentItem from './getFragmentItem';
+import hasRequiredInputChild from './hasRequiredInputChild';
 import hasSubmitChild from './hasSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
-
-function getDescendantIds(layoutData, itemId) {
-	const item = layoutData.items[itemId];
-
-	const descendantIds = [...item.children];
-
-	item.children.forEach((childId) => {
-		if (!isLayoutDataItemDeleted(layoutData, childId)) {
-			descendantIds.push(...getDescendantIds(layoutData, childId));
-		}
-	});
-
-	return descendantIds;
-}
 
 function getFormItems(layoutData) {
 	return Object.values(layoutData.items).filter(
@@ -44,24 +29,15 @@ function getFormItems(layoutData) {
 	);
 }
 
-function itemIsHidden(layoutData, itemId) {
-	const item = layoutData.items[itemId];
-
-	if (!item) {
-		return false;
-	}
-
-	return (
-		item.config.styles?.display === 'none' ||
-		itemIsHidden(layoutData, item.parentId)
-	);
-}
-
 export default function useIsSomeFormIncomplete() {
 	const stateRef = useSelectorRef((state) => state);
 
 	return () => {
-		const {fragmentEntryLinks, layoutData} = stateRef.current;
+		const {
+			fragmentEntryLinks,
+			layoutData,
+			selectedViewportSize,
+		} = stateRef.current;
 
 		const forms = getFormItems(layoutData);
 
@@ -103,32 +79,16 @@ export default function useIsSomeFormIncomplete() {
 		});
 
 		return Promise.all(promises).then((forms) =>
-			forms.some(({fields, itemId}) => {
-				const requiredFields = fields
-					.flatMap((fieldSet) => fieldSet.fields)
-					.filter((field) => field.required);
-
-				const descendantIds = getDescendantIds(layoutData, itemId);
-
-				return requiredFields.some((field) =>
-					Object.values(fragmentEntryLinks).some(
-						(fragmentEntryLink) => {
-							const {itemId} = getFragmentItem(
-								layoutData,
-								fragmentEntryLink.fragmentEntryLinkId
-							);
-
-							return (
-								itemIsHidden(layoutData, itemId) &&
-								fragmentEntryLink.editableValues?.[
-									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-								]?.inputFieldId === field.key &&
-								descendantIds.includes(itemId)
-							);
-						}
-					)
-				);
-			})
+			forms.some(({fields, itemId}) =>
+				hasRequiredInputChild({
+					checkHidden: true,
+					formFields: fields,
+					fragmentEntryLinks,
+					itemId,
+					layoutData,
+					selectedViewportSize,
+				})
+			)
 		);
 	};
 }

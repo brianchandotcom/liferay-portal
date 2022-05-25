@@ -751,6 +751,18 @@ definition {
 		Form.assertFormWasPublished();
 	}
 
+	macro navigateFormPagesTopList {
+		var formPageNumber = "${key_formPageNumber}";
+		var formPageName = "${key_formPageName}";
+
+		Click(
+			locator1 = "Form#FORM_PAGE_TOP_LIST",
+			key_formPageNumber = "${formPageNumber}",
+			key_formPageName = "${formPageName}");
+
+		
+	}
+
 	macro reorderFields {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldName = "${fieldName}",

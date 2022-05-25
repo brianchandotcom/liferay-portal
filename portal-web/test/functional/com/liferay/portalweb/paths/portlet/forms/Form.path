@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_PAGE_TOP_LIST</td>
+	<td>//div[@class='ddm-form-pagination position-relative wizard-mode']//div//div[text()='${key_formPageName}']/..//span[@data-multi-step-icon='${key_formPageNumber}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

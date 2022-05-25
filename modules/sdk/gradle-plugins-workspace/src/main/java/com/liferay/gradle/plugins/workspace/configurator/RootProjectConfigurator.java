@@ -22,6 +22,7 @@ import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer;
 import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer;
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage;
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
@@ -104,6 +105,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  * @author Andrea Di Giorgi
  * @author David Truong
  * @author Simon Jiang
+ * @author Seiphon Wang
  */
 @SuppressWarnings("deprecation")
 public class RootProjectConfigurator implements Plugin<Project> {
@@ -129,6 +131,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_DOCKERFILE_ALL_TASK_NAME =
 		"createDockerfileAll";
+
+	public static final String CREATE_REGISTRY_CONTAINER_TASK_NAME =
+			"createRegistryContainer";
+
+	public static final String CREATE_DOCKER_LOCAL_REGISTRY_TASK_NAME =
+		"createDockerLocalRegistry";
 
 	public static final String CREATE_DOCKERFILE_TASK_NAME = "createDockerfile";
 
@@ -164,11 +172,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String PULL_DOCKER_IMAGE_TASK_NAME = "pullDockerImage";
 
+	public static final String PULL_LOCAL_DOCKER_IMAGE_TASK_NAME =
+		"pullLocalDockerImage";
+
+	public static final String PUSH_LOCAL_DOCKER_IMAGE_TASK_NAME =
+		"pushLocalDockerImage";
+
 	public static final String REMOVE_DOCKER_CONTAINER_TASK_NAME =
 		"removeDockerContainer";
 
 	public static final String START_DOCKER_CONTAINER_TASK_NAME =
 		"startDockerContainer";
+
+	public static final String START_REGISTRY_CONTAINER_TASK_NAME =
+		"startRegistryContainer";
 
 	public static final String STOP_DOCKER_CONTAINER_TASK_NAME =
 		"stopDockerContainer";
@@ -336,6 +353,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension, verifyProductTask);
+
+		_addTaskCreateDockerLocalRegistry(project);
+		_addTaskPushDockerImage(project, workspaceExtension);
+		_addTaskPullDockerImage(project, workspaceExtension);
 	}
 
 	private DockerBuildImage _addTaskBuildDockerImage(
@@ -729,6 +750,73 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerfile;
+	}
+
+	private void _addTaskCreateDockerLocalRegistry(Project project) {
+		DockerPullImage pullRegistryImage = GradleUtil.addTask(
+			project, CREATE_DOCKER_LOCAL_REGISTRY_TASK_NAME,
+			DockerPullImage.class);
+
+		Property<String> pullImageProperty = pullRegistryImage.getImage();
+
+		pullImageProperty.set("registry:2");
+
+		DockerCreateContainer dockerCreateContainer = GradleUtil.addTask(
+			project, CREATE_REGISTRY_CONTAINER_TASK_NAME,
+			DockerCreateContainer.class);
+
+		dockerCreateContainer.dependsOn(pullRegistryImage);
+
+		dockerCreateContainer.targetImageId(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "registry:2";
+				}
+
+			});
+
+		Property<String> containerNameProperty =
+			dockerCreateContainer.getContainerName();
+
+		containerNameProperty.set("registry");
+
+		DockerCreateContainer.HostConfig hostConfig =
+			dockerCreateContainer.getHostConfig();
+
+		ListProperty<String> portBindings = hostConfig.getPortBindings();
+
+		portBindings.add("5000:5000");
+
+		Property<String> restartPolicy = hostConfig.getRestartPolicy();
+
+		restartPolicy.set("always");
+
+		Property<String> containerId = dockerCreateContainer.getContainerId();
+
+		containerId.set("registry");
+
+		DockerStartContainer dockerStartContainer = GradleUtil.addTask(
+			project, START_REGISTRY_CONTAINER_TASK_NAME,
+			DockerStartContainer.class);
+
+		dockerStartContainer.dependsOn(dockerCreateContainer);
+		dockerStartContainer.mustRunAfter(dockerCreateContainer);
+
+		dockerStartContainer.setGroup(DOCKER_GROUP);
+		dockerStartContainer.setDescription(
+			"Create and start docker local registry.");
+
+		dockerStartContainer.targetContainerId(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "registry";
+				}
+
+			});
 	}
 
 	private CreateTokenTask _addTaskCreateToken(Project project) {
@@ -1129,6 +1217,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerLogsContainer;
 	}
 
+	private void _addTaskPullDockerImage(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		DockerPullImage pullLocalDockerImage = GradleUtil.addTask(
+			project, PULL_LOCAL_DOCKER_IMAGE_TASK_NAME, DockerPullImage.class);
+
+		pullLocalDockerImage.setGroup(DOCKER_GROUP);
+		pullLocalDockerImage.setDescription("Pull the local Docker iamge.");
+
+		Property<String> image = pullLocalDockerImage.getImage();
+
+		image.set(workspaceExtension.getDockerImageId());
+	}
+
 	private DockerPullImage _addTaskPullDockerImage(
 		Project project, WorkspaceExtension workspaceExtension,
 		VerifyProductTask verifyProductTask) {
@@ -1146,6 +1248,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerPullImage.setGroup(DOCKER_GROUP);
 
 		return dockerPullImage;
+	}
+
+	private void _addTaskPushDockerImage(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		DockerPushImage pushLocalDockerImage = GradleUtil.addTask(
+			project, PUSH_LOCAL_DOCKER_IMAGE_TASK_NAME, DockerPushImage.class);
+
+		pushLocalDockerImage.setGroup(DOCKER_GROUP);
+		pushLocalDockerImage.setDescription("Push the local Docker iamge.");
+
+		SetProperty<String> images = pushLocalDockerImage.getImages();
+
+		images.add(workspaceExtension.getDockerImageId());
 	}
 
 	private DockerRemoveContainer _addTaskRemoveDockerContainer(
@@ -1759,10 +1875,27 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				version = project.getVersion();
 			}
 
-			workspaceExtension.setDockerImageId(
-				String.format(
-					"%s-liferay:%s",
-					StringUtil.getDockerSafeName(project.getName()), version));
+			String dockerLocalRegistryUrl =
+				workspaceExtension.getDockerLocalRegistryUrl();
+
+			String dockerLocalRegistryPort =
+				workspaceExtension.getDockerLocalRegistryPort();
+
+			if (workspaceExtension.isDockerLocalRegistryEnabled()) {
+				workspaceExtension.setDockerImageId(
+					String.format(
+						"%s:%s/%s-liferay:%s", dockerLocalRegistryUrl,
+						dockerLocalRegistryPort,
+						StringUtil.getDockerSafeName(project.getName()),
+						version));
+			}
+			else {
+				workspaceExtension.setDockerImageId(
+					String.format(
+						"%s-liferay:%s",
+						StringUtil.getDockerSafeName(project.getName()),
+						version));
+			}
 		}
 	}
 

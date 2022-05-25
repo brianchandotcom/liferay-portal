@@ -81,6 +81,12 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
+		_localRegistryEnabled = GradleUtil.getProperty(
+			settings, "docker.local.registry.enabled", false);
+		_dockerLocalRegistryUrl = GradleUtil.getProperty(
+			settings, "docker.local.registry.url", "localhost");
+		_dockerLocalRegistryPort = GradleUtil.getProperty(
+			settings, "docker.local.registry.port", "5000");
 		_appServerTomcatVersion = GradleUtil.getProperty(
 			settings, "app.server.tomcat.version",
 			_getDefaultAppServerVersion());
@@ -281,6 +287,14 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_dockerImageLiferay);
 	}
 
+	public String getDockerLocalRegistryPort() {
+		return GradleUtil.toString(_dockerLocalRegistryPort);
+	}
+
+	public String getDockerLocalRegistryUrl() {
+		return GradleUtil.toString(_dockerLocalRegistryUrl);
+	}
+
 	public String getEnvironment() {
 		return GradleUtil.toString(_environment);
 	}
@@ -323,6 +337,10 @@ public class WorkspaceExtension {
 
 	public boolean isBundleTokenForce() {
 		return GradleUtil.toBoolean(_bundleTokenForce);
+	}
+
+	public boolean isDockerLocalRegistryEnabled() {
+		return GradleUtil.toBoolean(_localRegistryEnabled);
 	}
 
 	public ProjectConfigurator propertyMissing(String name) {
@@ -393,6 +411,18 @@ public class WorkspaceExtension {
 
 	public void setDockerImageLiferay(Object dockerImageLiferay) {
 		_dockerImageLiferay = dockerImageLiferay;
+	}
+
+	public void setDockerLocalRegistryEnabled(Object localRegistryEnabled) {
+		_localRegistryEnabled = localRegistryEnabled;
+	}
+
+	public void setDockerLocalRegistryPort(Object dockerLocalRegistryPort) {
+		_dockerLocalRegistryPort = dockerLocalRegistryPort;
+	}
+
+	public void setDockerLocalRegistryUrl(Object dockerLocalRegistryUrl) {
+		_dockerLocalRegistryUrl = dockerLocalRegistryUrl;
 	}
 
 	public void setEnvironment(Object environment) {
@@ -667,9 +697,12 @@ public class WorkspaceExtension {
 	private Object _dockerDir;
 	private Object _dockerImageId;
 	private Object _dockerImageLiferay;
+	private Object _dockerLocalRegistryPort;
+	private Object _dockerLocalRegistryUrl;
 	private Object _environment;
 	private final Gradle _gradle;
 	private Object _homeDir;
+	private Object _localRegistryEnabled;
 	private Object _nodePackageManager;
 	private Object _product;
 	private final Map<String, ProductInfo> _productInfos = new HashMap<>();

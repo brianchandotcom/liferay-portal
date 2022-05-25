@@ -27,7 +27,116 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-        task ("Setup: A simple product with a SKU") {
+	@description = "COMMERCE-9352 | Verify if discontinued products are replaced by the replacement product when adding a discontinued product to an order"
+	@priority = "3"
+	test DiscontinuedProductIsReplacedWhenImportedFromOrders {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Given a complete order with a discontinued product") {
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+
+			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productUnitPrice = "50",
+				shippingMethod = "Standard");
+		}
+
+		task ("And given ABS Sensor as Discontinued and set a new Replacement") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.editWarehousesQuantity(
+				italyQuantity = "0",
+				northeastQuantity = "0",
+				productName = "ABS Sensor",
+				productSku = "MIN93015",
+				southwestQuantity = "0");
+	
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "MIN55861");
+
+			Button.clickPublish();
+		}
+
+		task ("And given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When we try to import the previous order with the discontinued product") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Orders");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			CommerceNavigator.gotoTableListEntry(entryName = "48379");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then the older product is replaced with the new one ") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "24.00",
+				unitPrice = "24.00");
+		}
+
+		task ("And then after we click on 'Import' button verify if the product is actually replaced") {
+			Button.click(button = "Import");
+
+			SelectFrameTop();
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+		
+	}
+	
+
+	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				discontinued = "True",
@@ -51,10 +160,10 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-    @description = "COMMERCE-9347 | Replacement product's information is shown in product details"
+	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
 	@priority = "3"
-	test ReplacementProductInformationIsDisplayedInProductDetails {
-        task ("Given a Minium site with a buyer user") {
+	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
+		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -63,53 +172,52 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-        task ("When the discontinued product's product details page is reached") {
+		task ("When the discontinued product's product details page is reached") {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
-        }
+		}
 
-        task ("Then all the warnings about the discontinued product are shown") {
+		task ("And when the replacement product's button is hit") {
+			Click(
+				key_text = "Replacement Product",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the user is redirected to the replacement's product details page") {
+			FrontStore.assertProductDetails(
+				productName = "Test Simple Product Replacement",
+				productSKU = "SKU1001");
+		}
+	}
+
+	@description = "COMMERCE-9347 | Replacement product's information is shown in product details"
+	@priority = "3"
+	test ReplacementProductInformationIsDisplayedInProductDetails {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the discontinued product's product details page is reached") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+		}
+
+		task ("Then all the warnings about the discontinued product are shown") {
 			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
 
 			FrontStore.assertProductDetails(
 				endOfLifeDate = "${endOfLifeDate}",
 				productAvailability = "Discontinued");
-        }
-
-        task ("And then the replacement product's button is shown") {
-			AssertElementPresent(
-				locator1 = "Button#ANY",
-				key_text = "Replacement Product");
-        }
-    }
-
-	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
-	@priority = "3"
-	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
-        task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
 		}
 
-        task ("When the discontinued product's product details page is reached") {
-			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
-        }
-
-		task ("And when the replacement product's button is hit") {
-			Click(
-				locator1 = "Button#ANY",
-				key_text = "Replacement Product");
-        }
-
-        task ("Then the user is redirected to the replacement's product details page") {
-			FrontStore.assertProductDetails(
-				productName = "Test Simple Product Replacement",
-				productSKU = "SKU1001");
-        }
-
-    }
+		task ("And then the replacement product's button is shown") {
+			AssertElementPresent(
+				key_text = "Replacement Product",
+				locator1 = "Button#ANY");
+		}
+	}
 
 }

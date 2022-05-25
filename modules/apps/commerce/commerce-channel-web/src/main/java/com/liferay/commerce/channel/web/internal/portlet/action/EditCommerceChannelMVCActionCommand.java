@@ -238,10 +238,10 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 
 		_updateAccountCartMaxAllowed(commerceChannel, actionRequest);
 		_updatePurchaseOrderNumber(commerceChannel, actionRequest);
+		_updateRequestedDeliveryDateFormat(commerceChannel, actionRequest);
 		_updateShippingTaxCategory(commerceChannel, actionRequest);
 		_updateSiteType(commerceChannel, actionRequest);
 		_updateWorkflowDefinitionLinks(commerceChannel, actionRequest);
-		_updateRequestedDeliveryDateFormat(commerceChannel, actionRequest);
 
 		return _commerceChannelService.updateCommerceChannel(
 			commerceChannelId, commerceChannel.getSiteGroupId(), name,

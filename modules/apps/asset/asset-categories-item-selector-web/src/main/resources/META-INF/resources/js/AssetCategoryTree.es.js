@@ -16,7 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const nodeByName = (items, name) => {
 	return items.reduce(function reducer(acc, item) {
@@ -30,6 +30,16 @@ const nodeByName = (items, name) => {
 		return acc;
 	}, []);
 };
+
+function visit(nodes, callback) {
+	nodes.forEach((node) => {
+		callback(node);
+
+		if (node.children) {
+			visit(node.children, callback);
+		}
+	});
+}
 
 export function AssetCategoryTree({
 	filterQuery,
@@ -49,46 +59,54 @@ export function AssetCategoryTree({
 		return nodeByName(items, filterQuery);
 	}, [items, filterQuery]);
 
-	const selectedItemsRef = useRef(new Map());
+	const itemsById = useMemo(() => {
+		const flattenItems = {};
 
-	const handleMultipleSelectionChange = (item, selection) => {
-		selection.toggle(item.id);
+		visit(items, (item) => {
+			flattenItems[item.id] = item;
+		});
 
-		if (!selection.has(item.id)) {
-			selectedItemsRef.current.set(item.id, {
+		return flattenItems;
+	}, [items]);
+
+	useEffect(() => {
+		const selectedItems = [];
+
+		selectedKeys.forEach((key) => {
+			const item = itemsById[key];
+
+			if (item.disabled) {
+				return;
+			}
+
+			selectedItems.push({
 				className: item.className,
 				classNameId: item.classNameId,
 				classPK: item.id,
 				title: item.name,
 			});
-		}
-		else {
-			selectedItemsRef.current.delete(item.id);
+		});
+
+		if (onSelectedItemsCount) {
+			onSelectedItemsCount(selectedItems.length);
 		}
 
-		if (multiSelection) {
-			onSelectedItemsCount(selectedItemsRef.current.size);
-		}
+		let data = selectedItems;
 
-		if (!selectedItemsRef.current.size) {
-			return;
+		if (!multiSelection) {
+			data = selectedItems[0];
 		}
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
-			data: Array.from(selectedItemsRef.current.values()),
+			data,
 		});
-	};
-
-	const handleSingleSelectionChange = (item) => {
-		Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
-			data: {
-				className: item.className,
-				classNameId: item.classNameId,
-				classPK: item.id,
-				title: item.name,
-			},
-		});
-	};
+	}, [
+		selectedKeys,
+		itemsById,
+		itemSelectedEventName,
+		multiSelection,
+		onSelectedItemsCount,
+	]);
 
 	const onClick = (event, item, selection) => {
 		event.preventDefault();
@@ -97,29 +115,18 @@ export function AssetCategoryTree({
 			return;
 		}
 
-		if (multiSelection) {
-			handleMultipleSelectionChange(item, selection);
-		}
-		else {
-			handleSingleSelectionChange(item);
-		}
+		selection.toggle(item.id);
 	};
 
-	const onKeyDownCapture = (event, item, selection) => {
+	const onKeyDown = (event, item, selection) => {
 		if (event.key === ' ' || event.key === 'Enter') {
 			event.preventDefault();
-			event.stopPropagation();
 
 			if (item.disabled) {
 				return;
 			}
 
-			if (multiSelection) {
-				handleMultipleSelectionChange(item, selection);
-			}
-			else {
-				handleSingleSelectionChange(item);
-			}
+			selection.toggle(item.id);
 		}
 	};
 
@@ -136,18 +143,11 @@ export function AssetCategoryTree({
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
 						onClick={(event) => onClick(event, item, selection)}
-						onKeyDownCapture={(event) =>
-							onKeyDownCapture(event, item, selection)
-						}
+						onKeyDown={(event) => onKeyDown(event, item, selection)}
 					>
 						{multiSelection && !item.disabled && (
 							<ClayCheckbox
-								onChange={() =>
-									handleMultipleSelectionChange(
-										selection,
-										item
-									)
-								}
+								onChange={() => selection.toggle(item.id)}
 								tabIndex="-1"
 							/>
 						)}
@@ -163,17 +163,14 @@ export function AssetCategoryTree({
 								onClick={(event) =>
 									onClick(event, item, selection)
 								}
-								onKeyDownCapture={(event) =>
-									onKeyDownCapture(event, item, selection)
+								onKeyDown={(event) =>
+									onKeyDown(event, item, selection)
 								}
 							>
 								{multiSelection && !item.disabled && (
 									<ClayCheckbox
 										onChange={() =>
-											handleMultipleSelectionChange(
-												selection,
-												item
-											)
+											selection.toggle(item.id)
 										}
 										tabIndex="-1"
 									/>

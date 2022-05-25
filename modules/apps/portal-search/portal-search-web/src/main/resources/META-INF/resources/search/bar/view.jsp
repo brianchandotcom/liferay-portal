@@ -66,6 +66,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 						).put(
 							"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
 						).put(
+							"initialScope", searchBarPortletDisplayContext.getScopeParameterValue()
+						).put(
 							"keywords", searchBarPortletDisplayContext.getKeywords()
 						).put(
 							"keywordsParameterName", searchBarPortletDisplayContext.getKeywordsParameterName()
@@ -74,9 +76,11 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 						).put(
 							"paginationStartParameterName", searchBarPortletDisplayContext.getPaginationStartParameterName()
 						).put(
-							"scope", searchBarPortletDisplayContext.getScopeParameterValue()
-						).put(
 							"scopeParameterName", searchBarPortletDisplayContext.getScopeParameterName()
+						).put(
+							"scopeParameterStringCurrentSite", searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString()
+						).put(
+							"scopeParameterStringEverything", searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
 						).put(
 							"searchURL", searchBarPortletDisplayContext.getSearchURL()
 						).put(

@@ -57,29 +57,35 @@ public class CISystemHistoryReportUtil {
 	}
 
 	protected static void writeAllDurationsJavaScriptFile() throws IOException {
-		StringBuilder sb = new StringBuilder();
+		File allDurationsFile = new File(
+			_CI_SYSTEM_HISTORY_REPORT_DIR, "js/all-durations.js");
 
-		for (DurationReport durationReport : _getDurationReports()) {
-			sb.append(durationReport.getAllDurationsJavaScriptContent());
+		if (allDurationsFile.exists()) {
+			JenkinsResultsParserUtil.delete(allDurationsFile);
 		}
 
-		JenkinsResultsParserUtil.write(
-			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/all-durations.js"),
-			sb.toString());
+		for (DurationReport durationReport : _getDurationReports()) {
+			JenkinsResultsParserUtil.append(
+				allDurationsFile,
+				durationReport.getAllDurationsJavaScriptContent());
+		}
 	}
 
 	protected static void writeBackupDurationsJavaScriptFile()
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
+		File backupDurationsFile = new File(
+			_CI_SYSTEM_HISTORY_REPORT_DIR, "js/backup-durations.js");
 
-		for (DurationReport durationReport : _getDurationReports()) {
-			sb.append(durationReport.getBackupDurationsJavaScriptContent());
+		if (backupDurationsFile.exists()) {
+			JenkinsResultsParserUtil.delete(backupDurationsFile);
 		}
 
-		JenkinsResultsParserUtil.write(
-			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/backup-durations.js"),
-			sb.toString());
+		for (DurationReport durationReport : _getDurationReports()) {
+			JenkinsResultsParserUtil.append(
+				backupDurationsFile,
+				durationReport.getBackupDurationsJavaScriptContent());
+		}
 	}
 
 	protected static void writeDateDurationsJavaScriptFile(
@@ -89,19 +95,20 @@ public class CISystemHistoryReportUtil {
 		List<JSONObject> buildResultJSONObjects = _getBuildResultJSONObjects(
 			jobName, testSuiteName, dateString);
 
-		StringBuilder sb = new StringBuilder();
+		File durationsFile = new File(
+			_CI_SYSTEM_HISTORY_REPORT_DIR,
+			"js/durations-" + dateString + ".js");
+
+		if (durationsFile.exists()) {
+			JenkinsResultsParserUtil.delete(durationsFile);
+		}
 
 		for (DurationReport durationReport : _getDurationReports()) {
-			sb.append(
+			JenkinsResultsParserUtil.append(
+				durationsFile,
 				durationReport.getDateDurationsJavaScriptContent(
 					buildResultJSONObjects, dateString));
 		}
-
-		JenkinsResultsParserUtil.write(
-			new File(
-				_CI_SYSTEM_HISTORY_REPORT_DIR,
-				"js/durations-" + dateString + ".js"),
-			sb.toString());
 	}
 
 	protected static void writeDateDurationsJavaScriptFiles(

@@ -152,14 +152,10 @@ public class FragmentEntryLinkUtil {
 				themeDisplay.getLocale());
 
 			String fragmentEntryKey = null;
-			int fragmentEntryType = FragmentConstants.TYPE_COMPONENT;
-			String icon = null;
 			String name = null;
 
 			if (fragmentEntry != null) {
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
-				fragmentEntryType = fragmentEntry.getType();
-				icon = fragmentEntry.getIcon();
 				name = fragmentEntry.getName();
 			}
 			else {
@@ -226,9 +222,24 @@ public class FragmentEntryLinkUtil {
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 			).put(
 				"fragmentEntryType",
-				FragmentConstants.getTypeLabel(fragmentEntryType)
+				() -> {
+					int fragmentEntryType = FragmentConstants.TYPE_COMPONENT;
+
+					if (fragmentEntry != null) {
+						fragmentEntryType = fragmentEntry.getType();
+					}
+
+					return FragmentConstants.getTypeLabel(fragmentEntryType);
+				}
 			).put(
-				"icon", icon
+				"icon",
+				() -> {
+					if (fragmentEntry != null) {
+						return fragmentEntry.getIcon();
+					}
+
+					return null;
+				}
 			).put(
 				"name", name
 			).put(

@@ -25,8 +25,6 @@ ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getOb
 
 List<ObjectField> objectFields = (List<ObjectField>)request.getAttribute(ObjectWebKeys.OBJECT_FIELDS);
 
-String storageType = objectDefinition.getStorageType();
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -194,7 +192,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				</aui:field-wrapper>
 			</clay:sheet-section>
 
-			<c:if test='<%= !Objects.equals(storageType.toLowerCase(), "default") %>'>
+			<c:if test="<%= !objectDefinition.isDefaultStorageType() %>">
 				<clay:sheet-section>
 					<h3 class="sheet-subtitle">
 						<%= LanguageUtil.get(request, "external-data-source") %>
@@ -205,7 +203,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 							md="11"
 						>
 							<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
-								<aui:option label="<%= LanguageUtil.get(request, storageType) %>" selected="<%= true %>" value="" />
+								<aui:option label="<%= LanguageUtil.get(request, objectDefinition.getStorageType()) %>" selected="<%= true %>" value="" />
 							</aui:select>
 						</clay:col>
 					</clay:row>

@@ -24,13 +24,11 @@ import com.liferay.object.web.internal.object.definitions.display.context.Object
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,9 +74,7 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		return Objects.equals(
-			StringUtil.toLowerCase(objectDefinition.getStorageType()),
-			"default");
+		return objectDefinition.isDefaultStorageType();
 	}
 
 	@Override

@@ -88,7 +88,29 @@ public class PwdAuthenticator {
 		return false;
 	}
 
+	public static void pretendToAuthenticate() throws PwdEncryptorException {
+		authenticate(
+			_PRETENDED_LOGIN, _PRETENDED_CLEAR_TEXT_PASSWORD,
+			_PRETENDED_CURRENT_ENCRYPTED_PASSWORD);
+	}
+
+	private static final String _PRETENDED_CLEAR_TEXT_PASSWORD = "password";
+
+	private static final String _PRETENDED_CURRENT_ENCRYPTED_PASSWORD;
+
+	private static final String _PRETENDED_LOGIN = "login";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PwdAuthenticator.class.getName());
+
+	static {
+		try {
+			_PRETENDED_CURRENT_ENCRYPTED_PASSWORD =
+				PasswordEncryptorUtil.encrypt("currentPassword");
+		}
+		catch (PwdEncryptorException pwdEncryptorException) {
+			throw new RuntimeException(pwdEncryptorException);
+		}
+	}
 
 }

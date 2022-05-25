@@ -97,8 +97,10 @@ export function AssetCategoryTree({
 			data = selectedItems[0];
 		}
 
-		Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
-			data,
+		requestAnimationFrame(() => {
+			Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
+				data,
+			});
 		});
 	}, [
 		selectedKeys,

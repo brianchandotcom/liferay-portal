@@ -24,12 +24,7 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Enable log context and Incoming X-Request-ID") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Audit",
-				configurationName = "Audit Log Context",
-				configurationScope = "System Scope");
+			Audit.gotoSystemSettings(portlet = "Audit Log Context");
 
 			Click(locator1 = "Audit#AUDIT_LOG_CONTEXT_ENABLED_BUTTON");
 
@@ -97,6 +92,37 @@ definition {
 			var userId = JSONCurlUtil.get("${curl}");
 
 			AuditLog.viewLogFileContent(logString = "${validXRequestId}");
+		}
+	}
+
+	@description = "This is a use case for LPS-150300. Verify that Console outputs the correct clientIP when reading of the X-Forwarded-For http header."
+	@priority = "5"
+	test VerifyCorrectClientIP {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property test.name.skip.portal.instance = "Audit#VerifyCorrectClientIP";
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("Verify that console outputs the correct clientIP when reading of the X-Forwarded-For http header") {
+			var ipAddress = PropsUtil.get("ip.address");
+
+			var curl = '''http://localhost:8080/home?SM_USER=test@liferay.com -H 'X-Forwarded-For: ${ipAddress}' ''';
+
+			echo("## * Read of the X-Forwarded-For http header:");
+
+			var runGet = JSONCurlUtil.get("${curl}");
+
+			AuditLog.viewLogFileContent(logString = "clientIP=127.0.0.1");
 		}
 	}
 

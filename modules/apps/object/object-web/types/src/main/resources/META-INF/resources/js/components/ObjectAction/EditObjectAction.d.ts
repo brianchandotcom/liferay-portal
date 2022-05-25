@@ -16,12 +16,14 @@
 
 import {CustomItem} from '../Form/CustomSelect/CustomSelect';
 export default function EditObjectAction({
+	ffNotificationTemplates,
 	objectAction: {id, ...values},
 	objectActionExecutors,
 	objectActionTriggers,
 	readOnly,
 }: IProps): JSX.Element;
 interface IProps {
+	ffNotificationTemplates: boolean;
 	objectAction: ObjectAction;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

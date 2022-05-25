@@ -13,7 +13,8 @@
  */
 
 import ClayForm, {ClayToggle} from '@clayui/form';
-import React, {useMemo} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {FormError} from '../../../hooks/useForm';
 import Card from '../../Card/Card';
@@ -21,13 +22,24 @@ import CodeMirrorEditor from '../../CodeMirrorEditor';
 import CustomSelect, {CustomItem} from '../../Form/CustomSelect/CustomSelect';
 import Input from '../../Form/Input';
 
+import './ActionBuilder.scss';
+
 export default function ActionBuilder({
 	errors,
+	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
 	setValues,
 	values,
 }: IProps) {
+	const [notificationTemplates, setNotificationTemplates] = useState<any[]>(
+		[]
+	);
+	const [
+		selectedNotificationTemplate,
+		setSelectedNotificationTemplate,
+	] = useState('');
+
 	const actionExecutors = useMemo(() => {
 		const executors = new Map<string, string>();
 
@@ -47,6 +59,34 @@ export default function ActionBuilder({
 
 		return triggers;
 	}, [objectActionTriggers]);
+
+	useEffect(() => {
+		if (values.objectActionExecutorKey === 'notificationTemplate') {
+			const makeFetch = async () => {
+				const response = await fetch(
+					'/o/notification/v1.0/notification-templates',
+					{
+						method: 'GET',
+					}
+				);
+
+				const {items} = (await response.json()) as any;
+
+				const notificationsArray = items.map(
+					(item: TNotificationTemplate) => {
+						return {
+							label: item.name,
+							value: item.id,
+						};
+					}
+				);
+
+				setNotificationTemplates(notificationsArray);
+			};
+
+			makeFetch();
+		}
+	}, [values]);
 
 	return (
 		<>
@@ -112,20 +152,46 @@ export default function ActionBuilder({
 					title={Liferay.Language.get('then[object]')}
 					viewMode="inline"
 				>
-					<CustomSelect
-						error={errors.objectActionExecutorKey}
-						onChange={({value}) =>
-							setValues({
-								objectActionExecutorKey: value,
-								parameters: {},
-							})
-						}
-						options={objectActionExecutors}
-						placeholder={Liferay.Language.get('choose-an-action')}
-						value={actionExecutors.get(
-							values.objectActionExecutorKey ?? ''
-						)}
-					/>
+					<div className="lfr-object__action-builder-then">
+						<CustomSelect
+							error={errors.objectActionExecutorKey}
+							onChange={({value}) =>
+								setValues({
+									objectActionExecutorKey: value,
+									parameters: {},
+								})
+							}
+							options={objectActionExecutors}
+							placeholder={Liferay.Language.get(
+								'choose-an-action'
+							)}
+							value={actionExecutors.get(
+								values.objectActionExecutorKey ?? ''
+							)}
+						/>
+
+						{ffNotificationTemplates &&
+							values.objectActionExecutorKey ===
+								'notificationTemplate' && (
+								<CustomSelect
+									className="lfr-object__action-builder-notification-then"
+									error={errors.objectActionExecutorKey}
+									label={Liferay.Language.get('notification')}
+									onChange={({label, value}) => {
+										setSelectedNotificationTemplate(label);
+										setValues({
+											parameters: {
+												...values.parameters,
+												notificationTemplateId: value,
+											},
+										});
+									}}
+									options={notificationTemplates}
+									required
+									value={selectedNotificationTemplate}
+								/>
+							)}
+					</div>
 				</Card>
 
 				{values.objectActionExecutorKey === 'webhook' && (
@@ -186,8 +252,22 @@ export default function ActionBuilder({
 
 interface IProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
+	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	setValues: (values: Partial<ObjectAction>) => void;
 	values: Partial<ObjectAction>;
 }
+
+type TNotificationTemplate = {
+	bcc: string;
+	body: LocalizedValue<string>;
+	cc: string;
+	description: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	id: number;
+	name: string;
+	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};

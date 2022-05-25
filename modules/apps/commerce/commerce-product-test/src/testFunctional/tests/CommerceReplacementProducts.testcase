@@ -10,7 +10,7 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(minium = "true");
+		CommerceConfiguration.commerceSetUp();
 
 		task ("Setup: Create an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -26,6 +26,11 @@ definition {
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
 		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
 
 	@description = "COMMERCE-9352 | Verify if discontinued products are replaced by the replacement product when adding a discontinued product to an order"
 	@priority = "3"
@@ -73,7 +78,7 @@ definition {
 				productName = "ABS Sensor",
 				productSku = "MIN93015",
 				southwestQuantity = "0");
-	
+
 			CommerceEntry.gotoMenuTab(menuTab = "Details");
 
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
@@ -132,11 +137,12 @@ definition {
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
-		
 	}
-	
 
 	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
+	@priority = "3"
+	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
+		task ("Given a simple product with a SKU") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				discontinued = "True",
@@ -145,7 +151,7 @@ definition {
 				sku = "SKU1001");
 		}
 
-		task ("Setup: A simple product with a SKU marked as discontinued with a replacement product set") {
+		task ("And given a simple product with a SKU marked as discontinued with a replacement product set") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				discontinued = "True",
@@ -154,16 +160,8 @@ definition {
 				replacementSKU = "SKU1001",
 				sku = "SKU1002");
 		}
-	}
 
-	tearDown {
-		CommerceConfiguration.commerceTearDown();
-	}
-
-	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
-	@priority = "3"
-	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
-		task ("Given a Minium site with a buyer user") {
+		task ("And given a Minium site with a buyer user") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -192,7 +190,26 @@ definition {
 	@description = "COMMERCE-9347 | Replacement product's information is shown in product details"
 	@priority = "3"
 	test ReplacementProductInformationIsDisplayedInProductDetails {
-		task ("Given a Minium site with a buyer user") {
+		task ("Given a simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product Replacement",
+				productType = "Simple",
+				sku = "SKU1001");
+		}
+
+		task ("And given a simple product with a SKU marked as discontinued with a replacement product set") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				replacementSKU = "SKU1001",
+				sku = "SKU1002");
+		}
+
+		task ("And given a Minium site with a buyer user") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(

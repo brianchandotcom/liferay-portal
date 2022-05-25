@@ -439,7 +439,7 @@ definition {
 			key_entryName = "${orderId}",
 			locator1 = "CommerceEntry#SEARCH_ORDER_ID_RESULT");
 	}
-	
+
 	macro viewOrdersDetails {
 		AssertElementPresent(
 			key_productSku = "${productSku}",

@@ -2359,7 +2359,7 @@ definition {
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 		}
 	}
-	
+
 	@description = "Verify users can configure shipping option eligibility to specific order types."
 	@priority = "3"
 	test ShippingOptionEligibleForSpecificOrderType {

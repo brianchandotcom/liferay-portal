@@ -5610,7 +5610,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user == null) {
-			PwdAuthenticator.pretendToAuthenticate();
+			if ((authResult == Authenticator.SUCCESS) &&
+				PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) {
+
+				PwdAuthenticator.pretendToAuthenticate();
+			}
 
 			return Authenticator.DNE;
 		}

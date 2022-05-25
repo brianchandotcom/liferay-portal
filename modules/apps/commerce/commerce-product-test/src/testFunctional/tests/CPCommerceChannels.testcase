@@ -2359,6 +2359,134 @@ definition {
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 		}
 	}
+	
+	@description = "Verify users can configure shipping option eligibility to specific order types."
+	@priority = "3"
+	test ShippingOptionEligibleForSpecificOrderType {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given two active order types") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Description 1",
+				orderTypeName = "Test Order Type 1");
+
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Description 2",
+				orderTypeName = "Test Order Type 2");
+		}
+
+		task ("And given an active shipping option's eligibility is set specifically to Test Order Type 1") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				orderTypesEligibility = "Test Order Type 1",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And given the buyer creates an order for each order type") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Test Order Type 1");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var order1Id = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Test Order Type 2");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var order2Id = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+		}
+
+		task ("When the user goes to checkout for the Test Order Type 2 order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order2Id}");
+
+			Button.click(button = "Checkout");
+		}
+
+		task ("Then at the shipping method step, the edited shipping option should not be available") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			AssertElementNotPresent(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_radioOption = "Expedited",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("When the user goes to checkout for the Test Order Type 1 order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+
+			Button.click(button = "Checkout");
+		}
+
+		task ("Then at the shipping method step, the edited shipping option should be available") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			AssertElementPresent(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_radioOption = "Expedited",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
 
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"

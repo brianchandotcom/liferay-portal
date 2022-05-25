@@ -191,11 +191,8 @@ public class Serializer {
 		else if (serializable instanceof Class) {
 			Class<?> clazz = (Class<?>)serializable;
 
-			String contextName = ClassLoaderPool.getContextName(
-				clazz.getClassLoader());
-
 			writeByte(SerializationConstants.TC_CLASS);
-			writeString(contextName);
+			writeString(ClassLoaderPool.getContextName(clazz.getClassLoader()));
 			writeString(clazz.getName());
 
 			return;

@@ -33,10 +33,7 @@ public class AnnotatedObjectOutputStream extends ObjectOutputStream {
 
 	@Override
 	protected void annotateClass(Class<?> clazz) throws IOException {
-		String contextName = ClassLoaderPool.getContextName(
-			clazz.getClassLoader());
-
-		writeUTF(contextName);
+		writeUTF(ClassLoaderPool.getContextName(clazz.getClassLoader()));
 	}
 
 }

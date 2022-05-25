@@ -284,8 +284,8 @@ public class ConfigurationModelToDDMFormConverter {
 		_setDDMFormFieldReadOnly(attributeDefinition, ddmFormField);
 		_setDDMFormFieldRequired(ddmFormField, required);
 		_setDDMFormFieldTip(attributeDefinition, ddmFormField);
-		_setDDMFormFieldValidation(ddmFormField);
 		_setDDMFormFieldVisibilityExpression(attributeDefinition, ddmFormField);
+		_setDDMFormFieldValidation(ddmFormField);
 
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setShowLabel(true);

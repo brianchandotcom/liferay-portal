@@ -581,6 +581,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ddmFormFieldValidation.getDDMFormFieldValidationExpression();
 
 		Assert.assertNotNull(ddmFormFieldValidationExpression);
+
 		Assert.assertEquals(
 			ConfigurationModelToDDMFormConverter.
 				NUMBER_TYPE_VALUE_VALIDATION_EXPRESSION_NAME,

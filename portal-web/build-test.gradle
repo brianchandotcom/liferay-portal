@@ -59,6 +59,12 @@ dependencies {
 	if (poshiRunner.poshiPropertiesFile && poshiRunner.poshiPropertiesFile.exists()) {
 		Properties poshiRunnerProperties = GUtil.loadProperties(poshiRunner.poshiPropertiesFile)
 
+		File poshiExtPropertiesFile = file("poshi-ext.properties")
+
+		if (poshiExtPropertiesFile.exists()) {
+			poshiRunnerProperties = GUtil.loadProperties(poshiExtPropertiesFile)
+		}
+
 		String testBaseDirName = poshiRunnerProperties.getProperty("test.base.dir.name")
 
 		if (testBaseDirName) {

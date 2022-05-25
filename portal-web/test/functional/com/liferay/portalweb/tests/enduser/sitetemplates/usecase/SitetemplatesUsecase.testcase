@@ -748,7 +748,7 @@ definition {
 
 		NavigationMenusAdmin.addItem(
 			item = "Page",
-			pageNames = "Page1 Name,Page2 Name",
+			pageNameList = "Page1 Name,Page2 Name",
 			privacy = "Private Pages");
 
 		NavigationMenusAdmin.viewItem(itemName = "Page1 Name");

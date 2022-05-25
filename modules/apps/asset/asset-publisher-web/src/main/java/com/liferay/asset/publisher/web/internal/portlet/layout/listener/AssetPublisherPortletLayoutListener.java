@@ -23,6 +23,7 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -260,8 +262,18 @@ public class AssetPublisherPortletLayoutListener
 					themeDisplay.getPermissionChecker(), groupIds, false, true);
 
 			for (AssetEntry assetEntry : assetEntries) {
+				long classNameId = assetEntry.getClassNameId();
+
+				if (Objects.equals(
+						assetEntry.getClassName(),
+						DLFileEntry.class.getName())) {
+
+					classNameId = _portal.getClassNameId(
+						FileEntry.class.getName());
+				}
+
 				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-					themeDisplay.getScopeGroupId(), assetEntry.getClassNameId(),
+					themeDisplay.getScopeGroupId(), classNameId,
 					assetEntry.getClassPK(), portletId,
 					_portal.getClassNameId(Portlet.class), plid,
 					serviceContext);

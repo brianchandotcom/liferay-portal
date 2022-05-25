@@ -158,6 +158,7 @@ public class TaxonomyCategoryDTOConverter
 						},
 						false);
 				taxonomyVocabularyId = assetCategory.getVocabularyId();
+
 				setParentTaxonomyCategory(
 					() -> {
 						if (assetCategory.getParentCategory() == null) {

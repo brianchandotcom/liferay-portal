@@ -35,6 +35,7 @@ public class IndexUtil {
 				key = indexEntityName;
 				label = language.get(
 					resourceBundle, _labelMap.get(indexEntityName));
+
 				setGroup(
 					() -> {
 						if (indexEntityName.startsWith("sla")) {

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACCOUNT_ORDER_DEFAULTS_ENTRY</td>
+	<td>//div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::span | //div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::h4</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_MENU_ITEM</td>
 	<td>//div[contains(@class,'show')]//button[contains(.,'${key_menuItem}')] | //div[contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
 	<td></td>

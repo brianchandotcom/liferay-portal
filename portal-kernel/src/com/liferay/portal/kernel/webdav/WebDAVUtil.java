@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -167,14 +168,9 @@ public class WebDAVUtil {
 		// Guest
 
 		if (user.isDefaultUser()) {
-			List<Group> groups = new ArrayList<>();
-
-			Group group = GroupLocalServiceUtil.getGroup(
-				user.getCompanyId(), GroupConstants.GUEST);
-
-			groups.add(group);
-
-			return groups;
+			return ListUtil.fromArray(
+				GroupLocalServiceUtil.getGroup(
+					user.getCompanyId(), GroupConstants.GUEST));
 		}
 
 		// Communities

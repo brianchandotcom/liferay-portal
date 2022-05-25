@@ -106,10 +106,8 @@ public class PortletServlet extends HttpServlet {
 
 		// LPS-66826
 
-		HttpSession httpSession = _getSharedHttpSession(
-			httpServletRequest, portletRequest);
-
-		portletSession.setHttpSession(httpSession);
+		portletSession.setHttpSession(
+			_getSharedHttpSession(httpServletRequest, portletRequest));
 
 		try {
 			PortletFilterUtil.doFilter(

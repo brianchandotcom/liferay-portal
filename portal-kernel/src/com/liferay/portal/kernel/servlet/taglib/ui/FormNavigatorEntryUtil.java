@@ -46,12 +46,10 @@ public class FormNavigatorEntryUtil {
 		String formNavigatorId, String categoryKey, User user,
 		T formModelBean) {
 
-		List<FormNavigatorEntry<T>> formNavigatorEntries =
-			_getFormNavigatorEntries(
-				formNavigatorId, categoryKey, formModelBean);
-
 		return filterVisibleFormNavigatorEntries(
-			formNavigatorEntries, user, formModelBean);
+			_getFormNavigatorEntries(
+				formNavigatorId, categoryKey, formModelBean),
+			user, formModelBean);
 	}
 
 	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(

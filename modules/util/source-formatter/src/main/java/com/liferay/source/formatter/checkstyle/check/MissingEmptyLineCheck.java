@@ -39,7 +39,6 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-
 		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
 			_checkMissingEmptyLineInInstanceInit(detailAST);
 

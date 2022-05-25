@@ -330,22 +330,22 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 	}
 
 	private Object[] _encloseWithCharacter(
-		Object[] cellValues, String enclosingCharacter) {
+		Object[] rowValues, String enclosingCharacter) {
 
 		if (Validator.isNull(enclosingCharacter)) {
-			return cellValues;
+			return rowValues;
 		}
 
-		for (int i = 0; i < cellValues.length; i++) {
-			cellValues[i] =
-				enclosingCharacter + cellValues[i] + enclosingCharacter;
+		for (int i = 0; i < rowValues.length; i++) {
+			rowValues[i] =
+				enclosingCharacter + rowValues[i] + enclosingCharacter;
 		}
 
-		return cellValues;
+		return rowValues;
 	}
 
 	private byte[] _getContent(
-		String[] cellNames, boolean containsHeaders, String delimiter,
+		String[] columnNames, boolean containsHeaders, String delimiter,
 		String enclosingCharacter, Object[][] rowValues) {
 
 		StringBundler sb = new StringBundler();
@@ -355,14 +355,14 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 		}
 
 		if (containsHeaders) {
-			sb.append(StringUtil.merge(cellNames, delimiter));
+			sb.append(StringUtil.merge(columnNames, delimiter));
 			sb.append("\n");
 		}
 
-		for (Object[] cellValues : rowValues) {
+		for (Object[] singleRowValues : rowValues) {
 			sb.append(
 				StringUtil.merge(
-					_encloseWithCharacter(cellValues, enclosingCharacter),
+					_encloseWithCharacter(singleRowValues, enclosingCharacter),
 					delimiter));
 			sb.append("\n");
 		}
@@ -374,7 +374,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 
 	private CSVBatchEngineImportTaskItemReaderImpl
 			_getCSVBatchEngineImportTaskItemReader(
-				String[] cellNames, boolean containsHeaders, String delimiter,
+				String[] columnNames, boolean containsHeaders, String delimiter,
 				String enclosingCharacter, Object[][] rowValues)
 		throws IOException {
 
@@ -382,7 +382,7 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 			StringPool.COMMA,
 			new ByteArrayInputStream(
 				_getContent(
-					cellNames, containsHeaders, delimiter, enclosingCharacter,
+					columnNames, containsHeaders, delimiter, enclosingCharacter,
 					rowValues)),
 			_getProperties(containsHeaders, delimiter, enclosingCharacter));
 	}

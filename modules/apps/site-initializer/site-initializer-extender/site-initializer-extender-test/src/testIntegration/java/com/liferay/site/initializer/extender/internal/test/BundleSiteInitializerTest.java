@@ -644,10 +644,11 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCustomValue(ExpandoBridge expandoBridge) {
-
 		Assert.assertNotNull(expandoBridge);
-		Assert.assertEquals(expandoBridge.getAttribute("Test Expando Column 1"), 0.1);
-		Assert.assertEquals(expandoBridge.getAttribute("Test Expando Column 2"), "Test");
+		Assert.assertEquals(
+			expandoBridge.getAttribute("Test Expando Column 1"), 0.1);
+		Assert.assertEquals(
+			"Test", expandoBridge.getAttribute("Test Expando Column 2"));
 	}
 
 	private void _assertDDMStructure(Group group) {

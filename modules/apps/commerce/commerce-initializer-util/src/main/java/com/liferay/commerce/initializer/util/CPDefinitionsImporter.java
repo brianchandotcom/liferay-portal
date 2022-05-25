@@ -185,12 +185,13 @@ public class CPDefinitionsImporter {
 				for (int j = 0; j < jsonArray2.length(); j++) {
 					JSONObject jsonObject2 = jsonArray2.getJSONObject(j);
 
-					JSONObject jsonObject3 = (JSONObject) jsonObject2.get(
+					JSONObject jsonObject3 = (JSONObject)jsonObject2.get(
 						"customValue");
+
 					if (jsonObject2.getString("customValue") != null) {
 						expandoBridge.setAttributeDefault(
 							jsonObject2.getString("name"),
-							(Serializable) jsonObject3.get("data"));
+							(Serializable)jsonObject3.get("data"));
 					}
 				}
 			}

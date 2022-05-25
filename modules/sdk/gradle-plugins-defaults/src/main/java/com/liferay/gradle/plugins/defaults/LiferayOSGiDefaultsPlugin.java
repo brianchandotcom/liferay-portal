@@ -390,7 +390,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			_addDependenciesPortalTest(project, portalVersion);
 			_addDependenciesPortalTestSnapshot(project);
-			_addDependenciesTestCompile(project);
+			_addDependenciesTestCompile(project, portalVersion);
 
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
@@ -709,30 +709,53 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			"com.liferay.portal.kernel", "default");
 	}
 
-	private void _addDependenciesTestCompile(Project project) {
-		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, "org.mockito",
-			"mockito-core", "1.10.8");
+	private void _addDependenciesTestCompile(
+		Project project, String portalVersion) {
 
-		ModuleDependency moduleDependency =
-			(ModuleDependency)GradleUtil.addDependency(
+		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion)) {
+
+			GradleUtil.addDependency(
 				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-				"org.powermock", "powermock-api-mockito", "1.6.1");
+				"org.mockito", "mockito-core", "1.10.8");
 
-		Map<String, String> excludeArgs = new HashMap<>();
+			ModuleDependency moduleDependency =
+				(ModuleDependency)GradleUtil.addDependency(
+					project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+					"org.powermock", "powermock-api-mockito", "1.6.1");
 
-		excludeArgs.put("group", "org.mockito");
-		excludeArgs.put("module", "mockito-all");
+			Map<String, String> excludeArgs = new HashMap<>();
 
-		moduleDependency.exclude(excludeArgs);
+			excludeArgs.put("group", "org.mockito");
+			excludeArgs.put("module", "mockito-all");
+
+			moduleDependency.exclude(excludeArgs);
+
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				"org.powermock", "powermock-module-junit4", "1.6.1");
+		}
+		else {
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				"org.mockito", "mockito-core", "4.5.1");
+
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				"org.mockito", "mockito-inline", "4.5.1");
+
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, "junit",
+				"junit", "4.12");
+		}
 
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"com.liferay.portletmvc4spring",
 			"com.liferay.portletmvc4spring.test", "5.2.1");
-		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-			"org.powermock", "powermock-module-junit4", "1.6.1");
+
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "5.2.2.RELEASE");

@@ -213,6 +213,15 @@ public class FragmentEntryLinkUtil {
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues())
 			).put(
+				"fragmentEntryId",
+				() -> {
+					if (fragmentEntry != null) {
+						return fragmentEntry.getFragmentEntryId();
+					}
+
+					return 0;
+				}
+			).put(
 				"fragmentEntryKey", fragmentEntryKey
 			).put(
 				"fragmentEntryLinkId",

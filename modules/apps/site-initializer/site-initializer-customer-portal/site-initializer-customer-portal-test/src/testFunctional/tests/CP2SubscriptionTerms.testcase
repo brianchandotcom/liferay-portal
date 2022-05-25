@@ -1,33 +1,32 @@
 @component-name = "portal-solutions"
 definition {
 
-    property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
-    property portal.release = "false";
-    property portal.upstream = "false";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "Customer Portal";
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        CustomerPortal.createCPSite(siteName = "Customer Portal");
-    }
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
 			CustomerPortal.customerPortalTearDown();
 
-            User.logoutPG();
-        }
-    }
-
+			User.logoutPG();
+		}
+	}
 
 	@description = "LPS-144449 - Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms."
 	@ignore = "true"
@@ -221,68 +220,6 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
 		AssertElementPresent(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Provisioned",
-			value1 = "Provisioned");
-
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
-	}
-
-	@description = "LPS-144467 - Verify that the Provisioned column appears for Portal."
-	@ignore = "true"
-	@priority = "3"
-	test ProvisionedColumnAppearsForPortal {
-		SetWindowSize(value1 = "1920,1080");
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
-
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-		Click(
-			locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
-			value = "Portal");
-
-		Click(
-			cardName = "Non-Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
-
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#TABLE_HEAD",
-			title = "Provisioned",
-			value1 = "Provisioned");
-
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\ESCAPE");
-	}
-
-	@description = "LPS-144475 - Verify that the Provisioned column does not appear for Other."
-	@ignore = "true"
-	@priority = "3"
-	test ProvisionedColumnDontAppearsForOther {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
-
-		CustomerPortal.enterOnProject(title = "Test Account 02");
-
-		Click(
-			cardName = "Developer Tools",
-			locator1 = "CustomerPortalSite#CARD_NAME");
-
-		AssertElementNotPresent(
 			locator1 = "CustomerPortalSite#TABLE_HEAD",
 			title = "Provisioned",
 			value1 = "Provisioned");

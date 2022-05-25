@@ -28,6 +28,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-144988 - Assert if button 'Add Another Admin' works when clicked"
+	@priority = "4"
+	test CanAddAnotherAdmin {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
+
+		CP2DXPCloudSetup.viewSetupDXPCloufEXtraFields();
+	}
+
 	@description = "LPS-144976 - Verify if the user can choose an option at 'Disaster Recovery Data Center Region'"
 	@priority = "5"
 	test CanChooseDisasterRecoveryDataCenter {
@@ -366,32 +392,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
 			value1 = "This field is required.");
-	}
-
-	@description = "LPS-144988 - Assert if button 'Add Another Admin' works when clicked"
-	@priority = "4"
-	test CanAddAnotherAdmin {
-		Accounts.openAccountsAdmin();
-
-		CustomerPortal.accountTableProject(title = "Test Account 01");
-
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
-
-		CP2DXPCloudSetup.viewSetupDXPCloufEXtraFields();
 	}
 
 }

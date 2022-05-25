@@ -26,6 +26,7 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -457,7 +458,9 @@ public class BatchEngineExportTaskExecutorTest
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
 		Assert.assertEquals(
-			ROWS_COUNT, blogsEntryLocalService.getBlogsEntriesCount());
+			ROWS_COUNT,
+			blogsEntryLocalService.getGroupEntriesCount(
+				group.getGroupId(), new QueryDefinition<>()));
 
 		_exportBlogPostings("CSV", fieldNames, parameters);
 

@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	@description = "Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
+	@description = "LPS-150142 - Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
 	@priority = "4"
 	test IfAddAnotherAdminButtonOptionsAppear {
 		Accounts.openAccountsAdmin();
@@ -61,14 +61,14 @@ definition {
 
 		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-		CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
 		CP2DXPCloudSetup.typeAllSetupDXPCloufEXtraInfo();
 
 		CP2DXPCloudSetup.viewSetupDXPCloufEXtraInfo();
 	}
 
-	@description = "Verify if the user is allowed to remove the additional admin(s) added before continuing"
+	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"
 	@priority = "5"
 	test IfAddedAdminCanBeRemoved {
 		Accounts.openAccountsAdmin();
@@ -96,7 +96,7 @@ definition {
 
 		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-		CP2DXPCloudSetup.clickOnAddMoreAdminButton();
+		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
 		CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
 

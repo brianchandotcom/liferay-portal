@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	@description = "Verify if trying to send invitation to members with a banned email shows a error"
+	@description = "LPS-144966 - Verify if trying to send invitation to members with a banned email shows a error"
 	@priority = "5"
 	test CanViewErrorMessageForBannedEmail {
 		Accounts.openAccountsAdmin();
@@ -61,7 +61,7 @@ definition {
 			value1 = "Please insert a valid e-mail.");
 	}
 
-	@description = "Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
+	@description = "LPS-144958 - Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
 	@priority = "4"
 	test IfMaxAdminDropDisabled {
 		Accounts.openAccountsAdmin();
@@ -91,7 +91,7 @@ definition {
 			role = "Administrator");
 	}
 
-	@description = "Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
+	@description = "LPS-144956 - Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
 	@priority = "4"
 	test IfMaxRequestorDropDisabled {
 		Accounts.openAccountsAdmin();
@@ -121,7 +121,7 @@ definition {
 			role = "Requester");
 	}
 
-	@description = "Verify if when the user selects 'Skip for Now' he is taken to the next step"
+	@description = "LPS-144960 - Verify if when the user selects 'Skip for Now' he is taken to the next step"
 	@priority = "5"
 	test IfSkipForNowJumpToNextStep {
 		Accounts.openAccountsAdmin();
@@ -143,7 +143,7 @@ definition {
 		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
 	}
 
-	@description = "Verify if partner = true, show 'Partner Manager' on Roles"
+	@description = "LPS-144964 - Verify if partner = true, show 'Partner Manager' on Roles"
 	@priority = "4"
 	test IsPartnerManagerShowingUp {
 		CP2TeamMembers.activePartnersRole();
@@ -174,7 +174,7 @@ definition {
 		CustomerPortal.deactivateKoroneikiAccount();
 	}
 
-	@description = "Verify if partner = true, show 'Partner Member' on Roles"
+	@description = "LPS-144963 - Verify if partner = true, show 'Partner Member' on Roles"
 	@priority = "4"
 	test IsPartnerMemberShowingUp {
 		CP2TeamMembers.activePartnersRole();
@@ -205,7 +205,7 @@ definition {
 		CustomerPortal.deactivateKoroneikiAccount();
 	}
 
-	@description = "Verify if when the fields are empty the button 'Send Invitations' is disabled"
+	@description = "LPS-144968 - Verify if when the fields are empty the button 'Send Invitations' is disabled"
 	@priority = "3"
 	test IsSendInvitationsButtonDisabled {
 		Accounts.openAccountsAdmin();
@@ -231,7 +231,7 @@ definition {
 		AssertElementPresent(locator1 = "CP2TeamMembers#SEND_INVITATIONS_DISABLED");
 	}
 
-	@description = "Verify if the user can invite multiple emails with roles on team members on the same screen."
+	@description = "LPS-144953 - Verify if the user can invite multiple emails with roles on team members on the same screen."
 	@ignore = "true"
 	@priority = "4"
 	test MultipleEmailsWithRoleAtOnce {

@@ -41,7 +41,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MORE_ADMIN_DXP_CLOUD</td>
+	<td>ADD_ANOTHER_ADMIN</td>
 	<td>//button[contains(@class, 'add-dxp-cloud')]</td>
 	<td></td>
 </tr>

@@ -63,8 +63,8 @@ definition {
 		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
 	}
 
-	macro clickOnAddMoreAdminButton {
-		Click(locator1 = "CP2DXPCloudSetup#ADD_MORE_ADMIN_DXP_CLOUD");
+	macro clickOnAddAnotherAdminButton {
+		Click(locator1 = "CP2DXPCloudSetup#ADD_ANOTHER_ADMIN");
 	}
 
 	macro clickOnRemoveThisAdminButton {
@@ -215,6 +215,24 @@ definition {
 				locator1 = "CP2DXPCloudSetup#REGIONS_NAMES",
 				value1 = "${regionName}");
 		}
+	}
+
+	macro viewSetupDXPCloufEXtraFields {
+		AssertElementPresent(
+			label = "dxp.admins[1].email",
+			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+
+		AssertElementPresent(
+			label = "dxp.admins[1].firstName",
+			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+
+		AssertElementPresent(
+			label = "dxp.admins[1].lastName",
+			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
+
+		AssertElementPresent(
+			label = "dxp.admins[1].github",
+			locator1 = "CP2DXPCloudSetup#SETUP_FIELDS");
 	}
 
 	macro viewSetupDXPCloufEXtraInfo {

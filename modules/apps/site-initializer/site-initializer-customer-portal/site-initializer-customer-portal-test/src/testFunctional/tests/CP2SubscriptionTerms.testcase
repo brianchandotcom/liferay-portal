@@ -1,0 +1,346 @@
+@component-name = "portal-solutions"
+definition {
+
+    property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+    property portal.release = "false";
+    property portal.upstream = "false";
+    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+    property testray.main.component.name = "Customer Portal";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        CustomerPortal.createCPSite(siteName = "Customer Portal");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+			CustomerPortal.customerPortalTearDown();
+
+            User.logoutPG();
+        }
+    }
+
+
+	@description = "LPS-144449 - Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms."
+	@ignore = "true"
+	@priority = "4"
+	test ClickingSubscriptionCardPopUpShows {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#MODAL_TITLE",
+			modalTitle = "Non-Production");
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
+	@description = "LPS-144483 - Verify there if status Active shows up."
+	@ignore = "true"
+	@priority = "3"
+	test IfActiveStatusShowsUp {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Status",
+			value1 = "Status");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_STATUS",
+			status = "Active",
+			value1 = "Active");
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
+	@description = "LPS-144484 - Verify there if status Expired shows up."
+	@ignore = "true"
+	@priority = "2"
+	test IfExpiredStatusShowsUp {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 02");
+
+		AssertTextEquals(
+			cardName = "Developer Tools",
+			locator1 = "CustomerPortalSite#CARD_STATUS",
+			status = "Expired",
+			value1 = "Expired");
+	}
+
+	@description = "LPS-144485 - Verify there if status Future shows up."
+	@ignore = "true"
+	@priority = "2"
+	test IfFutureStatusShowsUp {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Status",
+			value1 = "Status");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_STATUS",
+			status = "Future",
+			value1 = "Future");
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
+	@description = "LPS-144452 - Check if when the user clicks out of the modal it closes."
+	@ignore = "true"
+	@priority = "3"
+	test ModalCloseIfClickedOut {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#MODAL_TITLE",
+			modalTitle = "DXP Cloud");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+
+		AssertElementNotPresent(locator1 = "CustomerPortalSite#MODAL");
+	}
+
+	@description = "LPS-144464 - Verify that the Provisioned column appears for Commerce."
+	@ignore = "true"
+	@priority = "3"
+	test ProvisionedColumnAppearsForCommerce {
+		SetWindowSize(value1 = "1920,1080");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 04");
+
+		Click(
+			cardName = "Developer Tools",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Provisioned",
+			value1 = "Provisioned");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+	}
+
+	@description = "LPS-144466 - Verify that the Provisioned column appears for DXP."
+	@ignore = "true"
+	@priority = "3"
+	test ProvisionedColumnAppearsForDXP {
+		SetWindowSize(value1 = "1920,1080");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 02");
+
+		Click(
+			locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+			value = "DXP");
+
+		Click(
+			cardName = "Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Provisioned",
+			value1 = "Provisioned");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+	}
+
+	@description = "LPS-144467 - Verify that the Provisioned column appears for Portal."
+	@ignore = "true"
+	@priority = "3"
+	test ProvisionedColumnAppearsForPortal {
+		SetWindowSize(value1 = "1920,1080");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+			value = "Portal");
+
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Provisioned",
+			value1 = "Provisioned");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+	}
+
+	@description = "LPS-144475 - Verify that the Provisioned column does not appear for Other."
+	@ignore = "true"
+	@priority = "3"
+	test ProvisionedColumnDontAppearsForOther {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 02");
+
+		Click(
+			cardName = "Developer Tools",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementNotPresent(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Provisioned",
+			value1 = "Provisioned");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+	}
+
+	@description = "LPS-144470 - Verify that the Provisioned column does not appear for DXP Cloud"
+	@ignore = "true"
+	@priority = "3"
+	test ProvisionedColumnAppearsForDXPCloud {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementNotPresent(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Provisioned",
+			value1 = "Provisioned");
+
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\ESCAPE");
+	}
+
+	@description = "LPS-144454 - Verify there is value under the Start - End Date column."
+	@ignore = "true"
+	@priority = "4"
+	test ValueUnderColumnFields {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		Click(
+			cardName = "Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		CustomerPortal.viewTableValue();
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
+}

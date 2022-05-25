@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+	@description = "LPS-148181 - Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
 	@priority = "5"
 	test IfInvitedIsSeenOnAccountRoles {
 		Accounts.openAccountsAdmin();

@@ -56,6 +56,51 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_NAME</td>
+	<td>//div[contains(@class, 'cards-subscription')]//h5[(text()='${cardName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_STATUS</td>
+	<td>//div[contains(@class, 'card-subscription')]//h5[(text()='${cardName}')]//..//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_NAVBAR</td>
+	<td>//div[@id='subscription-navbar']/button[@value='${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_HEAD</td>
+	<td>//thead//th[text()= '${title}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_VALUE</td>
+	<td>//tbody//td[text()= '${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_STATUS</td>
+	<td>//td[contains(@class, 'text-center')]/span[contains(@class, 'label')]/span[(text()= '${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL</td>
+	<td>//div[contains(@class, 'modal-dialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_TITLE</td>
+	<td>//div[contains(@class, 'flex-row')]//h2[contains(., '${modalTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_MODAL_CARD</td>
+	<td>//button[contains(@aria-label, 'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROJECT_TABLE_NAME</td>
 	<td>//div[contains(@class,'card-body')]//h4[contains(@title,'${key_projectName}')]</td>
 	<td></td>

@@ -57,9 +57,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		Click(
-			key_nodeName = "Minium",
-			locator1 = "Treeview#NODE_ITEM");
+		Click(locator1 = "Treeview#NODE_COLLAPSED");
 
 		Click(
 			key_nodeName = "${key_card}",

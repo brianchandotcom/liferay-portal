@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * @author Shuyang Zhou
+ * @author Igor Beslic
  */
 public class ColumnValuesExtractor {
 
@@ -39,19 +40,28 @@ public class ColumnValuesExtractor {
 			Field field = fieldMap.get(fieldName);
 
 			if (field != null) {
-				unsafeFunctions.add(
-					item -> {
-						if (ItemClassIndexUtil.isExportableArray(
-								field.getType()) ||
-							(field.get(item) == null)) {
+				if (ItemClassIndexUtil.isSingleColumnAdoptableValue(
+						field.getType())) {
 
-							return StringPool.BLANK;
-						}
+					unsafeFunctions.add(
+						item -> {
+							if (field.get(item) == null) {
+								return StringPool.BLANK;
+							}
 
-						return field.get(item);
-					});
+							return field.get(item);
+						});
 
-				continue;
+					continue;
+				}
+
+				if (ItemClassIndexUtil.isSingleColumnAdoptableArray(
+						field.getType())) {
+
+					unsafeFunctions.add(item -> StringPool.BLANK);
+
+					continue;
+				}
 			}
 
 			int index = fieldName.indexOf(CharPool.UNDERLINE);

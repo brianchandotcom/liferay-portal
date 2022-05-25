@@ -191,17 +191,23 @@ definition {
 		}
 
 		task ("And given Money Order and Mercanet are linked to Order Type 1 and PayPal is linked to Order Type 2") {
-			CommerceChannels.setEntryEligibility(
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Money Order");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Mercanet");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 2",
 				paymentMethod = "PayPal");
+
+			Refresh();
 		}
 
 		task ("When the buyer creates an order from pending orders with Order Type 1") {
@@ -277,17 +283,23 @@ definition {
 		}
 
 		task ("And given Money Order, Mercanet, and PayPal payment methods are linked to order type 1") {
-			CommerceChannels.setEntryEligibility(
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "PayPal");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Money Order");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Mercanet");
+
+			Refresh();
 		}
 
 		task ("When the buyer creates an order from pending orders with Order Type 1") {
@@ -362,17 +374,23 @@ definition {
 		}
 
 		task ("And given PayPal, Money Order, and Mercanet payment methods are linked to order type 1") {
-			CommerceChannels.setEntryEligibility(
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "PayPal");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Money Order");
 
-			CommerceChannels.setEntryEligibility(
+			Refresh();
+
+			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Mercanet");
+
+			Refresh();
 		}
 
 		task ("And given the PayPal payment method is disabled") {

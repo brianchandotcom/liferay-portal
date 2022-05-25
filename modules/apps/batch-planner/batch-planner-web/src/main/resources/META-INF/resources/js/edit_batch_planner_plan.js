@@ -84,8 +84,9 @@ export default function ({
 			}
 		});
 	}
-
-	handleOverrideExistingRecordsCheckbox(namespace);
+	else {
+		handleOverrideExistingRecordsCheckbox(namespace);
+	}
 
 	async function handleTemplateSelectedEvent({template}) {
 		if (template) {

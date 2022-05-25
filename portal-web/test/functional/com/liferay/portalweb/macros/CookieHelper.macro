@@ -137,16 +137,15 @@ definition {
 
 	@description = "Delete all cookies and Refresh page"
 	macro deleteAllCookiesAndRefreshPage {
-		var javascript = '''var allCookies = document.cookie.split(';');
-    							for (var i = 0; i < allCookies.length; i++)
-    								document.cookie = allCookies[i] + "=;expires="
-    								+ new Date(0).toUTCString();''';
+		var javascript = '''document.cookie.split(";").forEach(function(c) {
+    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+});''';
 
 		var deleted = selenium.getEval("${javascript}");
 
 		echo("${deleted}");
 
-		Refresh();
+		Navigator.openURL();
 	}
 
 	@description = "Navigate to home page"

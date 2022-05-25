@@ -308,18 +308,21 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		commerceOrderImporterItemImpl.setQuantity(quantity);
 
-		if (csvRecord.isMapped("requestedDeliveryDate") &&
-			csvRecord.isSet("requestedDeliveryDate")) {
+		if (csvRecord.isMapped(_REQUESTED_DELIVERY_DATE_FIELD_NAME) &&
+			csvRecord.isSet(_REQUESTED_DELIVERY_DATE_FIELD_NAME)) {
 
-			String requestedDeliveryDate = GetterUtil.getString(
-				csvRecord.get("requestedDeliveryDate"));
+			String requestedDeliveryDateString = GetterUtil.getString(
+				csvRecord.get(_REQUESTED_DELIVERY_DATE_FIELD_NAME));
 
-			commerceOrderImporterItemImpl.setRequestedDeliveryDate(
-				requestedDeliveryDate);
+			commerceOrderImporterItemImpl.setRequestedDeliveryDateString(
+				requestedDeliveryDateString);
 		}
 
 		return commerceOrderImporterItemImpl;
 	}
+
+	private static final String _REQUESTED_DELIVERY_DATE_FIELD_NAME =
+		"requestedDeliveryDate";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSVCommerceOrderImporterTypeImpl.class);

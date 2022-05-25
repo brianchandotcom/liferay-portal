@@ -20,6 +20,11 @@
 	<td>//div[@data-field-name='useIncomingXRequestId']//span[contains(.,'Use Incoming X-Request-ID')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AUDIT_LOG_MESSAGE_FORMAT</td>
+	<td>//div[contains(@data-field-name,'logMessageFormat')]//div[contains(@class,'option-selected')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

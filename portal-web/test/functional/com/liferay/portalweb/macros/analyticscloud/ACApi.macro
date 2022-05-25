@@ -33,7 +33,7 @@ definition {
 			echo("Correct error message - PASSED");
 		}
 		else {
-			fail("Wrong error message");
+			fail("Wrong error message - ${apiResponse}");
 		}
 
 		// Checks if the status value is ERROR
@@ -42,7 +42,7 @@ definition {
 			echo("Correct status - PASSED");
 		}
 		else {
-			fail("Wrong status");
+			fail("Wrong status - ${apiResponse}");
 		}
 	}
 
@@ -54,7 +54,7 @@ definition {
 			echo("Correct message - PASSED");
 		}
 		else {
-			fail("New export schedule was not created: Wrong message");
+			fail("New export schedule was not created: Wrong message - ${apiResponse}");
 		}
 
 		// Checks if the fromDate value is the same as the one used to create the schedule
@@ -63,7 +63,7 @@ definition {
 			echo("Correct fromDate - PASSED");
 		}
 		else {
-			fail("New export schedule was not created: Wrong fromDate");
+			fail("New export schedule was not created: Wrong fromDate - ${apiResponse}");
 		}
 
 		// Checks if the toDate value is the same as the one used to create the schedule
@@ -72,7 +72,7 @@ definition {
 			echo("Correct toDate - PASSED");
 		}
 		else {
-			fail("New export schedule was not created: Wrong toDate");
+			fail("New export schedule was not created: Wrong toDate - ${apiResponse}");
 		}
 
 		// Checks if the type value is the same as the one used to create the schedule
@@ -81,7 +81,7 @@ definition {
 			echo("Correct type - PASSED");
 		}
 		else {
-			fail("New export schedule was not created: Wrong type");
+			fail("New export schedule was not created: Wrong type - ${apiResponse}");
 		}
 
 		// Checks if the status value is the same as the one used to create the schedule
@@ -90,7 +90,7 @@ definition {
 			echo("Correct status - PASSED");
 		}
 		else {
-			fail("New export schedule was not created: Wrong status");
+			fail("New export schedule was not created: Wrong status - ${apiResponse}");
 		}
 	}
 

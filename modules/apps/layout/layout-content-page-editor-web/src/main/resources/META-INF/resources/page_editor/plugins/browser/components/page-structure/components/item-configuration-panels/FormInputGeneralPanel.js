@@ -34,6 +34,7 @@ import FormService from '../../../../../../app/services/FormService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
+import {isFormRequiredField} from '../../../../../../app/utils/isFormRequiredField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../common/components/Collapse';
@@ -49,44 +50,62 @@ const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
 const REQUIRED_CONFIGURATION_KEY = 'inputRequired';
 const SHOW_HELP_TEXT_CONFIGURATION_KEY = 'inputShowHelpText';
 
-const INPUT_COMMON_CONFIGURATION = [
-	{
-		defaultValue: false,
-		label: Liferay.Language.get('mark-as-required'),
-		name: REQUIRED_CONFIGURATION_KEY,
-		type: 'checkbox',
-	},
-	{
-		defaultValue: true,
-		label: Liferay.Language.get('show-label'),
-		name: 'inputShowLabel',
-		type: 'checkbox',
-		typeOptions: {displayType: 'toggle'},
-	},
-	{
-		defaultValue: '',
-		label: Liferay.Language.get('label'),
-		localizable: true,
-		name: 'inputLabel',
-		type: 'text',
-	},
-	{
-		defaultValue: true,
-		label: Liferay.Language.get('show-help-text'),
-		name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
-		type: 'checkbox',
-		typeOptions: {displayType: 'toggle'},
-	},
-	{
-		defaultValue: Liferay.Language.get(
-			'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
-		),
-		label: Liferay.Language.get('help-text'),
-		localizable: true,
-		name: HELP_TEXT_CONFIGURATION_KEY,
-		type: 'text',
-	},
-];
+function getInputCommonConfiguration(configurationValues, formFields) {
+	const fields = [];
+
+	if (configurationValues[FIELD_ID_CONFIGURATION_KEY]) {
+		const isRequiredField = isFormRequiredField(
+			configurationValues[FIELD_ID_CONFIGURATION_KEY],
+			formFields
+		);
+
+		fields.push({
+			defaultValue: isRequiredField,
+			disabled: isRequiredField,
+			label: Liferay.Language.get('mark-as-required'),
+			name: REQUIRED_CONFIGURATION_KEY,
+			type: 'checkbox',
+		});
+	}
+
+	fields.push(
+		{
+			defaultValue: true,
+			label: Liferay.Language.get('show-label'),
+			name: 'inputShowLabel',
+			type: 'checkbox',
+			typeOptions: {displayType: 'toggle'},
+		},
+		{
+			defaultValue: '',
+			label: Liferay.Language.get('label'),
+			localizable: true,
+			name: 'inputLabel',
+			type: 'text',
+		},
+		{
+			defaultValue: true,
+			label: Liferay.Language.get('show-help-text'),
+			name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
+			type: 'checkbox',
+			typeOptions: {displayType: 'toggle'},
+		}
+	);
+
+	if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] !== false) {
+		fields.push({
+			defaultValue: Liferay.Language.get(
+				'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
+			),
+			label: Liferay.Language.get('help-text'),
+			localizable: true,
+			name: HELP_TEXT_CONFIGURATION_KEY,
+			type: 'text',
+		});
+	}
+
+	return fields;
+}
 
 function getTypeLabels(itemTypes, classNameId, classTypeId) {
 	if (!itemTypes || !classNameId) {
@@ -135,19 +154,10 @@ export function FormInputGeneralPanel({item}) {
 	});
 
 	const fields = useMemo(() => {
-		let nextFields = INPUT_COMMON_CONFIGURATION;
-
-		if (!configurationValues[FIELD_ID_CONFIGURATION_KEY]) {
-			nextFields = nextFields.filter(
-				(field) => field.name !== REQUIRED_CONFIGURATION_KEY
-			);
-		}
-
-		if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] === false) {
-			nextFields = nextFields.filter(
-				(field) => field.name !== HELP_TEXT_CONFIGURATION_KEY
-			);
-		}
+		let nextFields = getInputCommonConfiguration(
+			configurationValues,
+			formFields
+		);
 
 		const fieldSetsWithoutLabel =
 			fragmentEntryLinkRef.current.configuration?.fieldSets?.filter(
@@ -160,7 +170,7 @@ export function FormInputGeneralPanel({item}) {
 		];
 
 		return nextFields;
-	}, [configurationValues, fragmentEntryLinkRef]);
+	}, [configurationValues, fragmentEntryLinkRef, formFields]);
 
 	const handleValueSelect = (key, value) => {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];

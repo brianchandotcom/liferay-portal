@@ -28,7 +28,87 @@
 	<td></td>
 	<td></td>
 </tr>
-
+<!--APP_STORE-->
+<tr>
+	<td>APP_FILTER_LABEL</td>
+	<td>//span[contains(@class,'aui-field-select')]/span[contains(@class,'aui-field-content')]/label[contains(.,'${key_filterName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_FILTER_SELECT_DROP_DOWN_LIST</td>
+	<td>//label[contains(.,'${key_filterName}')]/following-sibling::span/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_FILTER_SELECTED_OPTION</td>
+	<td>//span[contains(@Class,'aui-field-content')]//select/option[contains(.,'${filterBy}') and @selected]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_PURCHASE</td>
+	<td>//div[contains(@class,'purchase')]/a[contains(.,'${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_SUBMIT</td>
+	<td>//input[contains(@type,'submit') or contains(@class,'submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_PURCHASE_AGREE_CHECKBOX</td>
+	<td>//span[contains(@class,'aui-field-element')]/input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_PURCHASE_INFO</td>
+	<td>//div[contains(@class,'container')]/h3[contains(.,' Thank You! ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_PURCHASE_USER_SELECT</td>
+	<td>//div[contains(@class,'card user')]/div[contains(.,' For Personal Use Only ')]//following-sibling::div[contains(@class,'card-action')]/a[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_RESULT_FILTER</td>
+	<td>//div[contains(@class,'marketplace-entry-tile')]/div//following-sibling::ul/li[contains(.,'${key_filterName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_RESULT_BOX</td>
+	<td>//span[contains(@class,'aui-field-element')]/input[contains(@class,'aui-field-input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_TITLE_TYPE</td>
+	<td>//a[contains(.,'${key_searchName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_INPUT_FIELD</td>
+	<td>//div[label[contains(.,'${key_text}')]]/..//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETPLACE_TITLE</td>
+	<td>//div[contains(@class,'banner-content')]/a[contains(@title,'liferay-marketplace')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETPLACE_DESCRIPTION</td>
+	<td>//div[contains(@class,'authorize')]/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[contains(@value,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SIGN_IN</td>
+	<td>//a[contains(@class,'btn-secondary')]/span</td>
+	<td></td>
+</tr>
 <!--BREADCRUMB-->
 
 <tr>

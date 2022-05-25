@@ -1,12 +1,12 @@
 [
 	{
 		"dataType": 5,
-		"modelResource": "com.liferay.account.model.AccountEntry",
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 1"
 	},
 	{
 		"dataType": 15,
-		"modelResource": "com.liferay.account.model.AccountEntry",
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 2"
 	}
 ]

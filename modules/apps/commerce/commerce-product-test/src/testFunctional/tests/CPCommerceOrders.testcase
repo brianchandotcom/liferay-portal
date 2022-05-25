@@ -1234,6 +1234,12 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
+		Click(locator1 = "Button#ANGLE_DOWN");
+
+		WaitForElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+
+		var orderId = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+
 		Pause(locator1 = "5000");
 
 		CommerceCheckout.gotoCheckout();
@@ -1259,6 +1265,7 @@ definition {
 
 		AssertElementPresent(
 			key_orderQuantity = "1",
+			key_reference = "MIN55861",
 			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 
 		CommerceNavigator.gotoEntry(entryName = "MIN55861");
@@ -1267,6 +1274,7 @@ definition {
 
 		AssertElementPresent(
 			key_orderQuantity = "1",
+			key_reference = "${orderId}",
 			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 	}
 

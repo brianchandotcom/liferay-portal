@@ -943,7 +943,7 @@
 </tr>
 <tr>
 	<td>ON_ORDER_QUANTITY</td>
-	<td>//div[@class="dnd-tr with-bg"]//div[contains(text(),'${key_orderQuantity}')]</td>
+	<td>//div[@class="dnd-tr"]//*[text()='${key_reference}']//..//..//..//div[(@class="dnd-td") and (text()='${key_orderQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>

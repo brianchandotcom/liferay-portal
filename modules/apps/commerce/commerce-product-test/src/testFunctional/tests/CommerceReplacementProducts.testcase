@@ -1,0 +1,85 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property osgi.module.configuration.file.names = "com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+        task ("Setup: A simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product Replacement",
+				productType = "Simple",
+				sku = "SKU1001");
+		}
+
+		task ("Setup: A simple product with a SKU marked as discontinued with a replacement product set") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				replacementSKU = "SKU1001",
+				sku = "SKU1002");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+    @description = "COMMERCE-9347 | Replacement product's information is shown in product details"
+	@priority = "3"
+	test ReplacementProductInformationIsDisplayedInProductDetails {
+        task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+        task ("When the discontinued product's product details page is reached") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+        }
+
+        task ("Then all the warnings about the discontinued product are shown") {
+			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
+
+			FrontStore.assertProductDetails(
+				endOfLifeDate = "${endOfLifeDate}",
+				productAvailability = "Discontinued");
+        }
+
+        task ("And then the replacement product's button is shown") {
+			AssertElementPresent(
+				locator1 = "Button#ANY",
+				key_text = "Replacement Product");
+        }
+    }
+
+}

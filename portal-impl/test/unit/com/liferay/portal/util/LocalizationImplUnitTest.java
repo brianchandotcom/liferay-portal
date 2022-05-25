@@ -153,12 +153,9 @@ public class LocalizationImplUnitTest {
 
 		Locale contentDefaultLocale = LocaleUtil.fromLanguageId("es_ES");
 
-		Locale[] contentAvailableLocales = _getContentAvailableLocales(
-			"es_ES,en_US,de_DE");
-
 		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
 			"com.liferay.portal.className", 0L, contentDefaultLocale,
-			contentAvailableLocales);
+			_getContentAvailableLocales("es_ES,en_US,de_DE"));
 
 		if (expectedResult) {
 			Assert.assertTrue(

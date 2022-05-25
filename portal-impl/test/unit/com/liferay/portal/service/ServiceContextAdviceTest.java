@@ -81,12 +81,10 @@ public class ServiceContextAdviceTest {
 
 	@Test
 	public void testWithNoArguments() {
-		Method method = ReflectionTestUtil.getMethod(
-			TestInterceptedClass.class, "method");
-
 		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
 			_aopInvocationHandler, "_getAopMethodInvocation",
-			new Class<?>[] {Method.class}, method);
+			new Class<?>[] {Method.class},
+			ReflectionTestUtil.getMethod(TestInterceptedClass.class, "method"));
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
@@ -99,11 +97,9 @@ public class ServiceContextAdviceTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		Method method = ReflectionTestUtil.getMethod(
-			TestInterceptedClass.class, "method", ServiceContext.class);
-
 		AopMethodInvocation aopMethodInvocation = _createTestMethodInvocation(
-			method);
+			ReflectionTestUtil.getMethod(
+				TestInterceptedClass.class, "method", ServiceContext.class));
 
 		aopMethodInvocation.proceed(new Object[] {null});
 
@@ -115,12 +111,11 @@ public class ServiceContextAdviceTest {
 	public void testWithoutServiceContextParameter() {
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 
-		Method method = ReflectionTestUtil.getMethod(
-			TestInterceptedClass.class, "method", Object.class);
-
 		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
 			_aopInvocationHandler, "_getAopMethodInvocation",
-			new Class<?>[] {Method.class}, method);
+			new Class<?>[] {Method.class},
+			ReflectionTestUtil.getMethod(
+				TestInterceptedClass.class, "method", Object.class));
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.internal.service.persistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -1741,13 +1740,11 @@ public class TableMapperTest {
 	}
 
 	protected void testDestroy(TableMapper<?, ?> tableMapper) {
-		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				PortalCacheManagerNames.MULTI_VM);
-
 		Map<String, PortalCache<?, ?>> portalCaches =
 			ReflectionTestUtil.getFieldValue(
-				portalCacheManager, "_dynamicPortalCaches");
+				PortalCacheManagerProvider.getPortalCacheManager(
+					PortalCacheManagerNames.MULTI_VM),
+				"_dynamicPortalCaches");
 
 		Assert.assertEquals(portalCaches.toString(), 2, portalCaches.size());
 

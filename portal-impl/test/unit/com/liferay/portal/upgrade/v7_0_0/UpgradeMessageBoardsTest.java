@@ -101,16 +101,14 @@ public class UpgradeMessageBoardsTest {
 
 		_upgradeMessageBoards.upgradeThreadPriorities(_portletPreferences);
 
-		String[] values = _portletPreferences.getValues(
-			"priorities", StringPool.EMPTY_ARRAY);
-
 		Assert.assertArrayEquals(
 			new String[] {
 				"Urgent|/message_boards/priority_urgent.png|3.0",
 				"Sticky|/message_boards/priority_sticky.png|2.0",
 				"Announcement|/message_boards/priority_announcement.png|1.0"
 			},
-			values);
+			_portletPreferences.getValues(
+				"priorities", StringPool.EMPTY_ARRAY));
 	}
 
 	private PortletPreferences _portletPreferences;

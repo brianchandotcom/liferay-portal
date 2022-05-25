@@ -113,11 +113,8 @@ public class JSONSerializerTest {
 		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
-
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			groupPermissions, null);
-
-		serviceContext.setModelPermissions(modelPermissions);
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(groupPermissions, null));
 
 		String json = JSONFactoryUtil.serialize(serviceContext);
 
@@ -140,11 +137,8 @@ public class JSONSerializerTest {
 		String[] groupPermissions = {"VIEW"};
 
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
-
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			groupPermissions, null);
-
-		serviceContext.setModelPermissions(modelPermissions);
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(groupPermissions, null));
 
 		String json1 = JSONFactoryUtil.serialize(serviceContext);
 

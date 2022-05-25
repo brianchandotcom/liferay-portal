@@ -52,8 +52,8 @@ public interface SearchBarPortletInstanceConfiguration {
 	public String[] suggestionsContributorConfigurations();
 
 	@Meta.AD(
-		deflt = "2", description = "suggestions-display-threshold-help",
-		name = "suggestions-display-threshold", required = false
+		deflt = "2", name = "character-threshold-for-displaying-suggestions",
+		required = false
 	)
 	public int suggestionsDisplayThreshold();
 

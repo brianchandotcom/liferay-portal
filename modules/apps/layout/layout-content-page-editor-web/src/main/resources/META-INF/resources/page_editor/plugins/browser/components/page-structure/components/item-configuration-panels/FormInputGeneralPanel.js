@@ -122,7 +122,7 @@ export function FormInputGeneralPanel({item}) {
 		[item.itemId]
 	);
 
-	const {classNameId, classTypeId} = useSelectorCallback(
+	const {classNameId, classTypeId, formId} = useSelectorCallback(
 		(state) =>
 			selectFormConfiguration(item, state.layoutData) ||
 			DEFAULT_FORM_CONFIGURATION,
@@ -200,6 +200,7 @@ export function FormInputGeneralPanel({item}) {
 							classNameId,
 							classTypeId,
 							fields: formFields,
+							formId,
 						}}
 						item={item}
 						onValueSelect={handleValueSelect}
@@ -227,7 +228,7 @@ function FormInputMappingOptions({
 	item,
 	onValueSelect,
 }) {
-	const {classNameId, classTypeId, fields} = form;
+	const {classNameId, classTypeId, fields, formId} = form;
 
 	const inputType = useSelectorCallback(
 		(state) => {
@@ -265,19 +266,6 @@ function FormInputMappingOptions({
 			let nextFields = fields;
 
 			const selectedFields = (() => {
-				const findFormItemId = (itemId) => {
-					const formItem = state.layoutData.items[itemId];
-
-					if (formItem?.type === LAYOUT_DATA_ITEM_TYPES.form) {
-						return itemId;
-					}
-					else if (formItem?.parentId) {
-						return findFormItemId(formItem.parentId);
-					}
-
-					return null;
-				};
-
 				const selectedFields = [];
 
 				const findSelectedFields = (itemId) => {
@@ -309,7 +297,7 @@ function FormInputMappingOptions({
 					inputItem?.children.forEach(findSelectedFields);
 				};
 
-				findSelectedFields(findFormItemId(item.itemId));
+				findSelectedFields(formId);
 
 				return selectedFields;
 			})();

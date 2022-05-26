@@ -189,6 +189,7 @@ function StructureTreeNodeContent({
 
 	const item = {
 		children: node.children,
+		config: layoutDataRef.current.items[node.id]?.config,
 		icon: node.icon,
 		itemId: node.id,
 		name: node.name,

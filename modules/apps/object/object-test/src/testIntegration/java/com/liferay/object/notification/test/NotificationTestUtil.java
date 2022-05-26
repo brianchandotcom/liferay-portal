@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.notification.service.test;
+package com.liferay.object.notification.test;
 
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 /**
  * @author Gustavo Lima
@@ -24,16 +26,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 public class NotificationTestUtil {
 
 	public static NotificationTemplate addNotificationTemplate(
-			long userId, String from, String name)
+			long userId, String name, String to)
 		throws Exception {
 
 		return NotificationTemplateLocalServiceUtil.addNotificationTemplate(
 			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), from,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(), name,
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap());
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), to
+			).build());
 	}
 
 }

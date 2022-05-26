@@ -12,20 +12,30 @@
  * details.
  */
 
-package com.liferay.notification.service.test;
+package com.liferay.object.notification.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.util.NotificationHelper;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,10 +69,27 @@ public class NotificationTest {
 		_userLocalService.updateUser(_user);
 
 		_notificationTemplate = NotificationTestUtil.addNotificationTemplate(
-			_user.getUserId(), _user.getEmailAddress(), "Test");
+			_user.getUserId(), "Test", _user.getEmailAddress());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", RandomTestUtil.randomString(),
+						StringUtil.randomId())));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			_user.getUserId(), objectDefinition.getObjectDefinitionId());
 
 		_notificationHelper.sendNotification(
-			_user.getUserId(), _notificationTemplate, _notificationTemplate);
+			_user.getUserId(), _notificationTemplate,
+			objectDefinition.getClassName(), objectDefinition);
 
 		Assert.assertEquals(
 			1,
@@ -81,6 +108,9 @@ public class NotificationTest {
 
 	@DeleteAfterTestRun
 	private NotificationTemplate _notificationTemplate;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

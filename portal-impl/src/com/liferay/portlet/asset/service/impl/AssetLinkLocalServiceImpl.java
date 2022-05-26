@@ -404,7 +404,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 				((link.getEntryId2() == entryId) &&
 				 !ArrayUtil.contains(linkEntryIds, link.getEntryId1()))) {
 
-				deleteLink(link);
+				deleteAssetLink(link);
 			}
 		}
 

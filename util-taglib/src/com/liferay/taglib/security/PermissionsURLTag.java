@@ -84,9 +84,9 @@ public class PermissionsURLTag extends TagSupport {
 			}
 		}
 		else if (resourceGroupId instanceof String) {
-			String esourceGroupIdString = (String)resourceGroupId;
+			String resourceGroupIdString = (String)resourceGroupId;
 
-			if (esourceGroupIdString.length() == 0) {
+			if (resourceGroupIdString.length() == 0) {
 				resourceGroupId = null;
 			}
 		}

@@ -104,7 +104,6 @@
 /portal/jabsorb.jar
 /portal/jackson-annotations.jar
 /portal/jackson-core.jar
-/portal/jackson-databind.jar
 /portal/jackson-module-jaxb-annotations.jar
 /portal/javassist.jar
 /portal/jaxb-api.jar

@@ -41,8 +41,8 @@ public interface CookiesBannerConfiguration {
 	public boolean explicitConsentMode();
 
 	@Meta.AD(
-		deflt = "We use cookies to deliver personalized content, analyze trends, administer the site, track user movements on the site, and collect demographic information about our user base as a whole. Accept all cookies for the best possible experience on our website or manage your preferences.",
-		name = "content", required = false
+		deflt = "${language:cookies-banner-content}", name = "content",
+		required = false
 	)
 	public LocalizedValuesMap content();
 
@@ -50,8 +50,8 @@ public interface CookiesBannerConfiguration {
 	public String privacyPolicyLink();
 
 	@Meta.AD(
-		deflt = "Visit our Privacy Policy", name = "link-display-text",
-		required = false
+		deflt = "${language:visit-our-privacy-policy}",
+		name = "link-display-text", required = false
 	)
 	public LocalizedValuesMap linkDisplayText();
 

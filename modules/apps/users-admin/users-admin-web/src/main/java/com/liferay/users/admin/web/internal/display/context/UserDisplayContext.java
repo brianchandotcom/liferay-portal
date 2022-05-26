@@ -258,13 +258,7 @@ public class UserDisplayContext {
 			return true;
 		}
 
-		Role administratorRole = RoleLocalServiceUtil.getRole(
-			selUser.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		long[] administratorUserIds = UserLocalServiceUtil.getRoleUserIds(
-			administratorRole.getRoleId());
-
-		if (administratorUserIds.length == 1) {
+		if (UserLocalServiceUtil.getRoleUsersCount(role.getRoleId()) == 1) {
 			return false;
 		}
 

@@ -182,13 +182,25 @@ export function FormInputGeneralPanel({item}) {
 			keyPath.push(languageId);
 		}
 
+		let editableValues = fragmentEntryLinkRef.current.editableValues;
+
+		if (
+			key === FIELD_ID_CONFIGURATION_KEY &&
+			isFormRequiredField(value, formFields)
+		) {
+			editableValues = setIn(
+				fragmentEntryLinkRef.current.editableValues,
+				[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					REQUIRED_CONFIGURATION_KEY,
+				],
+				true
+			);
+		}
+
 		dispatch(
 			updateEditableValues({
-				editableValues: setIn(
-					fragmentEntryLinkRef.current.editableValues,
-					keyPath,
-					value
-				),
+				editableValues: setIn(editableValues, keyPath, value),
 				fragmentEntryLinkId:
 					fragmentEntryLinkRef.current.fragmentEntryLinkId,
 				languageId,

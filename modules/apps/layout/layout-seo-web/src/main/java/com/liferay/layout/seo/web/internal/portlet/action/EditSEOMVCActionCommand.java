@@ -92,8 +92,8 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 			layout.getNameMap(), titleMap, descriptionMap, keywordsMap,
 			robotsMap, layout.getType(), layout.isHidden(),
 			layout.getFriendlyURLMap(), layout.isIconImage(), null,
-			layout.getMasterLayoutPlid(), layout.getStyleBookEntryId(),
-			layout.getFaviconFileEntryId(), serviceContext);
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPlid(), serviceContext);
 
 		boolean canonicalURLEnabled = ParamUtil.getBoolean(
 			actionRequest, "canonicalURLEnabled");

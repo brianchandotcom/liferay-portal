@@ -1,5 +1,17 @@
 @import 'atlas-variables';
 
+#wrapper .portlet-layout .portlet-body {
+	.lfr-ddm__form-report__header,
+	.lfr-ddm__form-report__tabs {
+		.container-fluid-max-xl {
+			max-width: 808px;
+		}
+	}
+	.lfr-ddm__form-report__cards {
+		max-width: 808px;
+	}
+}
+
 .lfr-ddm__form-report {
 	&__header {
 		background-color: $white;

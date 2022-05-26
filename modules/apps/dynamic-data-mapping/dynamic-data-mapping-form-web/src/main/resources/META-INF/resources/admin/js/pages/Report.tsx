@@ -64,7 +64,7 @@ export function Report() {
 
 			<hr className="m-0" />
 
-			<div className="container-fluid container-fluid-max-xl">
+			<div className="container-fluid container-fluid-max-xl lfr-ddm__form-report__cards">
 				<FormReport
 					data={data}
 					fields={fields}

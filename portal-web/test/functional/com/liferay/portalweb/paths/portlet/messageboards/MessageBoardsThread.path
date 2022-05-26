@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TAG</td>
+	<td>//span/a[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_USERNAME</td>
 	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//span[contains(.,'${key_userName}')]</td>
 	<td></td>

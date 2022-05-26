@@ -1,8 +1,7 @@
-$normal-transition-width: width 0.9s ease;
 $hover-transition-width: width 0.9s ease;
-
-$normal-transition: opacity 1s ease;
 $hover-transition: opacity 1s ease;
+$normal-transition-width: width 0.9s ease;
+$normal-transition: opacity 1s ease;
 
 .testray-sidebar {
 	background-color: #18215c;
@@ -13,11 +12,6 @@ $hover-transition: opacity 1s ease;
 	padding: 20px 0 0;
 	transition: $normal-transition-width;
 	width: 80px;
-
-	&:hover {
-		transition: $hover-transition-width;
-		width: 250px;
-	}
 
 	.divider {
 		background-color: $sidebar-divider-color;
@@ -49,7 +43,6 @@ $hover-transition: opacity 1s ease;
 		display: block;
 		padding: 10px 30px;
 		position: relative;
-		transition: 0.75s ease-in-out 0.33s;
 		white-space: nowrap;
 
 		&:active,
@@ -69,26 +62,26 @@ $hover-transition: opacity 1s ease;
 				color: white;
 			}
 		}
-
-		.testray-sidebar-text {
-			font-size: 1.2em;
-			font-weight: 450;
-			opacity: 0;
-			padding-left: 10px;
-			transition: $normal-transition;
-			vertical-align: middle;
-		}
 	}
 }
 
-.testray-sidebar:hover .testray-sidebar-item {
-	padding: 10px 30px;
-	transition: $hover-transition;
+.testray-sidebar-text {
+	font-size: 1.2em;
+	font-weight: 450;
+	opacity: 0;
+	padding-left: 10px;
+	transition: $normal-transition;
+	vertical-align: middle;
 }
 
-.testray-sidebar:hover .testray-sidebar-text {
-	opacity: 1;
-	transition: $hover-transition;
+.testray-sidebar-text-expanded {
+	opacity: 1 !important;
+	transition: $hover-transition !important;
+}
+
+.testray-sidebar-expanded {
+	transition: $hover-transition-width !important;
+	width: 250px !important;
 }
 
 .testray-logo {
@@ -119,9 +112,9 @@ $hover-transition: opacity 1s ease;
 	width: 150px;
 }
 
-.testray-sidebar:hover .testray-brand-logo {
-	opacity: 1;
-	transition: $hover-transition;
+.testray-brand-logo-expand {
+	opacity: 1 !important;
+	transition: $hover-transition !important;
 }
 
 .testray-avatar-dropdown {
@@ -134,7 +127,25 @@ $hover-transition: opacity 1s ease;
 	transition: $normal-transition;
 }
 
-.testray-sidebar:hover .testray-avatar-dropdown-text {
-	opacity: 1;
-	transition: $hover-transition;
+.testray-avatar-dropdown-text-expanded {
+	opacity: 1 !important;
+	transition: $hover-transition !important;
+}
+
+.forward-icon {
+	cursor: pointer;
+	padding: 10px 30px;
+	transform: rotateY(0deg);
+	transition: transform 0.5s ease 0.4s;
+
+	&:hover {
+		background-color: #303376;
+	}
+}
+
+.forward-icon-expanded {
+	cursor: pointer;
+	padding: 10px;
+	transform: rotateY(180deg);
+	transition: all 0.5s ease;
 }

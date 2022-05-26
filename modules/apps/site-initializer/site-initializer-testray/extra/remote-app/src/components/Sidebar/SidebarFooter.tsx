@@ -14,22 +14,39 @@
 
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useContext} from 'react';
 
 import {AccountContext} from '../../context/AccountContext';
 import i18n from '../../i18n';
+import ForwardIcon from '../../images/ForwardIcon';
 import {Liferay} from '../../services/liferay/liferay';
 import {Avatar} from '../Avatar';
 import DropDown from '../DropDown';
 import useSidebarActions from './useSidebarActions';
 
-const SidebarFooter = () => {
+type SidebarProps = {
+	expanded: boolean;
+	onClick: () => void;
+};
+
+const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 	const [{myUserAccount}] = useContext(AccountContext);
 	const MANAGE_DROPDOWN = useSidebarActions();
 
 	return (
 		<div className="testray-sidebar-footer">
 			<div className="divider divider-full" />
+
+			<div className="d-flex justify-content-end">
+				<div onClick={onClick}>
+					<ForwardIcon
+						className={classNames('forward-icon ', {
+							'forward-icon-expanded': expanded,
+						})}
+					/>
+				</div>
+			</div>
 
 			<DropDown
 				items={MANAGE_DROPDOWN}
@@ -38,7 +55,11 @@ const SidebarFooter = () => {
 					<div className="testray-sidebar-item">
 						<ClayIcon fontSize={16} symbol="cog" />
 
-						<span className="ml-1 testray-sidebar-text">
+						<span
+							className={classNames('ml-1 testray-sidebar-text', {
+								'testray-sidebar-text-expanded': expanded,
+							})}
+						>
 							{i18n.translate('manage')}
 						</span>
 					</div>
@@ -68,6 +89,7 @@ const SidebarFooter = () => {
 					<div className="testray-avatar-dropdown">
 						<Avatar
 							displayName
+							expanded={expanded}
 							name={Liferay.ThemeDisplay.getUserName()}
 							url={myUserAccount?.image}
 						/>

@@ -12,10 +12,12 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {Link, useLocation} from 'react-router-dom';
 
+import useLocalStorage from '../../hooks/useLocalStorage';
 import i18n from '../../i18n';
 import TestrayIcon from '../../images/testray-icon';
 import TestrayIconBrand from '../../images/testray-icon-brand';
@@ -25,6 +27,21 @@ import SidebarItem from './SidebarItem';
 
 const Sidebar = () => {
 	const {pathname} = useLocation();
+	const [expanded, setExpanded] = useLocalStorage('sidebar', true);
+
+	const popoverItem = (
+		<div className={classNames('cursor-pointer testray-sidebar-item')}>
+			<ClayIcon fontSize={20} symbol="drop" />
+
+			<span
+				className={classNames('ml-1 testray-sidebar-text', {
+					'testray-sidebar-text-expanded': expanded,
+				})}
+			>
+				{i18n.translate('results')}
+			</span>
+		</div>
+	);
 
 	const sidebarItems = [
 		{
@@ -46,14 +63,7 @@ const Sidebar = () => {
 					disableScroll={true}
 					header="Compare Runs"
 					size="lg"
-					trigger={
-						<div>
-							<SidebarItem
-								icon="drop"
-								label={i18n.translate('compare-runs')}
-							/>
-						</div>
-					}
+					trigger={popoverItem}
 				>
 					<CompareRun />
 				</ClayPopover>
@@ -62,12 +72,20 @@ const Sidebar = () => {
 	];
 
 	return (
-		<div className={classNames('testray-sidebar')}>
+		<div
+			className={classNames('testray-sidebar', {
+				'testray-sidebar-expanded': expanded,
+			})}
+		>
 			<div className="testray-sidebar-content">
 				<Link className="d-flex flex-center mb-5 w-100" to="/">
 					<TestrayIcon className="testray-logo" />
 
-					<TestrayIconBrand className="testray-brand-logo" />
+					<TestrayIconBrand
+						className={classNames('testray-brand-logo', {
+							'testray-brand-logo-expand': expanded,
+						})}
+					/>
 				</Link>
 
 				{sidebarItems.map(
@@ -87,6 +105,7 @@ const Sidebar = () => {
 											: pathname.includes(path)
 									}
 									className={className}
+									expanded={expanded}
 									icon={icon}
 									key={index}
 									label={label}
@@ -100,7 +119,10 @@ const Sidebar = () => {
 				)}
 			</div>
 
-			<SidebarFooter />
+			<SidebarFooter
+				expanded={expanded}
+				onClick={() => setExpanded(!expanded)}
+			/>
 		</div>
 	);
 };

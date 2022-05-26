@@ -18,6 +18,7 @@ import classNames from 'classnames';
 type AvatarProps = {
 	className?: string;
 	displayName?: boolean;
+	expanded?: boolean;
 	name?: string;
 	url?: string;
 };
@@ -39,6 +40,7 @@ function getInitials(name: string): string {
 const Avatar: React.FC<AvatarProps> = ({
 	className,
 	displayName = false,
+	expanded,
 	name = '',
 	url,
 }) => (
@@ -60,7 +62,13 @@ const Avatar: React.FC<AvatarProps> = ({
 		</ClaySticker>
 
 		{displayName && (
-			<span className="ml-3 testray-avatar-dropdown-text">{name}</span>
+			<span
+				className={classNames('ml-3 testray-avatar-dropdown-text', {
+					'testray-avatar-dropdown-text-expanded': expanded,
+				})}
+			>
+				{name}
+			</span>
 		)}
 	</div>
 );

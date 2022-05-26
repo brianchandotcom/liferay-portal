@@ -19,6 +19,7 @@ import {Link} from 'react-router-dom';
 type SidebarItemProps = {
 	active?: boolean;
 	className?: string;
+	expanded?: boolean;
 	icon: string;
 	label: string;
 	path?: string;
@@ -27,6 +28,7 @@ type SidebarItemProps = {
 const SidebarItem: React.FC<SidebarItemProps> = ({
 	active,
 	className,
+	expanded,
 	icon,
 	label,
 	path,
@@ -46,7 +48,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 		>
 			<ClayIcon fontSize={20} symbol={icon} />
 
-			<span className="ml-1 testray-sidebar-text">{label}</span>
+			<span
+				className={classNames('ml-1 testray-sidebar-text', {
+					'testray-sidebar-text-expanded': expanded,
+				})}
+			>
+				{label}
+			</span>
 		</LinkComponent>
 	);
 };

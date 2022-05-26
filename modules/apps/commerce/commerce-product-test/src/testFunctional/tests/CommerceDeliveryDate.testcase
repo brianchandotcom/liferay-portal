@@ -57,7 +57,7 @@ definition {
 	@description = "COMMERCE-9324. A buyer user can set the requested delivery date during the checkout process"
 	@priority = "3"
 	test CanSetDeliveryDate {
-		task ("Given Mnium channel's configuration page is reached") {
+		task ("Given Minium channel's configuration page is reached") {
 			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");

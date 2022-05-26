@@ -2178,6 +2178,10 @@ public class ContentPageEditorDisplayContext {
 				themeDisplay.getCompanyGroupId());
 		}
 		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+
 			return false;
 		}
 	}

@@ -671,6 +671,11 @@ public class LayoutWrapper
 		return model.getEmbeddedPortlets(groupId);
 	}
 
+	@Override
+	public String getFavicon() {
+		return model.getFavicon();
+	}
+
 	/**
 	 * Returns the favicon file entry ID of this layout.
 	 *

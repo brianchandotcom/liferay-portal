@@ -12,9 +12,9 @@
  * details.
  */
 
+import {CustomItem} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {CustomItem} from '../Form/CustomSelect/CustomSelect';
 import ObjectAction from './index';
 
 export default function EditObjectAction({

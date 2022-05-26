@@ -15,12 +15,12 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {AutoComplete} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
 import {defaultLanguageId} from '../../../utils/locale';
-import AutoComplete from '../../Form/AutoComplete';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
 import RequiredLabel from './RequiredLabel';

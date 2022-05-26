@@ -13,11 +13,10 @@
  */
 
 import ClayForm, {ClayToggle} from '@clayui/form';
+import {Card, Input} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {FormError} from '../../../hooks/useForm';
-import Card from '../../Card/Card';
-import Input from '../../Form/Input';
 
 export default function BasicInfo({
 	errors,

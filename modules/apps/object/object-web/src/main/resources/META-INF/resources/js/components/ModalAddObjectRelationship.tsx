@@ -16,6 +16,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {
+	FormCustomSelect,
+	Input,
+	Select,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -23,9 +28,6 @@ import useForm from '../hooks/useForm';
 import {defaultLanguageId} from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {toCamelCase} from '../utils/string';
-import CustomSelect from './Form/CustomSelect/CustomSelect';
-import Input from './Form/Input';
-import Select from './Form/Select';
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -216,7 +218,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						value={values.name ?? toCamelCase(values.label)}
 					/>
 
-					<CustomSelect
+					<FormCustomSelect
 						error={errors.type}
 						label={Liferay.Language.get('type')}
 						onChange={(type) => {

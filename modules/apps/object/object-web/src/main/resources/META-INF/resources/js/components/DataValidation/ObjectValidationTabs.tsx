@@ -14,13 +14,16 @@
 
 import 'codemirror/mode/groovy/groovy';
 import {ClayToggle} from '@clayui/form';
+import {
+	Card,
+	Input,
+	InputLocalized,
+	Select,
+} from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
-import Card from '../Card/Card';
+import {defaultLanguageId} from '../../utils/locale';
 import CodeEditor from '../CodeEditor/index';
-import Input from '../Form/Input';
-import InputLocalized from '../Form/InputLocalized/InputLocalized';
-import Select from '../Form/Select';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
 
 function BasicInfo({
@@ -43,6 +46,7 @@ function BasicInfo({
 		<>
 			<Card title={componentLabel}>
 				<InputLocalized
+					defaultLanguageId={defaultLanguageId}
 					disabled={disabled}
 					error={errors.name}
 					label={Liferay.Language.get('label')}
@@ -135,6 +139,7 @@ function Conditions({
 
 			<Card title={Liferay.Language.get('error-message')}>
 				<InputLocalized
+					defaultLanguageId={defaultLanguageId}
 					disabled={disabled}
 					error={errors.errorLabel}
 					label={Liferay.Language.get('message')}

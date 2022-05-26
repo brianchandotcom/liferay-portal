@@ -13,14 +13,17 @@
  */
 
 import ClayForm, {ClayToggle} from '@clayui/form';
+import {
+	Card,
+	CustomItem,
+	FormCustomSelect,
+	Input,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {FormError} from '../../../hooks/useForm';
-import Card from '../../Card/Card';
 import CodeMirrorEditor from '../../CodeEditor/CodeMirrorEditor';
-import CustomSelect, {CustomItem} from '../../Form/CustomSelect/CustomSelect';
-import Input from '../../Form/Input';
 
 import './ActionBuilder.scss';
 
@@ -95,7 +98,7 @@ export default function ActionBuilder({
 					title={Liferay.Language.get('when[object]')}
 					viewMode="inline"
 				>
-					<CustomSelect
+					<FormCustomSelect
 						error={errors.objectActionTriggerKey}
 						onChange={({value}) =>
 							setValues({objectActionTriggerKey: value})
@@ -153,7 +156,7 @@ export default function ActionBuilder({
 					viewMode="inline"
 				>
 					<div className="lfr-object__action-builder-then">
-						<CustomSelect
+						<FormCustomSelect
 							error={errors.objectActionExecutorKey}
 							onChange={({value}) =>
 								setValues({
@@ -173,7 +176,7 @@ export default function ActionBuilder({
 						{ffNotificationTemplates &&
 							values.objectActionExecutorKey ===
 								'notificationTemplate' && (
-								<CustomSelect
+								<FormCustomSelect
 									className="lfr-object__action-builder-notification-then"
 									error={errors.objectActionExecutorKey}
 									label={Liferay.Language.get('notification')}

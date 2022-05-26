@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 import 'codemirror/mode/groovy/groovy';
-import {CustomItem} from '../Form/CustomSelect/CustomSelect';
+import {CustomItem} from '@liferay/object-js-components-web';
 export default function Action({
 	ffNotificationTemplates,
 	objectAction: initialValues,

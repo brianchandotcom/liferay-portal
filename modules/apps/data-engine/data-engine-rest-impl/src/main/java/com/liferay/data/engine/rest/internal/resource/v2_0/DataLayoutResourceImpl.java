@@ -283,8 +283,7 @@ public class DataLayoutResourceImpl
 		ddmFormTemplateContext.put("editable", false);
 		ddmFormTemplateContext.put(
 			"spritemap",
-			FrontendIconsUtil.getSpritemap(
-				ddmStructureLayout.getGroupId()));
+			FrontendIconsUtil.getSpritemap(ddmStructureLayout.getGroupId()));
 		ddmFormTemplateContext.remove("fieldTypes");
 
 		return Response.ok(

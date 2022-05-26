@@ -58,8 +58,7 @@ public class ATag extends BaseATag {
 				jspWriter.write("<svg class=\"lexicon-icon ");
 				jspWriter.write("lexicon-icon-shortcut\" focusable=\"false\" ");
 				jspWriter.write("role=\"img\"><use href=\"");
-				jspWriter.write(
-					FrontendIconsUtil.getSpritemap(themeDisplay));
+				jspWriter.write(FrontendIconsUtil.getSpritemap(themeDisplay));
 				jspWriter.write("#shortcut\" /><span ");
 				jspWriter.write("class=\"sr-only\">");
 

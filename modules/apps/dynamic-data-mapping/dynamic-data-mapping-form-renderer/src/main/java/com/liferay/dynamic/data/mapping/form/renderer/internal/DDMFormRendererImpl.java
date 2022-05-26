@@ -66,9 +66,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String spriteMap = FrontendIconsUtil.getSpritemap(themeDisplay);
-
-		ddmFormTemplateContext.put("spritemap", spriteMap);
+		ddmFormTemplateContext.put(
+			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
 
 		return ddmFormTemplateContext;
 	}

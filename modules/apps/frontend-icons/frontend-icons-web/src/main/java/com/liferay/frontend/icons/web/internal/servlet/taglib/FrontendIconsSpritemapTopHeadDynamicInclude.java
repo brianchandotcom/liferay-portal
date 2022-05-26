@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Bryce Osterhaus
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class FrontendIconsSpritemapTopHeadDynamicInclude extends BaseDynamicInclude {
+public class FrontendIconsSpritemapTopHeadDynamicInclude
+	extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -55,8 +56,8 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude extends BaseDynamicIncl
 
 		sb.append(
 			StringBundler.concat(
-				"Liferay.Icons.basePath = '",
-				FrontendIconsUtil.getBasePath(), "';"));
+				"Liferay.Icons.basePath = '", FrontendIconsUtil.getBasePath(),
+				"';"));
 
 		sb.append(
 			StringBundler.concat(
@@ -67,7 +68,7 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude extends BaseDynamicIncl
 			StringBundler.concat(
 				"Liferay.Icons.systemSpritemap = '",
 				FrontendIconsUtil.getSystemSpritemap(), "';"));
-				
+
 		sb.append("</script>");
 
 		printWriter.println(sb);

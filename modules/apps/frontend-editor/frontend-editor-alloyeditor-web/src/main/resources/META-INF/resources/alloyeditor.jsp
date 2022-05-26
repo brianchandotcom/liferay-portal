@@ -230,8 +230,7 @@ name = HtmlUtil.escapeJS(name);
 			{
 				documentBrowseLinkCallback: documentBrowseLinkCallback,
 				htmlEncodeOutput: true,
-				spritemap:
-					'<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
+				spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
 				title: false,
 				uiNode: uiNode,
 			},

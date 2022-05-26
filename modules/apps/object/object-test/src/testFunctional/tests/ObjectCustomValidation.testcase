@@ -124,12 +124,88 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUserDefineValidationActiveOrInactive {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153552",
+			objectName = "CustomObject153552",
+			pluralLabelName = "Custom Objects 153552");
 
-		// TODO LPS-153552 CanUserDefineValidationActiveOrInactive pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject153552");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153552");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153552");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField < 18)");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomValidation.assertValidationPresent(
+			validationActive = "Yes",
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153552",
+			value = "10");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "10");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153552");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.desactiveValidation();
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomValidation.assertValidationPresent(
+			validationActive = "No",
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153552",
+			value = "10");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
+
+		ObjectPortlet.viewEntry(entry = "10");
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"

@@ -102,9 +102,6 @@
 /portal/isoparser.jar
 /portal/istack-commons-runtime.jar
 /portal/jabsorb.jar
-/portal/jackson-annotations.jar
-/portal/jackson-core.jar
-/portal/jackson-module-jaxb-annotations.jar
 /portal/javassist.jar
 /portal/jaxb-api.jar
 /portal/jaxb-runtime.jar

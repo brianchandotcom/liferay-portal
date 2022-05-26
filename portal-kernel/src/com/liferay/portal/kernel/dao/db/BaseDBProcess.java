@@ -199,84 +199,29 @@ public abstract class BaseDBProcess implements DBProcess {
 		String newColumnType = newColumnDefinition.substring(
 			newColumnName.length() + 1);
 
-		boolean sameColumn = StringUtil.equalsIgnoreCase(
-			oldColumnName, newColumnName);
-
-		if (hasColumn(tableName, oldColumnName)) {
-			if (sameColumn) {
-				if (!hasColumnType(tableName, oldColumnName, newColumnType)) {
-					throw new SQLException(
-						StringBundler.concat(
-							"This method does not allow type changes. Column ",
-							oldColumnName, " has a different type than ",
-							newColumnType));
-				}
-
-				DBInspector dbInspector = new DBInspector(connection);
-
-				String normalizedOldColumnName = dbInspector.normalizeName(
-					oldColumnName);
-				String normalizedNewColumnName = dbInspector.normalizeName(
-					newColumnName);
-
-				boolean databaseSameColumn = normalizedOldColumnName.equals(
-					normalizedNewColumnName);
-
-				if (!databaseSameColumn) {
-					DB db = DBManagerUtil.getDB();
-
-					db.alterColumnName(
-						connection, tableName, oldColumnName,
-						newColumnDefinition);
-				}
-
+		if (!hasColumn(tableName, oldColumnName)) {
+			if (hasColumnType(tableName, newColumnName, newColumnType)) {
 				return;
 			}
 
-			if (hasColumn(tableName, newColumnName)) {
-				String message = StringBundler.concat(
-					"Column ", oldColumnName, " should not exist in table ",
-					tableName, ".");
+			throw new SQLException(
+				StringBundler.concat(
+					"Column ", tableName, StringPool.PERIOD, oldColumnName,
+					" does not exist"));
+		}
 
-				if (!hasColumnType(tableName, newColumnName, newColumnType)) {
-					message = StringBundler.concat(
-						message, " Column ", newColumnName,
-						" already exists with a different type than ",
-						newColumnType);
-				}
-
-				throw new SQLException(message);
-			}
-
-			if (!hasColumnType(tableName, oldColumnName, newColumnType)) {
-				throw new SQLException(
-					StringBundler.concat(
-						"This method does not allow type changes. Column ",
-						oldColumnName, " has a different type than ",
-						newColumnType));
-			}
-
+		if (hasColumnType(tableName, oldColumnName, newColumnType)) {
 			DB db = DBManagerUtil.getDB();
 
 			db.alterColumnName(
 				connection, tableName, oldColumnName, newColumnDefinition);
-
-			return;
 		}
-
-		if (!hasColumn(tableName, newColumnName)) {
+		else {
 			throw new SQLException(
 				StringBundler.concat(
-					"Column ", oldColumnName, " does not exist in table ",
-					tableName));
-		}
-
-		if (!hasColumnType(tableName, newColumnName, newColumnType)) {
-			throw new SQLException(
-				StringBundler.concat(
-					"Column ", newColumnName,
-					" already exists with a different type than ",
-					newColumnType));
+					"Type change is now allowed when altering column name. ",
+					"Column ", tableName, StringPool.PERIOD, oldColumnName,
+					" has different type than ", newColumnType));
 		}
 	}
 

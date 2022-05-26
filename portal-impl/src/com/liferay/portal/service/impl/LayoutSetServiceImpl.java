@@ -34,6 +34,18 @@ import java.util.TreeMap;
  */
 public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 
+	@Override
+	public void updateFaviconFileEntryId(
+			long groupId, boolean privateLayout, long faviconFileEntryId)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
+
+		layoutSetLocalService.updateFaviconFileEntryId(
+			groupId, privateLayout, faviconFileEntryId);
+	}
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *

@@ -26,12 +26,21 @@ export default function propsTransformer({
 				`${portletNamespace}faviconFileEntryId`
 			);
 
+			const faviconFileEntryImage = document.getElementById(
+				`${portletNamespace}faviconFileEntryImage`
+			);
+
 			const faviconFileEntryTitle = document.getElementById(
 				`${portletNamespace}faviconFileEntryTitle`
 			);
 
-			if (faviconFileEntryId && faviconFileEntryTitle) {
+			if (
+				faviconFileEntryId &&
+				faviconFileEntryImage &&
+				faviconFileEntryTitle
+			) {
 				faviconFileEntryId.value = '0';
+				faviconFileEntryImage.classList.add('d-none');
 				faviconFileEntryTitle.innerHTML = faviconFileEntryTitleValue;
 			}
 		},

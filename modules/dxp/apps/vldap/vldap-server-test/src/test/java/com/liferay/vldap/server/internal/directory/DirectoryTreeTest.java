@@ -1337,7 +1337,8 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			FastDateFormatFactory.class);
 
 		Mockito.when(
-			fastDateFormatFactory.getSimpleDateFormat(Mockito.anyString())
+			fastDateFormatFactory.getSimpleDateFormat(
+				Mockito.nullable(String.class))
 		).thenReturn(
 			fastDateFormat
 		);
@@ -1465,8 +1466,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		Mockito.when(
 			userLocalService.search(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
 				Mockito.anyInt(), Mockito.any(LinkedHashMap.class),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any(UserScreenNameComparator.class))

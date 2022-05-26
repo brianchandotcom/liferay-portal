@@ -693,11 +693,12 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 
 		Mockito.when(
 			userLocalService.search(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyInt(), Mockito.any(LinkedHashMap.class),
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.anyInt(), Mockito.nullable(LinkedHashMap.class),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class))
+				Mockito.nullable(UserScreenNameComparator.class))
 		).thenReturn(
 			_users
 		);
@@ -742,7 +743,8 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 			FastDateFormatFactory.class);
 
 		Mockito.when(
-			fastDateFormatFactory.getSimpleDateFormat(Mockito.anyString())
+			fastDateFormatFactory.getSimpleDateFormat(
+				Mockito.nullable(String.class))
 		).thenReturn(
 			fastDateFormat
 		);
@@ -779,8 +781,8 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		Mockito.when(
 			groupLocalService.search(
 				Mockito.anyLong(), Mockito.any(long[].class),
-				Mockito.anyString(), Mockito.anyString(),
-				Mockito.any(LinkedHashMap.class), Mockito.anyBoolean(),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(LinkedHashMap.class), Mockito.anyBoolean(),
 				Mockito.anyInt(), Mockito.anyInt())
 		).thenReturn(
 			Arrays.asList(group)

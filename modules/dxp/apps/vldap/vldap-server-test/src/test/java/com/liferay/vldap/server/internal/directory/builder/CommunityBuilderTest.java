@@ -325,11 +325,12 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 
 		Mockito.when(
 			userLocalService.search(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyInt(), Mockito.any(LinkedHashMap.class),
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.anyInt(), Mockito.nullable(LinkedHashMap.class),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class))
+				Mockito.nullable(UserScreenNameComparator.class))
 		).thenReturn(
 			Arrays.asList(_user)
 		);

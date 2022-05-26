@@ -37,7 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -129,7 +128,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		_setUpExpandoBridge();
 
 		Mockito.when(
-			_expandoBridge.hasAttribute(Matchers.eq("sambaLMPassword"))
+			_expandoBridge.hasAttribute(Mockito.eq("sambaLMPassword"))
 		).thenReturn(
 			true
 		);
@@ -144,7 +143,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		Mockito.verify(
 			_expandoBridge, Mockito.times(0)
 		).addAttribute(
-			Matchers.anyString(), Matchers.anyBoolean()
+			Mockito.anyString(), Mockito.anyBoolean()
 		);
 
 		Mockito.verify(
@@ -303,7 +302,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 
 		Mockito.when(
 			expandoBridgeFactory.getExpandoBridge(
-				Matchers.eq(PRIMARY_KEY), Matchers.eq(User.class.getName()))
+				Mockito.eq(PRIMARY_KEY), Mockito.eq(User.class.getName()))
 		).thenReturn(
 			_expandoBridge
 		);
@@ -313,7 +312,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		).when(
 			expandoBridgeFactory
 		).getExpandoBridge(
-			Matchers.eq(PRIMARY_KEY), Matchers.eq(User.class.getName())
+			Mockito.eq(PRIMARY_KEY), Mockito.eq(User.class.getName())
 		);
 
 		ReflectionTestUtil.setFieldValue(

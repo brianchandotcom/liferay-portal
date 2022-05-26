@@ -369,30 +369,32 @@ public class UserBuilderFilterConstraintsTest extends BaseVLDAPTestCase {
 
 		Mockito.when(
 			userLocalService.search(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
 				Mockito.anyInt(),
 				Mockito.eq(
 					LinkedHashMapBuilder.<String, Object>put(
 						"usersRoles", PRIMARY_KEY
 					).build()),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class))
+				Mockito.nullable(UserScreenNameComparator.class))
 		).thenReturn(
 			Arrays.asList(_hasRoleUser)
 		);
 
 		Mockito.when(
 			userLocalService.search(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
 				Mockito.anyInt(),
 				Mockito.eq(
 					LinkedHashMapBuilder.<String, Object>put(
 						"usersOrgs", PRIMARY_KEY
 					).build()),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class))
+				Mockito.nullable(UserScreenNameComparator.class))
 		).thenReturn(
 			Arrays.asList(_hasOrganizationUser)
 		);

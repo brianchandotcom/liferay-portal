@@ -14,6 +14,15 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.IOException;
+
 /**
  * @author Alan Huang
  */
@@ -21,7 +30,8 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		content = fixEmptyLinesInMultiLineTags(content);
 
@@ -31,7 +41,50 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterDoctype(content);
 
+		content = _fixMissingEmptyLineAroundSingleComment(fileName, content);
+
 		return content;
+	}
+
+	private String _fixMissingEmptyLineAroundSingleComment(
+			String fileName, String content)
+		throws IOException {
+
+		if (!fileName.endsWith(".path")) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+			String preLine = StringPool.BLANK;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if ((trimmedLine.startsWith("<!--") &&
+					 trimmedLine.endsWith("-->") &&
+					 Validator.isNotNull(preLine)) ||
+					(preLine.startsWith("<!--") && preLine.endsWith("-->") &&
+					 Validator.isNotNull(line))) {
+
+					sb.append("\n");
+				}
+
+				preLine = trimmedLine;
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		if (!content.endsWith("\n") && (sb.index() > 0)) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 }

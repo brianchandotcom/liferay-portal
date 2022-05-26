@@ -18,16 +18,14 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -184,43 +182,36 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		long groupId, boolean privateLayout, long parentLayoutId,
 		String sourcePrototypeLayoutUuid, int defaultPriority) {
 
-		try {
-			int priority = defaultPriority;
+		int priority = defaultPriority;
 
-			if (priority < 0) {
-				Layout layout = layoutPersistence.findByG_P_P_First(
-					groupId, privateLayout, parentLayoutId,
-					new LayoutPriorityComparator(false));
+		if (priority < 0) {
+			List<Layout> layouts = layoutPersistence.findByG_P_P(
+				groupId, privateLayout, parentLayoutId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
 
-				priority = layout.getPriority() + 1;
+			if (layouts.isEmpty()) {
+				return 0;
 			}
 
-			if ((priority < _PRIORITY_BUFFER) &&
-				Validator.isNull(sourcePrototypeLayoutUuid)) {
+			Layout layout = layouts.get(0);
 
-				LayoutSet layoutSet = layoutSetPersistence.fetchByG_P(
-					groupId, privateLayout);
-
-				if (Validator.isNotNull(
-						layoutSet.getLayoutSetPrototypeUuid()) &&
-					layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
-					priority = priority + _PRIORITY_BUFFER;
-				}
-			}
-
-			return priority;
+			priority = layout.getPriority() + 1;
 		}
-		catch (NoSuchLayoutException noSuchLayoutException) {
 
-			// LPS-52675
+		if ((priority < _PRIORITY_BUFFER) &&
+			Validator.isNull(sourcePrototypeLayoutUuid)) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException);
+			LayoutSet layoutSet = layoutSetPersistence.fetchByG_P(
+				groupId, privateLayout);
+
+			if (Validator.isNotNull(layoutSet.getLayoutSetPrototypeUuid()) &&
+				layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+
+				priority = priority + _PRIORITY_BUFFER;
 			}
-
-			return 0;
 		}
+
+		return priority;
 	}
 
 	@Override
@@ -726,9 +717,6 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			0, Portal.FRIENDLY_URL_SEPARATOR.length() - 1);
 
 	private static final int _PRIORITY_BUFFER = 1000000;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutLocalServiceHelper.class);
 
 	private static volatile LayoutFriendlyURLEntryValidator
 		_layoutFriendlyURLEntryValidator =

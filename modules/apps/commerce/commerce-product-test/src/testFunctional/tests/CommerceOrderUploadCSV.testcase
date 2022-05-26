@@ -142,8 +142,6 @@ definition {
 			SelectFrameTop();
 
 			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
-
-			IFrame.closeFrame();
 		}
 	}
 

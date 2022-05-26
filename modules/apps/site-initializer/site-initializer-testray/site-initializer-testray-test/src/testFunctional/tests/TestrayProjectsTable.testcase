@@ -37,6 +37,8 @@ definition {
 		task ("Create Project and Verify if the user can see the Description Column") {
 			Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
+			Testray.clickOnPageNumber(pageNumber = "3");
+
 			Testray.assertProjectDescription(value = "ci:test");
 		}
 	}

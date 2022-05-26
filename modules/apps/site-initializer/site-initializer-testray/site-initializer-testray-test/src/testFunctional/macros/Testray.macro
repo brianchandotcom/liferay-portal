@@ -217,4 +217,10 @@ definition {
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 
+	macro clickOnModalNumber {
+		Click(
+			key_pageDirection = "${pageNumber}",
+			locator1 = "Testray#NEXT_AND_PREVIOUS_MODAL_BUTTON");
+	}
+
 }

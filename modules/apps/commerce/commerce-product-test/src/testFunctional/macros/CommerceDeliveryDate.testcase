@@ -99,28 +99,16 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				shippingMethod = "Standard");
 
-			Click(locator1 = "Button#CONTINUE");
+			Button.click(button = "Continue");
 
-			Click(
-				key_radioOption = "Standard",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			Click(locator1 = "Button#CONTINUE");
+			CommerceCheckout.setStandardShippingOption();
 		}
 
 		task ("Then the user can set a requested delivery date in the blank input when reaching checkout's 'Order Summary' step") {
-			var displayDateDay = DateUtil.getCurrentDate();
-			var displayDateMonth = DateUtil.getCurrentMonth();
-			var displayDateYear = DateUtil.getCurrentYear();
-
-			var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-
-			Type(
-				key_fieldName = "mm/dd/yyyy",
-				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-				value1 = "${displayDate}");
-
-			Click(locator1 = "Button#CONTINUE");
+			CommerceCheckout.setDeliveryDate(
+				displayDateDay = DateUtil.getCurrentDate(),
+				displayDateMonth = DateUtil.getCurrentMonth(),
+				displayDateYear = DateUtil.getCurrentYear());
 		}
 
 		task ("And then the checkout process completes successfully ") {

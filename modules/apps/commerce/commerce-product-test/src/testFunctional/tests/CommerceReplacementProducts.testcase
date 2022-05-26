@@ -79,15 +79,9 @@ definition {
 				productSku = "MIN93015",
 				southwestQuantity = "0");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Details");
+			CommerceProducts.discontinueSKU();
 
-			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
-
-			Type(
-				locator1 = "TextInput#REPLACEMENT",
-				value1 = "MIN55861");
-
-			Button.clickPublish();
+			CommerceProducts.setReplacementSKU(replacementSKU = "MIN55861");
 		}
 
 		task ("And given a Minium site with a buyer user") {

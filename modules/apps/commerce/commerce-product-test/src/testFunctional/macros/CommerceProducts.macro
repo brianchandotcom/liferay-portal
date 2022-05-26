@@ -204,6 +204,12 @@ definition {
 			workflowResourceValue = "Commerce Product");
 	}
 
+	macro discontinueSKU {
+		CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+	}
+
 	macro duplicateProduct {
 		AssertElementPresent(
 			key_status = "${status}",
@@ -275,6 +281,14 @@ definition {
 		KeyPress(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
 			value1 = "\RETURN");
+	}
+
+	macro setReplacementSKU {
+		Type(
+			locator1 = "TextInput#REPLACEMENT",
+			value1 = "${replacementSKU}");
+
+		Button.clickPublish();
 	}
 
 }

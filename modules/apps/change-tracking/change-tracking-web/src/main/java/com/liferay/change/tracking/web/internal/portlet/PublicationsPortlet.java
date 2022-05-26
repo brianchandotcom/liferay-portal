@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.portlet;
 
-import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -24,19 +23,13 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
@@ -52,7 +45,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -109,31 +101,6 @@ public class PublicationsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Activate
-	protected void activate() throws PortalException {
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				Role role = _roleLocalService.getRole(
-					companyId, RoleConstants.PUBLICATIONS_USER);
-
-				_resourcePermissionLocalService.addResourcePermission(
-					role.getCompanyId(),
-					_resourceActions.getPortletRootModelResource(
-						CTPortletKeys.PUBLICATIONS),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(role.getCompanyId()), role.getRoleId(),
-					CTActionKeys.ADD_PUBLICATION);
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), ActionKeys.VIEW);
-			});
-	}
-
 	@Override
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
@@ -166,9 +133,6 @@ public class PublicationsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
@@ -196,9 +160,6 @@ public class PublicationsPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.web)(&(release.schema.version>=1.0.2)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

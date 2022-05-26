@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -65,6 +67,7 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -91,6 +94,31 @@ public class InviteUsersMVCResourceCommand
 		throws PortletException {
 
 		return super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	@Activate
+	protected void activate() throws PortalException {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				Role role = _roleLocalService.getRole(
+					companyId, RoleConstants.PUBLICATIONS_USER);
+
+				_resourcePermissionLocalService.addResourcePermission(
+					role.getCompanyId(),
+					_resourceActions.getPortletRootModelResource(
+						CTPortletKeys.PUBLICATIONS),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					CTActionKeys.ADD_PUBLICATION);
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, CTPortletKeys.PUBLICATIONS,
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, CTPortletKeys.PUBLICATIONS,
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ActionKeys.VIEW);
+			});
 	}
 
 	@Override
@@ -296,6 +324,9 @@ public class InviteUsersMVCResourceCommand
 	}
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
@@ -306,6 +337,9 @@ public class InviteUsersMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -454,13 +454,18 @@ export function ColorPicker({
 								className="border-0"
 								displayType="secondary"
 								onClick={() => {
-									setError({label: null, value: null});
-									onSetValue(
-										field.defaultValue ?? null,
-										field.defaultValue
-											? null
-											: Liferay.Language.get('default')
-									);
+									if (value !== field.defaultValue) {
+										setError({label: null, value: null});
+
+										onSetValue(
+											field.defaultValue ?? null,
+											field.defaultValue
+												? null
+												: Liferay.Language.get(
+														'default'
+												  )
+										);
+									}
 								}}
 								small
 								symbol="times-circle"

@@ -535,6 +535,11 @@
 		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>OBJECT_VALIDATIONS_TAB</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Validations')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

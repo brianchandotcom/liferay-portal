@@ -933,6 +933,10 @@ definition {
 		ObjectAdmin.searchInDefinePermissions(search = "Custom Objects");
 	}
 
+	macro goToValidationsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_VALIDATIONS_TAB");
+	}
+
 	macro markLayoutAsDefault {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 

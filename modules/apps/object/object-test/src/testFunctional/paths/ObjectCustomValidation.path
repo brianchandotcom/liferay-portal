@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>ObjectCustomValidation</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectCustomValidation</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>LABEL_ON_ADD_VALIDATION</td>
+		<td>//input[contains(@id,'objectFieldLabel')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_TYPE_VALIDATION</td>
+		<td>//input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CHOOSE_OPTION_TYPE_VALIDATION</td>
+		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_validationType}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_LABEL_VALIDATION</td>
+		<td>//div[@class='table-list-title' and contains(.,'${key_validationName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_INFO_VALIDATION</td>
+		<td>//div[@class='dnd-td' and contains(.,'${key_validationInfo}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ACTIVE_VALIDATION_TOGGLE</td>
+		<td>//input[contains(@class,'toggle-switch-check')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_CONDITIONS_TAB</td>
+		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Conditions')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>INSERT_GROOVY_SCRIPT_ON_VALIDATION</td>
+		<td>//div[contains(@class,'lfr-objects__editor')]/div[contains(@class,'CodeMirror')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_ERROR_MESSAGE_VALIDATION</td>
+		<td>//input[contains(@placeholder,'Add an error message') and (@class='form-control')]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

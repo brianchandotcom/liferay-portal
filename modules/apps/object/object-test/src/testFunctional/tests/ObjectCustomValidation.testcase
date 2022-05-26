@@ -68,12 +68,59 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUserAddValidationsGroovy {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153550",
+			objectName = "CustomObject153550",
+			pluralLabelName = "Custom Objects 153550");
 
-		// TODO LPS-153550 CanUserAddValidationsGroovy pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153550");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153550");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153550");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		for (var entryTitle : list "Entry Test,Decline Entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject153550",
+				value = "${entryTitle}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
+
+		ObjectPortlet.viewEntry(entry = "Entry Test");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Decline Entry");
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"

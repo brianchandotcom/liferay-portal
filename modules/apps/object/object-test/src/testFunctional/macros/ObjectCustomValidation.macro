@@ -1,0 +1,65 @@
+definition {
+
+	macro activeValidation {
+		Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
+	}
+
+	macro addErrorMessage {
+		Type.type(
+			locator1 = "ObjectCustomValidation#ADD_ERROR_MESSAGE_VALIDATION",
+			value1 = "${errorMessage}");
+	}
+
+	macro addObjectValidation {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectCustomValidation#LABEL_ON_ADD_VALIDATION",
+			value1 = "${validationName}");
+
+		Click(locator1 = "ObjectCustomValidation#SELECT_TYPE_VALIDATION");
+
+		Click(
+			key_validationType = "${validationType}",
+			locator1 = "ObjectCustomValidation#CHOOSE_OPTION_TYPE_VALIDATION");
+
+		Button.clickSave();
+	}
+
+	macro assertValidationPresent {
+		AssertElementPresent(
+			key_validationName = "${validationName}",
+			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
+
+		AssertElementPresent(
+			key_validationInfo = "${validationType}",
+			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
+
+		AssertElementPresent(
+			key_validationInfo = "${validationActive}",
+			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
+	}
+
+	macro desactiveValidation {
+		Uncheck.uncheckToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
+	}
+
+	macro gotoConditionsTab {
+		Click(locator1 = "ObjectCustomValidation#OBJECT_CONDITIONS_TAB");
+	}
+
+	macro gotoCustomValidation {
+		Click(
+			key_validationName = "${validationName}",
+			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+	}
+
+	macro insertGroovyScript {
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "ObjectCustomValidation#INSERT_GROOVY_SCRIPT_ON_VALIDATION",
+			value1 = "${groovyScript}");
+	}
+
+}

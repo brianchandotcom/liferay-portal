@@ -104,9 +104,9 @@ public class StagingLocalServiceTest {
 				stagingLayout.getKeywordsMap(), stagingLayout.getRobotsMap(),
 				stagingLayout.getType(), stagingLayout.isHidden(),
 				stagingLayout.getFriendlyURLMap(), false, null,
-				stagingLayout.getMasterLayoutPlid(),
 				stagingLayout.getStyleBookEntryId(),
-				stagingLayout.getFaviconFileEntryId(), new ServiceContext());
+				stagingLayout.getFaviconFileEntryId(),
+				stagingLayout.getMasterLayoutPlid(), new ServiceContext());
 
 			stagingLayout = _layoutLocalService.updateLayout(
 				stagingLayout.getGroupId(), stagingLayout.isPrivateLayout(),
@@ -119,9 +119,9 @@ public class StagingLocalServiceTest {
 				stagingLayout.getKeywordsMap(), stagingLayout.getRobotsMap(),
 				stagingLayout.getType(), stagingLayout.isHidden(),
 				stagingLayout.getFriendlyURLMap(), false, null,
-				stagingLayout.getMasterLayoutPlid(),
 				stagingLayout.getStyleBookEntryId(),
-				stagingLayout.getFaviconFileEntryId(), new ServiceContext());
+				stagingLayout.getFaviconFileEntryId(),
+				stagingLayout.getMasterLayoutPlid(), new ServiceContext());
 
 			Map<Locale, String> layoutNameMap = stagingLayout.getNameMap();
 

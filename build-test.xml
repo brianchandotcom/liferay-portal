@@ -4380,6 +4380,16 @@ tell application "Safari" to quit
 					</echo>
 				</else>
 			</if>
+
+			<get-testcase-property property.name="upgrade.reports.enabled" />
+
+			<if>
+			<equals arg1="${upgrade.reports.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+upgrade.report.enabled=true</echo>
+			</then>
+			</if>
 		</sequential>
 	</macrodef>
 

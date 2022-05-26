@@ -12,7 +12,13 @@
  * details.
  */
 
-export default function hasSubmitChild(element) {
+import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
+
+export default function hasSubmitChild(itemId) {
+	const element = document.querySelector(
+		`.${getLayoutDataItemUniqueClassName(itemId)}`
+	);
+
 	return Boolean(
 		element.querySelector(
 			'input[type=submit], button[type=submit], button:not([type])'

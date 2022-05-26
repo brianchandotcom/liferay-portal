@@ -18,7 +18,6 @@ import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {getCacheItem, getCacheKey} from './cache';
 import getFragmentItem from './getFragmentItem';
-import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 import hasSubmitChild from './hasSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 
@@ -58,16 +57,6 @@ function itemIsHidden(layoutData, itemId) {
 	);
 }
 
-function isSomeSubmitMissing(forms) {
-	return forms.some((form) => {
-		const formElement = document.querySelector(
-			`.${getLayoutDataItemUniqueClassName(form.itemId)}`
-		);
-
-		return !hasSubmitChild(formElement);
-	});
-}
-
 export default function useIsSomeFormIncomplete() {
 	const stateRef = useSelectorRef((state) => state);
 
@@ -80,7 +69,7 @@ export default function useIsSomeFormIncomplete() {
 			return Promise.resolve(false);
 		}
 
-		if (isSomeSubmitMissing(forms)) {
+		if (forms.some((form) => !hasSubmitChild(form.itemId))) {
 			return Promise.resolve(true);
 		}
 

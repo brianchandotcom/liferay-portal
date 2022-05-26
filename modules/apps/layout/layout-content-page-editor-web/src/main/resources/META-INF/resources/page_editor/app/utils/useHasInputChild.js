@@ -20,7 +20,6 @@ import {useSelectorCallback, useSelectorRef} from '../contexts/StoreContext';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from './cache';
-import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 import hasSubmitChild from './hasSubmitChild';
 import useCache from './useCache';
 
@@ -96,19 +95,14 @@ export default function useHasInputChild(itemId) {
 			return false;
 		}
 
-		const itemElement = document.querySelector(
-			`.${getLayoutDataItemUniqueClassName(itemId)}`
-		);
-
-		if (hasSubmitChild(itemElement)) {
-			return true;
-		}
-
-		return hasRequiredInputChild(
-			layoutDataRef.current?.items[itemId],
-			layoutDataRef.current,
-			fragmentEntryLinksRef.current,
-			formFields
+		return (
+			hasSubmitChild(itemId) ||
+			hasRequiredInputChild(
+				layoutDataRef.current?.items[itemId],
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current,
+				formFields
+			)
 		);
 	}, [formFields, layoutDataRef, fragmentEntryLinksRef, itemId]);
 }

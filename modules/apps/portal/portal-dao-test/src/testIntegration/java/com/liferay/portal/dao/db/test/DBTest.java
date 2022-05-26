@@ -82,7 +82,7 @@ public class DBTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_db.runSQL("drop table " + _TABLE_NAME);
+		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME + ")");
 	}
 
 	@Test
@@ -252,6 +252,19 @@ public class DBTest {
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 0, indexMetadatas.size());
+	}
+
+	@Test
+	public void testAlterTableName() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"alter_table_name ", _TABLE_NAME, " DBTestSecond"));
+
+		Assert.assertTrue(_dbInspector.hasTable("DBTestSecond"));
+
+		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME));
+
+		_db.runSQL("DROP_TABLE_IF_EXISTS(DBTestSecond)");
 	}
 
 	private void _addIndex(String[] columnNames) {

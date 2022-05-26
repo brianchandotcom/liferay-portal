@@ -151,9 +151,11 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(
-			key_title = "Asset Publisher",
-			locator1 = "IFrame#MODAL_ANY");
+		if (!(isSet(skipSelectFrame))) {
+			SelectFrame(
+				key_title = "Asset Publisher",
+				locator1 = "IFrame#MODAL_ANY");
+		}
 
 		AssertClick(
 			locator1 = "Button#DONE",

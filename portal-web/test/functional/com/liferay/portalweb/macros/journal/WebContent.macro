@@ -1675,17 +1675,7 @@ definition {
 			key_text = "Select",
 			locator1 = "Button#ANY_WITH_LABEL");
 
-		IFrame.selectCategoryFrame();
-
-		Check.checkNotVisible(
-			key_nodeName = "${categoryName}",
-			locator1 = "Treeview#NODE_CHECKBOX");
-
-		SelectFrameTop();
-
-		Click(
-			key_text = "Done",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		AssetCategorization.selectCategories(categoryNameList = "${categoryNameList}");
 	}
 
 	macro selectFolder {

@@ -39,6 +39,7 @@ const SimpleInputModal = ({
 	initialVisible,
 	mainFieldLabel,
 	mainFieldName,
+	mainFieldValue = '',
 	namespace,
 	onFormSuccess,
 	placeholder,
@@ -47,11 +48,21 @@ const SimpleInputModal = ({
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
-	const [inputValue, setInputValue] = useState('');
+	const [inputValue, setInputValue] = useState(mainFieldValue);
 	const [isChecked, setChecked] = useState(checkboxFieldValue);
 
 	const handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || '');
+	};
+
+	const handleMainFieldRef = (mainFieldElement) => {
+		if (
+			mainFieldElement &&
+			mainFieldValue &&
+			mainFieldValue === inputValue
+		) {
+			mainFieldElement.setSelectionRange(0, inputValue.length);
+		}
 	};
 
 	const _handleSubmit = (event) => {
@@ -156,6 +167,7 @@ const SimpleInputModal = ({
 									setInputValue(event.target.value)
 								}
 								placeholder={placeholder}
+								ref={handleMainFieldRef}
 								required
 								type="text"
 								value={inputValue}

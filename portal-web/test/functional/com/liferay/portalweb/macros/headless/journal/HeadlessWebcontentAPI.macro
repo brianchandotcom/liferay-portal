@@ -88,6 +88,41 @@ definition {
 		return "${articleId}";
 	}
 
+	macro _createStructuredContent {
+		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents/ \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{
+    "contentFields": [{
+        "contentFieldValue": {
+            "data": "${data}"
+        },
+        "dataType": "string",
+        "label": "${label}",
+        "name": "${name}",
+        "nestedContentFields": [],
+        "repeatable": false
+    }],
+    "contentStructureId": "${ddmStructureId}",
+    "title": "${title}",
+	"priority": "${priority}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _createStructuredContentDraft {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title}");
 
@@ -122,7 +157,7 @@ definition {
 		return "${curl}";
 	}
 
-	macro _editStructuredContentWithPriority {
+	macro _editStructuredContent {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority},${structuredContentId}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -157,7 +192,7 @@ definition {
 		return "${curl}";
 	}
 
-	macro _filterStructuredContentWithPriority {
+	macro _filterStructuredContent {
 		Variables.assertDefined(parameterList = "${filtervalue}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -166,7 +201,26 @@ definition {
 			site = "true");
 
 		var curl = '''
-			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue} \
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _sortStructureContent {
+		Variables.assertDefined(parameterList = "${sortvalue}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?sort=${sortvalue} \
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';
@@ -182,6 +236,14 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actualPriorityValue}",
 			expected = "${expectedPriorityValue}");
+	}
+
+	macro assertPriorityFieldIsSortedWithCorrectValue {
+		var actualPriorityValueList = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
+
+		TestUtils.assertEquals(
+			actual = "${actualPriorityValueList}",
+			expected = "${expectedPriorityValueList}");
 	}
 
 	macro assertPriorityFieldWithDefaultValue {
@@ -209,6 +271,22 @@ definition {
 			expected = "${editStructuredContentId}");
 	}
 
+	macro createStructuredContent {
+		if (!(isSet(priority))) {
+			var priority = "";
+		}
+
+		var response = HeadlessWebcontentAPI._createStructuredContent(
+			data = "${data}",
+			ddmStructureId = "${ddmStructureId}",
+			label = "${label}",
+			name = "${name}",
+			priority = "${priority}",
+			title = "${title}");
+
+		return "${response}";
+	}
+
 	macro createStructuredContentDraft {
 		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
 			data = "${data}",
@@ -220,12 +298,16 @@ definition {
 		return "${response}";
 	}
 
-	macro editStructuredContentWithPriority {
+	macro editStructuredContent {
 		Variables.assertDefined(parameterList = "${responseToParse},${data},${ddmStructureId},${label},${name},${priority},${title}");
 
 		var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
 
-		var response = HeadlessWebcontentAPI._editStructuredContentWithPriority(
+		if (!(isSet(priority))) {
+			var priority = "";
+		}
+
+		var response = HeadlessWebcontentAPI._editStructuredContent(
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
 			label = "${label}",
@@ -237,8 +319,14 @@ definition {
 		return "${response}";
 	}
 
-	macro filterStructuredContentWithPriority {
-		var response = HeadlessWebcontentAPI._filterStructuredContentWithPriority(filtervalue = "${filtervalue}");
+	macro filterStructuredContent {
+		var response = HeadlessWebcontentAPI._filterStructuredContent(filtervalue = "${filtervalue}");
+
+		return "${response}";
+	}
+
+	macro sortStructureContent {
+		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
 
 		return "${response}";
 	}

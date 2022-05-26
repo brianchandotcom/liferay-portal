@@ -218,12 +218,32 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Conditions tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUserSeeConditionsTab {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153554",
+			objectName = "CustomObject153554",
+			pluralLabelName = "Custom Objects 153554");
 
-		// TODO LPS-153554 CanUserSeeConditionsTab pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153554	");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.viewActiveTabOnCustomValidation(activeTab = "Conditions");
+
+		for (var cardsName : list "Groovy,Error Message") {
+			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = "${cardsName}");
+		}
 	}
 
 	@description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"

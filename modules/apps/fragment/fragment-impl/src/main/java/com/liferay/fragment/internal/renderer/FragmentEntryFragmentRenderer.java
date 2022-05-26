@@ -25,6 +25,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -293,6 +294,13 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		defaultFragmentEntryProcessorContext.setFragmentElementId(
 			fragmentRendererContext.getFragmentElementId());
+
+		Optional<InfoForm> infoFormOptional =
+			fragmentRendererContext.getInfoFormOptional();
+
+		defaultFragmentEntryProcessorContext.setInfoForm(
+			infoFormOptional.orElse(null));
+
 		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
 			fragmentRendererContext.getPreviewClassNameId());
 		defaultFragmentEntryProcessorContext.setPreviewClassPK(

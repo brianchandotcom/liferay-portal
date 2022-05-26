@@ -200,7 +200,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 								PortletURLBuilder.createActionURL(
 									_renderResponse
 								).setActionName(
-									"deleteCategory"
+									"/asset_categories_admin/delete_category"
 								).setRedirect(
 									_themeDisplay.getURLCurrent()
 								).setParameter(

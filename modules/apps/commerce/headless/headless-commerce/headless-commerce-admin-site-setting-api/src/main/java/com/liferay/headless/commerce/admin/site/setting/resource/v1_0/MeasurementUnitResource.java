@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -66,9 +65,6 @@ public interface MeasurementUnitResource {
 	public MeasurementUnit postMeasurementUnit(MeasurementUnit measurementUnit)
 		throws Exception;
 
-	public Response postMeasurementUnitBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteMeasurementUnitByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -94,10 +90,6 @@ public interface MeasurementUnitResource {
 		throws Exception;
 
 	public void deleteMeasurementUnit(Long id) throws Exception;
-
-	public Response deleteMeasurementUnitBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
 
 	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
 
@@ -141,10 +133,6 @@ public interface MeasurementUnitResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

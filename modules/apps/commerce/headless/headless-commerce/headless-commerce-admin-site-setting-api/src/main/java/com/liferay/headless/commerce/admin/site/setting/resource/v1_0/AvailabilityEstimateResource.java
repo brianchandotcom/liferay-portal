@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -60,19 +59,11 @@ public interface AvailabilityEstimateResource {
 
 	public Response deleteAvailabilityEstimate(Long id) throws Exception;
 
-	public Response deleteAvailabilityEstimateBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public AvailabilityEstimate getAvailabilityEstimate(Long id)
 		throws Exception;
 
 	public Response putAvailabilityEstimate(
 			Long id, AvailabilityEstimate availabilityEstimate)
-		throws Exception;
-
-	public Response putAvailabilityEstimateBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<AvailabilityEstimate>
@@ -121,10 +112,6 @@ public interface AvailabilityEstimateResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

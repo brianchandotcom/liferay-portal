@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -68,17 +67,9 @@ public interface WarehouseResource {
 
 	public Response deleteWarehouse(Long id) throws Exception;
 
-	public Response deleteWarehouseBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public Warehouse getWarehouse(Long id) throws Exception;
 
 	public Response putWarehouse(Long id, Warehouse warehouse) throws Exception;
-
-	public Response putWarehouseBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -116,10 +107,6 @@ public interface WarehouseResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -68,17 +67,9 @@ public interface TaxCategoryResource {
 
 	public Response deleteTaxCategory(Long id) throws Exception;
 
-	public Response deleteTaxCategoryBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public TaxCategory getTaxCategory(Long id) throws Exception;
 
 	public Response putTaxCategory(Long id, TaxCategory taxCategory)
-		throws Exception;
-
-	public Response putTaxCategoryBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -117,10 +108,6 @@ public interface TaxCategoryResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

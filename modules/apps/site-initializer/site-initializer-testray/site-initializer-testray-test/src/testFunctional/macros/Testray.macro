@@ -56,6 +56,12 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
 	}
 
+	macro clickOnModalNumber {
+		Click(
+			key_pageDirection = "${pageNumber}",
+			locator1 = "Testray#NEXT_AND_PREVIOUS_MODAL_BUTTON");
+	}
+
 	macro clickOnPageNumber {
 		Click(
 			key_pageNumber = "${pageNumber}",
@@ -215,12 +221,6 @@ definition {
 		AssertElementPresent(
 			key_rowValue = "${rowValue}",
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
-	}
-
-	macro clickOnModalNumber {
-		Click(
-			key_pageDirection = "${pageNumber}",
-			locator1 = "Testray#NEXT_AND_PREVIOUS_MODAL_BUTTON");
 	}
 
 }

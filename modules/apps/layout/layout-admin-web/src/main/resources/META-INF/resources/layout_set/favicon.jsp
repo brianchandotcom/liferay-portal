@@ -21,6 +21,8 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 %>
 
 <div class="form-group">
+	<img alt="<%= HtmlUtil.escape(layoutsAdminDisplayContext.getFaviconTitle()) %>" class="mb-2" height="16" id="<portlet:namespace />faviconFileEntryImage" src="<%= layoutsAdminDisplayContext.getFaviconImage() %>" width="16" />
+
 	<p>
 		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconFileEntryTitle"><%= layoutsAdminDisplayContext.getFaviconTitle() %></span>
 	</p>
@@ -44,6 +46,9 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 					const faviconFileEntryId = document.getElementById(
 						'<portlet:namespace />faviconFileEntryId'
 					);
+					const faviconFileEntryImage = document.getElementById(
+						'<portlet:namespace />faviconFileEntryImage'
+					);
 					const faviconFileEntryTitle = document.getElementById(
 						'<portlet:namespace />faviconFileEntryTitle'
 					);
@@ -52,11 +57,20 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 						selectedItem &&
 						selectedItem.value &&
 						faviconFileEntryId &&
+						faviconFileEntryImage &&
 						faviconFileEntryTitle
 					) {
 						const itemValue = JSON.parse(selectedItem.value);
 
 						faviconFileEntryId.value = itemValue.fileEntryId;
+
+						if (itemValue.url) {
+							faviconFileEntryImage.src = itemValue.url;
+						}
+						else {
+							faviconFileEntryImage.classList.add('d-none');
+						}
+
 						faviconFileEntryTitle.innerHTML = itemValue.title;
 					}
 				},
@@ -73,13 +87,22 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		const faviconFileEntryId = document.getElementById(
 			'<portlet:namespace />faviconFileEntryId'
 		);
+		const faviconFileEntryImage = document.getElementById(
+			'<portlet:namespace />faviconFileEntryImage'
+		);
 		const faviconFileEntryTitle = document.getElementById(
 			'<portlet:namespace />faviconFileEntryTitle'
 		);
 
-		if (clearFaviconButton && faviconFileEntryId && faviconFileEntryTitle) {
+		if (
+			clearFaviconButton &&
+			faviconFileEntryId &&
+			faviconFileEntryImage &&
+			faviconFileEntryTitle
+		) {
 			clearFaviconButton.addEventListener('click', (event) => {
 				faviconFileEntryId.value = '0';
+				faviconFileEntryImage.classList.add('d-none');
 				faviconFileEntryTitle.innerHTML =
 					'<liferay-ui:message key="favicon-from-theme" />';
 			});

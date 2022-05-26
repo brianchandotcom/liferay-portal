@@ -14,8 +14,11 @@
 
 package com.liferay.notification.internal.util;
 
+import com.liferay.notification.constants.DefinitionTermConstants;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.term.contributor.DefinitionTermContributor;
+import com.liferay.notification.term.contributor.DefinitionTermContributorRegistry;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationHelper;
 import com.liferay.notification.util.NotificationTypeRegistry;
@@ -33,7 +36,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,8 +82,12 @@ public class NotificationHelperImpl implements NotificationHelper {
 			user.getLanguageId());
 
 		String subject = _formatString(
-			notificationTemplate.getSubject(userLocale));
-		String body = _formatString(notificationTemplate.getBody(userLocale));
+			notificationType, _SUBJECTFIELD,
+			notificationTemplate.getSubject(userLocale), object, userLocale);
+
+		String body = _formatString(
+			notificationType, _BODYFIELD,
+			notificationTemplate.getBody(userLocale), object, userLocale);
 
 		if (Validator.isNull(fromName)) {
 			fromName = notificationTemplate.getFromName(
@@ -83,17 +96,27 @@ public class NotificationHelperImpl implements NotificationHelper {
 
 		if (Validator.isNull(subject)) {
 			subject = _formatString(
-				notificationTemplate.getSubject(siteDefaultLocale));
+				notificationType, _SUBJECTFIELD,
+				notificationTemplate.getSubject(siteDefaultLocale), object,
+				siteDefaultLocale);
 		}
 
 		if (Validator.isNull(body)) {
-			_formatString(notificationTemplate.getBody(siteDefaultLocale));
+			_formatString(
+				notificationType, _BODYFIELD,
+				notificationTemplate.getBody(siteDefaultLocale), object,
+				siteDefaultLocale);
 		}
 
-		String to = _formatString(notificationTemplate.getTo(userLocale));
+		String to = _formatString(
+			notificationType, _TOFIELD, notificationTemplate.getTo(userLocale),
+			object, userLocale);
 
 		if (Validator.isNull(to)) {
-			_formatString(notificationTemplate.getBody(siteDefaultLocale));
+			to = _formatString(
+				notificationType, _TOFIELD,
+				notificationTemplate.getTo(siteDefaultLocale), object,
+				siteDefaultLocale);
 		}
 
 		EmailAddressValidator emailAddressValidator =
@@ -169,16 +192,68 @@ public class NotificationHelperImpl implements NotificationHelper {
 			fromName, 0, subject, toEmailAddress, toFullName);
 	}
 
-	private String _formatString(String content) {
+	private String _formatString(
+			NotificationType notificationType, int fieldType, String content,
+			Object object, Locale locale)
+		throws PortalException {
+
 		if (Validator.isNull(content)) {
 			return StringPool.BLANK;
+		}
+
+		Set<String> placeholders = new HashSet<>();
+
+		Matcher matcher = _placeholderPattern.matcher(content);
+
+		while (matcher.find()) {
+			placeholders.add(matcher.group());
+		}
+
+		List<DefinitionTermContributor> definitionTermContributors =
+			new ArrayList<>();
+
+		if (fieldType == _TOFIELD) {
+			definitionTermContributors.addAll(
+				_definitionTermContributorRegistry.
+					getDefinitionTermContributorsByContributorKey(
+						DefinitionTermConstants.
+							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR));
+		}
+
+		definitionTermContributors.addAll(
+			_definitionTermContributorRegistry.
+				getDefinitionTermContributorsByNotificationTypeKey(
+					notificationType.getKey()));
+
+		for (DefinitionTermContributor definitionTermContributor :
+				definitionTermContributors) {
+
+			for (String placeholder : placeholders) {
+				content = StringUtil.replace(
+					content, placeholder,
+					definitionTermContributor.getFilledTerm(
+						placeholder, object, locale));
+			}
 		}
 
 		return content;
 	}
 
+	private static final int _BODYFIELD = 2;
+
+	private static final int _SUBJECTFIELD = 1;
+
+	private static final int _TOFIELD = 3;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationHelperImpl.class);
+
+	private static final Pattern _placeholderPattern = Pattern.compile(
+		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
+
+	@Reference
+	private DefinitionTermContributorRegistry
+		_definitionTermContributorRegistry;
 
 	@Reference
 	private NotificationQueueEntryLocalService

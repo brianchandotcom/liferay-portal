@@ -32,14 +32,14 @@ import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
 import hideFragment from '../../utils/hideFragment';
 import openWarningModal from '../../utils/openWarningModal';
-import useHasInputChild from '../../utils/useHasInputChild';
+import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
 export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
-	const hasInputChild = useHasInputChild(item.itemId);
+	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
 	const widgets = useWidgets();
 
@@ -67,7 +67,7 @@ export default function TopperItemActions({item}) {
 		) {
 			items.push({
 				action: () => {
-					if (hasInputChild()) {
+					if (hasRequiredChild()) {
 						openWarningModal({
 							action: () =>
 								hideFragment({
@@ -144,7 +144,7 @@ export default function TopperItemActions({item}) {
 	}, [
 		dispatch,
 		fragmentEntryLinks,
-		hasInputChild,
+		hasRequiredChild,
 		isInputFragment,
 		item,
 		layoutData,

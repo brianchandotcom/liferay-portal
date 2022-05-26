@@ -27,7 +27,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import hideFragment from '../../utils/hideFragment';
 import openWarningModal from '../../utils/openWarningModal';
-import useHasInputChild from '../../utils/useHasInputChild';
+import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
 function getHiddenAncestorId(layoutData, item, selectedViewportSize) {
@@ -61,7 +61,7 @@ export function HideFragmentField({
 	);
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const hasInputChild = useHasInputChild(item.itemId);
+	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
 
 	const [nextValue, setNextValue] = useControlledState(value || false);
@@ -108,7 +108,7 @@ export function HideFragmentField({
 							const isHidden =
 								item.config.styles.display === 'none';
 
-							if (!isHidden && hasInputChild()) {
+							if (!isHidden && hasRequiredChild()) {
 								openWarningModal({
 									action: () =>
 										hideFragment({

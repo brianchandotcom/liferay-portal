@@ -60,7 +60,7 @@ import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import hideFragment from '../../../../../app/utils/hideFragment';
 import openWarningModal from '../../../../../app/utils/openWarningModal';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
-import useHasInputChild from '../../../../../app/utils/useHasInputChild';
+import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -375,7 +375,7 @@ const VisibilityButton = ({
 	selectedViewportSize,
 	visible,
 }) => {
-	const hasInputChild = useHasInputChild(node.id);
+	const hasRequiredChild = useHasRequiredChild(node.id);
 
 	return (
 		<ClayButton
@@ -394,7 +394,7 @@ const VisibilityButton = ({
 			disabled={node.isMasterItem || node.hiddenAncestor}
 			displayType="unstyled"
 			onClick={() => {
-				if (!node.hidden && hasInputChild()) {
+				if (!node.hidden && hasRequiredChild()) {
 					openWarningModal({
 						action: () =>
 							hideFragment({

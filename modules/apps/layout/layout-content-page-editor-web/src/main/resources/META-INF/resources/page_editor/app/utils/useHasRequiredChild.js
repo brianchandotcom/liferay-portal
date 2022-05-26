@@ -22,7 +22,7 @@ import hasRequiredInputChild from './hasRequiredInputChild';
 import hasSubmitChild from './hasSubmitChild';
 import useCache from './useCache';
 
-export default function useHasInputChild(itemId) {
+export default function useHasRequiredChild(itemId) {
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks

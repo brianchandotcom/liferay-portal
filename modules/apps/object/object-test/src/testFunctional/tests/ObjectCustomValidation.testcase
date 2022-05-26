@@ -50,12 +50,29 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotActiveByDefaultWhenAddValidationsGroovy {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153551",
+			objectName = "CustomObject153551",
+			pluralLabelName = "Custom Objects 153551");
 
-		// TODO LPS-153551 CannotActiveByDefaultWhenAddValidationsGroovy pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153551");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		Refresh();
+
+		ObjectCustomValidation.assertValidationPresent(
+			validationActive = "No",
+			validationName = "Custom Validation",
+			validationType = "Groovy");
 	}
 
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"

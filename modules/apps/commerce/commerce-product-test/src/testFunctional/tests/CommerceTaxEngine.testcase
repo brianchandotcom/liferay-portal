@@ -797,6 +797,11 @@ definition {
 			keyName = "Test",
 			keyReferenceCode = "Test Reference");
 
+		CommerceEntry.viewTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
 		CommerceNavigator.gotoEntry(entryName = "Test");
 
 		CommerceEntry.editTaxCategory(

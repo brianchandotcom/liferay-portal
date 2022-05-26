@@ -16,7 +16,6 @@ package com.liferay.change.tracking.web.internal.upgrade;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.web.internal.upgrade.v1_0_2.PublicationsUserRoleUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_3.PublicationsConfigurationPortletUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_4.PublicationsRolePermissionsUpgradeProcess;
 import com.liferay.change.tracking.web.internal.upgrade.v1_0_5.PublicationsAdminRoleNameUpgradeProcess;
@@ -41,7 +40,7 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.5", new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.6", new DummyUpgradeStep());
 
 		registry.register(
 			"0.0.1", "1.0.1",
@@ -68,10 +67,11 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.1", "1.0.2",
-			new PublicationsUserRoleUpgradeProcess(
-				_companyLocalService, _resourceActions,
-				_resourcePermissionLocalService, _roleLocalService,
-				_userLocalService));
+			new com.liferay.change.tracking.web.internal.upgrade.v1_0_2.
+				PublicationsUserRoleUpgradeProcess(
+					_companyLocalService, _resourceActions,
+					_resourcePermissionLocalService, _roleLocalService,
+					_userLocalService));
 
 		registry.register(
 			"1.0.2", "1.0.3",
@@ -85,6 +85,12 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.4", "1.0.5", new PublicationsAdminRoleNameUpgradeProcess());
+
+		registry.register(
+			"1.0.5", "1.0.6",
+			new com.liferay.change.tracking.web.internal.upgrade.v1_0_6.
+				PublicationsUserRoleUpgradeProcess(
+					_resourcePermissionLocalService, _roleLocalService));
 	}
 
 	@Reference

@@ -155,7 +155,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
 			byte[] iconBytes, long masterLayoutPlid, long styleBookEntryId,
-			ServiceContext serviceContext)
+			long faviconFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -194,7 +194,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
 				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
 				friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
-				styleBookEntryId, serviceContext);
+				styleBookEntryId, faviconFileEntryId, serviceContext);
 		}
 
 		layoutLocalService.updateAsset(
@@ -727,7 +727,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			}
 			else if (methodName.equals("updateLayout") &&
 					 ((arguments.length == 15) || (arguments.length == 16) ||
-					  (arguments.length == 17))) {
+					  (arguments.length == 18))) {
 
 				Map<Locale, String> friendlyURLMap = null;
 
@@ -744,6 +744,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 				long masterLayoutPlid = 0;
 				long styleBookEntryId = 0;
+				long faviconFileEntryId = 0;
 
 				ServiceContext serviceContext = null;
 
@@ -755,11 +756,12 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 					serviceContext = (ServiceContext)arguments[15];
 				}
-				else if (arguments.length == 17) {
+				else if (arguments.length == 18) {
 					masterLayoutPlid = (Long)arguments[14];
 					styleBookEntryId = (Long)arguments[15];
+					faviconFileEntryId = (Long)arguments[16];
 
-					serviceContext = (ServiceContext)arguments[16];
+					serviceContext = (ServiceContext)arguments[17];
 				}
 
 				returnValue = updateLayout(
@@ -772,11 +774,12 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					(Map<Locale, String>)arguments[8], (String)arguments[9],
 					(Boolean)arguments[10], friendlyURLMap,
 					(Boolean)arguments[12], (byte[])arguments[13],
-					masterLayoutPlid, styleBookEntryId, serviceContext);
+					masterLayoutPlid, styleBookEntryId, faviconFileEntryId,
+					serviceContext);
 			}
 			else {
 				if (methodName.equals("updateLayout") &&
-					(arguments.length == 10)) {
+					(arguments.length == 11)) {
 
 					updateLookAndFeel(
 						(LayoutLocalService)_targetObject, (Long)arguments[0],

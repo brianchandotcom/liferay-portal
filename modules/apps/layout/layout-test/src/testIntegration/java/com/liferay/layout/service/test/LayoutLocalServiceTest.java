@@ -141,7 +141,8 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, "/friendly-url-2"
 			).build(),
 			false, null, layout1.getMasterLayoutPlid(),
-			layout1.getStyleBookEntryId(), new ServiceContext());
+			layout1.getStyleBookEntryId(), layout1.getFaviconFileEntryId(),
+			new ServiceContext());
 
 		Layout layout2 = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -372,7 +373,8 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, "/friendly-url-2"
 			).build(),
 			false, null, layout.getMasterLayoutPlid(),
-			layout.getStyleBookEntryId(), new ServiceContext());
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			new ServiceContext());
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -384,7 +386,8 @@ public class LayoutLocalServiceTest {
 			draftLayout.getRobotsMap(), draftLayout.getType(),
 			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
 			null, draftLayout.getMasterLayoutPlid(),
-			draftLayout.getStyleBookEntryId(), new ServiceContext());
+			draftLayout.getStyleBookEntryId(),
+			draftLayout.getFaviconFileEntryId(), new ServiceContext());
 	}
 
 	@Test
@@ -409,7 +412,8 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, ""
 			).build(),
 			false, null, layout.getMasterLayoutPlid(),
-			layout.getStyleBookEntryId(), serviceContext);
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			serviceContext);
 
 		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
 	}
@@ -434,7 +438,8 @@ public class LayoutLocalServiceTest {
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, layout.getPlid(),
-			layout.getStyleBookEntryId(), new ServiceContext());
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			new ServiceContext());
 	}
 
 	private void _testDeleteLayouts(boolean system) throws Exception {

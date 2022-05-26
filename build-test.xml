@@ -10572,6 +10572,7 @@ ${update.properties}</echo>
 				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10" />
 				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10.1" />
 				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10.3" />
+				<equals arg1="${test.portal.bundle.version}" arg2="7.3.10.u4" />
 			</or>
 			<then>
 				<property name="invoker.filter.helper.log.level" value="" />

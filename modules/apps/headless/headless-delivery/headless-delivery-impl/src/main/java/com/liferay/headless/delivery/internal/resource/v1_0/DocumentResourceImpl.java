@@ -44,6 +44,7 @@ import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DocumentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -72,9 +73,11 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -323,7 +326,7 @@ public class DocumentResourceImpl
 					() -> _assetTagLocalService.getTagNames(
 						DLFileEntry.class.getName(), documentId),
 					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId())));
+					existingFileEntry.getGroupId(), Constants.UPDATE)));
 	}
 
 	@Override
@@ -462,7 +465,7 @@ public class DocumentResourceImpl
 				null,
 				_createServiceContext(
 					() -> new Long[0], () -> new String[0], documentFolderId,
-					documentOptional, groupId)));
+					documentOptional, groupId, Constants.ADD)));
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -492,7 +495,7 @@ public class DocumentResourceImpl
 	private ServiceContext _createServiceContext(
 			Supplier<Long[]> defaultCategoriesSupplier,
 			Supplier<String[]> defaultKeywordsSupplier, Long documentFolderId,
-			Optional<Document> documentOptional, Long groupId)
+			Optional<Document> documentOptional, Long groupId, String command)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -559,6 +562,14 @@ public class DocumentResourceImpl
 					_ddmBeanTranslator.translate(ddmFormValues));
 			}
 		}
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			DocumentUtil.getThemeDisplay(contextHttpServletRequest, groupId));
+
+		serviceContext.setRequest(contextHttpServletRequest);
+		serviceContext.setCommand(command);
 
 		return serviceContext;
 	}
@@ -820,7 +831,7 @@ public class DocumentResourceImpl
 				_createServiceContext(
 					() -> new Long[0], () -> new String[0],
 					fileEntry.getFolderId(), documentOptional,
-					fileEntry.getGroupId())));
+					fileEntry.getGroupId(), Constants.UPDATE)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

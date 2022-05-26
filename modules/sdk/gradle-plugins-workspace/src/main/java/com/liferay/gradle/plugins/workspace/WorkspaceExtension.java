@@ -507,6 +507,19 @@ public class WorkspaceExtension {
 		);
 	}
 
+	private ProductInfo _getProductInfo(Path downloadPath, String product)
+		throws Exception {
+
+		try (JsonReader jsonReader = new JsonReader(
+				Files.newBufferedReader(downloadPath))) {
+
+			Map<String, ProductInfo> productInfos = _getProductInfos(
+				jsonReader);
+
+			return productInfos.get(product);
+		}
+	}
+
 	private ProductInfo _getProductInfo(String product) {
 		if (product == null) {
 			return null;
@@ -528,32 +541,16 @@ public class WorkspaceExtension {
 					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
 					downloadCommand.execute();
 
-					Path downloadPath = downloadCommand.getDownloadPath();
-
-					try (JsonReader jsonReader = new JsonReader(
-							Files.newBufferedReader(downloadPath))) {
-
-						Map<String, ProductInfo> productInfos =
-							_getProductInfos(jsonReader);
-
-						return productInfos.get(product);
-					}
+					return _getProductInfo(
+						downloadCommand.getDownloadPath(), product);
 				}
 				catch (Exception exception1) {
 					try {
 						downloadCommand.setUrl(new URL(_CDN_PRODUCT_INFO_URL));
 						downloadCommand.execute();
 
-						Path downloadPath = downloadCommand.getDownloadPath();
-
-						try (JsonReader jsonReader = new JsonReader(
-								Files.newBufferedReader(downloadPath))) {
-
-							Map<String, ProductInfo> productInfos =
-								_getProductInfos(jsonReader);
-
-							return productInfos.get(product);
-						}
+						return _getProductInfo(
+							downloadCommand.getDownloadPath(), product);
 					}
 					catch (Exception exception2) {
 						try (InputStream inputStream =

@@ -554,8 +554,8 @@ public class DataDefinitionResourceImpl
 				dataLayoutResource.putDataLayout(
 					Optional.ofNullable(
 						dataLayout.getId()
-					).orElse(
-						_getDefaultDataLayoutId(dataDefinitionId)
+					).orElseGet(
+						() -> _getDefaultDataLayoutId(dataDefinitionId)
 					),
 					dataLayout));
 		}
@@ -617,8 +617,8 @@ public class DataDefinitionResourceImpl
 					_ddmStructureLayoutLocalService.getStructureLayout(
 						Optional.ofNullable(
 							dataLayout.getId()
-						).orElse(
-							_getDefaultDataLayoutId(dataDefinitionId)
+						).orElseGet(
+							() -> _getDefaultDataLayoutId(dataDefinitionId)
 						));
 
 				JSONArray jsonArray = JSONUtil.getValueAsJSONArray(

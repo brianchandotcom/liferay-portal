@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -564,11 +563,9 @@ public class DocumentResourceImpl
 		}
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			DocumentUtil.getThemeDisplay(
-				contextHttpServletRequest, contextHttpServletResponse,
-				groupId));
+
+		DocumentUtil.addThemeDisplay(
+			contextHttpServletRequest, contextHttpServletResponse, groupId);
 
 		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setCommand(command);

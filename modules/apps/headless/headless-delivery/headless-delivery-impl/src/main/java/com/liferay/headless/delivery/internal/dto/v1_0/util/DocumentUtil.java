@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DocumentUtil {
 
-	public static ThemeDisplay getThemeDisplay(
+	public static void addThemeDisplay(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long groupId)
 		throws Exception {
@@ -48,8 +48,6 @@ public class DocumentUtil {
 
 		themeDisplay.setScopeGroupId(groupId);
 		themeDisplay.setSiteGroupId(groupId);
-
-		return themeDisplay;
 	}
 
 }

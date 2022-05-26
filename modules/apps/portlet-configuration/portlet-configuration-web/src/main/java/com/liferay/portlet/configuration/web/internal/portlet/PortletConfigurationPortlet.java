@@ -710,11 +710,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			request, "resourceGroupId", themeDisplay.getScopeGroupId());
 
 		if (Validator.isNotNull(modelResource)) {
-			String resourcePrimKey = ParamUtil.getString(
+			String[] resourcePrimKeys = ParamUtil.getStringValues(
 				request, "resourcePrimKey");
 
-			_permissionService.checkPermission(
-				resourceGroupId, modelResource, resourcePrimKey);
+			for (String resourcePrimKey : resourcePrimKeys) {
+				_permissionService.checkPermission(
+					resourceGroupId, modelResource, resourcePrimKey);
+			}
 
 			return;
 		}

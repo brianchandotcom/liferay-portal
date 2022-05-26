@@ -112,25 +112,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetCategoryAdminPortlet extends MVCPortlet {
 
-	public void deleteCategory(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] deleteCategoryIds = null;
-
-		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
-
-		if (categoryId > 0) {
-			deleteCategoryIds = new long[] {categoryId};
-		}
-		else {
-			deleteCategoryIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		_assetCategoryService.deleteCategories(deleteCategoryIds);
-	}
-
 	public void deleteVocabulary(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

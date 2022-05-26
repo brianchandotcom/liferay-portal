@@ -1330,20 +1330,6 @@ definition {
 		ItemSelector.viewRelevantSelections(addImageOptions = "true");
 	}
 
-	@description = "This is a test for LPS-136944. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a video."
-	@priority = "3"
-	test OnlyRelevantSelectionsAppearWhenAddingVideos {
-		property portal.acceptance = "false";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Web Content");
-
-		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
-
-		ItemSelector.viewRelevantSelections(addVideoOptions = "true");
-	}
-
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."
 	@priority = "4"
 	@refactordone

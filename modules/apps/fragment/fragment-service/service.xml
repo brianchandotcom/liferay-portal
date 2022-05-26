@@ -149,6 +149,7 @@
 		<column name="configuration" type="String" />
 		<column name="icon" type="String" />
 		<column name="previewFileEntryId" type="long" />
+		<column name="properties" type="String" />
 		<column name="readOnly" type="boolean" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />

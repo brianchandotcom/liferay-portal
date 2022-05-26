@@ -6,6 +6,7 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Account"
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-account-client/src/main/java"
+disabledBatchSchemaNames: ["AccountAddress", "AccountMember", "AccountOrganization"]
 forcePredictableOperationId: false
 liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-account-test/src/testIntegration/java"

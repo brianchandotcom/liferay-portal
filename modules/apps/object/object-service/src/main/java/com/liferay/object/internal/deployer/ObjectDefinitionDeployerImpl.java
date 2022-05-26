@@ -16,10 +16,13 @@ package com.liferay.object.internal.deployer;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.notification.constants.DefinitionTermConstants;
+import com.liferay.notification.term.contributor.DefinitionTermContributor;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
+import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionTermContributor;
 import com.liferay.object.internal.notification.type.ObjectDefinitionNotificationType;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -89,7 +93,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectViewLocalService objectViewLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
-		ResourceActions resourceActions,
+		ResourceActions resourceActions, UserLocalService userLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor) {
 
 		_bundleContext = bundleContext;
@@ -106,6 +110,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 		_resourceActions = resourceActions;
+		_userLocalService = userLocalService;
 		_workflowStatusModelPreFilterContributor =
 			workflowStatusModelPreFilterContributor;
 	}
@@ -239,6 +244,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),
+			_bundleContext.registerService(
+				DefinitionTermContributor.class,
+				new ObjectDefinitionTermContributor(
+					objectDefinition.getObjectDefinitionId(),
+					_objectFieldLocalService, _userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"definition.term.contributor.key",
+					DefinitionTermConstants.
+						BODY_AND_SUBJECT_DEFINITION_TERMS_CONTRIBUTOR
+				).put(
+					"notification.type.key", objectDefinition.getClassName()
+				).build()),
 			_modelSearchRegistrarHelper.register(
 				objectDefinition.getClassName(), _bundleContext,
 				modelSearchDefinition -> {
@@ -301,6 +318,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 	private final ResourceActions _resourceActions;
+	private final UserLocalService _userLocalService;
 	private final ModelPreFilterContributor
 		_workflowStatusModelPreFilterContributor;
 

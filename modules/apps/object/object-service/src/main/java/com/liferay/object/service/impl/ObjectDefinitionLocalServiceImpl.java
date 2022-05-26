@@ -521,7 +521,8 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectEntryLocalService, _objectFieldLocalService,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _persistedModelLocalServiceRegistry,
-				_resourceActions, _workflowStatusModelPreFilterContributor));
+				_resourceActions, _userLocalService,
+				_workflowStatusModelPreFilterContributor));
 
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
 			_bundleContext, ObjectDefinitionDeployer.class,

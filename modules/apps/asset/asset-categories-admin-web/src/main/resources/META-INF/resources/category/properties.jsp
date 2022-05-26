@@ -74,7 +74,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(category.getTitle(locale));
 %>
 
-<portlet:actionURL name="editProperties" var="editPropertiesURL">
+<portlet:actionURL name="/asset_categories_admin/edit_category_properties" var="editPropertiesURL">
 	<portlet:param name="mvcPath" value="/edit_category.jsp" />
 	<portlet:param name="screenNavigationCategoryKey" value='<%= ParamUtil.getString(request, "screenNavigationCategoryKey") %>' />
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />

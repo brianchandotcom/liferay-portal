@@ -170,6 +170,12 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
 				deviceCss);
 		}
+
+		long faviconFileEntryId = ParamUtil.getLong(
+			actionRequest, "faviconFileEntryId");
+
+		_layoutSetService.updateFaviconFileEntryId(
+			groupId, privateLayout, faviconFileEntryId);
 	}
 
 	private void _updateMergePages(

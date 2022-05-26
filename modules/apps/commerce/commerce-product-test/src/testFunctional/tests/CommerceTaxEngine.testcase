@@ -210,10 +210,20 @@ definition {
 			keyName = "Test",
 			keyReferenceCode = "Test Reference");
 
-		CommerceEntry.addTaxCategory(
+		CommerceEntry.viewTaxCategory(
 			keyDescription = "Test Description",
-			keyName = "Test 2",
+			keyName = "Test",
 			keyReferenceCode = "Test Reference");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description 2",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference 2");
+
+		CommerceEntry.viewTaxCategory(
+			keyDescription = "Test Description 2",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference 2");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

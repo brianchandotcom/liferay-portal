@@ -319,13 +319,14 @@ public class DocumentResourceImpl
 				existingFileEntry.getExpirationDate(),
 				existingFileEntry.getReviewDate(),
 				_createServiceContext(
+					Constants.UPDATE,
 					() -> ArrayUtil.toArray(
 						_assetCategoryLocalService.getCategoryIds(
 							DLFileEntry.class.getName(), documentId)),
 					() -> _assetTagLocalService.getTagNames(
 						DLFileEntry.class.getName(), documentId),
 					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId(), Constants.UPDATE)));
+					existingFileEntry.getGroupId())));
 	}
 
 	@Override
@@ -463,8 +464,8 @@ public class DocumentResourceImpl
 				null, binaryFile.getInputStream(), binaryFile.getSize(), null,
 				null,
 				_createServiceContext(
-					() -> new Long[0], () -> new String[0], documentFolderId,
-					documentOptional, groupId, Constants.ADD)));
+					Constants.ADD, () -> new Long[0], () -> new String[0],
+					documentFolderId, documentOptional, groupId)));
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -492,9 +493,9 @@ public class DocumentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Supplier<Long[]> defaultCategoriesSupplier,
+			String command, Supplier<Long[]> defaultCategoriesSupplier,
 			Supplier<String[]> defaultKeywordsSupplier, Long documentFolderId,
-			Optional<Document> documentOptional, Long groupId, String command)
+			Optional<Document> documentOptional, Long groupId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -517,7 +518,15 @@ public class DocumentResourceImpl
 					Document.ViewableBy.OWNER.getValue()
 				));
 
+		serviceContext.setCommand(command);
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setPlid(
+			_portal.getControlPanelPlid(contextCompany.getCompanyId()));
+		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setUserId(contextUser.getUserId());
+
+		DocumentUtil.addThemeDisplay(
+			groupId, contextHttpServletRequest, contextHttpServletResponse);
 
 		Optional<DLFileEntryType> dlFileEntryTypeOptional =
 			_getDLFileEntryTypeOptional(
@@ -561,16 +570,6 @@ public class DocumentResourceImpl
 					_ddmBeanTranslator.translate(ddmFormValues));
 			}
 		}
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-
-		DocumentUtil.addThemeDisplay(
-			contextHttpServletRequest, contextHttpServletResponse, groupId);
-
-		serviceContext.setRequest(contextHttpServletRequest);
-		serviceContext.setCommand(command);
-		serviceContext.setPlid(
-			_portal.getControlPanelPlid(contextCompany.getCompanyId()));
 
 		return serviceContext;
 	}
@@ -830,9 +829,9 @@ public class DocumentResourceImpl
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 				_createServiceContext(
-					() -> new Long[0], () -> new String[0],
+					Constants.UPDATE, () -> new Long[0], () -> new String[0],
 					fileEntry.getFolderId(), documentOptional,
-					fileEntry.getGroupId(), Constants.UPDATE)));
+					fileEntry.getGroupId())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

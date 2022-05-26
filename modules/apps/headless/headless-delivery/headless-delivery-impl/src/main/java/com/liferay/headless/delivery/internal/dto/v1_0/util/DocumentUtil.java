@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DocumentUtil {
 
 	public static void addThemeDisplay(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId)
+			long groupId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		ServicePreAction servicePreAction = new ServicePreAction();

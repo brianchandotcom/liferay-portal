@@ -25,6 +25,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayoutSet.getFaviconFileEntryId() %>" />
 
 	<aui:button name="selectFaviconButton" value="select" />
+
 	<aui:button name="clearFaviconButton" value="clear" />
 
 	<aui:script sandbox="<%= true %>">

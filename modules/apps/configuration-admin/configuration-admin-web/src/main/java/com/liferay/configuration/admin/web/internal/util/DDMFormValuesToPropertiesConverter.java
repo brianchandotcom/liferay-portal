@@ -193,7 +193,7 @@ public class DDMFormValuesToPropertiesConverter {
 			(!_locationVariableResolver.isLocationVariable(
 				defaultValue, LocationVariableProtocol.LANGUAGE) &&
 			 !_locationVariableResolver.isLocationVariable(
-				defaultValue, LocationVariableProtocol.RESOURCE))) {
+				 defaultValue, LocationVariableProtocol.RESOURCE))) {
 
 			return false;
 		}

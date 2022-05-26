@@ -16,7 +16,6 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -29,13 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 public class DocumentUtil {
 
 	public static ThemeDisplay getThemeDisplay(
-			HttpServletRequest httpServletRequest, long groupId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long groupId)
 		throws Exception {
 
 		ServicePreAction servicePreAction = new ServicePreAction();
-
-		HttpServletResponse httpServletResponse =
-			new DummyHttpServletResponse();
 
 		servicePreAction.servicePre(
 			httpServletRequest, httpServletResponse, false);

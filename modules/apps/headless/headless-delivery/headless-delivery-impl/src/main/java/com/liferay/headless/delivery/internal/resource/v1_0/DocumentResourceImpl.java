@@ -566,7 +566,9 @@ public class DocumentResourceImpl
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		contextHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			DocumentUtil.getThemeDisplay(contextHttpServletRequest, groupId));
+			DocumentUtil.getThemeDisplay(
+				contextHttpServletRequest, contextHttpServletResponse,
+				groupId));
 
 		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setCommand(command);

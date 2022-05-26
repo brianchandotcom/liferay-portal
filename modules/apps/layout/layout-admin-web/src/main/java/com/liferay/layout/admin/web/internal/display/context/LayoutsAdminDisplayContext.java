@@ -1351,6 +1351,16 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	public boolean isClearFaviconButtonEnabled() {
+		LayoutSet selLayoutSet = getSelLayoutSet();
+
+		if (selLayoutSet.getFaviconFileEntryId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isConversionDraft(Layout layout) {
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			(layout.fetchDraftLayout() != null)) {

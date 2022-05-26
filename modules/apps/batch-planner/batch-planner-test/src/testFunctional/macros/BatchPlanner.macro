@@ -5,8 +5,6 @@ definition {
 
 		JSONBatchPlannerPlansAPI._deleteBatchPlannerPlans();
 
-		JSONJobScheduler._deleteJobSchedulerTriggersByType(taskExecutorType = "batch-planner");
-
 		Notifications.deleteAllNotifications();
 	}
 

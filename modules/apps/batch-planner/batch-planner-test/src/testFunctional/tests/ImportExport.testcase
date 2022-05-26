@@ -991,7 +991,6 @@ definition {
 	@description = "Verify users can schedule an import"
 	@priority = "3"
 	test CanScheduleImport {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ImportExport#CanScheduleImport";
 
 		task ("Given an account import template") {

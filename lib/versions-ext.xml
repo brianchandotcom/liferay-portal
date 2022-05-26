@@ -1174,18 +1174,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/jackson-databind.jar</file-name>
-				<version>2.13.2.2</version>
-				<project-name>Jackson Databind</project-name>
-				<project-url>https://github.com/FasterXML/jackson-databind</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/javassist.jar</file-name>
 				<version>3.18.2 GA</version>
 				<project-name>Javassist</project-name>

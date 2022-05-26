@@ -23,6 +23,8 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -459,6 +462,20 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _getDraftLayoutURL(layout);
+	}
+
+	public String getFileEntryItemSelectorURL() {
+		FileItemSelectorCriterion itemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			getSelectFaviconEventName(), itemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -932,6 +949,10 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"selPlid", getSelPlid()
 		).buildPortletURL();
+	}
+
+	public String getSelectFaviconEventName() {
+		return _liferayPortletResponse.getNamespace() + "selectImage";
 	}
 
 	public String getSelectLayoutCollectionURL(

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.frontend.icons;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -26,16 +27,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class FrontendIconsUtil {
 
 	public static String getBasePath() {
-		return _ICONS_BASE_PATH;
+		String pathContext = PortalUtil.getPathContext();
+
+		return pathContext + _ICONS_BASE_PATH;
 	}
 
 	public static String getSpritemapPath(long siteId) {
 		return StringBundler.concat(
-			_ICONS_BASE_PATH, "/site/", String.valueOf(siteId), ".svg");
+			getBasePath(), "/site/", String.valueOf(siteId), ".svg");
 	}
 
 	public static String getSpritemapPath(String name) {
-		return StringBundler.concat(_ICONS_BASE_PATH, "/pack/", name, ".svg");
+		return StringBundler.concat(getBasePath(), "/pack/", name, ".svg");
 	}
 
 	public static String getSpritemapPath(ThemeDisplay themeDisplay) {

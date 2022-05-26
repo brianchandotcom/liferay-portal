@@ -19,22 +19,20 @@ import com.liferay.notification.term.contributor.DefinitionTermContributorRegist
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Luca Pellizzon
  */
-@Component(
-	immediate = true,
-	service = DefinitionTermContributorRegistry.class
-)
+@Component(immediate = true, service = DefinitionTermContributorRegistry.class)
 public class DefinitionTermContributorRegistryImpl
 	implements DefinitionTermContributorRegistry {
 
@@ -61,16 +59,14 @@ public class DefinitionTermContributorRegistryImpl
 				bundleContext, DefinitionTermContributor.class,
 				"notification.type.key",
 				ServiceTrackerCustomizerFactory.
-					<DefinitionTermContributor>serviceWrapper(
-						bundleContext));
+					<DefinitionTermContributor>serviceWrapper(bundleContext));
 
 		_serviceTrackerMapByTermContributorKey =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, DefinitionTermContributor.class,
 				"definition.term.contributor.key",
 				ServiceTrackerCustomizerFactory.
-					<DefinitionTermContributor>serviceWrapper(
-						bundleContext));
+					<DefinitionTermContributor>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
@@ -80,33 +76,29 @@ public class DefinitionTermContributorRegistryImpl
 		_serviceTrackerMapByTermContributorKey.close();
 	}
 
-	private List<DefinitionTermContributor>
-		_getDefinitionTermContributors(
-			String key,
-			ServiceTrackerMap
-				<String,
-				 List
-					 <ServiceTrackerCustomizerFactory.ServiceWrapper
-						 <DefinitionTermContributor>>>
-							serviceTrackerMap) {
+	private List<DefinitionTermContributor> _getDefinitionTermContributors(
+		String key,
+		ServiceTrackerMap
+			<String,
+			 List
+				 <ServiceTrackerCustomizerFactory.ServiceWrapper
+					 <DefinitionTermContributor>>> serviceTrackerMap) {
 
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<DefinitionTermContributor>>
-					definitionTermContributorWrappers =
-						serviceTrackerMap.getService(key);
+				<DefinitionTermContributor>> definitionTermContributorWrappers =
+					serviceTrackerMap.getService(key);
 
 		if (definitionTermContributorWrappers == null) {
 			return Collections.emptyList();
 		}
 
-		List<DefinitionTermContributor>
-			definitionTermContributors = new ArrayList<>();
+		List<DefinitionTermContributor> definitionTermContributors =
+			new ArrayList<>();
 
 		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<DefinitionTermContributor>
-					tableActionProviderServiceWrapper :
-						definitionTermContributorWrappers) {
+				<DefinitionTermContributor> tableActionProviderServiceWrapper :
+					definitionTermContributorWrappers) {
 
 			definitionTermContributors.add(
 				tableActionProviderServiceWrapper.getService());

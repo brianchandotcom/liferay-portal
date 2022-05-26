@@ -1,4 +1,4 @@
-# Checks for 
+# Checks for .ldif
 
 Check | Category | Description
 ----- | -------- | -----------

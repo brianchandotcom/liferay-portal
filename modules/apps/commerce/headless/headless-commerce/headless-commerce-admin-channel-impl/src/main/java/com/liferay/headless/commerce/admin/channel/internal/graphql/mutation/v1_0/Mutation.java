@@ -244,21 +244,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deletePaymentMethodGroupRelOrderTypeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentMethodGroupRelOrderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentMethodGroupRelOrderTypeResource ->
-				paymentMethodGroupRelOrderTypeResource.
-					deletePaymentMethodGroupRelOrderTypeBatch(
-						callbackURL, object));
-	}
-
-	@GraphQLField
 	public PaymentMethodGroupRelOrderType
 			createPaymentMethodGroupRelIdPaymentMethodGroupRelOrderType(
 				@GraphQLName("id") Long id,
@@ -291,20 +276,6 @@ public class Mutation {
 						paymentMethodGroupRelTermId));
 
 		return true;
-	}
-
-	@GraphQLField
-	public Response deletePaymentMethodGroupRelTermBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentMethodGroupRelTermResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentMethodGroupRelTermResource ->
-				paymentMethodGroupRelTermResource.
-					deletePaymentMethodGroupRelTermBatch(callbackURL, object));
 	}
 
 	@GraphQLField
@@ -342,21 +313,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteShippingFixedOptionOrderTypeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_shippingFixedOptionOrderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			shippingFixedOptionOrderTypeResource ->
-				shippingFixedOptionOrderTypeResource.
-					deleteShippingFixedOptionOrderTypeBatch(
-						callbackURL, object));
-	}
-
-	@GraphQLField
 	public ShippingFixedOptionOrderType
 			createShippingFixedOptionIdShippingFixedOptionOrderType(
 				@GraphQLName("id") Long id,
@@ -387,20 +343,6 @@ public class Mutation {
 					shippingFixedOptionTermId));
 
 		return true;
-	}
-
-	@GraphQLField
-	public Response deleteShippingFixedOptionTermBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_shippingFixedOptionTermResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			shippingFixedOptionTermResource ->
-				shippingFixedOptionTermResource.
-					deleteShippingFixedOptionTermBatch(callbackURL, object));
 	}
 
 	@GraphQLField
@@ -492,10 +434,6 @@ public class Mutation {
 			_groupLocalService);
 		paymentMethodGroupRelOrderTypeResource.setRoleLocalService(
 			_roleLocalService);
-
-		paymentMethodGroupRelOrderTypeResource.
-			setVulcanBatchEngineImportTaskResource(
-				_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -515,10 +453,6 @@ public class Mutation {
 			_groupLocalService);
 		paymentMethodGroupRelTermResource.setRoleLocalService(
 			_roleLocalService);
-
-		paymentMethodGroupRelTermResource.
-			setVulcanBatchEngineImportTaskResource(
-				_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -539,10 +473,6 @@ public class Mutation {
 			_groupLocalService);
 		shippingFixedOptionOrderTypeResource.setRoleLocalService(
 			_roleLocalService);
-
-		shippingFixedOptionOrderTypeResource.
-			setVulcanBatchEngineImportTaskResource(
-				_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -561,9 +491,6 @@ public class Mutation {
 		shippingFixedOptionTermResource.setGroupLocalService(
 			_groupLocalService);
 		shippingFixedOptionTermResource.setRoleLocalService(_roleLocalService);
-
-		shippingFixedOptionTermResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<ChannelResource>

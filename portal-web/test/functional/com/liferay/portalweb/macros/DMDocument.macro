@@ -1745,6 +1745,15 @@ definition {
 		}
 	}
 
+	macro editFriendlyURL {
+		Type(
+			inputFieldId = "urlTitle",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${friendlyURLEdit}");
+
+		PortletEntry.publish();
+	}
+
 	macro editPG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

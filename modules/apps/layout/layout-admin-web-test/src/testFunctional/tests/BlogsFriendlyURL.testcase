@@ -35,9 +35,9 @@ definition {
 		}
 	}
 
-	@description = "This ensures that ser is redirected to the restored friendly URL when he accesses a blog display page URL with an old friendly URL after he restored a friendly URL."
+	@description = "This ensures that a user is redirected to a restored friendly URL when he accesses a blog display page URL."
 	@priority = "4"
-	test CanAcessDisplayPageWithOldFriendlyURLAfterRestoring {
+	test CanAccessDisplayPageWithOldFriendlyURLAfterRestoring {
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
@@ -88,6 +89,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -412,6 +414,8 @@ public class LayoutStagedModelDataHandler
 		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 			_exportLinkedURL(portletDataContext, layout, layoutElement);
 		}
+
+		_exportFaviconFileEntry(layout, portletDataContext);
 
 		_fixExportTypeSettings(layout);
 
@@ -1364,6 +1368,33 @@ public class LayoutStagedModelDataHandler
 			layoutElement.addAttribute(
 				"draft-layout-id", String.valueOf(draftLayout.getLayoutId()));
 		}
+	}
+
+	private void _exportFaviconFileEntry(
+			Layout layout, PortletDataContext portletDataContext)
+		throws Exception {
+
+		if (layout.getFaviconFileEntryId() <= 0) {
+			return;
+		}
+
+		FileEntry faviconFileEntry;
+
+		try {
+			faviconFileEntry = _dlAppLocalService.getFileEntry(
+				layout.getFaviconFileEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layout, faviconFileEntry,
+			PortletDataContext.REFERENCE_TYPE_WEAK);
 	}
 
 	private void _exportLayoutIconImage(
@@ -2798,6 +2829,9 @@ public class LayoutStagedModelDataHandler
 	@Reference(target = "(model.class.name=java.lang.String)")
 	private ExportImportContentProcessor<String>
 		_defaultTextExportImportContentProcessor;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>

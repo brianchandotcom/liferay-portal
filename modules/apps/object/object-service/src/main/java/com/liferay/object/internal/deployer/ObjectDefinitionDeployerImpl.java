@@ -236,7 +236,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectDefinitionNotificationType(
 					objectDefinition.getClassName(),
 					objectDefinition.getShortName()),
-				HashMapDictionaryBuilder.put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),
 			_modelSearchRegistrarHelper.register(

@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
+	testIntegrationCompile project(":apps:notification:notification-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")
 	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:object:object-runtime-api")

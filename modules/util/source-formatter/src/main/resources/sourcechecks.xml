@@ -784,7 +784,7 @@
 		</check>
 		<check name="JavaUpgradeEmptyLinesCheck">
 			<category name="Styling" />
-			<description name="Finds missing and unnecessary empty lines." />
+			<description name="Finds missing and unnecessary empty lines in Upgrade classes." />
 		</check>
 		<check name="JavaUpgradeIndexCheck">
 			<category name="Bug Prevention" />

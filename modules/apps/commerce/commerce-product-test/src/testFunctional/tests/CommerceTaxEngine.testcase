@@ -748,6 +748,11 @@ definition {
 			keyName = "Test",
 			keyReferenceCode = "Test Reference");
 
+		CommerceEntry.viewTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -116,15 +117,16 @@ public class AssetListEntryLocalServiceImpl
 					segmentsEntryId, StringPool.BLANK, serviceContext);
 		}
 
-		List<Long> selectedAssetEntryIds = dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				AssetListEntryAssetEntryRelTable.INSTANCE.assetEntryId
-			).from(
-				AssetListEntryAssetEntryRelTable.INSTANCE
-			).where(
-				AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.eq(
-					assetListEntryId)
-			));
+		List<Long> selectedAssetEntryIds = new ArrayList<>(
+			dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					AssetListEntryAssetEntryRelTable.INSTANCE.assetEntryId
+				).from(
+					AssetListEntryAssetEntryRelTable.INSTANCE
+				).where(
+					AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.
+						eq(assetListEntryId)
+				)));
 
 		for (long assetEntryId : assetEntryIds) {
 			if (selectedAssetEntryIds.contains(assetEntryId)) {

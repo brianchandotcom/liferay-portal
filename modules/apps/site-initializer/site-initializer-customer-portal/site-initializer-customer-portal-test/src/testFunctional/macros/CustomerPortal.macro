@@ -233,6 +233,14 @@ definition {
 			title = "${title}");
 	}
 
+	macro enterOnSubscription {
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
 	macro loginOktaToUpdateCP {
 		var userEmailAddress = "garrettz@mbopartners.com.broken";
 		var userPassword = "q4F63ZEH3njnnA34S761";
@@ -494,14 +502,6 @@ definition {
 			locator1 = "CustomerPortalSite#TABLE_STATUS",
 			status = "Future",
 			value1 = "Future");
-	}
-
-	macro enterOnSubscription {
-		Click(
-			cardName = "Non-Production",
-			locator1 = "CustomerPortalSite#CARD_NAME");
-
-        Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
 	}
 
 }

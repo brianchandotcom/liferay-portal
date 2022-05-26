@@ -42,6 +42,20 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
 	}
 
+	macro clickOnStatusButton {
+		Click(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "${title}");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "All");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "${status}");
+	}
+
 	macro goToCP2 {
 		Refresh();
 
@@ -68,20 +82,6 @@ definition {
 		var openURL = selenium.getAttribute("RaylifeRetrieveEmail#SITE_LINK");
 
 		Navigator.openSpecificURL(url = "${openURL}");
-	}
-
-	macro clickOnStatusButton {
-		Click(
-			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-			title = "${title}");
-
-		Click(
-			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
-			status = "All");
-
-		Click(
-			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
-			status = "${status}");
 	}
 
 }

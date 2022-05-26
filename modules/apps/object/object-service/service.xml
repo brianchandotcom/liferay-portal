@@ -28,6 +28,7 @@
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="objectActionTriggerKey" type="String" />
 		<column name="parameters" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 

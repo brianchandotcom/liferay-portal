@@ -36,6 +36,9 @@ components:
                 parameters:
                     additionalProperties: true
                     type: object
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
             type: object
         ObjectDefinition:
             properties:

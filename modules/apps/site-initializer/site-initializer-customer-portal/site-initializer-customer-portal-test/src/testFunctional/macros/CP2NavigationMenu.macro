@@ -70,4 +70,18 @@ definition {
 		Navigator.openSpecificURL(url = "${openURL}");
 	}
 
+	macro clickOnStatusButton {
+		Click(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "${title}");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "All");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "${status}");
+	}
+
 }

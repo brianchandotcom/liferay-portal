@@ -1,0 +1,151 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			//CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-144412 - Verify if the user can open the drop-down filter and select Active Status"
+	@priority = "4"
+	test CanUserSelectActiveStatus {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnStatusButton(
+			status = "Active",
+			title = "All");
+
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "Active");
+	}
+
+	@description = "LPS-144413 - Verify if the user can open the drop-down filter and select Expired Status"
+	@priority = "4"
+	test CanUserSelectExpiredStatus {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnStatusButton(
+			status = "Expired",
+			title = "All");
+
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "Expired");
+	}
+
+	@description = "LPS-144414 - Verify if the user can open the drop-down filter and select Future Status"
+	@priority = "4"
+	test CanUserSelectFutureStatus {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnStatusButton(
+			status = "Future",
+			title = "All");
+
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "Future");
+	}
+
+	@description = "LPS-144416 - Verify if the user can open the drop-down filter and select three statuses"
+	@priority = "3"
+	test CanUserSelectThreeStatuses {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnStatusButton(
+			status = "All",
+			title = "All");
+
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "All");
+	}
+
+	@description = "LPS-144419 - Verify if the value of the filter when transitioning between subscription types is kept and only reset when the user leaves the page"
+	@priority = "4"
+	test ValueIsKeptOnTransition {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnStatusButton(
+			status = "Active",
+			title = "All");
+
+		CustomerPortal.enterOnSubscription();
+
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "Active");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		AssertElementNotPresent(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "Active");
+	}
+
+}

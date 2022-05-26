@@ -496,4 +496,12 @@ definition {
 			value1 = "Future");
 	}
 
+	macro enterOnSubscription {
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+        Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
 }

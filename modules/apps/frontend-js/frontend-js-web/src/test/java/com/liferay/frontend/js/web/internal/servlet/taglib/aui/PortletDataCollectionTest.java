@@ -15,23 +15,31 @@
 package com.liferay.frontend.js.web.internal.servlet.taglib.aui;
 
 import com.liferay.frontend.js.web.internal.servlet.taglib.aui.part.AMDPortletDataPart;
+import com.liferay.frontend.js.web.internal.servlet.taglib.aui.part.ESMPortletDataPart;
+import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESMImport;
+import com.liferay.portal.kernel.servlet.taglib.aui.PortletData;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.liferay.frontend.js.web.internal.servlet.taglib.aui.part.ESMPortletDataPart;
-import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
-import com.liferay.portal.kernel.servlet.taglib.aui.ESMImport;
-import com.liferay.portal.kernel.servlet.taglib.aui.PortletData;
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class PortletDataCollectionTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGenerateVariableDoesNotCollide() {
@@ -48,8 +56,8 @@ public class PortletDataCollectionTest {
 					new ESMImport(
 						"symbol", "frontendJsWeb", "frontend-js-web"))));
 
-		PortletDataCollection portletDataCollection =
-			new PortletDataCollection(Collections.singleton(portletData));
+		PortletDataCollection portletDataCollection = new PortletDataCollection(
+			Collections.singleton(portletData));
 
 		List<String> variables = new ArrayList<>();
 
@@ -71,8 +79,8 @@ public class PortletDataCollectionTest {
 		portletData.add(
 			new AMDPortletDataPart("content", "_Var,1Var,*Var,/Var"));
 
-		PortletDataCollection portletDataCollection =
-			new PortletDataCollection(Collections.singleton(portletData));
+		PortletDataCollection portletDataCollection = new PortletDataCollection(
+			Collections.singleton(portletData));
 
 		Collection<AMDRequire> amdRequires =
 			portletDataCollection.getAMDRequires();
@@ -93,8 +101,8 @@ public class PortletDataCollectionTest {
 		portletData.add(
 			new AMDPortletDataPart("content", "var,V ar,va*r,var/"));
 
-		PortletDataCollection portletDataCollection =
-			new PortletDataCollection(Collections.singleton(portletData));
+		PortletDataCollection portletDataCollection = new PortletDataCollection(
+			Collections.singleton(portletData));
 
 		Collection<AMDRequire> amdRequires =
 			portletDataCollection.getAMDRequires();
@@ -112,11 +120,10 @@ public class PortletDataCollectionTest {
 	public void testGenerateVariableStripsLastInvalidCharacter() {
 		PortletData portletData = new PortletData();
 
-		portletData.add(
-			new AMDPortletDataPart("content", "var!"));
+		portletData.add(new AMDPortletDataPart("content", "var!"));
 
-		PortletDataCollection portletDataCollection =
-			new PortletDataCollection(Collections.singleton(portletData));
+		PortletDataCollection portletDataCollection = new PortletDataCollection(
+			Collections.singleton(portletData));
 
 		Collection<AMDRequire> amdRequires =
 			portletDataCollection.getAMDRequires();
@@ -131,7 +138,7 @@ public class PortletDataCollectionTest {
 	}
 
 	protected void assertVariables(
-		List<String> variables, String...expectedVariables) {
+		List<String> variables, String... expectedVariables) {
 
 		for (String expectedVariable : expectedVariables) {
 			Assert.assertTrue(
@@ -140,7 +147,7 @@ public class PortletDataCollectionTest {
 		}
 
 		Assert.assertTrue(
-			"Unexpected variables found: " + variables,	variables.isEmpty());
+			"Unexpected variables found: " + variables, variables.isEmpty());
 	}
 
 }

@@ -295,6 +295,10 @@ definition {
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
+	macro gotoFriendlyURLHistory {
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
+	}
+
 	macro openToAddDocumentType {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

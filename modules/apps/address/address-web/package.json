@@ -1,6 +1,4 @@
 {
-	"dependencies": {
-	},
 	"main": "js/index.js",
 	"name": "@liferay/address-web",
 	"scripts": {

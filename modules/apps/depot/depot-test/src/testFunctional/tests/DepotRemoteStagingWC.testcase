@@ -778,12 +778,8 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
-			embedVideo = "true",
-			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
-			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutPreview = "https://www.youtube.com",
-			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://youtu.be/HOdbzGCI5ME",
+			embedVideo = "https://youtu.be/HOdbzGCI5ME",
+			navTab = "URL",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

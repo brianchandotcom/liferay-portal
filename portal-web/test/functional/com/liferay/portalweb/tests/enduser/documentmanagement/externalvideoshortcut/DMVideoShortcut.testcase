@@ -115,13 +115,10 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
-			embedVideo = "true",
+			embedVideo = "https://www.facebook.com/Cristiano/videos/1710977485745946",
 			kbArticleContent = "Knowledge Base Video Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutPreview = "https://www.facebook.com",
-			videoShortcutTitle = "Test Facebook Video",
-			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+			navTab = "URL");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -239,11 +236,8 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
-			embedVideo = "true",
-			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutPreview = "https://player.twitch.tv",
-			videoShortcutTitle = "Test Twitch Video Name",
-			videoURL = "https://www.twitch.tv/videos/806178790",
+			embedVideo = "https://www.twitch.tv/videos/806178790",
+			navTab = "URL",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -295,14 +289,10 @@ definition {
 			siteName = "Guest");
 
 		Blogs.addEntry(
-			embedVideo = "true",
+			embedVideo = "https://vimeo.com/483035084",
 			entryContent = "video",
 			entryTitle = "Blogs Entry Title",
-			extractedVideoShortcutTitle = "Air",
-			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutPreview = "https://player.vimeo.com",
-			videoShortcutTitle = "Test Vimeo Video",
-			videoURL = "https://vimeo.com/483035084");
+			navTab = "URL");
 
 		Navigator.gotoSitePage(
 			pageName = "Blog Page",
@@ -502,12 +492,8 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
-			embedVideo = "true",
-			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
-			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutPreview = "https://www.youtube.com",
-			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			embedVideo = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			navTab = "URL",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

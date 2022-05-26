@@ -64,6 +64,11 @@ public class AssetVocabularyItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String getDefaultDisplayStyle() {
+		return "list";
+	}
+
+	@Override
 	public ItemDescriptor getItemDescriptor(AssetVocabulary assetVocabulary) {
 		return new AssetVocabularyItemDescriptor(
 			assetVocabulary, _httpServletRequest);

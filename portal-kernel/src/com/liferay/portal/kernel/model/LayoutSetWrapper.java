@@ -54,6 +54,7 @@ public class LayoutSetWrapper
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
+		attributes.put("faviconFileEntryId", getFaviconFileEntryId());
 		attributes.put("css", getCss());
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
@@ -129,6 +130,12 @@ public class LayoutSetWrapper
 
 		if (colorSchemeId != null) {
 			setColorSchemeId(colorSchemeId);
+		}
+
+		Long faviconFileEntryId = (Long)attributes.get("faviconFileEntryId");
+
+		if (faviconFileEntryId != null) {
+			setFaviconFileEntryId(faviconFileEntryId);
 		}
 
 		String css = (String)attributes.get("css");
@@ -232,6 +239,16 @@ public class LayoutSetWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the favicon file entry ID of this layout set.
+	 *
+	 * @return the favicon file entry ID of this layout set
+	 */
+	@Override
+	public long getFaviconFileEntryId() {
+		return model.getFaviconFileEntryId();
 	}
 
 	/**
@@ -544,6 +561,16 @@ public class LayoutSetWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the favicon file entry ID of this layout set.
+	 *
+	 * @param faviconFileEntryId the favicon file entry ID of this layout set
+	 */
+	@Override
+	public void setFaviconFileEntryId(long faviconFileEntryId) {
+		model.setFaviconFileEntryId(faviconFileEntryId);
 	}
 
 	/**

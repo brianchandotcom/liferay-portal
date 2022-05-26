@@ -3040,6 +3040,7 @@ public class LayoutSetPersistenceImpl
 		ctStrictColumnNames.add("logoId");
 		ctStrictColumnNames.add("themeId");
 		ctStrictColumnNames.add("colorSchemeId");
+		ctStrictColumnNames.add("faviconFileEntryId");
 		ctStrictColumnNames.add("css");
 		ctStrictColumnNames.add("settings_");
 		ctStrictColumnNames.add("layoutSetPrototypeUuid");

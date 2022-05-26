@@ -31,7 +31,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 	<aui:button name="selectFaviconButton" value="change-favicon" />
 
-	<aui:button name="clearFaviconButton" value="clear" />
+	<aui:button disabled="<%= !layoutsAdminDisplayContext.isClearFaviconButtonEnabled() %>" name="clearFaviconButton" value="clear" />
 
 	<aui:script sandbox="<%= true %>">
 		const selectLayoutButton = document.getElementById(

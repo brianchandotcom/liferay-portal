@@ -90,8 +90,10 @@ export function SelectTree({
 			};
 		});
 
-		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-			data: selectedItems,
+		requestAnimationFrame(() => {
+			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+				data: selectedItems,
+			});
 		});
 	}, [selectedKeys, itemsById, itemSelectorSaveEvent]);
 

@@ -70,6 +70,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public String getCompanyFallbackVirtualHostname();
 
+	public String getFavicon();
+
 	/**
 	 * Returns the layout set's group.
 	 *

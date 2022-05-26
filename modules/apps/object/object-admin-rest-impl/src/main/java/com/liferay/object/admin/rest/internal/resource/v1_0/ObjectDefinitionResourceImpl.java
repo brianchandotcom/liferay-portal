@@ -305,6 +305,7 @@ public class ObjectDefinitionResourceImpl
 								objectDefinition.getStatus()));
 					}
 				};
+				storageType = objectDefinition.getStorageType();
 				system = objectDefinition.isSystem();
 				titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
 			}

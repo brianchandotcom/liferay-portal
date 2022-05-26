@@ -29,8 +29,8 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 				"ObjectDefinition", "storageType", "VARCHAR(75)");
 
 			runSQL(
-				"update ObjectDefinition set storageType = " +
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+				"update ObjectDefinition set storageType = '" +
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + "'");
 		}
 	}
 

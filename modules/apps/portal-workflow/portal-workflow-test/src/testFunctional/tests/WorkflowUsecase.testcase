@@ -525,7 +525,7 @@ definition {
 			webContentTitle = "WC With Legal Category");
 
 		WebContent.selectCategory(
-			categoryName = "legal",
+			categoryNameList = "legal",
 			vocabularyName = "Vocabulary Name");
 
 		Button.clickSubmitForPublication();
@@ -551,11 +551,7 @@ definition {
 			webContentTitle = "WC With Multiple Categories");
 
 		WebContent.selectCategory(
-			categoryName = "legal",
-			vocabularyName = "Vocabulary Name");
-
-		WebContent.selectCategory(
-			categoryName = "other",
+			categoryNameList = "legal,other",
 			vocabularyName = "Vocabulary Name");
 
 		Button.clickSubmitForPublication();
@@ -581,7 +577,7 @@ definition {
 			webContentTitle = "WC With Other Category");
 
 		WebContent.selectCategory(
-			categoryName = "other",
+			categoryNameList = "other",
 			vocabularyName = "Vocabulary Name");
 
 		Button.clickSubmitForPublication();

@@ -2049,7 +2049,7 @@ definition {
 				webContentTitle = "WC Text Title");
 
 			WebContent.selectCategory(
-				categoryName = "Category Name",
+				categoryNameList = "Category Name",
 				vocabularyName = "Vocabulary Name");
 
 			PortletEntry.publish();

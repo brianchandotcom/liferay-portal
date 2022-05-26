@@ -1219,7 +1219,7 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.selectCategory(
-				categoryName = "Substage_4",
+				categoryNameList = "Substage_4",
 				vocabularyName = "Stage");
 
 			PortletEntry.publish();

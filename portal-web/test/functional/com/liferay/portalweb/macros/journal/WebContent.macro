@@ -326,7 +326,7 @@ definition {
 			webContentTitle = "${webContentTitle}");
 
 		WebContent.selectCategory(
-			categoryName = "${categoryName}",
+			categoryNameList = "${categoryName}",
 			userSegmentDetailTitle = "${userSegmentDetailTitle}",
 			vocabularyName = "${vocabularyName}");
 

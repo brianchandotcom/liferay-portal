@@ -208,7 +208,7 @@ definition {
 				siteName = "Site Name");
 
 			AssetPublisherPortlet.editConfigureCategoriesFilterPG(
-				categoryNames = "Category Name 1,Category Name 2",
+				categoryNameList = "Category Name 1,Category Name 2",
 				queryContains = "Does Not Contain");
 		}
 

@@ -267,11 +267,11 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			WebContent.selectCategory(
-				categoryName = "Public Category Name",
+				categoryNameList = "Public Category Name",
 				vocabularyName = "Public Vocabulary Name");
 
 			WebContent.selectCategory(
-				categoryName = "Internal Category Name",
+				categoryNameList = "Internal Category Name",
 				vocabularyName = "Internal Vocabulary Name");
 
 			PortletEntry.publish();

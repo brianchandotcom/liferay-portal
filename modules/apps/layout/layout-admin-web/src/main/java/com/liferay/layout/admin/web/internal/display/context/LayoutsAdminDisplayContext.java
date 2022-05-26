@@ -88,8 +88,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.LayoutDescription;
-import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
@@ -590,18 +588,6 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"selPlid", layout.getPlid()
 		).buildString();
-	}
-
-	public List<LayoutDescription> getLayoutDescriptions() {
-		if (_layoutDescriptions != null) {
-			return _layoutDescriptions;
-		}
-
-		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
-			getGroupId(), isPrivateLayout(), getRootNodeName(),
-			themeDisplay.getLocale());
-
-		return _layoutDescriptions;
 	}
 
 	public Long getLayoutId() {
@@ -2057,7 +2043,6 @@ public class LayoutsAdminDisplayContext {
 	private String _keywords;
 	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final LayoutCopyHelper _layoutCopyHelper;
-	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;

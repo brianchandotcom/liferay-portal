@@ -1382,7 +1382,7 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		FileEntry faviconFileEntry;
+		FileEntry faviconFileEntry = null;
 
 		try {
 			faviconFileEntry = _dlAppLocalService.getFileEntry(

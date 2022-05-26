@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Iván Zaera Avellón
@@ -39,8 +41,17 @@ public class AMDPortletDataPart implements PortletDataPart {
 		Map<String, String> moduleAliasMap = VariableUtil.parseRequire(
 			amdRequire);
 
+		Set<String> usedVariables = new HashSet<>();
+
 		for (Map.Entry<String, String> entry : moduleAliasMap.entrySet()) {
-			_amdRequires.add(new AMDRequire(entry.getKey(), entry.getValue()));
+			String module = entry.getKey();
+			String variable = entry.getValue();
+
+			if (Validator.isNull(variable)) {
+				variable = VariableUtil.generateVariable(module, usedVariables);
+			}
+
+			_amdRequires.add(new AMDRequire(module, variable));
 		}
 	}
 

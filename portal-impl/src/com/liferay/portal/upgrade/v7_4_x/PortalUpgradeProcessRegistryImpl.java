@@ -92,6 +92,9 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(14, 0, 0), new UpgradeExternalReferenceCode());
+
+		upgradeProcesses.put(
+			new Version(14, 0, 1), new UpgradeFaviconFileEntryIdColumn());
 	}
 
 }

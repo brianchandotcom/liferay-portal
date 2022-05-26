@@ -610,8 +610,8 @@
 		<column name="styleBookEntryId" type="long" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
-		<column name="masterLayoutPlid" type="long" />
 		<column name="faviconFileEntryId" type="long" />
+		<column name="masterLayoutPlid" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />

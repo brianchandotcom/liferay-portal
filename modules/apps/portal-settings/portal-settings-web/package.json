@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"@liferay/address-web": "*"
-	},
 	"name": "@liferay/portal-settings-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

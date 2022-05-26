@@ -115,6 +115,31 @@ definition {
 		AssertElementNotPresent(locator1 = "AssetCategorization#TAG");
 	}
 
+	macro selectCategories {
+		AssetCategorization.gotoSelectCategory();
+
+		Portlet.expandTree();
+
+		for (var categoryName : list "${categoryNameList}") {
+			Check.checkNotVisible(
+				key_nodeName = "${categoryName}",
+				locator1 = "Treeview#NODE_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		if (IsElementPresent(key_text = "Add", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
+			Click(
+				key_text = "Add",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+		else if (IsElementPresent(key_text = "Done", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
+			Click(
+				key_text = "Done",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+	}
+
 	macro selectCategory {
 		AssetCategorization.gotoSelectCategory();
 

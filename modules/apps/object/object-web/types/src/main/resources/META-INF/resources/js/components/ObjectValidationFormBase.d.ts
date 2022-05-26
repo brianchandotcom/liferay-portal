@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {FormError} from '../hooks/useForm';
 export declare function useObjectValidationForm({
 	initialValues,

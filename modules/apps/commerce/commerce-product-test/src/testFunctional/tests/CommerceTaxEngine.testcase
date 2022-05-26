@@ -411,10 +411,29 @@ definition {
 			keyName = "Test",
 			keyReferenceCode = "Test Reference");
 
-		CommerceEntry.addTaxCategory(
+		CommerceEntry.viewTaxCategory(
 			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description 2",
 			keyName = "Test 2",
 			keyReferenceCode = "Test Reference");
+
+		Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description 2",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference 2");
+
+		CommerceEntry.viewTaxCategory(
+			keyDescription = "Test Description 2",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference 2");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

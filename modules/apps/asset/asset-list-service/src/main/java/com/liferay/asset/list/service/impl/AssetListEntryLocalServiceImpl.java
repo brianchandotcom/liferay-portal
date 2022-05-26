@@ -116,32 +116,27 @@ public class AssetListEntryLocalServiceImpl
 					segmentsEntryId, StringPool.BLANK, serviceContext);
 		}
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					AssetListEntryAssetEntryRelTable.INSTANCE
-				).from(
-					AssetListEntryAssetEntryRelTable.INSTANCE
-				).where(
-					AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.
-						eq(assetListEntryId)
-				));
+		List<Long> selectedAssetEntryIds = dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				AssetListEntryAssetEntryRelTable.INSTANCE.assetEntryId
+			).from(
+				AssetListEntryAssetEntryRelTable.INSTANCE
+			).where(
+				AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.eq(
+					assetListEntryId)
+			));
 
 		for (long assetEntryId : assetEntryIds) {
-			if (ListUtil.exists(
-					assetListEntryAssetEntryRels,
-					assetListEntryAssetEntryRel ->
-						assetListEntryAssetEntryRel.getAssetEntryId() ==
-							assetEntryId)) {
-
+			if (selectedAssetEntryIds.contains(assetEntryId)) {
 				continue;
 			}
 
-			assetListEntryAssetEntryRels.add(
-				_assetListEntryAssetEntryRelLocalService.
-					addAssetListEntryAssetEntryRel(
-						assetListEntryId, assetEntryId, segmentsEntryId,
-						serviceContext));
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					assetListEntryId, assetEntryId, segmentsEntryId,
+					serviceContext);
+
+			selectedAssetEntryIds.add(assetEntryId);
 		}
 
 		// Asset list entry

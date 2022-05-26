@@ -141,6 +141,20 @@ public class PortalFixpackRelease {
 	private String _getPortalVersion(
 		String portalBuildVersion, String portalFixpackVersion) {
 
+		if (portalBuildVersion.startsWith("73")) {
+			if (portalFixpackVersion.equals("1") ||
+				portalFixpackVersion.equals("2")) {
+
+				return "7.3.10.1";
+			}
+			else if (portalFixpackVersion.equals("3")) {
+				return "7.3.10.3";
+			}
+			else {
+				return "7.3.10.u" + portalFixpackVersion;
+			}
+		}
+
 		String basePortalVersionRegex = "(\\d)(\\d)(\\d\\d)";
 
 		StringBuilder sb = new StringBuilder();

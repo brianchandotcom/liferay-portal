@@ -35,7 +35,8 @@ public class PortalRelease {
 		URL bundlesBaseURL = null;
 
 		for (String baseURLString : _BASE_URL_STRINGS) {
-			String bundlesBaseURLString = baseURLString + "/" + portalVersion;
+			String bundlesBaseURLString =
+				baseURLString + "/" + portalVersion.replaceAll("\\.u", "-u");
 
 			String bundlesBaseURLContent = null;
 

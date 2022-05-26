@@ -91,6 +91,35 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			return null;
 		}
 
+		if (patcherPortalVersion.contains("7310")) {
+			Matcher matcher = _patcherPortalVersion73Pattern.matcher(
+				patcherPortalVersion);
+
+			if (!matcher.find()) {
+				return null;
+			}
+
+			String fixpackVersion = matcher.group("fixpackVersion");
+
+			if (!fixpackVersion.equals("1") && !fixpackVersion.equals("2")) {
+				return null;
+			}
+
+			try {
+				URL portalFixpackURL = new URL(
+					JenkinsResultsParserUtil.combine(
+						"https://files.liferay.com/private/ee/fix-packs/7.3.10",
+						"/dxp/liferay-fix-pack-dxp-", fixpackVersion,
+						"-7310.zip"));
+
+				_portalFixpackRelease = new PortalFixpackRelease(
+					portalFixpackURL);
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
 		Matcher matcher = _patcherPortalVersionDXPPattern.matcher(
 			patcherPortalVersion);
 
@@ -151,6 +180,31 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 		String patcherPortalVersion = getParameterValue(
 			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
+
+		if (patcherPortalVersion.contains("7310")) {
+			Matcher matcher = _patcherPortalVersion73Pattern.matcher(
+				patcherPortalVersion);
+
+			String portalReleaseVersion = "7.3.10";
+
+			if (matcher.find()) {
+				String fixpackVersion = matcher.group("fixpackVersion");
+
+				if (fixpackVersion.equals("1") || fixpackVersion.equals("2")) {
+					portalReleaseVersion = "7.3.10.1";
+				}
+				else if (fixpackVersion.equals("3")) {
+					portalReleaseVersion = "7.3.10.3";
+				}
+				else {
+					portalReleaseVersion = "7.3.10.u" + fixpackVersion;
+				}
+			}
+
+			_portalRelease = new PortalRelease(portalReleaseVersion);
+
+			return _portalRelease;
+		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion)) {
 			Matcher patcherPortalVersion62Matcher =
@@ -292,6 +346,8 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		Pattern.compile(
 			"(?<majorVersion>6)\\.(?<minorVersion>2)\\." +
 				"(?<fixVersion>\\d{2})( SP(?<servicePackVersion>\\d+))?");
+	private static final Pattern _patcherPortalVersion73Pattern =
+		Pattern.compile("fix-pack-dxp-(?<fixpackVersion>\\d+)-7310");
 	private static final Pattern _patcherPortalVersion74Pattern =
 		Pattern.compile(
 			"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +

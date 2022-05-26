@@ -24,7 +24,7 @@ export function getSpritemapPath(iconPack?: string): string {
 	const packOrSite = iconPack ? 'pack' : 'site';
 	const iconPackOrSiteId = iconPack || Liferay.ThemeDisplay.getSiteGroupId();
 
-	return `${Liferay._ICONS_.basePath}/${packOrSite}/${iconPackOrSiteId}.svg`;
+	return `${Liferay.Icons.basePath}/${packOrSite}/${iconPackOrSiteId}.svg`;
 }
 
 export function getSystemSpritemapPath(): string {
@@ -32,5 +32,5 @@ export function getSystemSpritemapPath(): string {
 		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 	}
 
-	return Liferay._ICONS_.systemSpritemap;
+	return Liferay.Icons.systemSpritemap;
 }

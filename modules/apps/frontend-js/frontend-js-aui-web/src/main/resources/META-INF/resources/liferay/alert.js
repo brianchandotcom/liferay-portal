@@ -239,7 +239,7 @@ AUI.add(
 					var bodyContent = Lang.sub(instance.TPL_CONTENT, {
 						icon: instance.get('icon'),
 						message: instance.get('message'),
-						spritemap: Liferay._ICONS_.spritemap,
+						spritemap: Liferay.Icons.spritemap,
 						title: instance.get('title') || '',
 					});
 

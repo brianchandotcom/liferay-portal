@@ -180,7 +180,7 @@ AUI.add(
 
 				CONTENT_TEMPLATE: Lang.sub(CONTENT_TEMPLATE, {
 					iconMoonTooltip: Liferay.Language.get('dark-theme'),
-					spritemap: Liferay._ICONS_.spritemap,
+					spritemap: Liferay.Icons.spritemap,
 				}),
 
 				bindUI() {

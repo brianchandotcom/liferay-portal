@@ -47,7 +47,7 @@ public class FrontendIconsSpritemapPathTopHeadDynamicInclude extends BaseDynamic
 
 		sb.append("<script data-senna-track=\"temporary\">");
 		sb.append("var Liferay = window.Liferay || {};");
-		sb.append("Liferay._ICONS_ = Liferay._ICONS_ || {};");
+		sb.append("Liferay.Icons = Liferay.Icons || {};");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -55,17 +55,17 @@ public class FrontendIconsSpritemapPathTopHeadDynamicInclude extends BaseDynamic
 
 		sb.append(
 			StringBundler.concat(
-				"Liferay._ICONS_.basePath = '",
+				"Liferay.Icons.basePath = '",
 				FrontendIconsUtil.getBasePath(), "';"));
 
 		sb.append(
 			StringBundler.concat(
-				"Liferay._ICONS_.spritemap = '",
+				"Liferay.Icons.spritemap = '",
 				FrontendIconsUtil.getSpritemapPath(themeDisplay), "';"));
 
 		sb.append(
 			StringBundler.concat(
-				"Liferay._ICONS_.systemSpritemap = '",
+				"Liferay.Icons.systemSpritemap = '",
 				FrontendIconsUtil.getSystemSpritemapPath(), "';"));
 				
 		sb.append("</script>");

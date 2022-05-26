@@ -5,7 +5,7 @@
 /// <reference path="apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/liferay.d.ts" />
 
 declare module Liferay {
-	export const _ICONS_: {
+	export const Icons: {
 		basePath: string;
 		spritemap: string;
 		systemSpritemap: string;

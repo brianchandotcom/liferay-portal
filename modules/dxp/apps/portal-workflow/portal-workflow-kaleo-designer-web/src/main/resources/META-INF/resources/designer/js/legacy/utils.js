@@ -292,7 +292,7 @@ AUI.add(
 								discardDefaultButtonCssClasses: true,
 								labelHTML:
 									'<svg class="lexicon-icon" focusable="false"><use href="' +
-									Liferay._ICONS_.spritemap +
+									Liferay.Icons.spritemap +
 									'#times" /><title>' +
 									Liferay.Language.get('close') +
 									'</title></svg>',

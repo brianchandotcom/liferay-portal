@@ -34,7 +34,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.osgi.service.cm.Configuration;
@@ -108,7 +107,7 @@ public class SamlIdpSsoSessionMaxAgePropertyUpgradeProcessTest {
 		Configuration verifyConfiguration = Mockito.verify(
 			configuration, Mockito.times(1));
 
-		verifyConfiguration.update(Matchers.eq(properties));
+		verifyConfiguration.update(Mockito.eq(properties));
 	}
 
 	@Test
@@ -157,7 +156,7 @@ public class SamlIdpSsoSessionMaxAgePropertyUpgradeProcessTest {
 		Configuration verifyConfiguration = Mockito.verify(
 			configuration, Mockito.times(1));
 
-		verifyConfiguration.update(Matchers.eq(properties));
+		verifyConfiguration.update(Mockito.eq(properties));
 	}
 
 	@Test
@@ -200,7 +199,7 @@ public class SamlIdpSsoSessionMaxAgePropertyUpgradeProcessTest {
 		Configuration verifyConfiguration = Mockito.verify(
 			configuration, Mockito.times(1));
 
-		verifyConfiguration.update(Matchers.eq(properties));
+		verifyConfiguration.update(Mockito.eq(properties));
 	}
 
 	@Test

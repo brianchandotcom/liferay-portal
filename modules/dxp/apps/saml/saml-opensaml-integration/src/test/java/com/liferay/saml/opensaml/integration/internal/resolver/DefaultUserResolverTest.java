@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
@@ -371,7 +370,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		Mockito.when(
-			contactLocalService.getContact(Mockito.anyLong())
+			contactLocalService.getContact(Mockito.any(Long.class))
 		).thenReturn(
 			contact
 		);
@@ -391,37 +390,40 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			_userLocalService.addUser(
-				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.anyString(), Mockito.anyString(),
-				Mockito.any(Locale.class), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(),
+				Mockito.any(Long.class), Mockito.any(Long.class),
+				Mockito.anyBoolean(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.anyBoolean(),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.any(Locale.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.any(Integer.class), Mockito.any(Integer.class),
+				Mockito.anyBoolean(), Mockito.any(Integer.class),
+				Mockito.any(Integer.class), Mockito.any(Integer.class),
+				Mockito.nullable(String.class), Mockito.any(long[].class),
 				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
+				Mockito.any(long[].class), Mockito.anyBoolean(),
+				Mockito.any(ServiceContext.class))
 		).thenReturn(
 			null
 		);
 
 		Mockito.when(
 			_userLocalService.getUserByEmailAddress(
-				Mockito.anyLong(),
+				Mockito.any(Long.class),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
 		).thenReturn(
 			user
 		);
 
 		Mockito.when(
-			_userLocalService.getUserById(Mockito.anyLong())
+			_userLocalService.getUserById(Mockito.any(Long.class))
 		).thenReturn(
 			user
 		);
 
 		Mockito.when(
 			_userLocalService.getUserByScreenName(
-				Mockito.anyLong(),
+				Mockito.any(Long.class),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
 		).thenReturn(
 			user
@@ -429,27 +431,31 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			_userLocalService.updateEmailAddress(
-				Mockito.anyLong(), Mockito.eq(StringPool.BLANK),
-				Mockito.anyString(), Mockito.anyString())
+				Mockito.any(Long.class), Mockito.eq(StringPool.BLANK),
+				Mockito.nullable(String.class), Mockito.nullable(String.class))
 		).thenReturn(
 			user
 		);
 
 		Mockito.when(
 			_userLocalService.updateUser(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyBoolean(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyBoolean(), Mockito.any(byte[].class),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.any(long[].class),
+				Mockito.any(Long.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.anyBoolean(), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.anyBoolean(),
+				Mockito.any(byte[].class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.any(Long.class), Mockito.any(Long.class),
+				Mockito.anyBoolean(), Mockito.any(Integer.class),
+				Mockito.any(Integer.class), Mockito.any(Integer.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
 				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.anyListOf(UserGroupRole.class),
+				Mockito.any(long[].class), Mockito.anyList(),
 				Mockito.any(long[].class), Mockito.any(ServiceContext.class))
 		).thenReturn(
 			user
@@ -550,30 +556,32 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		Mockito.when(
 			_userLocalService.addUser(
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
-				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.anyBoolean(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS),
 				Mockito.any(Locale.class), Mockito.eq("test"),
-				Mockito.anyString(), Mockito.eq("test"), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(),
-				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.eq(false), Mockito.any(ServiceContext.class))
+				Mockito.nullable(String.class), Mockito.eq("test"),
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
+				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.nullable(String.class), Mockito.nullable(long[].class),
+				Mockito.nullable(long[].class), Mockito.nullable(long[].class),
+				Mockito.nullable(long[].class), Mockito.eq(false),
+				Mockito.any(ServiceContext.class))
 		).thenReturn(
 			user
 		);
 
 		Mockito.when(
 			_userLocalService.updateEmailAddressVerified(
-				Mockito.anyLong(), Mockito.eq(true))
+				Mockito.any(Long.class), Mockito.eq(true))
 		).thenReturn(
 			user
 		);
 
 		Mockito.when(
 			_userLocalService.updatePasswordReset(
-				Mockito.anyLong(), Mockito.eq(false))
+				Mockito.any(Long.class), Mockito.eq(false))
 		).thenReturn(
 			user
 		);
@@ -612,7 +620,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			CompanyLocalService.class);
 
 		Mockito.when(
-			companyLocalService.getCompany(Mockito.anyLong())
+			companyLocalService.getCompany(Mockito.any(Long.class))
 		).thenReturn(
 			company
 		);
@@ -630,7 +638,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			userFieldExpressionHandlerRegistry.getFieldExpressionHandler(
-				Mockito.anyString())
+				Mockito.nullable(String.class))
 		).thenReturn(
 			defaultUserFieldExpressionHandler
 		);
@@ -651,7 +659,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		Digester digester = Mockito.mock(Digester.class);
 
 		Mockito.when(
-			digester.digest(Mockito.anyString())
+			digester.digest(Mockito.nullable(String.class))
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
@@ -683,8 +691,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			samlPeerBindingLocalService.fetchSamlPeerBinding(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString())
+				Mockito.any(Long.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class))
 		).thenReturn(
 			null
 		);
@@ -735,7 +744,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				Mockito.anyLong(), Mockito.anyString())
+				Mockito.any(Long.class), Mockito.nullable(String.class))
 		).thenReturn(
 			samlSpIdpConnection
 		);
@@ -753,7 +762,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Mockito.when(
 			userFieldExpressionResolverRegistry.getUserFieldExpressionResolver(
-				Mockito.anyString())
+				Mockito.nullable(String.class))
 		).thenReturn(
 			testUserFieldExpressionResolver
 		);

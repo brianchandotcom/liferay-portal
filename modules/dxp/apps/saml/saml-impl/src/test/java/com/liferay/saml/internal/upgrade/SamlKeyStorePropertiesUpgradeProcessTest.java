@@ -30,7 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.osgi.service.cm.Configuration;
@@ -71,7 +70,7 @@ public class SamlKeyStorePropertiesUpgradeProcessTest {
 
 		samlKeyStorePropertiesUpgradeProcess.doUpgrade();
 
-		Mockito.verifyZeroInteractions(configurationAdmin);
+		Mockito.verifyNoInteractions(configurationAdmin);
 	}
 
 	@Test
@@ -94,7 +93,7 @@ public class SamlKeyStorePropertiesUpgradeProcessTest {
 
 		samlKeyStorePropertiesUpgradeProcess.doUpgrade();
 
-		Mockito.verifyZeroInteractions(configurationAdmin);
+		Mockito.verifyNoInteractions(configurationAdmin);
 	}
 
 	@Test
@@ -106,7 +105,7 @@ public class SamlKeyStorePropertiesUpgradeProcessTest {
 
 		Mockito.when(
 			configurationAdmin.getConfiguration(
-				Mockito.anyString(), Matchers.eq(StringPool.QUESTION))
+				Mockito.anyString(), Mockito.eq(StringPool.QUESTION))
 		).thenReturn(
 			configuration
 		);
@@ -132,10 +131,10 @@ public class SamlKeyStorePropertiesUpgradeProcessTest {
 			configurationAdmin, Mockito.times(1));
 
 		verifyConfigurationAdmin.getConfiguration(
-			Matchers.eq(
+			Mockito.eq(
 				"com.liferay.saml.runtime.configuration." +
 					"SamlKeyStoreManagerConfiguration"),
-			Matchers.eq(StringPool.QUESTION));
+			Mockito.eq(StringPool.QUESTION));
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -146,7 +145,7 @@ public class SamlKeyStorePropertiesUpgradeProcessTest {
 		Configuration verifyConfiguration = Mockito.verify(
 			configuration, Mockito.times(1));
 
-		verifyConfiguration.update(Matchers.eq(properties));
+		verifyConfiguration.update(Mockito.eq(properties));
 	}
 
 }

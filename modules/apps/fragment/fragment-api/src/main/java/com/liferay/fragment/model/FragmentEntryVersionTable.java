@@ -97,9 +97,8 @@ public class FragmentEntryVersionTable
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<FragmentEntryVersionTable, String> properties =
-		createColumn(
-			"properties", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryVersionTable, Clob> properties =
+		createColumn("properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryVersionTable, Boolean> readOnly =
 		createColumn(
 			"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

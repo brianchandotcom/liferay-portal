@@ -314,7 +314,7 @@ public class FragmentEntryCacheModel
 		icon = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
-		properties = objectInput.readUTF();
+		properties = (String)objectInput.readObject();
 
 		readOnly = objectInput.readBoolean();
 
@@ -419,10 +419,10 @@ public class FragmentEntryCacheModel
 		objectOutput.writeLong(previewFileEntryId);
 
 		if (properties == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(properties);
+			objectOutput.writeObject(properties);
 		}
 
 		objectOutput.writeBoolean(readOnly);

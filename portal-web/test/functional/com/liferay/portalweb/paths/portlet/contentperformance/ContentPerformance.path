@@ -51,6 +51,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOT_GRAPH_INDEX</td>
+	<td>xpath=(//*[local-name()='circle'])[key_index]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOT_GRAPH_TODAY_ZERO</td>
+	<td>//*[local-name()='circle' and contains(@cx,'275') and contains(@cy,'185')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_AUTHOR</td>
 	<td>//div[contains(@class,'text-secondary') and contains (text(),'Authored by ${key_author}')]</td>
 	<td></td>

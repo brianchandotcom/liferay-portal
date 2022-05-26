@@ -1423,12 +1423,23 @@ definition {
 	}
 
 	@description = "LPS-109417: When the graphic shows the publication date, all previous dots will be 0"
-	@ignore = "true"
 	@priority = "5"
 	test PublicationDatePreviousSet0 {
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-139242 PublicationDatePreviousSet0 pending implementation
+		task ("Check that publication date is represented at graph") {
+			AssertVisible(locator1 = "ContentPerformance#DOT_GRAPH_TODAY_ZERO");
+		}
 
+		task ("Check that dates before publication date have no dots/0") {
+			for (var index : list "2,3,4,5,6,7") {
+				AssertElementNotPresent(
+					key_index = "${index}",
+					locator1 = "ContentPerformance#DOT_GRAPH_INDEX");
+			}
+		}
 	}
 
 	@description = "LPS-126044: When the user accesses to the content performance panel of a blog display page, the views graph is shown in the content performance panel"

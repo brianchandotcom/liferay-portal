@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -42,6 +43,11 @@ public class BaseIGViewFileVersionDisplayContext
 			httpServletResponse);
 
 		this.fileVersion = fileVersion;
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return parentDisplayContext.getActionDropdownItems();
 	}
 
 	@Override

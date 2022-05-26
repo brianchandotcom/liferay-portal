@@ -415,7 +415,7 @@ public class LayoutStagedModelDataHandler
 			_exportLinkedURL(portletDataContext, layout, layoutElement);
 		}
 
-		_exportFaviconFileEntry(layout, portletDataContext);
+		_exportFaviconFileEntry(layout, layoutElement, portletDataContext);
 
 		_fixExportTypeSettings(layout);
 
@@ -960,8 +960,33 @@ public class LayoutStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FileEntry.class);
 
-		importedLayout.setFaviconFileEntryId(
-			MapUtil.getLong(fileEntryIds, layout.getFaviconFileEntryId(), 0));
+		long faviconFileEntryId = MapUtil.getLong(
+			fileEntryIds, layout.getFaviconFileEntryId(), 0);
+
+		String faviconFileEntryUuid = layoutElement.attributeValue(
+			"favicon-file-entry-uuid");
+
+		if ((faviconFileEntryId == 0) &&
+			Validator.isNotNull(faviconFileEntryUuid)) {
+
+			long faviconFileEntryGroupId = GetterUtil.getLong(
+				layoutElement.attributeValue("favicon-file-entry-group-id"));
+
+			try {
+				FileEntry faviconFileEntry =
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						faviconFileEntryUuid, faviconFileEntryGroupId);
+
+				faviconFileEntryId = faviconFileEntry.getFileEntryId();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		importedLayout.setFaviconFileEntryId(faviconFileEntryId);
 
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
@@ -1378,7 +1403,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportFaviconFileEntry(
-			Layout layout, PortletDataContext portletDataContext)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (layout.getFaviconFileEntryId() <= 0) {
@@ -1399,9 +1425,19 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
+		if (Validator.isNull(
+				layoutElement.attributeValue("favicon-file-entry-uuid"))) {
+
+			layoutElement.addAttribute(
+				"favicon-file-entry-uuid", faviconFileEntry.getUuid());
+			layoutElement.addAttribute(
+				"favicon-file-entry-group-id",
+				String.valueOf(faviconFileEntry.getGroupId()));
+		}
+
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, layout, faviconFileEntry,
-			PortletDataContext.REFERENCE_TYPE_WEAK);
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 
 	private void _exportLayoutIconImage(

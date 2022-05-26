@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -168,6 +169,14 @@ public class LayoutLookAndFeelDisplayContext {
 				return LanguageUtil.get(
 					_httpServletRequest, "favicon-from-master");
 			}
+		}
+
+		LayoutSet layoutSet = selLayout.getLayoutSet();
+
+		if (layoutSet.getFaviconFileEntryId() > 0) {
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(), "favicon-from-x",
+				_layoutsAdminDisplayContext.getRootNodeName());
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");

@@ -584,25 +584,6 @@ definition {
 			value1 = "${keyDescription}");
 
 		Button.clickSave();
-
-		CommerceNavigator.gotoEntry(entryName = "${keyName}");
-
-		AssertTextEquals(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
-
-		AssertTextEquals(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyName}");
-
-		AssertTextEquals(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyDescription}");
-
-		Click(locator1 = "Button#BACK");
 	}
 
 	macro assertCheckedSpecificToggle {

@@ -53,6 +53,16 @@ else {
 }
 %>
 
-<liferay-ui:menu
-	menu="<%= igViewFileVersionDisplayContext.getMenu() %>"
-/>
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
+		<clay:dropdown-actions
+			dropdownItems="<%= igViewFileVersionDisplayContext.getActionDropdownItems() %>"
+			propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:menu
+			menu="<%= igViewFileVersionDisplayContext.getMenu() %>"
+		/>
+	</c:otherwise>
+</c:choose>

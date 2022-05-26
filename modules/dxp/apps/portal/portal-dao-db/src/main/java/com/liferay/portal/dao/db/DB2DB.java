@@ -403,7 +403,7 @@ public class DB2DB extends BaseDB {
 					String[] template = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @old-table@ to @new-table@;",
+						"rename table @old-table@ to @new-table@;",
 						RENAME_TABLE_TEMPLATE, template);
 				}
 				else if (line.contains(DROP_INDEX)) {

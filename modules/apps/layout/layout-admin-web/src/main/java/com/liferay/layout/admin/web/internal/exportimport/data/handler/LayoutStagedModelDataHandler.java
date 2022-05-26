@@ -956,37 +956,8 @@ public class LayoutStagedModelDataHandler
 
 		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
-		Map<Long, Long> fileEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
-
-		long faviconFileEntryId = MapUtil.getLong(
-			fileEntryIds, layout.getFaviconFileEntryId(), 0);
-
-		String faviconFileEntryUuid = layoutElement.attributeValue(
-			"favicon-file-entry-uuid");
-
-		if ((faviconFileEntryId == 0) &&
-			Validator.isNotNull(faviconFileEntryUuid)) {
-
-			long faviconFileEntryGroupId = GetterUtil.getLong(
-				layoutElement.attributeValue("favicon-file-entry-group-id"));
-
-			try {
-				FileEntry faviconFileEntry =
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
-						faviconFileEntryUuid, faviconFileEntryGroupId);
-
-				faviconFileEntryId = faviconFileEntry.getFileEntryId();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
-		}
-
-		importedLayout.setFaviconFileEntryId(faviconFileEntryId);
+		_importFaviconFileEntry(
+			portletDataContext, layout, layoutElement, importedLayout);
 
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
@@ -2029,6 +2000,43 @@ public class LayoutStagedModelDataHandler
 				Layout.class, layout.getPlid()),
 			portletDataContext.getAssetTagNames(
 				Layout.class, layout.getPlid()));
+	}
+
+	private void _importFaviconFileEntry(
+		PortletDataContext portletDataContext, Layout layout,
+		Element layoutElement, Layout importedLayout) {
+
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		long faviconFileEntryId = MapUtil.getLong(
+			fileEntryIds, layout.getFaviconFileEntryId(), 0);
+
+		String faviconFileEntryUuid = layoutElement.attributeValue(
+			"favicon-file-entry-uuid");
+
+		if ((faviconFileEntryId == 0) &&
+			Validator.isNotNull(faviconFileEntryUuid)) {
+
+			long faviconFileEntryGroupId = GetterUtil.getLong(
+				layoutElement.attributeValue("favicon-file-entry-group-id"));
+
+			try {
+				FileEntry faviconFileEntry =
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						faviconFileEntryUuid, faviconFileEntryGroupId);
+
+				faviconFileEntryId = faviconFileEntry.getFileEntryId();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		importedLayout.setFaviconFileEntryId(faviconFileEntryId);
 	}
 
 	private void _importFriendlyURLEntries(

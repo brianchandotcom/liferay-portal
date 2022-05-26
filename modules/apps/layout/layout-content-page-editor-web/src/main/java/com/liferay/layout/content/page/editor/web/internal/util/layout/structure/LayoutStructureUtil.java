@@ -109,6 +109,10 @@ public class LayoutStructureUtil {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructureItem.getParentItemId());
 
+		if (currentLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
+
 		List<String> collectionStyledLayoutStructureItemIds = new ArrayList<>();
 
 		while (!Objects.equals(

@@ -143,7 +143,7 @@
 </tr>
 <tr>
 	<td>SITE_PATH</td>
-	<td>//*[name()='svg']//*[@class='analytics-sankey-title text-truncated' and @y='0']//*[text()='${key_pageName}']</td>
+	<td>//*[name()='svg']//*[contains(@class, 'analytics-sankey-title') and @y='0']//*[text()='${key_pageName}']</td>
 	<td></td>
 </tr>
 </tbody>

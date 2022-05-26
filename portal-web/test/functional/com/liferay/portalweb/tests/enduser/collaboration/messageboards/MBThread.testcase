@@ -562,20 +562,24 @@ definition {
 	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
 	@priority = "4"
 	test CanPublishThreadWithTag {
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname");
+
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			layoutName = "message-boards-page",
+			selectTag = "true",
 			siteURLKey = "guest",
-			tagName = "Test Tag Name",
+			tagName = "tagname",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewPG(
+			tagName = "tagname",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
 			userName = "Test Test");
-
-		AssertElementPresent(locator1 = "AP#METADATA_TAGS");
 	}
 
 	@priority = "5"

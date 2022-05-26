@@ -40,6 +40,10 @@ public class CommerceOrderPaymentConstants {
 		STATUS_PENDING
 	};
 
+	public static final int[] STATUSES_RETRY_PAYMENT = {
+		STATUS_AUTHORIZED, STATUS_CANCELLED
+	};
+
 	public static String getOrderPaymentLabelStyle(int orderPaymentStatus) {
 		if (orderPaymentStatus == STATUS_AUTHORIZED) {
 			return "info";

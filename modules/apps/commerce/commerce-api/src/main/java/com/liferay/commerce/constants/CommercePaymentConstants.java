@@ -25,6 +25,11 @@ public class CommercePaymentConstants {
 
 	public static final int COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD = 0;
 
+	public static final int[] COMMERCE_PAYMENT_METHOD_TYPES_ONLINE = {
+		COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD,
+		COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT
+	};
+
 	public static final String DEFAULT_PAYMENT_REQUEST_PROVIDER_KEY = "default";
 
 	public static final String SERVLET_PATH = "commerce-payment";

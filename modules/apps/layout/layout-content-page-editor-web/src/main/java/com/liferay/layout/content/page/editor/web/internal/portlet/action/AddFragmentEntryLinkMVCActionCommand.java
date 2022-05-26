@@ -153,9 +153,12 @@ public class AddFragmentEntryLinkMVCActionCommand
 				_portal.getHttpServletRequest(actionRequest), errorMessage));
 	}
 
-	private JSONObject _addFragmentEntryLinkToLayoutDataJSONObject(
-			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
+	private JSONObject _processAddFragmentEntryLink(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
+			actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -194,25 +197,15 @@ public class AddFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
 
-		return jsonObject.put("layoutData", layoutStructure.toJSONObject());
-	}
-
-	private JSONObject _processAddFragmentEntryLink(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
-			actionRequest);
-
-		JSONObject jsonObject = _addFragmentEntryLinkToLayoutDataJSONObject(
-			actionRequest, fragmentEntryLink);
-
 		return jsonObject.put(
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
 				_portal.getHttpServletResponse(actionResponse),
-				StringPool.BLANK));
+				StringPool.BLANK)
+		).put(
+			"layoutData", layoutStructure.toJSONObject()
+		);
 	}
 
 	@Reference

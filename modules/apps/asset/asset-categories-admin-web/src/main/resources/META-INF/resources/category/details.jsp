@@ -44,7 +44,7 @@ else if (parentCategoryId > 0) {
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name="editCategory" var="editCategoryURL">
+<portlet:actionURL name="/asset_categories_admin/edit_category" var="editCategoryURL">
 	<portlet:param name="mvcPath" value="/edit_category.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />

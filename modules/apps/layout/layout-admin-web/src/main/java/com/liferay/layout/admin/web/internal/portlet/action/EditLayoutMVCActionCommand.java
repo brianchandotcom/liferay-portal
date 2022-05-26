@@ -123,6 +123,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			long styleBookEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "styleBookEntryId",
 				layout.getStyleBookEntryId());
+			long faviconFileEntryId = ParamUtil.getLong(
+				uploadPortletRequest, "faviconFileEntryId",
+				layout.getFaviconFileEntryId());
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
@@ -156,7 +159,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
 				layout.getKeywordsMap(), layout.getRobotsMap(), type, hidden,
 				friendlyURLMap, !deleteLogo, iconBytes, masterLayoutPlid,
-				styleBookEntryId, serviceContext);
+				styleBookEntryId, faviconFileEntryId, serviceContext);
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
@@ -178,7 +181,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					type, draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
 					draftLayout.getMasterLayoutPlid(), styleBookEntryId,
-					serviceContext);
+					faviconFileEntryId, serviceContext);
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);

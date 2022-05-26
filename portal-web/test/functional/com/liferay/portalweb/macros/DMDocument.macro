@@ -2232,6 +2232,22 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
 	}
 
+	macro removeOldFriendlyURL {
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+	}
+
 	macro removeTag {
 		if (IsElementPresent(locator1 = "Button#EDIT")) {
 			Click(locator1 = "Button#EDIT");
@@ -2249,6 +2265,29 @@ definition {
 		Click(
 			locator1 = "Icon#REMOVE_TAG",
 			value1 = "${removeTag}");
+	}
+
+	macro restoreOldFriendlyURL {
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+		AssertVisible(
+			key_activeURL = "${restoredURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_ACTIVE_URL");
+
+		AssertVisible(
+			key_oldFriendlyURL = "${activeURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		AssertVisible(
+			inputFieldId = "urlTitle",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${restoredURL}");
 	}
 
 	macro revertPG {
@@ -2687,6 +2726,12 @@ definition {
 		}
 
 		SystemSettings.saveConfiguration();
+	}
+
+	macro viewActiveURL {
+		AssertVisible(
+			key_activeURL = "${activeURL}",
+			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_ACTIVE_URL");
 	}
 
 	macro viewAllPG {

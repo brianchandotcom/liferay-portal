@@ -300,20 +300,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteShipmentItemBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_shipmentItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			shipmentItemResource ->
-				shipmentItemResource.deleteShipmentItemBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
 	public ShipmentItem patchShipmentItem(
 			@GraphQLName("shipmentItemId") Long shipmentItemId,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
@@ -449,9 +435,6 @@ public class Mutation {
 		shipmentItemResource.setContextUser(_user);
 		shipmentItemResource.setGroupLocalService(_groupLocalService);
 		shipmentItemResource.setRoleLocalService(_roleLocalService);
-
-		shipmentItemResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(

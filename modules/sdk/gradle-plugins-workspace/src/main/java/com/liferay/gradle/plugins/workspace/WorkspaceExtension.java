@@ -522,6 +522,7 @@ public class WorkspaceExtension {
 				downloadCommand.setToken(false);
 				downloadCommand.setUserName(null);
 				downloadCommand.setQuiet(true);
+				downloadCommand.setConnectionTimeout(5 * 1000);
 
 				try {
 					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
@@ -647,7 +648,7 @@ public class WorkspaceExtension {
 	private static final String _NODE_PACKAGE_MANAGER = "yarn";
 
 	private static final String _PRODUCT_INFO_URL =
-		"https://releases-cdn.liferay.com/tools/workspace/.product_info.json";
+		"https://releases.liferay.com/tools/workspace/.product_info.json";
 
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;

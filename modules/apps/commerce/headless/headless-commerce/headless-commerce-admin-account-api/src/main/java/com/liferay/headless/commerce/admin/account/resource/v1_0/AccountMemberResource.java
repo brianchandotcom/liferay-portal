@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -89,10 +88,6 @@ public interface AccountMemberResource {
 			Long id, AccountMember accountMember)
 		throws Exception;
 
-	public Response postAccountIdAccountMemberBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public Response deleteAccountIdAccountMember(Long id, Long userId)
 		throws Exception;
 
@@ -139,10 +134,6 @@ public interface AccountMemberResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

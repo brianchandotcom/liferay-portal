@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -73,10 +72,6 @@ public interface AccountAddressResource {
 
 	public Response deleteAccountAddress(Long id) throws Exception;
 
-	public Response deleteAccountAddressBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public AccountAddress getAccountAddress(Long id) throws Exception;
 
 	public AccountAddress patchAccountAddress(
@@ -85,10 +80,6 @@ public interface AccountAddressResource {
 
 	public AccountAddress putAccountAddress(
 			Long id, AccountAddress accountAddress)
-		throws Exception;
-
-	public Response putAccountAddressBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<AccountAddress>
@@ -106,10 +97,6 @@ public interface AccountAddressResource {
 
 	public AccountAddress postAccountIdAccountAddress(
 			Long id, AccountAddress accountAddress)
-		throws Exception;
-
-	public Response postAccountIdAccountAddressBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -148,10 +135,6 @@ public interface AccountAddressResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

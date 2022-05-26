@@ -290,21 +290,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteAccountAddressBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountAddressResource ->
-				accountAddressResource.deleteAccountAddressBatch(
-					id, callbackURL, object));
-	}
-
-	@GraphQLField
 	public AccountAddress patchAccountAddress(
 			@GraphQLName("id") Long id,
 			@GraphQLName("accountAddress") AccountAddress accountAddress)
@@ -328,21 +313,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountAddressResource -> accountAddressResource.putAccountAddress(
 				id, accountAddress));
-	}
-
-	@GraphQLField
-	public Response updateAccountAddressBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountAddressResource ->
-				accountAddressResource.putAccountAddressBatch(
-					id, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -372,21 +342,6 @@ public class Mutation {
 			accountAddressResource ->
 				accountAddressResource.postAccountIdAccountAddress(
 					id, accountAddress));
-	}
-
-	@GraphQLField
-	public Response createAccountIdAccountAddressBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountAddressResource ->
-				accountAddressResource.postAccountIdAccountAddressBatch(
-					id, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -541,21 +496,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createAccountIdAccountMemberBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountMemberResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountMemberResource ->
-				accountMemberResource.postAccountIdAccountMemberBatch(
-					id, callbackURL, object));
-	}
-
-	@GraphQLField
 	public Response deleteAccountIdAccountMember(
 			@GraphQLName("id") Long id, @GraphQLName("userId") Long userId)
 		throws Exception {
@@ -627,22 +567,6 @@ public class Mutation {
 			accountOrganizationResource ->
 				accountOrganizationResource.postAccountIdAccountOrganization(
 					id, accountOrganization));
-	}
-
-	@GraphQLField
-	public Response createAccountIdAccountOrganizationBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountOrganizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountOrganizationResource ->
-				accountOrganizationResource.
-					postAccountIdAccountOrganizationBatch(
-						id, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -742,9 +666,6 @@ public class Mutation {
 		accountAddressResource.setContextUser(_user);
 		accountAddressResource.setGroupLocalService(_groupLocalService);
 		accountAddressResource.setRoleLocalService(_roleLocalService);
-
-		accountAddressResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -778,9 +699,6 @@ public class Mutation {
 		accountMemberResource.setContextUser(_user);
 		accountMemberResource.setGroupLocalService(_groupLocalService);
 		accountMemberResource.setRoleLocalService(_roleLocalService);
-
-		accountMemberResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -797,9 +715,6 @@ public class Mutation {
 		accountOrganizationResource.setContextUser(_user);
 		accountOrganizationResource.setGroupLocalService(_groupLocalService);
 		accountOrganizationResource.setRoleLocalService(_roleLocalService);
-
-		accountOrganizationResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(UserResource userResource)

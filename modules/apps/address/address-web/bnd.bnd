@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Address Web
 Bundle-SymbolicName: com.liferay.address.web
 Bundle-Version: 1.0.0
-Liferay-JS-Submodules-Bridge: address-web
 Web-ContextPath: /address-web

@@ -19,7 +19,7 @@ import {
 	SET_DRAFT_STATUS,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
-	SET_TOKEN_VALUE,
+	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 
@@ -52,14 +52,14 @@ export default function reducer(state, action) {
 			return {...state, previewLayoutType: layoutType};
 		}
 
-		case SET_TOKEN_VALUE: {
-			const {name, value} = action;
+		case SET_TOKEN_VALUES: {
+			const {tokens} = action;
 
 			return {
 				...state,
 				frontendTokensValues: {
 					...state.frontendTokensValues,
-					[name]: value,
+					...tokens,
 				},
 			};
 		}

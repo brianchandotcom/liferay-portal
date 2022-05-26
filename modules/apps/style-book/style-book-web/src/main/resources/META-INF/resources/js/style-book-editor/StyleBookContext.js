@@ -22,7 +22,7 @@ import {
 	SET_DRAFT_STATUS,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
-	SET_TOKEN_VALUE,
+	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
@@ -84,13 +84,13 @@ export function useUndoHistory() {
 	return useContext(StyleBookStoreContext).undoHistory;
 }
 
-function internalSaveTokenValue({dispatch, frontendTokensValues, name, value}) {
+function internalSaveTokenValues({dispatch, frontendTokensValues, tokens}) {
 	dispatch({
 		type: SET_DRAFT_STATUS,
 		value: DRAFT_STATUS.saving,
 	});
 
-	return saveDraft({...frontendTokensValues, [name]: value})
+	return saveDraft({...frontendTokensValues, ...tokens})
 		.then(() => {
 			dispatch({
 				type: SET_DRAFT_STATUS,
@@ -98,9 +98,8 @@ function internalSaveTokenValue({dispatch, frontendTokensValues, name, value}) {
 			});
 
 			dispatch({
-				name,
-				type: SET_TOKEN_VALUE,
-				value,
+				tokens,
+				type: SET_TOKEN_VALUES,
 			});
 		})
 		.catch((error) => {
@@ -124,14 +123,13 @@ export function useSaveTokenValue() {
 	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
-	return (name, value) => {
+	return ({name, value}) => {
 		const previousValue = frontendTokensValues[name];
 
-		internalSaveTokenValue({
+		internalSaveTokenValues({
 			dispatch,
 			frontendTokensValues,
-			name,
-			value,
+			tokens: {[name]: value},
 		}).then(() => {
 			dispatch({
 				name,
@@ -173,11 +171,10 @@ export function useOnUndo() {
 		const [lastUndo, ...undos] = undoHistory;
 		const previousValue = frontendTokensValues[lastUndo.name];
 
-		internalSaveTokenValue({
+		internalSaveTokenValues({
 			dispatch,
 			frontendTokensValues,
-			name: lastUndo.name,
-			value: lastUndo.value,
+			tokens: {[lastUndo.name]: lastUndo.value},
 		}).then(() => {
 			dispatch({
 				type: UPDATE_UNDO_REDO_HISTORY,
@@ -201,11 +198,10 @@ export function useOnRedo() {
 		const [lastRedo, ...redos] = redoHistory;
 		const previousValue = frontendTokensValues[lastRedo.name];
 
-		internalSaveTokenValue({
+		internalSaveTokenValues({
 			dispatch,
 			frontendTokensValues,
-			name: lastRedo.name,
-			value: lastRedo.value,
+			tokens: {[lastRedo.name]: lastRedo.value},
 		}).then(() => {
 			dispatch({
 				redoHistory: redos,

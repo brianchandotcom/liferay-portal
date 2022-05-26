@@ -469,10 +469,8 @@ public class LayoutsAdminDisplayContext {
 			return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
 		}
 
-		FileEntry fileEntry;
-
 		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 				selLayoutSet.getFaviconFileEntryId());
 
 			return fileEntry.getTitle();

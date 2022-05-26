@@ -412,7 +412,7 @@ const ListItem = ({
 						<div
 							className="form-rule-list-invalid-rule"
 							title={Liferay.Language.get(
-								'due-to-missing-fields'
+								'this-rule-is-broken-due-to-missing-fields'
 							)}
 						>
 							<ClayLabelCustom displayType="danger">

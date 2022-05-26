@@ -570,6 +570,8 @@ public class DocumentResourceImpl
 
 		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setCommand(command);
+		serviceContext.setPlid(
+			_portal.getControlPanelPlid(contextCompany.getCompanyId()));
 
 		return serviceContext;
 	}

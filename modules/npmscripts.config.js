@@ -29,6 +29,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/address-web': {
+						'/': '*',
+					},
 					'@liferay/document-library-preview-css': {
 						'/': '*',
 					},

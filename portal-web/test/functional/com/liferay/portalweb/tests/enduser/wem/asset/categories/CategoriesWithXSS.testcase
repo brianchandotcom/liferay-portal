@@ -121,7 +121,7 @@ definition {
 		task ("Select the new category") {
 			Click(locator1 = "Button#SELECT_CATEGORIES");
 
-			AssetCategorization.selectCategory(categoryName = '''><img src=x onerror=alert()>''');
+			AssetCategorization.selectCategories(categoryNameList = '''><img src=x onerror=alert()>''');
 		}
 
 		task ("View the selected category in Account Settings") {

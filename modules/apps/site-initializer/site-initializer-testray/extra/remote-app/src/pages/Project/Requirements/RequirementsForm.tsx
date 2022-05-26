@@ -15,6 +15,7 @@
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
@@ -28,6 +29,7 @@ import {
 	TestrayRequirement,
 	getComponents,
 } from '../../../graphql/queries';
+import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
@@ -61,6 +63,8 @@ const RequirementsForm: React.FC = () => {
 		form: {onClose, onSubmit},
 	} = useFormActions();
 	const {projectId} = useParams();
+
+	const {setTabs} = useHeader({shouldUpdate: false});
 
 	const context: {requirement?: TestrayRequirement} = useOutletContext();
 
@@ -103,6 +107,14 @@ const RequirementsForm: React.FC = () => {
 		register,
 		required: true,
 	};
+
+	useEffect(() => {
+		if (!context.requirement) {
+			setTimeout(() => {
+				setTabs([]);
+			}, 10);
+		}
+	}, [context.requirement, setTabs]);
 
 	return (
 		<Container className="container" title="">

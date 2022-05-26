@@ -70,7 +70,7 @@ const CaseForm = () => {
 		testrayProject: TestrayProject;
 	} = useOutletContext();
 
-	const {setHeading, setTabs} = useHeader({
+	const {setTabs} = useHeader({
 		shouldUpdate: false,
 	});
 
@@ -88,22 +88,10 @@ const CaseForm = () => {
 	useEffect(() => {
 		if (testrayProject) {
 			setTimeout(() => {
-				setHeading([
-					{
-						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.id}/routines`,
-						title: testrayProject.name,
-					},
-					{
-						category: i18n.translate('project').toUpperCase(),
-						title: i18n.translate('add-case'),
-					},
-				]);
-
 				setTabs([]);
 			}, 10);
 		}
-	}, [setHeading, setTabs, testrayProject]);
+	}, [setTabs, testrayProject]);
 
 	const {
 		form: {onClose, onSubmit},

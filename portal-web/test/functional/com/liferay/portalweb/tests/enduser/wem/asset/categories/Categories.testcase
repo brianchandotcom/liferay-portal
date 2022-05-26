@@ -710,7 +710,7 @@ definition {
 			Category.moveViaEditCP(
 				categoryName = "Category Name",
 				vocabularyName = "Vocabulary Name",
-				vocabularyName2 = "Vocabulary Name 2");
+				vocabularyName2 = "Vocabulary Name 2 (Test Site Name)");
 		}
 
 		task ("View the category is moved to another vocabulary") {

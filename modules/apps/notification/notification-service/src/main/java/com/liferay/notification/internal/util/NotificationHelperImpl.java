@@ -90,7 +90,11 @@ public class NotificationHelperImpl implements NotificationHelper {
 			_formatString(notificationTemplate.getBody(siteDefaultLocale));
 		}
 
-		String to = _formatString(notificationTemplate.getTo());
+		String to = _formatString(notificationTemplate.getTo(userLocale));
+
+		if (Validator.isNull(to)) {
+			_formatString(notificationTemplate.getBody(siteDefaultLocale));
+		}
 
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
@@ -120,13 +124,13 @@ public class NotificationHelperImpl implements NotificationHelper {
 				else {
 					_addNotificationQueueEntry(
 						userId, body, fromName, notificationTemplate,
-						notificationType, object, subject);
+						notificationType, object, toUser, subject);
 				}
 			}
 			else {
 				_addNotificationQueueEntry(
 					userId, body, fromName, notificationTemplate,
-					notificationType, object, subject);
+					notificationType, object, toUser, subject);
 			}
 		}
 	}
@@ -134,7 +138,8 @@ public class NotificationHelperImpl implements NotificationHelper {
 	private void _addNotificationQueueEntry(
 			long userId, String body, String fromName,
 			NotificationTemplate notificationTemplate,
-			NotificationType notificationType, Object object, String subject)
+			NotificationType notificationType, Object object, User toUser,
+			String subject)
 		throws PortalException {
 
 		_notificationQueueEntryLocalService.addNotificationQueueEntry(
@@ -142,7 +147,7 @@ public class NotificationHelperImpl implements NotificationHelper {
 			notificationTemplate.getBcc(), body, notificationTemplate.getCc(),
 			notificationType.getClassName(object),
 			notificationType.getClassPK(object), notificationTemplate.getFrom(),
-			fromName, 0, subject, notificationTemplate.getTo(),
+			fromName, 0, subject, toUser.getEmailAddress(),
 			notificationTemplate.getName());
 	}
 

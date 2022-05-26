@@ -95,6 +95,11 @@ public class ObjectServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"3.7.0", "3.8.0",
 			new ObjectEntryExternalReferenceCodeUpgradeProcess());
+
+		registry.register(
+			"3.8.0", "3.9.0",
+			new com.liferay.object.internal.upgrade.v3_9_0.
+				ObjectViewColumnUpgradeProcess());
 	}
 
 }

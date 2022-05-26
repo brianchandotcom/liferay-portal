@@ -956,6 +956,13 @@ public class LayoutStagedModelDataHandler
 
 		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		importedLayout.setFaviconFileEntryId(
+			MapUtil.getLong(fileEntryIds, layout.getFaviconFileEntryId(), 0));
+
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
 

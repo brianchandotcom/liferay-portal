@@ -23,6 +23,7 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRelTable;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
@@ -31,6 +32,7 @@ import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPer
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -115,9 +117,15 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
-					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					AssetListEntryAssetEntryRelTable.INSTANCE
+				).from(
+					AssetListEntryAssetEntryRelTable.INSTANCE
+				).where(
+					AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.
+						eq(assetListEntryId)
+				));
 
 		for (long assetEntryId : assetEntryIds) {
 			if (ListUtil.exists(

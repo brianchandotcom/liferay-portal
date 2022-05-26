@@ -20,7 +20,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -34,15 +33,15 @@ public class PortletPreferencesSettingsTest {
 
 		Mockito.when(
 			_portletPreferences.getValue(
-				Matchers.eq(_PORTLET_PREFERENCES_SINGLE_KEY),
-				Matchers.anyString())
+				Mockito.eq(_PORTLET_PREFERENCES_SINGLE_KEY),
+				Mockito.nullable(String.class))
 		).thenReturn(
 			_PORTLET_PREFERENCES_SINGLE_VALUE
 		);
 
 		Mockito.when(
 			_portletPreferences.getValues(
-				Matchers.eq(_PORTLET_PREFERENCES_MULTIPLE_KEY), Matchers.any())
+				Mockito.eq(_PORTLET_PREFERENCES_MULTIPLE_KEY), Mockito.any())
 		).thenReturn(
 			_PORTLET_PREFERENCES_MULTIPLE_VALUES
 		);

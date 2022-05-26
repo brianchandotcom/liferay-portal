@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -154,7 +153,7 @@ public class LocaleUtilTest {
 		languageUtil.setLanguage(language);
 
 		Mockito.when(
-			language.isBetaLocale(Matchers.anyObject())
+			language.isBetaLocale(Mockito.any())
 		).thenReturn(
 			false
 		);

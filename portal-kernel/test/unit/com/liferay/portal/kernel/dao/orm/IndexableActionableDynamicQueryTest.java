@@ -25,9 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -39,8 +37,6 @@ public class IndexableActionableDynamicQueryTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
@@ -90,22 +86,15 @@ public class IndexableActionableDynamicQueryTest {
 	}
 
 	protected void verifyNoDocumentsUpdated() {
-		Mockito.verifyZeroInteractions(indexWriterHelper);
+		Mockito.verifyNoInteractions(indexWriterHelper);
 	}
 
-	@Mock
-	protected Document document1;
-
-	@Mock
-	protected Document document2;
-
-	@Mock
-	protected Document document3;
-
+	protected Document document1 = Mockito.mock(Document.class);
+	protected Document document2 = Mockito.mock(Document.class);
+	protected Document document3 = Mockito.mock(Document.class);
 	protected IndexableActionableDynamicQuery indexableActionableDynamicQuery;
-
-	@Mock
-	protected IndexWriterHelper indexWriterHelper;
+	protected IndexWriterHelper indexWriterHelper = Mockito.mock(
+		IndexWriterHelper.class);
 
 	private ServiceRegistration<?> _serviceRegistration;
 

@@ -25,7 +25,6 @@ import java.util.Collections;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -44,13 +43,13 @@ public class PortletCategoryComparatorTest {
 		languageUtil.setLanguage(language);
 
 		Mockito.when(
-			language.get(Matchers.eq(LocaleUtil.SPAIN), Matchers.eq("area"))
+			language.get(Mockito.eq(LocaleUtil.SPAIN), Mockito.eq("area"))
 		).thenReturn(
 			"Área"
 		);
 
 		Mockito.when(
-			language.get(Matchers.eq(LocaleUtil.SPAIN), Matchers.eq("zone"))
+			language.get(Mockito.eq(LocaleUtil.SPAIN), Mockito.eq("zone"))
 		).thenReturn(
 			"Zona"
 		);

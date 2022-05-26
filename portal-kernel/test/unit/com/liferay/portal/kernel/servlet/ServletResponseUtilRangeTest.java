@@ -41,14 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.Answer;
 
 import org.osgi.framework.BundleContext;
@@ -81,7 +77,7 @@ public class ServletResponseUtilRangeTest {
 		);
 
 		Mockito.when(
-			file.delete(Matchers.any(File.class))
+			file.delete(Mockito.any(File.class))
 		).thenAnswer(
 			(Answer<Boolean>)invocation -> {
 				Object[] args = invocation.getArguments();
@@ -112,11 +108,6 @@ public class ServletResponseUtilRangeTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_serviceRegistration.unregister();
-	}
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -332,7 +323,7 @@ public class ServletResponseUtilRangeTest {
 
 	private static ServiceRegistration<MimeTypes> _serviceRegistration;
 
-	@Mock
-	private HttpServletRequest _httpServletRequest;
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
 
 }

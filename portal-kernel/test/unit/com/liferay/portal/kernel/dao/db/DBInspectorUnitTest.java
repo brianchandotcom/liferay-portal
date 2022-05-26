@@ -23,16 +23,12 @@ import java.sql.ResultSet;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
-@RunWith(MockitoJUnitRunner.class)
 public class DBInspectorUnitTest {
 
 	@Test
@@ -120,7 +116,7 @@ public class DBInspectorUnitTest {
 		);
 
 		Mockito.when(
-			_connection.prepareStatement(Mockito.anyString())
+			_connection.prepareStatement(Mockito.nullable(String.class))
 		).thenReturn(
 			_preparedStatement
 		);
@@ -133,7 +129,7 @@ public class DBInspectorUnitTest {
 
 		Mockito.when(
 			_databaseMetaData.getColumns(
-				Mockito.anyString(), Mockito.anyString(),
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
 				Mockito.eq(StringUtil.toLowerCase(tableName)),
 				Mockito.eq(columnName))
 		).thenReturn(
@@ -163,16 +159,11 @@ public class DBInspectorUnitTest {
 
 	private static final String _TABLE_NAME = "table_name";
 
-	@Mock
-	private Connection _connection;
-
-	@Mock
-	private DatabaseMetaData _databaseMetaData;
-
-	@Mock
-	private PreparedStatement _preparedStatement;
-
-	@Mock
-	private ResultSet _resultSet;
+	private final Connection _connection = Mockito.mock(Connection.class);
+	private final DatabaseMetaData _databaseMetaData = Mockito.mock(
+		DatabaseMetaData.class);
+	private final PreparedStatement _preparedStatement = Mockito.mock(
+		PreparedStatement.class);
+	private final ResultSet _resultSet = Mockito.mock(ResultSet.class);
 
 }

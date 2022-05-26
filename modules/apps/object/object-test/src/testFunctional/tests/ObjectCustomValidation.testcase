@@ -209,12 +209,30 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUserSeeBasicInfoTab {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153553",
+			objectName = "CustomObject153553",
+			pluralLabelName = "Custom Objects 153553");
 
-		// TODO LPS-153553 CanUserSeeBasicInfoTab pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153553");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.viewActiveTabOnCustomValidation(activeTab = "Basic Info");
+
+		for (var cardsName : list "Basic Info,Trigger Event") {
+			ObjectCustomValidation.viewCardsOnCustomValidation(cardName = "${cardsName}");
+		}
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Conditions tab"
@@ -227,7 +245,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153554	");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153554");
 
 		ObjectAdmin.goToValidationsTab();
 

@@ -1511,6 +1511,12 @@ public class ServicePreAction extends Action {
 		themeDisplay.setUnfilteredLayouts(unfilteredLayouts);
 		themeDisplay.setUser(user);
 
+		if ((layout != null) &&
+			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153902"))) {
+
+			themeDisplay.setFavicon(layout.getFavicon());
+		}
+
 		// Icons
 
 		boolean showControlPanelIcon = false;

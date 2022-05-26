@@ -28,12 +28,22 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -133,7 +143,8 @@ public class FragmentEntryLinkManager {
 			DefaultFragmentRendererContext defaultFragmentRendererContext,
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String portletId)
+			HttpServletResponse httpServletResponse,
+			LayoutStructure layoutStructure, String portletId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -153,6 +164,8 @@ public class FragmentEntryLinkManager {
 
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
+			defaultFragmentRendererContext.setInfoForm(
+				_getInfoForm(fragmentEntryLink, layoutStructure));
 
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
@@ -312,13 +325,14 @@ public class FragmentEntryLinkManager {
 	public JSONObject getFragmentEntryLinkJSONObject(
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String portletId)
+			HttpServletResponse httpServletResponse,
+			LayoutStructure layoutStructure, String portletId)
 		throws PortalException {
 
 		return getFragmentEntryLinkJSONObject(
 			new DefaultFragmentRendererContext(fragmentEntryLink),
 			fragmentEntryLink, httpServletRequest, httpServletResponse,
-			portletId);
+			layoutStructure, portletId);
 	}
 
 	private FragmentEntry _getFragmentEntry(
@@ -386,6 +400,53 @@ public class FragmentEntryLinkManager {
 		return jsonArray;
 	}
 
+	private InfoForm _getInfoForm(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		if (formStyledLayoutStructureItem == null) {
+			return null;
+		}
+
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				_portal.getClassName(
+					formStyledLayoutStructureItem.getClassNameId()));
+
+		if (infoItemFormProvider != null) {
+			try {
+				return infoItemFormProvider.getInfoForm(
+					String.valueOf(
+						formStyledLayoutStructureItem.getClassTypeId()));
+			}
+			catch (NoSuchFormVariationException noSuchFormVariationException) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	private InfoForm _getInfoForm(
+		FragmentEntryLink fragmentEntryLink, LayoutStructure layoutStructure) {
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+		LayoutStructureItem layoutStructureItem =
+			LayoutStructureItemUtil.getAncestor(
+				fragmentStyledLayoutStructureItem.getItemId(),
+				LayoutDataItemTypeConstants.TYPE_FORM, layoutStructure);
+
+		if (!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
+			return null;
+		}
+
+		return _getInfoForm((FormStyledLayoutStructureItem)layoutStructureItem);
+	}
+
 	private String _getPortletId(String content) {
 		Document document = Jsoup.parse(content);
 
@@ -430,6 +491,9 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

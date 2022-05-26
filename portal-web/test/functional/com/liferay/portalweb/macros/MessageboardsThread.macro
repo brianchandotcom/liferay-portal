@@ -165,7 +165,14 @@ definition {
 		if (isSet(tagName)) {
 			Panel.expandPanel(panel = "Categorization");
 
-			AssetCategorization.addTag(tagName = "${tagName}");
+			if (isSet(selectTag)) {
+				AssetCategorization.selectTag(
+					skipSelectFrame = "true",
+					tagNameList = "${tagName}");
+			}
+			else {
+				AssetCategorization.addTag(tagName = "${tagName}");
+			}
 		}
 
 		if (isSet(priority)) {
@@ -1606,6 +1613,12 @@ definition {
 				AssertTextEquals(
 					locator1 = "MessageBoardsThread#THREAD_BODY",
 					value1 = "${threadBody}");
+			}
+
+			if (isSet(tagName)) {
+				AssertVisible(
+					key_tagName = "${tagName}",
+					locator1 = "MessageBoardsThread#THREAD_TAG");
 			}
 
 			if (isSet(threadBodyImageName)) {

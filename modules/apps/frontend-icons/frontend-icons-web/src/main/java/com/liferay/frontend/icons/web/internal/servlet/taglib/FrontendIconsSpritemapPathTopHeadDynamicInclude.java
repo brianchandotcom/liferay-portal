@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bryce Osterhaus
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
+public class FrontendIconsSpritemapPathTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(

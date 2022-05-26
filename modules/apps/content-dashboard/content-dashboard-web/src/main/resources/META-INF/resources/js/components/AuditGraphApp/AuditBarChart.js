@@ -21,6 +21,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {
 	Bar,
 	BarChart,
+	Brush,
 	CartesianGrid,
 	Cell,
 	Legend,
@@ -222,6 +223,15 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 		(i) => checkboxes[i] === false
 	);
 
+	const mediumGraph =
+		vocabularies[0].categories &&
+		vocabularies.length * vocabularies[0].categories.length > 100;
+
+	const bigGraph = mediumGraph && vocabularies[0].categories.length > 30;
+
+	const brushIndex =
+		vocabularies.length < 10 ? vocabularies.length - 1 : bigGraph ? 4 : 9;
+
 	const [tooltip, setTooltip] = useState(null);
 
 	const onBarClick = (assetCategoryIds) => {
@@ -273,7 +283,10 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 				/>
 			)}
 			<div className="mb-3 overflow-auto">
-				<ResponsiveContainer height={BAR_CHART.height} width="100%">
+				<ResponsiveContainer
+					height={bigGraph ? BAR_CHART.bigHeight : BAR_CHART.height}
+					width="100%"
+				>
 					<BarChart data={data}>
 						{showLegend && (
 							<Legend
@@ -409,6 +422,15 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 									/>
 								))}
 							</Bar>
+						)}
+
+						{mediumGraph && (
+							<Brush
+								dataKey="name"
+								endIndex={brushIndex}
+								height={BAR_CHART.brushHeight}
+								stroke={BAR_CHART.brushStroke}
+							/>
 						)}
 					</BarChart>
 				</ResponsiveContainer>

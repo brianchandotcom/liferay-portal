@@ -5,6 +5,6 @@ Import-Package:\
 	com.liferay.fragment.util.comparator,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.8.0
+Liferay-Require-SchemaVersion: 2.9.0
 Liferay-Service: true
 -dsannotations-options: inherit

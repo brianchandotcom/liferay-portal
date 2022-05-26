@@ -96,6 +96,28 @@ public class JSONUtil {
 			JSONUtil::_createJSONArray, JSONArray::put, JSONUtil::concat);
 	}
 
+	public static JSONObject createJSONObject(String json) {
+		json = json.trim();
+
+		if ((json.length() < 2) ||
+			(json.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
+			(json.charAt(json.length() - 1) != CharPool.CLOSE_CURLY_BRACE)) {
+
+			return null;
+		}
+
+		try {
+			return _createJSONObject(json);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
+	}
+
 	public static boolean equals(JSONArray jsonArray1, JSONArray jsonArray2) {
 		return Objects.equals(jsonArray1.toString(), jsonArray2.toString());
 	}

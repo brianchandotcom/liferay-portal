@@ -18,6 +18,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,8 +29,10 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -49,10 +52,12 @@ public class ViewObjectDefinitionsDisplayContext {
 	public ViewObjectDefinitionsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectEntryManagerServicesTracker objectEntryManagerServicesTracker) {
 
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
+		_objectEntryManagerServicesTracker = objectEntryManagerServicesTracker;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -120,6 +125,19 @@ public class ViewObjectDefinitionsDisplayContext {
 				"get", "permissions", "modal-permissions"));
 	}
 
+	public List<String> getObjectEntryManagerStorageTypes() {
+		List<String> objectEntryManagerStorageTypes = TransformUtil.transform(
+			_objectEntryManagerServicesTracker.
+				getObjectEntryManagerStorageTypes(),
+			objectEntryManagerStorageType -> LanguageUtil.get(
+				_objectRequestHelper.getLocale(),
+				objectEntryManagerStorageType));
+
+		Collections.sort(objectEntryManagerStorageTypes);
+
+		return objectEntryManagerStorageTypes;
+	}
+
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
 			PortletURLUtil.getCurrent(
@@ -169,6 +187,8 @@ public class ViewObjectDefinitionsDisplayContext {
 
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+	private final ObjectEntryManagerServicesTracker
+		_objectEntryManagerServicesTracker;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

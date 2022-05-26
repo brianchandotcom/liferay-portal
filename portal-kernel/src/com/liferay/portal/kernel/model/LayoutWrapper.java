@@ -75,8 +75,8 @@ public class LayoutWrapper
 		attributes.put("styleBookEntryId", getStyleBookEntryId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
-		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
 		attributes.put("faviconFileEntryId", getFaviconFileEntryId());
+		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
@@ -286,16 +286,16 @@ public class LayoutWrapper
 			setPriority(priority);
 		}
 
-		Long masterLayoutPlid = (Long)attributes.get("masterLayoutPlid");
-
-		if (masterLayoutPlid != null) {
-			setMasterLayoutPlid(masterLayoutPlid);
-		}
-
 		Long faviconFileEntryId = (Long)attributes.get("faviconFileEntryId");
 
 		if (faviconFileEntryId != null) {
 			setFaviconFileEntryId(faviconFileEntryId);
+		}
+
+		Long masterLayoutPlid = (Long)attributes.get("masterLayoutPlid");
+
+		if (masterLayoutPlid != null) {
+			setMasterLayoutPlid(masterLayoutPlid);
 		}
 
 		String layoutPrototypeUuid = (String)attributes.get(

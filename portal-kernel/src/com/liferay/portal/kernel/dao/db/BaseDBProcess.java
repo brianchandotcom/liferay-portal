@@ -241,8 +241,8 @@ public abstract class BaseDBProcess implements DBProcess {
 		if (!hasColumn(tableName, columnName)) {
 			throw new SQLException(
 				StringBundler.concat(
-					"Column ", columnName, " does not exist in table ",
-					tableName));
+					"Column ", tableName, StringPool.PERIOD, columnName,
+					" does not exist"));
 		}
 
 		if (!hasColumnType(tableName, columnName, newColumnType)) {
@@ -261,8 +261,9 @@ public abstract class BaseDBProcess implements DBProcess {
 			if (!hasColumnType(tableName, columnName, columnType)) {
 				throw new SQLException(
 					StringBundler.concat(
-						"Column ", columnName, " already exists in table ",
-						tableName, " with different type than ", columnType));
+						"Column ", tableName, StringPool.PERIOD, columnName,
+						" already exists with different type than ",
+						columnType));
 			}
 
 			return;

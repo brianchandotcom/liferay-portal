@@ -1018,20 +1018,6 @@ public interface LayoutModel
 	public void setPriority(int priority);
 
 	/**
-	 * Returns the master layout plid of this layout.
-	 *
-	 * @return the master layout plid of this layout
-	 */
-	public long getMasterLayoutPlid();
-
-	/**
-	 * Sets the master layout plid of this layout.
-	 *
-	 * @param masterLayoutPlid the master layout plid of this layout
-	 */
-	public void setMasterLayoutPlid(long masterLayoutPlid);
-
-	/**
 	 * Returns the favicon file entry ID of this layout.
 	 *
 	 * @return the favicon file entry ID of this layout
@@ -1044,6 +1030,20 @@ public interface LayoutModel
 	 * @param faviconFileEntryId the favicon file entry ID of this layout
 	 */
 	public void setFaviconFileEntryId(long faviconFileEntryId);
+
+	/**
+	 * Returns the master layout plid of this layout.
+	 *
+	 * @return the master layout plid of this layout
+	 */
+	public long getMasterLayoutPlid();
+
+	/**
+	 * Sets the master layout plid of this layout.
+	 *
+	 * @param masterLayoutPlid the master layout plid of this layout
+	 */
+	public void setMasterLayoutPlid(long masterLayoutPlid);
 
 	/**
 	 * Returns the layout prototype uuid of this layout.

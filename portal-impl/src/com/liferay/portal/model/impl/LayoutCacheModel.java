@@ -142,10 +142,10 @@ public class LayoutCacheModel
 		sb.append(css);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", masterLayoutPlid=");
-		sb.append(masterLayoutPlid);
 		sb.append(", faviconFileEntryId=");
 		sb.append(faviconFileEntryId);
+		sb.append(", masterLayoutPlid=");
+		sb.append(masterLayoutPlid);
 		sb.append(", layoutPrototypeUuid=");
 		sb.append(layoutPrototypeUuid);
 		sb.append(", layoutPrototypeLinkEnabled=");
@@ -301,8 +301,8 @@ public class LayoutCacheModel
 		}
 
 		layoutImpl.setPriority(priority);
-		layoutImpl.setMasterLayoutPlid(masterLayoutPlid);
 		layoutImpl.setFaviconFileEntryId(faviconFileEntryId);
+		layoutImpl.setMasterLayoutPlid(masterLayoutPlid);
 
 		if (layoutPrototypeUuid == null) {
 			layoutImpl.setLayoutPrototypeUuid("");
@@ -409,9 +409,9 @@ public class LayoutCacheModel
 
 		priority = objectInput.readInt();
 
-		masterLayoutPlid = objectInput.readLong();
-
 		faviconFileEntryId = objectInput.readLong();
+
+		masterLayoutPlid = objectInput.readLong();
 		layoutPrototypeUuid = objectInput.readUTF();
 
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
@@ -556,9 +556,9 @@ public class LayoutCacheModel
 
 		objectOutput.writeInt(priority);
 
-		objectOutput.writeLong(masterLayoutPlid);
-
 		objectOutput.writeLong(faviconFileEntryId);
+
+		objectOutput.writeLong(masterLayoutPlid);
 
 		if (layoutPrototypeUuid == null) {
 			objectOutput.writeUTF("");
@@ -625,8 +625,8 @@ public class LayoutCacheModel
 	public long styleBookEntryId;
 	public String css;
 	public int priority;
-	public long masterLayoutPlid;
 	public long faviconFileEntryId;
+	public long masterLayoutPlid;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;

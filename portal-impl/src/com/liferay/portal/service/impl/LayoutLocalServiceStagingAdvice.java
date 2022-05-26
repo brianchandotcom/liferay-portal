@@ -154,8 +154,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
-			byte[] iconBytes, long masterLayoutPlid, long styleBookEntryId,
-			long faviconFileEntryId, ServiceContext serviceContext)
+			byte[] iconBytes, long styleBookEntryId, long faviconFileEntryId,
+			long masterLayoutPlid, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -193,8 +193,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			return layoutLocalService.updateLayout(
 				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
 				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
-				friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
-				styleBookEntryId, faviconFileEntryId, serviceContext);
+				friendlyURLMap, hasIconImage, iconBytes, styleBookEntryId,
+				faviconFileEntryId, masterLayoutPlid, serviceContext);
 		}
 
 		layoutLocalService.updateAsset(
@@ -757,9 +757,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					serviceContext = (ServiceContext)arguments[15];
 				}
 				else if (arguments.length == 18) {
-					masterLayoutPlid = (Long)arguments[14];
-					styleBookEntryId = (Long)arguments[15];
-					faviconFileEntryId = (Long)arguments[16];
+					styleBookEntryId = (Long)arguments[14];
+					faviconFileEntryId = (Long)arguments[15];
+					masterLayoutPlid = (Long)arguments[16];
 
 					serviceContext = (ServiceContext)arguments[17];
 				}
@@ -774,7 +774,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					(Map<Locale, String>)arguments[8], (String)arguments[9],
 					(Boolean)arguments[10], friendlyURLMap,
 					(Boolean)arguments[12], (byte[])arguments[13],
-					masterLayoutPlid, styleBookEntryId, faviconFileEntryId,
+					styleBookEntryId, faviconFileEntryId, masterLayoutPlid,
 					serviceContext);
 			}
 			else {

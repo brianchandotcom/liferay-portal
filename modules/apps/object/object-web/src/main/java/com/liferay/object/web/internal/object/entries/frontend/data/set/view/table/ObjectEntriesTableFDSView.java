@@ -35,12 +35,15 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -97,14 +100,14 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 				String label = objectViewColumn.getLabel(locale, true);
 
-				if (label.isEmpty()) {
+				if (label.isEmpty() && (objectField != null)) {
 					label = objectField.getLabel(locale, true);
 				}
 
 				if (objectField == null) {
 					_addNonbjectField(
 						fdsTableSchemaBuilder, label,
-						objectViewColumn.getObjectFieldName());
+						objectViewColumn.getObjectFieldName(), locale);
 				}
 				else {
 					_addObjectField(fdsTableSchemaBuilder, label, objectField);
@@ -118,7 +121,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	private void _addAllObjectFields(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale) {
 
-		_addNonbjectField(fdsTableSchemaBuilder, "id", "id");
+		_addNonbjectField(fdsTableSchemaBuilder, "id", "id", locale);
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -129,8 +132,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
 				objectField));
 
-		_addNonbjectField(fdsTableSchemaBuilder, "status", "status");
-		_addNonbjectField(fdsTableSchemaBuilder, "author", "creator");
+		_addNonbjectField(fdsTableSchemaBuilder, "status", "status", locale);
+		_addNonbjectField(fdsTableSchemaBuilder, "author", "creator", locale);
 	}
 
 	private void _addFDSTableSchemaField(
@@ -194,7 +197,11 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 	private void _addNonbjectField(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldLabel,
-		String fieldName) {
+		String fieldName, Locale locale) {
+
+		if (Validator.isNull(fieldLabel)) {
+			fieldLabel = LanguageUtil.get(locale, _labelKeys.get(fieldName));
+		}
 
 		if (Objects.equals(fieldName, "creator")) {
 			_addFDSTableSchemaField(
@@ -283,6 +290,17 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	}
 
 	private final FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+	private final Map<String, String> _labelKeys = HashMapBuilder.put(
+		"creator", "creator"
+	).put(
+		"dateCreated", "create-date"
+	).put(
+		"dateModified", "modified-date"
+	).put(
+		"id", "id"
+	).put(
+		"status", "status"
+	).build();
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

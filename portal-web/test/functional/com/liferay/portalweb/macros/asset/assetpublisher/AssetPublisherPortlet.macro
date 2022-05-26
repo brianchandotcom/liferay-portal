@@ -253,7 +253,9 @@ definition {
 
 		AssetCategorization.gotoSelectCategory();
 
-		Portlet.selectTreeNode(nodeName = "${categoryName}");
+		Check.checkNotVisible(
+			key_nodeName = "${categoryName}",
+			locator1 = "Treeview#NODE_CHECKBOX");
 
 		SelectFrameTop();
 

@@ -29,6 +29,7 @@ public class HTMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectEmptyLines() throws Exception {
 		test("IncorrectEmptyLines.testhtml");
+		test("IncorrectEmptyLines.testpath");
 	}
 
 }

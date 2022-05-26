@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
@@ -178,21 +177,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteWarehouseItemBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_warehouseItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			warehouseItemResource ->
-				warehouseItemResource.deleteWarehouseItemBatch(
-					id, callbackURL, object));
-	}
-
-	@GraphQLField
 	public Response patchWarehouseItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
@@ -283,9 +267,6 @@ public class Mutation {
 		warehouseResource.setContextUser(_user);
 		warehouseResource.setGroupLocalService(_groupLocalService);
 		warehouseResource.setRoleLocalService(_roleLocalService);
-
-		warehouseResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -301,9 +282,6 @@ public class Mutation {
 		warehouseItemResource.setContextUser(_user);
 		warehouseItemResource.setGroupLocalService(_groupLocalService);
 		warehouseItemResource.setRoleLocalService(_roleLocalService);
-
-		warehouseItemResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<WarehouseResource>
@@ -320,7 +298,5 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }

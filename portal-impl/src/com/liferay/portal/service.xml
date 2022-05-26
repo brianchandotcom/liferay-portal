@@ -611,6 +611,7 @@
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
 		<column name="masterLayoutPlid" type="long" />
+		<column name="faviconFileEntryId" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
@@ -991,6 +992,7 @@
 		<column name="logoId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
+		<column name="faviconFileEntryId" type="long" />
 		<column name="css" type="String" />
 		<column name="settings" type="String" />
 		<column name="layoutSetPrototypeUuid" type="String" />

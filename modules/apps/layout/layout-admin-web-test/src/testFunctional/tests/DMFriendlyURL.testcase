@@ -36,30 +36,139 @@ definition {
 	}
 
 	@description = "This ensures that an image cannot be previewed when using a removed friendlyURL."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotPreviewImageWithRemovedFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-154399 CannotPreviewImageWithRemovedFriendlyURL pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMNavigator.gotoFriendlyURLHistory();
+
+		DMDocument.removeOldFriendlyURL(oldFriendlyURL = "document_1");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1_edit");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1_edit",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This ensures that an image can be previewed after restoring the friendlyURL."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPreviewImageAfterRestoringFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-154399 CanPreviewImageAfterRestoringFriendlyURL pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMNavigator.gotoFriendlyURLHistory();
+
+		DMDocument.restoreOldFriendlyURL(
+			activeURL = "document_1_edit",
+			oldFriendlyURL = "document_1",
+			restoredURL = "document_1");
+
+		PortletEntry.publish();
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1_edit");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1_edit",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This ensures that an image can be previewed after updating the friendlyURL."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPreviewImageAfterUpdatingFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-154399 CanPreviewImageAfterUpdatingFriendlyURL pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMNavigator.gotoFriendlyURLHistory();
+
+		DMDocument.viewActiveURL(activeURL = "document_1_edit");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1_edit");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_1_edit",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This ensures that an image in the WC content field can be rendered correctly after moving it to a folder."

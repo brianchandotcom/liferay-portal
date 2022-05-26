@@ -35,6 +35,7 @@ import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -84,6 +86,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -462,6 +465,27 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _getDraftLayoutURL(layout);
+	}
+
+	public String getFaviconImage() {
+		LayoutSet layoutSet = getSelLayoutSet();
+
+		if (layoutSet.getFaviconFileEntryId() > 0) {
+			String faviconImage = _getFileEntryImage(
+				layoutSet.getFaviconFileEntryId());
+
+			if (faviconImage != null) {
+				return faviconImage;
+			}
+		}
+
+		Theme theme = layoutSet.getTheme();
+
+		if (theme == null) {
+			return StringPool.BLANK;
+		}
+
+		return theme.getContextPath() + theme.getImagesPath() + "/favicon.ico";
 	}
 
 	public String getFaviconTitle() {
@@ -1870,6 +1894,31 @@ public class LayoutsAdminDisplayContext {
 
 		return HttpComponentsUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
+	}
+
+	private String _getFileEntryImage(long fileEntryId) {
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (fileEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return HtmlUtil.escape(
+			StringBundler.concat(
+				PortalUtil.getPathContext(), "/documents/",
+				fileEntry.getRepositoryId(), StringPool.SLASH,
+				fileEntry.getFolderId(), StringPool.SLASH,
+				URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
+				StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
 	}
 
 	private long[] _getGroupIds() {

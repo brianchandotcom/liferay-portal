@@ -31,6 +31,10 @@ export default function propsTransformer({
 							`${portletNamespace}faviconFileEntryId`
 						);
 
+						const faviconFileEntryImage = document.getElementById(
+							`${portletNamespace}faviconFileEntryImage`
+						);
+
 						const faviconFileEntryTitle = document.getElementById(
 							`${portletNamespace}faviconFileEntryTitle`
 						);
@@ -39,11 +43,20 @@ export default function propsTransformer({
 							selectedItem &&
 							selectedItem.value &&
 							faviconFileEntryId &&
+							faviconFileEntryImage &&
 							faviconFileEntryTitle
 						) {
 							const itemValue = JSON.parse(selectedItem.value);
 
 							faviconFileEntryId.value = itemValue.fileEntryId;
+
+							if (itemValue.url) {
+								faviconFileEntryImage.src = itemValue.url;
+							}
+							else {
+								faviconFileEntryImage.classList.add('d-none');
+							}
+
 							faviconFileEntryTitle.innerHTML = itemValue.title;
 						}
 					}

@@ -158,8 +158,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
 				layout.getKeywordsMap(), layout.getRobotsMap(), type, hidden,
-				friendlyURLMap, !deleteLogo, iconBytes, masterLayoutPlid,
-				styleBookEntryId, faviconFileEntryId, serviceContext);
+				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
+				faviconFileEntryId, masterLayoutPlid, serviceContext);
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(

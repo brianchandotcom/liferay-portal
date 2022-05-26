@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -462,6 +464,30 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _getDraftLayoutURL(layout);
+	}
+
+	public String getFaviconTitle() {
+		LayoutSet selLayoutSet = getSelLayoutSet();
+
+		if (selLayoutSet.getFaviconFileEntryId() == 0) {
+			return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
+		}
+
+		FileEntry fileEntry;
+
+		try {
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				selLayoutSet.getFaviconFileEntryId());
+
+			return fileEntry.getTitle();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
 	}
 
 	public String getFileEntryItemSelectorURL() {

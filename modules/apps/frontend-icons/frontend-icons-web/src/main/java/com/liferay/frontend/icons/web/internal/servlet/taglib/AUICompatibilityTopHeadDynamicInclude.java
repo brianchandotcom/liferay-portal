@@ -55,6 +55,11 @@ public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		sb.append(
 			StringBundler.concat(
+				"Liferay._ICONS_.basePath = '",
+				FrontendIconsUtil.getBasePath(), "';"));
+
+		sb.append(
+			StringBundler.concat(
 				"Liferay._ICONS_.spritemap = '",
 				FrontendIconsUtil.getSpritemapPath(themeDisplay), "';"));
 
@@ -62,6 +67,7 @@ public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
 			StringBundler.concat(
 				"Liferay._ICONS_.systemSpritemap = '",
 				FrontendIconsUtil.getSystemSpritemapPath(), "';"));
+				
 		sb.append("</script>");
 
 		printWriter.println(sb);

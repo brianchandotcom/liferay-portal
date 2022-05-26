@@ -35,7 +35,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -68,11 +67,6 @@ public class ApplicationContextServicePublisherUtil {
 
 					if (serviceRegistration != null) {
 						serviceRegistrations.add(serviceRegistration);
-					}
-				}
-				catch (BeanIsAbstractException beanIsAbstractException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(beanIsAbstractException);
 					}
 				}
 				catch (Exception exception) {

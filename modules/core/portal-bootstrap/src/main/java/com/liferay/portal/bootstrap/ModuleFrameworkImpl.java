@@ -116,7 +116,6 @@ import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 
-import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -1199,11 +1198,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				try {
 					bean = configurableApplicationContext.getBean(beanName);
-				}
-				catch (BeanIsAbstractException beanIsAbstractException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(beanIsAbstractException);
-					}
 				}
 				catch (Exception exception) {
 					_log.error(exception);

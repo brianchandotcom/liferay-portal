@@ -90,7 +90,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 							fieldName: ['productName', 'LANG'],
 						},
 					],
-					spritemap: '<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>',
+					spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
 					titleLabel: '<%= LanguageUtil.get(request, "add-existing-sku") %>',
 				});
 			</aui:script>

@@ -903,7 +903,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getLexiconIconsPath() {
-		String spritemap = FrontendIconsUtil.getSpritemapPath(
+		String spritemap = FrontendIconsUtil.getSpritemap(
 			ddmFormAdminRequestHelper.getThemeDisplay());
 
 		return spritemap + "#";

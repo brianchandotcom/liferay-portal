@@ -12,13 +12,13 @@
  * details.
  */
 
-export function getSpritemapPath(iconPack?: string): string {
+export function getSpritemap(iconPack?: string): string {
 	if (!Liferay.FeatureFlags['LPS-145112']) {
 		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 	}
 
 	if (!iconPack && Liferay.ThemeDisplay.isControlPanel()) {
-		return getSystemSpritemapPath();
+		return getSystemSpritemap();
 	}
 
 	const packOrSite = iconPack ? 'pack' : 'site';
@@ -27,7 +27,7 @@ export function getSpritemapPath(iconPack?: string): string {
 	return `${Liferay.Icons.basePath}/${packOrSite}/${iconPackOrSiteId}.svg`;
 }
 
-export function getSystemSpritemapPath(): string {
+export function getSystemSpritemap(): string {
 	if (!Liferay.FeatureFlags['LPS-145112']) {
 		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 	}

@@ -3,14 +3,14 @@
 	<#if is_setup_complete || !is_signed_in>
 		<button class="speedwell-topbar__button speedwell-main-menu__open js-toggle-main-menu">
 			<svg class="lexicon-icon lexicon-icon-bars">
-				<use href="${siteSpritemapPath}#bars" />
+				<use href="${siteSpritemap}#bars" />
 			</svg>
 		</button>
 
 		<div class="speedwell-main-menu__link-wrapper">
 			<button class="speedwell-topbar__button js-toggle-main-menu">
 				<svg class="lexicon-icon lexicon-icon-times">
-					<use href="${siteSpritemapPath}#times" />
+					<use href="${siteSpritemap}#times" />
 				</svg>
 			</button>
 
@@ -39,7 +39,7 @@
 		<div class="speedwell-topbar__search speedwell-search">
 			<div class="speedwell-topbar__button js-toggle-search">
 				<svg class="lexicon-icon lexicon-icon-search">
-					<use href="${siteSpritemapPath}#search" />
+					<use href="${siteSpritemap}#search" />
 				</svg>
 			</div>
 
@@ -47,14 +47,14 @@
 				<div class="speedwell-search__bar">
 					<button class="speedwell-topbar__button" disabled>
 						<svg class="lexicon-icon lexicon-icon-search">
-							<use href="${siteSpritemapPath}#search" />
+							<use href="${siteSpritemap}#search" />
 						</svg>
 					</button>
 					<@liferay_commerce_ui["search-bar"] id="search-bar" />
 
 					<button class="speedwell-topbar__button js-toggle-search">
 						<svg class="lexicon-icon lexicon-icon-times">
-							<use href="${siteSpritemapPath}#times" />
+							<use href="${siteSpritemap}#times" />
 						</svg>
 					</button>
 				</div>
@@ -68,7 +68,7 @@
 		<div class="speedwell-account">
 			<button class="speedwell-topbar__button js-toggle-account">
 				<svg class="lexicon-icon lexicon-icon-user">
-					<use href="${siteSpritemapPath}#user" />
+					<use href="${siteSpritemap}#user" />
 				</svg>
 			</button>
 

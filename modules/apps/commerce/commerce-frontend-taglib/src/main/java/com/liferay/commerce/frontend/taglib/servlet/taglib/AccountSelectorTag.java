@@ -93,7 +93,7 @@ public class AccountSelectorTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			if (Validator.isNull(_spritemap)) {
-				_spritemap = FrontendIconsUtil.getSpritemapPath(themeDisplay);
+				_spritemap = FrontendIconsUtil.getSpritemap(themeDisplay);
 			}
 
 			HttpServletRequest parentHttpServletRequest = getRequest();

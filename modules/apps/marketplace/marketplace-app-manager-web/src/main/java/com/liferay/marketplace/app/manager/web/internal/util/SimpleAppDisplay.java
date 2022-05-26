@@ -72,7 +72,7 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return FrontendIconsUtil.getSpritemapPath(themeDisplay) + "#apps";
+		return FrontendIconsUtil.getSpritemap(themeDisplay) + "#apps";
 	}
 
 	@Override

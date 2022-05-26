@@ -1,1 +1,1 @@
-export {default as getSpritemapPath} from './getSpritemapPath';
+export {default as getSpritemap} from './getSpritemap';

@@ -677,7 +677,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"sitesFromURL", ParamUtil.getString(_renderRequest, "sites")
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
 			"statusLabel",
 			_language.get(

@@ -91,7 +91,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		).put(
 			"skin", "moono-lisa"
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
 		).put(
 			"toolbars", _getToolbarsJSONObject(themeDisplay.getLocale())
 		);

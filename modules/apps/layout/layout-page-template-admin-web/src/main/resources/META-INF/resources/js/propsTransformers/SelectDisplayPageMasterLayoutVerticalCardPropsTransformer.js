@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {getSpritemap} from '@liferay/frontend-icons-web';
 
 import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 
@@ -30,7 +30,7 @@ export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransforme
 				formSubmitURL: addDisplayPageUrl,
 				mappingTypes,
 				namespace,
-				spritemap: getSpritemapPath(),
+				spritemap: getSpritemap(),
 				title,
 			});
 		},

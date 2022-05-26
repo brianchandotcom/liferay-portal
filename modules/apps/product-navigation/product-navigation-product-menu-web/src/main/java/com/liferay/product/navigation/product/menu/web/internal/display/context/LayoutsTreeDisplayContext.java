@@ -290,7 +290,7 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"productMenuPortletURL", getProductMenuPortletURL()
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).build();
 	}
 

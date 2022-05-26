@@ -242,7 +242,7 @@ public class ButtonTag extends BaseContainerTag {
 						WebKeys.THEME_DISPLAY);
 
 				jspWriter.write(
-					FrontendIconsUtil.getSpritemapPath(themeDisplay));
+					FrontendIconsUtil.getSpritemap(themeDisplay));
 
 				jspWriter.write("#");
 				jspWriter.write(_icon);

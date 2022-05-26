@@ -98,7 +98,7 @@ public class ReschedulePublicationDisplayContext {
 				"minutes", String.format("%02d", calendar.get(Calendar.MINUTE))
 			)
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
 			"timeZone",
 			() -> {

@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
-import {getSpritemapPath} from '../../index';
+import {getSpritemap} from '../../index';
 import AddIconPackModal from './AddIconPackModal';
 
 import type {IIconPacks} from '../../types';
@@ -120,7 +120,7 @@ export default function SiteIconPackConfiguration({
 													key={icon.name}
 												>
 													<ClayIcon
-														spritemap={`${getSpritemapPath(
+														spritemap={`${getSpritemap(
 															iconPackName
 														)}?${referenceTime}`}
 														symbol={icon.name}

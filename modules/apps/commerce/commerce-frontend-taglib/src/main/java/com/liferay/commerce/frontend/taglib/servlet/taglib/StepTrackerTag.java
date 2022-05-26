@@ -75,7 +75,7 @@ public class StepTrackerTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_spritemap = FrontendIconsUtil.getSpritemapPath(themeDisplay);
+			_spritemap = FrontendIconsUtil.getSpritemap(themeDisplay);
 		}
 
 		httpServletRequest.setAttribute(

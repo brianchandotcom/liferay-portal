@@ -246,7 +246,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					"value", PublicationRoleConstants.ROLE_ADMIN
 				))
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
 			"verifyEmailAddressURL",
 			() -> {

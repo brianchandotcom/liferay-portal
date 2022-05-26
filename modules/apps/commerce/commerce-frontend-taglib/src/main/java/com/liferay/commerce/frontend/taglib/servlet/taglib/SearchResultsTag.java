@@ -69,7 +69,7 @@ public class SearchResultsTag extends ComponentRendererTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		putValue("spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay));
+		putValue("spritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
 
 		putValue("visible", false);
 

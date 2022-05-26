@@ -50,7 +50,7 @@ public class SearchBarTag extends ComponentRendererTag {
 
 		putValue("query", query);
 
-		putValue("spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay));
+		putValue("spritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
 
 		Map<String, Object> context = getContext();
 

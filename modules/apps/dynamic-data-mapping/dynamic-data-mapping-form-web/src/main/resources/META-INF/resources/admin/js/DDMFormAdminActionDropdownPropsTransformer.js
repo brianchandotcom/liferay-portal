@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {getSpritemap} from '@liferay/frontend-icons-web';
 import {openModal} from 'frontend-js-web';
 
 import {openShareFormModal} from './components/share-form/openShareFormModal.es';
@@ -51,7 +51,7 @@ const ACTIONS = {
 			localizedName,
 			portletNamespace,
 			shareFormInstanceURL,
-			spritemap: getSpritemapPath(),
+			spritemap: getSpritemap(),
 			url,
 		});
 	},

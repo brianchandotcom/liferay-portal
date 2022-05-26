@@ -15,10 +15,10 @@
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import {getSpritemapPath} from '@liferay/frontend-icons-web';
+import {getSpritemap} from '@liferay/frontend-icons-web';
 import React from 'react';
 
-const spritemap = getSpritemapPath();
+const spritemap = getSpritemap();
 
 const MenuCustom = ({
 	inputValue,

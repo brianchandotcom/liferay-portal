@@ -120,7 +120,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					).put(
 						"redirectURL", HtmlUtil.escape(redirect)
 					).put(
-						"spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay)
+						"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
 					).put(
 						"view", "fieldSets"
 					).build()
@@ -141,7 +141,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.namespace('DDM').FormSettings = {
 		portletNamespace: '<portlet:namespace />',
 		showPagination: false,
-		spritemap: '<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>',
+		spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
 	};
 
 	var clearPortletHandlers = function (event) {

@@ -322,8 +322,8 @@ public class TemplateContextHelper {
 			contextObjects.put(
 				"scopeGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
 			contextObjects.put(
-				"siteSpritemapPath",
-				FrontendIconsUtil.getSpritemapPath(
+				"siteSpritemap",
+				FrontendIconsUtil.getSpritemap(
 					themeDisplay.getSiteGroupId()));
 			contextObjects.put("themeDisplay", themeDisplay);
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());

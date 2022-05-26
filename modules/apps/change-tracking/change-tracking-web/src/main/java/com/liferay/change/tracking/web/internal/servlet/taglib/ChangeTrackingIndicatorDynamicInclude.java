@@ -240,7 +240,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				return saveDisplayPreferenceURL.toString();
 			}
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
 		).build();
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;

@@ -190,7 +190,7 @@ public class ViewConflictsDisplayContext {
 				return false;
 			}
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
 			"timeZone",
 			() -> {

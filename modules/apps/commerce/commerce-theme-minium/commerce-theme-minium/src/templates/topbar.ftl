@@ -3,7 +3,7 @@
 		<#if back_url?has_content>
 			<a class="commerce-topbar-button" href="${htmlUtil.escape(back_url)}">
 				<svg class="commerce-icon commerce-topbar-button__icon lexicon-icon lexicon-icon-arrow-back">
-					<use href="${siteSpritemapPath}#arrow-back" />
+					<use href="${siteSpritemap}#arrow-back" />
 				</svg>
 
 				<span class="commerce-topbar-button__label">
@@ -14,11 +14,11 @@
 		<#if show_search_bar>
 			<label class="commerce-topbar-button js-toggle-search" for="commerce-search-input">
 				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--not-active lexicon-icon lexicon-icon-search">
-					<use href="${siteSpritemapPath}#search" />
+					<use href="${siteSpritemap}#search" />
 				</svg>
 
 				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--active lexicon-icon lexicon-icon-times">
-					<use href="${siteSpritemapPath}#times" />
+					<use href="${siteSpritemap}#times" />
 				</svg>
 			</label>
 		</#if>

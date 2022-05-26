@@ -12,4 +12,4 @@
  * details.
  */
 
-export default function getSpritemapPath(iconPack: String): string;
+export default function getSpritemap(iconPack: String): string;

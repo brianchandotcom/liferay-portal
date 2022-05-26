@@ -22,7 +22,7 @@ import classNames from 'classnames';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import {getSpritemapPath} from '../../index';
+import {getSpritemap} from '../../index';
 
 import type {IIconPack, IIconPacks} from '../../types';
 
@@ -378,7 +378,7 @@ function IconPicker({
 													}}
 												>
 													<ClayIcon
-														spritemap={`${getSpritemapPath(
+														spritemap={`${getSpritemap(
 															iconPackName
 														)}?${referenceTime}`}
 														symbol={icon.name}

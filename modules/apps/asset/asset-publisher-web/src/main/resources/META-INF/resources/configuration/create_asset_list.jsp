@@ -39,7 +39,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 			mainFieldPlaceholder: '<liferay-ui:message key="title" />',
 			namespace:
 				'<%= PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource)) %>',
-			spritemap: '<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>',
+			spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
 		});
 	}
 

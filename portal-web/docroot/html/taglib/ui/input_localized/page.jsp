@@ -225,7 +225,7 @@
 								<button class="dropdown-item" id="manage-translations">
 									<span class="inline-item inline-item-before">
 										<svg class="lexicon-icon lexicon-icon-automatic-translate" role="presentation">
-											<use xlink:href="<%= FrontendIconsUtil.getSpritemapPath(themeDisplay) %>#automatic-translate" />
+											<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#automatic-translate" />
 										</svg>
 									</span>
 									<span><liferay-ui:message key="manage-translations" /></span>

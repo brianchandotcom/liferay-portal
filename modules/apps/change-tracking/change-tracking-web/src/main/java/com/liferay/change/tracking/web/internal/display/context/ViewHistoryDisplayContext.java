@@ -247,7 +247,7 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 		).put(
 			"entries", entriesJSONArray
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemapPath(_themeDisplay)
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
 			"userInfo",
 			() -> {

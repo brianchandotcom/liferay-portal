@@ -41,18 +41,13 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterDoctype(content);
 
-		content = _fixMissingEmptyLineAroundSingleComment(fileName, content);
+		content = _fixMissingEmptyLineAroundSingleComment(content);
 
 		return content;
 	}
 
-	private String _fixMissingEmptyLineAroundSingleComment(
-			String fileName, String content)
+	private String _fixMissingEmptyLineAroundSingleComment(String content)
 		throws IOException {
-
-		if (!fileName.endsWith(".path")) {
-			return content;
-		}
 
 		StringBundler sb = new StringBundler();
 

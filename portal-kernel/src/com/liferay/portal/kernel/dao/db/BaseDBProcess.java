@@ -211,6 +211,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		if (hasColumnType(tableName, oldColumnName, newColumnType)) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			if (StringUtil.equals(
+					dbInspector.normalizeName(oldColumnName),
+					dbInspector.normalizeName(newColumnName))) {
+
+				return;
+			}
+
 			DB db = DBManagerUtil.getDB();
 
 			db.alterColumnName(
@@ -219,7 +228,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		else {
 			throw new SQLException(
 				StringBundler.concat(
-					"Type change is now allowed when altering column name. ",
+					"Type change is not allowed when altering column name. ",
 					"Column ", tableName, StringPool.PERIOD, oldColumnName,
 					" has different type than ", newColumnType));
 		}

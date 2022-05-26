@@ -101,6 +101,10 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "This publication contains changes to a content page. Publishing these changes will fully overwrite the page's content and layout in production.");
+
 		Publications.publishPublication(publicationName = "Publication Name 1");
 	}
 

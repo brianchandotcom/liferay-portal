@@ -55,6 +55,8 @@ public class LayoutSetTable extends BaseTable<LayoutSetTable> {
 		"themeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutSetTable, String> colorSchemeId = createColumn(
 		"colorSchemeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutSetTable, Long> faviconFileEntryId = createColumn(
+		"faviconFileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutSetTable, Clob> css = createColumn(
 		"css", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutSetTable, Clob> settings = createColumn(

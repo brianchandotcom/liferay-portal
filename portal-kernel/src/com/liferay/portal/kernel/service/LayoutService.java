@@ -655,6 +655,7 @@ public interface LayoutService extends BaseService {
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param styleBookEntryId the primary key of the style book entry
+	 * @param faviconFileEntryId the file entry ID of the layout's new favicon
 	 * @param serviceContext the service context to be applied. Can set the
 	 modification date and expando bridge attributes for the layout.
 	 * @return the updated layout
@@ -668,7 +669,7 @@ public interface LayoutService extends BaseService {
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
 			byte[] iconBytes, long masterLayoutPlid, long styleBookEntryId,
-			ServiceContext serviceContext)
+			long faviconFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

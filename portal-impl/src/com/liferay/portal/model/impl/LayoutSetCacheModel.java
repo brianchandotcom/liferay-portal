@@ -76,7 +76,7 @@ public class LayoutSetCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class LayoutSetCacheModel
 		sb.append(themeId);
 		sb.append(", colorSchemeId=");
 		sb.append(colorSchemeId);
+		sb.append(", faviconFileEntryId=");
+		sb.append(faviconFileEntryId);
 		sb.append(", css=");
 		sb.append(css);
 		sb.append(", settings=");
@@ -153,6 +155,8 @@ public class LayoutSetCacheModel
 		else {
 			layoutSetImpl.setColorSchemeId(colorSchemeId);
 		}
+
+		layoutSetImpl.setFaviconFileEntryId(faviconFileEntryId);
 
 		if (css == null) {
 			layoutSetImpl.setCss("");
@@ -209,6 +213,8 @@ public class LayoutSetCacheModel
 		logoId = objectInput.readLong();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
+
+		faviconFileEntryId = objectInput.readLong();
 		css = (String)objectInput.readObject();
 		settings = (String)objectInput.readObject();
 		layoutSetPrototypeUuid = objectInput.readUTF();
@@ -251,6 +257,8 @@ public class LayoutSetCacheModel
 			objectOutput.writeUTF(colorSchemeId);
 		}
 
+		objectOutput.writeLong(faviconFileEntryId);
+
 		if (css == null) {
 			objectOutput.writeObject("");
 		}
@@ -289,6 +297,7 @@ public class LayoutSetCacheModel
 	public long logoId;
 	public String themeId;
 	public String colorSchemeId;
+	public long faviconFileEntryId;
 	public String css;
 	public String settings;
 	public String layoutSetPrototypeUuid;

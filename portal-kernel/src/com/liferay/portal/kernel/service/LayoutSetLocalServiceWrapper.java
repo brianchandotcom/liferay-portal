@@ -362,6 +362,15 @@ public class LayoutSetLocalServiceWrapper
 		return _layoutSetLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public LayoutSet updateFaviconFileEntryId(
+			long groupId, boolean privateLayout, long faviconFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSetLocalService.updateFaviconFileEntryId(
+			groupId, privateLayout, faviconFileEntryId);
+	}
+
 	/**
 	 * Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

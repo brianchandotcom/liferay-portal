@@ -143,6 +143,8 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setColorSchemeId(RandomTestUtil.randomString());
 
+		newLayoutSet.setFaviconFileEntryId(RandomTestUtil.nextLong());
+
 		newLayoutSet.setCss(RandomTestUtil.randomString());
 
 		newLayoutSet.setSettings(RandomTestUtil.randomString());
@@ -184,6 +186,9 @@ public class LayoutSetPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutSet.getColorSchemeId(),
 			newLayoutSet.getColorSchemeId());
+		Assert.assertEquals(
+			existingLayoutSet.getFaviconFileEntryId(),
+			newLayoutSet.getFaviconFileEntryId());
 		Assert.assertEquals(existingLayoutSet.getCss(), newLayoutSet.getCss());
 		Assert.assertEquals(
 			existingLayoutSet.getSettings(), newLayoutSet.getSettings());
@@ -265,8 +270,8 @@ public class LayoutSetPersistenceTest {
 			"layoutSetId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "privateLayout", true,
 			"logoId", true, "themeId", true, "colorSchemeId", true,
-			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
-			true);
+			"faviconFileEntryId", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -576,6 +581,8 @@ public class LayoutSetPersistenceTest {
 		layoutSet.setThemeId(RandomTestUtil.randomString());
 
 		layoutSet.setColorSchemeId(RandomTestUtil.randomString());
+
+		layoutSet.setFaviconFileEntryId(RandomTestUtil.nextLong());
 
 		layoutSet.setCss(RandomTestUtil.randomString());
 

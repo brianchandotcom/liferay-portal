@@ -14,8 +14,11 @@
 
 package com.liferay.site.initializer.extender.internal.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -28,6 +31,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -37,6 +42,14 @@ import org.osgi.framework.Bundle;
  * @author Rafael Praxedes
  */
 public class SiteInitializerUtil {
+
+	public static final String[] PORTLET_PROPERTIES_WHITELIST = {
+		"default.guest.public.layout.friendly.url",
+		"default.guest.public.layout.name",
+		"default.guest.public.layout.regular.color.scheme.id",
+		"default.guest.public.layout.regular.theme.id",
+		"default.guest.public.layout.template.id"
+	};
 
 	public static String read(Bundle bundle, String fileName, URL url)
 		throws Exception {
@@ -62,7 +75,13 @@ public class SiteInitializerUtil {
 				return null;
 			}
 
-			return StringUtil.read(inputStream);
+			String content = StringUtil.read(inputStream);
+
+			Map<String, String> portalPropertiesReplaceValues =
+				_getPortalPropertiesReplaceValues(content);
+
+			return StringUtil.replace(
+				content, "[$", "$]", portalPropertiesReplaceValues);
 		}
 	}
 
@@ -88,5 +107,43 @@ public class SiteInitializerUtil {
 
 		return map;
 	}
+
+	private static Map<String, String> _getPortalPropertiesReplaceValues(
+		String content) {
+
+		Map<String, String> portalPropertiesReplaceValues = new HashMap<>();
+
+		if (Validator.isNull(content)) {
+			return portalPropertiesReplaceValues;
+		}
+
+		Matcher matcher = _portalPropertyPattern.matcher(content);
+
+		while (matcher.find()) {
+			String portalProperty = matcher.group();
+
+			portalProperty = portalProperty.substring(
+				2, portalProperty.length() - 2);
+
+			String[] portalPropertyParts = StringUtil.split(
+				portalProperty, CharPool.COLON);
+
+			String value = PropsUtil.get(portalPropertyParts[1]);
+
+			if ((value == null) ||
+				!ArrayUtil.contains(
+					PORTLET_PROPERTIES_WHITELIST, portalPropertyParts[1])) {
+
+				value = StringPool.BLANK;
+			}
+
+			portalPropertiesReplaceValues.put(portalProperty, value);
+		}
+
+		return portalPropertiesReplaceValues;
+	}
+
+	private static final Pattern _portalPropertyPattern = Pattern.compile(
+		"\\[\\$PORTAL_PROPERTY:((?!\\.)(?!.*\\.\\.)[a-zA-Z0-9_.]+)\\$\\]");
 
 }

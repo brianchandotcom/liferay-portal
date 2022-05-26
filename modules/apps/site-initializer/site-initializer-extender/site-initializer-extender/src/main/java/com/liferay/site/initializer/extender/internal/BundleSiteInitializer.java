@@ -180,8 +180,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -1467,12 +1465,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String json = SiteInitializerUtil.read(
 			parentResourcePath + "page.json", _servletContext);
-
-		Map<String, String> portalPropertiesReplaceValues =
-			_getPortalPropertiesReplaceValues(json);
-
-		json = StringUtil.replace(
-			json, "[$", "$]", portalPropertiesReplaceValues);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
@@ -3331,34 +3323,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
-	private Map<String, String> _getPortalPropertiesReplaceValues(
-		String content) {
-
-		Map<String, String> portalPropertiesReplaceValues = new HashMap<>();
-
-		Matcher matcher = _portalPropertyPattern.matcher(content);
-
-		while (matcher.find()) {
-			String portalProperty = matcher.group();
-
-			portalProperty = portalProperty.substring(
-				2, portalProperty.length() - 2);
-
-			String[] portalPropertyParts = StringUtil.split(
-				portalProperty, CharPool.COLON);
-
-			String value = PropsUtil.get(portalPropertyParts[1]);
-
-			if (value == null) {
-				value = StringPool.BLANK;
-			}
-
-			portalPropertiesReplaceValues.put(portalProperty, value);
-		}
-
-		return portalPropertiesReplaceValues;
-	}
-
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {
 		return HashMapBuilder.put(
 			"RELEASE_INFO:BUILD_DATE",
@@ -3525,14 +3489,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String metadataJSON = SiteInitializerUtil.read(
 			resourcePath + "/metadata.json", _servletContext);
 
-		if (metadataJSON != null) {
-			Map<String, String> portalPropertiesReplaceValues =
-				_getPortalPropertiesReplaceValues(metadataJSON);
-
-			metadataJSON = StringUtil.replace(
-				metadataJSON, "[$", "$]", portalPropertiesReplaceValues);
-		}
-
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			(metadataJSON == null) ? "{}" : metadataJSON);
 
@@ -3596,8 +3552,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
-	private static final Pattern _portalPropertyPattern = Pattern.compile(
-		"\\[\\$PORTAL_PROPERTY:((?!\\.)(?!.*\\.\\.)[a-zA-Z0-9_.]+)\\$\\]");
 
 	private final AccountResource.Factory _accountResourceFactory;
 	private final AccountRoleLocalService _accountRoleLocalService;

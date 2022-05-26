@@ -1,0 +1,11 @@
+.lfr-notification__rich-text-localized {
+	display: flex;
+
+	&-editor {
+		flex-grow: 1;
+	}
+
+	&-flag {
+		margin-left: 0.5rem;
+	}
+}

@@ -13,6 +13,11 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import {
+	SidePanelForm,
+	closeSidePanel,
+	openToast,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -23,7 +28,6 @@ import {
 } from '../utils/locale';
 import {BasicInfo, Conditions} from './DataValidation/ObjectValidationTabs';
 import {useObjectValidationForm} from './ObjectValidationFormBase';
-import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const TABS = [
 	{

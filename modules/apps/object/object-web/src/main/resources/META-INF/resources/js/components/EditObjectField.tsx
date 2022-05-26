@@ -14,6 +14,15 @@
 
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {
+	Card,
+	Input,
+	InputLocalized,
+	Select,
+	SidePanelForm,
+	closeSidePanel,
+	openToast,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
@@ -25,15 +34,10 @@ import {
 	updateFieldSettings,
 } from '../utils/fieldSettings';
 import {defaultLanguageId, defaultLocale} from '../utils/locale';
-import Card from './Card/Card';
-import Input from './Form/Input';
-import InputLocalized from './Form/InputLocalized/InputLocalized';
-import Select from './Form/Select';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
 } from './ObjectFieldFormBase';
-import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 import './EditObjectField.scss';
 
@@ -134,6 +138,7 @@ export default function EditObjectField({
 		>
 			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
+					defaultLanguageId={defaultLanguageId}
 					disabled={readOnly}
 					error={errors.label}
 					label={Liferay.Language.get('label')}

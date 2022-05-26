@@ -15,6 +15,12 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayModal from '@clayui/modal';
+import {
+	AutoComplete,
+	CheckboxItem,
+	FormCustomSelect,
+	Input,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {
 	FormEvent,
@@ -26,10 +32,6 @@ import React, {
 } from 'react';
 
 import {defaultLanguageId, locale} from '../../../utils/locale';
-import AutoComplete from '../../Form/AutoComplete';
-import {CheckboxItem} from '../../Form/CheckBoxItem';
-import CustomSelect from '../../Form/CustomSelect/CustomSelect';
-import Input from '../../Form/Input';
 import ViewContext, {TYPES} from '../context';
 import {
 	TLabelValueObject,
@@ -344,7 +346,7 @@ export function ModalAddFilterColumn({
 					</AutoComplete>
 				)}
 
-				<CustomSelect
+				<FormCustomSelect
 					disabled={
 						!editingFilter &&
 						(!selectedFilterBy ||

@@ -16,13 +16,13 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {ERRORS} from '../utils/errors';
 import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
-import Input from './Form/Input';
 import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
 
 const headers = new Headers({

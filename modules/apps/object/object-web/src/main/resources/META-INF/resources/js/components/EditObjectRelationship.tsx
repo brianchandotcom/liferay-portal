@@ -13,6 +13,15 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {
+	Card,
+	FormCustomSelect,
+	Input,
+	InputLocalized,
+	SidePanelForm,
+	closeSidePanel,
+	openToast,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -24,11 +33,6 @@ import {
 } from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {firstLetterUppercase} from '../utils/string';
-import Card from './Card/Card';
-import CustomSelect from './Form/CustomSelect/CustomSelect';
-import Input from './Form/Input';
-import InputLocalized from './Form/InputLocalized/InputLocalized';
-import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -126,6 +130,7 @@ export default function EditObjectRelationship({
 				)}
 
 				<InputLocalized
+					defaultLanguageId={defaultLanguageId}
 					disabled={readOnly}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
@@ -144,7 +149,7 @@ export default function EditObjectRelationship({
 					value={initialValues.name}
 				/>
 
-				<CustomSelect
+				<FormCustomSelect
 					disabled
 					label={Liferay.Language.get('type')}
 					options={objectRelationshipTypes}
@@ -152,7 +157,7 @@ export default function EditObjectRelationship({
 					value={selectedType?.label}
 				/>
 
-				<CustomSelect
+				<FormCustomSelect
 					disabled
 					label={Liferay.Language.get('object')}
 					options={[]}
@@ -160,7 +165,7 @@ export default function EditObjectRelationship({
 					value={initialValues.objectDefinitionName2}
 				/>
 
-				<CustomSelect
+				<FormCustomSelect
 					disabled={readOnly}
 					label={Liferay.Language.get('deletion-type')}
 					onChange={(deletionType) =>

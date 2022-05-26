@@ -15,9 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
+import {Input} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
-
-import Input from './Form/Input';
 
 export default function DangerModal({
 	children,

@@ -12,12 +12,13 @@
  * details.
  */
 
+import {EditorSidebar, FieldBase} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import FieldBase from '../Form/FieldBase';
+import {defaultLanguageId} from '../../utils/locale';
+import {METADATAS} from '../ObjectView/context';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
-import Sidebar from './Sidebar';
 
 import './index.scss';
 
@@ -43,9 +44,11 @@ export default function CodeEditor({
 			</FieldBase>
 
 			{elements && (
-				<Sidebar
+				<EditorSidebar
+					defaultLanguageId={defaultLanguageId}
 					editorRef={editorRef}
-					objectValidationRuleElements={elements}
+					metadatasFields={METADATAS}
+					sidebarElements={elements}
 				/>
 			)}
 		</div>

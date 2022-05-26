@@ -78,6 +78,9 @@ module.exports = {
 					'@liferay/map-openstreetmap': {
 						'/': '*',
 					},
+					'@liferay/object-js-components-web': {
+						'/': '*',
+					},
 					'asset-taglib': {
 						'/': '*',
 					},

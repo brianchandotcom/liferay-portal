@@ -15,6 +15,11 @@
 import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {
+	FormCustomSelect,
+	Input,
+	Select,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
@@ -22,9 +27,6 @@ import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
 import {normalizeFieldSettings} from '../utils/fieldSettings';
 import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
-import CustomSelect from './Form/CustomSelect/CustomSelect';
-import Input from './Form/Input';
-import Select from './Form/Select';
 
 import './ObjectFieldFormBase.scss';
 
@@ -192,7 +194,7 @@ export default function ObjectFieldFormBase({
 				}
 			/>
 
-			<CustomSelect<ObjectFieldType>
+			<FormCustomSelect<ObjectFieldType>
 				disabled={disabled}
 				error={errors.businessType}
 				label={Liferay.Language.get('type')}
@@ -508,7 +510,7 @@ function AttachmentSourceProperty({
 
 	return (
 		<>
-			<CustomSelect
+			<FormCustomSelect
 				disabled={disabled}
 				error={error}
 				label={Liferay.Language.get('request-files')}

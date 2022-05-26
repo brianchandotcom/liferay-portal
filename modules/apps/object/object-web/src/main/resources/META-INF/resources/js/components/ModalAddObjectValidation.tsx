@@ -16,12 +16,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {FormCustomSelect, Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../utils/locale';
-import CustomSelect from './Form/CustomSelect/CustomSelect';
-import Input from './Form/Input';
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -140,7 +139,7 @@ function ModalAddObjectValidation({
 						value={labelInput[defaultLanguageId]}
 					/>
 
-					<CustomSelect<ObjectValidationType>
+					<FormCustomSelect<ObjectValidationType>
 						error={
 							showError && fieldErrors.typeError !== ''
 								? fieldErrors.typeError

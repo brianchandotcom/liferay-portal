@@ -15,6 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {
+	AutoComplete,
+	FormCustomSelect,
+} from '@liferay/object-js-components-web';
 import React, {
 	FormEvent,
 	useContext,
@@ -23,8 +27,6 @@ import React, {
 	useState,
 } from 'react';
 
-import AutoComplete from '../../Form/AutoComplete';
-import CustomSelect from '../../Form/CustomSelect/CustomSelect';
 import ViewContext, {TYPES} from '../context';
 import {TObjectViewColumn, TObjectViewSortColumn} from '../types';
 
@@ -149,7 +151,7 @@ export function ModalAddDefaultSortColumn({
 						</AutoComplete>
 					)}
 
-					<CustomSelect
+					<FormCustomSelect
 						label={Liferay.Language.get('sorting')}
 						onChange={(item: TSortOptions) => {
 							setSelectedObjetSort(item);

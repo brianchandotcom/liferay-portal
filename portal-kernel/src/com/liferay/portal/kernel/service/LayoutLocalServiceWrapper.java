@@ -1769,6 +1769,7 @@ public class LayoutLocalServiceWrapper
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param styleBookEntryId the primary key of the style book entrys
+	 * @param faviconFileEntryId the file entry ID of the layout's new favicon
 	 * @param serviceContext the service context to be applied. Can set the
 	 modification date and expando bridge attributes for the layout.
 	 For layouts that are linked to a layout prototype, attributes
@@ -1793,14 +1794,15 @@ public class LayoutLocalServiceWrapper
 			boolean hidden,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
 			boolean hasIconImage, byte[] iconBytes, long masterLayoutPlid,
-			long styleBookEntryId, ServiceContext serviceContext)
+			long styleBookEntryId, long faviconFileEntryId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,
 			descriptionMap, keywordsMap, robotsMap, type, hidden,
 			friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
-			styleBookEntryId, serviceContext);
+			styleBookEntryId, faviconFileEntryId, serviceContext);
 	}
 
 	/**
@@ -1829,12 +1831,13 @@ public class LayoutLocalServiceWrapper
 			long groupId, boolean privateLayout, long layoutId,
 			String typeSettings, byte[] iconBytes, String themeId,
 			String colorSchemeId, long styleBookEntryId, String css,
-			long masterLayoutPlid)
+			long masterLayoutPlid, long faviconFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, typeSettings, iconBytes, themeId,
-			colorSchemeId, styleBookEntryId, css, masterLayoutPlid);
+			colorSchemeId, styleBookEntryId, css, masterLayoutPlid,
+			faviconFileEntryId);
 	}
 
 	/**

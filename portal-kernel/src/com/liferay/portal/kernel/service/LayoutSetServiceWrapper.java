@@ -44,6 +44,15 @@ public class LayoutSetServiceWrapper
 		return _layoutSetService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public void updateFaviconFileEntryId(
+			long groupId, boolean privateLayout, long faviconFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutSetService.updateFaviconFileEntryId(
+			groupId, privateLayout, faviconFileEntryId);
+	}
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *

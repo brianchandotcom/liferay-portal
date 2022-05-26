@@ -20,6 +20,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -91,6 +92,11 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 					themeDisplay.getPlid(),
 					_KEY_COLLECTION_APPLIED_FILTERS_FRAGMENT_RENDERER));
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId);
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =
 				JSONFactoryUtil.createJSONObject(
@@ -146,7 +152,7 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					StringPool.BLANK));
+					layoutStructure, StringPool.BLANK));
 		}
 
 		try {
@@ -157,7 +163,7 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				LayoutStructureUtil.updateLayoutPageTemplateData(
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
 					themeDisplay.getPlid(),
-					layoutStructure -> layoutStructure.updateItemConfig(
+					curLayoutStructure -> curLayoutStructure.updateItemConfig(
 						JSONFactoryUtil.createJSONObject(itemConfig), itemId))
 			).put(
 				"pageContents",

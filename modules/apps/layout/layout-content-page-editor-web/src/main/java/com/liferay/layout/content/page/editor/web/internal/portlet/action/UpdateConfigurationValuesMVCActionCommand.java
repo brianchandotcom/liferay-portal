@@ -163,17 +163,17 @@ public class UpdateConfigurationValuesMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId());
+
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
 				_portal.getHttpServletResponse(actionResponse),
-				StringPool.BLANK));
-
-		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
-				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-				fragmentEntryLink.getSegmentsExperienceId());
+				layoutStructure, StringPool.BLANK));
 
 		return jsonObject.put("layoutData", layoutStructure.toJSONObject());
 	}

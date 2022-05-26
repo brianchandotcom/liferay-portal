@@ -114,6 +114,7 @@ public class ChangeMasterLayoutMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure,
 					editableValuesJSONObject.getString("portletId"));
 
 			fragmentEntryLinkJSONObject.put("masterLayout", Boolean.TRUE);

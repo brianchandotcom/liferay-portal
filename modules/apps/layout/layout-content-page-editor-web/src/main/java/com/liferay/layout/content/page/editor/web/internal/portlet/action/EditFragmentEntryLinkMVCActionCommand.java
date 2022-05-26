@@ -20,12 +20,16 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -54,6 +58,9 @@ public class EditFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
@@ -76,11 +83,16 @@ public class EditFragmentEntryLinkMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId());
+
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
+				_portal.getHttpServletResponse(actionResponse), layoutStructure,
 				StringPool.BLANK));
 	}
 

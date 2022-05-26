@@ -20,8 +20,10 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -134,6 +136,10 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 				getFragmentEntryLinksBySegmentsExperienceId(
 					groupId, segmentsExperienceId, plid);
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				groupId, plid, segmentsExperienceId);
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =
 				JSONFactoryUtil.createJSONObject(
@@ -145,6 +151,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure,
 					editableValuesJSONObject.getString("portletId")));
 		}
 

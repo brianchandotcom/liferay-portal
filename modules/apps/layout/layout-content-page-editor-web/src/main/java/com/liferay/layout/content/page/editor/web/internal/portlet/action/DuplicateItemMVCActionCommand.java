@@ -24,6 +24,7 @@ import com.liferay.layout.content.page.editor.web.internal.exception.Noninstance
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -199,7 +200,8 @@ public class DuplicateItemMVCActionCommand
 		return JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
 			_getDuplicatedFragmentEntryLinksJSONArray(
-				actionRequest, actionResponse, duplicatedFragmentEntryLinkIds)
+				actionRequest, actionResponse, duplicatedFragmentEntryLinkIds,
+				segmentsExperienceId, themeDisplay)
 		).put(
 			"duplicatedItemId",
 			() -> {
@@ -323,10 +325,16 @@ public class DuplicateItemMVCActionCommand
 
 	private JSONArray _getDuplicatedFragmentEntryLinksJSONArray(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			Set<Long> duplicatedFragmentEntryLinkIds)
+			Set<Long> duplicatedFragmentEntryLinkIds, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId);
 
 		for (long fragmentEntryLinkId : duplicatedFragmentEntryLinkIds) {
 			FragmentEntryLink fragmentEntryLink =
@@ -342,6 +350,7 @@ public class DuplicateItemMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure,
 					editableValuesJSONObject.getString("portletId")));
 		}
 

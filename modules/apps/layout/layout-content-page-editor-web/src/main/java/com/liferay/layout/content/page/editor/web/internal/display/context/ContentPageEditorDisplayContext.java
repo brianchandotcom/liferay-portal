@@ -1426,6 +1426,8 @@ public class ContentPageEditorDisplayContext {
 					getGroupId(), masterLayoutPageTemplateEntry.getPlid()));
 		}
 
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -1442,7 +1444,7 @@ public class ContentPageEditorDisplayContext {
 					defaultFragmentRendererContext, fragmentEntryLink,
 					httpServletRequest,
 					PortalUtil.getHttpServletResponse(_renderResponse),
-					StringPool.BLANK);
+					layoutStructure, StringPool.BLANK);
 
 			jsonObject.put(
 				"masterLayout",
@@ -1452,8 +1454,6 @@ public class ContentPageEditorDisplayContext {
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				jsonObject);
 		}
-
-		LayoutStructure layoutStructure = _getLayoutStructure();
 
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();

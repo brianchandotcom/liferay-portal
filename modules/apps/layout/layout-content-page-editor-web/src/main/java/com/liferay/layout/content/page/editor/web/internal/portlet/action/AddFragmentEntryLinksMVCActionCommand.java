@@ -137,6 +137,10 @@ public class AddFragmentEntryLinksMVCActionCommand
 				themeDisplay.getLayout(), layoutStructure, parentItemId,
 				fragmentComposition.getData(), position, segmentsExperienceId);
 
+		layoutStructure = LayoutStructureUtil.getLayoutStructure(
+			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+			segmentsExperienceId);
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =
 				JSONFactoryUtil.createJSONObject(
@@ -148,6 +152,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure,
 					editableValuesJSONObject.getString("portletId")));
 
 			List<ContentPageEditorListener> contentPageEditorListeners =
@@ -161,10 +166,6 @@ public class AddFragmentEntryLinksMVCActionCommand
 					fragmentEntryLink);
 			}
 		}
-
-		layoutStructure = LayoutStructureUtil.getLayoutStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			segmentsExperienceId);
 
 		return JSONUtil.put(
 			"addedItemId",

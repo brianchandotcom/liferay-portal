@@ -30,6 +30,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -166,13 +167,18 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			}
 		}
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId());
+
 		try {
 			jsonObject =
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					defaultFragmentRendererContext, fragmentEntryLink,
 					_portal.getHttpServletRequest(resourceRequest),
 					_portal.getHttpServletResponse(resourceResponse),
-					StringPool.BLANK);
+					layoutStructure, StringPool.BLANK);
 		}
 		finally {
 			httpServletRequest.removeAttribute(

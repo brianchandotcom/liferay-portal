@@ -201,7 +201,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
+				_portal.getHttpServletResponse(actionResponse), layoutStructure,
 				StringPool.BLANK)
 		).put(
 			"layoutData", layoutStructure.toJSONObject()

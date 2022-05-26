@@ -20,6 +20,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -238,11 +239,16 @@ public class AddPortletMVCActionCommand
 		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE, liferayRenderResponse);
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId());
+
 		return jsonObject.put(
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, httpServletRequest, httpServletResponse,
-				portletId));
+				layoutStructure, portletId));
 	}
 
 	@Reference

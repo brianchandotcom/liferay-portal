@@ -412,6 +412,8 @@ public class DBUpgrader {
 			buildNumber = _getBuildNumberForMissedUpgradeProcesses(buildNumber);
 
 			StartupHelperUtil.upgradeProcess(buildNumber);
+
+			_updateReleaseState(ReleaseConstants.STATE_GOOD);
 		}
 		catch (Exception exception) {
 			_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);

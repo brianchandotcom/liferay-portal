@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.exportimport.data.handler;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -161,6 +164,9 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
+		_exportFaviconFileEntry(
+			portletDataContext, stagedLayoutSet, stagedLayoutSetElement);
+
 		if (ExportImportThreadLocal.isStagingInProcess() &&
 			updateLastPublishDate) {
 
@@ -253,6 +259,13 @@ public class StagedLayoutSetStagedModelDataHandler
 		if (!group.isLayoutSetPrototype()) {
 			_updateLastMergeTime(portletDataContext, modifiedLayouts);
 		}
+
+		Element stagedLayoutSetElement =
+			portletDataContext.getImportDataStagedModelElement(stagedLayoutSet);
+
+		_importFaviconFileEntry(
+			portletDataContext, importedStagedLayoutSet, stagedLayoutSet,
+			stagedLayoutSetElement);
 
 		// Page priorities
 
@@ -382,6 +395,49 @@ public class StagedLayoutSetStagedModelDataHandler
 				}
 			}
 		}
+	}
+
+	private void _exportFaviconFileEntry(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet stagedLayoutSet, Element stagedLayoutSetElement)
+		throws Exception {
+
+		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
+
+		long faviconFileEntryId = layoutSet.getFaviconFileEntryId();
+
+		if (faviconFileEntryId <= 0) {
+			return;
+		}
+
+		FileEntry faviconFileEntry = null;
+
+		try {
+			faviconFileEntry = _dlAppService.getFileEntry(
+				layoutSet.getFaviconFileEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return;
+		}
+
+		if (Validator.isNull(
+				stagedLayoutSetElement.attributeValue(
+					"favicon-file-entry-uuid"))) {
+
+			stagedLayoutSetElement.addAttribute(
+				"favicon-file-entry-uuid", faviconFileEntry.getUuid());
+			stagedLayoutSetElement.addAttribute(
+				"favicon-file-entry-group-id",
+				String.valueOf(faviconFileEntry.getGroupId()));
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, stagedLayoutSet, faviconFileEntry,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 
 	private void _exportLayouts(
@@ -610,6 +666,54 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 
 		return false;
+	}
+
+	private void _importFaviconFileEntry(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet importedStagedLayoutSet,
+			StagedLayoutSet stagedLayoutSet, Element stagedLayoutSetElement)
+		throws Exception {
+
+		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
+
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
+			portletDataContext, stagedLayoutSet, DLFileEntry.class,
+			layoutSet.getFaviconFileEntryId());
+
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		long faviconFileEntryId = MapUtil.getLong(
+			fileEntryIds, layoutSet.getFaviconFileEntryId(), 0);
+
+		String faviconFileEntryUuid = stagedLayoutSetElement.attributeValue(
+			"favicon-file-entry-uuid");
+
+		if ((faviconFileEntryId == 0) &&
+			Validator.isNotNull(faviconFileEntryUuid)) {
+
+			long faviconFileEntryGroupId = GetterUtil.getLong(
+				stagedLayoutSetElement.attributeValue(
+					"favicon-file-entry-group-id"));
+
+			try {
+				FileEntry faviconFileEntry =
+					_dlAppService.getFileEntryByUuidAndGroupId(
+						faviconFileEntryUuid, faviconFileEntryGroupId);
+
+				faviconFileEntryId = faviconFileEntry.getFileEntryId();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
+
+		importedLayoutSet.setFaviconFileEntryId(faviconFileEntryId);
 	}
 
 	private void _importLogo(PortletDataContext portletDataContext) {
@@ -969,6 +1073,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	@Reference
 	private ColorSchemeFactory _colorSchemeFactory;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>

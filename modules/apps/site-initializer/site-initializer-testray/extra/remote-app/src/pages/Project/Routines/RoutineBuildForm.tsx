@@ -17,8 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
-import InputSelect from '../../../components/Input/InputSelect';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {
 	CTypePagination,
@@ -81,13 +80,13 @@ const RoutineBuildForm = () => {
 	return (
 		<Container className="container">
 			<ClayForm className="container pt-2">
-				<Input
+				<Form.Input
 					{...inputProps}
 					label={i18n.translate('name')}
 					name="name"
 				/>
 
-				<InputSelect
+				<Form.Select
 					{...inputProps}
 					label="routine"
 					name="routineId"
@@ -97,7 +96,7 @@ const RoutineBuildForm = () => {
 					}))}
 				/>
 
-				<InputSelect
+				<Form.Select
 					{...inputProps}
 					label="product-version"
 					name="productVersionId"
@@ -109,13 +108,13 @@ const RoutineBuildForm = () => {
 					)}
 				/>
 
-				<Input
+				<Form.Input
 					{...inputProps}
 					label={i18n.translate('git-hash')}
 					name="gitHash"
 				/>
 
-				<Input
+				<Form.Input
 					{...inputProps}
 					label={i18n.translate('description')}
 					name="description"

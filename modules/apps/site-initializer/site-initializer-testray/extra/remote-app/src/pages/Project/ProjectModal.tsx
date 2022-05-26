@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../components/Input';
+import Form from '../../components/Form';
 import Modal from '../../components/Modal';
 import {
 	CreateProject,
@@ -81,14 +81,14 @@ const ProjectModal: React.FC<FormModalComponent> = ({
 			)}
 			visible
 		>
-			<Input
+			<Form.Input
 				label={i18n.translate('name')}
 				name="name"
 				required
 				{...inputProps}
 			/>
 
-			<Input
+			<Form.Input
 				label={i18n.translate('description')}
 				name="description"
 				{...inputProps}

@@ -18,8 +18,7 @@ import ClayLayout from '@clayui/layout';
 import {useContext, useEffect, useState} from 'react';
 
 import {Avatar} from '../../../components/Avatar';
-import Input from '../../../components/Input';
-import InputFile from '../../../components/Input/InputFile';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {AccountContext} from '../../../context/AccountContext';
 import {UserAccount} from '../../../graphql/queries';
@@ -74,7 +73,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 
 						<ClayLayout.Col size={3} sm={12} xl={7}>
 							<ClayForm.Group className="form-group-sm">
-								<Input
+								<Form.Input
 									label={i18n.translate('first-name')}
 									name="firstname"
 									onChange={onChange}
@@ -82,7 +81,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									value={form.givenName}
 								/>
 
-								<Input
+								<Form.Input
 									label={i18n.translate('last-name')}
 									name="lastname"
 									onChange={onChange}
@@ -90,7 +89,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									value={form.familyName}
 								/>
 
-								<Input
+								<Form.Input
 									label={i18n.translate('email-address')}
 									name="emailAddress"
 									onChange={onChange}
@@ -98,7 +97,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 									value={form.emailAddress}
 								/>
 
-								<Input
+								<Form.Input
 									label={i18n.translate('screen-name')}
 									name="screeName"
 									onChange={onChange}
@@ -128,7 +127,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 
 								<br />
 
-								<InputFile
+								<Form.File
 									name="inputFile"
 									onChange={onChange}
 									required={false}

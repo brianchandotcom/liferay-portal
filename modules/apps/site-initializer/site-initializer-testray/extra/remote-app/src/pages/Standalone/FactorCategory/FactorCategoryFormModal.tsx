@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {
 	CreateFactorCategory,
@@ -81,7 +81,11 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 			)}
 			visible
 		>
-			<Input label={i18n.translate('name')} name="name" {...inputProps} />
+			<Form.Input
+				label={i18n.translate('name')}
+				name="name"
+				{...inputProps}
+			/>
 		</Modal>
 	);
 };

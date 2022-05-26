@@ -15,7 +15,10 @@
 import {useQuery} from '@apollo/client';
 import React, {useCallback} from 'react';
 
-import {BoxItem, Boxes, DualListBox} from '../../../../components/Input';
+import DualListBox, {
+	BoxItem,
+	Boxes,
+} from '../../../../components/Form/DualListBox';
 import {
 	SelectCasesParameters,
 	getSelectCasesParameters,

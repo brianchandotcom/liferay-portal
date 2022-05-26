@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import React, {useState} from 'react';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {CreateRoutine} from '../../../graphql/mutations';
 import {
@@ -64,7 +64,7 @@ const BuildForm: React.FC<BuildFormProps> = ({form, onChange}) => {
 
 	return (
 		<div>
-			<Input
+			<Form.Input
 				label={i18n.translate('name')}
 				name="name"
 				onChange={onChange}
@@ -104,14 +104,14 @@ const BuildForm: React.FC<BuildFormProps> = ({form, onChange}) => {
 				/>
 			</ClayForm.Group>
 
-			<Input
+			<Form.Input
 				label={i18n.translate('git-hash')}
 				name="gitHash"
 				onChange={onChange}
 				required
 			/>
 
-			<Input
+			<Form.Input
 				label={i18n.translate('description')}
 				name="description"
 				onChange={onChange}
@@ -160,8 +160,7 @@ const RoutineBuildModal: React.FC<RoutineBuildModalProps> = ({
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError();
 		}
 	};

@@ -20,7 +20,7 @@ import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {CreateSuite, UpdateSuite} from '../../../graphql/mutations';
 import {CreateSuiteCaseBatch} from '../../../graphql/mutations/testraySuiteCase';
@@ -120,10 +120,13 @@ const SuiteForm = () => {
 
 	return (
 		<Container className="container">
-			<Input {...inputProps} label={i18n.translate('name')} name="name" />
-
-			<Input
+			<Form.Input
+				label={i18n.translate('name')}
+				name="name"
 				{...inputProps}
+			/>
+
+			<Form.Input
 				label={i18n.translate('description')}
 				name="description"
 				required={false}

@@ -15,12 +15,9 @@
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import ClayLayout from '@clayui/layout';
-import {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
-import InputSelect from '../../../components/Input/InputSelect';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
@@ -58,25 +55,6 @@ const priorities = [...new Array(5)].map((_, index) => ({
 const descriptionTypes = Object.values(
 	DescriptionType
 ).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
-
-const FormRow: React.FC<{children: ReactNode; title: string}> = ({
-	children,
-	title,
-}) => (
-	<>
-		<ClayLayout.Row justify="start">
-			<ClayLayout.Col size={3} sm={12} xl={3}>
-				<h5 className="font-weight-normal">{title}</h5>
-			</ClayLayout.Col>
-
-			<ClayLayout.Col size={3} sm={12} xl={9}>
-				{children}
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-
-		<hr />
-	</>
-);
 
 type CaseModalProps = {
 	modal: FormModalOptions;
@@ -150,16 +128,16 @@ const CaseModal: React.FC<CaseModalProps> = ({
 		>
 			<Container>
 				<ClayForm>
-					<FormRow title={i18n.translate('case-name')}>
-						<Input
+					<Form.BaseRow title={i18n.translate('case-name')}>
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('name')}
 							name="name"
 						/>
-					</FormRow>
+					</Form.BaseRow>
 
-					<FormRow title={i18n.translate('details')}>
-						<InputSelect
+					<Form.BaseRow title={i18n.translate('details')}>
+						<Form.Select
 							{...inputProps}
 							label="priority"
 							name="priority"
@@ -167,7 +145,7 @@ const CaseModal: React.FC<CaseModalProps> = ({
 							required={false}
 						/>
 
-						<InputSelect
+						<Form.Select
 							{...inputProps}
 							label="type"
 							name="type"
@@ -179,9 +157,9 @@ const CaseModal: React.FC<CaseModalProps> = ({
 							)}
 						/>
 
-						<InputSelect
+						<Form.Select
 							{...inputProps}
-							label="main-component"
+							label={i18n.translate('main-component')}
 							name="componentId"
 							options={testrayComponents.map(
 								({id: value, name: label}) => ({
@@ -191,25 +169,25 @@ const CaseModal: React.FC<CaseModalProps> = ({
 							)}
 						/>
 
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('enter-the-case-name')}
 							name="estimatedDuration"
 							required={false}
 						/>
-					</FormRow>
+					</Form.BaseRow>
 
-					<FormRow title={i18n.translate('description')}>
+					<Form.BaseRow title={i18n.translate('description')}>
 						<ClayForm.Group className="form-group-sm">
-							<InputSelect
+							<Form.Select
 								{...inputProps}
-								label="description-type"
+								label={i18n.translate('description-type')}
 								name="descriptionType"
 								options={descriptionTypes}
 								required={false}
 							/>
 
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('description')}
 								name="description"
@@ -219,18 +197,18 @@ const CaseModal: React.FC<CaseModalProps> = ({
 						</ClayForm.Group>
 
 						<MarkdownPreview markdown={description} />
-					</FormRow>
+					</Form.BaseRow>
 
-					<FormRow title={i18n.translate('steps')}>
-						<InputSelect
+					<Form.BaseRow title={i18n.translate('steps')}>
+						<Form.Select
 							{...inputProps}
-							label="steps-type"
+							label={i18n.translate('steps-type')}
 							name="stepsType"
 							options={descriptionTypes}
 							required={false}
 						/>
 
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('steps')}
 							name="steps"
@@ -239,7 +217,7 @@ const CaseModal: React.FC<CaseModalProps> = ({
 						/>
 
 						<MarkdownPreview markdown={steps} />
-					</FormRow>
+					</Form.BaseRow>
 				</ClayForm>
 			</Container>
 		</Modal>

@@ -15,13 +15,11 @@
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import ClayLayout from '@clayui/layout';
-import {ReactNode, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
-import Input from '../../../components/Input';
-import InputSelect from '../../../components/Input/InputSelect';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import {CreateCase, UpdateCase} from '../../../graphql/mutations';
@@ -62,26 +60,6 @@ const priorities = [...new Array(5)].map((_, index) => ({
 const descriptionTypes = Object.values(
 	DescriptionType
 ).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
-
-const FormRow: React.FC<{
-	children: ReactNode;
-	separator?: boolean;
-	title: string;
-}> = ({children, separator = true, title}) => (
-	<>
-		<ClayLayout.Row justify="start">
-			<ClayLayout.Col size={3} sm={12} xl={2}>
-				<h5 className="font-weight-bold">{title}</h5>
-			</ClayLayout.Col>
-
-			<ClayLayout.Col size={3} sm={12} xl={10}>
-				{children}
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-
-		{separator && <hr />}
-	</>
-);
 
 const CaseForm = () => {
 	const {
@@ -177,16 +155,16 @@ const CaseForm = () => {
 	return (
 		<Container className="container">
 			<ClayForm className="container pt-2">
-				<FormRow title={i18n.translate('add-case')}>
-					<Input
+				<Form.BaseRow title={i18n.translate('add-case')}>
+					<Form.Input
 						{...inputProps}
 						label={i18n.translate('name')}
 						name="name"
 					/>
-				</FormRow>
+				</Form.BaseRow>
 
-				<FormRow title={i18n.translate('details')}>
-					<InputSelect
+				<Form.BaseRow title={i18n.translate('details')}>
+					<Form.Select
 						{...inputProps}
 						className="col-4"
 						label="priority"
@@ -195,7 +173,7 @@ const CaseForm = () => {
 						required={false}
 					/>
 
-					<InputSelect
+					<Form.Select
 						{...inputProps}
 						label="type"
 						name="caseTypeId"
@@ -208,7 +186,7 @@ const CaseForm = () => {
 						value={caseTypeId}
 					/>
 
-					<InputSelect
+					<Form.Select
 						{...inputProps}
 						label="main-component"
 						name="componentId"
@@ -221,20 +199,20 @@ const CaseForm = () => {
 						value={componentId}
 					/>
 
-					<Input
+					<Form.Input
 						{...inputProps}
 						className="col-4"
 						label={i18n.translate('estimed-duration')}
 						name="estimatedDuration"
 						required={false}
 					/>
-				</FormRow>
+				</Form.BaseRow>
 
-				<FormRow
+				<Form.BaseRow
 					separator={false}
 					title={i18n.translate('description')}
 				>
-					<InputSelect
+					<Form.Select
 						{...inputProps}
 						className="col-2 ml-auto"
 						defaultOption={false}
@@ -242,9 +220,9 @@ const CaseForm = () => {
 						options={descriptionTypes}
 						required={false}
 					/>
-				</FormRow>
+				</Form.BaseRow>
 
-				<Input
+				<Form.Input
 					{...inputProps}
 					name="description"
 					required={false}
@@ -255,8 +233,8 @@ const CaseForm = () => {
 
 				<hr />
 
-				<FormRow separator={false} title={i18n.translate('steps')}>
-					<InputSelect
+				<Form.BaseRow separator={false} title={i18n.translate('steps')}>
+					<Form.Select
 						{...inputProps}
 						className="col-2 ml-auto"
 						defaultOption={false}
@@ -264,9 +242,9 @@ const CaseForm = () => {
 						options={descriptionTypes}
 						required={false}
 					/>
-				</FormRow>
+				</Form.BaseRow>
 
-				<Input
+				<Form.Input
 					{...inputProps}
 					name="steps"
 					required={false}

@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useState} from 'react';
 
-import Input, {AutoComplete} from '../../components/Input';
+import Form from '../../components/Form';
 import Modal from '../../components/Modal';
 import {getBuilds, getProjects, getRoutines} from '../../graphql/queries';
 import {FormModalOptions} from '../../hooks/useFormModal';
@@ -53,21 +53,21 @@ const TestflowForm = () => {
 
 	return (
 		<>
-			<AutoComplete
+			<Form.AutoComplete
 				gqlQuery={getProjects}
 				label="Project"
 				objectName="projects"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 			/>
 
-			<AutoComplete
+			<Form.AutoComplete
 				gqlQuery={getRoutines}
 				label="Routine"
 				objectName="routines"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 			/>
 
-			<AutoComplete
+			<Form.AutoComplete
 				gqlQuery={getBuilds}
 				label="Build"
 				objectName="builds"
@@ -75,7 +75,7 @@ const TestflowForm = () => {
 				transformData={(data) => data?.Builds?.items || []}
 			/>
 
-			<Input label="Name" name="name" required />
+			<Form.Input label="Name" name="name" required />
 
 			<div className="my-4">
 				<ClayForm.Group>

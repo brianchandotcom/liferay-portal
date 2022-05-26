@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import {useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {createUserAccount, updateUserAccount} from '../../../graphql/mutations';
 import {Role, TypePagination, getLiferayRoles} from '../../../graphql/queries';
@@ -79,8 +79,7 @@ const UserForm = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		}
-		else {
+		} else {
 			newRoles = [...newRoles, Number(value)];
 		}
 
@@ -105,21 +104,21 @@ const UserForm = () => {
 
 					<ClayLayout.Col size={12} sm={12} xl={9}>
 						<ClayForm.Group className="form-group-sm">
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('first-name')}
 								name="givenName"
 								required
 							/>
 
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('last-name')}
 								name="familyName"
 								required
 							/>
 
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('email-address')}
 								name="emailAddress"
@@ -127,7 +126,7 @@ const UserForm = () => {
 								type="email"
 							/>
 
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('screen-name')}
 								name="alternateName"
@@ -147,14 +146,14 @@ const UserForm = () => {
 
 					<ClayLayout.Col size={12} sm={12} xl={9}>
 						<ClayForm.Group className="form-group-sm">
-							<Input
+							<Form.Input
 								{...inputProps}
 								label={i18n.translate('password')}
 								name="password"
 								type="password"
 							/>
 
-							<Input
+							<Form.Input
 								{...inputProps}
 								label="Confirm Password"
 								name="repassword"

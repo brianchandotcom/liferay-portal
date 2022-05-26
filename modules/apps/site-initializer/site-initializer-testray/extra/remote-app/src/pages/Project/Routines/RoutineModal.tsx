@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {CreateRoutine, UpdateRoutine} from '../../../graphql/mutations';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
@@ -83,7 +83,7 @@ const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
 			)}
 			visible
 		>
-			<Input
+			<Form.Input
 				errors={errors}
 				label={i18n.translate('name')}
 				name="name"

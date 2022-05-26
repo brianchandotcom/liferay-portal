@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {CreateCaseType, UpdateCaseType} from '../../../graphql/mutations';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
@@ -82,7 +82,11 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 			)}
 			visible
 		>
-			<Input label={i18n.translate('name')} name="name" {...inputProps} />
+			<Form.Input
+				label={i18n.translate('name')}
+				name="name"
+				{...inputProps}
+			/>
 		</Modal>
 	);
 };

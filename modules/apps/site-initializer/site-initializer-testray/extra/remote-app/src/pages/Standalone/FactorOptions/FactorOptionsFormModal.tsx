@@ -16,8 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
-import Input from '../../../components/Input';
-import InputSelect from '../../../components/Input/InputSelect';
+import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
 import {
 	CreateFactorOption,
@@ -100,10 +99,14 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 			)}
 			visible
 		>
-			<Input label={i18n.translate('name')} name="name" {...inputProps} />
+			<Form.Input
+				label={i18n.translate('name')}
+				name="name"
+				{...inputProps}
+			/>
 
-			<InputSelect
-				label="Category"
+			<Form.Select
+				label={i18n.translate('category')}
 				name="category"
 				options={factorCategories.map(({id: value, name: label}) => ({
 					label,

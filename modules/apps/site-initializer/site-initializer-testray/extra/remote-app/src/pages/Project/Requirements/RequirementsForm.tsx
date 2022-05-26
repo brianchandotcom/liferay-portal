@@ -15,13 +15,10 @@
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import ClayLayout from '@clayui/layout';
-import {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
-import Input from '../../../components/Input';
-import InputSelect from '../../../components/Input/InputSelect';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import {CreateRequirement, UpdateRequirement} from '../../../graphql/mutations';
@@ -58,25 +55,6 @@ const descriptionTypes = [
 		value: 'plaintext',
 	},
 ];
-
-const FormRow: React.FC<{children: ReactNode; title: string}> = ({
-	children,
-	title,
-}) => (
-	<>
-		<ClayLayout.Row justify="start">
-			<ClayLayout.Col size={3} sm={12} xl={3}>
-				<h5 className="font-weight-normal">{title}</h5>
-			</ClayLayout.Col>
-
-			<ClayLayout.Col size={3} sm={12} xl={9}>
-				{children}
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-
-		<hr />
-	</>
-);
 
 const RequirementsForm: React.FC = () => {
 	const {
@@ -129,33 +107,33 @@ const RequirementsForm: React.FC = () => {
 	return (
 		<Container className="container" title="">
 			<ClayForm>
-				<FormRow title={i18n.translate('requirements')}>
+				<Form.BaseRow title={i18n.translate('requirements')}>
 					<ClayForm.Group className="form-group-sm">
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('key')}
 							name="key"
 						/>
 
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('summary')}
 							name="summary"
 						/>
 
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('link-url')}
 							name="linkURL"
 						/>
 
-						<Input
+						<Form.Input
 							{...inputProps}
 							label={i18n.translate('link-title')}
 							name="linkTitle"
 						/>
 
-						<InputSelect
+						<Form.Select
 							{...inputProps}
 							label="main-component"
 							name="componentId"
@@ -168,16 +146,16 @@ const RequirementsForm: React.FC = () => {
 							value={componentId}
 						/>
 					</ClayForm.Group>
-				</FormRow>
+				</Form.BaseRow>
 
-				<FormRow title={i18n.translate('description')}>
-					<InputSelect
+				<Form.BaseRow title={i18n.translate('description')}>
+					<Form.Select
 						{...inputProps}
 						name="descriptionType"
 						options={descriptionTypes}
 					/>
 
-					<Input
+					<Form.Input
 						{...inputProps}
 						name="description"
 						required
@@ -185,7 +163,7 @@ const RequirementsForm: React.FC = () => {
 					/>
 
 					<MarkdownPreview markdown={descriptionType} />
-				</FormRow>
+				</Form.BaseRow>
 
 				<div>
 					<ClayButton.Group spaced>

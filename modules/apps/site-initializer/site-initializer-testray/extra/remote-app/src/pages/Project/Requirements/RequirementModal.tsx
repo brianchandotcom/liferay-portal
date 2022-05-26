@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {ReactNode, useEffect, useState} from 'react';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
@@ -94,7 +94,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 			<ClayForm>
 				<FormRow title={i18n.translate('requirements')}>
 					<ClayForm.Group className="form-group-sm">
-						<Input
+						<Form.Input
 							label={i18n.translate('key')}
 							name="key"
 							onChange={onChange}
@@ -102,7 +102,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 							value={form.key}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('summary')}
 							name="summary"
 							onChange={onChange}
@@ -110,7 +110,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 							value={form.summary}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('link-url')}
 							name="linkURL"
 							onChange={onChange}
@@ -118,7 +118,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 							value={form.linkURL}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('link-title')}
 							name="linkTitle"
 							onChange={onChange}
@@ -158,7 +158,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 							value={form.descriptionType}
 						/>
 
-						<Input
+						<Form.Input
 							name="description"
 							onChange={onChange}
 							required

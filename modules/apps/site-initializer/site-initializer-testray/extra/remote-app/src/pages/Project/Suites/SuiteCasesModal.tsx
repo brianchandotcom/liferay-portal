@@ -16,7 +16,10 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import React, {useCallback, useState} from 'react';
 
-import {BoxItem, Boxes, DualListBox} from '../../../components/Input';
+import DualListBox, {
+	BoxItem,
+	Boxes,
+} from '../../../components/Form/DualListBox';
 import Modal from '../../../components/Modal';
 import {
 	SelectCasesParameters,

@@ -18,7 +18,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useEffect, useState} from 'react';
 
-import Input from '../../../components/Input';
+import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import Modal from '../../../components/Modal';
 import {
@@ -66,7 +66,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 
 				<ClayLayout.Col size={12} sm={12} xl={9}>
 					<ClayForm.Group className="form-group-sm">
-						<Input
+						<Form.Input
 							label={i18n.translate('first-name')}
 							name="givenName"
 							onChange={onChange}
@@ -74,7 +74,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 							value={form.givenName}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('last-name')}
 							name="familyName"
 							onChange={onChange}
@@ -82,7 +82,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 							value={form.familyName}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('email-address')}
 							name="emailAddress"
 							onChange={onChange}
@@ -91,7 +91,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 							value={form.emailAddress}
 						/>
 
-						<Input
+						<Form.Input
 							label={i18n.translate('screen-name')}
 							name="alternateName"
 							onChange={onChange}
@@ -113,7 +113,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 
 				<ClayLayout.Col size={12} sm={12} xl={9}>
 					<ClayForm.Group className="form-group-sm">
-						<Input
+						<Form.Input
 							label={i18n.translate('password')}
 							name="password"
 							onChange={onChange}
@@ -122,7 +122,7 @@ const UserForm: React.FC<UserFormProps> = ({form, onChange}) => {
 							value={form.password}
 						/>
 
-						<Input
+						<Form.Input
 							label="Confirm Password"
 							name="repassword"
 							onChange={onChange}
@@ -192,14 +192,12 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
 				(variables as any).userAccountId = form.id;
 
 				await onUpdateUserAccount({variables});
-			}
-			else {
+			} else {
 				await onCreateUserAccount({variables});
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError();
 		}
 	};

@@ -230,6 +230,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectEmptyLinesInUpgradeProcess() throws Exception {
+		test("IncorrectEmptyLinesInUpgradeProcess.testjava");
+	}
+
+	@Test
 	public void testIncorrectOperatorOrder() throws Exception {
 		test(
 			"IncorrectOperatorOrder.testjava",
@@ -399,11 +404,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"MissingEmptyLinesBeforeMethodCalls.testjava",
 			"There should be an empty line before 'portletPreferences.store'",
 			26);
-	}
-
-	@Test
-	public void testMissingEmptyLinesMiddleDBProcessMethods() throws Exception {
-		test("MissingEmptyLinesMiddleDBProcessMethodsUpgradeProcess.testjava");
 	}
 
 	@Test

@@ -16,9 +16,15 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
@@ -28,23 +34,18 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.ALL_PRODUCT_INSTANCES,
 	service = FDSView.class
 )
-public class AllSkusTableFDSView extends BaseProductTableFDSView {
+public class AllSkusTableFDSView extends BaseTableFDSView {
 
 	@Override
-	protected FDSTableSchemaBuilder addActionLinkFields(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder) {
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
 			"sku", "sku",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink"));
-	}
-
-	@Override
-	protected FDSTableSchemaBuilder addFields(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder) {
-
-		return fdsTableSchemaBuilder.add(
+				"actionLink")
+		).add(
 			"productName", "product"
 		).add(
 			"options", "options"
@@ -56,7 +57,10 @@ public class AllSkusTableFDSView extends BaseProductTableFDSView {
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"label")
-		);
+		).build();
 	}
+
+	@Reference
+	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
 
 }

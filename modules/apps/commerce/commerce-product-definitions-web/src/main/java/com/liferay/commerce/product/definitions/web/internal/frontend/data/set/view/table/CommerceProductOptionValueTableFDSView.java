@@ -16,9 +16,15 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -29,20 +35,33 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_OPTION_VALUES,
 	service = FDSView.class
 )
-public class CommerceProductOptionValueTableFDSView
-	extends BaseCommerceProductOptionValueTableFDSView {
+public class CommerceProductOptionValueTableFDSView extends BaseTableFDSView {
 
 	@Override
-	protected FDSTableSchemaBuilder addFields(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder) {
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).add(
+			"preselected", "default",
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setActionId("updatePreselected");
+				fdsTableSchemaField.setContentRenderer("actionLink");
+			}
+		).add(
 			"key", "key"
 		).add(
 			"position", "position"
 		).add(
 			"sku", "linked-product"
-		);
+		).build();
 	}
+
+	@Reference
+	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
 
 }

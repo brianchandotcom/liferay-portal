@@ -196,13 +196,22 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that the Validation tab is available"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewValidationTab {
 		property portal.acceptance = "true";
 
-		// TODO LPS-153546 CanViewValidationTab pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153546",
+			objectName = "CustomObject153546",
+			pluralLabelName = "Custom Objects 153546");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153546");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectAdmin.viewSelectedTabOnObject(selectedTab = "Validations");
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"

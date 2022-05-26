@@ -1134,6 +1134,14 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
 	}
 
+	macro viewSelectedTabOnObject {
+		Refresh();
+
+		AssertElementPresent(
+			key_selectedTab = "${selectedTab}",
+			locator1 = "ObjectAdmin#VIEW_SELECTED_TAB_ON_OBJECT");
+	}
+
 	macro viewSystemObject {
 		AssertElementPresent(
 			key_name = "${name}",

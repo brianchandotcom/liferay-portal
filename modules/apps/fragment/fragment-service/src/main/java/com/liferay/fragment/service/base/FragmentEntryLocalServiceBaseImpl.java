@@ -974,6 +974,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		draftFragmentEntry.setIcon(publishedFragmentEntry.getIcon());
 		draftFragmentEntry.setPreviewFileEntryId(
 			publishedFragmentEntry.getPreviewFileEntryId());
+		draftFragmentEntry.setProperties(
+			publishedFragmentEntry.getProperties());
 		draftFragmentEntry.setReadOnly(publishedFragmentEntry.getReadOnly());
 		draftFragmentEntry.setType(publishedFragmentEntry.getType());
 		draftFragmentEntry.setLastPublishDate(

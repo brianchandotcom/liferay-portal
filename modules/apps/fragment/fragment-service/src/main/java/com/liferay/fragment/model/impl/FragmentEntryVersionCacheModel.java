@@ -78,7 +78,7 @@ public class FragmentEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -124,6 +124,8 @@ public class FragmentEntryVersionCacheModel
 		sb.append(icon);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", properties=");
+		sb.append(properties);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
 		sb.append(", type=");
@@ -241,6 +243,14 @@ public class FragmentEntryVersionCacheModel
 		}
 
 		fragmentEntryVersionImpl.setPreviewFileEntryId(previewFileEntryId);
+
+		if (properties == null) {
+			fragmentEntryVersionImpl.setProperties("");
+		}
+		else {
+			fragmentEntryVersionImpl.setProperties(properties);
+		}
+
 		fragmentEntryVersionImpl.setReadOnly(readOnly);
 		fragmentEntryVersionImpl.setType(type);
 
@@ -310,6 +320,7 @@ public class FragmentEntryVersionCacheModel
 		icon = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
+		properties = objectInput.readUTF();
 
 		readOnly = objectInput.readBoolean();
 
@@ -413,6 +424,13 @@ public class FragmentEntryVersionCacheModel
 
 		objectOutput.writeLong(previewFileEntryId);
 
+		if (properties == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(properties);
+		}
+
 		objectOutput.writeBoolean(readOnly);
 
 		objectOutput.writeInt(type);
@@ -454,6 +472,7 @@ public class FragmentEntryVersionCacheModel
 	public String configuration;
 	public String icon;
 	public long previewFileEntryId;
+	public String properties;
 	public boolean readOnly;
 	public int type;
 	public long lastPublishDate;

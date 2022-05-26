@@ -15111,6 +15111,7 @@ public class FragmentEntryPersistenceImpl
 		ctStrictColumnNames.add("configuration");
 		ctStrictColumnNames.add("icon");
 		ctStrictColumnNames.add("previewFileEntryId");
+		ctStrictColumnNames.add("properties");
 		ctStrictColumnNames.add("readOnly");
 		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("lastPublishDate");

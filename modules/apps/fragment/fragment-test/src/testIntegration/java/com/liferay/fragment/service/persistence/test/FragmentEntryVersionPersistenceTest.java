@@ -169,6 +169,8 @@ public class FragmentEntryVersionPersistenceTest {
 		newFragmentEntryVersion.setPreviewFileEntryId(
 			RandomTestUtil.nextLong());
 
+		newFragmentEntryVersion.setProperties(RandomTestUtil.randomString());
+
 		newFragmentEntryVersion.setReadOnly(RandomTestUtil.randomBoolean());
 
 		newFragmentEntryVersion.setType(RandomTestUtil.nextInt());
@@ -259,6 +261,9 @@ public class FragmentEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getPreviewFileEntryId(),
 			newFragmentEntryVersion.getPreviewFileEntryId());
+		Assert.assertEquals(
+			existingFragmentEntryVersion.getProperties(),
+			newFragmentEntryVersion.getProperties());
 		Assert.assertEquals(
 			existingFragmentEntryVersion.isReadOnly(),
 			newFragmentEntryVersion.isReadOnly());
@@ -554,9 +559,10 @@ public class FragmentEntryVersionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "cacheable", true, "icon",
-			true, "previewFileEntryId", true, "readOnly", true, "type", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			true, "previewFileEntryId", true, "properties", true, "readOnly",
+			true, "type", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -913,6 +919,8 @@ public class FragmentEntryVersionPersistenceTest {
 		fragmentEntryVersion.setIcon(RandomTestUtil.randomString());
 
 		fragmentEntryVersion.setPreviewFileEntryId(RandomTestUtil.nextLong());
+
+		fragmentEntryVersion.setProperties(RandomTestUtil.randomString());
 
 		fragmentEntryVersion.setReadOnly(RandomTestUtil.randomBoolean());
 

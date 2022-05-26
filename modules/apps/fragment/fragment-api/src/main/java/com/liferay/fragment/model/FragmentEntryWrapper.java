@@ -66,6 +66,7 @@ public class FragmentEntryWrapper
 		attributes.put("configuration", getConfiguration());
 		attributes.put("icon", getIcon());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("properties", getProperties());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -204,6 +205,12 @@ public class FragmentEntryWrapper
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
+		}
+
+		String properties = (String)attributes.get("properties");
+
+		if (properties != null) {
+			setProperties(properties);
 		}
 
 		Boolean readOnly = (Boolean)attributes.get("readOnly");
@@ -474,6 +481,16 @@ public class FragmentEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the properties of this fragment entry.
+	 *
+	 * @return the properties of this fragment entry
+	 */
+	@Override
+	public String getProperties() {
+		return model.getProperties();
 	}
 
 	/**
@@ -912,6 +929,16 @@ public class FragmentEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the properties of this fragment entry.
+	 *
+	 * @param properties the properties of this fragment entry
+	 */
+	@Override
+	public void setProperties(String properties) {
+		model.setProperties(properties);
 	}
 
 	/**

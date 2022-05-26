@@ -83,10 +83,10 @@ public class FragmentEntryVersionModelImpl
 		{"css", Types.CLOB}, {"html", Types.CLOB}, {"js", Types.CLOB},
 		{"cacheable", Types.BOOLEAN}, {"configuration", Types.CLOB},
 		{"icon", Types.VARCHAR}, {"previewFileEntryId", Types.BIGINT},
-		{"readOnly", Types.BOOLEAN}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"properties", Types.VARCHAR}, {"readOnly", Types.BOOLEAN},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -115,6 +115,7 @@ public class FragmentEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("configuration", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("icon", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("properties", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -125,7 +126,7 @@ public class FragmentEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentEntryVersionId, ctCollectionId))";
+		"create table FragmentEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,previewFileEntryId LONG,properties VARCHAR(75) null,readOnly BOOLEAN,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentEntryVersionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentEntryVersion";
@@ -444,6 +445,12 @@ public class FragmentEntryVersionModelImpl
 			(BiConsumer<FragmentEntryVersion, Long>)
 				FragmentEntryVersion::setPreviewFileEntryId);
 		attributeGetterFunctions.put(
+			"properties", FragmentEntryVersion::getProperties);
+		attributeSetterBiConsumers.put(
+			"properties",
+			(BiConsumer<FragmentEntryVersion, String>)
+				FragmentEntryVersion::setProperties);
+		attributeGetterFunctions.put(
 			"readOnly", FragmentEntryVersion::getReadOnly);
 		attributeSetterBiConsumers.put(
 			"readOnly",
@@ -515,6 +522,7 @@ public class FragmentEntryVersionModelImpl
 		fragmentEntry.setConfiguration(getConfiguration());
 		fragmentEntry.setIcon(getIcon());
 		fragmentEntry.setPreviewFileEntryId(getPreviewFileEntryId());
+		fragmentEntry.setProperties(getProperties());
 		fragmentEntry.setReadOnly(getReadOnly());
 		fragmentEntry.setType(getType());
 		fragmentEntry.setLastPublishDate(getLastPublishDate());
@@ -998,6 +1006,25 @@ public class FragmentEntryVersionModelImpl
 	}
 
 	@Override
+	public String getProperties() {
+		if (_properties == null) {
+			return "";
+		}
+		else {
+			return _properties;
+		}
+	}
+
+	@Override
+	public void setProperties(String properties) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_properties = properties;
+	}
+
+	@Override
 	public boolean getReadOnly() {
 		return _readOnly;
 	}
@@ -1303,6 +1330,7 @@ public class FragmentEntryVersionModelImpl
 		fragmentEntryVersionImpl.setConfiguration(getConfiguration());
 		fragmentEntryVersionImpl.setIcon(getIcon());
 		fragmentEntryVersionImpl.setPreviewFileEntryId(getPreviewFileEntryId());
+		fragmentEntryVersionImpl.setProperties(getProperties());
 		fragmentEntryVersionImpl.setReadOnly(isReadOnly());
 		fragmentEntryVersionImpl.setType(getType());
 		fragmentEntryVersionImpl.setLastPublishDate(getLastPublishDate());
@@ -1365,6 +1393,8 @@ public class FragmentEntryVersionModelImpl
 			this.<String>getColumnOriginalValue("icon"));
 		fragmentEntryVersionImpl.setPreviewFileEntryId(
 			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		fragmentEntryVersionImpl.setProperties(
+			this.<String>getColumnOriginalValue("properties"));
 		fragmentEntryVersionImpl.setReadOnly(
 			this.<Boolean>getColumnOriginalValue("readOnly"));
 		fragmentEntryVersionImpl.setType(
@@ -1583,6 +1613,14 @@ public class FragmentEntryVersionModelImpl
 		fragmentEntryVersionCacheModel.previewFileEntryId =
 			getPreviewFileEntryId();
 
+		fragmentEntryVersionCacheModel.properties = getProperties();
+
+		String properties = fragmentEntryVersionCacheModel.properties;
+
+		if ((properties != null) && (properties.length() == 0)) {
+			fragmentEntryVersionCacheModel.properties = null;
+		}
+
 		fragmentEntryVersionCacheModel.readOnly = isReadOnly();
 
 		fragmentEntryVersionCacheModel.type = getType();
@@ -1736,6 +1774,7 @@ public class FragmentEntryVersionModelImpl
 	private String _configuration;
 	private String _icon;
 	private long _previewFileEntryId;
+	private String _properties;
 	private boolean _readOnly;
 	private int _type;
 	private Date _lastPublishDate;
@@ -1797,6 +1836,7 @@ public class FragmentEntryVersionModelImpl
 		_columnOriginalValues.put("configuration", _configuration);
 		_columnOriginalValues.put("icon", _icon);
 		_columnOriginalValues.put("previewFileEntryId", _previewFileEntryId);
+		_columnOriginalValues.put("properties", _properties);
 		_columnOriginalValues.put("readOnly", _readOnly);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
@@ -1872,19 +1912,21 @@ public class FragmentEntryVersionModelImpl
 
 		columnBitmasks.put("previewFileEntryId", 2097152L);
 
-		columnBitmasks.put("readOnly", 4194304L);
+		columnBitmasks.put("properties", 4194304L);
 
-		columnBitmasks.put("type_", 8388608L);
+		columnBitmasks.put("readOnly", 8388608L);
 
-		columnBitmasks.put("lastPublishDate", 16777216L);
+		columnBitmasks.put("type_", 16777216L);
 
-		columnBitmasks.put("status", 33554432L);
+		columnBitmasks.put("lastPublishDate", 33554432L);
 
-		columnBitmasks.put("statusByUserId", 67108864L);
+		columnBitmasks.put("status", 67108864L);
 
-		columnBitmasks.put("statusByUserName", 134217728L);
+		columnBitmasks.put("statusByUserId", 134217728L);
 
-		columnBitmasks.put("statusDate", 268435456L);
+		columnBitmasks.put("statusByUserName", 268435456L);
+
+		columnBitmasks.put("statusDate", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

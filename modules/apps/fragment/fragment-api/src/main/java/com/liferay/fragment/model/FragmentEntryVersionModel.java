@@ -425,6 +425,21 @@ public interface FragmentEntryVersionModel
 	public void setPreviewFileEntryId(long previewFileEntryId);
 
 	/**
+	 * Returns the properties of this fragment entry version.
+	 *
+	 * @return the properties of this fragment entry version
+	 */
+	@AutoEscape
+	public String getProperties();
+
+	/**
+	 * Sets the properties of this fragment entry version.
+	 *
+	 * @param properties the properties of this fragment entry version
+	 */
+	public void setProperties(String properties);
+
+	/**
 	 * Returns the read only of this fragment entry version.
 	 *
 	 * @return the read only of this fragment entry version

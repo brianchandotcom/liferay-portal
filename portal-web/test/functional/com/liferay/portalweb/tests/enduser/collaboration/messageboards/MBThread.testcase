@@ -560,12 +560,22 @@ definition {
 	}
 
 	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanPublishThreadWithTag {
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			tagName = "Test Tag Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 
-		// TODO LPS-149484 CanPublishThreadWithTag pending implementation
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
 
+		AssertElementPresent(locator1 = "AP#METADATA_TAGS");
 	}
 
 	@priority = "5"

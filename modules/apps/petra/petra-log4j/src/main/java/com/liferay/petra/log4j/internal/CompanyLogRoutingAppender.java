@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,8 +36,11 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.appender.rolling.DirectWriteRolloverStrategy;
+import org.apache.logging.log4j.core.appender.rolling.PatternProcessor;
 import org.apache.logging.log4j.core.appender.rolling.RolloverStrategy;
 import org.apache.logging.log4j.core.appender.rolling.TriggeringPolicy;
+import org.apache.logging.log4j.core.appender.rolling.action.Action;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
@@ -192,8 +196,47 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		builder.withFilePermissions(_filePermissions);
 		builder.withImmediateFlush(_immediateFlush);
 		builder.withLocking(_locking);
-		builder.withStrategy(_rolloverStrategy);
 		builder.withPolicy(_triggeringPolicy);
+
+		if (_rolloverStrategy instanceof DirectWriteRolloverStrategy) {
+			DirectWriteRolloverStrategy directWriteRolloverStrategy =
+				(DirectWriteRolloverStrategy)_rolloverStrategy;
+
+			DirectWriteRolloverStrategy.Builder
+				directWriteRolloverStrategyBuilder =
+					DirectWriteRolloverStrategy.newBuilder();
+
+			directWriteRolloverStrategyBuilder.withMaxFiles(
+				String.valueOf(directWriteRolloverStrategy.getMaxFiles()));
+			directWriteRolloverStrategyBuilder.withCompressionLevelStr(
+				String.valueOf(
+					directWriteRolloverStrategy.getCompressionLevel()));
+			directWriteRolloverStrategyBuilder.withStopCustomActionsOnError(
+				directWriteRolloverStrategy.isStopCustomActionsOnError());
+
+			List<Action> customActions =
+				directWriteRolloverStrategy.getCustomActions();
+
+			directWriteRolloverStrategyBuilder.withCustomActions(
+				customActions.toArray(new Action[0]));
+
+			PatternProcessor patternProcessor =
+				directWriteRolloverStrategy.getTempCompressedFilePattern();
+
+			if (patternProcessor != null) {
+				directWriteRolloverStrategyBuilder.
+					withTempCompressedFilePattern(
+						patternProcessor.getPattern());
+			}
+
+			directWriteRolloverStrategyBuilder.withConfig(
+				loggerContext.getConfiguration());
+
+			builder.withStrategy(directWriteRolloverStrategyBuilder.build());
+		}
+		else {
+			builder.withStrategy(_rolloverStrategy);
+		}
 
 		RollingFileAppender rollingFileAppender = builder.build();
 

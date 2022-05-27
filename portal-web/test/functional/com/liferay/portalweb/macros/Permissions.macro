@@ -232,8 +232,6 @@ definition {
 	}
 
 	macro setUpRegRoleLoginUserCP {
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(roleTitle = "");
-
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
@@ -344,8 +342,6 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		Portlet.waitForForm();
-
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(roleTitle = "");
 
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",

@@ -180,22 +180,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/NotificationQueueEntry"
             tags: ["NotificationQueueEntry"]
-    "/notification-queue-entry/{notificationQueueEntryId}/resend":
-        put:
-            operationId: putNotificationQueueEntryResend
-            parameters:
-                - in: path
-                  name: notificationQueueEntryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["NotificationQueueEntry"]
     "/notification-template/{notificationTemplateId}":
         delete:
             operationId: deleteNotificationTemplate

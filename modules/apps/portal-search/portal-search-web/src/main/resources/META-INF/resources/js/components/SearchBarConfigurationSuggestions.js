@@ -20,6 +20,11 @@ import React, {useState} from 'react';
 
 import FieldList from './FieldList';
 
+const CONTRIBUTORS = {
+	BASIC: 'basic',
+	BLUEPRINT: 'blueprint',
+};
+
 const DEFAULT_ATTRIBUTES = {
 	blueprintKey: '',
 	fields: [],
@@ -36,7 +41,7 @@ const DEFAULT_ATTRIBUTES = {
  */
 const removeEmptyFields = (fields) =>
 	fields.filter(({attributes, contributorName, displayGroupName, size}) => {
-		if (contributorName === 'basic') {
+		if (contributorName === CONTRIBUTORS.BASIC) {
 			return displayGroupName && size;
 		}
 
@@ -56,7 +61,6 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 			value: field,
 		}))
 	);
-
 	const [touched, setTouched] = useState({
 		blueprintKey: false,
 		displayGroupName: false,
@@ -78,7 +82,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 	};
 
 	const _handleChangeContributorName = (event) => {
-		if (event.target.value === 'basic') {
+		if (event.target.value === CONTRIBUTORS.BASIC) {
 			onReplace({
 				contributorName: event.target.value,
 				displayGroupName: value.displayGroupName,
@@ -95,19 +99,9 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 		}
 	};
 
-	const _handleChangeMultiSelect = (newValue) => {
-		onChange({
-			attributes: {
-				...value.attributes,
-				fields: newValue.map((item) => item.value),
-			},
-		});
-		setMultiSelectItems(newValue);
-	};
-
-	const _handleBlurMultiSelect = () => {
+	const _handleMultiSelectBlur = () => {
 		if (multiSelectValue) {
-			_handleChangeMultiSelect([
+			_handleMultiSelectChange([
 				...multiSelectItems,
 				{
 					label: multiSelectValue,
@@ -117,6 +111,16 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 
 			setMultiSelectValue('');
 		}
+	};
+
+	const _handleMultiSelectChange = (newValue) => {
+		onChange({
+			attributes: {
+				...value.attributes,
+				fields: newValue.map((item) => item.value),
+			},
+		});
+		setMultiSelectItems(newValue);
 	};
 
 	return (
@@ -190,7 +194,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 				</ClayInput.GroupItem>
 			</div>
 
-			{value.contributorName === 'blueprint' && (
+			{value.contributorName === CONTRIBUTORS.BLUEPRINT && (
 				<>
 					<div className="form-group-autofit">
 						<ClayInput.GroupItem
@@ -278,9 +282,9 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 
 							<ClayMultiSelect
 								items={multiSelectItems}
-								onBlur={_handleBlurMultiSelect}
+								onBlur={_handleMultiSelectBlur}
 								onChange={setMultiSelectValue}
-								onItemsChange={_handleChangeMultiSelect}
+								onItemsChange={_handleMultiSelectChange}
 								value={multiSelectValue}
 							/>
 						</ClayInput.GroupItem>
@@ -310,14 +314,14 @@ function SearchBarConfigurationSuggestions({
 
 	const _getContributorOptions = (index) => {
 		const indexOfBasic = suggestionsContributorConfiguration.findIndex(
-			(value) => value.contributorName === 'basic'
+			(value) => value.contributorName === CONTRIBUTORS.BASIC
 		);
 
 		if (indexOfBasic > -1 && index !== indexOfBasic) {
 			return (
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value="blueprint"
+					value={CONTRIBUTORS.BLUEPRINT}
 				/>
 			);
 		}
@@ -326,12 +330,12 @@ function SearchBarConfigurationSuggestions({
 			<>
 				<ClaySelect.Option
 					label={Liferay.Language.get('basic')}
-					value="basic"
+					value={CONTRIBUTORS.BASIC}
 				/>
 
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value="blueprint"
+					value={CONTRIBUTORS.BLUEPRINT}
 				/>
 			</>
 		);
@@ -340,19 +344,19 @@ function SearchBarConfigurationSuggestions({
 	const _getDefaultValue = () => {
 		if (
 			suggestionsContributorConfiguration.some(
-				(config) => config.contributorName === 'basic'
+				(config) => config.contributorName === CONTRIBUTORS.BASIC
 			)
 		) {
 			return {
 				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: 'blueprint',
+				contributorName: CONTRIBUTORS.BLUEPRINT,
 				displayGroupName: '',
 				size: '',
 			};
 		}
 
 		return {
-			contributorName: 'basic',
+			contributorName: CONTRIBUTORS.BASIC,
 			displayGroupName: '',
 			size: '',
 		};

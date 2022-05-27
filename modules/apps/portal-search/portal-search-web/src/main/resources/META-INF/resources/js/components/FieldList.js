@@ -114,10 +114,10 @@ function Field({children, index, onDelete}) {
 
 function FieldList({
 	addButtonLabel = Liferay.Language.get('add-option'),
-	value,
 	defaultValue = {},
-	renderInputs,
 	onChange,
+	renderInputs,
+	value,
 }) {
 	const idCounterRef = useRef(10000); // Starts at 10000 to avoid conflicts with existing fields.
 

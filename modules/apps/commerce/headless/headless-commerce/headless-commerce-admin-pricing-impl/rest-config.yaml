@@ -6,6 +6,7 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Pricing"
 author: "Zoltán Takács"
 clientDir: "../headless-commerce-admin-pricing-client/src/main/java"
+disabledBatchSchemaNames: ["DiscountAccount", "DiscountAccountGroup", "DiscountCategory", "DiscountChannel", "DiscountOrderType", "DiscountProduct", "DiscountProductGroup", "DiscountRule", "DiscountSku", "PriceListAccount", "PriceListAccountGroup", "PriceListChannel", "PriceListDiscount", "PriceListOrderType", "PriceModifier", "PriceModifierCategory", "PriceModifierProduct", "PriceModifierProductGroup", "TierPrice"]
 forcePredictableSchemaPropertyName: false
 liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-pricing-test/src/testIntegration/java"

@@ -23,9 +23,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -37,13 +35,13 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -99,12 +97,10 @@ public class ContentPageLayoutEditorDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageLayoutEditorDisplayContext(
-		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererController fragmentRendererController,
+		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FragmentRendererTracker fragmentRendererTracker,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
@@ -117,9 +113,8 @@ public class ContentPageLayoutEditorDisplayContext
 		StagingGroupHelper stagingGroupHelper) {
 
 		super(
-			commentManager, contentPageEditorSidebarPanels,
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererController,
+			contentPageEditorSidebarPanels,
+			fragmentCollectionContributorTracker, fragmentEntryLinkManager,
 			fragmentRendererTracker, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse,

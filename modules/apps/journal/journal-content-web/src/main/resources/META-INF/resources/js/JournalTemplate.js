@@ -18,6 +18,7 @@ import {
 	fetch,
 	openSelectionModal,
 	openToast,
+	toggleRadio,
 } from 'frontend-js-web';
 
 export default function ({
@@ -127,13 +128,13 @@ export default function ({
 		),
 	];
 
-	Liferay.Util.toggleRadio(
+	toggleRadio(
 		`${namespace}ddmTemplateTypeCustom`,
 		`${namespace}customDDMTemplateContainer`,
 		null
 	);
 
-	Liferay.Util.toggleRadio(
+	toggleRadio(
 		`${namespace}ddmTemplateTypeDefault`,
 		null,
 		`${namespace}customDDMTemplateContainer`

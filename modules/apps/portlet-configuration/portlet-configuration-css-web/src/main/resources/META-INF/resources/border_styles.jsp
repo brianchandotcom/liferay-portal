@@ -24,8 +24,8 @@
 		<aui:fieldset label="border-width">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' data-inputselector=".same-border-width" inlineLabel="right" label="same-for-all" labelCssClass="simple-toggle-switch" name="useForAllWidth" type="toggle-switch" />
 
-			<span class="field-row">
-				<aui:input inlineField="<%= true %>" label="top" name="borderWidthTop" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("top", "value") %>' />
+			<span class="align-items-end d-flex">
+				<aui:input inlineField="<%= true %>" label="top" name="borderWidthTop" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("top", "value") %>' wrapperCssClass="pr-2" />
 
 				<aui:select inlineField="<%= true %>" label="" name="borderWidthTopUnit" title="top-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("top", "unit"), "%") %>' />
@@ -33,8 +33,8 @@
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("top", "unit"), "em") %>' />
 				</aui:select>
 			</span>
-			<span class="field-row">
-				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="right" name="borderWidthRight" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "value") %>' />
+			<span class="align-items-end d-flex">
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="right" name="borderWidthRight" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "value") %>' wrapperCssClass="pr-2" />
 
 				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthRightUnit" title="right-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "unit"), "%") %>' />
@@ -42,8 +42,8 @@
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("right", "unit"), "em") %>' />
 				</aui:select>
 			</span>
-			<span class="field-row">
-				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="bottom" name="borderWidthBottom" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "value") %>' />
+			<span class="align-items-end d-flex">
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="bottom" name="borderWidthBottom" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "value") %>' wrapperCssClass="pr-2" />
 
 				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthBottomUnit" title="bottom-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "unit"), "%") %>' />
@@ -51,8 +51,8 @@
 					<aui:option label="em" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("bottom", "unit"), "em") %>' />
 				</aui:select>
 			</span>
-			<span class="field-row">
-				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="left" name="borderWidthLeft" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "value") %>' />
+			<span class="align-items-end d-flex">
+				<aui:input cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="left" name="borderWidthLeft" value='<%= portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "value") %>' wrapperCssClass="pr-2" />
 
 				<aui:select cssClass="same-border-width" disabled='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' inlineField="<%= true %>" label="" name="borderWidthLeftUnit" title="left-border-unit">
 					<aui:option label="%" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderWidthProperty("left", "unit"), "%") %>' />

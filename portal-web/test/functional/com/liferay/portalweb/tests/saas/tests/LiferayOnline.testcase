@@ -11,9 +11,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.firstLoginPG();
 	}
 
 	tearDown {

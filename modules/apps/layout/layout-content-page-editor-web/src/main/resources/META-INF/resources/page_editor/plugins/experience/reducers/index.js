@@ -12,6 +12,7 @@
  * details.
  */
 
+import {INIT} from '../../../app/actions/types';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
@@ -60,6 +61,13 @@ const reducer = (state, action) => {
 				availableSegmentsExperiences:
 					action.payload.availableSegmentsExperiences,
 			});
+			break;
+
+		case INIT:
+			nextState = {
+				...state,
+				loadedSegmentsExperiences: [state.segmentsExperienceId],
+			};
 			break;
 		default:
 			break;

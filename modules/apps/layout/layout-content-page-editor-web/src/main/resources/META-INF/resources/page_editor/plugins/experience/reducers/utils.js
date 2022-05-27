@@ -87,6 +87,10 @@ function storeNewLayoutData(state, segmentsExperienceId, layoutData) {
 function selectExperience(state, experienceId) {
 	return {
 		...state,
+		loadedSegmentsExperiences: [
+			...state.loadedSegmentsExperiences,
+			experienceId,
+		],
 		segmentsExperienceId: experienceId,
 	};
 }

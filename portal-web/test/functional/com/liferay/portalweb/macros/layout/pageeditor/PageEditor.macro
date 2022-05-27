@@ -2196,6 +2196,69 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
+	macro editFormContainer {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+		}
+
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//div[@aria-label='Form Container']",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			PageEditor.clickConfigurableField(
+				fragmentName = "Form Container",
+				index = "${index}");
+		}
+
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame(value1 = "relative=top");
+		}
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		if ("${panel}" == "General") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			if (isSet(contentType)) {
+				Select(
+					key_fieldLabel = "Content Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${contentType}");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Content Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${contentType}");
+			}
+
+			if (isSet(subtype)) {
+				Select(
+					key_fieldLabel = "Subtype",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${subtype}");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Subtype",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${subtype}");
+			}
+		}
+	}
+
 	macro editFragmentHTML {
 		PageEditor.gotoEditableFieldEdit(
 			contributed = "${contributed}",

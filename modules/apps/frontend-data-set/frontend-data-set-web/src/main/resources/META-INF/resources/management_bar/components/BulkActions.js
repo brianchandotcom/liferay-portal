@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import {postForm} from 'frontend-js-web';
+import {postForm, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -152,7 +152,7 @@ function BulkActions({
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<span className="text-truncate">
-									{Liferay.Util.sub(
+									{sub(
 										Liferay.Language.get(
 											'x-of-x-items-selected'
 										),

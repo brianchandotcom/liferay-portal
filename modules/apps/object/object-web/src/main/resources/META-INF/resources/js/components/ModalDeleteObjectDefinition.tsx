@@ -14,7 +14,7 @@
 
 import {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {createResourceURL, fetch} from 'frontend-js-web';
+import {createResourceURL, fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
@@ -43,7 +43,7 @@ function ModalDeleteObjectDefinition({
 				title={Liferay.Language.get('deletion-not-allowed')}
 			>
 				<div>
-					{Liferay.Util.sub(
+					{sub(
 						Liferay.Language.get(
 							'x-has-active-relationships-and-cannot-be-deleted'
 						),
@@ -52,7 +52,7 @@ function ModalDeleteObjectDefinition({
 				</div>
 
 				<div>
-					{Liferay.Util.sub(
+					{sub(
 						Liferay.Language.get(
 							'to-delete-x,-you-must-first-delete-its-relationships'
 						),
@@ -69,7 +69,7 @@ function ModalDeleteObjectDefinition({
 
 	return code === 0 ? (
 		<DangerModal
-			errorMessage={Liferay.Util.sub(
+			errorMessage={sub(
 				Liferay.Language.get('input-does-not-match-x'),
 				`${name}`
 			)}
@@ -87,7 +87,7 @@ function ModalDeleteObjectDefinition({
 
 			<p
 				dangerouslySetInnerHTML={{
-					__html: Liferay.Util.sub(
+					__html: sub(
 						Liferay.Language.get('x-has-x-object-entries'),
 						`<strong>${name}</strong>`,
 						`${objectEntriesCount}`
@@ -103,7 +103,7 @@ function ModalDeleteObjectDefinition({
 
 			<p
 				dangerouslySetInnerHTML={{
-					__html: Liferay.Util.sub(
+					__html: sub(
 						Liferay.Language.get('please-enter-x-to-confirm'),
 						`<strong>${name}</strong>`
 					),
@@ -156,7 +156,7 @@ export default function ModalWithProvider({
 				objectDefinitionId: itemData.id,
 				p_p_resource_id:
 					'/object_definitions/get_object_definition_delete_info',
-			})
+			}).href
 		);
 
 		const {
@@ -188,7 +188,7 @@ export default function ModalWithProvider({
 
 		if (response.ok) {
 			Liferay.Util.openToast({
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get('x-was-deleted-successfully'),
 					`<strong>${objectDefinition?.name}</strong>`
 				),

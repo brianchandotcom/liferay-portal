@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export default function openDeletePageTemplateModal({
 	message,
 	onDelete,
@@ -39,6 +41,6 @@ export default function openDeletePageTemplateModal({
 			},
 		],
 		status: 'danger',
-		title: Liferay.Util.sub(Liferay.Language.get('delete-x'), title),
+		title: sub(Liferay.Language.get('delete-x'), title),
 	});
 }

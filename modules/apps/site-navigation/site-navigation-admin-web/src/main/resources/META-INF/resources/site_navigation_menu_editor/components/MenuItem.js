@@ -21,7 +21,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {fetch, objectToFormData, openToast} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -159,7 +159,7 @@ export function MenuItem({item}) {
 					style={itemStyle}
 				>
 					<ClayCheckbox
-						aria-label={Liferay.Util.sub(
+						aria-label={sub(
 							Liferay.Language.get('select-x'),
 							`${title} (${type})`
 						)}
@@ -215,7 +215,7 @@ export function MenuItem({item}) {
 
 								<ClayLayout.ContentCol gutters>
 									<ClayButtonWithIcon
-										aria-label={Liferay.Util.sub(
+										aria-label={sub(
 											Liferay.Language.get('delete-x'),
 											`${title} (${type})`
 										)}

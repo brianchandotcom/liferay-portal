@@ -10,6 +10,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
@@ -22,12 +23,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 
 	function handleDelete() {
 		if (
-			confirm(
-				Liferay.Util.sub(
-					Liferay.Language.get('x-will-be-deleted'),
-					data.name
-				)
-			)
+			confirm(sub(Liferay.Language.get('x-will-be-deleted'), data.name))
 		) {
 			deleteOrganization(data.id).then(() => {
 				chartInstanceRef.current.deleteNodes([data], true);
@@ -40,7 +36,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 	function handleRemove() {
 		if (
 			confirm(
-				Liferay.Util.sub(
+				sub(
 					Liferay.Language.get('x-will-be-removed-from-x'),
 					data.name,
 					parentData.name

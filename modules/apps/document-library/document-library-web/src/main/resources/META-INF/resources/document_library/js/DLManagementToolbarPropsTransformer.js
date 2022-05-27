@@ -17,6 +17,7 @@ import {
 	navigate,
 	openModal,
 	openSelectionModal,
+	sub,
 } from 'frontend-js-web';
 
 import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil';
@@ -227,7 +228,7 @@ export default function propsTransformer({
 			},
 			selectEventName: `${portletNamespace}selectFolder`,
 			size: 'lg',
-			title: Liferay.Util.sub(dialogTitle, [selectedItems]),
+			title: sub(dialogTitle, [selectedItems]),
 			url: selectFolderURL,
 		});
 	};

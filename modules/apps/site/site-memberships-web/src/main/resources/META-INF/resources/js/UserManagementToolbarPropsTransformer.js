@@ -12,7 +12,12 @@
  * details.
  */
 
-import {addParams, getPortletId, openSelectionModal} from 'frontend-js-web';
+import {
+	addParams,
+	getPortletId,
+	openSelectionModal,
+	sub,
+} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedUsers = () => {
@@ -96,7 +101,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					submitForm(addGroupUsersFm);
 				}
 			},
-			title: Liferay.Util.sub(
+			title: sub(
 				Liferay.Language.get('assign-users-to-this-x'),
 				itemData?.groupTypeLabel
 			),

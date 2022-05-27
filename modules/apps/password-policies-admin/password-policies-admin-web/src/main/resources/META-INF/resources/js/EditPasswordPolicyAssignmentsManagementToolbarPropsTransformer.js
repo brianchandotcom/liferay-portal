@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
+import {getCheckedCheckboxes, openSelectionModal, sub} from 'frontend-js-web';
 
 function addEntity(portletNamespace, inputName, entity) {
 	const addUserIdsInput = document.getElementById(
@@ -89,7 +89,7 @@ export default function propsTransformer({
 					}
 				},
 				selectEventName: `${portletNamespace}selectMember`,
-				title: Liferay.Util.sub(
+				title: sub(
 					Liferay.Language.get('add-assignees-to-x'),
 					passwordPolicyName
 				),

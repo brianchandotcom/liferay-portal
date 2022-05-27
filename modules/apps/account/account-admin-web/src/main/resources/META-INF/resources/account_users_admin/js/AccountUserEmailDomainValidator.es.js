@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase} from 'frontend-js-web';
+import {PortletBase, sub} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AccountUserEmailDomainValidator extends PortletBase {
@@ -99,7 +99,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				if (!!blockedDomains && blockedDomains.includes(emailDomain)) {
 					hasError = true;
 
-					errorMessage = Liferay.Util.sub(
+					errorMessage = sub(
 						Liferay.Language.get('x-is-a-blocked-domain'),
 						emailDomain
 					);
@@ -110,7 +110,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				) {
 					hasError = true;
 
-					errorMessage = Liferay.Util.sub(
+					errorMessage = sub(
 						Liferay.Language.get(
 							'x-is-not-a-valid-domain-for-the-following-accounts-x'
 						),

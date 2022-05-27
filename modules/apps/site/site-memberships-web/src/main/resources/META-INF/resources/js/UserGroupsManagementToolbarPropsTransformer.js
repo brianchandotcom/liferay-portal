@@ -12,7 +12,7 @@
  * details.
  */
 
-import {addParams, openSelectionModal} from 'frontend-js-web';
+import {addParams, openSelectionModal, sub} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedUserGroups = () => {
@@ -98,7 +98,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			selectEventName: `${portletNamespace}selectUserGroups`,
-			title: Liferay.Util.sub(
+			title: sub(
 				Liferay.Language.get('assign-user-groups-to-this-x'),
 				itemData?.groupTypeLabel
 			),

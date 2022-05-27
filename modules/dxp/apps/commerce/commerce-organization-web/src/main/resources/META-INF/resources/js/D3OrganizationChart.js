@@ -10,7 +10,7 @@
  */
 
 import * as d3 from 'd3';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 
 import {getAccount} from './data/accounts';
 import {getOrganization} from './data/organizations';
@@ -432,14 +432,14 @@ class D3OrganizationChart {
 
 					const message =
 						nodesToBeMoved.length === 1
-							? Liferay.Util.sub(
+							? sub(
 									Liferay.Language.get(
 										'x-will-be-moved-into-x'
 									),
 									nodesToBeMoved[0].data.name,
 									target.data.name
 							  )
-							: Liferay.Util.sub(
+							: sub(
 									Liferay.Language.get(
 										'x-items-will-be-moved-into-x'
 									),
@@ -490,7 +490,7 @@ class D3OrganizationChart {
 				if (rejectedNodes.length) {
 					rejectedNodes.forEach((node) => {
 						openToast({
-							message: Liferay.Util.sub(
+							message: sub(
 								Liferay.Language.get('x-could-not-be-moved'),
 								node.data.name
 							),

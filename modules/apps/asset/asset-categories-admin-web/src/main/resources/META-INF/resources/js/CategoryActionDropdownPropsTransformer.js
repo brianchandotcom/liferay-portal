@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
+import {openModal, openSelectionModal, openToast, sub} from 'frontend-js-web';
 
 import openDeleteCategoryModal from './openDeleteCategoryModal';
 
@@ -50,7 +50,7 @@ const ACTIONS = {
 
 				if (categoryId === parentCategoryId) {
 					openToast({
-						message: Liferay.Util.sub(
+						message: sub(
 							Liferay.Language.get(
 								'unable-to-move-the-category-x-into-itself'
 							),
@@ -80,10 +80,7 @@ const ACTIONS = {
 			},
 			selectEventName: `${portletNamespace}selectCategory`,
 			size: 'md',
-			title: Liferay.Util.sub(
-				Liferay.Language.get('move-x'),
-				categoryTitle
-			),
+			title: sub(Liferay.Language.get('move-x'), categoryTitle),
 			url: selectParentCategoryURL,
 		});
 	},

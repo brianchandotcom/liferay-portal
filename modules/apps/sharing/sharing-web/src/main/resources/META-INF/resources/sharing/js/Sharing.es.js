@@ -25,7 +25,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 function filterDuplicateItems(items) {
@@ -183,7 +183,7 @@ const Sharing = ({
 
 					if (!isEmailAddressValid(item.value)) {
 						return Promise.resolve({
-							error: Liferay.Util.sub(
+							error: sub(
 								Liferay.Language.get(
 									'x-is-not-a-valid-email-address'
 								),
@@ -202,7 +202,7 @@ const Sharing = ({
 						.then((response) => response.json())
 						.then(({userExists}) => ({
 							error: !userExists
-								? Liferay.Util.sub(
+								? sub(
 										Liferay.Language.get(
 											'user-x-does-not-exist'
 										),

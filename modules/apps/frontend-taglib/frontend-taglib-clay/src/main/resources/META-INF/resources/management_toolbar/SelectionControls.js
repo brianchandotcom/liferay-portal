@@ -14,6 +14,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
@@ -184,7 +185,7 @@ const SelectionControls = ({
 						<span className="navbar-text">
 							{selectedItems === itemsTotal
 								? Liferay.Language.get('all-selected')
-								: `${Liferay.Util.sub(
+								: `${sub(
 										Liferay.Language.get('x-of-x'),
 										selectedItems,
 										itemsTotal

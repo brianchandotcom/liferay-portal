@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, toggleSelectBox} from 'frontend-js-web';
+import {delegate, sub, toggleSelectBox} from 'frontend-js-web';
 
 const ANY = 'any';
 const SELECT_MORE_THAN_ONE = 'select-more-than-one';
@@ -390,7 +390,7 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 				});
 			},
 			selectEventName: `${namespace}selectDDMStructureField`,
-			title: Liferay.Util.sub(
+			title: sub(
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('structure-field')
 			),

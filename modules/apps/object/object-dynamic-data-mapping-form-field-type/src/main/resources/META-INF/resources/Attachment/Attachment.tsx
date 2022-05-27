@@ -24,7 +24,7 @@ import {
 	FieldChangeEventHandler,
 	ReactFieldBase as FieldBase,
 } from 'dynamic-data-mapping-form-field-type';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, sub} from 'frontend-js-web';
 import React, {ChangeEventHandler, useRef, useState} from 'react';
 
 import './Attachment.scss';
@@ -44,7 +44,7 @@ function validateFileExtension(
 	if (!isValidExtension) {
 		return {
 			displayErrors: true,
-			errorMessage: Liferay.Util.sub(
+			errorMessage: sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-extension-x'
 				),
@@ -63,7 +63,7 @@ function validateFileSize(
 	if (maxFileSize === 0 && fileSize > overallMaximumUploadRequestSize) {
 		return {
 			displayErrors: true,
-			errorMessage: Liferay.Util.sub(
+			errorMessage: sub(
 				Liferay.Language.get(
 					'file-size-is-larger-than-the-allowed-overall-maximum-upload-request-size-x'
 				),
@@ -79,7 +79,7 @@ function validateFileSize(
 	) {
 		return {
 			displayErrors: true,
-			errorMessage: Liferay.Util.sub(
+			errorMessage: sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 				),

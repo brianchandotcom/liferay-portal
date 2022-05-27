@@ -12,6 +12,7 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import Email from './Email.es';
@@ -25,10 +26,7 @@ export function ShareFormModalBody({
 }) {
 	const [addresses, setAddresses] = useState([]);
 	const [message, setMessage] = useState(
-		Liferay.Util.sub(
-			Liferay.Language.get('please-fill-out-this-form-x'),
-			url
-		)
+		sub(Liferay.Language.get('please-fill-out-this-form-x'), url)
 	);
 	const [subject, setSubject] = useState(
 		localizedName[themeDisplay.getLanguageId()]

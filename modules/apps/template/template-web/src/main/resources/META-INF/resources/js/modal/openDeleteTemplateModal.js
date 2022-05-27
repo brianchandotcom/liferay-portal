@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export default function openDeleteTemplateModal({multiple = false, onDelete}) {
 	Liferay.Util.openModal({
 		bodyHTML: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
@@ -33,7 +35,7 @@ export default function openDeleteTemplateModal({multiple = false, onDelete}) {
 			},
 		],
 		status: 'danger',
-		title: Liferay.Util.sub(
+		title: sub(
 			Liferay.Language.get('delete-x'),
 			multiple
 				? Liferay.Language.get('templates')

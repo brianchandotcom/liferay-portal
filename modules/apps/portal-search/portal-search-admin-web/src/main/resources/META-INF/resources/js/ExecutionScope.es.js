@@ -22,6 +22,7 @@ import ClaySticker from '@clayui/sticker';
 import ClayToolbar from '@clayui/toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const DEFAULT_DELTA = 10;
@@ -164,7 +165,7 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 							<ClayToolbar.Section>
 								<span className="component-text text-truncate-inline">
 									<span className="text-truncate">
-										{Liferay.Util.sub(
+										{sub(
 											Liferay.Language.get(
 												'x-instances-selected'
 											),
@@ -235,7 +236,7 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 										</ClayList.ItemTitle>
 
 										<ClayList.ItemText>
-											{Liferay.Util.sub(
+											{sub(
 												Liferay.Language.get(
 													'instance-id-x'
 												),

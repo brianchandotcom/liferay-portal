@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, openSelectionModal} from 'frontend-js-web';
+import {delegate, openSelectionModal, sub} from 'frontend-js-web';
 
 export default function ({
 	itemSelectorUrl,
@@ -73,7 +73,7 @@ export default function ({
 							searchContainer.updateDataStore();
 						},
 						selectEventName: 'sitesSelectItem',
-						title: Liferay.Util.sub(
+						title: sub(
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('site')
 						),

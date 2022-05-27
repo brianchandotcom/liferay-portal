@@ -19,7 +19,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, openToast, sub} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
 import {getSpritemap} from '../../index';
@@ -186,7 +186,7 @@ export default function AddIconPackModal({
 						{errorNameTaken && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
-									{`${Liferay.Util.sub(
+									{`${sub(
 										Liferay.Language.get(
 											'x-is-already-the-name-of-an-icon-pack'
 										),
@@ -303,7 +303,7 @@ function IconPicker({
 
 										{!!totalSelectedIconsFromPack && (
 											<b className="ml-auto">
-												{Liferay.Util.sub(
+												{sub(
 													Liferay.Language.get(
 														'x-icons-selected'
 													),

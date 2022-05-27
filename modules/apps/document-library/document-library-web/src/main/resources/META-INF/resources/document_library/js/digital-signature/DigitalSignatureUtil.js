@@ -19,6 +19,7 @@ import {
 	navigate,
 	objectToFormData,
 	openModal,
+	sub,
 } from 'frontend-js-web';
 
 const MAXIMUM_SELECTED_FILES = 10;
@@ -27,21 +28,21 @@ const translatedKeys = {
 	cancel: Liferay.Language.get('cancel'),
 	continue: Liferay.Language.get('continue'),
 	deselected: Liferay.Language.get('deselected'),
-	maximum_files_message: Liferay.Util.sub(
+	maximum_files_message: sub(
 		Liferay.Language.get('maximum-of-x-files-per-envelope'),
 		MAXIMUM_SELECTED_FILES
 	),
 };
 
 const _invalidFileExtensionContent = (invalidFileExtensions) =>
-	`${Liferay.Util.sub(
+	`${sub(
 		Liferay.Language.get(
 			'these-file-extensions-are-not-supported-by-docusign-and-have-been-x'
 		),
 		_translatedStrongKeys(translatedKeys.deselected)
 	)}
 
-	<p class="mt-2">${Liferay.Util.sub(
+	<p class="mt-2">${sub(
 		Liferay.Language.get('please-x-or-x-to-choose-new-documents'),
 		_translatedStrongKeys(translatedKeys.continue),
 		_translatedStrongKeys(translatedKeys.cancel)
@@ -58,7 +59,7 @@ const _invalidFileExtensionContent = (invalidFileExtensions) =>
 const _invalidFileCountContent = (
 	extendedMessage
 ) => `<div class="alert alert-warning">
-		${Liferay.Util.sub(
+		${sub(
 			Liferay.Language.get(
 				'you-have-exceeded-the-maximum-amount-of-x-files-allowed-per-envelope'
 			),
@@ -67,7 +68,7 @@ const _invalidFileCountContent = (
 
 		${
 			extendedMessage
-				? `<div class="mt-2">${Liferay.Util.sub(
+				? `<div class="mt-2">${sub(
 						Liferay.Language.get(
 							'please-x-or-x-to-remove-files-in-your-envelope'
 						),
@@ -138,7 +139,7 @@ const _showWarningModal = ({
 		status: 'warning',
 		title:
 			invalidFileExtensions.length === 0
-				? Liferay.Util.sub(
+				? sub(
 						Liferay.Language.get('maximum-of-x-files-per-envelope'),
 						MAXIMUM_SELECTED_FILES
 				  )

@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 export default function ImageInput({name, portletNamespace, previewURL}) {
@@ -72,7 +73,7 @@ export default function ImageInput({name, portletNamespace, previewURL}) {
 								monospaced
 								onClick={() => inputRef.current?.click()}
 								small
-								title={Liferay.Util.sub(
+								title={sub(
 									fileName
 										? Liferay.Language.get('change-x')
 										: Liferay.Language.get('select-x'),

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -69,7 +70,7 @@ export default function (props) {
 				<p
 					className="small text-secondary"
 					dangerouslySetInnerHTML={{
-						__html: Liferay.Util.sub(
+						__html: sub(
 							Liferay.Language.get(
 								'x-learn-how-x-to-tailor-categories-to-your-needs'
 							),

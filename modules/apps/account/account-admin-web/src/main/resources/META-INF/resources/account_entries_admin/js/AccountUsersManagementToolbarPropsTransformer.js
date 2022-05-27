@@ -16,6 +16,7 @@ import {
 	getCheckedCheckboxes,
 	openSelectionModal,
 	postForm,
+	sub,
 } from 'frontend-js-web';
 
 export default function propsTransformer({
@@ -88,7 +89,7 @@ export default function propsTransformer({
 						});
 					}
 				},
-				title: Liferay.Util.sub(
+				title: sub(
 					Liferay.Language.get('assign-users-to-x'),
 					accountEntryName
 				),

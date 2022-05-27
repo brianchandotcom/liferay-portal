@@ -27,6 +27,7 @@ import ClayTable from '@clayui/table';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
@@ -291,7 +292,7 @@ export default function ChangeTrackingChangesView({
 						key = Liferay.Language.get('x-deleted-a-x-x-ago');
 					}
 
-					model.description = Liferay.Util.sub(
+					model.description = sub(
 						key,
 						model.userName,
 						model.typeName,
@@ -308,7 +309,7 @@ export default function ChangeTrackingChangesView({
 						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
 					}
 
-					model.description = Liferay.Util.sub(
+					model.description = sub(
 						key,
 						model.userName,
 						model.typeName,
@@ -1720,7 +1721,7 @@ export default function ChangeTrackingChangesView({
 					</ClayTable.Cell>
 
 					<ClayTable.Cell className="table-cell-expand-smallest">
-						{Liferay.Util.sub(
+						{sub(
 							Liferay.Language.get('x-ago'),
 							node.timeDescription
 						)}
@@ -2359,7 +2360,7 @@ export default function ChangeTrackingChangesView({
 			<ManagementToolbar.ResultsBarItem>
 				<span className="component-text text-truncate-inline">
 					<span className="text-truncate">
-						{Liferay.Util.sub(
+						{sub(
 							renderState.changes &&
 								renderState.changes.length === 1
 								? Liferay.Language.get('x-result-for')

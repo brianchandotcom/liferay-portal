@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate, toggleSelectBox} from 'frontend-js-web';
+import {delegate, sub, toggleSelectBox} from 'frontend-js-web';
 
 export default function ({classTypes, namespace}) {
 	const mapDDMStructures = {};
@@ -400,7 +400,7 @@ export default function ({classTypes, namespace}) {
 				});
 			},
 			selectEventName: `${namespace}selectDDMStructureField`,
-			title: Liferay.Util.sub(
+			title: sub(
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('structure-field')
 			),

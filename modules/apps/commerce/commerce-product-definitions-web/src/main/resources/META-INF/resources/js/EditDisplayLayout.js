@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, sub} from 'frontend-js-web';
 
 export default function ({
 	displayPageItemSelectorUrl,
@@ -75,7 +75,7 @@ export default function ({
 					searchContainer.updateDataStore();
 				},
 				selectEventName: 'productDefinitionsSelectItem',
-				title: Liferay.Util.sub(
+				title: sub(
 					Liferay.Language.get('select-x'),
 					Liferay.Language.get('product')
 				),

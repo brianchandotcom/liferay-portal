@@ -23,6 +23,7 @@ import {
 	fetch,
 	objectToFormData,
 	openToast,
+	sub,
 } from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -366,7 +367,7 @@ const FragmentEditor = ({
 						<div className="javascript source-editor">
 							<CodeMirrorEditor
 								codeFooterText="}"
-								codeHeaderHelpText={Liferay.Util.sub(
+								codeHeaderHelpText={sub(
 									Liferay.Language.get(
 										'parameter-x-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components'
 									),

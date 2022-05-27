@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
@@ -64,7 +64,7 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				setScript(event.script);
 
 				openToast({
-					message: Liferay.Util.sub(
+					message: sub(
 						Liferay.Language.get('x-imported'),
 						event.fileName
 					),

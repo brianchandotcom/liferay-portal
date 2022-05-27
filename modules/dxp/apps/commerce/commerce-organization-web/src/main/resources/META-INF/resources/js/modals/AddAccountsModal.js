@@ -14,7 +14,7 @@ import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import ChartContext from '../ChartContext';
@@ -22,7 +22,7 @@ import {createAccount, getAccounts, updateAccount} from '../data/accounts';
 
 function showNotFoundError(name) {
 	openToast({
-		message: Liferay.Util.sub(Liferay.Language.get('x-not-found'), name),
+		message: sub(Liferay.Language.get('x-not-found'), name),
 		type: 'danger',
 	});
 }
@@ -73,7 +73,7 @@ export default function AddOrganizationModal({
 			createAccount(newAccountName, [parentData.id])
 				.then((accountData) => {
 					openToast({
-						message: Liferay.Util.sub(
+						message: sub(
 							Liferay.Language.get('1-account-was-added-to-x'),
 							parentData.name
 						),
@@ -133,13 +133,13 @@ export default function AddOrganizationModal({
 
 					const message =
 						nodeChildren.length === 1
-							? Liferay.Util.sub(
+							? sub(
 									Liferay.Language.get(
 										'1-account-was-added-to-x'
 									),
 									parentData.name
 							  )
-							: Liferay.Util.sub(
+							: sub(
 									Liferay.Language.get(
 										'x-accounts-were-added-to-x'
 									),

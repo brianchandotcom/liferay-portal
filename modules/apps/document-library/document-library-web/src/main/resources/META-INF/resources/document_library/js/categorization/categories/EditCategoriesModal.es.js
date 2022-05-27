@@ -19,7 +19,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {AssetCategoriesSelector} from 'asset-taglib';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
@@ -69,7 +69,7 @@ const EditCategoriesModal = ({
 			);
 		}
 
-		return Liferay.Util.sub(
+		return sub(
 			Liferay.Language.get(
 				'you-are-editing-the-common-categories-for-x-items.-select-edit-or-replace-current-categories'
 			),

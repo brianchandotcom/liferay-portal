@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 const isElementInnerSelector = (element, ...selectors) =>
 	!selectors.some((selector) => element.closest(selector));
 
@@ -81,7 +83,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 
 		if (!nameInput.value && !name[defaultLanguageId]) {
 			Liferay.Util.openToast({
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'
 					),

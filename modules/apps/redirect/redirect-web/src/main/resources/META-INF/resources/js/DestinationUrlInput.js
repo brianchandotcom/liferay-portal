@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -113,7 +114,7 @@ const DestinationUrlInput = ({
 					<div
 						className="small"
 						dangerouslySetInnerHTML={{
-							__html: Liferay.Util.sub(
+							__html: sub(
 								Liferay.Language.get('enter-an-absolute-url'),
 								'<em>',
 								'</em>'

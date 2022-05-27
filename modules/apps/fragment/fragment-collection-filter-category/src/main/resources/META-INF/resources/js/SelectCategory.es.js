@@ -18,6 +18,7 @@ import {
 	getCollectionFilterValue,
 	setCollectionFilterValue,
 } from '@liferay/fragment-renderer-collection-filter-impl';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -107,7 +108,7 @@ export default function SelectCategory({
 			)?.label || label;
 	}
 	else if (selectedCategoryIds.length > 1) {
-		label = Liferay.Util.sub(
+		label = sub(
 			Liferay.Language.get('x-selected'),
 			selectedCategoryIds.length
 		);

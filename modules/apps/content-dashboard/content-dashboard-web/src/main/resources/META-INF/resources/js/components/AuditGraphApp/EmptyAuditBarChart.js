@@ -13,6 +13,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 import {
 	BarChart,
@@ -28,7 +29,7 @@ export default function EmptyAuditBarChart({learnHowURL}) {
 	const description = learnHowURL && (
 		<div
 			dangerouslySetInnerHTML={{
-				__html: Liferay.Util.sub(
+				__html: sub(
 					Liferay.Language.get(
 						'x-learn-how-x-to-tailor-categories-to-your-needs'
 					),

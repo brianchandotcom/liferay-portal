@@ -16,6 +16,7 @@ import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import AddToCart from 'commerce-frontend-js/components/add_to_cart/AddToCart';
 import {isProductPurchasable} from 'commerce-frontend-js/utilities/index';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {getCartItems} from '../utilities/data';
@@ -85,7 +86,7 @@ function SkuContent({
 						displayType="warning"
 						title={Liferay.Language.get('alert')}
 					>
-						{Liferay.Util.sub(
+						{sub(
 							Liferay.Language.get('x-has-been-replaced-by-x'),
 							mappedProduct.sku,
 							product.sku

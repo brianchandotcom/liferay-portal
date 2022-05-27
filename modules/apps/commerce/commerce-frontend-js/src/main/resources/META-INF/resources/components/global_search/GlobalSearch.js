@@ -17,6 +17,7 @@ import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -267,7 +268,7 @@ function GlobalSearch({
 												}
 											)}
 										>
-											{Liferay.Util.sub(
+											{sub(
 												Liferay.Language.get(
 													'search-x-in-catalog'
 												),
@@ -318,7 +319,7 @@ function GlobalSearch({
 													}
 												)}
 											>
-												{Liferay.Util.sub(
+												{sub(
 													Liferay.Language.get(
 														'search-x-in-orders'
 													),
@@ -370,7 +371,7 @@ function GlobalSearch({
 												}
 											)}
 										>
-											{Liferay.Util.sub(
+											{sub(
 												Liferay.Language.get(
 													'search-x-in-accounts'
 												),

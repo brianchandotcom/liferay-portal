@@ -1,5 +1,5 @@
 {
-	"@generated": "cf6d69bd91d21e7955bfb61004d4f3225b130460",
+	"@generated": "e30120567787497c5b17af0ad4a3c5a25f213c20",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -15,6 +15,9 @@
 		"paths": {
 			"frontend-js-components-web": [
 				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.d.ts"
+			],
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,
@@ -34,6 +37,9 @@
 	"references": [
 		{
 			"path": "../../frontend-js/frontend-js-components-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-web"
 		}
 	]
 }

@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {render} from '@liferay/frontend-js-react-web';
+import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
@@ -33,10 +34,7 @@ export function Modal({
 	const {observer} = useModal({onClose});
 	const emailContentRef = useRef({
 		addresses: [],
-		message: Liferay.Util.sub(
-			Liferay.Language.get('please-fill-out-this-form-x'),
-			url
-		),
+		message: sub(Liferay.Language.get('please-fill-out-this-form-x'), url),
 		subject: localizedName[themeDisplay.getLanguageId()],
 	});
 

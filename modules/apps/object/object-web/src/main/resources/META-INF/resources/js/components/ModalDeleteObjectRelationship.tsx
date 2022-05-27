@@ -14,7 +14,7 @@
 
 import {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
@@ -66,7 +66,7 @@ function ModalDeleteObjectRelationship({
 
 			<p
 				dangerouslySetInnerHTML={{
-					__html: Liferay.Util.sub(
+					__html: sub(
 						Liferay.Language.get(
 							'please-type-the-relationship-name-x-to-confirm'
 						),

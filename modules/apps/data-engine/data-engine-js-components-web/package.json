@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"dom-align": "1.10.4",
+		"frontend-js-web": "*",
 		"moment": "^2.22.2"
 	},
 	"jest": {

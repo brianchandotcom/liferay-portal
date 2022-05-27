@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export default function openDeleteSiteModal({multiple = false, onDelete}) {
 	Liferay.Util.openModal({
 		bodyHTML: Liferay.Language.get(
@@ -35,7 +37,7 @@ export default function openDeleteSiteModal({multiple = false, onDelete}) {
 			},
 		],
 		status: 'danger',
-		title: Liferay.Util.sub(
+		title: sub(
 			Liferay.Language.get('delete-x'),
 			multiple
 				? Liferay.Language.get('sites')

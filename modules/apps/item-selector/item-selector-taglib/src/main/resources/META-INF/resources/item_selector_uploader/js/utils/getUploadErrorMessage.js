@@ -12,7 +12,7 @@
  * details.
  */
 
-import {STATUS_CODE} from 'frontend-js-web';
+import {STATUS_CODE, sub} from 'frontend-js-web';
 
 export default function getUploadErrorMessage(error, maxFileSize) {
 	let message = Liferay.Language.get(
@@ -31,7 +31,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 				break;
 			case STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION:
 				if (error.message) {
-					message = Liferay.Util.sub(
+					message = sub(
 						Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-extension-x'
 						),
@@ -53,7 +53,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 				break;
 			case STATUS_CODE.SC_FILE_SIZE_EXCEPTION:
 			case STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
-				message = Liferay.Util.sub(
+				message = sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
@@ -65,7 +65,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 				const maxUploadRequestSize =
 					Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-				message = Liferay.Util.sub(
+				message = sub(
 					Liferay.Language.get(
 						'request-is-larger-than-x-and-could-not-be-processed'
 					),

@@ -18,7 +18,7 @@ import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 const CTEditComment = ({handleCancel, handleSave, initialValue}) => {
@@ -479,7 +479,7 @@ export default function ChangeTrackingComments({
 				<div className="container-fluid">
 					<ul className="tbar-nav">
 						<li className="tbar-item tbar-item-expand">
-							{Liferay.Util.sub(
+							{sub(
 								count === 1
 									? Liferay.Language.get('x-comment')
 									: Liferay.Language.get('x-comments'),

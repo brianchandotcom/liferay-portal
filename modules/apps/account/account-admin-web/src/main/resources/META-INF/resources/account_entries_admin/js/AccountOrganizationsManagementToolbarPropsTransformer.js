@@ -16,6 +16,7 @@ import {
 	getCheckedCheckboxes,
 	openSelectionModal,
 	postForm,
+	sub,
 } from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
@@ -82,7 +83,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						});
 					}
 				},
-				title: Liferay.Util.sub(
+				title: sub(
 					Liferay.Language.get('assign-organizations-to-x'),
 					data?.accountEntryName
 				),

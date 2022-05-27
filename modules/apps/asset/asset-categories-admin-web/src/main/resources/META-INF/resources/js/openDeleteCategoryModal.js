@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export default function openDeleteCategoryModal({
 	message,
 	multiple = false,
@@ -39,7 +41,7 @@ export default function openDeleteCategoryModal({
 			},
 		],
 		status: 'danger',
-		title: Liferay.Util.sub(
+		title: sub(
 			Liferay.Language.get('delete-x'),
 			multiple
 				? Liferay.Language.get('categories')

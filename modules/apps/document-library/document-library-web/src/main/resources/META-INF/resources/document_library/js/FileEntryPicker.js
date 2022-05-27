@@ -16,6 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -89,7 +90,7 @@ const FileNamePicker = ({
 					<ClayForm.FeedbackItem>
 						<ClayIcon className="mr-1" symbol="exclamation-full" />
 
-						{Liferay.Util.sub(
+						{sub(
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 							),

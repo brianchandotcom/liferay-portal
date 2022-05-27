@@ -12,6 +12,7 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDragLayer} from 'react-dnd';
 
@@ -67,7 +68,7 @@ export default function DragPreview() {
 
 			setLabel(
 				descendantsCount
-					? Liferay.Util.sub(
+					? sub(
 							Liferay.Language.get('x-elements'),
 							descendantsCount + 1
 					  )

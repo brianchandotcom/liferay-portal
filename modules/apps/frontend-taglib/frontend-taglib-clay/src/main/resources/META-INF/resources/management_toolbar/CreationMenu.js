@@ -16,6 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import getDataAttributes from '../get_data_attributes';
@@ -208,7 +209,7 @@ const CreationMenu = ({
 							</div>
 
 							<div className="dropdown-caption">
-								{Liferay.Util.sub(
+								{sub(
 									Liferay.Language.get(
 										'showing-x-of-x-elements'
 									),

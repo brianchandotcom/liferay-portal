@@ -18,7 +18,7 @@ import {
 	useCommerceAccount,
 	useCommerceCart,
 } from 'commerce-frontend-js/utilities/hooks';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -280,7 +280,7 @@ function DiagramTable({
 								? Liferay.Language.get(
 										'the-product-was-successfully-added-to-the-cart'
 								  )
-								: Liferay.Util.sub(
+								: sub(
 										Liferay.Language.get(
 											'x-products-were-successfully-added-to-the-cart'
 										),

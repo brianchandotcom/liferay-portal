@@ -27,6 +27,7 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {DragLayer, MultiPanelSidebar} from 'data-engine-taglib';
+import {sub} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,
@@ -353,7 +354,7 @@ export function FormBuilder() {
 	const onShareClick = useCallback(async () => {
 		const url = await getFormUrl();
 
-		emailContentRef.current.message = Liferay.Util.sub(
+		emailContentRef.current.message = sub(
 			Liferay.Language.get('please-fill-out-this-form-x'),
 			url
 		);

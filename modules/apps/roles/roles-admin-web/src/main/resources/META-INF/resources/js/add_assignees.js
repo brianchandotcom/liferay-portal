@@ -12,7 +12,12 @@
  * details.
  */
 
-import {createPortletURL, openSelectionModal, postForm} from 'frontend-js-web';
+import {
+	createPortletURL,
+	openSelectionModal,
+	postForm,
+	sub,
+} from 'frontend-js-web';
 
 export default function addAssignees({
 	editRoleAssignmentsURL,
@@ -56,10 +61,7 @@ export default function addAssignees({
 			}
 		},
 		selectEventName: `${portletNamespace}selectAssignees`,
-		title: Liferay.Util.sub(
-			Liferay.Language.get('add-assignees-to-x'),
-			roleName
-		),
+		title: sub(Liferay.Language.get('add-assignees-to-x'), roleName),
 		url: selectAssigneesURL,
 	});
 }

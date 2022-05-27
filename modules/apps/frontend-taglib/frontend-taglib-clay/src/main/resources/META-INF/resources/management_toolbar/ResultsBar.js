@@ -15,7 +15,7 @@
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 const ResultsBar = ({
@@ -32,7 +32,7 @@ const ResultsBar = ({
 				>
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
-							{Liferay.Util.sub(
+							{sub(
 								itemsTotal === 1
 									? Liferay.Language.get('x-result-for')
 									: Liferay.Language.get('x-results-for'),

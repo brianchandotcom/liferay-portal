@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, sub as subUtil} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -169,7 +169,7 @@ function AssetVocabulariesCategoriesSelector({
 			selectEventName: eventName,
 			size: 'md',
 			title: label
-				? Liferay.Util.sub(Liferay.Language.get('select-x'), label)
+				? subUtil(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),
 			url,
 		});

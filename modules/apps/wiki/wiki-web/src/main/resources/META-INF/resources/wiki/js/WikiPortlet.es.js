@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 
 const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
 	'uploads-are-in-progress-confirmation'
@@ -132,7 +132,7 @@ class WikiPortlet {
 			formatSelect.selectedIndex
 		].text.trim();
 
-		const confirmMessage = Liferay.Util.sub(
+		const confirmMessage = sub(
 			this._strings.confirmLoseFormatting,
 			this._currentFormatLabel,
 			newFormat

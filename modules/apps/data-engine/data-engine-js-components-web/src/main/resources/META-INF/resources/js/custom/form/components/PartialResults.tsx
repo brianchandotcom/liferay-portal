@@ -13,6 +13,7 @@
  */
 
 import {useResource} from '@clayui/data-provider';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 // @ts-ignore
@@ -71,14 +72,12 @@ const PartialResults: React.FC<IProps> = ({reportDataURL}) => {
 						<div className="align-items-center">
 							<span className="lfr-de__partial-results-title text-truncate">
 								{totalItems === 1
-									? Liferay.Util.sub(
-											Liferay.Language.get('x-entry'),
-											[totalItems]
-									  )
-									: Liferay.Util.sub(
-											Liferay.Language.get('x-entries'),
-											[totalItems]
-									  )}
+									? sub(Liferay.Language.get('x-entry'), [
+											totalItems,
+									  ])
+									: sub(Liferay.Language.get('x-entries'), [
+											totalItems,
+									  ])}
 							</span>
 						</div>
 

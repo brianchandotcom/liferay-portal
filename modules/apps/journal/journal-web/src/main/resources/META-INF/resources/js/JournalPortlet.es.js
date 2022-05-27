@@ -12,7 +12,7 @@
  * details.
  */
 
-import {debounce, fetch, navigate, openToast} from 'frontend-js-web';
+import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
 
@@ -81,7 +81,7 @@ export default function _JournalPortlet({
 
 		if (!titleInputComponent?.getValue(defaultLanguageId)) {
 			showAlert(
-				Liferay.Util.sub(
+				sub(
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'
 					),
@@ -135,7 +135,7 @@ export default function _JournalPortlet({
 		else {
 			if (showErrors) {
 				showAlert(
-					Liferay.Util.sub(
+					sub(
 						Liferay.Language.get(
 							'please-enter-a-valid-title-for-the-default-language-x'
 						),

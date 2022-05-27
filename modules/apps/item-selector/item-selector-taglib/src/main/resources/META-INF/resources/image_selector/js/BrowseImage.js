@@ -12,6 +12,7 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -42,7 +43,7 @@ const BrowseImage = ({
 					<span
 						className="pr-1"
 						dangerouslySetInnerHTML={{
-							__html: Liferay.Util.sub(
+							__html: sub(
 								Liferay.Language.get(
 									'drag-and-drop-to-upload-or-x'
 								),
@@ -63,7 +64,7 @@ const BrowseImage = ({
 				<span
 					className="pl-1"
 					dangerouslySetInnerHTML={{
-						__html: Liferay.Util.sub(
+						__html: sub(
 							Liferay.Language.get('maximum-size-x'),
 							Liferay.Util.formatStorage(
 								parseInt(maxFileSize, 10)

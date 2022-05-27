@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
-import {STATUS_CODE} from 'frontend-js-web';
+import {STATUS_CODE, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -82,7 +82,7 @@ const ImageSelector = ({
 		}
 		else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
 			if (validExtensions) {
-				message = Liferay.Util.sub(
+				message = sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-extension-x'
 					),
@@ -90,7 +90,7 @@ const ImageSelector = ({
 				);
 			}
 			else {
-				message = Liferay.Util.sub(
+				message = sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-type'
 					)
@@ -103,7 +103,7 @@ const ImageSelector = ({
 			);
 		}
 		else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION) {
-			message = Liferay.Util.sub(
+			message = sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 				),
@@ -114,7 +114,7 @@ const ImageSelector = ({
 			const maxUploadRequestSize =
 				Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-			message = Liferay.Util.sub(
+			message = sub(
 				Liferay.Language.get(
 					'request-is-larger-than-x-and-could-not-be-processed'
 				),
@@ -218,7 +218,7 @@ const ImageSelector = ({
 		const bytesTotalSpaceIndex = bytesTotal.indexOf(STR_SPACE);
 
 		setProgressData(
-			Liferay.Util.sub(
+			sub(
 				TPL_PROGRESS_DATA,
 				bytesLoaded.substring(0, bytesLoadedSpaceIndex),
 				bytesLoaded.substring(bytesLoadedSpaceIndex + 1),

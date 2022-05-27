@@ -16,6 +16,7 @@ import {
 	getCheckedCheckboxes,
 	openSelectionModal,
 	postForm,
+	sub,
 } from 'frontend-js-web';
 
 export default function propsTransformer({
@@ -44,10 +45,7 @@ export default function propsTransformer({
 				}
 			},
 			selectEventName: `${portletNamespace}selectUsers`,
-			title: Liferay.Util.sub(
-				Liferay.Language.get('add-users-to-x'),
-				userGroupName
-			),
+			title: sub(Liferay.Language.get('add-users-to-x'), userGroupName),
 			url: selectUsersURL,
 		});
 	};

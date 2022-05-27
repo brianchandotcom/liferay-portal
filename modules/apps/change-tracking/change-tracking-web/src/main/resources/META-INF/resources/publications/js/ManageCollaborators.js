@@ -35,7 +35,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 const CollaboratorRow = ({
@@ -385,7 +385,7 @@ const ManageCollaborators = ({
 
 					if (!isEmailAddressValid(item.value)) {
 						return Promise.resolve({
-							error: Liferay.Util.sub(
+							error: sub(
 								Liferay.Language.get(
 									'x-is-not-a-valid-email-address'
 								),
@@ -424,7 +424,7 @@ const ManageCollaborators = ({
 							}
 
 							return {
-								error: Liferay.Util.sub(
+								error: sub(
 									Liferay.Language.get(
 										'user-x-does-not-exist'
 									),
@@ -597,10 +597,7 @@ const ManageCollaborators = ({
 
 			if (
 				!confirm(
-					Liferay.Util.sub(
-						key,
-						publicationsUserRoleEmailAddresses.join(', ')
-					)
+					sub(key, publicationsUserRoleEmailAddresses.join(', '))
 				)
 			) {
 				return;

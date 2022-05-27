@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export default function openDeleteAssetEntryListModal({
 	multiple = false,
 	onDelete,
@@ -38,7 +40,7 @@ export default function openDeleteAssetEntryListModal({
 			},
 		],
 		status: 'danger',
-		title: Liferay.Util.sub(
+		title: sub(
 			Liferay.Language.get('delete-x'),
 			multiple
 				? Liferay.Language.get('collections')

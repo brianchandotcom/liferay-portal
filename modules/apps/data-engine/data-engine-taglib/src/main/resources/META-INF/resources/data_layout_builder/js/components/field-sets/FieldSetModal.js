@@ -30,6 +30,7 @@ import {
 	pagesStructureReducer,
 } from 'data-engine-js-components-web/js/core/reducers/index.es';
 import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
+import {sub} from 'frontend-js-web';
 import {default as React, useCallback, useState} from 'react';
 
 import {FormBuilder} from '../../FormBuilder';
@@ -99,7 +100,7 @@ const ModalContent = ({
 
 			if (fieldsWithoutOptions.length) {
 				throw new Error(
-					Liferay.Util.sub(
+					sub(
 						Liferay.Language.get(
 							'at-least-one-option-should-be-set-for-field-x'
 						),

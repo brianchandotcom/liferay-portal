@@ -20,6 +20,7 @@ import {
 	PortletBase,
 	STATUS_CODE,
 	delegate,
+	sub,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 import ReactDOM from 'react-dom';
@@ -278,7 +279,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					break;
 				case STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION:
 					if (error.message) {
-						message = Liferay.Util.sub(
+						message = sub(
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-extension-x'
 							),
@@ -300,7 +301,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					break;
 				case STATUS_CODE.SC_FILE_SIZE_EXCEPTION:
 				case STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
-					message = Liferay.Util.sub(
+					message = sub(
 						Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 						),
@@ -313,7 +314,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						Liferay.PropsValues
 							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-					message = Liferay.Util.sub(
+					message = sub(
 						Liferay.Language.get(
 							'request-is-larger-than-x-and-could-not-be-processed'
 						),
@@ -487,7 +488,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				this._previewFile(file);
 			}
 			else {
-				errorMessage = Liferay.Util.sub(
+				errorMessage = sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
@@ -496,7 +497,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			}
 		}
 		else {
-			errorMessage = Liferay.Util.sub(
+			errorMessage = sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-extension-x'
 				),

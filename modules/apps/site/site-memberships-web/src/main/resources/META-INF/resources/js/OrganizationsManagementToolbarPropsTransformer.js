@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, sub} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteSelectedOrganizations = () => {
@@ -53,7 +53,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					submitForm(addGroupOrganizationsFm);
 				}
 			},
-			title: Liferay.Util.sub(
+			title: sub(
 				Liferay.Language.get('assign-organizations-to-this-x'),
 				itemData?.groupTypeLabel
 			),

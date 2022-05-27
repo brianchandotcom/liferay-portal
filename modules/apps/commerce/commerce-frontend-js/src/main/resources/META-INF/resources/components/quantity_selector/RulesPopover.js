@@ -15,6 +15,7 @@
 import ClayPopover from '@clayui/popover';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
 export default function RulesPopover({
@@ -87,7 +88,7 @@ export default function RulesPopover({
 								'text-danger': errors.includes('min'),
 							})}
 							dangerouslySetInnerHTML={{
-								__html: Liferay.Util.sub(
+								__html: sub(
 									Liferay.Language.get(
 										'min-quantity-per-order-is-x'
 									),
@@ -105,7 +106,7 @@ export default function RulesPopover({
 								'text-danger': errors.includes('max'),
 							})}
 							dangerouslySetInnerHTML={{
-								__html: Liferay.Util.sub(
+								__html: sub(
 									Liferay.Language.get(
 										'max-quantity-per-order-is-x'
 									),
@@ -123,8 +124,8 @@ export default function RulesPopover({
 								'text-danger': errors.includes('multiple'),
 							})}
 							dangerouslySetInnerHTML={{
-								__html: Liferay.Util.sub(
-									Liferay.Util.sub(
+								__html: sub(
+									sub(
 										Liferay.Language.get(
 											'quantity-must-be-a-multiple-of-x'
 										),

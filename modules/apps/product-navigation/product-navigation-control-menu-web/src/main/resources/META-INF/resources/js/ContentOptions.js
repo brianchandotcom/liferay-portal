@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -23,15 +24,15 @@ import {AddPanelContext} from './AddPanel';
 
 const OPTIONS = [
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-items'), 4),
+		label: sub(Liferay.Language.get('x-items'), 4),
 		value: 4,
 	},
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-items'), 8),
+		label: sub(Liferay.Language.get('x-items'), 8),
 		value: 8,
 	},
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-items'), 10),
+		label: sub(Liferay.Language.get('x-items'), 10),
 		value: 10,
 	},
 ];

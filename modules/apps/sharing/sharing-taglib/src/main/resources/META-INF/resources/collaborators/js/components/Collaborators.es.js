@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -78,7 +78,7 @@ const Collaborators = ({
 				<ClayLayout.ContentCol className="collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"
-						data-title={Liferay.Util.sub(
+						data-title={sub(
 							Liferay.Language.get('x-is-the-owner'),
 							owner.fullName
 						)}
@@ -109,13 +109,13 @@ const Collaborators = ({
 									className="lfr-portal-tooltip"
 									data-title={
 										moreCollaboratorsCount === 1
-											? Liferay.Util.sub(
+											? sub(
 													Liferay.Language.get(
 														'x-more-collaborator'
 													),
 													moreCollaboratorsCount
 											  )
-											: Liferay.Util.sub(
+											: sub(
 													Liferay.Language.get(
 														'x-more-collaborators'
 													),

@@ -23,7 +23,7 @@ import {
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
@@ -292,7 +292,7 @@ export function useObjectFieldForm({
 			const lastChar = folderPath[folderPath.length - 1];
 
 			if (forbiddenLastChars?.some((char) => char === lastChar)) {
-				return Liferay.Util.sub(
+				return sub(
 					Liferay.Language.get(
 						'the-folder-name-cannot-end-with-the-following-characters-x'
 					),
@@ -303,7 +303,7 @@ export function useObjectFieldForm({
 			// folder name cannot contain invalid characters
 
 			if (forbiddenChars?.some((symbol) => folderPath.includes(symbol))) {
-				return Liferay.Util.sub(
+				return sub(
 					Liferay.Language.get(
 						'the-folder-name-cannot-contain-the-following-invalid-characters-x'
 					),
@@ -319,7 +319,7 @@ export function useObjectFieldForm({
 				forbiddenNames &&
 				folderPath.split('/').some((name) => reservedNames.has(name))
 			) {
-				return Liferay.Util.sub(
+				return sub(
 					Liferay.Language.get(
 						'the-folder-name-cannot-have-a-reserved-word-such-as-x'
 					),
@@ -367,7 +367,7 @@ export function useObjectFieldForm({
 				errors.maximumFileSize = REQUIRED_MSG;
 			}
 			else if (settings.maximumFileSize > uploadRequestSizeLimit) {
-				errors.maximumFileSize = Liferay.Util.sub(
+				errors.maximumFileSize = sub(
 					Liferay.Language.get(
 						'file-size-is-larger-than-the-allowed-overall-maximum-upload-request-size-x-mb'
 					),
@@ -375,7 +375,7 @@ export function useObjectFieldForm({
 				);
 			}
 			else if (settings.maximumFileSize < 0) {
-				errors.maximumFileSize = Liferay.Util.sub(
+				errors.maximumFileSize = sub(
 					Liferay.Language.get(
 						'only-integers-greater-than-or-equal-to-x-are-allowed'
 					),

@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -228,7 +229,7 @@ export function LayoutSelector({layoutType}) {
 				{totalLayouts > recentLayouts.length && (
 					<>
 						<ClayDropDown.Caption>
-							{Liferay.Util.sub(
+							{sub(
 								Liferay.Language.get('showing-x-of-x-items'),
 								recentLayouts.length,
 								totalLayouts

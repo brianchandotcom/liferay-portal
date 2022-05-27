@@ -54,9 +54,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -223,8 +225,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
-			String configuration, String icon, boolean readOnly,
-			String typeLabel, boolean overwrite)
+			String configuration, String icon, String properties,
+			boolean readOnly, String typeLabel, boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -273,14 +275,14 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					fragmentCollection.getGroupId(), fragmentCollectionId,
 					fragmentEntryKey, name, css, html, js, cacheable,
-					configuration, icon, 0, type, status,
+					configuration, icon, 0, properties, type, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {
 				fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 					fragmentEntry.getFragmentEntryId(), fragmentCollectionId,
 					name, css, html, js, cacheable, configuration, icon,
-					fragmentEntry.getPreviewFileEntryId(), status);
+					fragmentEntry.getPreviewFileEntryId(), properties, status);
 			}
 
 			if (fragmentEntry.isReadOnly() != readOnly) {
@@ -689,6 +691,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			boolean cacheable = false;
 			String configuration = StringPool.BLANK;
 			String icon = StringPool.BLANK;
+			String properties = StringPool.BLANK;
 			boolean readOnly = false;
 			String typeLabel = StringPool.BLANK;
 
@@ -717,12 +720,20 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					jsonObject.getString("configurationPath"));
 				readOnly = jsonObject.getBoolean("readOnly");
 				icon = jsonObject.getString("icon");
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-152938"))) {
+
+					properties = jsonObject.getString("properties");
+				}
+
 				typeLabel = jsonObject.getString("type");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				cacheable, configuration, icon, readOnly, typeLabel, overwrite);
+				cacheable, configuration, icon, properties, readOnly, typeLabel,
+				overwrite);
 
 			if (fragmentEntry == null) {
 				continue;

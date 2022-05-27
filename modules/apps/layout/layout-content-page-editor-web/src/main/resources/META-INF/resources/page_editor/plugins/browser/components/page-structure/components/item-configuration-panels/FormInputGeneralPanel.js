@@ -327,12 +327,18 @@ function FormInputMappingOptions({
 			nextFields = nextFields
 				.map((fieldset) => ({
 					...fieldset,
-					fields: fieldset.fields.filter(
-						(field) =>
-							ALLOWED_INPUT_TYPES[field.type]?.includes(
-								inputType
-							) && !selectedFields.includes(field.key)
-					),
+					fields: fieldset.fields
+						.filter(
+							(field) =>
+								ALLOWED_INPUT_TYPES[field.type]?.includes(
+									inputType
+								) && !selectedFields.includes(field.key)
+						)
+						.map((field) =>
+							field.required
+								? {...field, label: `${field.label}*`}
+								: field
+						),
 				}))
 				.filter((fieldset) => fieldset.fields.length);
 

@@ -30,6 +30,8 @@ definition {
 		else {
 			DMDocument.tearDownCP();
 
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
 			User.logoutPG();
 		}
 	}
@@ -677,15 +679,27 @@ definition {
 	test CanDeleteDocumentInSitePage {
 		property portal.acceptance = "true";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "/D/M/Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		Navigator.openURL();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -702,7 +716,21 @@ definition {
 	test CanDeleteMultipleDocumentsViaActionsButton {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -710,12 +738,14 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document_${entryCount}.doc",
-				groupName = "Guest",
+				groupName = "Site Name",
 				mimeType = "application/msword",
 				sourceFileName = "Document_${entryCount}.doc");
 		}
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		for (var entryCount : list "1,2") {
 			var dmDocumentTitle = "Document_${entryCount}.doc";
@@ -1170,14 +1200,16 @@ definition {
 	test CanMoveDocumentToRecycleBin {
 		property portal.acceptance = "true";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.moveToRecycleBinCP(
 			assetType = "Document",
@@ -1291,7 +1323,21 @@ definition {
 	test CannotAddSpecialCharacterToName {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -1300,7 +1346,9 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name?");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		DMPortlet.viewDefaultPG();
 	}
@@ -1509,19 +1557,31 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_3.txt",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "text/plain",
 			sourceFileName = "Document_3.txt");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_3.txt",
-			groupName = "Guest",
-			siteURLKey = "guest");
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
@@ -1535,7 +1595,7 @@ definition {
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
@@ -1543,7 +1603,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/documents-and-media-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/documents-and-media-page");
 
 		DMDocument.viewDefault();
 	}

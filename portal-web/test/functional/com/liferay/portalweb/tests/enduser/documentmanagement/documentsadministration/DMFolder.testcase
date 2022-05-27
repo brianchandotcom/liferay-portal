@@ -32,6 +32,8 @@ definition {
 
 			DMFolder.tearDownCP();
 
+			Site.tearDownCP();
+
 			User.logoutPG();
 		}
 	}
@@ -416,12 +418,14 @@ definition {
 	test CanMoveFolderToRecycleBin {
 		property portal.acceptance = "true";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",

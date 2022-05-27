@@ -142,6 +142,8 @@ definition {
 	test CanDeleteAutoTaggedDocument {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanDeleteAutoTaggedDocument";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
 			confidenceThreshold = "0.05");
@@ -150,14 +152,14 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
-			groupName = "Guest",
-			siteURLKey = "guest");
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document DOCX",
-			groupName = "Guest");
+			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 

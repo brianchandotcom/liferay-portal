@@ -22,6 +22,8 @@ definition {
 
 			DMFolder.tearDownCP();
 
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
 			User.logoutPG();
 		}
 	}
@@ -171,14 +173,16 @@ definition {
 	test RestoreShortcutAfterDeletingTarget {
 		JSONGroup.addGroup(groupName = "Site Name");
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Test Content Page Name",
 			type = "content");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
-			siteName = "Guest");
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
 
@@ -188,7 +192,7 @@ definition {
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
-			siteName = "Guest");
+			siteName = "Test Site Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -199,14 +203,16 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		Navigator.gotoPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		DMDocument.addDMShortcutPG(
 			contentPage = "Test Content Page Name",
 			dmDocumentTitle = "Document_1.jpg",
 			siteName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
@@ -218,7 +224,7 @@ definition {
 
 		DMDocument.viewDefault();
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Document_1.jpg");
 
@@ -232,7 +238,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.restoreCP(
 			assetName = "Document_1.jpg",
@@ -240,7 +246,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		AssertElementPresent(
 			key_text = "shortcut",

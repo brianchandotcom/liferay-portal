@@ -83,16 +83,18 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewMultipleImagesInDM {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		for (var documentTitle : list "Document_1,Document_2,Document_3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "${documentTitle}",
-				groupName = "Guest",
+				groupName = "Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "${documentTitle}.jpg");
 		}
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 

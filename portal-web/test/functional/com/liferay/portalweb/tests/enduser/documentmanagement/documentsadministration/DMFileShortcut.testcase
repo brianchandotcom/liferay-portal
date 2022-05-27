@@ -198,7 +198,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "Document_1.jpg",
@@ -218,7 +220,7 @@ definition {
 
 		DMDocument.viewDefault();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.viewDefault();
 	}
@@ -234,7 +236,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "Document_1.jpg",
@@ -248,7 +252,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 

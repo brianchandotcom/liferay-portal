@@ -23,6 +23,8 @@ definition {
 
 			Depot.tearDownCP();
 
+			Site.tearDownCP();
+
 			User.logoutPG();
 		}
 	}
@@ -644,14 +646,16 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewSVG {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.svg",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "image/svg+xml",
 			sourceFileName = "Document_1.svg");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -1188,16 +1192,18 @@ definition {
 	@priority = "4"
 	@refactordone
 	test FilePaginationDisplaysCorrectCount {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		for (var documentTitle : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "${documentTitle}",
-				groupName = "Guest",
+				groupName = "Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "${documentTitle}.jpg");
 		}
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 

@@ -64,17 +64,21 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 	);
 
 	const updateFrontendTokensValues = (frontendToken, value) => {
-		const {mappings = [], name} = frontendToken;
+		const {mappings = [], label, name} = frontendToken;
 
 		const cssVariableMapping = mappings.find(
 			(mapping) => mapping.type === 'cssVariable'
 		);
 
 		if (value) {
-			saveTokenValue(name, {
-				cssVariableMapping: cssVariableMapping.value,
-				name: tokenValues[value]?.name,
-				value: tokenValues[value]?.value || value,
+			saveTokenValue({
+				label,
+				name,
+				value: {
+					cssVariableMapping: cssVariableMapping.value,
+					name: tokenValues[value]?.name,
+					value: tokenValues[value]?.value || value,
+				},
 			});
 		}
 	};

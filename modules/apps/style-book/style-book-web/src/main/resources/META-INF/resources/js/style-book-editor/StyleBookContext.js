@@ -124,7 +124,7 @@ export function useSaveTokenValue() {
 	const dispatch = useDispatch();
 	const frontendTokensValues = useFrontendTokensValues();
 
-	return ({name, value}) => {
+	return ({label, name, value}) => {
 		const previousValue = frontendTokensValues[name];
 
 		internalSaveTokenValues({
@@ -133,6 +133,7 @@ export function useSaveTokenValue() {
 			tokens: {[name]: value},
 		}).then(() => {
 			dispatch({
+				label,
 				name,
 				type: ADD_UNDO_ACTION,
 				value: previousValue,
@@ -182,6 +183,7 @@ export function useOnUndo() {
 				undoHistory: undos,
 			});
 			dispatch({
+				label: lastUndo.label,
 				name: lastUndo.name,
 				type: ADD_REDO_ACTION,
 				value: previousValue,
@@ -210,6 +212,7 @@ export function useOnRedo() {
 			});
 			dispatch({
 				isRedo: true,
+				label: lastRedo.label,
 				name: lastRedo.name,
 				type: ADD_UNDO_ACTION,
 				value: previousValue,
@@ -237,7 +240,8 @@ export function useMultipleUndo() {
 				undoHistory.length
 			);
 
-			const nextRedoHistory = undosToUndo.map(({name}) => ({
+			const nextRedoHistory = undosToUndo.map(({label, name}) => ({
+				label,
 				name,
 				value: frontendTokensValues[name],
 			}));
@@ -256,7 +260,8 @@ export function useMultipleUndo() {
 				redoHistory.length
 			);
 
-			const nextUndoHistory = undosToUndo.map(({name}) => ({
+			const nextUndoHistory = undosToUndo.map(({label, name}) => ({
+				label,
 				name,
 				value: frontendTokensValues[name],
 			}));

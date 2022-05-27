@@ -147,7 +147,7 @@ const History = ({actions = [], type, onHistoryItemClick}) => {
 	return actionList.map((action, index) => (
 		<ClayDropDown.Item
 			disabled={isSelectedAction(index)}
-			key={action.name}
+			key={index}
 			onClick={(event) => {
 				const numberOfActions =
 					type === UNDO_TYPES.undo
@@ -158,10 +158,7 @@ const History = ({actions = [], type, onHistoryItemClick}) => {
 			}}
 			symbolRight={isSelectedAction(index) ? 'check' : ''}
 		>
-			{Liferay.Util.sub(
-				Liferay.Language.get('update-x-configuration'),
-				action.name
-			)}
+			{Liferay.Util.sub(Liferay.Language.get('update-x'), action.label)}
 		</ClayDropDown.Item>
 	));
 };

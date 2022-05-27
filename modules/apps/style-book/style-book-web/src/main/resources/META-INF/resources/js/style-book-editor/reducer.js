@@ -67,7 +67,7 @@ export default function reducer(state, action) {
 		}
 
 		case ADD_UNDO_ACTION: {
-			const {isRedo = false, name, value} = action;
+			const {isRedo = false, label, name, value} = action;
 
 			const nextRedoHistory = isRedo ? state.redoHistory : [];
 			const nextUndoHistory = state.undoHistory || [];
@@ -77,6 +77,7 @@ export default function reducer(state, action) {
 				redoHistory: nextRedoHistory,
 				undoHistory: [
 					{
+						label,
 						name,
 						value,
 					},
@@ -86,13 +87,14 @@ export default function reducer(state, action) {
 		}
 
 		case ADD_REDO_ACTION: {
-			const {name, value} = action;
+			const {label, name, value} = action;
 			const nextRedoHistory = state.redoHistory || [];
 
 			return {
 				...state,
 				redoHistory: [
 					{
+						label,
 						name,
 						value,
 					},

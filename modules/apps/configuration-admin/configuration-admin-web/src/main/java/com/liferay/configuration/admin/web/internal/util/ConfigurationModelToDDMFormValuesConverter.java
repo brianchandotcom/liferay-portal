@@ -88,9 +88,9 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setFieldReference(name);
+		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 		ddmFormFieldValue.setName(
 			DDMFormFieldNameUtil.normalizeFieldName(name));
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 
 		return ddmFormFieldValue;
 	}

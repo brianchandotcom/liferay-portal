@@ -391,22 +391,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 				else if (value instanceof Object[]) {
 					Object[] values = (Object[])value;
 
-					String type = field.getType();
-
-					boolean richText = type.equals(
-						DDMFormFieldTypeConstants.RICH_TEXT);
-
 					for (int i = 0; i < values.length; i++) {
-						if (richText) {
-							String valueString = _getSortableValue(
-								ddmStructure.getDDMFormField(field.getName()),
-								locale, values[i].toString());
+						String valueString = _getSortableValue(
+							ddmStructure.getDDMFormField(field.getName()),
+							locale, values[i].toString());
 
-							sb.append(_htmlParser.extractText(valueString));
-						}
-						else {
-							sb.append(values[i]);
-						}
+						_addFieldValue(sb, field.getType(), valueString);
 
 						if (i < (values.length - 1)) {
 							sb.append(StringPool.SPACE);
@@ -418,24 +408,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 						ddmStructure.getDDMFormField(field.getName()), locale,
 						value);
 
-					String type = field.getType();
-
-					if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
-						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-							valueString);
-
-						String[] stringArray = ArrayUtil.toStringArray(
-							jsonArray);
-
-						sb.append(stringArray);
-					}
-					else {
-						if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
-							valueString = _htmlParser.extractText(valueString);
-						}
-
-						sb.append(valueString);
-					}
+					_addFieldValue(sb, field.getType(), valueString);
 				}
 
 				sb.append(StringPool.SPACE);
@@ -626,6 +599,56 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	@Reference
 	protected Sorts sorts;
+
+	private void _addFieldValue(
+			StringBundler sb, String type, String valueString)
+		throws Exception {
+
+		if (type.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
+			type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE) ||
+			type.equals(DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			if ((jsonObject != null) && jsonObject.has("title")) {
+				sb.append(jsonObject.getString("title"));
+			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			if (jsonObject == null) {
+				return;
+			}
+
+			if (jsonObject.has("description") &&
+				Validator.isNotNull(jsonObject.getString("description"))) {
+
+				sb.append(jsonObject.getString("description"));
+			}
+			else if (jsonObject.has("alt") &&
+					 Validator.isNotNull(jsonObject.getString("alt"))) {
+
+				sb.append(jsonObject.getString("alt"));
+			}
+			else if (jsonObject.has("title")) {
+				sb.append(jsonObject.getString("title"));
+			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
+			sb.append(_htmlParser.extractText(valueString));
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			sb.append(ArrayUtil.toStringArray(jsonArray));
+		}
+		else {
+			sb.append(valueString);
+		}
+	}
 
 	private void _addFieldValueRequiredTerm(
 		BooleanQuery booleanQuery, String fieldName, Serializable fieldValue) {

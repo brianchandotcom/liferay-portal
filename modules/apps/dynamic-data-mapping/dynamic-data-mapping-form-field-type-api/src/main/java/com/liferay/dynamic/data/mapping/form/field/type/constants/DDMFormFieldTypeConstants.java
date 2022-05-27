@@ -45,7 +45,11 @@ public class DDMFormFieldTypeConstants {
 
 	public static final String IMAGE = "image";
 
+	public static final String JOURNAL_ARTICLE = "journal_article";
+
 	public static final String KEY_VALUE = "key_value";
+
+	public static final String LINK_TO_LAYOUT = "link_to_layout";
 
 	public static final String LOCALIZABLE_TEXT = "localizable_text";
 

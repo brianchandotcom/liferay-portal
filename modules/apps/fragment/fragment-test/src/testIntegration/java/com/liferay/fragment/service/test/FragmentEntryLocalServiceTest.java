@@ -883,7 +883,7 @@ public class FragmentEntryLocalServiceTest {
 			_updatedFragmentCollection.getFragmentCollectionId(),
 			fragmentEntry.getName(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(), false, null,
-			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
@@ -928,7 +928,9 @@ public class FragmentEntryLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			name, css, html, js, configuration, status);
+			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
+			fragmentEntry.isCacheable(), configuration, fragmentEntry.getIcon(),
+			fragmentEntry.getFragmentEntryId(), status);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -960,7 +962,9 @@ public class FragmentEntryLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			name, css, html, js, configuration, previewFileEntryId, status);
+			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
+			fragmentEntry.isCacheable(), configuration, fragmentEntry.getIcon(),
+			previewFileEntryId, status);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1016,8 +1020,11 @@ public class FragmentEntryLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), fragmentEntry.getCss(), html,
-			fragmentEntry.getJs(), null, WorkflowConstants.STATUS_APPROVED);
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), html, fragmentEntry.getJs(),
+			fragmentEntry.isCacheable(), null, fragmentEntry.getIcon(),
+			fragmentEntry.getPreviewFileEntryId(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(

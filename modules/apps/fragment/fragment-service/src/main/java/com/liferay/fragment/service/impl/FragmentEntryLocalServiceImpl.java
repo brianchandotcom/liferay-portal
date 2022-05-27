@@ -598,6 +598,10 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
@@ -605,10 +609,13 @@ public class FragmentEntryLocalServiceImpl
 			String configuration, long previewFileEntryId, int status)
 		throws PortalException {
 
-		return updateFragmentEntry(
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		return fragmentEntryLocalService.updateFragmentEntry(
 			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, StringPool.BLANK, previewFileEntryId,
-			status);
+			cacheable, configuration, fragmentEntry.getIcon(),
+			previewFileEntryId, status);
 	}
 
 	@Override
@@ -668,6 +675,10 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
@@ -677,11 +688,17 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		return updateFragmentEntry(
-			userId, fragmentEntryId, name, css, html, js, configuration,
-			fragmentEntry.getPreviewFileEntryId(), status);
+		return fragmentEntryLocalService.updateFragmentEntry(
+			userId, fragmentEntryId, fragmentEntry.getFragmentCollectionId(),
+			name, css, html, js, fragmentEntry.isCacheable(), configuration,
+			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
+			status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
@@ -692,10 +709,10 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		return updateFragmentEntry(
+		return fragmentEntryLocalService.updateFragmentEntry(
 			userId, fragmentEntryId, fragmentEntry.getFragmentCollectionId(),
-			name, css, html, js, false, configuration, previewFileEntryId,
-			status);
+			name, css, html, js, fragmentEntry.isCacheable(), configuration,
+			fragmentEntry.getIcon(), previewFileEntryId, status);
 	}
 
 	@Override

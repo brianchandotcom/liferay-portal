@@ -1506,13 +1506,11 @@ public class ModulesStructureTest {
 				Assert.assertFalse(sb.toString(), !allowed);
 			}
 
-			GradleDependency activeGradleDependency =
-				_getActiveGradleDependency(
-					gradleDependencies, gradleDependency);
-
 			Assert.assertEquals(
 				"Redundant dependency detected in " + path,
-				activeGradleDependency, gradleDependency);
+				_getActiveGradleDependency(
+					gradleDependencies, gradleDependency),
+				gradleDependency);
 		}
 	}
 

@@ -1034,6 +1034,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		Long fieldValue = (Long)properties.get(fieldName);
 
+		if (fieldValue == null) {
+			return 1;
+		}
+
 		return fieldValue.longValue() + 1;
 	}
 

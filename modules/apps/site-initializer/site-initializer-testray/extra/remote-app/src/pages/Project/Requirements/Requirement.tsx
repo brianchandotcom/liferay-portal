@@ -12,40 +12,29 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
 import ClayIcon from '@clayui/icon';
 import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import Loading from '../../../components/Loading';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import {
 	TestrayRequirement,
-	getCases,
-	getRequirement,
+	TestrayRequirementCase,
+	getRequirementCases,
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {DescriptionType} from '../../../types';
+import {searchUtil} from '../../../util/search';
 
 const Requirement = () => {
-	const {requirementId} = useParams();
+	const {projectId} = useParams();
+	const testrayRequirement: TestrayRequirement = useOutletContext();
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
-
-	const {data, loading} = useQuery<{requirement: TestrayRequirement}>(
-		getRequirement,
-		{
-			variables: {
-				requirementId,
-			},
-		}
-	);
-
-	const testrayRequirement = data?.requirement;
 
 	useEffect(() => {
 		if (testrayRequirement) {
@@ -58,14 +47,6 @@ const Requirement = () => {
 	useEffect(() => {
 		setTabs([]);
 	}, [setTabs]);
-
-	if (loading) {
-		return <Loading />;
-	}
-
-	if (!testrayRequirement) {
-		return null;
-	}
 
 	return (
 		<>
@@ -133,22 +114,47 @@ const Requirement = () => {
 			<Container className="mt-3" title={i18n.translate('cases')}>
 				<ListView
 					managementToolbarProps={{visible: false}}
-					query={getCases}
+					query={getRequirementCases}
 					tableProps={{
 						columns: [
 							{
+								clickable: true,
 								key: 'priority',
+								render: (
+									_,
+									requirementCase: TestrayRequirementCase
+								) => requirementCase.case.priority,
 								value: i18n.translate('priority'),
 							},
-							{key: 'name', value: i18n.translate('case-name')},
 							{
+								clickable: true,
+								key: 'name',
+								render: (
+									_,
+									requirementCase: TestrayRequirementCase
+								) => requirementCase.case.name,
+								value: i18n.translate('case-name'),
+							},
+							{
+								clickable: true,
 								key: 'component',
-								render: (component) => component?.name,
+								render: (
+									_,
+									requirementCase: TestrayRequirementCase
+								) => requirementCase.case.component?.name,
 								value: i18n.translate('component'),
 							},
 						],
+						navigateTo: ({case: Case}: TestrayRequirementCase) =>
+							`/project/${projectId}/cases/${Case.id}`,
 					}}
-					transformData={(data) => data?.cases}
+					transformData={(data) => data?.requirementscaseses}
+					variables={{
+						filter: searchUtil.eq(
+							'requirementId',
+							testrayRequirement.id
+						),
+					}}
 				/>
 			</Container>
 		</>

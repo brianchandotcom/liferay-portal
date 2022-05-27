@@ -38,6 +38,17 @@ const RequirementsOutlet = () => {
 	const {pathname} = useLocation();
 	const basePath = `/project/${projectId}/cases/${caseId}`;
 
+	const {data, loading} = useQuery<{requirement: TestrayRequirement}>(
+		getRequirement,
+		{
+			variables: {
+				requirementId,
+			},
+		}
+	);
+
+	const testrayRequirement = data?.requirement;
+
 	const {setHeading, setTabs} = useHeader({
 		shouldUpdate: false,
 		useTabs: [
@@ -53,17 +64,6 @@ const RequirementsOutlet = () => {
 			},
 		],
 	});
-
-	const {data, loading} = useQuery<{requirement: TestrayRequirement}>(
-		getRequirement,
-		{
-			variables: {
-				requirementId,
-			},
-		}
-	);
-
-	const testrayRequirement = data?.requirement;
 
 	useEffect(() => {
 		setTabs([]);

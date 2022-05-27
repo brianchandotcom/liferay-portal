@@ -295,9 +295,6 @@ definition {
 			DMDocument.viewStatus(
 				dmDocumentStatus = "Approved",
 				dmDocumentTitle = "Document_${entryCount}.doc");
-
-
-				
 		}
 	}
 

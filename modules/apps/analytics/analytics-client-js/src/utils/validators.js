@@ -31,7 +31,10 @@ const isValidEvent = ({eventId, eventProps}) => {
 	]);
 	const validationsValue = _validate([
 		validateMaxLength(VALIDATION_PROPERTY_VALUE_MAXIMUM_LENGTH),
-		validateAttributeType,
+
+		// LRAC-11274 Avoid make validation to prevent bugs for now
+		// validateAttributeType
+
 	]);
 	let errors = [];
 

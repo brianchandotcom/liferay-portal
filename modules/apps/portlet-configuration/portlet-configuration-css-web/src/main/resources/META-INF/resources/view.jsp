@@ -24,6 +24,8 @@
 
 		<liferay-frontend:edit-form
 			action="<%= updateLookAndFeelURL %>"
+			cssClass="pt-0"
+			fluid="<%= true %>"
 			method="post"
 			name="fm"
 		>

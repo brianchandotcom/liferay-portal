@@ -1746,6 +1746,8 @@ definition {
 	}
 
 	macro editFriendlyURL {
+		Panel.expandPanel(panel = "Friendly URL");
+
 		Type(
 			inputFieldId = "urlTitle",
 			locator1 = "TextInput#INPUT_ID",

@@ -645,9 +645,9 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		AssertElementPresent(
-			key_mgImageName = "hqdefault.jpg",
-			locator1 = "MediaGallery#ENTRY_IMAGE_PREVIEW");
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "HOdbzGCI5ME",
+			staging = "true");
 	}
 
 	@description = "This test covers LPS-154417."

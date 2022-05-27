@@ -97,6 +97,8 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(14, 0, 1), new UpgradeFaviconFileEntryIdColumn());
 
 		upgradeProcesses.put(new Version(14, 0, 2), new UpgradeRole());
+
+		upgradeProcesses.put(new Version(14, 0, 3), new UpgradeCountryCode());
 	}
 
 }

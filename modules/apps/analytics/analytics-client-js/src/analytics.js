@@ -364,13 +364,7 @@ class Analytics {
 	 * @returns {Promise} A promise resolved with the stored or generated userId
 	 */
 	_getUserId() {
-		const newUserIdRequired = this._isNewUserIdRequired();
-
-		let userId = getItem(STORAGE_KEY_USER_ID);
-
-		if (newUserIdRequired) {
-			userId = this._generateUserId();
-		}
+		const userId = getItem(STORAGE_KEY_USER_ID) || this._generateUserId();
 
 		return userId;
 	}
@@ -390,40 +384,6 @@ class Analytics {
 		localStorage.removeItem(STORAGE_KEY_IDENTITY);
 
 		return userId;
-	}
-
-	_isNewUserIdRequired() {
-		const {dataSourceId, identity} = this.config;
-
-		const storedIdentityHash = getItem(STORAGE_KEY_IDENTITY);
-		const storedUserId = getItem(STORAGE_KEY_USER_ID);
-
-		let newUserIdRequired = false;
-
-		// During logout or session expiration, identity object becomes undefined
-		// because the client object is being instantiated on every page navigation,
-		// in such cases, we force a new user ID token.
-
-		if (!storedUserId || (storedIdentityHash && !identity)) {
-			newUserIdRequired = true;
-		}
-
-		// After logout or session expiration, it is not guaranteed a new user ID
-		// is generated. The login/logout process can redirect the user to page
-		// where the analytics.js is not loaded. In such cases, we must verify
-		// the identity hashes match and generate a new user ID token otherwise.
-
-		if (
-			storedUserId &&
-			identity &&
-			storedIdentityHash &&
-			storedIdentityHash !==
-				this._getIdentityHash(dataSourceId, identity, storedUserId)
-		) {
-			newUserIdRequired = true;
-		}
-
-		return newUserIdRequired;
 	}
 
 	_isTrackingDisabled() {

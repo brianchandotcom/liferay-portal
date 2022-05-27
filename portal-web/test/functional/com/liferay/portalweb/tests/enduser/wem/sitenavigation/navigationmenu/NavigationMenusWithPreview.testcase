@@ -94,6 +94,8 @@ definition {
 	@description = "This is a test for LPS-144089. The navigation menu admin could choose display template when preview navigation menu."
 	@priority = "5"
 	test ConfigureDisplayTemplateOnPreviewMenu {
+		property portal.acceptance = "true";
+
 		task ("Given a navigation menu admin has a navigation menu with item") {
 			task ("Add a Heading fragment to a content page then publish") {
 				JSONLayout.addPublicLayout(
@@ -164,6 +166,8 @@ definition {
 	@description = "This is a test for LPS-144089. The navigation menu admin could preview menu in navigation menu editor."
 	@priority = "5"
 	test PreviewMenuInNavigationMenuEditor {
+		property portal.acceptance = "true";
+
 		task ("Given a navigation menu admin has a navigation menu with multiple items") {
 			task ("Add the first display page template for Web Content Article and Basic Web Content") {
 				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

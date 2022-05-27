@@ -551,6 +551,8 @@ definition {
 	@description = "This is a test for LPS-141352. The navigation menu admin could add a vocabulary item to navigation menu."
 	@priority = "5"
 	test AddVocabularyTypeNavigationMenuItem {
+		property portal.acceptance = "true";
+
 		task ("Given a navigation menu admin has a navigation menu") {
 			task ("Add a navigation menu") {
 				JSONSitenavigation.addSiteNavigationMenu(

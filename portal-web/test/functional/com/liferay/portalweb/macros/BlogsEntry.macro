@@ -330,9 +330,16 @@ definition {
 
 			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
 
-			ItemSelector.addVideoFromURL(
-				navTab = "URL",
-				videoSourceURL = "${embedVideo}");
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.addVideoFromDM(
+					navTab = "${navTab}",
+					videoShortcutTitle = "${embedVideo}");
+			}
+			else {
+				ItemSelector.addVideoFromURL(
+					navTab = "URL",
+					videoSourceURL = "${embedVideo}");
+			}
 		}
 
 		if (isSet(dmImage)) {

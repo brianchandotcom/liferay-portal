@@ -55,6 +55,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154668. I can create a Site of Liferay Welcome Site with the initializer"
+	@priority = "4"
+	test AddLiferayWelcomeSiteWithInitializer {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "LiferayOnline#AddLiferayWelcomeSiteWithInitializer";
+
+		task ("Go to Sites and add a new one") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addSiteTemplateCP(
+				siteName = "Liferay Welcome Site",
+				siteTemplateName = "Welcome");
+		}
+
+		task ("Go to Liferay Welcome Site") {
+			ApplicationsMenu.gotoSite(site = "Liferay Welcome Site");
+		}
+
+		task ("Assert the Liferay Site Initializer Welcome  Page") {
+			AssertElementPresent(locator1 = "Home#DEFAULT_LOGO");
+		}
+
+		task ("Delete de Site created") {
+			JSONGroup.deleteGroupByName(groupName = "Liferay Welcome Site");
+		}
+	}
+
 	@description = "This is a test for LPS-135077. I can create a Virtual Instance with Default Initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithDefaultInitializer {

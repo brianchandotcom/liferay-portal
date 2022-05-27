@@ -531,14 +531,15 @@ public class WorkspaceExtension {
 				DownloadCommand downloadCommand = new DownloadCommand();
 
 				downloadCommand.setCacheDir(_workspaceCacheDir);
+				downloadCommand.setConnectionTimeout(5 * 1000);
 				downloadCommand.setPassword(null);
+				downloadCommand.setQuiet(true);
 				downloadCommand.setToken(false);
 				downloadCommand.setUserName(null);
-				downloadCommand.setQuiet(true);
-				downloadCommand.setConnectionTimeout(5 * 1000);
 
 				try {
 					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
+
 					downloadCommand.execute();
 
 					return _getProductInfo(
@@ -547,6 +548,7 @@ public class WorkspaceExtension {
 				catch (Exception exception1) {
 					try {
 						downloadCommand.setUrl(new URL(_CDN_PRODUCT_INFO_URL));
+
 						downloadCommand.execute();
 
 						return _getProductInfo(

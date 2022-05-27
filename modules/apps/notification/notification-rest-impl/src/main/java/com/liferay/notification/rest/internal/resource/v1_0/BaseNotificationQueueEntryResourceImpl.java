@@ -237,40 +237,6 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 		return new NotificationQueueEntry();
 	}
 
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-queue-entry/{notificationQueueEntryId}/resend'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "notificationQueueEntryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationQueueEntry"
-			)
-		}
-	)
-	@javax.ws.rs.Path(
-		"/notification-queue-entry/{notificationQueueEntryId}/resend"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public void putNotificationQueueEntryResend(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("notificationQueueEntryId")
-			Long notificationQueueEntryId)
-		throws Exception {
-	}
-
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(

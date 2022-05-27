@@ -76,9 +76,6 @@ public interface NotificationQueueEntryResource {
 			Long notificationQueueEntryId)
 		throws Exception;
 
-	public void putNotificationQueueEntryResend(Long notificationQueueEntryId)
-		throws Exception;
-
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

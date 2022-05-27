@@ -594,11 +594,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testPutNotificationQueueEntryResend() throws Exception {
-		Assert.assertTrue(false);
-	}
-
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

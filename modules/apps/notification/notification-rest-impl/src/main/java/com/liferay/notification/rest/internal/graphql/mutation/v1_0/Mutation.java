@@ -93,22 +93,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateNotificationQueueEntryResend(
-			@GraphQLName("notificationQueueEntryId") Long
-				notificationQueueEntryId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_notificationQueueEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationQueueEntryResource ->
-				notificationQueueEntryResource.putNotificationQueueEntryResend(
-					notificationQueueEntryId));
-
-		return true;
-	}
-
-	@GraphQLField
 	public boolean deleteNotificationTemplate(
 			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
 		throws Exception {

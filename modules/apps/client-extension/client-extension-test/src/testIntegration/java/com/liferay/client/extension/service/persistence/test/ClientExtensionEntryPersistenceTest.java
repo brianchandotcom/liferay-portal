@@ -174,6 +174,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		newClientExtensionEntry.setSourceCodeURL(RandomTestUtil.randomString());
 
+		newClientExtensionEntry.setThemeJSURLs(RandomTestUtil.randomString());
+
 		newClientExtensionEntry.setType(RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setStatus(RandomTestUtil.nextInt());
@@ -258,6 +260,9 @@ public class ClientExtensionEntryPersistenceTest {
 			existingClientExtensionEntry.getSourceCodeURL(),
 			newClientExtensionEntry.getSourceCodeURL());
 		Assert.assertEquals(
+			existingClientExtensionEntry.getThemeJSURLs(),
+			newClientExtensionEntry.getThemeJSURLs());
+		Assert.assertEquals(
 			existingClientExtensionEntry.getType(),
 			newClientExtensionEntry.getType());
 		Assert.assertEquals(
@@ -291,6 +296,15 @@ public class ClientExtensionEntryPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByC_T() throws Exception {
+		_persistence.countByC_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_T(0L, "null");
+
+		_persistence.countByC_T(0L, (String)null);
 	}
 
 	@Test
@@ -697,6 +711,8 @@ public class ClientExtensionEntryPersistenceTest {
 		clientExtensionEntry.setProperties(RandomTestUtil.randomString());
 
 		clientExtensionEntry.setSourceCodeURL(RandomTestUtil.randomString());
+
+		clientExtensionEntry.setThemeJSURLs(RandomTestUtil.randomString());
 
 		clientExtensionEntry.setType(RandomTestUtil.randomString());
 

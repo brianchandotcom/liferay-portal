@@ -40,6 +40,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
 	<liferay-ui:error exception="<%= ClientExtensionEntryFriendlyURLMappingException.class %>" message="please-enter-a-valid-friendly-url-mapping" />
 	<liferay-ui:error exception="<%= ClientExtensionEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryThemeJSURLsException.class %>" message="please-enter-a-valid-url" />
 
 	<aui:model-context bean="<%= editClientExtensionEntryDisplayContext.getClientExtensionEntry() %>" model="<%= ClientExtensionEntry.class %>" />
 
@@ -66,9 +67,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 				disabled="<%= editClientExtensionEntryDisplayContext.isTypeDisabled() %>"
 				label="type"
 				name="type"
-				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), ClientExtensionConstants.TYPE_CUSTOM_ELEMENT, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), ClientExtensionConstants.TYPE_IFRAME, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_IFRAME)))
-				%>'
+				options="<%= editClientExtensionEntryDisplayContext.getTypeSelectOptions() %>"
 				propsTransformer="admin/js/clientExtensionEntryTypeSelectPropsTransformer"
 			/>
 
@@ -130,19 +129,49 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 				</div>
 			</liferay-frontend:fieldset>
 
-			<aui:input disabled="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+			<liferay-frontend:fieldset
+				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_THEME_JS) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_THEME_JS) %>"
+				id='<%= liferayPortletResponse.getNamespace() + "_type_themeJS" %>'
+			>
+				<div id="<portlet:namespace />_type_themeJSURLs">
 
-			<clay:select
-				label="portlet-category-name"
-				name="portletCategoryName"
-				options="<%=
-					editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions()
-				%>"
-			/>
+					<%
+					for (String themeJSURL : editClientExtensionEntryDisplayContext.getThemeJSURLs()) {
+					%>
 
-			<aui:input label="friendly-url-mapping" name="friendlyURLMapping">
-				<aui:validator name="friendlyURLMapping" />
-			</aui:input>
+						<div class="lfr-form-row">
+							<aui:input ignoreRequestValue="<%= true %>" label="url" name="themeJSURLs" type="text" value="<%= themeJSURL %>">
+								<aui:validator name="urlAllowRelative" />
+							</aui:input>
+						</div>
+
+					<%
+					}
+					%>
+
+				</div>
+			</liferay-frontend:fieldset>
+
+			<liferay-frontend:fieldset
+				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT, ClientExtensionConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT, ClientExtensionConstants.TYPE_IFRAME) %>"
+				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement_iframe" %>'
+			>
+				<aui:input disabled="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+
+				<clay:select
+					label="portlet-category-name"
+					name="portletCategoryName"
+					options="<%=
+						editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions()
+					%>"
+				/>
+
+				<aui:input label="friendly-url-mapping" name="friendlyURLMapping">
+					<aui:validator name="friendlyURLMapping" />
+				</aui:input>
+			</liferay-frontend:fieldset>
 
 			<aui:input label="properties" name="properties" type="textarea" />
 		</liferay-frontend:fieldset-group>
@@ -172,6 +201,12 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />_type_customElementCSSURLs',
+		minimumRows: 1,
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />_type_themeJSURLs',
 		minimumRows: 1,
 		namespace: '<portlet:namespace />',
 	}).render();

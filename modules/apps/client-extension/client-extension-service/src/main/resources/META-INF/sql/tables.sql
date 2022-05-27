@@ -20,6 +20,7 @@ create table ClientExtensionEntry (
 	portletCategoryName VARCHAR(75) null,
 	properties TEXT null,
 	sourceCodeURL STRING null,
+	themeJSURLs TEXT null,
 	type_ VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,

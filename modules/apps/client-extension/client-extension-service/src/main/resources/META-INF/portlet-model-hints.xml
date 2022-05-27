@@ -39,6 +39,9 @@
 		<field name="sourceCodeURL" type="String">
 			<hint-collection name="URL" />
 		</field>
+		<field name="themeJSURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="type" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

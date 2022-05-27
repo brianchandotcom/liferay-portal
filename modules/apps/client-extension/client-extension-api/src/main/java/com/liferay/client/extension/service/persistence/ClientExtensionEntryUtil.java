@@ -646,6 +646,280 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
+	 * Returns all the client extension entries where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching client extension entries
+	 */
+	public static List<ClientExtensionEntry> findByC_T(
+		long companyId, String type) {
+
+		return getPersistence().findByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the client extension entries where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entries
+	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @return the range of matching client extension entries
+	 */
+	public static List<ClientExtensionEntry> findByC_T(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().findByC_T(companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entries where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entries
+	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching client extension entries
+	 */
+	public static List<ClientExtensionEntry> findByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entries where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entries
+	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching client extension entries
+	 */
+	public static List<ClientExtensionEntry> findByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<ClientExtensionEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_T(
+			companyId, type, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first client extension entry in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry
+	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 */
+	public static ClientExtensionEntry findByC_T_First(
+			long companyId, String type,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().findByC_T_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the first client extension entry in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 */
+	public static ClientExtensionEntry fetchByC_T_First(
+		long companyId, String type,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().fetchByC_T_First(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry
+	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 */
+	public static ClientExtensionEntry findByC_T_Last(
+			long companyId, String type,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().findByC_T_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 */
+	public static ClientExtensionEntry fetchByC_T_Last(
+		long companyId, String type,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().fetchByC_T_Last(
+			companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns the client extension entries before and after the current client extension entry in the ordered set where companyId = &#63; and type = &#63;.
+	 *
+	 * @param clientExtensionEntryId the primary key of the current client extension entry
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next client extension entry
+	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry[] findByC_T_PrevAndNext(
+			long clientExtensionEntryId, long companyId, String type,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().findByC_T_PrevAndNext(
+			clientExtensionEntryId, companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Returns all the client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching client extension entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByC_T(
+		long companyId, String type) {
+
+		return getPersistence().filterFindByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entries
+	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @return the range of matching client extension entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByC_T(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().filterFindByC_T(companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entries that the user has permissions to view where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of client extension entries
+	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching client extension entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().filterFindByC_T(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param clientExtensionEntryId the primary key of the current client extension entry
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next client extension entry
+	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry[] filterFindByC_T_PrevAndNext(
+			long clientExtensionEntryId, long companyId, String type,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().filterFindByC_T_PrevAndNext(
+			clientExtensionEntryId, companyId, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the client extension entries where companyId = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 */
+	public static void removeByC_T(long companyId, String type) {
+		getPersistence().removeByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns the number of client extension entries where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching client extension entries
+	 */
+	public static int countByC_T(long companyId, String type) {
+		return getPersistence().countByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns the number of client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching client extension entries that the user has permission to view
+	 */
+	public static int filterCountByC_T(long companyId, String type) {
+		return getPersistence().filterCountByC_T(companyId, type);
+	}
+
+	/**
 	 * Returns the client extension entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

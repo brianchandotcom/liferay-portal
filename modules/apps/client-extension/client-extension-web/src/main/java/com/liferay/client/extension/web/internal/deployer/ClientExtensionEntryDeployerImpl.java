@@ -56,17 +56,24 @@ public class ClientExtensionEntryDeployerImpl
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		serviceRegistrations.add(
-			_registerConfigurationAction(clientExtensionEntry));
-
-		if (!clientExtensionEntry.isInstanceable() &&
-			Validator.isNotNull(clientExtensionEntry.getFriendlyURLMapping())) {
+		if ((clientExtensionEntry.getType() ==
+				ClientExtensionConstants.TYPE_CUSTOM_ELEMENT) ||
+			(clientExtensionEntry.getType() ==
+				ClientExtensionConstants.TYPE_IFRAME)) {
 
 			serviceRegistrations.add(
-				_registerFriendlyURLMapper(clientExtensionEntry));
-		}
+				_registerConfigurationAction(clientExtensionEntry));
 
-		serviceRegistrations.add(_registerPortlet(clientExtensionEntry));
+			if (!clientExtensionEntry.isInstanceable() &&
+				Validator.isNotNull(
+					clientExtensionEntry.getFriendlyURLMapping())) {
+
+				serviceRegistrations.add(
+					_registerFriendlyURLMapper(clientExtensionEntry));
+			}
+
+			serviceRegistrations.add(_registerPortlet(clientExtensionEntry));
+		}
 
 		return serviceRegistrations;
 	}

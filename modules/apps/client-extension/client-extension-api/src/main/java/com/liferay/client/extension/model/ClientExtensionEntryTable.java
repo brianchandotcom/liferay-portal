@@ -101,6 +101,9 @@ public class ClientExtensionEntryTable
 	public final Column<ClientExtensionEntryTable, String> sourceCodeURL =
 		createColumn(
 			"sourceCodeURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Clob> themeJSURLs =
+		createColumn(
+			"themeJSURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Integer> status =

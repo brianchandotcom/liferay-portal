@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -191,6 +192,25 @@ public class EditClientExtensionEntryDisplayContext {
 		return ParamUtil.getString(_portletRequest, "redirect");
 	}
 
+	public String[] getThemeJSURLs() {
+		String[] themeJSURLs = StringPool.EMPTY_ARRAY;
+
+		if (_clientExtensionEntry != null) {
+			String themeJSURLsString = _clientExtensionEntry.getThemeJSURLs();
+
+			themeJSURLs = themeJSURLsString.split(StringPool.NEW_LINE);
+		}
+
+		themeJSURLs = ParamUtil.getStringValues(
+			_portletRequest, "themeJSURLs", themeJSURLs);
+
+		if (themeJSURLs.length == 0) {
+			themeJSURLs = new String[1];
+		}
+
+		return themeJSURLs;
+	}
+
 	public String getTitle() {
 		if (_clientExtensionEntry == null) {
 			return LanguageUtil.get(_getHttpServletRequest(), "new-remote-app");
@@ -201,14 +221,41 @@ public class EditClientExtensionEntryDisplayContext {
 		return _clientExtensionEntry.getName(themeDisplay.getLocale());
 	}
 
+	public List<SelectOption> getTypeSelectOptions() {
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		return Arrays.asList(
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "custom-element"),
+				ClientExtensionConstants.TYPE_CUSTOM_ELEMENT,
+				isEditingClientExtensionEntryType(
+					ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "iframe"),
+				ClientExtensionConstants.TYPE_IFRAME,
+				isEditingClientExtensionEntryType(
+					ClientExtensionConstants.TYPE_IFRAME)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "theme-js"),
+				ClientExtensionConstants.TYPE_THEME_JS,
+				isEditingClientExtensionEntryType(
+					ClientExtensionConstants.TYPE_THEME_JS)));
+	}
+
 	public boolean isCustomElementUseESM() {
 		return BeanParamUtil.getBoolean(
 			_clientExtensionEntry, _getHttpServletRequest(),
 			"customElementUseESM");
 	}
 
-	public boolean isEditingClientExtensionEntryType(String type) {
-		return type.equals(_getClientExtensionEntryType());
+	public boolean isEditingClientExtensionEntryType(String... types) {
+		for (String type : types) {
+			if (type.equals(_getClientExtensionEntryType())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isInstanceable() {

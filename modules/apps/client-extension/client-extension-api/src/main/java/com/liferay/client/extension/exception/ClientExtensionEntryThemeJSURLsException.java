@@ -12,24 +12,30 @@
  * details.
  */
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onChange: (event) => {
-			const {value} = event.currentTarget;
+package com.liferay.client.extension.exception;
 
-			document
-				.querySelectorAll(`fieldset[id*='${portletNamespace}_type_']`)
-				.forEach((fieldset) => {
-					fieldset.classList.add('d-none');
-					fieldset.setAttribute('disabled', true);
+import com.liferay.portal.kernel.exception.PortalException;
 
-					if (fieldset.id.includes('_' + value)) {
-						fieldset.classList.remove('d-none');
-						fieldset.removeAttribute('disabled');
-					}
-				});
-		},
-		portletNamespace,
-	};
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class ClientExtensionEntryThemeJSURLsException extends PortalException {
+
+	public ClientExtensionEntryThemeJSURLsException() {
+	}
+
+	public ClientExtensionEntryThemeJSURLsException(String msg) {
+		super(msg);
+	}
+
+	public ClientExtensionEntryThemeJSURLsException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	public ClientExtensionEntryThemeJSURLsException(Throwable throwable) {
+		super(throwable);
+	}
+
 }

@@ -12,24 +12,20 @@
  * details.
  */
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onChange: (event) => {
-			const {value} = event.currentTarget;
+package com.liferay.client.extension.internal.upgrade.v3_1_0;
 
-			document
-				.querySelectorAll(`fieldset[id*='${portletNamespace}_type_']`)
-				.forEach((fieldset) => {
-					fieldset.classList.add('d-none');
-					fieldset.setAttribute('disabled', true);
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-					if (fieldset.id.includes('_' + value)) {
-						fieldset.classList.remove('d-none');
-						fieldset.removeAttribute('disabled');
-					}
-				});
-		},
-		portletNamespace,
-	};
+/**
+ * @author Iván Zaera Avellón
+ */
+public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		if (!hasColumn("ClientExtensionEntry", "themeJSURLs")) {
+			alterTableAddColumn("ClientExtensionEntry", "themeJSURLs", "TEXT");
+		}
+	}
+
 }

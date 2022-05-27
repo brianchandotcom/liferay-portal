@@ -334,6 +334,14 @@ definition {
 				navTab = "URL",
 				videoSourceURL = "${embedVideo}");
 		}
+
+		if (isSet(dmImage)) {
+			ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+			ItemSelector.selectDMImage(
+				imageFileName = "${dmImage}",
+				navTab = "${navTab}");
+		}
 	}
 
 	macro editContentViaCardViewPG {

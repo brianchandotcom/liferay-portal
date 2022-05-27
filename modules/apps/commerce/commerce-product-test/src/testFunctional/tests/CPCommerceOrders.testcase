@@ -184,6 +184,49 @@ definition {
 		}
 	}
 
+	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
+	@priority = "3"
+	test AssertPermissionToViewBillingAddressIsPresent {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the admin goes to the Account Roles page") {
+			Role.openRolesAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Account Roles");
+		}
+
+		task ("And clicks the buyer role") {
+			LexiconEntry.gotoEntry(rowEntry = "Buyer");
+		}
+
+		task ("And goes to the Define Permissions tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "Define Permissions");
+		}
+
+		task ("Then the View Billing Address permission is present") {
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View Billing Address",
+				permissionNavigationValue = "Open Carts > Commerce Orders:");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6912. Bulk delete orders"
 	@priority = "3"
 	test BulkDeleteOrders {

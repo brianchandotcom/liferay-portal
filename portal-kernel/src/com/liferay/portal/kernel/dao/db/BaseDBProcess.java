@@ -293,6 +293,10 @@ public abstract class BaseDBProcess implements DBProcess {
 				newTableName));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #hasTable(String)}
+	 */
+	@Deprecated
 	protected boolean doHasTable(String tableName) throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 

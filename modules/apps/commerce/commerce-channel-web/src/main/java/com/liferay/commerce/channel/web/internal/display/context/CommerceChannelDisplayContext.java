@@ -327,6 +327,22 @@ public class CommerceChannelDisplayContext
 		return itemSelectorURL.toString();
 	}
 
+	public String getOrderImporterDateFormat() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderImporterDateFormatConfiguration
+			commerceOrderImporterDateFormatConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderImporterDateFormatConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannel.getGroupId(),
+						CommerceConstants.
+							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+		return commerceOrderImporterDateFormatConfiguration.
+			orderImporterDateFormat();
+	}
+
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -353,22 +369,6 @@ public class CommerceChannelDisplayContext
 		}
 
 		return portletURL;
-	}
-
-	public String getRequestedDeliveryDateFormat() throws PortalException {
-		CommerceChannel commerceChannel = getCommerceChannel();
-
-		CommerceOrderImporterDateFormatConfiguration
-			commerceOrderImporterDateFormatConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceOrderImporterDateFormatConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceChannel.getGroupId(),
-						CommerceConstants.
-							SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
-
-		return commerceOrderImporterDateFormatConfiguration.
-			requestedDeliveryDateFormat();
 	}
 
 	public List<CPTaxCategory> getTaxCategories() {

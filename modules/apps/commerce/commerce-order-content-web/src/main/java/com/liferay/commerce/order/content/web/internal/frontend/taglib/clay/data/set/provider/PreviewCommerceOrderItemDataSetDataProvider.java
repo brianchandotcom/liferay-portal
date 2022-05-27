@@ -138,7 +138,7 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 						commerceOrderImporterItem.
 							getRequestedDeliveryDateString(),
 						commerceOrderImporterDateFormatConfiguration.
-							requestedDeliveryDateFormat(),
+							orderImporterDateFormat(),
 						themeDisplay.getLocale()),
 					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),

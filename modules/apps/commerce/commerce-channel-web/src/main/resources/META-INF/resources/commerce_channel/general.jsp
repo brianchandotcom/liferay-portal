@@ -138,7 +138,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				<aui:button name="selectFileButton" value="select-file" />
 
-				<aui:input label="order-importer-date-format" labelOff="disabled" labelOn="enabled" name="format--requestedDeliveryDateFormat--" type="text" value="<%= commerceChannelDisplayContext.getRequestedDeliveryDateFormat() %>" />
+				<aui:input label="order-importer-date-format" labelOff="disabled" labelOn="enabled" name="format--orderImporterDateFormat--" type="text" value="<%= commerceChannelDisplayContext.getOrderImporterDateFormat() %>" />
 			</commerce-ui:panel>
 		</div>
 

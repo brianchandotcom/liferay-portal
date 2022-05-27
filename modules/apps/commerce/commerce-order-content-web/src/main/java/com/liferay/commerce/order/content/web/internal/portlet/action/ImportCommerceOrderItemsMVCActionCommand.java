@@ -142,7 +142,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 							SimpleDateFormat simpleDateFormat =
 								new SimpleDateFormat(
 									commerceOrderImporterDateFormatConfiguration.
-										requestedDeliveryDateFormat());
+										orderImporterDateFormat());
 
 							String requestedDeliveryDate =
 								commerceOrderImporterItem.

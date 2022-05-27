@@ -23,6 +23,8 @@ import {
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 
+const MAX_UNDO_ACTIONS = 100;
+
 export default function reducer(state, action) {
 	switch (action.type) {
 		case LOADING: {
@@ -68,6 +70,7 @@ export default function reducer(state, action) {
 			const {isRedo = false, name, value} = action;
 
 			const nextRedoHistory = isRedo ? state.redoHistory : [];
+			const nextUndoHistory = state.undoHistory || [];
 
 			return {
 				...state,
@@ -77,13 +80,14 @@ export default function reducer(state, action) {
 						name,
 						value,
 					},
-					...state.undoHistory,
+					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),
 				],
 			};
 		}
 
 		case ADD_REDO_ACTION: {
 			const {name, value} = action;
+			const nextRedoHistory = state.redoHistory || [];
 
 			return {
 				...state,
@@ -92,7 +96,7 @@ export default function reducer(state, action) {
 						name,
 						value,
 					},
-					...state.redoHistory,
+					...nextRedoHistory,
 				],
 			};
 		}

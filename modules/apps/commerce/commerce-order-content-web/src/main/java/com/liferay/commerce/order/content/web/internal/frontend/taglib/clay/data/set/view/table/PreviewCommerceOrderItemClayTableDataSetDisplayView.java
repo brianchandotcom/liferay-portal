@@ -56,7 +56,7 @@ public class PreviewCommerceOrderItemClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"replacingSKU", "replacing");
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"requestedDeliveryDate", "requested-delivery-date");
+			"requestedDeliveryDateString", "requested-delivery-date");
 
 		return clayTableSchemaBuilder.build();
 	}

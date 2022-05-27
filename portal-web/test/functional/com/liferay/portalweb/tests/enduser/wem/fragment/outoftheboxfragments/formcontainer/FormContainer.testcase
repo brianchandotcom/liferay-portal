@@ -54,4 +54,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149984. The page editor could map entity to Form Container in display page template."
+	@priority = "5"
+	test MapEntityToFormContainerInDisplayPageTemplate {
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the page creator adds a Form Container to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could see Place fragments here message shown in Form Container") {
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Place fragments here.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("When the page creator navigates to the General panel of Form Container") {
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could change the content type of Form Container") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Basic Web Content (Default)");
+
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Other Content Type");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "None");
+
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Document");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Basic Document");
+		}
+	}
+
 }

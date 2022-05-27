@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -38,7 +37,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -62,10 +60,6 @@ public interface OrderRuleChannelResource {
 	public void deleteOrderRuleChannel(Long orderRuleChannelId)
 		throws Exception;
 
-	public Response deleteOrderRuleChannelBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public Page<OrderRuleChannel>
 			getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
 				String externalReferenceCode, Pagination pagination)
@@ -83,10 +77,6 @@ public interface OrderRuleChannelResource {
 
 	public OrderRuleChannel postOrderRuleIdOrderRuleChannel(
 			Long id, OrderRuleChannel orderRuleChannel)
-		throws Exception;
-
-	public Response postOrderRuleIdOrderRuleChannelBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -125,10 +115,6 @@ public interface OrderRuleChannelResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

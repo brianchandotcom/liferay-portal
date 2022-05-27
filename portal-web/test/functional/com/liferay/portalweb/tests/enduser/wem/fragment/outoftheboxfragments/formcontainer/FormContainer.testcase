@@ -215,4 +215,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149984. The Form Container has all capabilities of Container."
+	@priority = "4"
+	test ViewCapabilitiesOfFormContainer {
+		task ("Given a page creator has a content page with a Form Container fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the page creator navigates to the Styles panel of Form Container") {
+			PageEditor.gotoStyle(fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could see common styles section on Styles panel") {
+			for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
+				AssertElementPresent(
+					key_fieldSetLabel = "${fieldSetLabel}",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+			}
+		}
+
+		task ("When the page creator navigates to the General panel of Form Container") {
+			Navigator.gotoNavTab(navTab = "General");
+		}
+
+		task ("Then the page creator could see the Frame section on General panel") {
+			AssertElementPresent(
+				key_fieldSetLabel = "Frame",
+				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+		}
+
+		task ("When the page creator navigates to the Advanced panel of Form Container") {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		task ("Then the page creator could see the Hide from Site Search Results checkbox on General panel") {
+			AssertElementPresent(
+				checkboxName = "Hide from Site Search Results",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("When the page creator opens the dropdown menu of Form Container topper") {
+			Click.waitForMenuToggleJSClick(
+				key_fragmentName = "Form Container",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("Then the page creator could see the Save Composition action on dropdown menu") {
+			MenuItem.viewPresent(menuItem = "Save Composition");
+		}
+	}
+
 }

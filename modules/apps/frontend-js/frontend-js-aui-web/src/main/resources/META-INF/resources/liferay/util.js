@@ -734,45 +734,6 @@
 			return parseInt(value, 10) || 0;
 		},
 
-		toggleBoxes(
-			checkBoxId,
-			toggleBoxId,
-			displayWhenUnchecked,
-			toggleChildCheckboxes
-		) {
-			const checkBox = document.getElementById(checkBoxId);
-			const toggleBox = document.getElementById(toggleBoxId);
-
-			if (checkBox && toggleBox) {
-				let checked = checkBox.checked;
-
-				if (displayWhenUnchecked) {
-					checked = !checked;
-				}
-
-				if (checked) {
-					toggleBox.classList.remove('hide');
-				}
-				else {
-					toggleBox.classList.add('hide');
-				}
-
-				checkBox.addEventListener(EVENT_CLICK, () => {
-					toggleBox.classList.toggle('hide');
-
-					if (toggleChildCheckboxes) {
-						const childCheckboxes = toggleBox.querySelectorAll(
-							'input[type=checkbox]'
-						);
-
-						childCheckboxes.forEach((childCheckbox) => {
-							childCheckbox.checked = checkBox.checked;
-						});
-					}
-				});
-			}
-		},
-
 		toggleRadio(radioId, showBoxIds, hideBoxIds) {
 			const radioButton = document.getElementById(radioId);
 

@@ -138,18 +138,13 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				objectRelationshipId);
-
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getModelClassName());
 
 		return persistedModelLocalService.dslQuery(
 			_getGroupByStep(
-				groupId, objectRelationship, primaryKey,
-				objectRelationship.isReverse(),
+				groupId, objectRelationshipId, primaryKey,
 				DSLQueryFactoryUtil.selectDistinct(_table)
 			).limit(
 				start, end
@@ -161,18 +156,13 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				objectRelationshipId);
-
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getModelClassName());
 
 		return persistedModelLocalService.dslQueryCount(
 			_getGroupByStep(
-				groupId, objectRelationship, primaryKey,
-				objectRelationship.isReverse(),
+				groupId, objectRelationshipId, primaryKey,
 				DSLQueryFactoryUtil.countDistinct(
 					_table.getColumn(
 						_objectDefinition.getPKObjectFieldDBColumnName()))));
@@ -274,31 +264,28 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 	}
 
 	private GroupByStep _getGroupByStep(
-			long groupId, ObjectRelationship objectRelationship,
-			long primaryKey, boolean reverse, FromStep fromStep)
+			long groupId, long objectRelationshipId, long primaryKey,
+			FromStep fromStep)
 		throws PortalException {
 
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-		long objectDefinitionId2 = objectRelationship.getObjectDefinitionId2();
-
-		if (reverse) {
-			objectDefinitionId1 = objectRelationship.getObjectDefinitionId2();
-			objectDefinitionId2 = objectRelationship.getObjectDefinitionId1();
-		}
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId1);
+				objectRelationship.getObjectDefinitionId1());
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId2);
+				objectRelationship.getObjectDefinitionId2());
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			new DynamicObjectDefinitionTable(
 				objectDefinition2,
 				_objectFieldLocalService.getObjectFields(
-					objectDefinitionId2, objectDefinition2.getDBTableName()),
+					objectRelationship.getObjectDefinitionId2(),
+					objectDefinition2.getDBTableName()),
 				objectDefinition2.getDBTableName());
 
 		DynamicObjectRelationshipMappingTable

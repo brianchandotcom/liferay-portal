@@ -388,10 +388,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				</dd>
 
 				<%
-				Folder parentFolder = fileEntry.getFolder();
+				request.setAttribute("info_panel_location.jsp-parentFolder", fileEntry.getFolder());
 				%>
 
-				<%@ include file="/document_library/info_panel_location.jspf" %>
+				<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
 
 				<liferay-asset:asset-tags-available
 					className="<%= DLFileEntryConstants.getClassName() %>"

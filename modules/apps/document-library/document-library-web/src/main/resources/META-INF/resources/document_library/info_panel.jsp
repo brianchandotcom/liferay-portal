@@ -91,10 +91,10 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 							</dd>
 
 							<%
-							Folder parentFolder = folder.getParentFolder();
+							request.setAttribute("info_panel_location.jsp-parentFolder", folder.getParentFolder());
 							%>
 
-							<%@ include file="/document_library/info_panel_location.jspf" %>
+							<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
 						</c:if>
 					</dl>
 				</liferay-ui:section>

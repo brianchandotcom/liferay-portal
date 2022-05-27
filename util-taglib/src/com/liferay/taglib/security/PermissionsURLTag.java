@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.security;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -38,6 +39,83 @@ import javax.servlet.jsp.tagext.TagSupport;
  * @author Brian Wing Shun Chan
  */
 public class PermissionsURLTag extends TagSupport {
+
+	public static String doTag(
+			String redirect, String modelResource, Object resourceGroupId,
+			String windowState, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (resourceGroupId instanceof Number) {
+			Number resourceGroupIdNumber = (Number)resourceGroupId;
+
+			if (resourceGroupIdNumber.longValue() < 0) {
+				resourceGroupId = null;
+			}
+		}
+		else if (resourceGroupId instanceof String) {
+			String resourceGroupIdString = (String)resourceGroupId;
+
+			if (resourceGroupIdString.length() == 0) {
+				resourceGroupId = null;
+			}
+		}
+
+		if (resourceGroupId == null) {
+			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
+		}
+
+		if (Validator.isNull(redirect) &&
+			(Validator.isNull(windowState) ||
+			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
+
+			redirect = PortalUtil.getCurrentURL(httpServletRequest);
+		}
+
+		if (Validator.isNull(windowState)) {
+			if (themeDisplay.isStatePopUp()) {
+				windowState = LiferayWindowState.POP_UP.toString();
+			}
+			else {
+				windowState = WindowState.MAXIMIZED.toString();
+			}
+		}
+
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest,
+				PortletConfigurationApplicationType.PortletConfiguration.
+					CLASS_NAME,
+				PortletProvider.Action.VIEW)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setPortletResource(
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getId();
+			}
+		).setParameter(
+			"modelResource", modelResource
+		).setParameter(
+			"portletConfiguration", true
+		).setParameter(
+			"resourceGroupId", resourceGroupId
+		).setWindowState(
+			WindowStateFactory.getWindowState(windowState)
+		).buildPortletURL();
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+			portletURL.setParameter("returnToFullPageURL", redirect);
+		}
+
+		return portletURL.toString();
+	}
 
 	/**
 	 * Returns the URL for opening the resource's permissions configuration

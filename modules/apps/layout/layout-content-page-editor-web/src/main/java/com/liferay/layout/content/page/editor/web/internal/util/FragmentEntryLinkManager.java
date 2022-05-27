@@ -31,25 +31,42 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletConfig;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -188,7 +205,11 @@ public class FragmentEntryLinkManager {
 				defaultFragmentRendererContext, httpServletRequest,
 				httpServletResponse);
 
-			return JSONUtil.put(
+			JSONObject jsonObject = JSONUtil.put(
+				"comments",
+				_getFragmentEntryLinkCommentsJSONArray(
+					fragmentEntryLink, httpServletRequest)
+			).put(
 				"configuration", configurationJSONObject
 			).put(
 				"content", content
@@ -207,6 +228,20 @@ public class FragmentEntryLinkManager {
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues())
+			).put(
+				"error",
+				() -> {
+					if (SessionErrors.contains(
+							httpServletRequest,
+							"fragmentEntryContentInvalid")) {
+
+						SessionErrors.clear(httpServletRequest);
+
+						return true;
+					}
+
+					return false;
+				}
 			).put(
 				"fragmentEntryId",
 				() -> {
@@ -249,6 +284,28 @@ public class FragmentEntryLinkManager {
 				"segmentsExperienceId",
 				String.valueOf(fragmentEntryLink.getSegmentsExperienceId())
 			);
+
+			if (Validator.isNotNull(portletId)) {
+				jsonObject.put("portletId", portletId);
+			}
+			else {
+				portletId = _getPortletId(jsonObject.getString("content"));
+
+				PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+					portletId);
+
+				if (portletConfig != null) {
+					jsonObject.put(
+						"name",
+						_portal.getPortletTitle(
+							portletId, themeDisplay.getLocale())
+					).put(
+						"portletId", portletId
+					);
+				}
+			}
+
+			return jsonObject;
 		}
 		finally {
 			themeDisplay.setIsolated(isolated);
@@ -280,6 +337,76 @@ public class FragmentEntryLinkManager {
 		return _fragmentEntryLocalService.fetchFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId());
 	}
+
+	private JSONArray _getFragmentEntryLinkCommentsJSONArray(
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		try {
+			if (!_commentManager.hasDiscussion(
+					FragmentEntryLink.class.getName(),
+					fragmentEntryLink.getFragmentEntryLinkId())) {
+
+				return jsonArray;
+			}
+
+			List<Comment> rootComments = _commentManager.getRootComments(
+				FragmentEntryLink.class.getName(),
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			for (Comment rootComment : rootComments) {
+				JSONObject commentJSONObject = CommentUtil.getCommentJSONObject(
+					rootComment, httpServletRequest);
+
+				List<Comment> childComments = _commentManager.getChildComments(
+					rootComment.getCommentId(),
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+				JSONArray childCommentsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (Comment childComment : childComments) {
+					childCommentsJSONArray.put(
+						CommentUtil.getCommentJSONObject(
+							childComment, httpServletRequest));
+				}
+
+				commentJSONObject.put("children", childCommentsJSONArray);
+
+				jsonArray.put(commentJSONObject);
+			}
+		}
+		catch (PortalException portalException) {
+			return jsonArray;
+		}
+
+		return jsonArray;
+	}
+
+	private String _getPortletId(String content) {
+		Document document = Jsoup.parse(content);
+
+		Elements elements = document.getElementsByAttributeValueStarting(
+			"id", "portlet_");
+
+		if (elements.size() != 1) {
+			return StringPool.BLANK;
+		}
+
+		Element element = elements.get(0);
+
+		String id = element.id();
+
+		return PortletIdCodec.decodePortletName(id.substring(8));
+	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private FragmentCollectionContributorTracker

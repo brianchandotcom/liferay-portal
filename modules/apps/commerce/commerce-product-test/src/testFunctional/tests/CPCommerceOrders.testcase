@@ -558,6 +558,52 @@ definition {
 		}
 	}
 
+	@description = "Verify guests can view the billing address of an order at the order summary."
+	@priority = "3"
+	test AssertGuestCanViewBillingAddressDuringCheckout {
+		task ("Given a Speedwell site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+		}
+
+		task ("And given guest checkout is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Guest Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("When an order is placed by a guest user") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then at the Order Summary, the guest can view the billing address of the order") {
+			CommerceCheckout.initializersCheckout(
+				guestEmail = "buyer@liferay.com",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
 	@priority = "3"
 	test AssertPermissionToViewBillingAddressIsPresent {

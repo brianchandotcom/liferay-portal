@@ -7,4 +7,5 @@ application:
 author: "Javier Gamarra"
 clientDir: "../segments-asah-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: false
 testDir: "../segments-asah-rest-test/src/testIntegration/java"

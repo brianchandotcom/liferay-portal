@@ -743,54 +743,7 @@
 			return parseInt(value, 10) || 0;
 		},
 
-		toggleRadio(radioId, showBoxIds, hideBoxIds) {
-			const radioButton = document.getElementById(radioId);
-
-			if (radioButton) {
-				let showBoxes;
-
-				if (showBoxIds) {
-					if (Array.isArray(showBoxIds)) {
-						showBoxIds = showBoxIds.join(',#');
-					}
-
-					showBoxes = document.querySelectorAll('#' + showBoxIds);
-
-					showBoxes.forEach((showBox) => {
-						if (radioButton.checked) {
-							showBox.classList.remove('hide');
-						}
-						else {
-							showBox.classList.add('hide');
-						}
-					});
-				}
-
-				radioButton.addEventListener('change', () => {
-					if (showBoxes) {
-						showBoxes.forEach((showBox) => {
-							showBox.classList.remove('hide');
-						});
-					}
-
-					if (hideBoxIds) {
-						if (Array.isArray(hideBoxIds)) {
-							hideBoxIds = hideBoxIds.join(',#');
-						}
-
-						const hideBoxes = document.querySelectorAll(
-							'#' + hideBoxIds
-						);
-
-						hideBoxes.forEach((hideBox) => {
-							hideBox.classList.add('hide');
-						});
-					}
-				});
-			}
-		},
-
-		/*
+		/**
 		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 		 */
 		toggleSearchContainerButton(

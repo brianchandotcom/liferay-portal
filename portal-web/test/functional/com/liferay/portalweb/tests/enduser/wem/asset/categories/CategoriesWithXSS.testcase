@@ -174,7 +174,7 @@ definition {
 				key_vocabularyName = "Topic",
 				locator1 = "AssetCategorization#CATEGORY_SELECT");
 
-			AssetCategorization.selectCategory(categoryName = "${categoryName}");
+			AssetCategorization.selectCategories(categoryNameList = "${categoryName}");
 		}
 
 		task ("View the alert not shown") {

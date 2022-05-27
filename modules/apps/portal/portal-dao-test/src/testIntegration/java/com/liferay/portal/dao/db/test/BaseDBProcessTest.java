@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,7 +91,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNameChangingType() throws Exception {
+	public void testAlterColumnNameChangeType() throws Exception {
 		try {
 			alterColumnName(_TABLE_NAME, "typeBoolean", "typeChanged INTEGER");
 
@@ -104,7 +104,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNamePreviouslyApplied() throws Exception {
+	public void testAlterColumnNameNoNeeded() throws Exception {
 		alterColumnName(_TABLE_NAME, "deletedColumn", "typeBoolean BOOLEAN");
 
 		Assert.assertFalse(
@@ -115,9 +115,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNamePreviouslyAppliedWithoutDeletingOldColumn()
-		throws Exception {
-
+	public void testAlterColumnNameNoNeededOldColumnExist() throws Exception {
 		try {
 			alterColumnName(_TABLE_NAME, "typeInteger", "typeBoolean BOOLEAN");
 
@@ -133,9 +131,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNamePreviouslyAppliedWrongType()
-		throws Exception {
-
+	public void testAlterColumnNameNoNeededWithAlterType() throws Exception {
 		try {
 			alterColumnName(
 				_TABLE_NAME, "deletedColumn", "typeBoolean INTEGER");
@@ -153,7 +149,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNamePreviouslyAppliedWrongTypeWithoutDeletingOldColumn()
+	public void testAlterColumnNameNoNeededWithAlterTypeAndOldColumnExist()
 		throws Exception {
 
 		try {
@@ -171,35 +167,36 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNameSameColumnDifferentCase() throws Exception {
-		alterColumnName(_TABLE_NAME, "typeInteger", "TypeInteger INTEGER");
+	public void testAlterColumnNameNonexistedColumn() throws Exception {
+		try {
+			alterColumnName(
+				_TABLE_NAME, "nonexistedColumn",
+				"newNonexistedColumn LONG null");
 
-		String normalizedOldColumnName = _dbInspector.normalizeName(
-			"typeInteger");
-		String normalizedNewColumnName = _dbInspector.normalizeName(
-			"TypeInteger");
-
-		boolean sameColumn = normalizedOldColumnName.equals(
-			normalizedNewColumnName);
-
-		String databaseColumnName = _getDatabaseColumnName(
-			_TABLE_NAME, "TypeInteger");
-
-		if (!sameColumn) {
-			Assert.assertTrue(databaseColumnName.equals("TypeInteger"));
+			Assert.fail();
 		}
-		else {
-			Assert.assertTrue(
-				databaseColumnName.equals(normalizedNewColumnName));
+		catch (SQLException sqlException) {
 		}
+
+		Assert.assertFalse(
+			_dbInspector.hasColumn(_TABLE_NAME, "nonexistedColumn"));
 	}
 
 	@Test
-	public void testAlterColumnTypeAlterNothing() throws Exception {
-		alterColumnType(_TABLE_NAME, "typeText", "TEXT null");
+	public void testAlterColumnNameSameColumnDifferentCase() throws Exception {
+		alterColumnName(_TABLE_NAME, "typeInteger", "TypeInteger INTEGER");
 
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeText", "TEXT null"));
+		if (StringUtil.equals(
+				_dbInspector.normalizeName("typeInteger"),
+				_dbInspector.normalizeName("TypeInteger"))) {
+
+			Assert.assertTrue(
+				_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
+		}
+		else {
+			Assert.assertTrue(
+				_dbInspector.hasColumn(_TABLE_NAME, "TypeInteger"));
+		}
 	}
 
 	@Test
@@ -238,21 +235,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnTypeMissingColumn() throws Exception {
-		try {
-			alterColumnType(_TABLE_NAME, "missingColumn", "TEXT not null");
-
-			Assert.fail();
-		}
-		catch (SQLException sqlException) {
-		}
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "missingColumn", "TEXT not null"));
-	}
-
-	@Test
 	public void testAlterColumnTypeNoChangesNotNull() throws Exception {
 		alterColumnType(_TABLE_NAME, "notNilColumn", "VARCHAR(75) not null");
 
@@ -268,6 +250,29 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeNoNeeded() throws Exception {
+		alterColumnType(_TABLE_NAME, "typeText", "TEXT null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeText", "TEXT null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeNonexistedColumn() throws Exception {
+		try {
+			alterColumnType(_TABLE_NAME, "nonexistedColumn", "TEXT not null");
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException) {
+		}
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nonexistedColumn", "TEXT not null"));
 	}
 
 	@Test
@@ -326,21 +331,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterMissingColumnName() throws Exception {
-		try {
-			alterColumnName(
-				_TABLE_NAME, "missingColumn", "newMissingColumn LONG null");
-
-			Assert.fail();
-		}
-		catch (SQLException sqlException) {
-		}
-
-		Assert.assertFalse(
-			_dbInspector.hasColumn(_TABLE_NAME, "newMissingColumn"));
-	}
-
-	@Test
 	public void testAlterPrimaryKeyName() throws Exception {
 		alterColumnName(_TABLE_NAME, "id", "idTest LONG not null");
 
@@ -371,7 +361,12 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterTableAddRepeatedColumnDifferentType()
+	public void testAlterTableAddExistingColumn() throws Exception {
+		alterTableAddColumn(_TABLE_NAME, "typeDouble", "DOUBLE");
+	}
+
+	@Test
+	public void testAlterTableAddExistingColumnWithDifferentType()
 		throws Exception {
 
 		try {
@@ -386,15 +381,10 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterTableAddRepeatedColumnSameType() throws Exception {
-		alterTableAddColumn(_TABLE_NAME, "typeDouble", "DOUBLE");
-	}
-
-	@Test
 	public void testAlterTableDropIndexedColumn() throws Exception {
 		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
-		_db.alterTableDropColumn(_connection, _TABLE_NAME, "typeVarchar");
+		alterTableDropColumn(_TABLE_NAME, "typeVarchar");
 
 		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeVarchar"));
 
@@ -410,8 +400,8 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterTableDropMissingColumn() throws Exception {
-		alterTableDropColumn(_TABLE_NAME, "missingColumn");
+	public void testAlterTableDropNonexistedColumn() throws Exception {
+		alterTableDropColumn(_TABLE_NAME, "nonexistedColumn");
 	}
 
 	private void _addIndex(String[] columnNames) {
@@ -421,24 +411,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		ReflectionTestUtil.invoke(
 			_db, "addIndexes", new Class<?>[] {Connection.class, List.class},
 			_connection, indexMetadatas);
-	}
-
-	private String _getDatabaseColumnName(String tableName, String columnName)
-		throws Exception {
-
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				_dbInspector.getCatalog(), _dbInspector.getSchema(),
-				_dbInspector.normalizeName(tableName),
-				_dbInspector.normalizeName(columnName))) {
-
-			if (!resultSet.next()) {
-				return null;
-			}
-
-			return resultSet.getString("COLUMN_NAME");
-		}
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {

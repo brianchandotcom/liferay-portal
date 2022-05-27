@@ -17,7 +17,7 @@ import React, {useMemo} from 'react';
 
 import {defaultLanguageId} from '../../../utils/locale';
 import {METADATAS} from '../../ObjectView/context';
-import {Collapsable} from './Collapsable';
+import {Collapsible} from './Collapsible';
 import Element from './Element';
 
 import './Sidebar.scss';
@@ -55,9 +55,9 @@ export default function Sidebar({
 				<h5 className="my-3">{Liferay.Language.get('elements')}</h5>
 
 				{elements.map(({items, label}) => (
-					<Collapsable key={label} label={label}>
+					<Collapsible key={label} label={label}>
 						<Element items={items} onItemClick={onItemClick} />
-					</Collapsable>
+					</Collapsible>
 				))}
 			</div>
 		</div>

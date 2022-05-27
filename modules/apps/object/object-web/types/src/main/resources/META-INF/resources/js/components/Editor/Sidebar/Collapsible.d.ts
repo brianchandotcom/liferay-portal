@@ -13,11 +13,8 @@
  */
 
 import React from 'react';
-export declare function Collapsable({
-	children,
-	label,
-}: ICollapsable): JSX.Element;
-interface ICollapsable {
+export declare function Collapsible({children, label}: IProps): JSX.Element;
+interface IProps {
 	children: React.ReactNode;
 	label: string;
 }

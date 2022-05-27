@@ -17,16 +17,16 @@
 import {Collapse} from '@liferay/layout-content-page-editor-web';
 import React from 'react';
 
-export function Collapsable({children, label}: ICollapsable) {
+export function Collapsible({children, label}: IProps) {
 	return (
-		<div className="lfr-objects__object-editor-sidebar-collapsable-button-list">
+		<div className="lfr-objects__object-editor-sidebar-collapsible-button-list">
 			<Collapse label={label} open>
 				{children}
 			</Collapse>
 		</div>
 	);
 }
-interface ICollapsable {
+interface IProps {
 	children: React.ReactNode;
 	label: string;
 }

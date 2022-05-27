@@ -85,6 +85,20 @@ public class ViewNotificationTemplatesDisplayContext {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/notification_templates/edit_notification_template"
+				).setParameter(
+					"notificationTemplateId", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(
+					_notificationRequestHelper.getRequest(), "view"),
+				"get", null, null),
+			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(
 					_notificationRequestHelper.getRequest(), "delete"),
@@ -96,6 +110,13 @@ public class ViewNotificationTemplatesDisplayContext {
 				"get", "permissions", "modal-permissions"));
 	}
 
+	public NotificationTemplate getNotificationTemplate() {
+		HttpServletRequest httpServletRequest =
+			_notificationRequestHelper.getRequest();
+
+		return (NotificationTemplate)httpServletRequest.getAttribute(
+			NotificationWebKeys.NOTIFICATION_TEMPLATES);
+	}
 
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -174,6 +176,14 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		if (Validator.isNotNull(typeLabel)) {
 			jsonObject.put("type", typeLabel);
+		}
+
+		String typeOptions = getTypeOptions();
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152938")) &&
+			Validator.isNotNull(typeOptions)) {
+
+			jsonObject.put("typeOptions", typeOptions);
 		}
 
 		zipWriter.addEntry(

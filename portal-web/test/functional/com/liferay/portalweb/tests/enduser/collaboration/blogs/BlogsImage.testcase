@@ -500,12 +500,46 @@ definition {
 	}
 
 	@description = "This ensures that an image in the Blogs content field can be rendered correctly when publication is enabled."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewInlineImageWithPublication {
+		JSONPublications.enablePublications();
 
-		// TODO LPS-154389 CanViewInlineImageWithPublication pending implementation
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.editContent(
+			dmImage = "DM Document Title",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "dm-document-title");
 	}
 
 	@description = "This ensures that an image in the Blogs small image can be rendered correctly after moving it to a folder."

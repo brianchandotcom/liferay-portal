@@ -77,40 +77,52 @@ public class GetExperienceDataMVCResourceCommand
 			portletPreferences -> jsonArray.put(
 				portletPreferences.getPortletId()));
 
+		boolean loadFragmentEntryLinks = ParamUtil.getBoolean(
+			resourceRequest, "loadFragmentEntryLinks");
+
+		if (loadFragmentEntryLinks) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"fragmentEntryLinks", JSONFactoryUtil.createJSONObject()
+				).put(
+					"portletIds", jsonArray
+				));
+
+			return;
+		}
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (!ParamUtil.getBoolean(resourceRequest, "loadFragmentEntryLinks")) {
-			long segmentsExperienceId = ParamUtil.getLong(
-				resourceRequest, "segmentsExperienceId");
+		long segmentsExperienceId = ParamUtil.getLong(
+			resourceRequest, "segmentsExperienceId");
 
-			List<FragmentEntryLink> fragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						themeDisplay.getScopeGroupId(), segmentsExperienceId,
-						themeDisplay.getPlid());
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid());
 
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				DefaultFragmentRendererContext defaultFragmentRendererContext =
-					new DefaultFragmentRendererContext(fragmentEntryLink);
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			DefaultFragmentRendererContext defaultFragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
 
-				defaultFragmentRendererContext.
-					setCollectionStyledLayoutStructureItemIds(
-						LayoutStructureUtil.
-							getCollectionStyledLayoutStructureItemIds(
-								fragmentEntryLink.getFragmentEntryLinkId(),
-								LayoutStructureUtil.getLayoutStructure(
-									themeDisplay.getScopeGroupId(),
-									themeDisplay.getPlid(),
-									segmentsExperienceId)));
+			defaultFragmentRendererContext.
+				setCollectionStyledLayoutStructureItemIds(
+					LayoutStructureUtil.
+						getCollectionStyledLayoutStructureItemIds(
+							fragmentEntryLink.getFragmentEntryLinkId(),
+							LayoutStructureUtil.getLayoutStructure(
+								themeDisplay.getScopeGroupId(),
+								themeDisplay.getPlid(), segmentsExperienceId)));
 
-				jsonObject.put(
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-						defaultFragmentRendererContext, fragmentEntryLink,
-						_portal.getHttpServletRequest(resourceRequest),
-						_portal.getHttpServletResponse(resourceResponse),
-						StringPool.BLANK));
-			}
+			jsonObject.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					defaultFragmentRendererContext, fragmentEntryLink,
+					_portal.getHttpServletRequest(resourceRequest),
+					_portal.getHttpServletResponse(resourceResponse),
+					StringPool.BLANK));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

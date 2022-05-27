@@ -36,7 +36,7 @@ const FileSizeField = ({
 				{Liferay.Language.get('mime-type-field-label')}
 
 				<span
-					className="inline-item-after text-muted"
+					className="inline-item-after"
 					title={Liferay.Language.get('mime-type-help-message')}
 				>
 					<ClayIcon symbol="question-circle-full" />
@@ -56,7 +56,7 @@ const FileSizeField = ({
 				{Liferay.Language.get('maximum-file-size')}
 
 				<span
-					className="inline-item-after text-muted"
+					className="inline-item-after"
 					title={Liferay.Language.get(
 						'maximum-file-size-help-message'
 					)}

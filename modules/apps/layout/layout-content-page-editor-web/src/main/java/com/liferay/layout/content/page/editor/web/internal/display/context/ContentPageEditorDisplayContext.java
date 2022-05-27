@@ -1405,13 +1405,17 @@ public class ContentPageEditorDisplayContext {
 			return _fragmentEntryLinks;
 		}
 
-		Map<String, Object> fragmentEntryLinksMap = new HashMap<>();
-
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>(
+		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					getGroupId(), getSegmentsExperienceId(),
-					themeDisplay.getPlid()));
+					themeDisplay.getPlid());
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		Map<String, Object> fragmentEntryLinksMap = new HashMap<>(
+			_getFragmentEntryLinksMap(
+				fragmentEntryLinks, false, layoutStructure));
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -1421,38 +1425,13 @@ public class ContentPageEditorDisplayContext {
 					fetchLayoutPageTemplateEntryByPlid(
 						layout.getMasterLayoutPlid());
 
-			fragmentEntryLinks.addAll(
+			fragmentEntryLinks =
 				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
-					getGroupId(), masterLayoutPageTemplateEntry.getPlid()));
-		}
+					getGroupId(), masterLayoutPageTemplateEntry.getPlid());
 
-		LayoutStructure layoutStructure = _getLayoutStructure();
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			DefaultFragmentRendererContext defaultFragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			defaultFragmentRendererContext.
-				setCollectionStyledLayoutStructureItemIds(
-					LayoutStructureUtil.
-						getCollectionStyledLayoutStructureItemIds(
-							fragmentEntryLink.getFragmentEntryLinkId(),
-							_getLayoutStructure()));
-
-			JSONObject jsonObject =
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					defaultFragmentRendererContext, fragmentEntryLink,
-					httpServletRequest,
-					PortalUtil.getHttpServletResponse(_renderResponse),
-					layoutStructure, StringPool.BLANK);
-
-			jsonObject.put(
-				"masterLayout",
-				layout.getMasterLayoutPlid() == fragmentEntryLink.getPlid());
-
-			fragmentEntryLinksMap.put(
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				jsonObject);
+			fragmentEntryLinksMap.putAll(
+				_getFragmentEntryLinksMap(
+					fragmentEntryLinks, true, _getMasterLayoutStructure()));
 		}
 
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
@@ -1486,6 +1465,41 @@ public class ContentPageEditorDisplayContext {
 		_fragmentEntryLinks = fragmentEntryLinksMap;
 
 		return _fragmentEntryLinks;
+	}
+
+	private Map<String, Object> _getFragmentEntryLinksMap(
+			List<FragmentEntryLink> fragmentEntryLinks, boolean masterLayout,
+			LayoutStructure layoutStructure)
+		throws Exception {
+
+		Map<String, Object> fragmentEntryLinksMap = new HashMap<>();
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			DefaultFragmentRendererContext defaultFragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			defaultFragmentRendererContext.
+				setCollectionStyledLayoutStructureItemIds(
+					LayoutStructureUtil.
+						getCollectionStyledLayoutStructureItemIds(
+							fragmentEntryLink.getFragmentEntryLinkId(),
+							_getLayoutStructure()));
+
+			JSONObject jsonObject =
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					defaultFragmentRendererContext, fragmentEntryLink,
+					httpServletRequest,
+					PortalUtil.getHttpServletResponse(_renderResponse),
+					layoutStructure, StringPool.BLANK);
+
+			jsonObject.put("masterLayout", masterLayout);
+
+			fragmentEntryLinksMap.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				jsonObject);
+		}
+
+		return fragmentEntryLinksMap;
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {

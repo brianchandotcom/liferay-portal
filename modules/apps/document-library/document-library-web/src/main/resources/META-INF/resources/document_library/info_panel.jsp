@@ -50,7 +50,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 				<div class="autofit-col">
 					<ul class="autofit-padded-no-gutters autofit-row">
 						<li class="autofit-col">
-							<%@ include file="/document_library/subscribe.jspf" %>
+							<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
 						</li>
 
 						<%

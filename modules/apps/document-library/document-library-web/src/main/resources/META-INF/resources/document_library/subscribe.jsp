@@ -14,7 +14,11 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
+Folder folder = (Folder)request.getAttribute("info_panel.jsp-folder");
+
 long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 if (folder != null) {

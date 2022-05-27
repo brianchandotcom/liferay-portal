@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
-import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,30 +174,10 @@ public class DLViewDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest,
-				PortletConfigurationApplicationType.PortletConfiguration.
-					CLASS_NAME,
-				PortletProvider.Action.VIEW)
-		).setMVCPath(
-			"/edit_permissions.jsp"
-		).setPortletResource(
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getId();
-			}
-		).setParameter(
-			"modelResource", DLFileEntryConstants.getClassName()
-		).setParameter(
-			"portletConfiguration", true
-		).setParameter(
-			"resourceGroupId", themeDisplay.getScopeGroupId()
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+		return PermissionsURLTag.doTag(
+			null, DLFileEntryConstants.getClassName(),
+			themeDisplay.getScopeGroupId(),
+			LiferayWindowState.POP_UP.toString(), _httpServletRequest);
 	}
 
 	public long getRepositoryId() {

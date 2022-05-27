@@ -17,7 +17,7 @@ export const BAR_CHART = {
 	barHeight: 16,
 	bigHeight: 550,
 	brushHeight: 32,
-	brushStroke: '#0B5FFF',
+	brushStroke: '#80ACFF',
 	dotRadiusMax: 35,
 	dotRadiusMin: 5,
 	emptyHeight: 300,

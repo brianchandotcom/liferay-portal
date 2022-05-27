@@ -63,6 +63,10 @@ html#{$cadmin-selector} {
 				line:not(:last-child):not(:first-child) {
 				stroke-opacity: 0;
 			}
+
+			.recharts-brush-texts .recharts-text {
+				fill: $cadmin-secondary;
+			}
 		}
 
 		.custom-tooltip {

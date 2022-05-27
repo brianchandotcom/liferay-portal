@@ -45,7 +45,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 			portletURL="<%= dlViewDisplayContext.getRestoreTrashEntriesURL() %>"
 		/>
 
-		<%@ include file="/document_library/navigation.jspf" %>
+		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 		<clay:management-toolbar
 			additionalProps='<%=

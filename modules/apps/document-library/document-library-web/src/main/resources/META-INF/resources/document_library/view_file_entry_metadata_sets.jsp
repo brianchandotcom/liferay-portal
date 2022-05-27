@@ -20,7 +20,7 @@
 DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
 %>
 
-<%@ include file="/document_library/navigation.jspf" %>
+<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext) %>"

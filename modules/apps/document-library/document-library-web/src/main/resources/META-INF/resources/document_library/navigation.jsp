@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
 DLAdminNavigationDisplayContext dlAdminNavigationDisplayContext = new DLAdminNavigationDisplayContext(liferayPortletRequest, liferayPortletResponse);
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);

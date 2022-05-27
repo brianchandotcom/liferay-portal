@@ -416,14 +416,6 @@
 		"zipRequired": true
 	},
 	{
-		"a2": "CG",
-		"a3": "COG",
-		"idd": 269,
-		"name": "congo",
-		"number": 178,
-		"zipRequired": false
-	},
-	{
 		"a2": "CK",
 		"a3": "COK",
 		"idd": 682,
@@ -480,11 +472,11 @@
 		"zipRequired": true
 	},
 	{
-		"a2": "CG",
-		"a3": "COG",
+		"a2": "CD",
+		"a3": "COD",
 		"idd": 243,
 		"name": "democratic-republic-of-congo",
-		"number": 178,
+		"number": 180,
 		"zipRequired": false
 	},
 	{
@@ -1200,7 +1192,7 @@
 		"zipRequired": true
 	},
 	{
-		"a2": null,
+		"a2": "NA",
 		"a3": "NAM",
 		"idd": 674,
 		"name": "namibia",
@@ -1424,11 +1416,11 @@
 		"zipRequired": false
 	},
 	{
-		"a2": "CD",
-		"a3": "COD",
+		"a2": "CG",
+		"a3": "COG",
 		"idd": 242,
 		"name": "republic-of-congo",
-		"number": 180,
+		"number": 178,
 		"zipRequired": false
 	},
 	{

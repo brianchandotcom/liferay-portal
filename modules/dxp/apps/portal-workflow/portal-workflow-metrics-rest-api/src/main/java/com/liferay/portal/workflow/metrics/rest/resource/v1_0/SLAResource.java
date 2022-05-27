@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
@@ -37,7 +36,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -64,23 +62,11 @@ public interface SLAResource {
 
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
 
-	public Response postProcessSLABatch(
-			Long processId, SLA sla, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteSLA(Long slaId) throws Exception;
-
-	public Response deleteSLABatch(
-			Long slaId, String callbackURL, Object object)
-		throws Exception;
 
 	public SLA getSLA(Long slaId) throws Exception;
 
 	public SLA putSLA(Long slaId, SLA sla) throws Exception;
-
-	public Response putSLABatch(
-			Long slaId, SLA sla, String callbackURL, Object object)
-		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -118,10 +104,6 @@ public interface SLAResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

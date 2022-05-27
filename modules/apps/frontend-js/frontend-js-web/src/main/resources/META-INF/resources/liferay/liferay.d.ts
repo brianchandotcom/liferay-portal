@@ -496,6 +496,13 @@ declare module Liferay {
 		 */
 		export function toCharCode(name: string): string;
 
+		export function toggleBoxes(
+			checkBoxId: string,
+			toggleBoxId: string,
+			displayWhenUnchecked?: boolean,
+			toggleChildCheckboxes?: boolean
+		): void;
+
 		/**
 		 * Unescapes HTML from the given string.
 		 */

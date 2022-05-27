@@ -668,3 +668,10 @@ export function openToast({
 }): void;
 
 export function fetch(resource: string | Request, init?: Object): Promise<any>;
+
+export function toggleBoxes(
+	checkBoxId: string,
+	toggleBoxId: string,
+	displayWhenUnchecked?: boolean,
+	toggleChildCheckboxes?: boolean
+): void;

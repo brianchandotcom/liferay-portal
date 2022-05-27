@@ -1100,6 +1100,8 @@ AUI.add(
 						if (!currentUploadData.folder && !invalidFilesLength) {
 							var reloadButtonClassName = 'dl-reload-button';
 
+							openToastProps.autoClose = 10000;
+
 							openToastProps.message =
 								openToastProps.message +
 								`<div class="alert-footer">
@@ -1164,6 +1166,8 @@ AUI.add(
 						});
 
 						Liferay.Util.openToast({
+							autoClose:
+								invalidFilesLength > 3 ? undefined : false,
 							message,
 							toastProps: {
 								className: 'alert-full',

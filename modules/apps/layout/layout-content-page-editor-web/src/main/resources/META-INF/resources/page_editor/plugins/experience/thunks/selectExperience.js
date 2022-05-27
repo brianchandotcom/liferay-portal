@@ -18,16 +18,20 @@ import InfoItemService from '../../../app/services/InfoItemService';
 import selectExperienceAction from '../actions/selectExperience';
 
 export default function selectExperience({id}) {
-	return (dispatch) => {
+	return (dispatch, getState) => {
+		const loadedSegmentExperiences = getState().loadedSegmentExperiences;
+
 		return ExperienceService.selectExperience({
 			body: {
+				loadFragmentEntryLinks: !loadedSegmentExperiences.includes(id),
 				segmentsExperienceId: id,
 			},
 			dispatch,
 		})
-			.then((portletIds) => {
+			.then(({fragmentEntryLinks, portletIds}) => {
 				return dispatch(
 					selectExperienceAction({
+						fragmentEntryLinks,
 						portletIds,
 						segmentsExperienceId: id,
 					})

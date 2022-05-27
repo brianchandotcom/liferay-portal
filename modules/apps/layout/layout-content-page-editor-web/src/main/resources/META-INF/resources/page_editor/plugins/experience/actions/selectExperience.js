@@ -15,11 +15,13 @@
 import {SELECT_SEGMENTS_EXPERIENCE} from '../actions';
 
 export default function selectExperience({
+	fragmentEntryLinks = {},
 	portletIds = [],
 	segmentsExperienceId,
 }) {
 	return {
 		payload: {
+			fragmentEntryLinks,
 			portletIds,
 			segmentsExperienceId,
 		},

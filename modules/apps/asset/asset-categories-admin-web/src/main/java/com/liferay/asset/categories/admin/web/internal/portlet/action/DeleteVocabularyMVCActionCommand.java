@@ -15,13 +15,16 @@
 package com.liferay.asset.categories.admin.web.internal.portlet.action;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Barbara Cabrera
@@ -40,6 +43,25 @@ public class DeleteVocabularyMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		long[] deleteVocabularyIds = null;
+
+		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
+
+		if (vocabularyId > 0) {
+			deleteVocabularyIds = new long[] {vocabularyId};
+		}
+		else {
+			deleteVocabularyIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		for (long deleteVocabularyId : deleteVocabularyIds) {
+			_assetVocabularyService.deleteVocabulary(deleteVocabularyId);
+		}
 	}
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
 
 }

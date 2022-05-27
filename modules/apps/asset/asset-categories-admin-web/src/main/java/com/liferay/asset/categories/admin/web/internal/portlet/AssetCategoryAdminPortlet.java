@@ -102,27 +102,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetCategoryAdminPortlet extends MVCPortlet {
 
-	public void deleteVocabulary(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] deleteVocabularyIds = null;
-
-		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
-
-		if (vocabularyId > 0) {
-			deleteVocabularyIds = new long[] {vocabularyId};
-		}
-		else {
-			deleteVocabularyIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		for (long deleteVocabularyId : deleteVocabularyIds) {
-			_assetVocabularyService.deleteVocabulary(deleteVocabularyId);
-		}
-	}
-
 	public void editCategory(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

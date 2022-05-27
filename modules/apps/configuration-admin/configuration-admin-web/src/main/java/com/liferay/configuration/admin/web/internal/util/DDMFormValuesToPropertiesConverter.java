@@ -81,6 +81,8 @@ public class DDMFormValuesToPropertiesConverter {
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 
 		_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
+		_ddmFormFieldValuesReferencesMap =
+			ddmFormValues.getDDMFormFieldValuesReferencesMap(false);
 	}
 
 	public Dictionary<String, Object> getProperties() {
@@ -94,6 +96,11 @@ public class DDMFormValuesToPropertiesConverter {
 
 			List<DDMFormFieldValue> ddmFormFieldValues =
 				_ddmFormFieldValuesMap.get(attributeDefinition.getID());
+
+			if (ddmFormFieldValues == null) {
+				ddmFormFieldValues = _ddmFormFieldValuesReferencesMap.get(
+					attributeDefinition.getID());
+			}
 
 			if (attributeDefinition.getCardinality() == 0) {
 				value = _toSimpleValue(ddmFormFieldValues.get(0));
@@ -273,6 +280,8 @@ public class DDMFormValuesToPropertiesConverter {
 	private final ConfigurationModel _configurationModel;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
+	private final Map<String, List<DDMFormFieldValue>>
+		_ddmFormFieldValuesReferencesMap;
 	private final Locale _defaultLocale;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;

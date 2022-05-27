@@ -291,6 +291,7 @@ public class ConfigurationModelToDDMFormConverter {
 		_setDDMFormFieldValidation(ddmFormField);
 		_setDDMFormFieldVisibilityExpression(attributeDefinition, ddmFormField);
 
+		ddmFormField.setFieldReference(attributeDefinition.getID());
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setShowLabel(true);
 

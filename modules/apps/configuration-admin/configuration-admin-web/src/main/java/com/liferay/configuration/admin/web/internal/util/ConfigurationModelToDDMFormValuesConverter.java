@@ -87,7 +87,9 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	protected DDMFormFieldValue createDDMFormFieldValue(String name) {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setName(name);
+		ddmFormFieldValue.setFieldReference(name);
+		ddmFormFieldValue.setName(
+			DDMFormFieldNameUtil.normalizeFieldName(name));
 		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 
 		return ddmFormFieldValue;
@@ -124,9 +126,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		}
 
 		_addDDMFormFieldValues(
-			DDMFormFieldNameUtil.normalizeFieldName(
-				attributeDefinition.getID()),
-			values, ddmFormValues);
+			attributeDefinition.getID(), values, ddmFormValues);
 	}
 
 	private void _addDDMFormFieldValues(

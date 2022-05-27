@@ -15,11 +15,22 @@
 package com.liferay.notification.web.internal.portlet;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
@@ -50,4 +61,28 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class NotificationTemplatesPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new ViewNotificationTemplatesDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_notificationTemplateModelResourcePermission));
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.notification.model.NotificationTemplate)"
+	)
+	private ModelResourcePermission<NotificationTemplate>
+		_notificationTemplateModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
+
 }

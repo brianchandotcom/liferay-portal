@@ -14,4 +14,17 @@
  */
 --%>
 
-TODO
+<%@ include file="/init.jsp" %>
+
+<%
+ViewNotificationTemplatesDisplayContext viewNotificationTemplatesDisplayContext = (ViewNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+%>
+
+<frontend-data-set:headless-display
+	apiURL="<%= viewNotificationTemplatesDisplayContext.getAPIURL() %>"
+	creationMenu="<%= viewNotificationTemplatesDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= viewNotificationTemplatesDisplayContext.getFDSActionDropdownItems() %>"
+	formName="fm"
+	id="<%= NotificationFDSNames.NOTIFICATION_TEMPLATES %>"
+	style="fluid"
+/>

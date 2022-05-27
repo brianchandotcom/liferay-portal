@@ -34,6 +34,44 @@ definition {
 	}
 
 	@priority = "5"
+	test StructuredContentDraftContainsModifiedPriorityValue {
+		property portal.acceptance = "true";
+
+		task ("When in Headless Admin Content i create a structuredContent draft with with a priority field set") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "Text",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "1",
+				title = "Title");
+		}
+
+		task ("Given edit a web content with different priorities") {
+			var editStructuredContentId = HeadlessWebcontentAPI.editStructuredContent(
+				data = "Text",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "3.0",
+				responseToParse = "${responseToParse}",
+				title = "Title");
+		}
+
+		task ("When web contents are filtered with 3.0 priority") {
+			var response = HeadlessWebcontentAPI.filterStructuredContent(filtervalue = "priority%20eq%203.0");
+		}
+
+		task ("Then I should see in response content1 with the updated priority value") {
+			HeadlessWebcontentAPI.assertStructuredContentIdIsFilteredWithCorrectValue(
+				editStructuredContentId = "${editStructuredContentId}",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "5"
 	test StructuredContentDraftContainsPriorityField {
 		property portal.acceptance = "true";
 

@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -378,6 +380,8 @@ public class FragmentEntryLinkManager {
 			}
 		}
 		catch (PortalException portalException) {
+			_log.error(portalException);
+
 			return jsonArray;
 		}
 
@@ -400,6 +404,9 @@ public class FragmentEntryLinkManager {
 
 		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkManager.class);
 
 	@Reference
 	private CommentManager _commentManager;

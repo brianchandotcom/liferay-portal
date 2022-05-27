@@ -525,8 +525,10 @@ public class DocumentResourceImpl
 		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setUserId(contextUser.getUserId());
 
-		DocumentUtil.addThemeDisplay(
-			groupId, contextHttpServletRequest, contextHttpServletResponse);
+		if (contextHttpServletRequest != null) {
+			DocumentUtil.addThemeDisplay(
+				groupId, contextHttpServletRequest, contextHttpServletResponse);
+		}
 
 		Optional<DLFileEntryType> dlFileEntryTypeOptional =
 			_getDLFileEntryTypeOptional(

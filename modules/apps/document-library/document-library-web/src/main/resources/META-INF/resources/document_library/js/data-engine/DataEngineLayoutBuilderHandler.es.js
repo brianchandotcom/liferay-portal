@@ -48,7 +48,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		}
 	};
 
-	window.addEventListener('click', detectClickOutside, true);
+	window.addEventListener('mousedown', detectClickOutside, true);
 
 	const saveDataEngineStructure = async () => {
 		const dataLayoutBuilder = await getDataLayoutBuilder();
@@ -105,7 +105,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 	return {
 		dispose() {
 			form.removeEventListener('submit', saveDataEngineStructure);
-			window.removeEventListener('click', detectClickOutside, true);
+			window.removeEventListener('mousedown', detectClickOutside, true);
 		},
 	};
 }

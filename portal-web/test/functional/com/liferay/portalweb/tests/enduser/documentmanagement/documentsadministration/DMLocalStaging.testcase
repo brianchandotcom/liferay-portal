@@ -626,16 +626,16 @@ definition {
 			dmDocumentTitle = "Test YouTube Video",
 			friendlyURLEdit = "custom-url");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Site Name (Staging)",
 			layoutName = "Staging DM Page",
 			site = "false",
 			widgetName = "Media Gallery");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 

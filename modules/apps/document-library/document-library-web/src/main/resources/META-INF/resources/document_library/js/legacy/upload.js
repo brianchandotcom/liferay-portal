@@ -1102,7 +1102,11 @@ AUI.add(
 
 							openToastProps.message =
 								openToastProps.message +
-								` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">${instance._strings.reloadButton}</button>`;
+								`<div class="alert-footer">
+										<div class="btn-group" role="group">
+											<button class="btn btn-sm btn-primary alert-btn ${reloadButtonClassName}">${instance._strings.reloadButton}</button>
+										</div>
+								</div>`;
 
 							openToastProps.onClick = ({event}) => {
 								if (

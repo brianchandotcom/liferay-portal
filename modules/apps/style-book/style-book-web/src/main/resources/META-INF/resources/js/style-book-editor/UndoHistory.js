@@ -94,7 +94,13 @@ export default function UndoHistory() {
 
 					<ClayDropDown.Item
 						disabled={!undoHistory.length}
-						onClick={() => {}}
+						onClick={(event) => {
+							onHistoryItemClick(
+								event,
+								undoHistory.length,
+								UNDO_TYPES.undo
+							);
+						}}
 					>
 						{Liferay.Language.get('undo-all')}
 					</ClayDropDown.Item>

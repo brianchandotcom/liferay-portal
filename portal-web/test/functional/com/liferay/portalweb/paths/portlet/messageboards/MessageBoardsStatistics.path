@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--GENERAL-->
+
 <tr>
 	<td>GENERAL_DROPDOWN</td>
 	<td>//div[@id='messageBoardsGeneralStatisticsPanel']</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TOP_POSTERS-->
+
 <tr>
 	<td>TOP_POSTERS_DROPDOWN</td>
 	<td>//div[@id='messageBoardsTopPostersPanel']</td>

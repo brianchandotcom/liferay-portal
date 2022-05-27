@@ -12,7 +12,9 @@
 </thead>
 
 <tbody>
+
 <!-- SIDE BAR ELEMENTS -->
+
 <tr>
 	<td>CURRENT_PROPERTY</td>
 	<td>//div[@class='channels-menu-label']</td>

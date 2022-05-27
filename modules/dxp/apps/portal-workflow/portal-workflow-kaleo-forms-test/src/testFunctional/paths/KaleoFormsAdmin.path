@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--PROCESS_TABLE-->
+
 <tr>
 	<td>PROCESS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[contains(.,'${key_kfProcessName}')]</td>
@@ -26,7 +28,9 @@
 	<td>//div[contains(@class,'empty-result')]//div[contains(text(),'There are no unpublished definitions.')]</td>
 	<td></td>
 </tr>
+
 <!--PROCESS_DETAILS-->
+
 <tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//div[contains(@class,'form-group')]//label[contains(text(), '${key_fieldName}')]/following-sibling::div[contains(@class, 'input-group')]//textarea</td>
@@ -42,7 +46,9 @@
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[${key_itemPosition}]</td>
 	<td></td>
 </tr>
+
 <!--WORKFLOW_MODAL-->
+
 <tr>
 	<td>CLOSE_BUTTON</td>
 	<td>//button[contains(@aria-label,'close')]</td>

@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATA-->
+
 <tr>
 	<td>DATA_TABLE_FROM</td>
 	<td>//table[contains(@class,'conversion-data')]/tbody/tr/td[1]</td>

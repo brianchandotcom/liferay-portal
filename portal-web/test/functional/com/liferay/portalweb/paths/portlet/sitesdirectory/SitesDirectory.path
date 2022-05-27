@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DESCRIPTIVE-->
+
 <tr>
 	<td>DESCRIPTIVE_SITE_ENTRY</td>
 	<td>//*[@data-qa-id='rowItemContent']/h5/span[contains(.,'${key_siteName}')] | //*[@data-qa-id='rowItemContent']/h5/a[contains(.,'${key_siteName}')]</td>
@@ -36,7 +38,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_HIERARCHY-->
+
 <tr>
 	<td>LIST_HIERARCHY_PARENT_SITE_AVAILABLE</td>
 	<td>//ul[@class='level-1 sites']/li[contains(.,'${key_siteName}')]/a</td>

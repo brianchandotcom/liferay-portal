@@ -60,7 +60,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DETAILS-->
+
 <tr>
 	<td>DETAILS_SMALL_IMAGE</td>
 	<td>//label[contains(@for,'smallImage')]/input[@type='checkbox']</td>
@@ -91,13 +93,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATA_LIST_RECORD_FIELDS-->
+
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_TEXT</td>
 	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Text')]</td>
 	<td></td>
 </tr>
+
 <!--WEB_CONTENT-->
+
 <tr>
 	<td>CODE_MIRROR_EDITOR</td>
 	<td>//div[contains(@class,'CodeMirrorEditor')]//div[contains(@class,'CodeMirror cm-s-default')]</td>

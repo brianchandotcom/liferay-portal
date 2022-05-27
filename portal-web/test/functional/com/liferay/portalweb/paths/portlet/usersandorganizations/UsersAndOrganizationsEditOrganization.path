@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--DETAILS-->
+
 <tr>
 	<td>DETAILS_TYPE</td>
 	<td>//input[@value='${key_orgType}' and @type='text']</td>
@@ -21,7 +23,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PARENT_ORGANIZATION-->
+
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
 	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[1]//a</td>
@@ -42,7 +46,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ORGANIZATION_SITE-->
+
 <tr>
 	<td>ORGANIZATION_SITE_CREATE_SITE_CHECKBOX</td>
 	<td>//div[contains(@class,'input-checkbox-wrapper')]//input[contains(@id,'site')]</td>
@@ -53,7 +59,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CATEGORIZATION-->
+
 <tr>
 	<td>CATEGORIZATION_TAG</td>
 	<td>//li/span[contains(.,'${key_tagName}')]</td>
@@ -64,7 +72,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTACT-->
+
 <tr>
 	<td>CONTACT_ADD_BUTTON</td>
 	<td>//a[contains(@class,'btn') and contains(@class,'${key_contactType}')]</td>

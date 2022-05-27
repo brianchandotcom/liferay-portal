@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--FORM_ELEMENTS-->
+
 <tr>
 	<td>CHECKBOX</td>
 	<td>//td[normalize-space(text())='${key_definition}']/..//input[@type='checkbox']</td>
@@ -111,7 +113,9 @@
 	<td>//*[contains(@class,'container-fluid')]//parent::*[not(contains(@class,'hide')) and contains(@id,'ClaySamplePortlet')]</td>
 	<td></td>
 </tr>
+
 <!--MANAGEMENT_TOOLBARS-->
+
 <tr>
 	<td>DISPLAY_CONTEXT_CHECKBOX</td>
 	<td>//div[not(contains(@class,'hide')) and contains(@id, 'tabs')]//h3[text()='USING DISPLAY CONTEXT']//following::nav[contains(@class,'management-bar')][1]//input[@type='checkbox']</td>

@@ -225,7 +225,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--BOOLEAN-->
+
 <tr>
 	<td>BOOLEAN_NAME</td>
 	<td>//span[text()='${fieldValue}']</td>
@@ -241,7 +243,9 @@
 	<td>//div[contains(@class,'custom-control custom-checkbox')]//span[text()='${fieldName}']</td>
 	<td></td>
 </tr>
+
 <!--CHECKBOX-->
+
 <tr>
 	<td>CHECKBOX</td>
 	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains (@name,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox'] | //label[contains(@class,'toggle-switch')]//input[contains(@type,'checkbox')]/following-sibling::span[contains(@class,'toggle-switch-bar')]//span[contains(text(),'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')] | //input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
@@ -272,7 +276,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--COLOR-->
+
 <tr>
 	<td>COLOR_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='Color']/..//input</td>
@@ -308,7 +314,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATE-->
+
 <tr>
 	<td>DATE_CALENDAR</td>
 	<td>//button[contains(@class,'date-picker-dropdown-toggle')]</td>
@@ -344,7 +352,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_LIBRARY-->
+
 <tr>
 	<td>UPLOAD_FIELD_CLEAR_BUTTON</td>
 	<td>//button[text()='Clear']</td>
@@ -355,7 +365,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--HELP TEXT-->
+
 <tr>
 	<td>HELP_TEXT</td>
 	<td>//div[contains(@class,'form-group')]//div[contains(@class,'form-feedback-group') and contains(.,'${value1}')] | //div[contains(@data-field-name,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-feedback-group')]</td>
@@ -366,7 +378,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--OPTIONS-->
+
 <tr>
 	<td>OPTIONS_DELETE_ROW_BUTTON</td>
 	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//button[contains(@class,'close-modal')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
@@ -427,7 +441,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--IMAGE-->
+
 <tr>
 	<td>IMAGE_FIELD_DESCRIPTION</td>
 	<td>//div[contains(@class,'form-group')]//input[@type='text' and @value='${key_description}']</td>
@@ -443,7 +459,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--GRID-->
+
 <tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
 	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//button[contains(@class,'close')]</td>
@@ -499,7 +517,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RADIO-->
+
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
 	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span | //fieldset//legend[text()='${key_fieldName}']/..//span</td>
@@ -515,7 +535,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RICH TEXT-->
+
 <tr>
 	<td>RICH_TEXT_CONTENT</td>
 	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
@@ -531,7 +553,9 @@
 	<td>//body[contains(@class,'cke_editable')]</td>
 	<td></td>
 </tr>
+
 <!--NUMBER-->
+
 <tr>
 	<td>CHARACTER_OPTIONS_SHOW_LESS_BUTTON</td>
 	<td>//label[contains(text(),'Character Options')]//following-sibling::button[contains(.,'Show Less')]</td>
@@ -583,7 +607,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TEXT-->
+
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_FIELD</td>
 	<td>//div[contains(@class,'form-group')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
@@ -674,7 +700,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PARAGRAPH-->
+
 <tr>
 	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD</td>
 	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//p//strong[contains(text(),'${key_textName}')]</td>
@@ -760,7 +788,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PASSWORD-->
+
 <tr>
 	<td>PASSWORD_FIELD</td>
 	<td>//input[@type='password' and contains(@id,'${key_fieldName}')]</td>
@@ -771,7 +801,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT-->
+
 <tr>
 	<td>SELECT_ASSERT_RADIO_OPTION_ORDER</td>
 	<td>//div[${key_position}]//span[contains(text(),'${key_optionLabel}')]</td>
@@ -857,13 +889,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SEPARATOR-->
+
 <tr>
 	<td>SEPARATOR_LINE</td>
 	<td>//label[text()='${key_fieldLabel}']/following-sibling::hr[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
+
 <!--SWITCH-->
+
 <tr>
 	<td>SWITCH</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //label[contains(.,'${key_fieldName}')]//input</td>
@@ -889,13 +925,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TOOLBAR-->
+
 <tr>
 	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
 	<td>//a[contains(@href,"${key_titleName}")]</td>
 	<td></td>
 </tr>
+
 <!--VALIDATION-->
+
 <tr>
 	<td>VALIDATION_ACCEPTED_DATE</td>
 	<td>//div[contains(@class,'ddm-form-field-type__validation-date-accepted-date')]//div[contains(@class,"form-control results-chosen select-field-trigger")]</td>
@@ -996,7 +1036,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CAPTCHA-->
+
 <tr>
 	<td>CAPTCHA_FIELD</td>
 	<td>//div[contains(@class, 'taglib-captcha')]/img[contains(@id, 'captcha')]</td>
@@ -1022,7 +1064,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--AUTOCOMPLETE-->
+
 <tr>
 	<td>AUTOCOMPLETE_OPTION</td>
 	<td>//li[contains(.,'${key_autocompleteOption}')]</td>
@@ -1033,7 +1077,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--UPLOAD-->
+
 <tr>
 	<td>SELECT_UPLOAD_FIELD</td>
 	<td>//span[@class='lfr-btn-label']</td>
@@ -1119,7 +1165,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CHANGE FIELD TYPE-->
+
 <tr>
 	<td>CHANGE_FIELD_TYPE_BUTTON</td>
 	<td>//li[contains(@class,'ddm-fieldtypes-dropdown')]//div[contains(@class,'dropdown')] | //button[contains(@id,'field-type-menu-content')] | //li[contains(@class,'ddm-fieldtypes-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
@@ -1135,7 +1183,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FRONTEND SPA INFRASTRUCTURE-->
+
 <tr>
 	<td>USER_NOTIFICATION_TIMEOUT</td>
 	<td>//input[contains(@name,'userNotificationTimeout')]</td>
@@ -1146,19 +1196,25 @@
 	<td>//td[contains(@class,'lfr-image-column')]</td>
 	<td></td>
 </tr>
+
 <!--TRANSLATION-->
+
 <tr>
 	<td>TRANSLATION_LIST</td>
 	<td>xpath=//ul[@class='nav nav-underline lfr-translationmanager']//li[@class='nav-item'][${key_position}]/..//span[contains(text(),'${key_language}')]</td>
 	<td></td>
 </tr>
+
 <!--MULTIPLE_SELECTION-->
+
 <tr>
 	<td>DELETE_OPTION_FROM_MULTIPLE_SELECTION</td>
 	<td>//input[contains(@value,'${key_valueOption}')]//..//..//..//..//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
+
 <!--SIDE_BAR-->
+
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT</td>
 	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'form-builder-select-field')]//div[contains(text(),'${key_textContent}')]</td>

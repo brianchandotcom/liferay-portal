@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--PERMISSION_TABLE-->
+
 <tr>
 	<td>PERMISSION_TABLE_PERMISSIONS</td>
 	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td</td>

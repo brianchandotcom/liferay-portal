@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!-- LOGIN SCREEN FIELDS -->
+
 <tr>
 	<td>EMAIL_LOGIN_FIELD</td>
 	<td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>

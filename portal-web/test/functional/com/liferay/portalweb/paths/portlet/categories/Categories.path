@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CATEGORY_ENTRY-->
+
 <tr>
 	<td>CATEGORY_ENTRY</td>
 	<td>//tr[contains(.,'${key_categoryName}')]/td[2]</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CATEGORY_DETAILS-->
+
 <tr>
 	<td>CATEGORY_DETAILS_PROPERTY_KEY_2</td>
 	<td>//input[contains(@id,'key${key_pathNumber}')]</td>
@@ -72,7 +76,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--OOTB_CATEGORIES-->
+
 <tr>
 	<td>LOCKED_VOCABULARY</td>
 	<td>//a[contains(@class,'nav-link')][.//*[name()='svg'][contains(@class,'icon-lock')]]/span[normalize-space(text())='${key_vocabularyName}']</td>
@@ -83,7 +89,9 @@
 	<td>//*[contains(@id,'AssetCategoriesAdminPortlet_visibilityType') and @value='1']</td>
 	<td></td>
 </tr>
+
 <!--SUBCATEGORY_ENTRY-->
+
 <tr>
 	<td>SUBCATEGORY_ENTRY</td>
 	<td>//tr[contains(.,'${key_subcategoryName}')]/td[2]</td>
@@ -99,7 +107,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VOCABULARY_ENTRY-->
+
 <tr>
 	<td>VOCABULARY_ENTRY</td>
 	<td>//tr[contains(.,'${key_vocabularyName}')]/td[2]</td>
@@ -125,13 +135,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VOCABULARY_CATEGORY-->
+
 <tr>
 	<td>VOCABULARY_CATEGORY</td>
 	<td>//div[contains(@id,'assetCategories')]//td[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
+
 <!--VOCABULARY-->
+
 <tr>
 	<td>VOCABULARY_EDIT_CHECKBOX</td>
 	<td>//span[contains(text(), '${label}')]/..//input</td>

@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULES-->
+
 <tr>
 	<td>USER_SEGMENT_RULES_RULE</td>
 	<td>//li//div/h5[contains(.,'${key_userSegmentRule}')]</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'education')]</td>
@@ -67,7 +71,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'cityName')]</td>
@@ -78,7 +84,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'facebookName')]</td>
@@ -89,7 +97,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO</td>
 	<td>//div[contains(@class,'facebookgenderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='male']</td>
@@ -110,7 +120,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'selector')]</td>
@@ -126,7 +138,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD</td>
 	<td>//div[contains(@class,'facebookagerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'OlderThan')]</td>
@@ -142,7 +156,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[@title='Select']</td>
@@ -158,7 +174,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'scorePoints')]</td>
@@ -169,7 +187,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'friendlyURL')]</td>
@@ -180,7 +200,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_ADD_BUTTON</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//button/*[.='Add']</td>
@@ -201,7 +223,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'siteMemberNameContainer') and contains(.,'${key_selectSiteMemberSite}')]</td>
@@ -212,7 +236,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT</td>
 	<td>//select[contains(@id,'CustomFieldSelectorPortlet')]</td>
@@ -233,7 +259,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO</td>
 	<td>//div[contains(@class,'genderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='male']</td>
@@ -249,7 +277,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_siteRole}')]/td[2]//button[contains(.,'Choose')]</td>
@@ -275,7 +305,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'userGroupNameContainer')]</td>
@@ -291,7 +323,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]/p[@class='text-secondary']</td>
@@ -302,7 +336,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT</td>
 	<td>//div[contains(@class,'organizationrolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'roleId')]</td>
@@ -318,7 +354,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT</td>
 	<td>//div[contains(@class,'organizationmemberrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'organizationId')]</td>
@@ -329,7 +367,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_DEFAULT_REGULAR_ROLE</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'roleId')]</td>
@@ -345,7 +385,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD</td>
 	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'olderThan')]</td>
@@ -361,7 +403,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'countryId')]</td>
@@ -377,7 +421,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'browser')]</td>
@@ -388,7 +434,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'os')]</td>
@@ -399,7 +447,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_TIME-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'startTime')]</td>
@@ -415,7 +465,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE-->
+
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'RuleGroupId')]</td>

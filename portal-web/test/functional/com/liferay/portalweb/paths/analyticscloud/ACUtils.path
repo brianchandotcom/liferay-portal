@@ -55,13 +55,17 @@
 	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'Delete')]</td>
 	<td></td>
 </tr>
+
 <!-- CLOSE MODAL -->
+
 <tr>
 	<td>MODAL_CLOSE_BUTTON</td>
 	<td>//button[contains(@class, 'close')]</td>
 	<td></td>
 </tr>
+
 <!-- FILTER ORDER -->
+
 <tr>
 	<td>ORDER_ARROW_BUTTON_ASC</td>
 	<td>//a[contains(@class, 'nav-link-monospaced btn-outline-borderless')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-ascending')]]</td>
@@ -87,7 +91,9 @@
 	<td>//a[contains(@href,'sortOrder')]//span[text()='${key_columnName}']</td>
 	<td></td>
 </tr>
+
 <!-- PAGE_PAGINATION-->
+
 <tr>
 	<td>ACTIVE_PAGE</td>
 	<td>//li[@class='page-item active']</td>
@@ -118,7 +124,9 @@
 	<td>//div[@class='pagination-results']</td>
 	<td></td>
 </tr>
+
 <!-- SEARCH_BAR -->
+
 <tr>
 	<td>CLEAR_SEARCH_BAR_BUTTON</td>
 	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
@@ -134,7 +142,9 @@
 	<td>//span[@class='text-truncate'and text()='${key_pageTitle}']</td>
 	<td></td>
 </tr>
+
 <!-- SVG_TIMED_GRAPH -->
+
 <tr>
 	<td>SVG_TIMED_GRAPH</td>
 	<td>//*[text()='${key_parentName}']/parent::div/following-sibling::div[contains(@class, 'card-body')]//*[contains(@class, 'recharts-surface')]</td>
@@ -145,7 +155,9 @@
 	<td>xpath=(//*[contains(@class,'recharts-pie-labels')])[${key_index}]//*[contains(text(),'${key_percentage}')]</td>
 	<td></td>
 </tr>
+
 <!-- CLICKABLE -->
+
 <tr>
 	<td>DROPDOWN_ITEM</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//*[text()='${key_dropdownItem}']</td>

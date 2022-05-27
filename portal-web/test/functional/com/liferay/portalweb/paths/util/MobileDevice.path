@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADD_CLASSIFICATION_RULE-->
+
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM</td>
 	<td>//select[contains(@id,'os')]</td>

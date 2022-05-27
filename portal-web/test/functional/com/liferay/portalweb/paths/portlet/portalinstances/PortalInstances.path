@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--INSTANCE_TABLE-->
+
 <tr>
 	<td>INSTANCE_TABLE_WEB_ID</td>
 	<td>//tr[contains(.,'${key_virtualHost}')]/td[2]//a</td>

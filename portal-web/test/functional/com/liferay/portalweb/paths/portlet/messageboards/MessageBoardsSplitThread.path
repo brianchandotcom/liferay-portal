@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--THREAD_TABLE-->
+
 <tr>
 	<td>SPLIT_THREAD_INFO</td>
 	<td>//form[contains(@name,'message_board')]//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADD_EXPLANATION_POST-->
+
 <tr>
 	<td>ADD_EXPLANATION_POST_CHECKBOX</td>
 	<td>//label[contains(@for,'addExplanationPost')]/input[@type='checkbox']</td>

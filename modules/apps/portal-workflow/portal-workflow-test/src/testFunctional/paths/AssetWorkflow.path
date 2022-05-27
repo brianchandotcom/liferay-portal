@@ -40,7 +40,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DETAILS_WORKFLOW-->
+
 <tr>
 	<td>DETAILS_WORKFLOW_CREATED_BY</td>
 	<td>//div[@class='sidebar-body']//p</td>
@@ -76,7 +78,9 @@
 	<td>//a[contains(text(),'${key_workflowInstanceName}')]</td>
 	<td></td>
 </tr>
+
 <!--TRANSLATIONS_PREVIEW-->
+
 <tr>
 	<td>TRANSLATIONS_PREVIEW_EDITOR</td>
 	<td>//div[contains(@class,'translation-editor-preview') and contains(.,'${key_fieldValue}')]</td>
@@ -92,7 +96,9 @@
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet') and contains(@value,'${key_titleValue}') and @readonly='readonly'] </td>
 	<td></td>
 </tr>
+
 <!--PROCESS_BUILDER_FILTER_AND_ORDER-->
+
 <tr>
 	<td>PROCESS_BUILDER_FILTER_AND_ORDER_BUTTON</td>
 	<td>//button[contains(@class, "dropdown-toggle nav-link btn btn-unstyled")]</td>
@@ -103,19 +109,25 @@
 	<td>//a[contains(@class, 'dropdown-item active')][contains(text(), '${key_optionOrder}')]</td>
 	<td></td>
 </tr>
+
 <!--BLOGS-->
+
 <tr>
 	<td>BLOGS_ENTRY_TITLE</td>
 	<td>//p[@title="${key_title}"]</td>
 	<td></td>
 </tr>
+
 <!--BLOGS ENTRY-->
+
 <tr>
 	<td>BLOGS_ENTRY_STATUS_TABLE</td>
 	<td>//span[contains(@class, "label-item label-item-expand") and text()="${key_status}"]</td>
 	<td></td>
 </tr>
+
 <!--REVIEW ASSET-->
+
 <tr>
 	<td>ASSET_STATE</td>
 	<td>//div/span[contains(.,'State')]/..//div[(@class='panel-body') and contains(.,'${key_state}')]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--EVENTS_DISPLAYED-->
+
 <tr>
 	<td>EVENTS_DISPLAYED_MAX_DAYS</td>
 	<td>//select[contains(@id,'eventsPerPage')]</td>
@@ -21,7 +23,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS</td>
 	<td>//ul[contains(@class,'nav nav-underline')]//a[contains(.,'Display Settings')]</td>
@@ -37,7 +41,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER_SETTINGS-->
+
 <tr>
 	<td>USER_SETTINGS_TIME_FORMAT_SELECT</td>
 	<td>//select[contains(@id,'timeFormat')]</td>
@@ -68,7 +74,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RSS-->
+
 <tr>
 	<td>RSS_ENABLE_RSS_SUBSCRIPTION_SWITCHER</td>
 	<td>//label[contains(.,'Enable RSS Subscription')]//span[@class='toggle-switch-handle']</td>

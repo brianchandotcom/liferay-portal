@@ -75,13 +75,17 @@
 	<td>//span[contains(@id,'fieldDetails')][contains(.,'${key_settingsText}')]</td>
 	<td></td>
 </tr>
+
 <!--ASSETS-->
+
 <tr>
 	<td>ASSETS_DYNAMIC_EXPORT_LIMIT</td>
 	<td>//div[contains(@data-field-name,'dynamicExportLimit')]//input[@type='text']</td>
 	<td></td>
 </tr>
+
 <!--CORS-->
+
 <tr>
 	<td>CORS_CONFIGURATION</td>
 	<td>//textarea[contains(@name,'${key_configurationValue}')]</td>

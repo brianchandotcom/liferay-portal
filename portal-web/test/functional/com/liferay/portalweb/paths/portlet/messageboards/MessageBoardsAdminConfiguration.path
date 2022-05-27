@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--GENERAL-->
+
 <tr>
 	<td>GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX</td>
 	<td>//input[contains(@id,'allowAnonymousPosting')]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MESSAGE_ADDED_EMAIL-->
+
 <tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'emailMessageAddedEnabled')]</td>
@@ -37,7 +41,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MESSAGE_UPDATED_EMAIL-->
+
 <tr>
 	<td>MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'emailMessageUpdatedEnabled')]</td>
@@ -48,7 +54,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETUP_NAVIGATION-->
+
 <tr>
 	<td>SETUP_NAVIGATION_EMAIL_FROM</td>
 	<td>//ul[contains(@class,'nav nav-underline')]/li/a[contains(.,'Email From')]</td>

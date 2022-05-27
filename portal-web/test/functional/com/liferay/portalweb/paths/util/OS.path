@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--FILE_DIALOG_BOX-->
+
 <tr>
 	<td>FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG</td>
 	<td>os/fields/file_dialog_box_file_name_field.png</td>

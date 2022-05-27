@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ADMIN-->
+
 <tr>
 	<td>ADMIN_AUTHORIZATIONS_REVOKE_BUTTON</td>
 	<td>//tr[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//button[contains(@onclick,'revokeOAuth2Authorization')]</td>
@@ -151,7 +153,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--AUTHORIZATION_REQUEST-->
+
 <tr>
 	<td>AUTHORIZATION_REQUEST_APPLICATION_NAME</td>
 	<td>//form[contains(@id,'OAuth2AuthorizePortlet')]//h1[contains(.,'${key_applicationName}')]</td>
@@ -167,7 +171,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--OAUTH2_TESTER-->
+
 <tr>
 	<td>OAUTH2_TESTER_PORTAL_URL</td>
 	<td>//input[contains(@id,'liferayUrl')]</td>
@@ -208,7 +214,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER-->
+
 <tr>
 	<td>USER_CONNECTED_APP_ACTIVITY</td>
 	<td>//span[contains(.,'${key_activity}')]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATION_TAB-->
+
 <tr>
 	<td>NAVIGATION_TAB_DISPLAY_SETTINGS</td>
 	<td>//a[contains(.,'Display Settings')]</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DISPLAY_SETTINGS-->
+
 <tr>
 	<td>DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
 	<td>//input[contains(@id,'enableKBArticleSubscriptions')]</td>
@@ -62,7 +66,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SUGGESTION_RECEIVED_EMAIL-->
+
 <tr>
 	<td>SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME</td>
 	<td>//*[@class='nav-link active' and contains(.,'Suggestion Received Email')]/../../..//div[contains(@id,'SuggestionReceived')]//div[contains(@class,'cke_inner')]//iframe</td>
@@ -73,7 +79,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SUGGESTION_IN_PROGRESS_EMAIL-->
+
 <tr>
 	<td>SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME</td>
 	<td>//*[@class='nav-link active' and contains(.,'Suggestion in Progress Email')]/../../..//div[contains(@id,'SuggestionInProgress')]//div[contains(@class,'cke_inner')]//iframe</td>
@@ -84,7 +92,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SUGGESTION_RESOLVED_EMAIL-->
+
 <tr>
 	<td>SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME</td>
 	<td>//*[@class='nav-link active' and contains(.,'Suggestion Resolved Email')]/../../..//div[contains(@id,'SuggestionResolved')]//div[contains(@class,'cke_inner')]//iframe</td>

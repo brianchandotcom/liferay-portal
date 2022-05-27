@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_WIKIS</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Wikis')]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--WIKI_PAGE_TABLE-->
+
 <tr>
 	<td>WIKI_PAGE_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]//input[@type='checkbox']</td>

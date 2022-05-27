@@ -15,7 +15,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--GOOGLE_DOCS-->
+
 <tr>
 	<td>DISMISS</td>
 	<td>//div[contains(@class,'jfk-butterBar-shown')]/a[contains(.,'Dismiss')]</td>
@@ -26,7 +28,9 @@
 	<td>//div/input[contains(@class,'docs-title-input')]</td>
 	<td></td>
 </tr>
+
 <!--INSERT_LINK-->
+
 <tr>
 	<td>INSERT_LINK_APPLY_BUTTON</td>
 	<td>//div[contains(@class,'docs-link-smartlinksuggestion-title')]</td>

@@ -15,7 +15,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADT_MULTI_COLUMN-->
+
 <tr>
 	<td>ADT_MULTI_COLUMN</td>
 	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][${key_column}]</td>

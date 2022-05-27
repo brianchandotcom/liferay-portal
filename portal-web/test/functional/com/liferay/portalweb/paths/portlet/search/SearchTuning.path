@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--RESULT_RANKINGS-->
+
 <tr>
 	<td>RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH</td>
 	<td>//input[@id="active-switch-input"]</td>
@@ -96,7 +98,9 @@
 	<td>//div[contains(@class,'active')]//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//div[contains(@class,'result-pin-icon-display')]</td>
 	<td></td>
 </tr>
+
 <!--SYNONYMS-->
+
 <tr>
 	<td>SYNONYMS_ENTRY</td>
 	<td>//table[contains(@id, synonymSetsEntries)]//a[contains(.,'${key_synonyms}')]</td>

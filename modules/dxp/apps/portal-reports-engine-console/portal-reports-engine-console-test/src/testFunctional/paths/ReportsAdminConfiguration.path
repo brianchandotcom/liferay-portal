@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_DELIVERY_EMAIL</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Delivery Email')]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NOTIFICATIONS_EMAIL-->
+
 <tr>
 	<td>NOTIFICATIONS_EMAIL_SUBJECT_FIELD</td>
 	<td>//input[contains(@id,'emailNotificationsSubject')]</td>

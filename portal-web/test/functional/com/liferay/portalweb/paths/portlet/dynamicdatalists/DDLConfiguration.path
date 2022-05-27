@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_SCOPE</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
@@ -36,7 +38,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TEMPLATES-->
+
 <tr>
 	<td>TEMPLATES_DISPLAY_TEMPLATE_SELECT</td>
 	<td>//select[contains(@id,'displayDDMTemplateId')]</td>
@@ -62,7 +66,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_TABLE-->
+
 <tr>
 	<td>LIST_TABLE_NAME</td>
 	<td>//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td//a[contains(.,'${key_ddlListName}')]</td>
@@ -83,7 +89,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_MENULIST-->
+
 <tr>
 	<td>LIST_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
@@ -94,7 +102,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SEARCH-->
+
 <tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[@title='Search' and contains(@id,'PortletConfiguration')]</td>

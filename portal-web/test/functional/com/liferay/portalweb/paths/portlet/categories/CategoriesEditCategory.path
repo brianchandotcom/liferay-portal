@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--PROPERTIES-->
+
 <tr>
 	<td>PROPERTIES_UNDO_MESSAGE</td>
 	<td>//div[contains(@class,'undomanager-content')]</td>

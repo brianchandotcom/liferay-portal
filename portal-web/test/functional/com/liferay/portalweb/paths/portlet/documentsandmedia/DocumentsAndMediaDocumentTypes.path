@@ -60,7 +60,9 @@
 	<td>//div[contains(@class,'sidebar-content-open')]//div[contains(@class,'sidebar-header') and contains(.,'${key_sidebarTitle}')]</td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_TYPES_TABLE-->
+
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_NAME</td>
 	<td>//tr//td[contains(.,'${key_dmDocumentTypeName}')]</td>

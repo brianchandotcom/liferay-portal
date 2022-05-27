@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RESERVED_CREDENTIALS-->
+
 <tr>
 	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER</td>
 	<td>//label[contains(@for,'admin-reserved-screen-names')]</td>
@@ -46,7 +48,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFAULT_USER_ASSOCIATIONS-->
+
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_SITES_HEADER</td>
 	<td>//label[contains(@for,'admin-default-group-names')]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--DIAGRAM_ADMIN_TOOLTIP-->
+
 <tr>
 	<td>DIAGRAM_ADMIN_TOOLTIP</td>
 	<td>//form[contains(@class,'diagram-admin-tooltip')]</td>
@@ -36,7 +38,9 @@
 	<td>//form[contains(@class,'diagram-admin-tooltip')]//div[contains(@class,'input-group-item')]//input[contains(@value,'${key_inputItem}')]</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM_MAPPING-->
+
 <tr>
 	<td>DIAGRAM_EXPAND</td>
 	<td>//*[@id="wkbq___collapse"]//button</td>
@@ -112,7 +116,9 @@
 	<td>//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM_PRODUCT_DETAIL-->
+
 <tr>
 	<td>DIAGRAM_PRODUCT_DETAIL_NAME</td>
 	<td>//div[contains(@class,'portlet-content')]//h4[contains(text(),'${key_productName}')]</td>
@@ -128,7 +134,9 @@
 	<td>//div[contains(@class,'product-publisher')]//div[contains(@class,'portlet-content')]//p//a[contains(@href,'${key_productName}')]</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM_PRODUCT_TOOLTIP-->
+
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP</td>
 	<td>//div[contains(@class,'diagram-tooltip')]</td>
@@ -159,7 +167,9 @@
 	<td>//div[contains(@class,'diagram-tooltip')]//h4[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM_SETTINGS-->
+
 <tr>
 	<td>DIAGRAM_SETTINGS_TYPE_OPTION</td>
 	<td>//select[contains(@id,'type')]//option[contains(text(),'${key_settingOption}')]</td>
@@ -170,7 +180,9 @@
 	<td>//select[contains(@id,'type')]//option[@selected and contains(.,'${key_selectedType}')]</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM_ZOOM-->
+
 <tr>
 	<td>CHECK_DIAGRAM_ZOOM_VALUE</td>
 	<td>//select[contains(@class,'form-control ml-1')]//option[contains(.,'${key_zoomValue}')]</td>

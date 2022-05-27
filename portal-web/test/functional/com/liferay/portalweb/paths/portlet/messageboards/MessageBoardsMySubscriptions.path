@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--CATEGORY_TABLE-->
+
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_BREADCRUMB_1</td>
 	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//ul/li)[1]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_WEB_CONTENT_ADDED_EMAIL</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Web Content Added Email')]</td>

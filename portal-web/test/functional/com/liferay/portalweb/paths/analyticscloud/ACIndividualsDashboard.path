@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--KNOWN_INDIVIDUALS-->
+
 <tr>
 	<td>KNOWN_INDIVIDUAL_ATTRIBUTES_FILTER</td>
 	<td>//*[contains(@class,'btn')]/span[@class='text-truncate' and text()='${key_rowName}']</td>
@@ -36,7 +38,9 @@
 	<td>//tbody//tr[${resultOrder}]//a[contains(@class,'text-truncate') and text()='${key_itemName}']</td>
 	<td></td>
 </tr>
+
 <!-- INDIVIDUALS DASHBOARD -->
+
 <tr>
 	<td>ASSOCIATED_SEGMENT_ITEM</td>
 	<td>//span[contains(@class,'text-truncate')]//a[contains(text(),'${key_itemName}')]</td>
@@ -117,7 +121,9 @@
 	<td>//span[contains(text(),'${key_visitorLegend}')]</td>
 	<td></td>
 </tr>
+
 <!--INDIVIDUAL_DETAILS_CARD-->
+
 <tr>
 	<td>INDIVIDUAL_DETAILS_CARD_AVATAR</td>
 	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'avatar')]</td>
@@ -133,7 +139,9 @@
 	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'card-body')]//h4[normalize-space(text())='${fullName}']</td>
 	<td></td>
 </tr>
+
 <!--INDIVIDUALS_ACTIVITIES_CHART-->
+
 <tr>
 	<td>BASE_RESULTS_TIMELINE_ATTRIBUTES_TITLE</td>
 	<td>//div[contains(@class,'attributes-title')]</td>
@@ -149,7 +157,9 @@
 	<td>xpath=(//tr[contains(@class,'analytics-tooltip-chart-row')])[1]//td[1]//div[contains(@class,'analytics-tooltip-chart-content')]</td>
 	<td></td>
 </tr>
+
 <!-- OVERVIEW -->
+
 <tr>
 	<td>CHARTS_WRAPPER</td>
 	<td>//div[contains(@class,'recharts-wrapper')]</td>

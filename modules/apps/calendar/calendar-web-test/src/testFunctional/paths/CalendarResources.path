@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--RESOURCE_TABLE-->
+
 <tr>
 	<td>RESOURCE_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[1]</td>

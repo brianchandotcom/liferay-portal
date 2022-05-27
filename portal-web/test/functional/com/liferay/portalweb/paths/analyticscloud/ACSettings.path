@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!-- SETTINGS HEADER -->
+
 <tr>
 	<td>HEADER_DESCRIPTION</td>
 	<td>//div[contains(@class,'content-header')]//div[contains(@class,'description')]</td>
@@ -31,7 +33,9 @@
 	<td>//div[contains(@class,'header-text')]//div[contains(text(),'Invite new users to Analytics Cloud and/or configure existing users.')]</td>
 	<td></td>
 </tr>
+
 <!-- SETTINGS NAVIGATION -->
+
 <tr>
 	<td>SETTINGS_NAVIGATION</td>
 	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_settingsNavigation}')]</td>
@@ -42,7 +46,9 @@
 	<td>//a[contains(@href,'${key_definitionsOptions}')]</td>
 	<td></td>
 </tr>
+
 <!-- SETTINGS TOOLBAR -->
+
 <tr>
 	<td>DELETE_FROM_TOOLBAR</td>
 	<td>//*[contains(@class,'nav-btn')]</td>
@@ -63,7 +69,9 @@
 	<td>//h2[text()='Settings']</td>
 	<td></td>
 </tr>
+
 <!-- INTEREST KEYWORD -->
+
 <tr>
 	<td>KEYWORD_BUTTON</td>
 	<td>//*[contains(@class,'btn-primary')]</td>
@@ -99,7 +107,9 @@
 	<td>//*[@class='form-control-inset']</td>
 	<td></td>
 </tr>
+
 <!-- ADD DATA SOURCE SCREEN -->
+
 <tr>
 	<td>DXP_DATA_SOURCE_OPTION</td>
 	<td>//button[contains(@class,'data-source-item')]</td>
@@ -145,13 +155,17 @@
 	<td>//div[contains(@class,'sheet')]//span[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
+
 <!-- DELETE DATA SOURCE SCREEN -->
+
 <tr>
 	<td>DELETE_BUTTON_DATA_SOURCE</td>
 	<td>xpath=(//button | //a)[contains(@class,'btn')][normalize-space(text())='Delete Data Source']</td>
 	<td></td>
 </tr>
+
 <!-- DATA SOURCE INFORMATION -->
+
 <tr>
 	<td>DATA_SOURCE_LIST_STATUS</td>
 	<td>//span[contains(@class,'label-item') and contains(.,'${key_listStatus}')]</td>
@@ -174,6 +188,7 @@
 </tr>
 
 <!-- PROPERTIES -->
+
 <tr>
 	<td>SEARCH_BAR</td>
 	<td>//input[@type='text' and @placeholder='Search' and not(@disabled)]</td>
@@ -309,7 +324,9 @@
 	<td>//span[@class='text-truncate' and text()='${key_propertyName}']//ancestor::tr//input</td>
 	<td></td>
 </tr>
+
 <!-- USAGE -->
+
 <tr>
 	<td>INDIVIDUALS_USAGE_METRIC</td>
 	<td>//*[contains(@class,'metric-name') and contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
@@ -320,7 +337,9 @@
 	<td>//*[contains(@class,'metric-name') and contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
 	<td></td>
 </tr>
+
 <!-- USERS LIST -->
+
 <tr>
 	<td>USER_UNSELECTABLE</td>
 	<td>//tr[contains(@class,'clickable disabled')]//td[contains(text(),'${userEmail}')]</td>
@@ -406,7 +425,9 @@
 	<td>//span[text()='Pending']</td>
 	<td></td>
 </tr>
+
 <!-- CONFIGURE CSV -->
+
 <tr>
 	<td>DATA_SOURCE_FIELD_NAME</td>
 	<td>xpath=(//button[contains(@class,'show-caret') and contains(.,'${key_fieldName}')])[${key_index}]</td>

@@ -40,7 +40,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NOTIFICATIONS-->
+
 <tr>
 	<td>MARK_AS_READ</td>
 	<td>//a[contains(.,'Mark as Read')]/span[1]</td>
@@ -101,7 +103,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NOTIFICATIONS_CONFIGURATION-->
+
 <tr>
 	<td>NOTIFICATIONS_CONFIGURATION_EMAIL_SWITCH</td>
 	<td>//div[contains(@id,'${key_contentType}Content')]//td[contains(.,'${key_actionType}')]//following-sibling::td[contains(@class,'lfr-email-column')]//span</td>
@@ -122,7 +126,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NOTIFICATIONS_DELIVERY-->
+
 <tr>
 	<td>NOTIFICATION_DELIVERY_CHECKBOX</td>
 	<td>//table[contains(.,'${key_contentType}')]//tr[contains(.,'${key_actionType}')]//label[contains(.,'${key_notificationType}')]/input[@type='checkbox']</td>
@@ -183,7 +189,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REQUESTS-->
+
 <tr>
 	<td>REQUESTS_LIST_TAB</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'${key_navLinkOption}')]</td>

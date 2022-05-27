@@ -55,7 +55,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MENU-->
+
 <tr>
 	<td>MENU_ITEM</td>
 	<td>//div[contains(@class,'toggler-content-expanded')]//a[contains(.,'${key_portletName}')]</td>
@@ -66,7 +68,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY-->
+
 <tr>
 	<td>ENTRY_ATTACHMENTS</td>
 	<td>//div[contains(@id,'attachmentsHeader')]//a</td>

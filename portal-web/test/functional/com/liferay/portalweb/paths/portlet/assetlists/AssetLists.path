@@ -90,7 +90,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_CONTENT-->
+
 <tr>
 	<td>ASSET_TITLE_ROW</td>
 	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_assetTitle}')]//td[contains(@class,'lfr-title-column')]</td>
@@ -111,7 +113,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_USAGES-->
+
 <tr>
 	<td>ASSET_LIST_USAGES</td>
 	<td>//li[contains(@class,'nav-item')][contains(.,'${usageType} (${usageAmount})')]</td>

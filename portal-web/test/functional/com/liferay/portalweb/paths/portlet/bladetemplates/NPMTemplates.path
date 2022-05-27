@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NPM-TEMPLATES-->
+
 <tr>
 	<td>BILLBOARDJS_BODY</td>
 	<td>//div[contains(@id,'${key_portletName}') and contains(@class,'bb')]</td>

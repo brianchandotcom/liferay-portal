@@ -35,7 +35,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CATEGORIES_FILTER-->
+
 <tr>
 	<td>CATEGORIES_FILTER_CATEGORY</td>
 	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_EDIT-->
+
 <tr>
 	<td>ASSET_EDIT</td>
 	<td>//span[contains(@class,'visible-interaction')]//a</td>
@@ -67,7 +71,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_RICH_SUMMARY-->
+
 <tr>
 	<td>ASSET_RICH_SUMMARY_TITLE</td>
 	<td>//section[@class='portlet']//h3[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
@@ -78,7 +84,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_ABSTRACT-->
+
 <tr>
 	<td>ASSET_ABSTRACT_TITLE</td>
 	<td>//div[contains(@data-fragments-editor-item-type,'fragments-editor-mapped-item')]//*[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']</td>
@@ -114,7 +122,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_ABSTRACT_DETAIL-->
+
 <tr>
 	<td>ASSET_ABSTRACT_DETAIL_CONTENT</td>
 	<td>//div[contains(@class,'asset-content')]</td>
@@ -135,7 +145,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_ABSTRACT_BOOKMARK-->
+
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
 	<td>//h3/a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
@@ -146,7 +158,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_ABSTRACT_BOOKMARK_DETAIL-->
+
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK</td>
 	<td>//div[contains(@class,'asset-content')]/a</td>
@@ -162,7 +176,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSET_ABSTRACT_DDL_RECORD-->
+
 <tr>
 	<td>ASSET_ABSTRACT_DDL_RECORD_1</td>
 	<td>//div[contains(@class,'asset-content')]//div[contains(@class,'field-wrapper-content')]</td>
@@ -183,7 +199,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--METADATA-->
+
 <tr>
 	<td>METADATA_AUTHOR</td>
 	<td>//div[contains(@class,'author')]//span[contains(.,'${key_author}')]</td>

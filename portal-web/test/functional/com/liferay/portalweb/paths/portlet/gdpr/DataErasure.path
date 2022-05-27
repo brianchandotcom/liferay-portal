@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REVIEW_DATA_SELECT-->
+
 <tr>
 	<td>REVIEW_DATA_SELECT</td>
 	<td>//div[label[contains(.,'${key_selectData}')]]//input</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REVIEW_DATA_APPLICATIONS_SELECT-->
+
 <tr>
 	<td>APPLICATIONS_COUNT</td>
 	<td>//div[label[contains(.,'${key_applications}')]]//span</td>

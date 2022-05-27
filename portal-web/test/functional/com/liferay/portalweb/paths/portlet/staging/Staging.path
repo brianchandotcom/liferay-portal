@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--DELETIONS-->
+
 <tr>
 	<td>REPLICATE_INDIVIDUAL_DELETIONS</td>
 	<td>//span[contains(.,'Replicate Individual Deletions:')]</td>
@@ -21,7 +23,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PROCESSES-->
+
 <tr>
 	<td>PROCESS_CURRENT_ITEM</td>
 	<td>//div[contains(@class,'progress-current-item')]</td>
@@ -77,7 +81,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--STAGING-->
+
 <tr>
 	<td>STAGING_CONTENT_COUNT</td>
 	<td>//span[contains(@class,'badge-info')]</td>
@@ -143,7 +149,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PG-->
+
 <tr>
 	<td>LIVE_BUTTON</td>
 	<td>//a[contains(@value,'live')]</td>
@@ -229,7 +237,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SITE_PAGES_VARIATION_MENULIST-->
+
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
 	<td>xpath=(//ul//li//a[contains(.,'${key_sitePagesVariationName}')])[1]</td>
@@ -245,7 +255,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PAGE_VARIATION_MENULIST-->
+
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
 	<td>//a[contains(.,'${key_pageVariationName}') and contains(@href,'layoutBranchId')]</td>
@@ -256,7 +268,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--HISTORY-->
+
 <tr>
 	<td>HISTORY_VERSION</td>
 	<td>//span[contains(@class,'layout-revision')]</td>
@@ -282,7 +296,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIVE_MENU-->
+
 <tr>
 	<td>LIVE_MENU_MESSAGE</td>
 	<td>//span[@class='last-publication-branch']</td>
@@ -298,7 +314,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PUBLICATION_SUMMARY-->
+
 <tr>
 	<td>PUBLICATION_CONTENT</td>
 	<td>//div[@class='process-summary-subsection' and contains(.,'${key_contentName}')]</td>
@@ -329,7 +347,9 @@
 	<td>//div[@class='process-summary-subsection' and contains(.,'Publish Permissions')]</td>
 	<td></td>
 </tr>
+
 <!--STAGING_MENU-->
+
 <tr>
 	<td>STAGING_MENU_READY_FOR_PUBLICATION</td>
 	<td>//span[@class='toggle-switch-handle' and @data-label-on='Ready for Publish Process']</td>

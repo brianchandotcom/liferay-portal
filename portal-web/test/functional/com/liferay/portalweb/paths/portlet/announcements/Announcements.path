@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_ENTRIES_READ</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Read')]</td>
@@ -46,7 +48,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CARD_VIEW_ENTRY-->
+
 <tr>
 	<td>CARD_VIEW_ENTRY_TITLE</td>
 	<td>//*[@title='${key_entryTitle}']/a</td>

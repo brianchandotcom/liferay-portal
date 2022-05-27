@@ -639,7 +639,9 @@
 	<td>//a[contains(.,'${key_entryName}')]/../../..//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'component-action')]</td>
 	<td></td>
 </tr>
+
 <!--CATALOGS-->
+
 <tr>
 	<td>CATALOGS_FORM</td>
 	<td>//label[contains(.,'${key_title}')]/../select[contains(@class,'form-control')]</td>
@@ -650,7 +652,9 @@
 	<td>//input[@id='baseCommercePriceListId']/../input[@placeholder='Type Here']</td>
 	<td></td>
 </tr>
+
 <!--CHANNEL-->
+
 <tr>
 	<td>PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS</td>
 	<td>//div[contains(@class,'side-panel')]//li[a[span[contains(text(),'${navItem}')]]]</td>
@@ -661,7 +665,9 @@
 	<td>//p[@title='${key_productName}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
 	<td></td>
 </tr>
+
 <!--DIAGRAM-->
+
 <tr>
 	<td>VERIFY_PIN</td>
 	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle' and @fill='${key_color}']</td>
@@ -707,7 +713,9 @@
 	<td>//select[contains(@aria-label,'Select Label')]</td>
 	<td></td>
 </tr>
+
 <!--OPTION-->
+
 <tr>
 	<td>ADD_RELATION_FIELD</td>
 	<td>//div[h4[contains(.,'${key_title}')]]//input[@type='text']</td>
@@ -748,7 +756,9 @@
 	<td>//div[(text() = '${key_table}')]//..//..//..//a[(text() = "${key_entryName}")]</td>
 	<td></td>
 </tr>
+
 <!--IFRAME-->
+
 <tr>
 	<td>IFRAME_SIDE_PANEL</td>
 	<td>//div[contains(@class,'side-panel') and contains(@class,'is-visible')]//iframe</td>
@@ -764,7 +774,9 @@
 	<td>//div[@class='side-panel-iframe-title']//h3</td>
 	<td></td>
 </tr>
+
 <!--PRICE-->
+
 <tr>
 	<td>INPUT_PRICE</td>
 	<td>//div/label[contains(.,'Price') and not(contains(.,'Promo'))]/..//input</td>
@@ -775,7 +787,9 @@
 	<td>//a[text()='${key_name}']//..//..//..//span[@class='workflow-status']//*[contains(.,'')]</td>
 	<td></td>
 </tr>
+
 <!--IMAGES-->
+
 <tr>
 	<td>IMAGES_PLUS_BUTTON</td>
 	<td>//h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
@@ -786,13 +800,17 @@
 	<td>//span[contains(text(),'${key_itemName}')]/../../../../../../..//div[contains(@class,'product-card')]//a//picture[@data-fileentryid="${key_fileEntryId}"]</td>
 	<td></td>
 </tr>
+
 <!--ATTACHMENT-->
+
 <tr>
 	<td>ATTACHMENT_PLUS_BUTTON</td>
 	<td>//h4[contains(.,'Attachments')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
+
 <!--ORDER-->
+
 <tr>
 	<td>ACTIVE_ORDER_ID</td>
 	<td>//span[@class='order-id']</td>
@@ -833,7 +851,9 @@
 	<td>(//*[contains(@class, 'table-list-title')])[1]/a</td>
 	<td></td>
 </tr>
+
 <!--CHANNELS-->
+
 <tr>
 	<td>SEARCH_TABLES_CHANNELS</td>
 	<td>//h4[contains(text(),'${key_nameTableChannels}')]</td>
@@ -849,7 +869,9 @@
 	<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
 	<td></td>
 </tr>
+
 <!--PRODUCT-->
+
 <tr>
 	<td>ANY_AUTOCOMPLETE_TEXT_FIELD</td>
 	<td>//label[text()='${key_label}']/following::div[@id="autocomplete-root"]//input[@type="text"]</td>
@@ -900,7 +922,9 @@
 	<td>//img[@class='aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid']//..//..//..//..//..//..//h2[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
+
 <!--OPTION-->
+
 <tr>
 	<td>DELETE_OPTION_BUTTON</td>
 	<td>//h4[contains(.,'Option')]//..//button[contains(.,'Delete')]</td>
@@ -1006,7 +1030,9 @@
 	<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_warehouseName}')]/..//div[5]</td>
 	<td></td>
 </tr>
+
 <!--WAREHOUSES-->
+
 <tr>
 	<td>WAREHOUSE_INVENTORY_ITEM_QUANTITY</td>
 	<td>//input[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_commerceInventoryWarehouseItemQuantity${key_value1}')]</td>
@@ -1032,7 +1058,9 @@
 	<td>//a[contains(text(),'${key_itemName}')]//..//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
+
 <!--VISIBILITY-->
+
 <tr>
 	<td>CHECK_SPECIFIC_TOGGLE_SWITCH</td>
 	<td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]//..//..//..//div[contains(@class,'collapse show')]</td>

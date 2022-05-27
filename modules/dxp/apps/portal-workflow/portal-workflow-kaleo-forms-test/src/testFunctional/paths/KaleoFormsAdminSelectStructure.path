@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--KALEO_FORMS_STRUCTURE_TABLE-->
+
 <tr>
 	<td>KALEO_FORMS_STRUCTURE_ELLIPSIS</td>
 	<td>//tr[contains(.,'${key_kfFieldSetName}')]//td[contains(@class,'entry-action')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>

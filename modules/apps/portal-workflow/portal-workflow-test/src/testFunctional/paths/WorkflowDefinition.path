@@ -20,13 +20,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFINITION-->
+
 <tr>
 	<td>DEFINITION_TITLE</td>
 	<td>//input[(contains(@name,'KaleoDesignerPortlet_title')) or (contains(@name,'ControlPanelWorkflowPortlet_title')) and (contains(@type,'text'))]</td>
 	<td></td>
 </tr>
+
 <!--DEFINITION_TABLE-->
+
 <tr>
 	<td>DEFINITION_TABLE_EXTRA</td>
 	<td>//tbody//tr[4]</td>
@@ -77,7 +81,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DIALOG_BOX-->
+
 <tr>
 	<td>DIALOG_BOX_BODY</td>
 	<td>//div[contains(@class,'modal-body')]</td>

@@ -65,7 +65,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_CONTENT_ENTRY-->
+
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_ANY</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(.,'${key_rowAny}')]</td>
@@ -126,7 +128,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_CONTENT_REDIRECT-->
+
 <tr>
 	<td>ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN</td>
 	<td>//td[contains(@class,'lfr-destination-url-column')][contains(.,'${key_destinationURL}')]</td>

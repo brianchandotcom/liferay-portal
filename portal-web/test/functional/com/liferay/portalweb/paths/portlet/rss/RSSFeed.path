@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FEEDS-->
+
 <tr>
 	<td>FEEDS_TITLE</td>
 	<td>//h3[@class='feed-title']/a[contains(.,'${key_feedTitle}')]</td>
@@ -86,7 +88,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DISPLAY_SETTINGS-->
+
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_TITLE</td>
 	<td>//input[contains(@id,'showFeedTitle')]</td>

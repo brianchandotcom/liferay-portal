@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--SELECT_SITE_MODAL-->
+
 <tr>
 	<td>SELECT_SITE_MODAL</td>
 	<td>//div[@id='selectSite' and contains(@class,'liferay-modal')]</td>
@@ -26,7 +28,9 @@
 	<td>//div[@class='modal-title']</td>
 	<td></td>
 </tr>
+
 <!--SITE_TABLE-->
+
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
 	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_siteName}')]/td[1]//input</td>

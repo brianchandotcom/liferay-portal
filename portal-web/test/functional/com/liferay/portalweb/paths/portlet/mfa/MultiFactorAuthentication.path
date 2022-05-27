@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--CUSTOM_MFA_VERIFICATION-->
+
 <tr>
 	<td>CUSTOM_MFA_TITLE</td>
 	<td>//h3[contains(.,'Write something for this MFA sample.')]</td>
@@ -31,7 +33,9 @@
 	<td>//a[contains(.,'Use Email One-Time Password')]</td>
 	<td></td>
 </tr>
+
 <!--EMAIL_OTP_CONFIGURATION-->
+
 <tr>
 	<td>EMAIL_OTP_CONFIG_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input</td>
@@ -47,7 +51,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--EMAIL_OTP_SENDER-->
+
 <tr>
 	<td>EMAIL_OTP_SENDER_ADDRESS_FIELD</td>
 	<td>//textarea[contains(@name,'emailFromAddress')]</td>
@@ -68,7 +74,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--EMAIL_OTP_VERIFY-->
+
 <tr>
 	<td>EMAIL_OTP_VERIFY_INFO_MESSAGE</td>
 	<td>//div[@class='portlet-msg-info']</td>
@@ -104,19 +112,25 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CUSTOM_MFA_CONFIGURATION-->
+
 <tr>
 	<td>ORDER_FIELD</td>
 	<td>//input[contains(@name,'ranking')]</td>
 	<td></td>
 </tr>
+
 <!--IP_ADDRESS_CONFIGURATION-->
+
 <tr>
 	<td>IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1</td>
 	<td>xpath=(//textarea[contains(@name,'allowedIPAddress')])[1]</td>
 	<td></td>
 </tr>
+
 <!--TIME_BASED_ONE_TIME_PASSWORD_CONFIGURATION-->
+
 <tr>
 	<td>MFA_CHECKER_LINK</td>
 	<td>//div[contains(@class,"portlet-body")]//form//b//a</td>

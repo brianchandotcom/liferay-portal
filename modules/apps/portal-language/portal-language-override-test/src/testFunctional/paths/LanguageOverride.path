@@ -15,7 +15,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_PAGE-->
+
 <tr>
 	<td>VIEW_PAGE_LANGUAGE_KEY</td>
 	<td>//h5/strong[contains(.,'${key_languageKey}')]</td>
@@ -36,7 +38,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FILTER_BY_ANY_LANGUAGE-->
+
 <tr>
 	<td>FILTER_BY_ANY_LANGUAGE_FILTER_LABEL</td>
 	<td>//li[contains(@class,'tbar-item-expand')]//span[contains(@class,'label-item-expand')][starts-with(.,'Any Language')]</td>
@@ -52,7 +56,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_VIEW-->
+
 <tr>
 	<td>LANGUAGE_KEY_OVERRIDDEN_LABEL</td>
 	<td>//div[contains(@class,'autofit-col-expand')]//h6[contains (.,'Languages With Override:')]</td>

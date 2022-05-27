@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_SETUP</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Setup')]</td>
@@ -61,7 +63,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETUP-->
+
 <tr>
 	<td>ARCHIVE_RESTORE</td>
 	<td>//div[@class='archived-setups']//a</td>
@@ -102,7 +106,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETUP_RSS-->
+
 <tr>
 	<td>SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'rssDelta')]</td>

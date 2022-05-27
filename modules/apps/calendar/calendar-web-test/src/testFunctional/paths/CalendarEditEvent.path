@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--START_DATE-->
+
 <tr>
 	<td>START_DATE</td>
 	<td>//input[contains(@name,'_startTime') and @placeholder='mm/dd/yyyy']</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--END_DATE-->
+
 <tr>
 	<td>END_DATE</td>
 	<td>//input[contains(@name,'_endTime') and @placeholder='mm/dd/yyyy']</td>
@@ -82,7 +86,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REPEAT-->
+
 <tr>
 	<td>REPEAT_CHECKBOX</td>
 	<td>//input[contains(@id,'_repeat')]</td>
@@ -168,7 +174,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DETAILS-->
+
 <tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingDetailsPanel')]</td>
@@ -194,7 +202,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--INVITATIONS-->
+
 <tr>
 	<td>INVITATIONS_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingInvitationPanel')]</td>
@@ -240,7 +250,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RESOURCES_AVAILABILITY-->
+
 <tr>
 	<td>RESOURCES_AVAILABILITY_PANEL_COLLAPSED</td>
 	<td>//div[contains(@class,'toggler-header-collapsed') and contains(@id,'checkAvailability')]</td>
@@ -301,7 +313,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REMINDERS-->
+
 <tr>
 	<td>REMINDERS_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingReminderPanel')]</td>
@@ -367,7 +381,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MINI_CALENDAR-->
+
 <tr>
 	<td>MINI_CALENDAR_WEEK_START_DAY_START_DATE</td>
 	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[1]</td>
@@ -398,7 +414,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CATEGORIZATION-->
+
 <tr>
 	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingCategorizationPanel')]</td>
@@ -444,7 +462,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RELATED_ASSETS-->
+
 <tr>
 	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingAssetLinksPanel')]</td>
@@ -460,7 +480,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ARE_YOU_SURE_DIALOG_BOX-->
+
 <tr>
 	<td>ARE_YOU_SURE_DIALOG_BOX_HEADER</td>
 	<td>//div[contains(@class,'modal-header')]/h3[contains(.,'Are you sure?')]</td>
@@ -486,7 +508,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RECURRING_EVENT_DIALOG_BOX-->
+
 <tr>
 	<td>RECURRING_EVENT_DIALOG_BOX_HEADER</td>
 	<td>//h3[@class='modal-title' and contains(.,'Recurring Event')]</td>

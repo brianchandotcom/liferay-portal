@@ -35,7 +35,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TIMELINE_ENTRY-->
+
 <tr>
 	<td>TIMELINE_ENTRY_ACTION</td>
 	<td>//div[contains(@class,'entry-bubble') and contains(.,'${key_entryContent}')]//span[contains(@class,'action')]/a[contains(.,'${key_actionType}')]</td>

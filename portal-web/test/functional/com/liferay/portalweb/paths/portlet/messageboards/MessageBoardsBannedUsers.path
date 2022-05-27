@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--BANNED_USERS_TABLE-->
+
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_USER</td>
 	<td>//*[@data-qa-id='row']//div[contains(.,'${key_userScreenName}')]/h2/a</td>

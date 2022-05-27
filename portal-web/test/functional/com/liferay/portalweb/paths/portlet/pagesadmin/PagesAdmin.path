@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--DETAILS-->
+
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
 	<td>//div[contains(@class,'friendly-url')]/div[contains(@class,'form-text')]</td>
@@ -31,7 +33,9 @@
 	<td>//input[@type="hidden"][contains(@id,'panelSelectedPortlets')][contains(@value,'${key_componentOrPortletName}')]</td>
 	<td></td>
 </tr>
+
 <!--DETAILS_PAGE_TYPE_PANEL-->
+
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
 	<td>//div[contains(@id,'selectPortletsTree')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
@@ -42,7 +46,9 @@
 	<td>//div[contains(@class,'tree-expanded')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
+
 <!--FRIENDLY_URL-->
+
 <tr>
 	<td>FRIENDLY_URL</td>
 	<td>//input[contains(@name,'friendlyURL') and contains(@value,'${key_friendlyURL}')]</td>
@@ -63,7 +69,9 @@
 	<td>xpath=(//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}'])[last()]</td>
 	<td></td>
 </tr>
+
 <!--LIST_GROUP_ITEM-->
+
 <tr>
 	<td>LIST_GROUP_ITEM</td>
 	<td>//*[contains(@class,'list-group-item')][contains(.,'${key_itemName}')]/a</td>
@@ -129,7 +137,9 @@
 	<td>xpath=(//*[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
+
 <!--SEO-->
+
 <tr>
 	<td>PREVIEW_DESCRIPTION</td>
 	<td>//div[contains(@class,'preview-seo-description')]</td>
@@ -175,7 +185,9 @@
 	<td>portal/screenshots/page/preview_url_ellipses_og.png</td>
 	<td></td>
 </tr>
+
 <!--LOOK_AND_FEEL-->
+
 <tr>
 	<td>MASTER_LAYOUT_NAME</td>
 	<td>//div[@class='sheet-section']//span[contains(@id,'masterLayoutName')][contains(.,'${key_masterLayoutName}')]</td>

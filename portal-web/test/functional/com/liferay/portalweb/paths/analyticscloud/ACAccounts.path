@@ -10,25 +10,33 @@
 </thead>
 
 <tbody>
+
 <!-- NAVIGATION -->
+
 <tr>
 	<td>ACCOUNTS_HEADER_TAB_BUTTON</td>
 	<td>//header//ul//li//a//span[text()='${key_tabName}']</td>
 	<td></td>
 </tr>
+
 <!-- ACCOUNTS TABLE ROW -->
+
 <tr>
 	<td>ACCOUNTS_TABLE_ROW</td>
 	<td>//table//tbody//div[@class='content-container']//a[text()='${key_accountName}']</td>
 	<td></td>
 </tr>
+
 <!-- ACCOUNT DETAILS -->
+
 <tr>
 	<td>ACCOUNT_DETAIL_PROPERTY</td>
 	<td>//table//*[@class='property-cell table-cell-expand']//div[text()='${key_propertyName}']/following-sibling::div</td>
 	<td></td>
 </tr>
+
 <!-- ACCOUNT REPORT GRAPHS & TABLES -->
+
 <tr>
 	<td>ACCOUNT_ACTIVITY_BAR_GRAPH</td>
 	<td>//*[@class="recharts-layer recharts-bar-rectangle"][${key_expectedBarCount}]</td>

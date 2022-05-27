@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!-- DEFINITIONS -->
+
 <tr>
 	<td>DEFINITION_TYPE</td>
 	<td>//div[contains(@class, 'card card-root')]//a[text()='${key_definitionType}']</td>
 	<td></td>
 </tr>
+
 <!-- INDIVIDUAL ATTRIBUTES -->
+
 <tr>
 	<td>ATTRIBUTE_NAME</td>
 	<td>//div[contains(@class, 'card card-root')]//button[text()='${key_attributeName}']</td>
@@ -52,7 +56,9 @@
 	<td>//div[contains(@class, 'table-root')]//td[text()='${key_dataSourceName}']</td>
 	<td></td>
 </tr>
+
 <!-- HIDE_CUSTOM_EVENT -->
+
 <tr>
 	<td>HIDE_EVENT_ICON</td>
 	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary-color')]</td>

@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--APPLICATIONS-->
+
 <tr>
 	<td>ADD_PORTLET_LINK</td>
 	<td>//li[contains(@class,'add-panel')][*//*[contains(@class,'title')][normalize-space(text())='${key_portletName}']]//button[contains(@class,'item-add')]</td>
@@ -41,13 +43,17 @@
 	<td>//div[contains(@class,'open') or contains(@class,'show')]//*[contains(@class,'dropdown-item')][normalize-space(text())='${key_assetItem}']</td>
 	<td></td>
 </tr>
+
 <!--CONTENT-->
+
 <tr>
 	<td>ASSET_ENTRY</td>
 	<td>//div[contains(@class,'item-body')]//div[contains(@class,'title')][normalize-space(text())='${key_entryTitle}']</td>
 	<td></td>
 </tr>
+
 <!--WIDGETS-->
+
 <tr>
 	<td>WIDGET_CATEGORY</td>
 	<td>//div[contains(@class,'panel-group')]//*[contains(@class,'subtitle') and *[normalize-space(text())='${key_category}']]</td>

@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--AUDIO_GENERATION-->
+
 <tr>
 	<td>AUDIO_PREVIEW</td>
 	<td>//audio[contains(@class,'preview-file-audio')]//source[contains(@src,'${key_audioName}')]</td>
@@ -36,7 +38,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CUSTOM_FIELD-->
+
 <tr>
 	<td>CUSTOM_FIELD_BUTTON</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='${key_buttonName}']</td>
@@ -72,7 +76,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DETAILS_PANEL-->
+
 <tr>
 	<td>DETAILS_URL</td>
 	<td>//div[label[contains(.,'Latest Version URL')]]</td>
@@ -83,7 +89,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_DETAILS-->
+
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
 	<td>//div[@class='sidebar-section']//a[@title='File Size ${key_dmDocumentSize}']</td>
@@ -154,7 +162,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_EXTRACTED_METADATA-->
+
 <tr>
 	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
 	<td>//div[contains(@id,'documentLibraryMetadataPanel')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
@@ -165,7 +175,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_INFO-->
+
 <tr>
 	<td>DOCUMENT_INFO_COLLABORATOR_TOOLTIP</td>
 	<td>//div[contains(@class,'lfr-portal-tooltip') and contains(@data-title,'${key_collaborator}')]</td>
@@ -271,7 +283,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_TOOLBAR-->
+
 <tr>
 	<td>DOCUMENT_TOOLBAR_DOWNLOAD</td>
 	<td>//ul[@class='tbar-nav']//li/a[@title='File Size ${key_dmDocumentSize}']</td>
@@ -287,7 +301,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_VERSIONS-->
+
 <tr>
 	<td>DOCUMENT_VERSIONS_CREATION_DATE</td>
 	<td>//div[contains(@class,'group-title') and contains(.,'Version ${versionNumber}')]//following::div[1]</td>
@@ -298,13 +314,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_VIEWPORT-->
+
 <tr>
 	<td>DOCUMENT_VIEWPORT_PREVIEW</td>
 	<td>//img[contains(@src,'${key_imageSourceURL}')]</td>
 	<td></td>
 </tr>
+
 <!--FRIENDLY_URL-->
+
 <tr>
 	<td>FRIENDLY_URL_ACTIVE_URL</td>
 	<td>//div[contains(@class,'modal-dialog')]//div[contains(@class,'active-url')]//p[normalize-space(text())='${key_activeURL}']</td>
@@ -315,7 +335,9 @@
 	<td>//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}']</td>
 	<td></td>
 </tr>
+
 <!--MARKETING-->
+
 <tr>
 	<td>MARKETING_SELECT</td>
 	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_marketingSelect}')]</td>
@@ -346,7 +368,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--METADATA_PANEL-->
+
 <tr>
 	<td>METADATA_PANEL_DATE</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text']</td>
@@ -382,7 +406,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIDEO_GENERATION-->
+
 <tr>
 	<td>VIDEO_GENERATION_INFO</td>
 	<td>//div[contains(@class,'video-embed-placeholder-text') and contains(.,'${key_text}')]</td>
@@ -398,7 +424,9 @@
 	<td>//video[contains(@poster,'${key_videoName}')]</td>
 	<td></td>
 </tr>
+
 <!--VIDEO_SHORTCUT-->
+
 <tr>
 	<td>VIDEO_SHORTCUT_PREVIEW</td>
 	<td>//iframe[contains(@src,'${key_videoShortcutPreview}')]</td>

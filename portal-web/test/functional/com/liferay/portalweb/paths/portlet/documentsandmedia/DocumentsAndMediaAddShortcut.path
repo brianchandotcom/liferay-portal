@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT_FILE-->
+
 <tr>
 	<td>SELECT_FILE_FOLDER_NAME</td>
 	<td>//tr[contains(@class,'table-divider') and contains(.,'Folders')]/following-sibling::tr/td/a[contains(.,'${key_dmFolderName}')]</td>

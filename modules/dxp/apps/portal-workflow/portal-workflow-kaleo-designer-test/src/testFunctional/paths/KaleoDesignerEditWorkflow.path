@@ -60,7 +60,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!-- REVISION_HISTORY -->
+
 <tr>
 	<td>REVISION_HISTORY_PREVIEW_BUTTON</td>
 	<td>//span[contains(.,'Preview')]</td>
@@ -76,7 +78,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NODES-->
+
 <tr>
 	<td>NODES_TAB</td>
 	<td>//ul[contains(@class,'nav-tabs')]//a[contains(.,'Nodes')]</td>
@@ -112,7 +116,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETTINGS-->
+
 <tr>
 	<td>SETTINGS_ACTIONS</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(@class,'table-col-value')]</td>
@@ -173,7 +179,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETTINGS_CELL_EDITOR-->
+
 <tr>
 	<td>SETTINGS_CELL_EDITOR_ADD_SECTION</td>
 	<td>//button[@id='addSectionButton']</td>
@@ -269,7 +277,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR-->
+
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH</td>
 	<td>//input[contains(@name,'role')]</td>
@@ -300,7 +310,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_FORM_NODE-->
+
 <tr>
 	<td>VIEW_FORM_NODE_DEFAULT</td>
 	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeType}')]/../div/div/div</td>
@@ -326,7 +338,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_FORM_CONNECTOR-->
+
 <tr>
 	<td>VIEW_FORM_CONNECTOR_DEFAULT</td>
 	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'connector')]</td>
@@ -342,7 +356,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_FORM_ADD_NEW-->
+
 <tr>
 	<td>VIEW_FORM_ADD_NEW_NODE</td>
 	<td>//div[@class='property-builder-field-label' and contains(.,'${key_newNode}')]</td>
@@ -353,7 +369,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SOURCE_KALEO_XML-->
+
 <tr>
 	<td>SOURCE_KALEO_XML_CONTENT</td>
 	<td>//div[contains(@id,'KaleoDesignerPortlet')]/textarea</td>

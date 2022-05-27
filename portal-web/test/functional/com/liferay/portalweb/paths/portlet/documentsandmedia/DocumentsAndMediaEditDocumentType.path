@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DETAILS-->
+
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
 	<td>//textarea[contains(@id,'_description')]</td>

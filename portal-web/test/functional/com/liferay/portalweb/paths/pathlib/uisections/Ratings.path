@@ -35,7 +35,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--COMMENT_RATING-->
+
 <tr>
 	<td>COMMENT_RATING_THUMB</td>
 	<td>//div[contains(@class,'comment')]//div[contains(@class,'ratings')]//button[contains(@title,'${key_ratingResult}')]</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--YOUR_RATING-->
+
 <tr>
 	<td>YOUR_RATING_LIKE_COUNT</td>
 	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Unlike This')]//span[contains(@class,'current')]</td>
@@ -137,7 +141,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--AVERAGE-->
+
 <tr>
 	<td>AVERAGE_STAR</td>
 	<td>//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>

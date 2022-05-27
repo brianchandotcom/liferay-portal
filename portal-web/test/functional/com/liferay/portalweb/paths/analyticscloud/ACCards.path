@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!-- GENERAL CARDS -->
+
 <tr>
 	<td>INTERVAL_OPTION</td>
 	<td>//button[contains(@class,'interval-option')][normalize-space(text())='${interval}']</td>

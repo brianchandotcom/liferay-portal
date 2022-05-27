@@ -75,7 +75,9 @@
 	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
 	<td></td>
 </tr>
+
 <!--FEATURE FLAG CONFIGURATIONS-->
+
 <tr>
 	<td>ACTION_INFO_BUTTON_SEPARATOR</td>
 	<td>//nav[contains(@class,'management-bar')]//*[contains(@class,'info')]//preceding::*[contains(@class,'ellipsis')]//following::*[contains(@class, 'separator-left')]</td>

@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETUP_COUNTERS-->
+
 <tr>
 	<td>SETUP_COUNTERS_DISPLAY_ACTIVITY_COUNTER_NAME_DROPDOWN</td>
 	<td>//select[contains(@id,'displayActivityCounterName0')]</td>

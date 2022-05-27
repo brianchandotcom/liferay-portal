@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--RECORD_TABLE-->
+
 <tr>
 	<td>RECORD_TABLE_RECORD</td>
 	<td>//td[contains(.,'${key_kfProcessFieldData}')]</td>
@@ -31,7 +33,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--EXPORT_DIALOG_BOX-->
+
 <tr>
 	<td>EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT</td>
 	<td>//select[contains(@id,'fileExtension')]</td>

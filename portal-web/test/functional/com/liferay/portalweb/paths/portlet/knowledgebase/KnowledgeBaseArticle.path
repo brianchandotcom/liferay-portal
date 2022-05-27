@@ -70,7 +70,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADMIN_VIEW-->
+
 <tr>
 	<td>ADMIN_VIEW_CHILD_ARTICLE_TITLE</td>
 	<td>//div[@class='kb-elements']//a</td>
@@ -86,7 +88,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ATTACHMENTS-->
+
 <tr>
 	<td>ATTACHMENTS_HEADER_COLLAPSED</td>
 	<td>//a[contains(@class,'collapse-icon') and contains(@aria-expanded,'false') and contains(.,'Attachments')]</td>
@@ -107,7 +111,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CUSTOM_FIELD-->
+
 <tr>
 	<td>CUSTOM_FIELD_NAME</td>
 	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldName}')]</td>
@@ -123,7 +129,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--EDIT-->
+
 <tr>
 	<td>EDIT_FRIENDLY_URL_FIELD</td>
 	<td>//input[contains(@id,'knowledge_base_web') and contains(@id,'urlTitle')]</td>
@@ -139,7 +147,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--HISTORY-->
+
 <tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
 	<td>//div[@class='card-body']//p//span[contains(@id,'added-diff')]</td>
@@ -160,7 +170,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SECTIONS-->
+
 <tr>
 	<td>SECTIONS_SELECT</td>
 	<td>//select[contains(@id, 'knowledge_base_web') and contains(@id, 'sections')]//option[contains(.,'${key_kbArticleSection}')]</td>

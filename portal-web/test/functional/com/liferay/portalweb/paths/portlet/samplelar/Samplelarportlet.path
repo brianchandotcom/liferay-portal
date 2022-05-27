@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SAMPLE_BOOKING_TABLE-->
+
 <tr>
 	<td>SAMPLE_BOOKING_TABLE_BOOKING_ID</td>
 	<td>//tbody[@class='table-data']/tr/td</td>

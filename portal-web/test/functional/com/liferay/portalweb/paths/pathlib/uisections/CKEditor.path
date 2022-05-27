@@ -90,7 +90,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--This locator is necessary for tests that require the sendKey action-->
+
 <tr>
 	<td>RESIZER</td>
 	<td>//span[@id='cke_1_resizer']</td>
@@ -106,7 +108,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TOOLBAR-->
+
 <tr>
 	<td>TOOLBAR</td>
 	<td>//span[contains(@class,'cke_toolbox') ]</td>
@@ -132,7 +136,9 @@
 	<td>//div[contains(@class, 'cke_balloontoolbar')]//div[@class='cke_balloon_content']//span[contains(@class,'unlink_icon')]</td>
 	<td></td>
 </tr>
+
 <!--TOOLBAR_ELEMENTS-->
+
 <tr>
 	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
 	<td>//a[contains(@href,"${key_titleName}")]</td>
@@ -248,7 +254,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!-- CONTENT_AUDIO_LINK -->
+
 <tr>
 	<td>CONTENT_AUDIO_LINK_IMAGE</td>
 	<td>//img[contains(@class,'audio')]</td>
@@ -259,7 +267,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTENT_IMAGE_LINK-->
+
 <tr>
 	<td>CONTENT_IMAGE_LINK_IMAGE</td>
 	<td>//img[contains(@src,'jpg')]</td>
@@ -270,7 +280,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTENT_VIDEO_LINK-->
+
 <tr>
 	<td>CONTENT_VIDEO_LINK_IMAGE</td>
 	<td>//img[contains(@src,'data:image/gif')]</td>
@@ -281,7 +293,9 @@
 	<td>//div[contains(@class,'thumbnail-overlay')]//button[contains(@aria-label,'Play')]</td>
 	<td></td>
 </tr>
+
 <!--SOURCE_CODE_PREVIEW-->
+
 <tr>
 	<td>CODE_PREVIEW_IFRAME</td>
 	<td>//*[contains(@class,'code_preview')]//iframe</td>

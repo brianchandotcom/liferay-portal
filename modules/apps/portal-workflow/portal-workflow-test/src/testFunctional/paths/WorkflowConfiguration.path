@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--RESOURCE_TABLE-->
+
 <tr>
 	<td>RESOURCE_TABLE_CANCEL</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//button[contains(.,'Cancel')]</td>

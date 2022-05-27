@@ -60,7 +60,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_CARDS-->
+
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
 	<td>//*[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'card')]//a[contains(.,'${key_webContentTitle}')]</td>
@@ -71,7 +73,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_LIST-->
+
 <tr>
 	<td>ENTRY_LIST_THUMBNAIL</td>
 	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
@@ -127,7 +131,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_TABLE-->
+
 <tr>
 	<td>ENTRY_TABLE_ID</td>
 	<td>//tr[contains(@data-title,'${key_webContentTitle}')]/td[2]</td>
@@ -153,7 +159,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR -->
+
 <tr>
 	<td>PREVIEW_BUTTON</td>
 	<td>//fieldset[contains(@id,'${key_fieldsetName}')]//button[.//*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>

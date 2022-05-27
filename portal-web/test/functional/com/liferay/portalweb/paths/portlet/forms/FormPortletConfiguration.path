@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!--FORMS_TABLE-->
+
 <tr>
 	<td>FORMS_TABLE_NAME</td>
 	<td>xpath=(//div[contains(@id,'SearchContainer')]//tr[contains(.,'${key_formName}')]/td//a)[1]</td>
 	<td></td>
 </tr>
+
 <!--TRANSLATE-->
+
 <tr>
 	<td>SELECT_LANGUAGE</td>
 	<td>//span[contains(text(),'${key_language}')]</td>

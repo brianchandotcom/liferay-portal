@@ -15,7 +15,9 @@
 	<td>//a[contains(@class,'btn') and contains(.,'Add Identity Provider')]</td>
 	<td></td>
 </tr>
+
 <!--IDENTITY_PROVIDER_CONNECTION-->
+
 <tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_enabled')]</td>

@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PREVIEW-->
+
 <tr>
 	<td>PREVIEW_DOCUMENT_1_PNG</td>
 	<td>portal/portlets/user_segment_content_display_document.png</td>
@@ -31,7 +33,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RULE_PANEL-->
+
 <tr>
 	<td>RULE_PANEL_BELONGS_RADIO</td>
 	<td>xpath=(//label[contains(.,'belongs')]/input)[${key_rowNumber}]</td>
@@ -72,7 +76,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->
+
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
 	<td>//div[contains(.,'${key_userSegmentName}')]/span[@class='tree-label']</td>

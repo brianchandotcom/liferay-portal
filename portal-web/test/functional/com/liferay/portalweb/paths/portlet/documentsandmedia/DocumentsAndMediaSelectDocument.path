@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FOLDER_TABLE-->
+
 <tr>
 	<td>FOLDER_TABLE_FOLDER</td>
 	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]//span/a</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENTS_TABLE-->
+
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
 	<td>//button[@data-entityname='${key_dmDocumentTypeName}']</td>

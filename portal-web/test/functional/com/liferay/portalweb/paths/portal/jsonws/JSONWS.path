@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ADDRESS-->
+
 <tr>
 	<td>ADDRESS_ADD_ADDRESS</td>
 	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
@@ -21,7 +23,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--COMPANY-->
+
 <tr>
 	<td>COMPANY_COMPANYID_FIELD</td>
 	<td>//textarea[@name='companyId']</td>
@@ -32,7 +36,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER-->
+
 <tr>
 	<td>USER_ANYSPAN_FALSE</td>
 	<td>//span[contains(.,'${key_span}')]/following-sibling::label//input[contains(@id,'False') and @type='radio']</td>
@@ -58,7 +64,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SECURITY-->
+
 <tr>
 	<td>SECURITY_EMPTY_PAGE</td>
 	<td>//body[not(*)]</td>

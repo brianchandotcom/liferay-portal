@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--FRAGMENT-->
+
 <tr>
 	<td>FRAGMENT_HEADING</td>
 	<td>//*[contains(@class,'component-heading') and contains(.,'${key_title}')]</td>
@@ -41,7 +43,9 @@
 	<td>//*[contains(@class,'component-text-block') and contains(.,'${key_description}')]</td>
 	<td></td>
 </tr>
+
 <!--PAGE_EDITOR-->
+
 <tr>
 	<td>COLLECTION_DISPLAY</td>
 	<td>//div[contains(@class,'page-editor__collection')]//div[contains(@class, 'row')]</td>
@@ -62,7 +66,9 @@
 	<td>xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'row')]//div[contains(@class,'col-md')])[${key_position}]</td>
 	<td></td>
 </tr>
+
 <!--NAVBAR-->
+
 <tr>
 	<td>NAV_TAB</td>
 	<td>//ul[contains(@class,'masterclass-navbar-user')]</td>
@@ -83,7 +89,9 @@
 	<td>//div[contains(@class,'navbar')]//ul[contains(@class,'dropdown')]//a[contains(text(),'${key_navItem}')]</td>
 	<td></td>
 </tr>
+
 <!--SIGN_IN-->
+
 <tr>
 	<td>SIGN_IN_FORM</td>
 	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${labelTitle}')]/following-sibling::input</td>

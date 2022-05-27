@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSOCIATED_ASSET_TYPES-->
+
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_SELECT</td>
 	<td>//select[contains(@id,'AssetCategories')]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--PROPERTIES_PANEL-->
+
 <tr>
 	<td>TEMPLATE_TYPE</td>
 	<td>//div[contains(@class,'template-properties')]//p[contains(@class,'label')][normalize-space()='${label}']//following-sibling::p[contains(@class,'small')][normalize-space(text())='${type}']</td>

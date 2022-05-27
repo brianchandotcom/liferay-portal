@@ -12,6 +12,7 @@
 <tbody>
 
 <!--PARAGRAPH-->
+
 <tr>
 	<td>BODY_TEXT</td>
 	<td>//*[contains(@class,'cke_editable')]//p[${paragraph_number}]</td>

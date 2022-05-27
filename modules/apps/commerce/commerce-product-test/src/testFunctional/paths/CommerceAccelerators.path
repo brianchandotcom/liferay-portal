@@ -290,7 +290,9 @@
 	<td>//div[contains(@class,'table-responsive')]</td>
 	<td></td>
 </tr>
+
 <!--SPEEDWELL-->
+
 <tr>
 	<td>SPEEDWELL_ACCOUNT_DASHBOARD_ITEM</td>
 	<td>//div[contains(@class,'account-dashboard')]//h3[contains(.,'${key_dashboardItem}')]</td>
@@ -321,7 +323,9 @@
 	<td>//div[contains(@class,'speedwell-main-menu__links')]//a/div[contains(.,'${key_menuItem}')]</td>
 	<td></td>
 </tr>
+
 <!--CHECKOUT-->
+
 <tr>
 	<td>CHECKOUT_GENERIC_SELECT</td>
 	<td>//div[contains(@class,'form-group')]//select[contains(@title,'${key_fieldName}')]</td>
@@ -412,7 +416,9 @@
 	<td>//div[@class='multi-step-indicator-label' and contains(.,'${key_label}')]</td>
 	<td></td>
 </tr>
+
 <!--MINICART-->
+
 <tr>
 	<td>MINI_CART_BUTTON_DATA_BADGE_COUNT</td>
 	<td>//div[contains(@class,'mini-cart')]/button[@data-badge-count="${key_itemCount}"]</td>
@@ -508,7 +514,9 @@
 	<td>//p[contains(text(),"${key_cartItemSku}")]/../../../../div//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-times-circle-full')]</td>
 	<td></td>
 </tr>
+
 <!--ORDERS-->
+
 <tr>
 	<td>ACCOUNT_SELECTOR_ORDER_ID</td>
 	<td>//a[contains(@href,'commerceOrderId')]</td>
@@ -589,7 +597,9 @@
 	<td>//span[contains(text(),'Update')]</td>
 	<td></td>
 </tr>
+
 <!--COMPARE-->
+
 <tr>
 	<td>CHECK_ITEM_COMPARE</td>
 	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]</td>

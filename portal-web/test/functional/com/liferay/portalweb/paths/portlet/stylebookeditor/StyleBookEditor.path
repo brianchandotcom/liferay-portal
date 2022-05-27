@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!--PAGE_DESIGN_OPTIONS-->
+
 <tr>
 	<td>STYLE_BOOK_CARD_SELECTED</td>
 	<td>//li[contains(@class,'active')]//div[contains(@class,'card')][contains(.,'${key_card}')] | //div[contains(@class,'card')][contains(@class,'active')][contains(.,'${key_styleBookName}')]</td>
 	<td></td>
 </tr>
+
 <!--PAGE_PREVIEW-->
+
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_INLINE_CONTENT</td>
 	<td>//${key_element}[contains(@data-lfr-editable-id,'${key_id}') and contains(@data-lfr-editable-type,'${key_type}')][normalize-space(text())='${key_content}']</td>
@@ -42,7 +46,9 @@
 	<td>xpath=(//button[contains(@class,'style-book-editor__preview-selector')])[${index}]</td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR-->
+
 <tr>
 	<td>DRAFT_SAVED_MESSAGE</td>
 	<td>//div[contains(@class,'toolbar')]//span[contains(@class,'editor__status')][normalize-space(text())='Saved']</td>

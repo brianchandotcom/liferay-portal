@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--SELECT_SITE-->
+
 <tr>
 	<td>SELECT_SITE_IFRAME</td>
 	<td>//iframe</td>
@@ -21,7 +23,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT_BUTTON-->
+
 <tr>
 	<td>SELECT_BUTTON</td>
 	<td>//div[contains(@class,'portlet-body')]//tr[contains(.,'${key_siteName}')]/td//button</td>
@@ -32,7 +36,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SITES_TABLE-->
+
 <tr>
 	<td>SITES_TABLE_NAME</td>
 	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//table//tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>

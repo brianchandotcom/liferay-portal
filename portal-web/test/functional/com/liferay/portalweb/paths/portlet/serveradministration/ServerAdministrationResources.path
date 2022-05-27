@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ACTIONS_TABLE-->
+
 <tr>
 	<td>ACTIONS_TABLE_DESCRIPTION</td>
 	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//li[contains(.,'${key_actionsDescription}')]</td>

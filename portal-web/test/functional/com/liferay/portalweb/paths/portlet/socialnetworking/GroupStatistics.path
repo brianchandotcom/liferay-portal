@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--GROUP_STATISTICS_BODY-->
+
 <tr>
 	<td>GROUP_STATISTICS_BODY_CHART</td>
 	<td>//div[contains(@class,'chart-column')]//div[contains(@class,'group-statistics-chart')]</td>

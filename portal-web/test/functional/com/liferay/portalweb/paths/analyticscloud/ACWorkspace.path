@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!-- WORKSPACE LIST SCREEN FIELDS -->
+
 <tr>
 	<td>USER_MENU_OPTION</td>
 	<td>//div[contains(@class,'sticker-circle')]</td>
@@ -41,13 +43,17 @@
 	<td>//*[contains(@class, 'workspace-link')]</td>
 	<td></td>
 </tr>
+
 <!--CREATE_WORKSPACE-->
+
 <tr>
 	<td>INVITE_USERS_INPUT</td>
 	<td>xpath=(//input[@class='form-control-inset'])[2]</td>
 	<td></td>
 </tr>
+
 <!--WORKSPACE_SETTINGS-->
+
 <tr>
 	<td>TIMEZONE_COUNTRY_SELECT_FIELD</td>
 	<td>//label[normalize-space()='Timezone']//following-sibling::div//select</td>

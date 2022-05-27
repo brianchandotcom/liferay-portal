@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--IMAGE_VARIANT-->
+
 <tr>
 	<td>IMAGE_VARIANT_SOURCE_URL</td>
 	<td>//img[contains(@src,'${key_imageName}') and contains(@data-fileentryid,'')]</td>

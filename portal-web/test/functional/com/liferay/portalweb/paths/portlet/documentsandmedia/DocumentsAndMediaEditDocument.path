@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--INFO_BAR-->
+
 <tr>
 	<td>FOLDER</td>
 	<td>//input[contains(@id,'folderName')]</td>
@@ -31,7 +33,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REVISION_BUTTON-->
+
 <tr>
 	<td>MAJOR_REVISION_BUTTON</td>
 	<td>//label[contains(.,'Major Revision')]/input</td>

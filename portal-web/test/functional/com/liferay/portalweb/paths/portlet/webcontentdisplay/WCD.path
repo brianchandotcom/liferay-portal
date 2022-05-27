@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DOCUMENT_CONVERSION-->
+
 <tr>
 	<td>DOCUMENT_CONVERSION_TYPE</td>
 	<td>//a[contains (.,'${key_fileType}')]</td>
@@ -36,7 +38,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--WEB_CONTENT-->
+
 <tr>
 	<td>WEB_CONTENT_AUDIO</td>
 	<td>//div[contains(@class,'portlet-content')][*//*[contains(@class,'portlet-title')][normalize-space(text())='${key_webContentTitle}']]//audio//source[contains(@src,'${key_audioFileName}')]</td>

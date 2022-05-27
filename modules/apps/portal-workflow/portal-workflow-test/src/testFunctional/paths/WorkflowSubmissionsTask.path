@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--MENU-->
+
 <tr>
 	<td>DROPDOWN_MENU_OPTION</td>
 	<td>//a[contains(@class,'dropdown-item') and contains(text(), '${key_selectOption}')]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PREVIEW-->
+
 <tr>
 	<td>PREVIEW</td>
 	<td>//span[@class='panel-title']</td>
@@ -52,7 +56,9 @@
 	<td>//div[contains(@class,'contacts-container')]//div[@class='lfr-contact-extra']</td>
 	<td></td>
 </tr>
+
 <!--TABLE-->
+
 <tr>
 	<td>TABLE_ORDER_SUBMISSIONS</td>
 	<td>//tbody//tr[${key_order}]//td//a[text()='${key_title}']</td>

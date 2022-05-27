@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!--NAVIGATOR-->
+
 <tr>
 	<td>TAB_NAVIGATOR</td>
 	<td>//div[contains(@class, 'lfr-form-content')]//a[contains(@class, 'nav-link') and contains(.,'${key_tabName}')]</td>
 	<td></td>
 </tr>
+
 <!--LOOK_AND_FEEL_CONFIGURATION-->
+
 <tr>
 	<td>FIELD_BORDER_WIDTH_COLUMN</td>
 	<td>//div[contains(@class, 'border-width')]//label[contains(@class, 'control-label') and contains(text(), '${key_fieldName}')]//..//input[contains(@class, 'form-control')]</td>

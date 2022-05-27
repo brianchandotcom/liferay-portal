@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ATTACHMENTS-->
+
 <tr>
 	<td>ATTACHMENTS_REMOVE_LINK</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_attachmentName}')]//span[contains(@class,'item-remove')]</td>

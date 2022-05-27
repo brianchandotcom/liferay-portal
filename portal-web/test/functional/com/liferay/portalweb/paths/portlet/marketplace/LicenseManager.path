@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--LICENSE_MANAGER-->
+
 <tr>
 	<td>LICENSE_IFRAME</td>
 	<td>//iframe[contains(@id,'LicenseManagerPortlet_iframe')]</td>

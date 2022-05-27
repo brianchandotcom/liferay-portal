@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ROLE_TABLE-->
+
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>

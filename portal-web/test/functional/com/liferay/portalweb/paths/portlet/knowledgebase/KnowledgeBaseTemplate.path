@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--TEMPLATE-->
+
 <tr>
 	<td>TEMPLATE_TITLE</td>
 	<td>//div[@class='kb-title']</td>

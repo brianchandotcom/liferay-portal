@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--SITE_URL-->
+
 <tr>
 	<td>SITE_URL_FRIENDLY_URL_LABEL</td>
 	<td>//div[contains(@class,'form-group')]//label[contains(@for,'groupFriendlyURL')]</td>

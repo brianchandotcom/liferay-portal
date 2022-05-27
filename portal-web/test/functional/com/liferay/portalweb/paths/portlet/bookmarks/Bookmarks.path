@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--BOOKMARKS_TABLE-->
+
 <tr>
 	<td>BOOKMARKS_TABLE_NAME</td>
 	<td>//table[contains(@class,'table-autofit')]//td[2]//a[contains(.,'${key_bookmarkName}')]</td>
@@ -31,7 +33,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DESCRIPTIVE_ENTRY-->
+
 <tr>
 	<td>DESCRIPTIVE_ENTRY_TITLE</td>
 	<td>//*[contains(@class,'list-group-item')]//a[contains(.,'${key_assetName}')]</td>
@@ -47,7 +51,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FOLDER_TABLE-->
+
 <tr>
 	<td>FOLDER_TABLE_CHOOSE</td>
 	<td>//tr[contains(.,'${key_folderName}')]/td[4]//button[contains(.,'Choose')]</td>
@@ -58,7 +64,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SEARCH_TABLE-->
+
 <tr>
 	<td>SEARCH_TABLE_ENTRY_NAME</td>
 	<td>//div[contains(@id,'objectsSearchContainer')]/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td//span/a/span</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--RESOURCE_TABLE-->
+
 <tr>
 	<td>RESOURCE_TABLE_RESOURCE_LINK</td>
 	<td>//tr[contains(.,'${key_resourceName}')]/td[1]//a</td>

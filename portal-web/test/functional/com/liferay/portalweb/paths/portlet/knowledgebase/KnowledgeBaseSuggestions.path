@@ -40,7 +40,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_BAR</td>
 	<td>//dl[contains(@id,'knowledge_base_web') and contains(@class,'navbar')]</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--SIDE PANEL TOP LEVEL-->
+
 <tr>
 	<td>VIOLATION_PANEL_HEADER</td>
 	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header') and contains(.,'Accessibility Violations')]</td>
@@ -36,7 +38,9 @@
 	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_impact}')]</td>
 	<td></td>
 </tr>
+
 <!--FILTER-->
+
 <tr>
 	<td>FILTER_ELEMENT_ICON</td>
 	<td>//*[contains(@class,'a11y-panel') and contains(@class,'violations-header')]//*[*[name()='svg'][contains(@class,'lexicon-icon-filter')]]</td>
@@ -67,7 +71,9 @@
 	<td>//*[contains(@class,'a11y-dropdown show')]</td>
 	<td></td>
 </tr>
+
 <!--HIGHLIGHTED ELEMENTS-->
+
 <tr>
 	<td>HIGHLIGHTED_ELEMENT</td>
 	<td>//*[contains(@class,'a11y-overlay')]//*[contains(@class,'a11y-backdrop')]</td>
@@ -88,7 +94,9 @@
 	<td>//*[contains(@id, 'a11yContainer')]//*[contains(@class, 'a11y-overlay')][${key_index}]//*[contains(@class, '${key_text}')]</td>
 	<td></td>
 </tr>
+
 <!--POPOVERS-->
+
 <tr>
 	<td>HIGHLIGHTED_ELEMENT_POPOVER_IMPACT</td>
 	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'text-secondary') and contains(.,'${key_impact}')]</td>
@@ -109,7 +117,9 @@
 	<td>//*[contains(@class, 'a11y-popover')]//*[contains(@class,'list-group-subtext') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
+
 <!--SIDE PANEL COMPONENT VIEW-->
+
 <tr>
 	<td>VIOLATION_PANEL_COMPONENT_TITLE</td>
 	<td>//*[contains(@class,'a11y-panel')]//*[contains(@class,'component-title') and contains(.,'${key_text}')]</td>

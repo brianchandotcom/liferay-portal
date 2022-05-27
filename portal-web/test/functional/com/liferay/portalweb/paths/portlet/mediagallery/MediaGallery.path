@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY-->
+
 <tr>
 	<td>ENTRY_IMAGE_PREVIEW</td>
 	<td>//div[contains(@class,'aspect-ratio')]//img[contains(@src,'${key_mgImageName}')]</td>
@@ -56,7 +58,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FOLDER-->
+
 <tr>
 	<td>FOLDER_NAME</td>
 	<td>//span//a[@title='${key_mgFolderName}']</td>
@@ -72,7 +76,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADT_CAROUSEL-->
+
 <tr>
 	<td>ADT_CAROUSEL_ITEM</td>
 	<td>//div[contains(@class,'image-viewer-base carousel')]</td>

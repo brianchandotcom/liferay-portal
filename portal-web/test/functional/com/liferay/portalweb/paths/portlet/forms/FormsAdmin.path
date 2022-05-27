@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--FORMS_ENTRY_TABLE-->
+
 <tr>
 	<td>FORM_ENTRY_CHECKBOX</td>
 	<td>//td/a[text()='${key_formName}']//..//..//input[@type='checkbox']</td>
@@ -41,7 +43,9 @@
 	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
+
 <!--FORMS_TABLE-->
+
 <tr>
 	<td>FORMS_TABLE_NAME</td>
 	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${key_formName}')] | //div[contains(@class,'searchcontainer')]//h2[contains(.,'${key_formName}')] </td>

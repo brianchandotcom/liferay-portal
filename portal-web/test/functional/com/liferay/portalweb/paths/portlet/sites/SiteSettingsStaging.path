@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--STAGING-->
+
 <tr>
 	<td>NONE_RADIO</td>
 	<td>//span[contains(.,'None')]</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REMOTE_STAGING-->
+
 <tr>
 	<td>REMOTE_STAGING_IP</td>
 	<td>//input[contains(@id,'remoteAddress')]</td>

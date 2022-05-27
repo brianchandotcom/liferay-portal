@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TABLE-->
+
 <tr>
 	<td>TABLE_TITLE_HEADER</td>
 	<td>//table/tbody/tr/th[contains(.,'Title')]</td>

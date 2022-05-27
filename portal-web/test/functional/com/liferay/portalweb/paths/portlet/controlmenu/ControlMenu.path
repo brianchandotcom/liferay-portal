@@ -85,7 +85,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADMIN-->
+
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
 	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Users')]</td>

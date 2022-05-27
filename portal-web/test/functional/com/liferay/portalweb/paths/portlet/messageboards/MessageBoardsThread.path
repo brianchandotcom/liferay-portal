@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--THREAD-->
+
 <tr>
 	<td>THREAD_BODY</td>
 	<td>//div[contains(@class,'message-content') and contains(.,'${key_threadBody}')]</td>
@@ -96,7 +98,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MESSAGE-->
+
 <tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
 	<td>//span[@class='taglib-workflow-status']/span[contains(@class,'workflow-status')]</td>

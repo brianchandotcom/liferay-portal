@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENTRY_TABLE-->
+
 <tr>
 	<td>ENTRY_TABLE_ACTIONS_GENERIC</td>
 	<td>//td[7]//div/a</td>

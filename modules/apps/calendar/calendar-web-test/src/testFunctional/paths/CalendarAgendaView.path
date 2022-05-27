@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SCHEDULER_EVENT-->
+
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_1</td>
 	<td>xpath=(//div[contains(@class,'scheduler-view-agenda-event-content') and contains(.,'${key_eventTitle}')])[1]</td>

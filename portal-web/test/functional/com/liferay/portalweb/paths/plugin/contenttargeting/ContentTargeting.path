@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FORM-->
+
 <tr>
 	<td>FORM_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'ContentTargetingPortlet_searchPanel')]</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CARD-->
+
 <tr>
 	<td>CARD_CONTENT_TITLE</td>
 	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]</td>
@@ -57,7 +61,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--OTHERWISE_PANEL-->
+
 <tr>
 	<td>OTHERWISE_PANEL</td>
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]</td>
@@ -93,7 +99,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PREVIEW-->
+
 <tr>
 	<td>PREVIEW</td>
 	<td>//div[//li[contains(@id,'PreviewContent')] and contains(@class,'open')]//a[contains(.,'${key_previewEntry}')]</td>
@@ -129,7 +137,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REPORT_TABLE-->
+
 <tr>
 	<td>REPORT_TABLE_CONTENT</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[normalize-space(.//text())='${key_contentReports}']</td>

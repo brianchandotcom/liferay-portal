@@ -55,7 +55,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--GRID_VIEW-->
+
 <tr>
 	<td>GRID_VIEW_DOCUMENT</td>
 	<td>//div[contains(@aria-label,'Files and folders grid view.')]//span[contains(.,'${key_googleDocName}')]</td>
@@ -76,7 +78,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LIST_VIEW-->
+
 <tr>
 	<td>LIST_VIEW_DOCUMENT</td>
 	<td>//div[contains(@aria-label,'Files and folders list view.')]//div[contains(@aria-label,'${key_googleDocName}')]</td>

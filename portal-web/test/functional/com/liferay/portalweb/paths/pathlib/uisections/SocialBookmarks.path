@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ENABLE_SOCIAL_BOOKMARKS-->
+
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT</td>
 	<td>//select[contains(@id,'currentTypes')]</td>

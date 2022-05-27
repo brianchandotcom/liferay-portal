@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!--ADMIN-->
+
 <tr>
 	<td>TOKEN_REFRESH_OFFSET</td>
 	<td>//div[contains(@data-field-name,'tokenRefreshOffset')]//input[@type='text']</td>
 	<td></td>
 </tr>
+
 <!--KEYCLOAK LOGIN-->
+
 <tr>
 	<td>LOGIN_USERNAME_FIELD</td>
 	<td>//input[contains(@id,'username') or contains(@id,'identifierId') or contains(@data-report-value,'Email_Phone_Skype_Entry')]</td>

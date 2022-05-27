@@ -15,7 +15,9 @@
 	<td>//*[contains(@class,'asset-summary') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT-->
+
 <tr>
 	<td>FRAGMENT_HEADER</td>
 	<td>//*[contains(@class,'home-header') and contains(.,'${key_title}')]</td>

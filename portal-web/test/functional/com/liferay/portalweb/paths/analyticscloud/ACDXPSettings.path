@@ -10,13 +10,17 @@
 </thead>
 
 <tbody>
+
 <!-- INSTANCE SETTINGS OPTION -->
+
 <tr>
 	<td>ANALYTICS_CLOUD_DXP_OPTION</td>
 	<td>//*[contains(@href, 'analytics-cloud-connection')]</td>
 	<td></td>
 </tr>
+
 <!-- ANALYTICS CLOUD CONNECTION SCREEN -->
+
 <tr>
 	<td>TOKEN_INPUT_FIELD</td>
 	<td>//input[contains(@id,'token')]</td>
@@ -42,7 +46,9 @@
 	<td>//td[contains(@class, 'lfr-site-name-column')]</td>
 	<td></td>
 </tr>
+
 <!-- NAVIGATION SIDEBAR ITEMS -->
+
 <tr>
 	<td>AC_CONNECTION_NAV_SIDEBAR</td>
 	<td>//*[contains(@class, 'nav-link') and contains(@href,'connection')]</td>
@@ -58,31 +64,41 @@
 	<td>//*[contains(@class, 'nav-link') and contains(@href,'contact')]</td>
 	<td></td>
 </tr>
+
 <!-- SYNCS SITES TO PROPERTY SCREEN -->
+
 <tr>
 	<td>AVAILABLE_PROPERTY_NAME</td>
 	<td>//td[contains(., '${key_availablePropertyName}')]</td>
 	<td></td>
 </tr>
+
 <!-- GENERIC CHECKBOX -->
+
 <tr>
 	<td>AC_GENERIC_CHECKBOX</td>
 	<td>//*[contains(@type, 'checkbox')]</td>
 	<td></td>
 </tr>
+
 <!-- GENERIC ADD OR CONFIRMATION BUTTON -->
+
 <tr>
 	<td>AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON</td>
 	<td>//*[contains(@class, 'btn-primary')]</td>
 	<td></td>
 </tr>
+
 <!-- GENERIC CANCEL BUTTON -->
+
 <tr>
 	<td>AC_GENERIC_CANCEL_BUTTON</td>
 	<td>//*[contains(@class, 'btn-secondary')]</td>
 	<td></td>
 </tr>
+
 <!-- NEW PROPERTY SCREEN -->
+
 <tr>
 	<td>COMBINATED_PROPERTY_OPTION</td>
 	<td>//*[contains(@value, 'combined')]</td>
@@ -108,7 +124,9 @@
 	<td>//td[contains(., '${key_propertyName}')]//preceding-sibling::td</td>
 	<td></td>
 </tr>
+
 <!-- SYNC CONTACT DATA SCREEN -->
+
 <tr>
 	<td>FIELD_NAME_CHECKBOX</td>
 	<td>//td/input[contains(@value, '${key_fieldName}')]</td>

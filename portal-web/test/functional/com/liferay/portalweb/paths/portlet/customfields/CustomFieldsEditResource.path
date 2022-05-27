@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--CUSTOM_FIELDS_TABLE-->
+
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${customFieldName}')][last()]/td[2]//a/strong</td>

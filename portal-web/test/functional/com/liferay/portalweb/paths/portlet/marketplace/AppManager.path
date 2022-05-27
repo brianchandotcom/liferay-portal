@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--APP-->
+
 <tr>
 	<td>APP_NAME</td>
 	<td>//div[contains(@class,'content')]//*[contains(@class,'list-group-item')]//a[contains(.,'${key_appName}')]</td>
@@ -26,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--BREADCRUMB-->
+
 <tr>
 	<td>BREADCRUMB_2_LINK</td>
 	<td>//ul[contains(@class,'breadcrumb-horizontal')]/li[2]/a[contains(.,'${key_breadCrumb}')]</td>

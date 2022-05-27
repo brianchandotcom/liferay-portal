@@ -65,7 +65,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATE-->
+
 <tr>
 	<td>DATE_SCHEDULE_RADIO</td>
 	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'Schedule')]</td>
@@ -111,7 +113,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PAGES-->
+
 <tr>
 	<td>PAGES_CHOOSE_PAGE_DELETION_CHECKBOX</td>
 	<td>//span[contains(.,'Publish Page Deletions')]//span[contains(@class,'deletions')]/../../input</td>
@@ -142,7 +146,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTENT-->
+
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
 	<td>//input[contains(@name,'DELETIONS')]//following-sibling::span</td>
@@ -163,7 +169,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DELETIONS-->
+
 <tr>
 	<td>DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX</td>
 	<td>//input[contains(@id,'StagingProcessesPortlet_DELETIONS')]</td>
@@ -174,7 +182,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SCHEDULED_TABLE-->
+
 <tr>
 	<td>SCHEDULED_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[2]</td>
@@ -190,7 +200,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PUBLISH_TEMPLATES_TABLE-->
+
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_NAME</td>
 	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]/td[2]//a</td>

@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ALL_PAGES-->
+
 <tr>
 	<td>ALL_PAGES_PAGE_2</td>
 	<td>xpath=(//tr/td[1]//a)[2]</td>
@@ -51,13 +53,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DRAFT_PAGES-->
+
 <tr>
 	<td>DRAFT_PAGES_PENDING_HEADER</td>
 	<td>//h2[contains(text(),'Pending Approval')]</td>
 	<td></td>
 </tr>
+
 <!--DRAFT_PAGES_TABLE-->
+
 <tr>
 	<td>DRAFT_PAGES_WIKI_PAGE_NAME</td>
 	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]//a</td>
@@ -88,7 +94,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_ACTIVE_TAB</td>
 	<td>//a[contains(@class,'active') and contains(.,'${key_tabName}')]</td>
@@ -124,7 +132,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT_VERSION-->
+
 <tr>
 	<td>SELECT_VERSION_NEW_VERSION_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]/td[1]//input[@type='checkbox']</td>

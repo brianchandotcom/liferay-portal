@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--APPLIED_FILTERS-->
+
 <tr>
 	<td>APPLIED_FILTERS_FILTER_LIST</td>
 	<td>//div[contains(@id,'filterList')]</td>
@@ -31,7 +33,9 @@
 	<td>//div[contains(@id,'filterList')]//following-sibling::div//button[normalize-space()='${button}']</td>
 	<td></td>
 </tr>
+
 <!--BASED_ON_CUSTOM_MASTERS-->
+
 <tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>
 	<td>//div[contains(@class,'fragment-content--master')]//*[contains(@class,'component-${key_fragmentName}')]</td>
@@ -42,7 +46,9 @@
 	<td>//div[contains(@class,'fragment-content--master')]//section[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
+
 <!--COLLECTION_DISPLAY-->
+
 <tr>
 	<td>COLLECTION_DISPLAY_EMPTY_STATE</td>
 	<td>xpath=(//div[contains(@class,'block')])[${index}]//div[contains(@class,'empty-state')]</td>
@@ -174,7 +180,9 @@
 </td>
 	<td></td>
 </tr>
+
 <!--COLLECTION_FILTER-->
+
 <tr>
 	<td>COLLECTION_FILTER_DROPDOWN_TOGGLE</td>
 	<td>//label[normalize-space(text())='${key_title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
@@ -195,7 +203,9 @@
 	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//label[normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
 	<td></td>
 </tr>
+
 <!--COLOR_PICKER-->
+
 <tr>
 	<td>COLOR_SWATCH_CATEGORY</td>
 	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//span[contains(@class,'subtitle')][normalize-space(text())='${panel}']//following-sibling::div//span[contains(@class,'secondary')])[${index}]</td>
@@ -211,7 +221,9 @@
 	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//span[contains(@class,'subtitle')])[${index}]</td>
 	<td></td>
 </tr>
+
 <!--CONTENT_PAGE-->
+
 <tr>
 	<td>CONTENT_PAGE_DISABLED_HEADER</td>
 	<td>//header[contains(@class,'disabled-area')]</td>
@@ -267,13 +279,17 @@
 	<td>//div[contains(@class,'page-editor__layout-viewport__resizer')][contains(@style,'${key_style}')]</td>
 	<td></td>
 </tr>
+
 <!--DISPLAY_PAGE_TEMPLATE-->
+
 <tr>
 	<td>ENTRY_COVER_IMAGE</td>
 	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>
+
 <!--DROP_TARGET-->
+
 <tr>
 	<td>ANY_FRAGMENT_DROP_TARGET</td>
 	<td>//div[@aria-label='${key_targetFragmentName}']/div[contains(@class,'page-editor__topper__content')]</td>
@@ -304,7 +320,9 @@
 	<td>//section[contains(@id,'content')]</td>
 	<td></td>
 </tr>
+
 <!--EXPERIENCE-->
+
 <tr>
 	<td>EXPERIENCE_ACTIVE_LABEL</td>
 	<td>//*[contains(@class, 'text-truncate-inline')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
@@ -405,7 +423,9 @@
 	<td>//*[contains(@class,'modal-title') and contains(text(), 'New Experience')]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_SIDEBAR-->
+
 <tr>
 	<td>FRAGMENT_SIDEBAR_BODY</td>
 	<td>//div[contains(@class,'page-editor__sidebar')][contains(@class,'theme-adapter-forms')]</td>
@@ -446,7 +466,9 @@
 	<td>//div[contains(@class,'content--open')]//h1[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'${key_sidebarButton}')]</td>
 	<td></td>
 </tr>
+
 <!--COMMENTS_PANEL-->
+
 <tr>
 	<td>FRAGMENT_SIDEBAR_BACK</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
@@ -562,7 +584,9 @@
 	<td>//label/input[@type='checkbox']</td>
 	<td></td>
 </tr>
+
 <!--MAPPING_PANEL-->
+
 <tr>
 	<td>MAPPING_PANEL_TYPE_LABEL</td>
 	<td>//p[contains(@class,'type-label')]</td>
@@ -573,7 +597,9 @@
 	<td>xpath=(//p[contains(@class,'type-label')])[2]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENTS_AND_WIDGETS_PANEL-->
+
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON</td>
 	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'tooltip')][*[name()='svg'][contains(@class,'icon-${key_switchTo}')]]</td>
@@ -614,19 +640,25 @@
 	<td>//div[contains(@class,'page-editor__sidebar')]//div[@role='search']//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
+
 <!--FOOTER_FRAGMENT-->
+
 <tr>
 	<td>FOOTERS</td>
 	<td>//footer[contains(@class,'navbar-${key_type}')]</td>
 	<td></td>
 </tr>
+
 <!--HEADER_FRAGMENT-->
+
 <tr>
 	<td>NAVIGATION_BARS</td>
 	<td>//header[contains(@class,'navbar-${key_type}')]</td>
 	<td></td>
 </tr>
+
 <!--LAYOUT ELEMENTS-->
+
 <tr>
 	<td>CONTAINER_CONTAINER</td>
 	<td>xpath=(//div[@aria-label='Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')]</td>
@@ -672,7 +704,9 @@
 	<td>//div[contains(@class,'page-editor__col')][${key_position}]//button[contains(@class,'page-editor__col__resizer')]</td>
 	<td></td>
 </tr>
+
 <!--LAYOUT_ELEMENTS_CONFIGURATION-->
+
 <tr>
 	<td>CONTAINER_CONFIGURATION_BACKGROUND_COLOR</td>
 	<td>xpath=(//div[@aria-label='Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')][contains(@style,'background-color: var(--${key_paletteItem})')]</td>
@@ -793,7 +827,9 @@
 	<td>xpath=(//div[@aria-label='Grid'])[${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'${key_verticalAlignment}')]</td>
 	<td></td>
 </tr>
+
 <!--MANAGEMENT_BAR-->
+
 <tr>
 	<td>AUTOSAVE_MESSAGE</td>
 	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'text-success')]</td>
@@ -834,7 +870,9 @@
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>
 </tr>
+
 <!--PAGE_CONTENTS_PANEL-->
+
 <tr>
 	<td>PAGE_CONTENTS_CONTENT_FILTER_TOGGLE</td>
 	<td>//div[contains(@class,'page-contents__content-filter')]//button[contains(@class,'dropdown-toggle')]</td>
@@ -865,13 +903,17 @@
 	<td>//li[contains(@class,'page-contents__page-content')][.//span[normalize-space(text())='${key_itemName}']]//button[*[name()='svg'][contains(@class,'icon-pencil')]]</td>
 	<td></td>
 </tr>
+
 <!--PAGE_DESIGN_OPTIONS-->
+
 <tr>
 	<td>MORE_LINK</td>
 	<td>//*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]/a[normalize-space(text())='More']</td>
 	<td></td>
 </tr>
+
 <!--PAGE_STRUCTURE_ITEM_CONFIGURATION-->
+
 <tr>
 	<td>CONFIGURATION_PANEL_CONFIGURATION</td>
 	<td>//div[contains(@class,'item-configuration')]</td>

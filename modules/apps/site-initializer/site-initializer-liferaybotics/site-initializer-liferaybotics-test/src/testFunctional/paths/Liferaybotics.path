@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--HOME PAGE-->
+
 <tr>
 	<td>HOME_TITLE</td>
 	<td>//h1[@class='text-uppercase']//div[contains(text(),'${key_title}')]</td>
@@ -21,7 +23,9 @@
 	<td>//span[@class='text-truncate' and contains (text(),'${labelOption}')]</td>
 	<td></td>
 </tr>
+
 <!--DASHBOARD PAGE-->
+
 <tr>
 	<td>DASHBOARD_TITLE</td>
 	<td>//h1[@class='header' and contains (text(),'${key_title}')]</td>
@@ -37,7 +41,9 @@
 	<td>//div[contains(@class,'product-publisher')]</td>
 	<td></td>
 </tr>
+
 <!--NEWS PAGE-->
+
 <tr>
 	<td>NEWS_TITLE</td>
 	<td>//h1[@class='display-4 text-white' and contains (text(),'${key_title}')] </td>

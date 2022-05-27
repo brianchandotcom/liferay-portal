@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 	<!--BLOGS-->
+
 <tr>
 	<td>BLOGS_CONTENT</td>
 	<td>//div[contains(@class,'widget-mode')]//div</td>
@@ -21,7 +23,9 @@
 	<td>//h2[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
+
 <!--EMAIL-->
+
 <tr>
 	<td>EMAIL_VIEW_DOCUMENT_BUTTON</td>
 	<td>//div/a[contains(.,'View Document')]</td>
@@ -32,7 +36,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MANAGE_COLLABORATORS-->
+
 <tr>
 	<td>MANAGE_COLLABORATORS_ACCESS_DROPDOWN</td>
 	<td>//li/div[contains(.,'${key_userName}')]//div[4]/select</td>
@@ -58,7 +64,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MODAL-->
+
 <tr>
 	<td>MODAL_INVITE_TO_COLLABORATE_DROPDOWN</td>
 	<td>//div[contains(@class,'dropdown-menu')]//*[contains(@class,'dropdown-item')]</td>
@@ -84,7 +92,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NOTIFICATIONS-->
+
 <tr>
 	<td>NOTIFICATIONS_TITLE</td>
 	<td>//h4/a[contains(.,'${key_ownerName} has shared ${key_contentTitle} with you for ${key_contentSharingPermission}')]</td>
@@ -110,7 +120,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SHARED_CONTENT-->
+
 <tr>
 	<td>SHARED_CONTENT_CONTENT_OPTIONS</td>
 	<td>//tr/td[contains(.,'${key_contentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>

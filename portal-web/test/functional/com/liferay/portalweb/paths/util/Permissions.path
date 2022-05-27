@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PERMISSIONS_MODAL-->
+
 <tr>
 	<td>PERMISSIONS_MODAL_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_${key_actionName}']</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONFIGURATION_PERMISSIONS-->
+
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ROLE_NAME</td>
 	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
@@ -117,7 +121,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--INLINE_PERMISSIONS-->
+
 <tr>
 	<td>INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_ADD_DISCUSSION']</td>
@@ -188,7 +194,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTENT_PERMISSIONS-->
+
 <tr>
 	<td>CONTENT_PERMISSIONS_ROLE_NAME</td>
 	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]</td>
@@ -304,7 +312,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--EVENT_PERMISSIONS-->
+
 <tr>
 	<td>EVENT_PERMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleTitle}_ACTION_VIEW')]</td>

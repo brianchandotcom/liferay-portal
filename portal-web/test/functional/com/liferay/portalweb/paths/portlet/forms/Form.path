@@ -165,7 +165,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ALT_PAGINATION-->
+
 <tr>
 	<td>ALT_PAGINATION_PAGE</td>
 	<td>//*[contains(@class,'ddm-pagination')]//*[contains(@class,'page-item')]//*[contains(text(),'${key_page}')]</td>
@@ -186,7 +188,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PAGE_CONTROLS-->
+
 <tr>
 	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
 	<td>xpath=(//div[@class="page"])[${key_formPageNumber}]//div[contains(@class,'paginated-builder-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
@@ -242,7 +246,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ADD_FIELD-->
+
 <tr>
 	<td>ADD_FIELD</td>
 	<td>//button[contains(@class,'add-button-large')]/span | //div[contains(@class,'portlet-forms')]//button[contains(@class,'ddm-add-field')]</td>
@@ -288,7 +294,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SUCCESS_PAGE-->
+
 <tr>
 	<td>SUCCESS_PAGE_ADD</td>
 	<td>//div[contains(@class,'add-page-button-container')]//button[contains(text(), 'Add Success Page')]</td>
@@ -309,7 +317,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PUBLISH-->
+
 <tr>
 	<td>PUBLISH_FORM_DESCRIPTION_FIELD</td>
 	<td>//span[contains(@class,'lfr-ddm__default-page-header-description') and contains(., '${key_formDescription}')]</td>
@@ -345,7 +355,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SETTINGS_TAB-->
+
 <tr>
 	<td>SETTINGS_TAB_EMAIL_NOTIFICATIONS</td>
 	<td>//a[contains(@class,'tab-content') and contains(.,'Notifications')] | //span[contains(text(),'Notifications')]</td>
@@ -376,7 +388,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FIELD-->
+
 <tr>
 	<td>FIELD_BODY</td>
 	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@class,'form-group')]//legend[contains(text(),'${key_fieldName}')] |//div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
@@ -427,7 +441,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR -->
+
 <tr>
 	<td>BUILDER_SIDEBAR_PANEL</td>
 	<td>//div[contains(@class,'sidebar')]//*[@*='Builder'] | //div[contains(@class,'builder-sidebar')]//div[contains(@class,'sidebar-body')]</td>
@@ -558,7 +574,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATA_PROVIDER_INPUT_PARAMETER-->
+
 <tr>
 	<td>DATA_PROVIDER_INPUT_PARAMETER_LABEL_FIELD</td>
 	<td>//div[contains(@data-field-name,'inputParameters')]//input[@type='text' and contains(@name,'inputParameters') and contains(@placeholder,'label')]</td>
@@ -584,7 +602,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->
+
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2</td>
 	<td>//div[@data-field-name='outputParameters'][2]//div[@data-field-name='outputParameterPath']//input[contains(@class,'ddm-field-text')]</td>
@@ -625,7 +645,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->
+
 <tr>
 	<td>DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL</td>
 	<td>//div[contains(@id,'dataProviderPermissions')]//a[contains(@class,'collapse-icon')]</td>
@@ -641,7 +663,9 @@
 	<td>//button[contains(@class,'disabled') and contains (text(),'${key_value}')]</td>
 	<td></td>
 </tr>
+
 <!--PAGE-->
+
 <tr>
 	<td>PAGE_MOVE_DISABLED</td>
 	<td>//input[contains(@class,'page-header-title') and @value='${key_formPageName}']/../../../../..//button[@disabled and @title='${key_movePage}']</td>

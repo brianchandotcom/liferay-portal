@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--VERSIONS_TABLE-->
+
 <tr>
 	<td>VIEW_COMPARE_VERSIONS_CONTENT</td>
 	<td>//div[contains(@class,'diff-container-column')]//p</td>

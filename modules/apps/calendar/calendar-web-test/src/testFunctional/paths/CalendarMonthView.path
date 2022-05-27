@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE-->
+
 <tr>
 	<td>SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_LINK</td>
 	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//a[@class='scheduler-view-table-more' and contains(.,'Show ${key_eventNumber} more')]</td>

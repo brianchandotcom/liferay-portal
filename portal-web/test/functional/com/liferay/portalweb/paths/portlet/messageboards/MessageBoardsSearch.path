@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--SEARCH_RESULTS-->
+
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_TITLE</td>
 	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]</td>

@@ -45,7 +45,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--CONTENT_ADD_MENUBAR-->
+
 <tr>
 	<td>CONTENT_ADD_MENUBAR_IMAGE</td>
 	<td>//button[contains(@data-type,'image')]</td>
@@ -61,7 +63,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TEXT_FORMATTING-->
+
 <tr>
 	<td>TEXT_FORMATTING_STYLE</td>
 	<td>//button[contains(@class,'ae-toolbar-element')]//span[contains(@class,'selected-item')]</td>

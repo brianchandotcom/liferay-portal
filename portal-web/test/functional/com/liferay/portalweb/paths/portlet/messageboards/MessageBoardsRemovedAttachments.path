@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--ATTACHMENT_TABLE-->
+
 <tr>
 	<td>ATTACHMENT_FILE_NAME</td>
 	<td>//td[contains(@class,'lfr-file-name-column')]/a[contains(.,'${key_mbAttachmentFile}')]</td>

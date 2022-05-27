@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!-- TIME FILTER ELEMENTS -->
+
 <tr>
 	<td>TIME_FILTER_DROPDOWN</td>
 	<td>//div[contains(@class,'dropdown-range-key-root')]/button</td>

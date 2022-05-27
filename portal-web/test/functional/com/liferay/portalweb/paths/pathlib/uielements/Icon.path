@@ -350,7 +350,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ELLIPSIS-->
+
 <tr>
 	<td>ANY_VERTICAL_ELLIPSIS</td>
 	<td>//*[contains(.,'${key_text}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>

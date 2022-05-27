@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--PROCESS_TABLE-->
+
 <tr>
 	<td>NAME_ROW_FROM_MANAGE_FIELD</td>
 	<td>//tr[${key_rowNumber}]//td[contains(@class, 'table-title')]//a[contains(.,'${key_nameFieldset}')]</td>

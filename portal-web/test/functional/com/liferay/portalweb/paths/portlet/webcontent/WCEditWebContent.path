@@ -65,7 +65,9 @@
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR-->
+
 <tr>
 	<td>DEFAULT_LANGUAGE</td>
 	<td>//div[contains(@class,'article-default-language')]//p[normalize-space()='Default Language: ${defaultLanguage}']</td>
@@ -186,7 +188,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEW_HISTORY-->
+
 <tr>
 	<td>VIEW_HISTORY_VERSION_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td//input</td>
@@ -207,7 +211,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REPEATED FIELD ON WEB CONTENT-->
+
 <tr>
 	<td>REPEATED_FIELD</td>
 	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]</td>
@@ -218,7 +224,9 @@
 	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text'])[${index}]</td>
 	<td></td>
 </tr>
+
 <!--REPEATED FIELD BY INDEX-->
+
 <tr>
 	<td>REPEATED_FIELD_BY_INDEX</td>
 	<td>xpath=//div[contains(@class,'ddm-field') and contains(@data-field-name,'${key_fieldReference}')][${key_index}]</td>

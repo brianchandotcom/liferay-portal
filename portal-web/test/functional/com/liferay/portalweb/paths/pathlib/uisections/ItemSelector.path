@@ -35,7 +35,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--LOCATION_INFO-->
+
 <tr>
 	<td>LOCATION_INFO_CARDS</td>
 	<td>//div[contains(@class,'card-row') and contains(.,'${key_title}')]//span[contains(.,'${key_locationName}')]</td>
@@ -61,7 +63,9 @@
 	<td>//tr[contains(@data-qa-id,'row') and contains(.,'${key_title}')]//td[contains(@class,'lfr-location-column') and contains(.,'${key_locationName}')]</td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_GROUP_TAB</td>
 	<td>//div[contains(@class,'btn-group')]//a[contains(.,'${key_groupTab}')]</td>
@@ -82,7 +86,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT_FILE-->
+
 <tr>
 	<td>SELECT_FILE_IMAGE_CARD</td>
 	<td>//div[contains(@class,'card')]//span[contains(@title,'${key_imageFileName}')]</td>
@@ -108,7 +114,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VIEWER-->
+
 <tr>
 	<td>FOOTER</td>
 	<td>//div[contains(@class,"item-selector-preview")]//div[@class="footer"]//span</td>
@@ -154,7 +162,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR_FILE_INFO-->
+
 <tr>
 	<td>SIDEBAR_FILE_INFO_FORMAT</td>
 	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Format')]/following-sibling::dd[1]</td>
@@ -180,7 +190,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SIDEBAR_VERSION-->
+
 <tr>
 	<td>SIDEBAR_VERSION_STATUS</td>
 	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Status')]/following-sibling::dd[1]</td>
@@ -196,7 +208,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--SELECT_IMAGE_PREVIEW-->
+
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>
 	<td>//div[contains(@class,'item-selector-preview')]//img</td>
@@ -207,7 +221,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--URL-->
+
 <tr>
 	<td>URL_LABEL</td>
 	<td>//label[contains(.,'URL')]</td>

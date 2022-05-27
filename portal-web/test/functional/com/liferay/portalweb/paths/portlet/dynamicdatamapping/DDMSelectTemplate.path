@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TEMPLATE_CARDS-->
+
 <tr>
 	<td>TEMPLATE_CARDS_SMALL_IMAGE</td>
 	<td>//div[contains(@class,'aspect-ratio')]/div/label//img</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TEMPLATE_TABLE-->
+
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
 	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>

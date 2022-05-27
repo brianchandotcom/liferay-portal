@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSIGN_USER-->
+
 <tr>
 	<td>ASSIGN_USER_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_accountUserName}')]//button[contains(.,'Choose')]</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFAULT_ACCOUNT_ADDRESSES-->
+
 <tr>
 	<td>DEFAULT_ACCOUNT_ADDRESSES_HEADING</td>
 	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Default Account Addresses']</td>
@@ -112,7 +116,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFAULT_ACCOUNT_TERMS_AND_CONDITION-->
+
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY</td>
 	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::h4</td>
@@ -188,7 +194,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--USER-->
+
 <tr>
 	<td>USER_SELECT_BUTTON</td>
 	<td>//span[normalize-space(text())='User']//../following-sibling::span//*[normalize-space(text())='Select']</td>
@@ -204,7 +212,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--VALID_DOMAINS-->
+
 <tr>
 	<td>VALID_DOMAINS_ADD_BUTTON</td>
 	<td>//a[contains(@id,'addDomains')]/span</td>

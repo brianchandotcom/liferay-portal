@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ACTIVE-->
+
 <tr>
 	<td>ACTIVE_LABEL</td>
 	<td>//label[contains(@for,'active')]</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PARENT_SITE-->
+
 <tr>
 	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
 	<td>//input[contains(@id,'membershipRestriction') and contains(@class,'toggle-switch')]</td>
@@ -52,7 +56,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MENU_ADVANCED-->
+
 <tr>
 	<td>MENU_ADVANCED_TAB</td>
 	<td>//li[contains(@id,'SiteSettingsPortlet')]/a[contains(.,'Advanced')]</td>
@@ -63,7 +69,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--MEMBERSHIP_OPTIONS-->
+
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
 	<td>//div[contains(@class,'form-group')]/label[contains(@for,'type')]</td>
@@ -79,7 +87,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--PAGES-->
+
 <tr>
 	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT</td>
 	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[contains(@id,'publicLayoutSetPrototypeId')]</td>

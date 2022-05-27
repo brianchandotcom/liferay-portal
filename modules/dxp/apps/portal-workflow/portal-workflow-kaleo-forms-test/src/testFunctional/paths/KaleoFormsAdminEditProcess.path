@@ -30,7 +30,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FORM_NAVIGATOR-->
+
 <tr>
 	<td>FORM_NAVIGATOR_PROGRESS_BAR_NAME</td>
 	<td>//div[@class='progress-bar-title' and text()='${key_kfProgressName}']</td>
@@ -51,7 +53,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FIELD_SET-->
+
 <tr>
 	<td>SELECTED_FIELD_SET</td>
 	<td>//div[contains(@class,'ddm-field-group')]/a[contains(.,'${key_kfFieldSetName}')]</td>
@@ -67,7 +71,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FIELD_SET_PAGINATION-->
+
 <tr>
 	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
 	<td>//div[@class='dropdown pagination-items-per-page']</td>
@@ -83,7 +89,9 @@
 	<td>//*[contains(text(),'Name')]//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-asterisk')]</td>
 	<td></td>
 </tr>
+
 <!--WORKFLOW-->
+
 <tr>
 	<td>SELECTED_WORKFLOW</td>
 	<td>//div[contains(.,'Selected Workflow')]//span[contains(@id,'workflowDefinitionDisplay')]</td>
@@ -99,7 +107,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--WORKFLOW_NAVIGATION-->
+
 <tr>
 	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
 	<td>//a[@title='Published']/span</td>
@@ -115,7 +125,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--WORKFLOW_TABLE-->
+
 <tr>
 	<td>WORKFLOW_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[contains(.,'${key_workflowDefinitionTitle}')]</td>
@@ -126,7 +138,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--FORMS_TABLE-->
+
 <tr>
 	<td>FORMS_TABLE_TASK</td>
 	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_workflowTask}')]/td</td>

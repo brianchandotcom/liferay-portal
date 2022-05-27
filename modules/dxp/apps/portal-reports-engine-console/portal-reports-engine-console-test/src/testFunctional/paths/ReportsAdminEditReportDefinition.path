@@ -25,7 +25,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REPORT_DEFINITION_PARAMETERS-->
+
 <tr>
 	<td>REPORT_DEFINITION_PARAMETERS_KEY</td>
 	<td>//input[contains(@id,'AdminPortlet_key')]</td>

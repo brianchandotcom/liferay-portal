@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--APPS_LISTING_SCREEN-->
+
 <tr>
 	<td>APP_TAB</td>
 	<td>//a[contains(@class,'nav-link') and contains (@href,'${key_tabName}')]</td>

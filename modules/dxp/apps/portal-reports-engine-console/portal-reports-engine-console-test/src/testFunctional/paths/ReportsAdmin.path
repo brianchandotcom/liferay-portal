@@ -15,7 +15,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--NAVIGATION-->
+
 <tr>
 	<td>NAVIGATION_DEFINITIONS</td>
 	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Definitions')]</td>
@@ -31,7 +33,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--REPORTS_ENTRY_TABLE-->
+
 <tr>
 	<td>REPORTS_ENTRY_TABLE_DEFINITION_NAME</td>
 	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]//a</td>
@@ -52,7 +56,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFINITIONS_DEFINITION_TABLE-->
+
 <tr>
 	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]//div/a</td>
@@ -63,7 +69,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DEFINITIONS_DEFINITION_MENULIST-->
+
 <tr>
 	<td>DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Report')]</td>

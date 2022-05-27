@@ -20,7 +20,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--TABLE_GENERIC-->
+
 <tr>
 	<td>UNPUBLISH_ALERT_ERROR_MESSAGE_LINK</td>
 	<td>//a[text()='Configure assignments']</td>
@@ -41,7 +43,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSIGNED_TO_ME_TABLE-->
+
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')][2]/td[1]//a</td>
@@ -97,7 +101,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
+
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[1]//a</td>
@@ -158,7 +164,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--DIALOG_BOX-->
+
 <tr>
 	<td>IFRAME_UPDATE_DUE_DATE</td>
 	<td>//iframe[@title='Update Due Date']</td>
@@ -204,13 +212,17 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--COMPLETED_TABLE-->
+
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td//a</td>
 	<td></td>
 </tr>
+
 <!--Menu-->
+
 <tr>
 	<td>DROPDOWN_MENU_OPTION</td>
 	<td>//a[contains(@class,'dropdown-item') and contains(text(), '${key_selectOption}')]</td>
@@ -231,7 +243,9 @@
 	<td>//div[contains(@class,'widget-content')]/p | //div[contains(@class,'asset-summary')]</td>
 	<td></td>
 </tr>
+
 <!--REVIEW_THREAD_MESSAGE_SUBJECT-->
+
 <tr>
 	<td>REVIEW_PAGE_ELEMENTS_DISPLAYS</td>
 	<td>//span[contains(@class, 'control-label') and contains(., '${key_reviewDisplay}')]</td>

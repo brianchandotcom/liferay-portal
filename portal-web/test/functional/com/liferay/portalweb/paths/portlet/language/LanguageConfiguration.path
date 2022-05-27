@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--LANGUAGES-->
+
 <tr>
 	<td>LANGUAGES_CURRENT</td>
 	<td>//select[contains(@id,'currentLanguageIds')]</td>
@@ -31,7 +33,9 @@
 	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
+
 <!--DEPOT-->
+
 <tr>
 	<td>DEPOT_DEFAULT_LANGUAGE</td>
 	<td>//td[contains(.,'${key_language}') and contains(.,'Default')]</td>

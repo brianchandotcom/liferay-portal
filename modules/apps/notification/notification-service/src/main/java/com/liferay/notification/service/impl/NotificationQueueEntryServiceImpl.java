@@ -14,7 +14,6 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.service.base.NotificationQueueEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,15 +38,6 @@ public class NotificationQueueEntryServiceImpl
 		throws PortalException {
 
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
-			notificationQueueEntryId);
-	}
-
-	@Override
-	public NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException {
-
-		return notificationQueueEntryLocalService.resendNotificationQueueEntry(
 			notificationQueueEntryId);
 	}
 

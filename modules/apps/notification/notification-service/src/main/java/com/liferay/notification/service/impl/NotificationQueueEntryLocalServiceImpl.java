@@ -116,15 +116,6 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
-	public NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException {
-
-		return notificationQueueEntryLocalService.updateSent(
-			notificationQueueEntryId, false);
-	}
-
-	@Override
 	public void sendNotificationQueueEntries() throws Exception {
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryPersistence.findBySent(false);

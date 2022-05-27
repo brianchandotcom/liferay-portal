@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.google.docs.internal.display.context;
 
+import com.liferay.document.library.display.context.BaseIGViewFileVersionDisplayContext;
+import com.liferay.document.library.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
-import com.liferay.image.gallery.display.kernel.display.context.BaseIGViewFileVersionDisplayContext;
-import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;

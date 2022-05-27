@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.gallery.display.kernel.display.context;
+package com.liferay.document.library.display.context;
 
-import com.liferay.portal.kernel.display.context.BaseDisplayContextFactory;
+import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
@@ -24,25 +24,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseIGDisplayContextFactory
-	extends BaseDisplayContextFactory implements IGDisplayContextFactory {
+public interface IGDisplayContextFactory extends DisplayContextFactory {
 
-	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
+		HttpServletResponse httpServletResponse, FileShortcut fileShortcut);
 
-		return parentIGViewFileVersionDisplayContext;
-	}
-
-	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
-
-		return parentIGViewFileVersionDisplayContext;
-	}
+		HttpServletResponse httpServletResponse, FileVersion fileVersion);
 
 }

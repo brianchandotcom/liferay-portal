@@ -72,14 +72,6 @@ public interface OptionValueResource {
 	public HttpInvoker.HttpResponse deleteOptionValueHttpResponse(Long id)
 		throws Exception;
 
-	public void deleteOptionValueBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteOptionValueBatchHttpResponse(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public OptionValue getOptionValue(Long id) throws Exception;
 
 	public HttpInvoker.HttpResponse getOptionValueHttpResponse(Long id)
@@ -125,14 +117,6 @@ public interface OptionValueResource {
 
 	public HttpInvoker.HttpResponse postOptionIdOptionValueHttpResponse(
 			Long id, OptionValue optionValue)
-		throws Exception;
-
-	public void postOptionIdOptionValueBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postOptionIdOptionValueBatchHttpResponse(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -496,84 +480,6 @@ public interface OptionValueResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-commerce-admin-catalog/v1.0/optionValues/{id}");
-
-			httpInvoker.path("id", id);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteOptionValueBatch(
-				Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteOptionValueBatchHttpResponse(id, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteOptionValueBatchHttpResponse(
-				Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionValues/batch");
 
 			httpInvoker.path("id", id);
 
@@ -1096,86 +1002,6 @@ public interface OptionValueResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-commerce-admin-catalog/v1.0/options/{id}/optionValues");
-
-			httpInvoker.path("id", id);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void postOptionIdOptionValueBatch(
-				Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postOptionIdOptionValueBatchHttpResponse(
-					id, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postOptionIdOptionValueBatchHttpResponse(
-					Long id, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/options/optionValues/batch");
 
 			httpInvoker.path("id", id);
 

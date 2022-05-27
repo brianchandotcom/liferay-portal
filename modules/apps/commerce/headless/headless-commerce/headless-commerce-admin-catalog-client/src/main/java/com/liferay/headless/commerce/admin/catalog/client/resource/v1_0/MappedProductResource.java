@@ -46,13 +46,6 @@ public interface MappedProductResource {
 			Long mappedProductId)
 		throws Exception;
 
-	public void deleteMappedProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteMappedProductBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public MappedProduct patchMappedProduct(
 			Long mappedProductId, MappedProduct mappedProduct)
 		throws Exception;
@@ -263,81 +256,6 @@ public interface MappedProductResource {
 						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}");
 
 			httpInvoker.path("mappedProductId", mappedProductId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteMappedProductBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteMappedProductBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteMappedProductBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -73,10 +72,6 @@ public interface OptionValueResource {
 
 	public Response deleteOptionValue(Long id) throws Exception;
 
-	public Response deleteOptionValueBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public OptionValue getOptionValue(Long id) throws Exception;
 
 	public Response patchOptionValue(Long id, OptionValue optionValue)
@@ -96,10 +91,6 @@ public interface OptionValueResource {
 		throws Exception;
 
 	public OptionValue postOptionIdOptionValue(Long id, OptionValue optionValue)
-		throws Exception;
-
-	public Response postOptionIdOptionValueBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -138,10 +129,6 @@ public interface OptionValueResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

@@ -161,14 +161,6 @@ definition {
 					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 				}
 			}
-			else if (isSet(videoURL)) {
-				ItemSelector.addVideo(
-					extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
-					videoShortcutDescription = "${videoShortcutDescription}",
-					videoShortcutPreview = "${videoShortcutPreview}",
-					videoShortcutTitle = "${videoShortcutTitle}",
-					videoURL = "${videoURL}");
-			}
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",

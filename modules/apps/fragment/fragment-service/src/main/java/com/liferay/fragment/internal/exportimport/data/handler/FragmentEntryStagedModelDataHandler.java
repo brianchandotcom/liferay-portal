@@ -186,7 +186,17 @@ public class FragmentEntryStagedModelDataHandler
 				portletDataContext, importedFragmentEntry);
 		}
 
-		if (fragmentEntry.getPreviewFileEntryId() > 0) {
+		if ((fragmentEntry.getPreviewFileEntryId() == 0) &&
+			(importedFragmentEntry.getPreviewFileEntryId() > 0)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				importedFragmentEntry.getPreviewFileEntryId());
+
+			importedFragmentEntry =
+				_fragmentEntryLocalService.updateFragmentEntry(
+					importedFragmentEntry.getFragmentEntryId(), 0);
+		}
+		else if (fragmentEntry.getPreviewFileEntryId() > 0) {
 			Map<Long, Long> fileEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					FileEntry.class);

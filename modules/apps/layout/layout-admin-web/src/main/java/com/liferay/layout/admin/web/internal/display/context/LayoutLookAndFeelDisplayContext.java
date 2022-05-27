@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,11 +36,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -191,46 +188,12 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getFaviconImage() {
-		String faviconImage = null;
-
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		if (selLayout.getFaviconFileEntryId() > 0) {
-			faviconImage = _getFileEntryImage(
-				selLayout.getFaviconFileEntryId());
+		String faviconImage = selLayout.getFavicon();
 
-			if (faviconImage != null) {
-				return faviconImage;
-			}
-		}
-
-		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
-
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				selLayout.getMasterLayoutPlid());
-
-			if ((masterLayout != null) &&
-				(masterLayout.getFaviconFileEntryId() > 0)) {
-
-				faviconImage = _getFileEntryImage(
-					masterLayout.getFaviconFileEntryId());
-
-				if (faviconImage != null) {
-					return faviconImage;
-				}
-			}
-		}
-
-		LayoutSet layoutSet = selLayout.getLayoutSet();
-
-		if (layoutSet.getFaviconFileEntryId() > 0) {
-			faviconImage = _getFileEntryImage(
-				layoutSet.getFaviconFileEntryId());
-
-			if (faviconImage != null) {
-				return faviconImage;
-			}
+		if (faviconImage != null) {
+			return faviconImage;
 		}
 
 		Theme theme = null;
@@ -412,31 +375,6 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
-	}
-
-	private String _getFileEntryImage(long fileEntryId) {
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		if (fileEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return HtmlUtil.escape(
-			StringBundler.concat(
-				PortalUtil.getPathContext(), "/documents/",
-				fileEntry.getRepositoryId(), StringPool.SLASH,
-				fileEntry.getFolderId(), StringPool.SLASH,
-				URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
-				StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

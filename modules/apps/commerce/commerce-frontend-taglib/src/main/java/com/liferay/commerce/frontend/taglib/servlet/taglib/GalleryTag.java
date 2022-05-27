@@ -31,6 +31,7 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Fabio Mastrorilli
+ * @author Alessio Antonio Rendina
  */
 public class GalleryTag extends IncludeTag {
 
@@ -55,7 +56,7 @@ public class GalleryTag extends IncludeTag {
 			return SKIP_BODY;
 		}
 
-		return super.doStartTag();
+		return SKIP_BODY;
 	}
 
 	public long getCPDefinitionId() {
@@ -92,19 +93,6 @@ public class GalleryTag extends IncludeTag {
 		_infoItemRendererTracker = null;
 		_namespace = StringPool.BLANK;
 	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"liferay-commerce:gallery:namespace", _namespace);
-	}
-
-	private static final String _PAGE = "/gallery/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(GalleryTag.class);
 

@@ -124,6 +124,11 @@
 	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NO_FRAGMENTS_MESSAGE</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__no-fragments-message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_COMMENT-->
 <tr>
 	<td>FRAGMENT_COMMENT_ICON</td>

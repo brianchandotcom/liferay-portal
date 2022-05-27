@@ -35,6 +35,6 @@ public interface CommerceOrderImporterDateFormatConfiguration {
 		deflt = "yyyy-MM-dd", name = "order-importer-date-format",
 		required = false
 	)
-	public String requestedDeliveryDateFormat();
+	public String orderImporterDateFormat();
 
 }

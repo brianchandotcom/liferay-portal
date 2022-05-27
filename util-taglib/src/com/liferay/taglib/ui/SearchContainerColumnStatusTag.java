@@ -28,7 +28,6 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -83,12 +82,8 @@ public class SearchContainerColumnStatusTag<R>
 				(HttpServletRequest)pageContext.getRequest());
 			statusSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
-
-			ServletContext servletContext = ServletContextPool.get(
-				PortalUtil.getServletContextName());
-
-			statusSearchEntry.setServletContext(servletContext);
-
+			statusSearchEntry.setServletContext(
+				ServletContextPool.get(PortalUtil.getServletContextName()));
 			statusSearchEntry.setStatus(_status);
 			statusSearchEntry.setStatusByUserId(_statusByUserId);
 			statusSearchEntry.setStatusDate(_statusDate);

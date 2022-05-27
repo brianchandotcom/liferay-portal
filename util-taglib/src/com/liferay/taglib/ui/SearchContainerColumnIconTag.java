@@ -25,7 +25,6 @@ import java.util.List;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -65,12 +64,8 @@ public class SearchContainerColumnIconTag<R> extends SearchContainerColumnTag {
 			iconSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
 			iconSearchEntry.setToggleRowChecker(isToggleRowChecker());
-
-			ServletContext servletContext = ServletContextPool.get(
-				PortalUtil.getServletContextName());
-
-			iconSearchEntry.setServletContext(servletContext);
-
+			iconSearchEntry.setServletContext(
+				ServletContextPool.get(PortalUtil.getServletContextName()));
 			iconSearchEntry.setIcon(_icon);
 			iconSearchEntry.setValign(getValign());
 

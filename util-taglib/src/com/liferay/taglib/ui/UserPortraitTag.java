@@ -142,10 +142,8 @@ public class UserPortraitTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String userPortraitHTML = getUserPortraitHTML(
-			_cssClass, _size, getUser(), themeDisplay);
-
-		jspWriter.write(userPortraitHTML);
+		jspWriter.write(
+			getUserPortraitHTML(_cssClass, _size, getUser(), themeDisplay));
 
 		return EVAL_PAGE;
 	}

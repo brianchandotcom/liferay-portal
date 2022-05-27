@@ -530,10 +530,7 @@ public class IncludeTag extends AttributesTagSupport {
 			page);
 
 		if (_log.isDebugEnabled() && exists) {
-			String resourcePath = theme.getResourcePath(
-				getServletContext(), null, page);
-
-			_log.debug(resourcePath);
+			_log.debug(theme.getResourcePath(getServletContext(), null, page));
 		}
 
 		return exists;

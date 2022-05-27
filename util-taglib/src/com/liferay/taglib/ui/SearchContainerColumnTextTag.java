@@ -63,10 +63,9 @@ public class SearchContainerColumnTextTag<R>
 					_value = bodyContent.getString();
 				}
 				else {
-					Object object = BeanPropertiesUtil.getObject(
-						resultRow.getObject(), getName());
-
-					_value = String.valueOf(object);
+					_value = String.valueOf(
+						BeanPropertiesUtil.getObject(
+							resultRow.getObject(), getName()));
 				}
 			}
 

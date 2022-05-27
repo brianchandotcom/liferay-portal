@@ -25,14 +25,13 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,7 +40,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,35 +51,38 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = FragmentEntryLinkUtil.class)
 public class FragmentEntryLinkUtil {
 
-	public static void deleteFragmentEntryLink(
+	public void deleteFragmentEntryLink(
 			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
 			long fragmentEntryLinkId, long plid)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
 
 		if (fragmentEntryLink == null) {
-			LayoutClassedModelUsageLocalServiceUtil.
-				deleteLayoutClassedModelUsages(
-					String.valueOf(fragmentEntryLinkId),
-					PortalUtil.getClassNameId(FragmentEntryLink.class), plid);
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+				String.valueOf(fragmentEntryLinkId),
+				_portal.getClassNameId(FragmentEntryLink.class), plid);
 
 			return;
 		}
 
-		FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
 
-		LayoutClassedModelUsageLocalServiceUtil.deleteLayoutClassedModelUsages(
+		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
-			PortalUtil.getClassNameId(FragmentEntryLink.class), plid);
+			_portal.getClassNameId(FragmentEntryLink.class), plid);
 
 		List<ContentPageEditorListener> contentPageEditorListeners =
 			contentPageEditorListenerTracker.getContentPageEditorListeners();
@@ -93,14 +95,14 @@ public class FragmentEntryLinkUtil {
 		}
 	}
 
-	public static FragmentEntry getFragmentEntry(
+	public FragmentEntry getFragmentEntry(
 		long groupId,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		String fragmentEntryKey, Locale locale) {
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				groupId, fragmentEntryKey);
 
 		if (fragmentEntry != null) {
@@ -113,17 +115,11 @@ public class FragmentEntryLinkUtil {
 		return fragmentEntries.get(fragmentEntryKey);
 	}
 
-	public static JSONObject getFragmentEntryLinkJSONObject(
+	public JSONObject getFragmentEntryLinkJSONObject(
 			DefaultFragmentRendererContext defaultFragmentRendererContext,
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentEntryLink fragmentEntryLink,
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentRendererController fragmentRendererController,
-			FragmentRendererTracker fragmentRendererTracker,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, ItemSelector itemSelector,
-			String portletId)
+			HttpServletResponse httpServletResponse, String portletId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -144,12 +140,11 @@ public class FragmentEntryLinkUtil {
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
 
-			String configuration = fragmentRendererController.getConfiguration(
+			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(
-				fragmentEntryLink, fragmentCollectionContributorTracker,
-				themeDisplay.getLocale());
+				fragmentEntryLink, themeDisplay.getLocale());
 
 			String fragmentEntryKey = null;
 			String name = null;
@@ -168,7 +163,7 @@ public class FragmentEntryLinkUtil {
 				}
 
 				FragmentRenderer fragmentRenderer =
-					fragmentRendererTracker.getFragmentRenderer(rendererKey);
+					_fragmentRendererTracker.getFragmentRenderer(rendererKey);
 
 				if (fragmentRenderer != null) {
 					fragmentEntryKey = fragmentRenderer.getKey();
@@ -177,7 +172,7 @@ public class FragmentEntryLinkUtil {
 				}
 
 				if (Validator.isNotNull(portletId)) {
-					name = PortalUtil.getPortletTitle(
+					name = _portal.getPortletTitle(
 						portletId, themeDisplay.getLocale());
 				}
 			}
@@ -187,9 +182,9 @@ public class FragmentEntryLinkUtil {
 
 			FragmentEntryLinkItemSelectorUtil.
 				addFragmentEntryLinkFieldsSelectorURL(
-					itemSelector, httpServletRequest, configurationJSONObject);
+					_itemSelector, httpServletRequest, configurationJSONObject);
 
-			String content = fragmentRendererController.render(
+			String content = _fragmentRendererController.render(
 				defaultFragmentRendererContext, httpServletRequest,
 				httpServletResponse);
 
@@ -203,7 +198,7 @@ public class FragmentEntryLinkUtil {
 					fragmentEntryLink)
 			).put(
 				"defaultConfigurationValues",
-				fragmentEntryConfigurationParser.
+				_fragmentEntryConfigurationParser.
 					getConfigurationDefaultValuesJSONObject(configuration)
 			).put(
 				"editableTypes",
@@ -260,41 +255,59 @@ public class FragmentEntryLinkUtil {
 		}
 	}
 
-	public static JSONObject getFragmentEntryLinkJSONObject(
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+	public JSONObject getFragmentEntryLinkJSONObject(
 			FragmentEntryLink fragmentEntryLink,
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentRendererController fragmentRendererController,
-			FragmentRendererTracker fragmentRendererTracker,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, ItemSelector itemSelector,
-			String portletId)
+			HttpServletResponse httpServletResponse, String portletId)
 		throws PortalException {
 
 		return getFragmentEntryLinkJSONObject(
 			new DefaultFragmentRendererContext(fragmentEntryLink),
-			fragmentEntryConfigurationParser, fragmentEntryLink,
-			fragmentCollectionContributorTracker, fragmentRendererController,
-			fragmentRendererTracker, httpServletRequest, httpServletResponse,
-			itemSelector, portletId);
+			fragmentEntryLink, httpServletRequest, httpServletResponse,
+			portletId);
 	}
 
-	private static FragmentEntry _getFragmentEntry(
-		FragmentEntryLink fragmentEntryLink,
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		Locale locale) {
+	private FragmentEntry _getFragmentEntry(
+		FragmentEntryLink fragmentEntryLink, Locale locale) {
 
 		if (fragmentEntryLink.getFragmentEntryId() <= 0) {
 			return getFragmentEntry(
 				fragmentEntryLink.getGroupId(),
-				fragmentCollectionContributorTracker,
+				_fragmentCollectionContributorTracker,
 				fragmentEntryLink.getRendererKey(), locale);
 		}
 
-		return FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+		return _fragmentEntryLocalService.fetchFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId());
 	}
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

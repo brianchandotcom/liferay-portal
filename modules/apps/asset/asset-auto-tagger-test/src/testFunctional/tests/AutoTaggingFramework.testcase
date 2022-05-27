@@ -315,7 +315,7 @@ definition {
 
 	@description = "This test asserts that Entry will not have its tags updated when updating the autotagging assets if auto tagging is enabled at instance scope but disabled at site scope."
 	@priority = "3"
-	test NoTagUpdatesAfterDiablingAutoTagsAtSiteLevel {
+	test NoTagUpdatesAfterDisablingAutoTagsAtSiteLevel {
 		property custom.properties = "feature.flag.LPS-150762=true";
 		property test.name.skip.portal.instance = "AutoTaggingFramework#NoTagUpdatesAfterDiablingAutoTagsAtSiteLevel";
 

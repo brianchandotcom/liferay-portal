@@ -175,9 +175,10 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 					({system}: TObjectDefinition) => !system
 				);
 
-				setObjectDefinitions(customObjectDefinitions);
+					setObjectDefinitions(customObjectDefinitions);
 
-				return;
+					return;
+				}
 			}
 
 			setObjectDefinitions(objectDefinitions);
@@ -275,6 +276,10 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+<<<<<<< HEAD
+=======
+	ffManyToManyRelationshipCustomAndSystemObjects: boolean;
+>>>>>>> 99a002f (LPS-154049 baseline)
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	objectDefinitionId: number;
 	observer: any;
@@ -300,6 +305,10 @@ type TInitialValues = {
 
 const ModalWithProvider: React.FC<IProps> = ({
 	apiURL,
+<<<<<<< HEAD
+=======
+	ffManyToManyRelationshipCustomAndSystemObjects,
+>>>>>>> 99a002f (LPS-154049 baseline)
 	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionId,
 	system,
@@ -322,6 +331,12 @@ const ModalWithProvider: React.FC<IProps> = ({
 			{visibleModal && (
 				<ModalAddObjectRelationship
 					apiURL={apiURL}
+<<<<<<< HEAD
+=======
+					ffManyToManyRelationshipCustomAndSystemObjects={
+						ffManyToManyRelationshipCustomAndSystemObjects
+					}
+>>>>>>> 99a002f (LPS-154049 baseline)
 					ffOneToOneRelationshipConfigurationEnabled={
 						ffOneToOneRelationshipConfigurationEnabled
 					}

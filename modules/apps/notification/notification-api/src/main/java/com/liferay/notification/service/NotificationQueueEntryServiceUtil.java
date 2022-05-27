@@ -14,7 +14,6 @@
 
 package com.liferay.notification.service;
 
-import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -50,14 +49,6 @@ public class NotificationQueueEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException {
-
-		return getService().resendNotificationQueueEntry(
-			notificationQueueEntryId);
 	}
 
 	public static NotificationQueueEntryService getService() {

@@ -14,7 +14,6 @@
 
 package com.liferay.notification.service;
 
-import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -57,9 +56,5 @@ public interface NotificationQueueEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	public NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException;
 
 }

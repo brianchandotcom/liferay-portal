@@ -274,10 +274,6 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException;
-
 	public void sendNotificationQueueEntries() throws Exception;
 
 	/**

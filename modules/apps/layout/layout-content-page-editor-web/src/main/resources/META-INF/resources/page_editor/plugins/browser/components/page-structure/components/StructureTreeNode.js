@@ -20,6 +20,7 @@ import React, {useEffect, useRef} from 'react';
 
 import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
+import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {REQUIRED_FIELD_DATA} from '../../../../../app/config/constants/formModalData';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -63,6 +64,15 @@ import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 const HOVER_EXPAND_DELAY = 1000;
+
+const EDITABLE_LABEL = {
+	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('background-image'),
+	[EDITABLE_TYPES.html]: Liferay.Language.get('html'),
+	[EDITABLE_TYPES.image]: Liferay.Language.get('image'),
+	[EDITABLE_TYPES.link]: Liferay.Language.get('link'),
+	[EDITABLE_TYPES['rich-text']]: Liferay.Language.get('rich-text'),
+	[EDITABLE_TYPES.text]: Liferay.Language.get('text'),
+};
 
 const loadCollectionFields = (
 	dispatch,
@@ -244,6 +254,8 @@ function StructureTreeNodeContent({
 		};
 	}, [isOverTarget, node]);
 
+	const isEditable = node.itemType === ITEM_TYPES.editable;
+
 	return (
 		<div
 			aria-disabled={node.isMasterItem || !node.activable}
@@ -282,7 +294,16 @@ function StructureTreeNodeContent({
 				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
 					node.name,
 				])}
-				className="page-editor__page-structure__tree-node__mask"
+				className={classNames(
+					'page-editor__page-structure__tree-node__mask',
+					{
+						'lfr-portal-tooltip': isEditable,
+					}
+				)}
+				data-title={
+					isEditable ? EDITABLE_LABEL[node.editableType] : null
+				}
+				data-tooltip-align={isEditable ? 'left' : null}
 				onClick={(event) => {
 					event.stopPropagation();
 					event.target.focus();

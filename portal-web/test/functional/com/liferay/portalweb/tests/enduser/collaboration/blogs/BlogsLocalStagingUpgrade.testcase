@@ -18,15 +18,6 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This test covers LPS-154449."
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanPublishExternalVideoFromContentFieldAfterUpgradeFrom73101Archive {
-
-		// TODO LPS-154449
-
-	}
-
 	@description = "This test covers LPS-154447."
 	@ignore = "Test Stub"
 	@priority = "5"

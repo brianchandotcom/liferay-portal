@@ -10759,8 +10759,8 @@ mail.send.blacklist=
 
 mail.session.jndi.name=
 
-module.framework.properties.dependency.manager.sync.timeout=1800
-module.framework.properties.initial.system.check.enabled=true
+dependency.manager.sync.timeout=1800
+initial.system.check.enabled=true
 
 memory.scheduler.org.quartz.threadPool.threadCount=1
 

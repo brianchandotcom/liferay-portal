@@ -3,7 +3,7 @@
 		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" [#if input.required]required[/#if] type="checkbox" />
 
 		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox">
-			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${input.label}</span>
+			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${input.label}${input.required?string('*','')}</span>
 		</label>
 	</div>
 

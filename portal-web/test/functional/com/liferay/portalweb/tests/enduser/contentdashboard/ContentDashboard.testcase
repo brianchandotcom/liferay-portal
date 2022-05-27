@@ -13,6 +13,10 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		Navigator.openURL();
+
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "tree.png",
+			groupName = "Guest");
 	}
 
 	tearDown {

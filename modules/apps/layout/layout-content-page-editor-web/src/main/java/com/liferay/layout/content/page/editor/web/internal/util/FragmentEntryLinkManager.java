@@ -79,9 +79,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = FragmentEntryLinkManager.class)
 public class FragmentEntryLinkManager {
 
-	public void deleteFragmentEntryLink(
-			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
-			long fragmentEntryLinkId, long plid)
+	public void deleteFragmentEntryLink(long fragmentEntryLinkId, long plid)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -104,7 +102,7 @@ public class FragmentEntryLinkManager {
 			_portal.getClassNameId(FragmentEntryLink.class), plid);
 
 		List<ContentPageEditorListener> contentPageEditorListeners =
-			contentPageEditorListenerTracker.getContentPageEditorListeners();
+			_contentPageEditorListenerTracker.getContentPageEditorListeners();
 
 		for (ContentPageEditorListener contentPageEditorListener :
 				contentPageEditorListeners) {
@@ -410,6 +408,9 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private FragmentCollectionContributorTracker

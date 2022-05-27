@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -42,7 +41,6 @@ import java.util.Objects;
 public class LayoutStructureUtil {
 
 	public static void deleteMarkedForDeletionItems(
-			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
 			FragmentEntryLinkManager fragmentEntryLinkManager, long groupId,
 			long plid)
 		throws PortalException {
@@ -78,8 +76,7 @@ public class LayoutStructureUtil {
 						getFragmentEntryLinkIds(deletedLayoutStructureItems)) {
 
 					fragmentEntryLinkManager.deleteFragmentEntryLink(
-						contentPageEditorListenerTracker, fragmentEntryLinkId,
-						plid);
+						fragmentEntryLinkId, plid);
 				}
 			}
 

@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -126,8 +125,8 @@ public class PublishLayoutMVCActionCommand
 		throws Exception {
 
 		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			_contentPageEditorListenerTracker, _fragmentEntryLinkManager,
-			draftLayout.getGroupId(), draftLayout.getPlid());
+			_fragmentEntryLinkManager, draftLayout.getGroupId(),
+			draftLayout.getPlid());
 
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				layout.getCompanyId(), layout.getGroupId(),
@@ -193,9 +192,6 @@ public class PublishLayoutMVCActionCommand
 			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 	}
-
-	@Reference
-	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

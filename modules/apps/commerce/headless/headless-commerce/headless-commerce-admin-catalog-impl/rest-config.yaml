@@ -6,6 +6,7 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Catalog"
 author: "Zoltán Takács"
 clientDir: "../headless-commerce-admin-catalog-client/src/main/java"
+disabledBatchSchemaNames: ["Attachment", "Category", "MappedProduct", "OptionValue", "Pin", "ProductAccountGroup", "ProductChannel", "ProductGroupProduct", "ProductOption", "ProductOptionValue", "ProductSpecification", "RelatedProduct"]
 forcePredictableOperationId: false
 forcePredictableSchemaPropertyName: false
 liferayEnterpriseApp: true

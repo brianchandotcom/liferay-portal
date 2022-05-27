@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -45,9 +44,7 @@ public class ContainerLPKGUtil {
 		throws IOException {
 
 		Path deployerDirPath = Paths.get(
-			GetterUtil.getString(
-				bundleContext.getProperty("lpkg.deployer.dir"),
-				PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR));
+			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR);
 
 		List<File> lpkgFiles = new ArrayList<>();
 

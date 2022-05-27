@@ -1397,7 +1397,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
+		String deployDir = PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR;
 
 		for (String staticFileName :
 				StaticLPKGResolver.getStaticLPKGFileNames()) {

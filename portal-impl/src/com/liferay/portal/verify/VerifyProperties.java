@@ -1891,6 +1891,7 @@ public class VerifyProperties {
 		"module.framework.properties.file.install.disableNio2",
 		"module.framework.properties.file.install.log.level",
 		"module.framework.properties.file.install.optionalImportRefreshScope",
+		"module.framework.properties.lpkg.deployer.dir",
 		"module.framework.properties.lpkg.index.validator.enabled",
 		"module.framework.register.liferay.services", "msn.login",
 		"msn.password", "multicast.group.address[\"hibernate\"]",

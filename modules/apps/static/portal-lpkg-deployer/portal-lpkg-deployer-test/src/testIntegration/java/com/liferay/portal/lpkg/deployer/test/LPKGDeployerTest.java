@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,11 +65,11 @@ public class LPKGDeployerTest {
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 
-		final String lpkgDeployerDirString = bundleContext.getProperty(
-			"lpkg.deployer.dir");
+		final String lpkgDeployerDirString =
+			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR;
 
 		Assert.assertNotNull(
-			"The property \"lpkg.deployer.dir\" is null",
+			"The property \"module.framework.marketplace.dir\" is null",
 			lpkgDeployerDirString);
 
 		Path lpkgDeployerDirPath = Paths.get(lpkgDeployerDirString);

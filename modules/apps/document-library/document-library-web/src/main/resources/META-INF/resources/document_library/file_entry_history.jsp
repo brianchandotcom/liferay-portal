@@ -14,16 +14,20 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <ul class="list-group sidebar-list-group">
 
 	<%
+	FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
+
 	int status = WorkflowConstants.STATUS_APPROVED;
 
 	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 		status = WorkflowConstants.STATUS_ANY;
 	}
 
-	for (FileVersion historyFileVersion : fileEntry.getFileVersions(status)) {
+	for (FileVersion fileVersion : fileEntry.getFileVersions(status)) {
 	%>
 
 		<li class="list-group-item list-group-item-flex">
@@ -31,20 +35,20 @@
 				expand="<%= true %>"
 			>
 				<div class="list-group-title">
-					<liferay-ui:message arguments="<%= historyFileVersion.getVersion() %>" key="version-x" />
+					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
 				</div>
 
 				<div class="list-group-subtitle">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(historyFileVersion.getUserName()), dateFormatDateTime.format(historyFileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 				</div>
 
 				<div class="list-group-subtext">
 					<c:choose>
-						<c:when test="<%= Validator.isNull(historyFileVersion.getChangeLog()) %>">
+						<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
 							<liferay-ui:message key="no-change-log" />
 						</c:when>
 						<c:otherwise>
-							<%= HtmlUtil.escape(historyFileVersion.getChangeLog()) %>
+							<%= HtmlUtil.escape(fileVersion.getChangeLog()) %>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -53,7 +57,7 @@
 			<clay:content-col>
 
 				<%
-				DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, historyFileVersion);
+				DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, fileVersion);
 				%>
 
 				<c:choose>

@@ -94,6 +94,21 @@ public class FragmentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return fragmentEntryLocalService.addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, cacheable, configuration, icon, previewFileEntryId, type,
+			null, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, boolean cacheable, String configuration, String icon,
+			long previewFileEntryId, int type, String typeOptions, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Fragment entry
 
 		User user = _userLocalService.getUser(userId);
@@ -143,6 +158,7 @@ public class FragmentEntryLocalServiceImpl
 		draftFragmentEntry.setIcon(icon);
 		draftFragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		draftFragmentEntry.setType(type);
+		draftFragmentEntry.setTypeOptions(typeOptions);
 		draftFragmentEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		draftFragmentEntry.setStatusByUserId(userId);
 		draftFragmentEntry.setStatusByUserName(user.getFullName());
@@ -207,6 +223,7 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.getConfiguration(),
 				publishedFragmentEntry.getIcon(), 0,
 				publishedFragmentEntry.getType(),
+				publishedFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			_copyFragmentEntryPreviewFileEntry(
@@ -228,7 +245,9 @@ public class FragmentEntryLocalServiceImpl
 				draftFragmentEntry.getCss(), draftFragmentEntry.getHtml(),
 				draftFragmentEntry.getJs(), draftFragmentEntry.isCacheable(),
 				draftFragmentEntry.getConfiguration(),
-				draftFragmentEntry.getIcon(), 0, draftFragmentEntry.getType(),
+				draftFragmentEntry.getIcon(), 0,
+				draftFragmentEntry.getType(),
+				draftFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			_copyFragmentEntryPreviewFileEntry(
@@ -252,6 +271,8 @@ public class FragmentEntryLocalServiceImpl
 			copyDraftFragmentEntry.setConfiguration(
 				draftFragmentEntry.getConfiguration());
 			copyDraftFragmentEntry.setIcon(draftFragmentEntry.getIcon());
+			copyDraftFragmentEntry.setTypeOptions(
+				draftFragmentEntry.getTypeOptions());
 
 			updateDraft(copyDraftFragmentEntry);
 		}
@@ -629,6 +650,23 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
+		return fragmentEntryLocalService.updateFragmentEntry(
+			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
+			cacheable, configuration, icon, previewFileEntryId,
+			fragmentEntry.getTypeOptions(), status);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, long fragmentCollectionId,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			String typeOptions, int status)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
 		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
@@ -648,6 +686,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setIcon(icon);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntry.setTypeOptions(typeOptions);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());

@@ -208,7 +208,9 @@ describe('ExperienceToolbarSection', () => {
 		};
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -259,7 +261,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -335,7 +339,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -420,7 +426,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -490,7 +498,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -576,7 +586,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 
@@ -729,7 +741,9 @@ describe('ExperienceToolbarSection', () => {
 
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
-				return a(mockDispatch);
+				return a(mockDispatch, () => ({
+					loadedSegmentsExperiences: [],
+				}));
 			}
 		});
 

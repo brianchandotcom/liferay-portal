@@ -61,12 +61,12 @@ definition {
 		}
 
 		task ("Created New Option") {
+			Testray.clickOnModalNumber(pageNumber = "13");
+
 			TestrayManage.createNewOption(key_value = "Automate Test");
 		}
 
 		task ("Verify if the new option was created") {
-			Testray.clickOnModalNumber(pageNumber = "13");
-
 			TestrayManage.assertCreatedOptions(key_value = "Automate Test");
 		}
 	}

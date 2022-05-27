@@ -111,8 +111,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEXT_AND_PREVIOUS_MODAL_BUTTON</td>
-	<td>//div[contains(@class, 'modal-content')]//li[contains(@class, 'page-item active') and contains(., '${key_pageDirection}')]</td>
+	<td>NUMBER_MODAL_BUTTON</td>
+	<td>//div[contains(@class, 'modal-content')]//li[contains(@class, 'page-item') and contains(., '${key_pageDirection}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -59,7 +59,7 @@ definition {
 	macro clickOnModalNumber {
 		Click(
 			key_pageDirection = "${pageNumber}",
-			locator1 = "Testray#NEXT_AND_PREVIOUS_MODAL_BUTTON");
+			locator1 = "Testray#NUMBER_MODAL_BUTTON");
 	}
 
 	macro clickOnPageNumber {

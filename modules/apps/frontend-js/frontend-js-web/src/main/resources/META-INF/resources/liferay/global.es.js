@@ -94,6 +94,7 @@ import toCharCode from './util/to_char_code.es';
 import toggleBoxes from './util/toggle_boxes';
 import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
+import toggleRadio from './util/toggle_radio';
 import zIndex from './zIndex';
 
 Liferay = window.Liferay || {};
@@ -335,6 +336,7 @@ Liferay.Util.Session = {
 
 Liferay.Util.toggleBoxes = toggleBoxes;
 Liferay.Util.toggleControls = toggleControls;
+Liferay.Util.toggleRadio = toggleRadio;
 Liferay.Util.unescape = unescape;
 Liferay.Util.unescapeHTML = unescapeHTML;
 

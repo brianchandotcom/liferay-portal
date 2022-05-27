@@ -3439,10 +3439,10 @@ definition {
 
 			AssetCategorization.gotoSelectCategory();
 
-			for (var vocabularyName : list "Language,Region") {
+			for (var vocabularyName : list "Language (Test Site Name),Region (Test Site Name)") {
 				AssertElementPresent(
 					key_nodeName = "${vocabularyName}",
-					locator1 = "Treeview#NODE_UNSELECTED");
+					locator1 = "Treeview#NODE_ITEM");
 			}
 		}
 	}

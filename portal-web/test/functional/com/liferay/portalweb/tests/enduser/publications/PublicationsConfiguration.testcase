@@ -47,11 +47,13 @@ definition {
 	test EnableDisablePublications {
 		property portal.acceptance = "true";
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		Publications.enablePublications();
 
 		Publications.createNewPublication(publicationName = "Publication Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -62,7 +64,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.viewDefault();
 	}

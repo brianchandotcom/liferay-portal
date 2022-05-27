@@ -1032,9 +1032,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		long caseNumber = (Long)properties.get(fieldName);
+		Long fieldValue = (Long)properties.get(fieldName);
 
-		return caseNumber + 1;
+		return fieldValue.longValue() + 1;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)

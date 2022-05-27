@@ -417,6 +417,7 @@ function visit(
 					children: [],
 					dragAndDropHoveredItemId,
 					draggable: false,
+					editableType: type,
 					expanded: childId === activeItemId,
 					hidable: false,
 					hidden: false,

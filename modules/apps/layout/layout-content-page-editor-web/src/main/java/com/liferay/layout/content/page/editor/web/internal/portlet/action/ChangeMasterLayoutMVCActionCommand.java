@@ -14,16 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -113,13 +110,10 @@ public class ChangeMasterLayoutMVCActionCommand
 					fragmentEntryLink.getEditableValues());
 
 			JSONObject fragmentEntryLinkJSONObject =
-				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-					_fragmentEntryConfigurationParser, fragmentEntryLink,
-					_fragmentCollectionContributorTracker,
-					_fragmentRendererController, _fragmentRendererTracker,
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					_itemSelector,
 					editableValuesJSONObject.getString("portletId"));
 
 			fragmentEntryLinkJSONObject.put("masterLayout", Boolean.TRUE);
@@ -178,14 +172,10 @@ public class ChangeMasterLayoutMVCActionCommand
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
@@ -195,9 +185,6 @@ public class ChangeMasterLayoutMVCActionCommand
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

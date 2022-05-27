@@ -18,15 +18,11 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCompositionService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -148,13 +144,10 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 			fragmentEntryLinksJSONObject.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-					_fragmentEntryConfigurationParser, fragmentEntryLink,
-					_fragmentCollectionContributorTracker,
-					_fragmentRendererController, _fragmentRendererTracker,
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					_itemSelector,
 					editableValuesJSONObject.getString("portletId")));
 
 			List<ContentPageEditorListener> contentPageEditorListeners =
@@ -199,16 +192,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 	private FragmentCompositionService _fragmentCompositionService;
 
 	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

@@ -14,22 +14,18 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -81,9 +77,9 @@ public class AddFragmentEntryLinkMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		FragmentEntry fragmentEntry = FragmentEntryLinkUtil.getFragmentEntry(
-			groupId, _fragmentCollectionContributorTracker, fragmentEntryKey,
-			serviceContext.getLocale());
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLinkManager.getFragmentEntry(
+				groupId, fragmentEntryKey, serviceContext.getLocale());
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
@@ -213,12 +209,9 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 		return jsonObject.put(
 			"fragmentEntryLink",
-			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				_fragmentEntryConfigurationParser, fragmentEntryLink,
-				_fragmentCollectionContributorTracker,
-				_fragmentRendererController, _fragmentRendererTracker,
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse), _itemSelector,
+			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
 				StringPool.BLANK));
 	}
 
@@ -226,23 +219,13 @@ public class AddFragmentEntryLinkMVCActionCommand
 	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
-	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

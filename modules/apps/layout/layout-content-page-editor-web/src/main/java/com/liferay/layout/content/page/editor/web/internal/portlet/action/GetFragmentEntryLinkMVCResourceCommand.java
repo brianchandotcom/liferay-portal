@@ -14,23 +14,18 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
-import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -172,14 +167,12 @@ public class GetFragmentEntryLinkMVCResourceCommand
 		}
 
 		try {
-			jsonObject = FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				defaultFragmentRendererContext,
-				_fragmentEntryConfigurationParser, fragmentEntryLink,
-				_fragmentCollectionContributorTracker,
-				_fragmentRendererController, _fragmentRendererTracker,
-				_portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse), _itemSelector,
-				StringPool.BLANK);
+			jsonObject =
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					defaultFragmentRendererContext, fragmentEntryLink,
+					_portal.getHttpServletRequest(resourceRequest),
+					_portal.getHttpServletResponse(resourceResponse),
+					StringPool.BLANK);
 		}
 		finally {
 			httpServletRequest.removeAttribute(
@@ -203,29 +196,16 @@ public class GetFragmentEntryLinkMVCResourceCommand
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
 
 	@Reference
-	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

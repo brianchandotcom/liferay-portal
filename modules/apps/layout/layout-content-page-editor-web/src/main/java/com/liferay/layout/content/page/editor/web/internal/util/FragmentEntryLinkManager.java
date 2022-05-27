@@ -113,10 +113,7 @@ public class FragmentEntryLinkManager {
 	}
 
 	public FragmentEntry getFragmentEntry(
-		long groupId,
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		String fragmentEntryKey, Locale locale) {
+		long groupId, String fragmentEntryKey, Locale locale) {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
@@ -127,7 +124,7 @@ public class FragmentEntryLinkManager {
 		}
 
 		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorTracker.getFragmentEntries(locale);
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
 
 		return fragmentEntries.get(fragmentEntryKey);
 	}
@@ -330,7 +327,6 @@ public class FragmentEntryLinkManager {
 		if (fragmentEntryLink.getFragmentEntryId() <= 0) {
 			return getFragmentEntry(
 				fragmentEntryLink.getGroupId(),
-				_fragmentCollectionContributorTracker,
 				fragmentEntryLink.getRendererKey(), locale);
 		}
 

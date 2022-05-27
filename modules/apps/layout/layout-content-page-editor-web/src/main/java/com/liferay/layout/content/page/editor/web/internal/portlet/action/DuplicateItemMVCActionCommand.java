@@ -14,19 +14,14 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -343,13 +338,10 @@ public class DuplicateItemMVCActionCommand
 					fragmentEntryLink.getEditableValues());
 
 			jsonArray.put(
-				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-					_fragmentEntryConfigurationParser, fragmentEntryLink,
-					_fragmentCollectionContributorTracker,
-					_fragmentRendererController, _fragmentRendererTracker,
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					_itemSelector,
 					editableValuesJSONObject.getString("portletId")));
 		}
 
@@ -357,26 +349,13 @@ public class DuplicateItemMVCActionCommand
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

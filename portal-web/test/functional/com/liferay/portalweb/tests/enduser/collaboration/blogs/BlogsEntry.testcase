@@ -1344,12 +1344,48 @@ definition {
 	}
 
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly when publication is enabled."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewInlineVideoWithPublication {
+		JSONPublications.enablePublications();
 
-		// TODO LPS-154389 CanViewInlineVideoWithPublication pending implementation
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.editContent(
+			embedVideo = "Test YouTube Video Name",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryCP(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a test for LPS-90966. It checks that the caption link will keep persisting."

@@ -33,10 +33,13 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		if (
 			isElementInnerSelector(
 				target,
+				'.clay-color-dropdown-menu',
+				'.date-picker-dropdown-menu',
 				'.ddm-form-builder-wrapper',
-				'.multi-panel-sidebar',
+				'.ddm-select-dropdown',
+				'.input-localized-content',
 				'.lfr-icon-menu-open',
-				'.input-localized-content'
+				'.multi-panel-sidebar'
 			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();

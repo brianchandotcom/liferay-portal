@@ -57,8 +57,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryLinkUtil.class)
-public class FragmentEntryLinkUtil {
+@Component(immediate = true, service = FragmentEntryLinkManager.class)
+public class FragmentEntryLinkManager {
 
 	public void deleteFragmentEntryLink(
 			ContentPageEditorListenerTracker contentPageEditorListenerTracker,

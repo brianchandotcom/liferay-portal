@@ -58,7 +58,7 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 			String previousLine = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				String trimmedLine = StringUtil.trimLeading(line);
+				String trimmedLine = StringUtil.trim(line);
 
 				if ((trimmedLine.startsWith("<!--") &&
 					 trimmedLine.endsWith("-->") &&
@@ -70,13 +70,14 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 					sb.append("\n");
 				}
 
-				previousLine = trimmedLine;
 				sb.append(line);
 				sb.append("\n");
+
+				previousLine = trimmedLine;
 			}
 		}
 
-		if (!content.endsWith("\n") && (sb.index() > 0)) {
+		if (sb.index() > 0) {
 			sb.setIndex(sb.index() - 1);
 		}
 

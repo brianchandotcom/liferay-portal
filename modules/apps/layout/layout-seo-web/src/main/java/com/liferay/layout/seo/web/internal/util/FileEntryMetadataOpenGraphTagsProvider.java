@@ -123,7 +123,7 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		return Optional.of(value.getString(value.getDefaultLocale()));
+		return Optional.ofNullable(value.getString(value.getDefaultLocale()));
 	}
 
 	private final DDMStructureLocalService _ddmStructureLocalService;

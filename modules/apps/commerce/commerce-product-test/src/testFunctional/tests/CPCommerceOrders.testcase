@@ -493,6 +493,71 @@ definition {
 		}
 	}
 
+	@description = "Verify an error message appears when a buyer tries placing an order without the View Billing Address permission if a default billing address is not set."
+	@priority = "3"
+	test AssertErrorMessageWhenAnOrderIsPlacedByBuyerWithoutPermissionToViewBillingAddress {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer user does not have permission to view billing addresses") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "VIEW_BILLING_ADDRESS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("When the buyer tries checking out a new order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then an error message is shown which states a default billing address has not been set") {
+			Alert.viewErrorMessage(errorMessage = "No default billing address has been created for this account. Please contact the system administrator to create an order.");
+		}
+	}
+
 	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
 	@priority = "3"
 	test AssertPermissionToViewBillingAddressIsPresent {

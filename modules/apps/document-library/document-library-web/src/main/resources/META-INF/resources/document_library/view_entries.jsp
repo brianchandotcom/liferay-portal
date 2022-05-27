@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>

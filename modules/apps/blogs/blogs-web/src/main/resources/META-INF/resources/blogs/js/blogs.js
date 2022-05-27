@@ -13,6 +13,7 @@
  */
 
 import {State} from '@liferay/frontend-js-state-web';
+import {toggleBoxes} from 'frontend-js-web';
 import {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
 	imageSelectorImageAtom,
@@ -88,7 +89,7 @@ export default class Blogs {
 			this._shortenDescription = !customDescriptionEnabled;
 
 			if (emailEntryUpdatedEnabled) {
-				Liferay.Util.toggleBoxes(
+				toggleBoxes(
 					`${namespace}sendEmailEntryUpdated`,
 					`${namespace}emailEntryUpdatedCommentWrapper`
 				);

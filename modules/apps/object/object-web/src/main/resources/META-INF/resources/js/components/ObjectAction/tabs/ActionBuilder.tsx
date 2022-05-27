@@ -17,7 +17,7 @@ import React, {useMemo} from 'react';
 
 import {FormError} from '../../../hooks/useForm';
 import Card from '../../Card/Card';
-import CodeMirrorEditor from '../../CodeMirrorEditor';
+import CodeMirrorEditor from '../../CodeEditor/CodeMirrorEditor';
 import CustomSelect, {CustomItem} from '../../Form/CustomSelect/CustomSelect';
 import Input from '../../Form/Input';
 
@@ -165,6 +165,7 @@ export default function ActionBuilder({
 				{values.objectActionExecutorKey === 'groovy' && (
 					<CodeMirrorEditor
 						fixed
+						mode="groovy"
 						onChange={(script) =>
 							setValues({
 								parameters: {
@@ -173,10 +174,7 @@ export default function ActionBuilder({
 								},
 							})
 						}
-						options={{
-							mode: 'groovy',
-							value: values.parameters?.script ?? '',
-						}}
+						value={values.parameters?.script ?? ''}
 					/>
 				)}
 			</Card>

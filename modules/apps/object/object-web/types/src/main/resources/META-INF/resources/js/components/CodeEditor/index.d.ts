@@ -12,30 +12,18 @@
  * details.
  */
 
-import 'codemirror/addon/display/autorefresh';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/foldgutter.css';
-import 'codemirror/addon/display/placeholder';
-import 'codemirror/lib/codemirror.css';
-import CodeMirror from 'codemirror';
-import React from 'react';
-import './CodeMirrorEditor.scss';
-export default function CodeMirrorEditor({
+/// <reference types="react" />
+
+import {ICodeMirrorEditor} from './CodeMirrorEditor';
+import './index.scss';
+export default function CodeEditor({
 	className,
-	editorRef,
+	elements,
 	error,
-	fixed,
-	onChange,
-	options,
-	placeholder,
+	...options
 }: IProps): JSX.Element;
-interface IProps {
-	className?: string;
-	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;
+interface IProps extends ICodeMirrorEditor {
+	elements?: ObjectValidationRuleElement[];
 	error?: string;
-	fixed?: boolean;
-	onChange: (value?: string) => void;
-	options?: CodeMirror.EditorConfiguration;
-	placeholder?: string;
 }
 export {};

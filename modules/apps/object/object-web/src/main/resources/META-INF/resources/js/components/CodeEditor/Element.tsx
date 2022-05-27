@@ -23,19 +23,19 @@ export function ElementItem({label, onClick, tooltip}: IElementItem) {
 	return (
 		<ClayButton
 			borderless
-			className="lfr-objects__object-editor-sidebar-element-button"
+			className="lfr-objects__code-editor-sidebar-element-button"
 			displayType="unstyled"
 			key={label}
 			onClick={onClick}
 			small
 		>
-			<div className="lfr-objects__object-editor-sidebar-element-label-container">
-				<span className="lfr-objects__object-editor-sidebar-element-label">
+			<div className="lfr-objects__code-editor-sidebar-element-label-container">
+				<span className="lfr-objects__code-editor-sidebar-element-label">
 					{label}
 				</span>
 			</div>
 
-			<div className="lfr-objects__object-editor-sidebar-element-popover-container">
+			<div className="lfr-objects__code-editor-sidebar-element-popover-container">
 				{tooltip !== '' && (
 					<ClayPopover
 						alignPosition="left"
@@ -44,7 +44,7 @@ export function ElementItem({label, onClick, tooltip}: IElementItem) {
 						show={showPreview}
 						trigger={
 							<ClayIcon
-								className="lfr-objects__object-editor-sidebar-element-preview-icon"
+								className="lfr-objects__code-editor-sidebar-element-preview-icon"
 								onBlur={() => setShowPreview(false)}
 								onFocus={() => setShowPreview(true)}
 								onMouseLeave={() => setShowPreview(false)}

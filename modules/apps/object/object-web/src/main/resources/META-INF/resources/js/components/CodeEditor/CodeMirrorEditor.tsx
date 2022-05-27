@@ -30,12 +30,10 @@ import './CodeMirrorEditor.scss';
 export default function CodeMirrorEditor({
 	className,
 	editorRef,
-	error,
 	fixed,
 	onChange,
-	options,
-	placeholder,
-}: IProps) {
+	...options
+}: ICodeMirrorEditor) {
 	const editorWrapperRef = useRef<HTMLDivElement>(null);
 	const codeMirrorRef = useRef<CodeMirror.Editor>();
 
@@ -46,7 +44,6 @@ export default function CodeMirrorEditor({
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
 			inputStyle: 'contenteditable',
 			lineNumbers: true,
-			placeholder,
 			...options,
 		});
 
@@ -68,11 +65,8 @@ export default function CodeMirrorEditor({
 	return (
 		<div
 			className={classNames(
-				'lfr-objects__editor',
-				{
-					'lfr-objects__editor--error': error,
-					'lfr-objects__editor--fixed': fixed,
-				},
+				'form-control lfr-objects__editor',
+				{'lfr-objects__editor--fixed': fixed},
 				className
 			)}
 			ref={editorWrapperRef}
@@ -80,12 +74,9 @@ export default function CodeMirrorEditor({
 	);
 }
 
-interface IProps {
+export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
 	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	error?: string;
 	fixed?: boolean;
 	onChange: (value?: string) => void;
-	options?: CodeMirror.EditorConfiguration;
-	placeholder?: string;
 }

@@ -15,8 +15,8 @@
 import CodeMirror from 'codemirror';
 import React, {useMemo} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
-import {METADATAS} from '../../ObjectView/context';
+import {defaultLanguageId} from '../../utils/locale';
+import {METADATAS} from '../ObjectView/context';
 import {Collapsible} from './Collapsible';
 import Element from './Element';
 
@@ -50,7 +50,7 @@ export default function Sidebar({
 	elements.unshift(objectFields);
 
 	return (
-		<div className="lfr-objects__object-editor-sidebar">
+		<div className="lfr-objects__code-editor-sidebar">
 			<div className="px-3">
 				<h5 className="my-3">{Liferay.Language.get('elements')}</h5>
 

@@ -1,0 +1,52 @@
+@import 'atlas-variables';
+
+.lfr-objects__code-editor-sidebar {
+	overflow-x: hidden;
+	width: 280px;
+
+	&-element-button {
+		align-items: center;
+		border-radius: 0.25rem;
+		display: flex;
+		font-weight: normal;
+		height: 35px;
+		justify-content: space-between;
+		margin: 2px 0;
+		width: 100%;
+
+		&:hover {
+			background-color: $light;
+
+			.lfr-objects-element-preview-icon {
+				display: block;
+				margin-top: 0;
+			}
+		}
+	}
+
+	&-element-preview-icon {
+		display: none;
+	}
+
+	&-element-label {
+		min-width: 135px;
+	}
+
+	&-element-label-container {
+		overflow: hidden;
+		text-align: start;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+	}
+
+	&-element-popover-container {
+		display: flex;
+		justify-content: flex-end;
+		width: 20%;
+	}
+
+	&-collapsible-button-list {
+		margin-bottom: 15px;
+	}
+}

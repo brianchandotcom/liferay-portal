@@ -19,7 +19,7 @@ import React from 'react';
 
 export function Collapsible({children, label}: IProps) {
 	return (
-		<div className="lfr-objects__object-editor-sidebar-collapsible-button-list">
+		<div className="lfr-objects__code-editor-sidebar-collapsible-button-list">
 			<Collapse label={label} open>
 				{children}
 			</Collapse>

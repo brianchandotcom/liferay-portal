@@ -15,7 +15,6 @@
 import 'codemirror/mode/groovy/groovy';
 import {ChangeEventHandler} from 'react';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
-import './ObjectValidationTabs.scss';
 declare function BasicInfo({
 	componentLabel,
 	defaultLocale,

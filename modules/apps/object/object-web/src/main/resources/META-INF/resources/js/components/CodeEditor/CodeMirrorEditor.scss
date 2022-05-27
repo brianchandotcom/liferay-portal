@@ -1,0 +1,35 @@
+@import 'atlas-variables';
+
+.lfr-objects__editor {
+	.CodeMirror {
+		height: 100%;
+	}
+
+	.CodeMirror-empty {
+		color: $secondary-l1;
+	}
+
+	.CodeMirror-wrap pre {
+		word-break: break-word;
+	}
+
+	&.form-control {
+		height: 100%;
+		overflow: hidden;
+		padding: 0;
+	}
+
+	&--fixed {
+		&.form-control {
+			height: 300px;
+		}
+	}
+}
+
+.has-error {
+	.lfr-objects__editor {
+		.CodeMirror {
+			background-color: $danger-l2;
+		}
+	}
+}

@@ -26,6 +26,7 @@ import {
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
+import {UNDO_TYPES} from './constants/undoTypes';
 import reducer from './reducer';
 import saveDraft from './saveDraft';
 
@@ -213,6 +214,69 @@ export function useOnRedo() {
 				type: ADD_UNDO_ACTION,
 				value: previousValue,
 			});
+		});
+	};
+}
+
+export function useMultipleUndo() {
+	const dispatch = useDispatch();
+	const undoHistory = useUndoHistory();
+	const redoHistory = useRedoHistory();
+	const frontendTokensValues = useFrontendTokensValues();
+
+	return ({numberOfActions, type}) => {
+		let remainingUndos;
+		let undosToUndo;
+		let updateHistoryAction;
+
+		if (type === UNDO_TYPES.undo) {
+			undosToUndo = undoHistory.slice(0, numberOfActions);
+
+			remainingUndos = undoHistory.slice(
+				numberOfActions,
+				undoHistory.length
+			);
+
+			const nextRedoHistory = undosToUndo.map(({name}) => ({
+				name,
+				value: frontendTokensValues[name],
+			}));
+
+			updateHistoryAction = {
+				redoHistory: [...nextRedoHistory.reverse(), ...redoHistory],
+				type: UPDATE_UNDO_REDO_HISTORY,
+				undoHistory: remainingUndos,
+			};
+		}
+		else {
+			undosToUndo = redoHistory.slice(0, numberOfActions);
+
+			remainingUndos = redoHistory.slice(
+				numberOfActions,
+				redoHistory.length
+			);
+
+			const nextUndoHistory = undosToUndo.map(({name}) => ({
+				name,
+				value: frontendTokensValues[name],
+			}));
+
+			updateHistoryAction = {
+				redoHistory: remainingUndos,
+				type: UPDATE_UNDO_REDO_HISTORY,
+				undoHistory: [...nextUndoHistory.reverse(), ...undoHistory],
+			};
+		}
+
+		return internalSaveTokenValues({
+			dispatch,
+			frontendTokensValues,
+			tokens: undosToUndo.reduce(
+				(acc, {name, value}) => ({...acc, [name]: value}),
+				{}
+			),
+		}).then(() => {
+			dispatch(updateHistoryAction);
 		});
 	};
 }

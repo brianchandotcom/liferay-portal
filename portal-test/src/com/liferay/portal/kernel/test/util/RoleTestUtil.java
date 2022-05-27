@@ -68,10 +68,10 @@ public class RoleTestUtil {
 			String actionId)
 		throws Exception {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), roleName);
-
-		addResourcePermission(role, resourceName, scope, primKey, actionId);
+		addResourcePermission(
+			RoleLocalServiceUtil.getRole(
+				TestPropsValues.getCompanyId(), roleName),
+			resourceName, scope, primKey, actionId);
 	}
 
 	public static Role addRole(int roleType) throws Exception {

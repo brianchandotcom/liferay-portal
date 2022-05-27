@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -337,6 +338,11 @@ public class InviteUsersMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(javax.portlet.name=" + CTPortletKeys.PUBLICATIONS + ")"
+	)
+	private Portlet _portlet;
 
 	@Reference
 	private ResourceActions _resourceActions;

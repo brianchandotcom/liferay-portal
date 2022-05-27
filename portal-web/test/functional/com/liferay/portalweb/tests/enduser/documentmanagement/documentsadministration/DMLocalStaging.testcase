@@ -616,8 +616,6 @@ definition {
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Test YouTube Video",
 			groupName = "Site Name (Staging)",

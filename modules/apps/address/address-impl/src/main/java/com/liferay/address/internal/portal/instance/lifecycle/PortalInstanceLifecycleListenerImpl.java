@@ -164,9 +164,7 @@ public class PortalInstanceLifecycleListenerImpl
 					}
 				}
 				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException);
-					}
+					_log.error(portalException);
 				}
 			}
 		}

@@ -29,9 +29,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-151867. The page editor could add Form Container fragment from Form Components set to page."
+	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
-	test AddFormContainerToContentPage {
+	test MapEntityToFormContainerInContentPage {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -39,7 +39,7 @@ definition {
 				type = "content");
 		}
 
-		task ("When the page creator add a Form Container to page") {
+		task ("When the page creator adds a Form Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -51,6 +51,29 @@ definition {
 
 		task ("Then the page creator could see the Form Container on page") {
 			PageEditor.viewFragment(fragmentName = "Form Container");
+		}
+
+		task ("When the page creator navigates to the General panel of Form Container") {
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could select the content type of Form Container") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "None");
+
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Web Content Article");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Basic Web Content");
 		}
 	}
 

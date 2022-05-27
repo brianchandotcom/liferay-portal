@@ -44,16 +44,6 @@ public class NotificationQueueEntryResourceImpl
 			notificationQueueEntryId);
 	}
 
-	@Override
-	public void putNotificationQueueEntryResend(Long notificationQueueEntryId)
-		throws Exception {
-
-		_checkFeatureFlag();
-
-		_notificationQueueEntryService.resendNotificationQueueEntry(
-			notificationQueueEntryId);
-	}
-
 	private void _checkFeatureFlag() throws Exception {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149050"))) {
 			throw new UnsupportedOperationException();

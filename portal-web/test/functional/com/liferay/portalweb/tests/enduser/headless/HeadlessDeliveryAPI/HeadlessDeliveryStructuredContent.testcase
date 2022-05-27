@@ -165,4 +165,27 @@ definition {
 		}
 	}
 
+	@description = "StructuredContent is created with priority field"
+	@priority = "5"
+	test StructuredContentIsCreatedWithPriorityField {
+		property portal.acceptance = "true";
+
+		task ("When a web contents is created with default priority") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("Then the response body includes the default priority field") {
+			HeadlessWebcontentAPI.assertPriorityFieldWithDefaultValue(
+				expectedPriorityDefaultValue = "0.0",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
 }

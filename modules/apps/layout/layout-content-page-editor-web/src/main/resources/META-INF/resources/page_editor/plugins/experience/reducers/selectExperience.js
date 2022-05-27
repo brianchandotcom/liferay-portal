@@ -29,9 +29,9 @@ function selectExperienceReducer(state, payload) {
 	nextState = setExperimentStatus(nextState, segmentsExperienceId);
 
 	nextState = {
-		...state,
+		...nextState,
 		fragmentEntryLinks: {
-			...state.fragmentEntryLinks,
+			...nextState.fragmentEntryLinks,
 			...payload.fragmentEntryLinks,
 		},
 	};

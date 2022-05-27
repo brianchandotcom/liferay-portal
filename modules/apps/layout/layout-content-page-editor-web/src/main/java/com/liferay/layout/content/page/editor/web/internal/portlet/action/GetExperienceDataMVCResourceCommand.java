@@ -82,18 +82,18 @@ public class GetExperienceDataMVCResourceCommand
 			portletPreferences -> jsonArray.put(
 				portletPreferences.getPortletId()));
 
-		long segmentsExperienceId = ParamUtil.getLong(
-			resourceRequest, "segmentsExperienceId");
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					themeDisplay.getScopeGroupId(), segmentsExperienceId,
-					themeDisplay.getPlid());
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (ParamUtil.getBoolean(resourceRequest, "loadFragmentEntryLinks")) {
+		if (!ParamUtil.getBoolean(resourceRequest, "loadFragmentEntryLinks")) {
+			long segmentsExperienceId = ParamUtil.getLong(
+				resourceRequest, "segmentsExperienceId");
+
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						themeDisplay.getScopeGroupId(), segmentsExperienceId,
+						themeDisplay.getPlid());
+
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				DefaultFragmentRendererContext defaultFragmentRendererContext =
 					new DefaultFragmentRendererContext(fragmentEntryLink);

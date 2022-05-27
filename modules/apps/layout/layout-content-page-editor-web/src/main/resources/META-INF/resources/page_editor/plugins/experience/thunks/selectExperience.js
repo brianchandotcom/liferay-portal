@@ -19,11 +19,11 @@ import selectExperienceAction from '../actions/selectExperience';
 
 export default function selectExperience({id}) {
 	return (dispatch, getState) => {
-		const loadedSegmentExperiences = getState().loadedSegmentExperiences;
+		const loadedSegmentsExperiences = getState().loadedSegmentsExperiences;
 
 		return ExperienceService.selectExperience({
 			body: {
-				loadFragmentEntryLinks: !loadedSegmentExperiences.includes(id),
+				loadFragmentEntryLinks: !loadedSegmentsExperiences.includes(id),
 				segmentsExperienceId: id,
 			},
 			dispatch,

@@ -556,10 +556,8 @@ cat /proc/meminfo | grep Swap
 			<![CDATA[
 #!/bin/bash
 
-if id appserver &>/dev/null
+if ! id appserver &>/dev/null
 then
-	echo ""
-else
 	echo "Adding user appserver."
 
 	sudo useradd appserver

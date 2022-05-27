@@ -29,6 +29,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149984. The page editor cannot add fragment into Form Container without mapping entity."
+	@priority = "4"
+	test CannotAddFragmentToFormContainerWithoutMappingEntity {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator adds a Form Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("Then the page creator could see Select a content type to start creating the form message shown in Form Container") {
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Select a content type to start creating the form.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("When the page creator tries to add a Heading fragment into Form Container") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_targetFragmentName = "Form Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the page creator still see the Select a content type to start creating the form message shown in Form Container") {
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Select a content type to start creating the form.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+		}
+
+		task ("When the page creator tries to add a Heading fragment into Form Container after mapping entity") {
+			PageEditor.editFormContainer(
+				contentType = "Web Content Article",
+				panel = "General");
+
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_targetFragmentName = "Form Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator could see the Heading is inside the Form Container") {
+			AssertVisible(
+				key_targetFragmentName = "Heading",
+				locator1 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET");
+		}
+	}
+
 	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {

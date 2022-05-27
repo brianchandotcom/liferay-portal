@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=wiki-navigation-portlet-tree-menu",
 		"com.liferay.portlet.display-category=category.wiki",
+		"com.liferay.portlet.header-portlet-css=/tree_menu/css/main.css",
 		"com.liferay.portlet.icon=/tree_menu/icons/tree_menu.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.scopeable=true",

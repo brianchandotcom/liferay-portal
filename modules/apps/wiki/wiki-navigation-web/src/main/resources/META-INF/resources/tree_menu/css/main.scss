@@ -1,0 +1,24 @@
+.wiki-navigation-portlet-tree-menu .tree-view-container {
+	position: relative;
+
+	.loading-animation {
+		display: none;
+	}
+
+	&.loading {
+		.loading-animation {
+			display: block;
+			left: 0;
+			margin-bottom: 0;
+			margin-top: 0;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.tree-menu {
+			opacity: 0;
+		}
+	}
+}

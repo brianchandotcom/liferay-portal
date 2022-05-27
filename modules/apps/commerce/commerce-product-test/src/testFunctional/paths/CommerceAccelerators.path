@@ -378,6 +378,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_BILLING_ADDRESS</td>
+	<td>//address[@class='billing-address' and contains(.,'${key_addressInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_SHIPPING_ADDRESS</td>
 	<td>//address[@class='shipping-address' and contains(.,'${key_addressInfo}')]</td>
 	<td></td>

@@ -115,7 +115,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								PortletURLBuilder.createActionURL(
 									_renderResponse
 								).setActionName(
-									"deleteVocabulary"
+									"/asset_categories_admin/delete_vocabulary"
 								).setRedirect(
 									_getDefaultRedirect()
 								).setParameter(

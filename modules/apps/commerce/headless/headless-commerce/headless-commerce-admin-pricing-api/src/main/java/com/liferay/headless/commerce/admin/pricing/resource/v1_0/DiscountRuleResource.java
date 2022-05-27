@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -69,10 +68,6 @@ public interface DiscountRuleResource {
 
 	public Response deleteDiscountRule(Long id) throws Exception;
 
-	public Response deleteDiscountRuleBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public DiscountRule getDiscountRule(Long id) throws Exception;
 
 	public Response patchDiscountRule(Long id, DiscountRule discountRule)
@@ -84,10 +79,6 @@ public interface DiscountRuleResource {
 
 	public DiscountRule postDiscountIdDiscountRule(
 			Long id, DiscountRule discountRule)
-		throws Exception;
-
-	public Response postDiscountIdDiscountRuleBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -126,10 +117,6 @@ public interface DiscountRuleResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

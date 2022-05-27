@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -74,10 +73,6 @@ public interface TierPriceResource {
 			Long priceEntryId, TierPrice tierPrice)
 		throws Exception;
 
-	public Response postPriceEntryIdTierPriceBatch(
-			Long priceEntryId, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteTierPriceByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -91,10 +86,6 @@ public interface TierPriceResource {
 		throws Exception;
 
 	public void deleteTierPrice(Long id) throws Exception;
-
-	public Response deleteTierPriceBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
 
 	public TierPrice getTierPrice(Long id) throws Exception;
 
@@ -137,10 +128,6 @@ public interface TierPriceResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

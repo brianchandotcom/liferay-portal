@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -60,10 +59,6 @@ public interface PriceListAccountGroupResource {
 
 	public Response deletePriceListAccountGroup(Long id) throws Exception;
 
-	public Response deletePriceListAccountGroupBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
-
 	public Page<PriceListAccountGroup>
 			getPriceListByExternalReferenceCodePriceListAccountGroupPage(
 				String externalReferenceCode, Pagination pagination)
@@ -81,10 +76,6 @@ public interface PriceListAccountGroupResource {
 
 	public PriceListAccountGroup postPriceListIdPriceListAccountGroup(
 			Long id, PriceListAccountGroup priceListAccountGroup)
-		throws Exception;
-
-	public Response postPriceListIdPriceListAccountGroupBatch(
-			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -123,10 +114,6 @@ public interface PriceListAccountGroupResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

@@ -32,6 +32,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.ReleaseInfo" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl" %><%@
@@ -118,6 +119,8 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"initialSuggestionsContributorConfiguration", suggestionsContributorConfiguration
+									).put(
+										"isDXP", ReleaseInfo.isDXP()
 									).put(
 										"namespace", liferayPortletResponse.getNamespace()
 									).put(

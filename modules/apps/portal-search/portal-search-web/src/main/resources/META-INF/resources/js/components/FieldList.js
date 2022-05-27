@@ -63,7 +63,7 @@ function DropZone({index, move}) {
 	);
 }
 
-function Field({children, index, onDelete}) {
+function Field({children, index, onDelete, showDeleteButton, showDragButton}) {
 	const [{isDragging}, drag] = useDrag({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
@@ -82,30 +82,34 @@ function Field({children, index, onDelete}) {
 			<ClayForm.Group className="field-item">
 				<ClayInput.Group>
 					<ClayInput.GroupItem shrink>
-						<ClayButton
-							borderless
-							className="drag-handle"
-							displayType="secondary"
-							monospaced
-							small
-						>
-							<ClayIcon symbol="drag" />
-						</ClayButton>
+						{showDragButton && (
+							<ClayButton
+								borderless
+								className="drag-handle"
+								displayType="secondary"
+								monospaced
+								small
+							>
+								<ClayIcon symbol="drag" />
+							</ClayButton>
+						)}
 					</ClayInput.GroupItem>
 
 					{children}
 
-					<ClayInput.GroupItem shrink>
-						<ClayButton
-							borderless
-							displayType="secondary"
-							monospaced
-							onClick={onDelete}
-							small
-						>
-							<ClayIcon symbol="trash" />
-						</ClayButton>
-					</ClayInput.GroupItem>
+					{showDeleteButton && (
+						<ClayInput.GroupItem shrink>
+							<ClayButton
+								borderless
+								displayType="secondary"
+								monospaced
+								onClick={onDelete}
+								small
+							>
+								<ClayIcon symbol="trash" />
+							</ClayButton>
+						</ClayInput.GroupItem>
+					)}
 				</ClayInput.Group>
 			</ClayForm.Group>
 		</div>
@@ -117,6 +121,9 @@ function FieldList({
 	defaultValue = {},
 	onChange,
 	renderInputs,
+	showAddButton = true,
+	showDeleteButton = true,
+	showDragButton = true,
 	value,
 }) {
 	const idCounterRef = useRef(10000); // Starts at 10000 to avoid conflicts with existing fields.
@@ -161,6 +168,8 @@ function FieldList({
 						<Field
 							index={index}
 							onDelete={() => _handleDeleteField(index)}
+							showDeleteButton={showDeleteButton}
+							showDragButton={showDragButton}
 						>
 							{renderInputs({
 								index,
@@ -174,13 +183,18 @@ function FieldList({
 
 				<DropZone index={value.length} move={_handleMoveField} />
 
-				<ClayButton displayType="secondary" onClick={_handleAddField}>
-					<span className="inline-item inline-item-before">
-						<ClayIcon symbol="plus" />
-					</span>
+				{showAddButton && (
+					<ClayButton
+						displayType="secondary"
+						onClick={_handleAddField}
+					>
+						<span className="inline-item inline-item-before">
+							<ClayIcon symbol="plus" />
+						</span>
 
-					{addButtonLabel}
-				</ClayButton>
+						{addButtonLabel}
+					</ClayButton>
+				)}
 			</DndProvider>
 		</div>
 	);

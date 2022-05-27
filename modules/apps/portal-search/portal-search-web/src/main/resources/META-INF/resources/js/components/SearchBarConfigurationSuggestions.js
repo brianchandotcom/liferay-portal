@@ -297,6 +297,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 
 function SearchBarConfigurationSuggestions({
 	initialSuggestionsContributorConfiguration = '[]',
+	isDXP = false,
 	namespace = '',
 	suggestionsContributorConfigurationName = '',
 }) {
@@ -313,6 +314,15 @@ function SearchBarConfigurationSuggestions({
 	);
 
 	const _getContributorOptions = (index) => {
+		if (!isDXP) {
+			return (
+				<ClaySelect.Option
+					label={Liferay.Language.get('basic')}
+					value={CONTRIBUTORS.BASIC}
+				/>
+			);
+		}
+
 		const indexOfBasic = suggestionsContributorConfiguration.findIndex(
 			(value) => value.contributorName === CONTRIBUTORS.BASIC
 		);
@@ -399,6 +409,9 @@ function SearchBarConfigurationSuggestions({
 						value={value}
 					/>
 				)}
+				showAddButton={isDXP}
+				showDeleteButton={isDXP}
+				showDragButton={isDXP}
 				value={suggestionsContributorConfiguration}
 			/>
 		</div>

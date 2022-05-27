@@ -474,13 +474,7 @@ public class LayoutsAdminDisplayContext {
 			return faviconImage;
 		}
 
-		Theme theme = layoutSet.getTheme();
-
-		if (theme == null) {
-			return StringPool.BLANK;
-		}
-
-		return theme.getContextPath() + theme.getImagesPath() + "/favicon.ico";
+		return getThemeFavicon(layoutSet.getTheme());
 	}
 
 	public String getFaviconTitle() {
@@ -1192,6 +1186,14 @@ public class LayoutsAdminDisplayContext {
 		_tabs1 = ParamUtil.getString(_liferayPortletRequest, "tabs1", "pages");
 
 		return _tabs1;
+	}
+
+	public String getThemeFavicon(Theme theme) {
+		if (theme == null) {
+			return StringPool.BLANK;
+		}
+
+		return theme.getContextPath() + theme.getImagesPath() + "/favicon.ico";
 	}
 
 	public String getTitle(boolean privatePages) {

@@ -41,12 +41,12 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterDoctype(content);
 
-		content = _fixMissingEmptyLineAroundSingleComment(content);
+		content = _fixMissingEmptyLineAroundSingleLineComment(content);
 
 		return content;
 	}
 
-	private String _fixMissingEmptyLineAroundSingleComment(String content)
+	private String _fixMissingEmptyLineAroundSingleLineComment(String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -55,21 +55,22 @@ public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
-			String preLine = StringPool.BLANK;
+			String previousLine = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if ((trimmedLine.startsWith("<!--") &&
 					 trimmedLine.endsWith("-->") &&
-					 Validator.isNotNull(preLine)) ||
-					(preLine.startsWith("<!--") && preLine.endsWith("-->") &&
+					 Validator.isNotNull(previousLine)) ||
+					(previousLine.startsWith("<!--") &&
+					 previousLine.endsWith("-->") &&
 					 Validator.isNotNull(line))) {
 
 					sb.append("\n");
 				}
 
-				preLine = trimmedLine;
+				previousLine = trimmedLine;
 				sb.append(line);
 				sb.append("\n");
 			}

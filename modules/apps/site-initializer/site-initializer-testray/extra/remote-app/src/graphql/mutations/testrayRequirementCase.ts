@@ -12,15 +12,27 @@
  * details.
  */
 
-export * from './liferayUserAccount';
-export * from './testrayCase';
-export * from './testrayCaseResult';
-export * from './testrayCaseType';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRequirementCase';
-export * from './testrayRoutine';
-export * from './testraySuite';
-export * from './testraySuiteCase';
+import {gql} from '@apollo/client';
+
+export const CreateRequirementCaseBatch = gql`
+	mutation createRequirementCaseBatch($data: InputC_RequirementCase!) {
+		createRequirementCaseBatch(RequirementCase: $data)
+			@rest(
+				bodyKey: "RequirementCase"
+				bodySerializer: "requirementcase"
+				method: "POST"
+				path: "requirementscaseses/batch"
+				type: "C_RequirementCase"
+			) {
+			id
+		}
+	}
+`;
+
+export const DeleteRequirementCase = gql`
+	mutation deleteRequirementCase($id: Long) {
+		c {
+			deleteRequirementCase(requirementId: $id)
+		}
+	}
+`;

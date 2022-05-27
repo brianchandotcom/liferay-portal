@@ -2124,7 +2124,7 @@ definition {
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplay {
 		property portal.acceptance = "true";
-		property testray.main.component.name = "Display Pages";
+		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

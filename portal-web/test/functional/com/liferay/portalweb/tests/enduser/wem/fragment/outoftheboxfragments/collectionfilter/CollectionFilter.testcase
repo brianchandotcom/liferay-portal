@@ -574,7 +574,7 @@ definition {
 	@description = "This is a test for LPS-131947. Collection Filters with category works in display page template."
 	@priority = "4"
 	test FilterResultsOfCollectionDisplayByCategoryInDisplayPageTemplate {
-		property testray.main.component.name = "Display Pages";
+		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(

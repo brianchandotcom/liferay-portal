@@ -978,7 +978,7 @@ definition {
 	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInContentPageTemplate {
-		property testray.main.component.name = "Content Page Templates";
+		property testray.component.names = "Content Page Templates,Fragments";
 
 		task ("Add a Web Content via JSON") {
 			JSONWebcontent.addWebContent(
@@ -1042,7 +1042,7 @@ definition {
 	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInDisplayPageTemplate {
-		property testray.main.component.name = "Display Pages";
+		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

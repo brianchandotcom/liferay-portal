@@ -49,24 +49,7 @@ public class PermissionsURLTag extends TagSupport {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (resourceGroupId instanceof Number) {
-			Number resourceGroupIdNumber = (Number)resourceGroupId;
-
-			if (resourceGroupIdNumber.longValue() < 0) {
-				resourceGroupId = null;
-			}
-		}
-		else if (resourceGroupId instanceof String) {
-			String resourceGroupIdString = (String)resourceGroupId;
-
-			if (resourceGroupIdString.length() == 0) {
-				resourceGroupId = null;
-			}
-		}
-
-		if (resourceGroupId == null) {
-			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
-		}
+		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
 
 		if (Validator.isNull(redirect) &&
 			(Validator.isNull(windowState) ||
@@ -154,24 +137,7 @@ public class PermissionsURLTag extends TagSupport {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (resourceGroupId instanceof Number) {
-			Number resourceGroupIdNumber = (Number)resourceGroupId;
-
-			if (resourceGroupIdNumber.longValue() < 0) {
-				resourceGroupId = null;
-			}
-		}
-		else if (resourceGroupId instanceof String) {
-			String resourceGroupIdString = (String)resourceGroupId;
-
-			if (resourceGroupIdString.length() == 0) {
-				resourceGroupId = null;
-			}
-		}
-
-		if (resourceGroupId == null) {
-			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
-		}
+		resourceGroupId = _getResourceGroupId(resourceGroupId, themeDisplay);
 
 		if (Validator.isNull(redirect) &&
 			(Validator.isNull(windowState) ||
@@ -281,6 +247,31 @@ public class PermissionsURLTag extends TagSupport {
 
 	public void setWindowState(String windowState) {
 		_windowState = windowState;
+	}
+
+	private static Object _getResourceGroupId(
+		Object resourceGroupId, ThemeDisplay themeDisplay) {
+
+		if (resourceGroupId instanceof Number) {
+			Number resourceGroupIdNumber = (Number)resourceGroupId;
+
+			if (resourceGroupIdNumber.longValue() < 0) {
+				resourceGroupId = null;
+			}
+		}
+		else if (resourceGroupId instanceof String) {
+			String resourceGroupIdString = (String)resourceGroupId;
+
+			if (resourceGroupIdString.length() == 0) {
+				resourceGroupId = null;
+			}
+		}
+
+		if (resourceGroupId == null) {
+			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
+		}
+
+		return resourceGroupId;
 	}
 
 	private String _modelResource;

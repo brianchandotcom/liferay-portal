@@ -120,7 +120,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NO_FRAGMENTS_MESSAGE</td>
+	<td>DROP_ZONE_NO_FRAGMENTS_MESSAGE</td>
 	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
 	<td></td>
 </tr>

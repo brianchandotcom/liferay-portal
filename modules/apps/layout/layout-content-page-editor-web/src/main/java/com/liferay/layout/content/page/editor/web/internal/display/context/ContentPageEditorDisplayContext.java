@@ -419,9 +419,9 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/get_collection_supported_filters")
 			).put(
-				"getExperienceUsedPortletsURL",
+				"getExperienceDataURL",
 				_getResourceURL(
-					"/layout_content_page_editor/get_experience_used_portlets")
+					"/layout_content_page_editor/get_experience_data")
 			).put(
 				"getFileEntryURL",
 				_getResourceURL(

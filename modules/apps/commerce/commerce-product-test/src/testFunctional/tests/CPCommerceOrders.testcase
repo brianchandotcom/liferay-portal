@@ -307,6 +307,92 @@ definition {
 		}
 	}
 
+	@description = "Verify buyers without the View Billing Address permission cannot set a new billing address during the checkout process or view the billing address at the order summary."
+	@priority = "3"
+	test AssertDefaultBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a default billing address for the Commerce Account is set") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			AssertClick(
+				locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_BILLING",
+				value1 = "Set Default Address");
+
+			SelectFrame(
+				key_title = "Set Default Billing Address",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Accounts.addAddressViaSetDefaultAddress(
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Liferay, Inc.",
+				addressPostalCode = "91765",
+				addressRegion = "California",
+				addressStreet1 = "1400 Montefino Ave",
+				addressType = "Billing",
+				phoneNumber = "+1-877-543-3729");
+
+			Refresh();
+		}
+
+		task ("And given the buyer user does not have permission to view billing addresses") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "VIEW_BILLING_ADDRESS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("When an order is placed by the buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then during the checkout process the buyer cannot set a billing address, use the shipping address as the billing address, or view the default billing address at the order summary") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard",
+				viewBillingAddressPermission = "false");
+		}
+	}
+
 	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
 	@priority = "3"
 	test AssertPermissionToViewBillingAddressIsPresent {

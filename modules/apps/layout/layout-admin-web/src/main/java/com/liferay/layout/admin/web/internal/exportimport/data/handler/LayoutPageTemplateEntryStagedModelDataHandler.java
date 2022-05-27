@@ -410,7 +410,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		if (layout == null) {
+		if ((layout == null) ||
+			(!_layoutExportImportConfiguration.exportDraftLayout() &&
+			 !layout.isPublished())) {
+
 			return;
 		}
 

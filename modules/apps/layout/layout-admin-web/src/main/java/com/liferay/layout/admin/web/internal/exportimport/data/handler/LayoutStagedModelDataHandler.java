@@ -296,6 +296,12 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
+		if (!_layoutExportImportConfiguration.exportDraftLayout() &&
+			!layout.isPublished()) {
+
+			return;
+		}
+
 		Element layoutElement = portletDataContext.getExportDataElement(layout);
 
 		_populateElementLayoutMetadata(layoutElement, layout);

@@ -555,10 +555,10 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(),
-			_read("configuration-dark.json"),
-			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			StringPool.BLANK, StringUtil.randomString(),
+			StringUtil.randomString(), false, _read("configuration-dark.json"),
+			StringPool.BLANK, fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		fragmentEntryLink = _fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -614,7 +614,8 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			"Fragment Name", newCSS, newHTML, newJS, newConfiguration,
+			fragmentEntry.getFragmentCollectionId(), "Fragment Name", newCSS,
+			newHTML, newJS, false, newConfiguration, StringPool.BLANK,
 			fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -661,9 +662,11 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), fragmentEntry.getCss(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(),
 			_read("updated-fragment-configuration.html"), fragmentEntry.getJs(),
-			_read("updated-configuration-new-field.json"),
+			false, _read("updated-configuration-new-field.json"),
+			StringPool.BLANK, fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		_fragmentEntryLinkLocalService.updateLatestChanges(
@@ -703,9 +706,10 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), fragmentEntry.getCss(),
-			_read("updated-fragment-editable.html"), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), _read("updated-fragment-editable.html"),
+			fragmentEntry.getJs(), false, fragmentEntry.getConfiguration(),
+			StringPool.BLANK, fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		_fragmentEntryLinkLocalService.updateLatestChanges(
@@ -749,9 +753,10 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getName(), fragmentEntry.getCss(),
-			_read("updated-fragment-editable.html"), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), _read("updated-fragment-editable.html"),
+			fragmentEntry.getJs(), false, fragmentEntry.getConfiguration(),
+			StringPool.BLANK, fragmentEntry.getPreviewFileEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		_fragmentEntryLinkLocalService.updateLatestChanges(

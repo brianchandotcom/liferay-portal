@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -277,8 +275,8 @@ public class ConfigurationModelToDDMFormConverter {
 			attributeDefinition, ddmFormFieldOptions);
 
 		DDMFormField ddmFormField = new DDMFormField(
-			CamelCaseUtil.toCamelCase(
-				attributeDefinition.getID(), CharPool.PERIOD),
+			DDMFormFieldNameUtil.normalizeFieldName(
+				attributeDefinition.getID()),
 			type);
 
 		_setDDMFormFieldDataType(attributeDefinition, ddmFormField);

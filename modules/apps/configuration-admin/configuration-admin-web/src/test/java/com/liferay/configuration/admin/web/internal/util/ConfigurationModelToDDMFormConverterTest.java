@@ -23,11 +23,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.language.LanguageImpl;
@@ -113,7 +111,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			ddmForm.getDDMFormFieldsMap(false);
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(
-			CamelCaseUtil.toCamelCase(fieldName, CharPool.PERIOD));
+			DDMFormFieldNameUtil.normalizeFieldName(fieldName));
 
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals(fieldName, ddmFormField.getFieldReference());

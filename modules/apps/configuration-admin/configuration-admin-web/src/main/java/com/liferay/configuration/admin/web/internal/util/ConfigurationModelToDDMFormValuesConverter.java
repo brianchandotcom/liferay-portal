@@ -21,13 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.LocationVariableProtocol;
 import com.liferay.portal.kernel.settings.LocationVariableResolver;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -126,8 +124,8 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		}
 
 		_addDDMFormFieldValues(
-			CamelCaseUtil.toCamelCase(
-				attributeDefinition.getID(), CharPool.PERIOD),
+			DDMFormFieldNameUtil.normalizeFieldName(
+				attributeDefinition.getID()),
 			values, ddmFormValues);
 	}
 

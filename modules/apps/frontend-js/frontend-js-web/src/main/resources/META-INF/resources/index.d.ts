@@ -699,3 +699,14 @@ export function toggleSelectBox(
 	value: any,
 	toggleBoxId: string
 ): void;
+
+export function createResourceURL(
+	basePortletURL: string,
+	parameters?: Object
+): URL;
+
+export function sub(
+	string: string,
+	data: string | number | string[] | number[] | Array<string> | Array<number>,
+	...args: string[] | number[]
+): string;

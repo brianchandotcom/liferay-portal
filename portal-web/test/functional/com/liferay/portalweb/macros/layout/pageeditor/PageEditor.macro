@@ -798,9 +798,10 @@ definition {
 	}
 
 	macro addVideoFragmentURL {
-		FormFields.editText(
-			fieldName = "url",
-			fieldValue = "${videoLink}");
+		Type(
+			key_text = "URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoLink}");
 
 		Click(
 			key_sidebarButton = "Browser",
@@ -1256,7 +1257,7 @@ definition {
 
 		if (isSet(numberOfTabs)) {
 			Type(
-				key_fieldLabel = "Number Of Tabs",
+				key_fieldLabel = "Number of Tabs",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${numberOfTabs}");
 
@@ -1267,7 +1268,7 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertTextEquals(
-				key_fieldLabel = "Number Of Tabs",
+				key_fieldLabel = "Number of Tabs",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${numberOfTabs}");
 		}

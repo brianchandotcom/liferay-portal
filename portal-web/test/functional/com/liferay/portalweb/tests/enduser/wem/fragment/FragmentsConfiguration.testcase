@@ -826,7 +826,7 @@ main();
 			PageEditorConfiguration.changeConfigText(
 				editableText = "Updated fragment text",
 				fragmentName = "Text Fragment Example",
-				textConfigName = "buttonText");
+				textConfigName = "Button Text");
 
 			PageEditor.clickPublish();
 		}
@@ -905,7 +905,7 @@ main();
 			PageEditorConfiguration.changeConfigText(
 				editableText = "Updated fragment text",
 				fragmentName = "Text Fragment Example",
-				textConfigName = "buttonText");
+				textConfigName = "Button Text");
 
 			PageEditor.clickPublish();
 		}
@@ -977,7 +977,7 @@ main();
 			PageEditorConfiguration.changeConfigText(
 				editableText = "Updated fragment text",
 				fragmentName = "Text Fragment Example",
-				textConfigName = "buttonText");
+				textConfigName = "Button Text");
 
 			PageEditor.clickPublish();
 		}

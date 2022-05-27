@@ -217,13 +217,13 @@ definition {
 			PageEditorConfiguration.changeConfigText(
 				editableText = "Ir a alguna parte",
 				fragmentName = "Fragment Name",
-				textConfigName = "buttonText");
+				textConfigName = "Button Text");
 		}
 
 		task ("Assert localized content is shown in Button Text field") {
-			FormFields.viewTextValue(
-				fieldName = "buttonText",
-				fieldValue = "Ir a alguna parte");
+			InputField.viewText(
+				fieldLabel = "Button Text",
+				text = "Ir a alguna parte");
 		}
 
 		task ("Assert localized content is shown in fragment") {
@@ -240,9 +240,9 @@ definition {
 		}
 
 		task ("Assert Go Somewhere is shown in Button Text field") {
-			FormFields.viewTextValue(
-				fieldName = "buttonText",
-				fieldValue = "Go Somewhere");
+			InputField.viewText(
+				fieldLabel = "Button Text",
+				text = "Go Somewhere");
 		}
 
 		task ("Assert Go Somewhere is shown in fragment") {
@@ -259,9 +259,9 @@ definition {
 		}
 
 		task ("Assert Ir a alguna parte is shown in Button Text field") {
-			FormFields.viewTextValue(
-				fieldName = "buttonText",
-				fieldValue = "Ir a alguna parte");
+			InputField.viewText(
+				fieldLabel = "Button Text",
+				text = "Ir a alguna parte");
 		}
 
 		task ("Assert Ir a alguna parte is shown in fragment") {

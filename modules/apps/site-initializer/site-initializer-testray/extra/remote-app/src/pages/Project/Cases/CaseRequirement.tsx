@@ -13,55 +13,113 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {getRequirements} from '../../../graphql/queries';
+import {
+	TestrayRequirementCase,
+	TestraySuite,
+	getRequirementCases,
+} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {searchUtil} from '../../../util/search';
 
-const CaseRequirement = () => (
-	<Container title={i18n.translate('requirements')}>
-		<ListView
-			query={getRequirements}
-			tableProps={{
-				columns: [
-					{
-						clickable: true,
-						key: 'key',
-						value: 'Key',
-					},
-					{
-						key: 'linkTitle',
-						render: (
-							linkTitle: string,
-							{linkURL}: {linkURL: string}
-						) => (
-							<a
-								href={linkURL}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								{linkTitle}
+const CaseRequirement = () => {
+	const {
+		projectId,
+		testrayCase,
+	}: {projectId: number; testrayCase: TestraySuite} = useOutletContext();
 
-								<ClayIcon className="ml-2" symbol="shortcut" />
-							</a>
-						),
-						value: 'Link',
-					},
-					{key: 'team', value: i18n.translate('team')},
-					{key: 'component', value: i18n.translate('component')},
-					{
-						key: 'components',
-						value: i18n.translate('jira-components'),
-					},
-					{key: 'summary', value: i18n.translate('summary')},
-					{key: 'description', value: i18n.translate('description')},
-				],
-				navigateTo: ({id}) => id?.toString(),
-			}}
-			transformData={(data) => data?.c?.requirements}
-		/>
-	</Container>
-);
+	return (
+		<Container title={i18n.translate('requirements')}>
+			<ListView
+				query={getRequirementCases}
+				tableProps={{
+					columns: [
+						{
+							clickable: true,
+							key: 'key',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => requirementCase.requirement.key,
+							value: 'Key',
+						},
+						{
+							key: 'linkTitle',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => (
+								<a
+									href={requirementCase.requirement.linkURL}
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									{requirementCase.requirement.linkTitle}
+
+									<ClayIcon
+										className="ml-2"
+										symbol="shortcut"
+									/>
+								</a>
+							),
+							value: 'Link',
+						},
+						{
+							key: 'team',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) =>
+								requirementCase.requirement.component?.team
+									?.name,
+							value: i18n.translate('team'),
+						},
+						{
+							key: 'component',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => requirementCase.requirement.component?.name,
+							value: i18n.translate('component'),
+						},
+						{
+							key: 'components',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => requirementCase.requirement.components,
+							value: i18n.translate('jira-components'),
+						},
+						{
+							key: 'summary',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => requirementCase.requirement.summary,
+							value: i18n.translate('summary'),
+						},
+						{
+							key: 'description',
+							render: (
+								_,
+								requirementCase: TestrayRequirementCase
+							) => requirementCase.requirement.description,
+							value: i18n.translate('description'),
+						},
+					],
+					navigateTo: ({requirement}: TestrayRequirementCase) =>
+						`/project/${projectId}/requirements/${requirement.id}`,
+				}}
+				transformData={(data) => data?.requirementscaseses}
+				variables={{
+					filter: searchUtil.eq('caseId', testrayCase.id),
+				}}
+			/>
+		</Container>
+	);
+};
 
 export default CaseRequirement;

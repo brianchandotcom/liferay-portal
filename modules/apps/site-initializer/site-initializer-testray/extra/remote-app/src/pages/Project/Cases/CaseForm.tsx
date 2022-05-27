@@ -190,7 +190,7 @@ const CaseForm = () => {
 					<Form.Input
 						{...inputProps}
 						className="col-4"
-						label={i18n.translate('estimed-duration')}
+						label={i18n.translate('estimated-duration')}
 						name="estimatedDuration"
 						required={false}
 					/>

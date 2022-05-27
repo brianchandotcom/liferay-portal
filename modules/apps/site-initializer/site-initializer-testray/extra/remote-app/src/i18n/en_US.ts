@@ -106,7 +106,6 @@ export default {
 	'error': 'Error',
 	'errors': 'Errors',
 	'estimated-duration': 'Estimated Duration',
-	'estimed-duration': 'Estimed Duration',
 	'execution-date': 'Execution Date',
 	'export-cases': 'Export Cases',
 	'failed': 'Failed',

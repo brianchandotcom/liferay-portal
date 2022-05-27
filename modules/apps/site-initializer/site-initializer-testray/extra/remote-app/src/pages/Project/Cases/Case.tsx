@@ -52,7 +52,7 @@ const Case = () => {
 							value: testrayCase.description,
 						},
 						{
-							title: i18n.translate('estimed-duration'),
+							title: i18n.translate('estimated-duration'),
 							value: testrayCase.estimatedDuration,
 						},
 						{

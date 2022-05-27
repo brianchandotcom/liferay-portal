@@ -63,23 +63,25 @@ const CaseOutlet = () => {
 
 	useEffect(() => {
 		if (!isFormPage) {
-			setTabs([
-				{
-					active: pathname === basePath,
-					path: basePath,
-					title: i18n.translate('case-details'),
-				},
-				{
-					active: pathname === `${basePath}/requirements`,
-					path: `${basePath}/requirements`,
-					title: i18n.translate('requirements'),
-				},
-			]);
+			setTimeout(() => {
+				setTabs([
+					{
+						active: pathname === basePath,
+						path: basePath,
+						title: i18n.translate('case-details'),
+					},
+					{
+						active: pathname === `${basePath}/requirements`,
+						path: `${basePath}/requirements`,
+						title: i18n.translate('requirements'),
+					},
+				]);
+			});
 		}
 	}, [basePath, isFormPage, pathname, setTabs]);
 
 	if (testrayCase) {
-		return <Outlet context={{testrayCase}} />;
+		return <Outlet context={{projectId, testrayCase}} />;
 	}
 
 	return null;

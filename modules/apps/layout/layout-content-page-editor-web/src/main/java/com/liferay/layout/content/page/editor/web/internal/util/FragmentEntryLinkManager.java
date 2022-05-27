@@ -44,7 +44,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,9 +54,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,15 +66,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletConfig;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -215,7 +204,7 @@ public class FragmentEntryLinkManager {
 				defaultFragmentRendererContext, httpServletRequest,
 				httpServletResponse);
 
-			JSONObject jsonObject = JSONUtil.put(
+			return JSONUtil.put(
 				"comments",
 				_getFragmentEntryLinkCommentsJSONArray(
 					fragmentEntryLink, httpServletRequest)
@@ -238,20 +227,6 @@ public class FragmentEntryLinkManager {
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues())
-			).put(
-				"error",
-				() -> {
-					if (SessionErrors.contains(
-							httpServletRequest,
-							"fragmentEntryContentInvalid")) {
-
-						SessionErrors.clear(httpServletRequest);
-
-						return true;
-					}
-
-					return false;
-				}
 			).put(
 				"fragmentEntryId",
 				() -> {
@@ -294,28 +269,6 @@ public class FragmentEntryLinkManager {
 				"segmentsExperienceId",
 				String.valueOf(fragmentEntryLink.getSegmentsExperienceId())
 			);
-
-			if (Validator.isNotNull(portletId)) {
-				jsonObject.put("portletId", portletId);
-			}
-			else {
-				portletId = _getPortletId(jsonObject.getString("content"));
-
-				PortletConfig portletConfig = PortletConfigFactoryUtil.get(
-					portletId);
-
-				if (portletConfig != null) {
-					jsonObject.put(
-						"name",
-						_portal.getPortletTitle(
-							portletId, themeDisplay.getLocale())
-					).put(
-						"portletId", portletId
-					);
-				}
-			}
-
-			return jsonObject;
 		}
 		finally {
 			themeDisplay.setIsolated(isolated);
@@ -445,23 +398,6 @@ public class FragmentEntryLinkManager {
 		}
 
 		return _getInfoForm((FormStyledLayoutStructureItem)layoutStructureItem);
-	}
-
-	private String _getPortletId(String content) {
-		Document document = Jsoup.parse(content);
-
-		Elements elements = document.getElementsByAttributeValueStarting(
-			"id", "portlet_");
-
-		if (elements.size() != 1) {
-			return StringPool.BLANK;
-		}
-
-		Element element = elements.get(0);
-
-		String id = element.id();
-
-		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

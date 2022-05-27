@@ -96,6 +96,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -106,6 +108,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -151,12 +154,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * @author Eudaldo Alonso
@@ -1492,7 +1501,38 @@ public class ContentPageEditorDisplayContext {
 					PortalUtil.getHttpServletResponse(_renderResponse),
 					layoutStructure, StringPool.BLANK);
 
-			jsonObject.put("masterLayout", masterLayout);
+			jsonObject.put(
+				"error",
+				() -> {
+					if (SessionErrors.contains(
+							httpServletRequest,
+							"fragmentEntryContentInvalid")) {
+
+						SessionErrors.clear(httpServletRequest);
+
+						return true;
+					}
+
+					return false;
+				}
+			).put(
+				"masterLayout", masterLayout
+			);
+
+			String portletId = _getPortletId(jsonObject.getString("content"));
+
+			PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+				portletId);
+
+			if (portletConfig != null) {
+				jsonObject.put(
+					"name",
+					PortalUtil.getPortletTitle(
+						portletId, themeDisplay.getLocale())
+				).put(
+					"portletId", portletId
+				);
+			}
 
 			fragmentEntryLinksMap.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
@@ -1808,6 +1848,23 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _masterLayoutStructure;
+	}
+
+	private String _getPortletId(String content) {
+		Document document = Jsoup.parse(content);
+
+		Elements elements = document.getElementsByAttributeValueStarting(
+			"id", "portlet_");
+
+		if (elements.size() != 1) {
+			return StringPool.BLANK;
+		}
+
+		Element element = elements.get(0);
+
+		String id = element.id();
+
+		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
 	private Layout _getPublishedLayout() {

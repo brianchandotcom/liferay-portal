@@ -76,7 +76,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "content",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Add a Button fragment to the new fragment") {
@@ -126,13 +126,13 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "content",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			AssertVisible(
 				key_content = "Place fragments here.",
 				key_fragmentClass = "content",
 				key_position = "2",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 	}
 

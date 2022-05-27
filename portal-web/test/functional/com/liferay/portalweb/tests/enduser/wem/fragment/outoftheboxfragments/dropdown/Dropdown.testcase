@@ -164,7 +164,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			Click.javaScriptClick(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
 
@@ -177,7 +177,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			Button.click(button = "Publish Master");
 
@@ -225,7 +225,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			MouseOver(
 				key_sidebarButton = "Browser",
@@ -240,7 +240,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Define the Keep Panel Open in Edit Mode as displayed behavior") {
@@ -271,7 +271,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			PageEditor.clickManagementBar();
 
@@ -286,7 +286,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Define the Display on Hover and Keep Panel Open in Edit Mode as displayed behavior") {
@@ -305,7 +305,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			PageEditor.clickManagementBar();
 
@@ -320,7 +320,7 @@ definition {
 				key_content = "Place fragments here.",
 				key_fragmentClass = "menu",
 				key_position = "1",
-				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 	}
 

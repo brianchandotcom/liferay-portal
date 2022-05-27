@@ -20,6 +20,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -103,6 +104,11 @@ public class GetExperienceDataMVCResourceCommand
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
 					themeDisplay.getPlid());
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId);
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -122,7 +128,7 @@ public class GetExperienceDataMVCResourceCommand
 					defaultFragmentRendererContext, fragmentEntryLink,
 					_portal.getHttpServletRequest(resourceRequest),
 					_portal.getHttpServletResponse(resourceResponse),
-					StringPool.BLANK));
+					layoutStructure, StringPool.BLANK));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

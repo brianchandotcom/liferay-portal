@@ -172,8 +172,8 @@ public class UpdateConfigurationValuesMVCActionCommand
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				layoutStructure, StringPool.BLANK));
+				_portal.getHttpServletResponse(actionResponse), layoutStructure,
+				StringPool.BLANK));
 
 		return jsonObject.put("layoutData", layoutStructure.toJSONObject());
 	}

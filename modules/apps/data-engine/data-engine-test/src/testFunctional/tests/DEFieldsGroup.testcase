@@ -126,8 +126,6 @@ definition {
 		for (var language : list "pt-BR,zh-CN") {
 			PortletEntry.changeLocale(locale = "${language}");
 
-			Form.viewExpandedCollapseButton();
-
 			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text ${language}");
 
 			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric ${language}");

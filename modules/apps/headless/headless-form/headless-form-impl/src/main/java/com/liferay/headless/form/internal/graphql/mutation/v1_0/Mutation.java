@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -38,7 +37,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -118,20 +116,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteFormDocumentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formDocumentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formDocumentResource ->
-				formDocumentResource.deleteFormDocumentBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
 	public FormRecord updateFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -145,19 +129,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response updateFormRecordBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.putFormRecordBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public FormRecord createFormFormRecord(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -168,20 +139,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			formRecordResource -> formRecordResource.postFormFormRecord(
 				formId, formRecord));
-	}
-
-	@GraphQLField
-	public Response createFormFormRecordBatch(
-			@GraphQLName("formId") Long formId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.postFormFormRecordBatch(
-				formId, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -233,9 +190,6 @@ public class Mutation {
 		formResource.setContextUser(_user);
 		formResource.setGroupLocalService(_groupLocalService);
 		formResource.setRoleLocalService(_roleLocalService);
-
-		formResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -251,9 +205,6 @@ public class Mutation {
 		formDocumentResource.setContextUser(_user);
 		formDocumentResource.setGroupLocalService(_groupLocalService);
 		formDocumentResource.setRoleLocalService(_roleLocalService);
-
-		formDocumentResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(FormRecordResource formRecordResource)
@@ -267,9 +218,6 @@ public class Mutation {
 		formRecordResource.setContextUser(_user);
 		formRecordResource.setGroupLocalService(_groupLocalService);
 		formRecordResource.setRoleLocalService(_roleLocalService);
-
-		formRecordResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<FormResource>
@@ -288,7 +236,5 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }

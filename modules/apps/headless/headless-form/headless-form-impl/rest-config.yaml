@@ -7,4 +7,5 @@ application:
 author: "Javier Gamarra"
 clientDir: "../headless-form-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: false
 testDir: "../headless-form-test/src/testIntegration/java"

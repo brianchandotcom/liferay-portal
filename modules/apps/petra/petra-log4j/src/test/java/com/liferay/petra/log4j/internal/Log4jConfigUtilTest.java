@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -335,6 +336,8 @@ public class Log4jConfigUtilTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testShutdownLog4J() {
+		PropsTestUtil.setProps(Collections.emptyMap());
+
 		Logger logger = (Logger)LogManager.getRootLogger();
 
 		Map<String, Appender> appenders = logger.getAppenders();

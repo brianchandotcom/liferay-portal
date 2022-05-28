@@ -25,7 +25,7 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterColumnName(
 			"RemoteAppEntry", "remoteAppEntryId",
-			"clientExtensionEntryId LONG");
+			"clientExtensionEntryId LONG not null");
 
 		if (hasTable("RemoteAppEntry")) {
 			dropTable("ClientExtensionEntry");

@@ -123,7 +123,7 @@ public class WorkspaceExtension {
 			settings, "target.platform.version",
 			_getDefaultTargetplatformVersion());
 
-		_gradle.afterProject(
+		_gradle.projectsEvaluated(
 			new Closure<Void>(_gradle) {
 
 				@SuppressWarnings("unused")

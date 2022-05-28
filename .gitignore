@@ -5,6 +5,7 @@
 **/TEST-frontend-js.xml
 **/liferay/logs/*.log
 **/liferay/logs/*.xml
+**/liferay/logs/companies/*
 **/pmd-reports
 *.bak
 *.iml

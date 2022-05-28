@@ -67,7 +67,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 	@Override
 	public void append(LogEvent logEvent) {
-		if (!_ENABLED) {
+		if (!_COMPANY_LOG_ENABLED) {
 			return;
 		}
 
@@ -252,7 +252,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		return rollingFileAppender;
 	}
 
-	private static final boolean _ENABLED = GetterUtil.getBoolean(
+	private static final boolean _COMPANY_LOG_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.COMPANY_LOG_ENABLED));
 
 	private final boolean _advertise;

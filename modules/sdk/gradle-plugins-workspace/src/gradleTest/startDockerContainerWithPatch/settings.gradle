@@ -1,6 +1,4 @@
 import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
-import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
 
 import java.net.InetAddress
 
@@ -60,20 +58,6 @@ gradle.projectsEvaluated {
 			if (!expectedLineDetected) {
 				throw new GradleException("The expected line " + expectedLine + " was not found in the log.")
 			}
-		}
-	}
-
-	rootProject.tasks.register("removeContainer", DockerRemoveContainer) {
-		targetContainerId {
-			gradle.liferayWorkspace.dockerContainerId
-		}
-	}
-
-	rootProject.tasks.register("stopContainer", DockerStopContainer) {
-		finalizedBy "removeContainer"
-
-		targetContainerId {
-			gradle.liferayWorkspace.dockerContainerId
 		}
 	}
 }

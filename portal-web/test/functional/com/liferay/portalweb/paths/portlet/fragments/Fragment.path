@@ -10,7 +10,9 @@
 </thead>
 
 <tbody>
+
 <!--COLLECTION_DISPLAY_CELL-->
+
 <tr>
 	<td>FRAGMENT_TEXT_IN_COLLECTION_DISPLAY</td>
 	<td>//section[contains(@id,'content')]//div[contains(@class,'row')][${row}]/div[contains(@class,'col')][not(.//label)][${column}]//*[not(contains(@class,'tbar'))][normalize-space(text())]</td>
@@ -21,7 +23,9 @@
 	<td>//div[contains(@class,'content')]//div[contains(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')] | //div[contains(@class,'content')]//div[contains(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_image}')]</td>
 	<td></td>
 </tr>
+
 <!--CONTENT_DISPLAY_FRAGMENT-->
+
 <tr>
 	<td>CONTENT_DISPLAY_TEXT</td>
 	<td>xpath=(//div[contains(@class,'${assetType}')])[${index}]</td>
@@ -47,7 +51,9 @@
 	<td>xpath=(//div[contains(@class,'preview-file-container')])[${index}]//img[contains(@src,'${image}')]</td>
 	<td></td>
 </tr>
+
 <!--CONTENT_RATINGS_FRAGMENT-->
+
 <tr>
 	<td>CONTENT_RATINGS_AVERAGE_STAR</td>
 	<td>xpath=(//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-average')][.//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]])[${index}]</td>
@@ -68,7 +74,9 @@
 	<td>xpath=(//div[contains(@class,'ratings-stars')]//span[contains(@class,'ratings-stars-button-text')])[${index}]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT-->
+
 <tr>
 	<td>FRAGMENT_BODY</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]//*[contains(@class,'${fragmentName}')])[${index}]</td>
@@ -129,13 +137,17 @@
 	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__no-fragments-message')][normalize-space()='${key_messageInfo}'])[${key_position}]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_COMMENT-->
+
 <tr>
 	<td>FRAGMENT_COMMENT_ICON</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_CUSTOM_STYLE-->
+
 <tr>
 	<td>ALIGN</td>
 	<td>//div[contains(@class,'video')]/parent::div[contains(@style,'justify-content: ${key_alignment}')]</td>
@@ -176,7 +188,9 @@
 	<td>//div[contains(@class,'video')][contains(@style,'width: ${key_width}')]</td>
 	<td></td>
 </tr>
+
 <!--DROPDOWN_FRAGMENT-->
+
 <tr>
 	<td>DROPDOWN_FRAGMENT_MENU_CONTENT</td>
 	<td>//div[contains(@class,'dropdown-fragment-menu')]${key_element}</td>
@@ -192,7 +206,9 @@
 	<td>//button[contains(@class,'dropdown-fragment-toggle')]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_COMMON_STYLE-->
+
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
 	<td>//div[contains(@class,'text-${key_alignment}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
@@ -273,7 +289,9 @@
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_EDITABLE_FIELD-->
+
 <tr>
 	<td>AVAILABLE_ADAPTIVE_MEDIA</td>
 	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
@@ -335,7 +353,9 @@
 	<td>xpath=(//lfr-editable[contains(@id,'${id}')])[${key_position}]${key_style}[normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_CONTENT_AT_VIEW_MODE-->
+
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_TEXT</td>
 	<td>xpath=(//div[contains(@id,'fragment-')][.//*[contains(@class,'${fragmentName}')]])[${index}]//*[contains(@data-lfr-editable-id,'${id}')]</td>
@@ -351,7 +371,9 @@
 	<td>xpath=(//div[contains(@style,'background-image')])[${index}][contains(@style,'${image}')]</td>
 	<td></td>
 </tr>
+
 <!--FRAGMENT_HEADER-->
+
 <tr>
 	<td>FRAGMENT_HEADER</td>
 	<td>//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]</td>
@@ -372,7 +394,9 @@
 	<td>//div[contains(@class,'topper__bar--inset')]//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
+
 <!--TABS_FRAGMENT-->
+
 <tr>
 	<td>ACTIVE_NAV_ITEM_TAB</td>
 	<td>//div[contains(@class,'navbar')]//button[contains(@aria-selected,'true') and normalize-space()='${key_navItem}']</td>

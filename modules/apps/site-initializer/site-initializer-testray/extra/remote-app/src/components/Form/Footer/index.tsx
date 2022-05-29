@@ -12,25 +12,6 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
-import {BaseRow, BaseWarning, BaseWrapper} from './Base';
-import DualListBox from './DualListBox';
-import File from './File';
 import Footer from './Footer';
-import Input from './Input';
-import Select from './Select';
 
-const Form = () => {};
-
-Form.AutoComplete = AutoComplete;
-Form.BaseRow = BaseRow;
-Form.BaseWarning = BaseWarning;
-Form.BaseWrapper = BaseWrapper;
-Form.Divider = () => <hr />;
-Form.DualListBox = DualListBox;
-Form.File = File;
-Form.Footer = Footer;
-Form.Input = Input;
-Form.Select = Select;
-
-export default Form;
+export default Footer;

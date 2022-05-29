@@ -12,25 +12,25 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
-import {BaseRow, BaseWarning, BaseWrapper} from './Base';
-import DualListBox from './DualListBox';
-import File from './File';
-import Footer from './Footer';
-import Input from './Input';
-import Select from './Select';
+import ClayButton from '@clayui/button';
 
-const Form = () => {};
+import i18n from '../../../i18n';
 
-Form.AutoComplete = AutoComplete;
-Form.BaseRow = BaseRow;
-Form.BaseWarning = BaseWarning;
-Form.BaseWrapper = BaseWrapper;
-Form.Divider = () => <hr />;
-Form.DualListBox = DualListBox;
-Form.File = File;
-Form.Footer = Footer;
-Form.Input = Input;
-Form.Select = Select;
+type FooterProps = {
+	onClose: () => void;
+	onSubmit: () => void;
+};
 
-export default Form;
+const Footer: React.FC<FooterProps> = ({onClose, onSubmit}) => (
+	<ClayButton.Group spaced>
+		<ClayButton displayType="primary" onClick={onSubmit}>
+			{i18n.translate('save')}
+		</ClayButton>
+
+		<ClayButton displayType="secondary" onClick={() => onClose()}>
+			{i18n.translate('cancel')}
+		</ClayButton>
+	</ClayButton.Group>
+);
+
+export default Footer;

@@ -13,7 +13,6 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
@@ -219,7 +218,7 @@ const CaseForm = () => {
 
 				<MarkdownPreview markdown={description} />
 
-				<hr />
+				<Form.Divider />
 
 				<Form.BaseRow separator={false} title={i18n.translate('steps')}>
 					<Form.Select
@@ -241,7 +240,7 @@ const CaseForm = () => {
 
 				<MarkdownPreview markdown={steps} />
 
-				<hr />
+				<Form.Divider />
 
 				<div className="my-5">
 					<ClayCheckbox
@@ -251,23 +250,10 @@ const CaseForm = () => {
 					/>
 				</div>
 
-				<div>
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onClose()}
-						>
-							{i18n.translate('close')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="primary"
-							onClick={handleSubmit(_onSubmit)}
-						>
-							{i18n.translate('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</div>
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
 			</ClayForm>
 		</Container>
 	);

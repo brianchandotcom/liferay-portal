@@ -1015,6 +1015,11 @@ public class JournalContentDisplayContext {
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+
+		if (isShowArticle()) {
+			portletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, _getAssetEntry());
+		}
 	}
 
 	private JournalArticle _getArticleByPreviewAssetEntryId() {

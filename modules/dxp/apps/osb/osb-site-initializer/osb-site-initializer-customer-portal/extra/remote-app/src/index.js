@@ -31,6 +31,10 @@ const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
 };
 
 class CustomerPortalWebComponent extends HTMLElement {
+	constructor() {
+		super();
+	}
+
 	connectedCallback() {
 		const properties = {
 			createSupportRequest: super.getAttribute('create-support-request'),
@@ -64,6 +68,10 @@ class CustomerPortalWebComponent extends HTMLElement {
 			</ClayProvider>,
 			this
 		);
+	}
+
+	disconnectedCallback() {
+		ReactDOM.unmountComponentAtNode(this);
 	}
 }
 

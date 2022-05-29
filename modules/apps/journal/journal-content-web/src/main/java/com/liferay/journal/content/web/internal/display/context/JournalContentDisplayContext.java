@@ -265,21 +265,11 @@ public class JournalContentDisplayContext {
 	}
 
 	public long getAssetEntryId() throws PortalException {
-		JournalArticle article = getArticle();
+		AssetEntry assetEntry = _getAssetEntry();
 
-		if (article == null) {
+		if (assetEntry == null) {
 			return 0;
 		}
-
-		AssetRendererFactory<JournalArticle> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(article, 0);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), assetRenderer.getClassPK());
 
 		return assetEntry.getEntryId();
 	}
@@ -1069,6 +1059,24 @@ public class JournalContentDisplayContext {
 		}
 
 		return null;
+	}
+
+	private AssetEntry _getAssetEntry() throws PortalException {
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			return null;
+		}
+
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(article, 0);
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), assetRenderer.getClassPK());
 	}
 
 	private DDMTemplate _getDDMTemplate(String ddmTemplateKey)

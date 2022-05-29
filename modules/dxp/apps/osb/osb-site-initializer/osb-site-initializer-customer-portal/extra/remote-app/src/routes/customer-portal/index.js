@@ -14,12 +14,10 @@ import '../../routes/customer-portal/styles/app.scss';
 import {AppContextProvider} from './context';
 import Pages from './pages';
 
-const CustomerPortal = (props) => {
-	return (
-		<AppContextProvider {...props}>
-			<Pages />
-		</AppContextProvider>
-	);
-};
+const CustomerPortal = () => (
+	<AppContextProvider>
+		<Pages />
+	</AppContextProvider>
+);
 
 export default CustomerPortal;

@@ -14,7 +14,6 @@ import React, {useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 import Button from '../../../../../../common/components/Button';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
-import {useCustomerPortal} from '../../../../context';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants/autoCloseAlertTime';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
@@ -28,8 +27,7 @@ const ModalKeyDetails = ({
 	project,
 	sessionId,
 }) => {
-	const [{assetsPath}] = useCustomerPortal();
-	const {provisioningServerAPI} = useApplicationProvider();
+	const {liferayWebDAV, provisioningServerAPI} = useApplicationProvider();
 
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
@@ -72,8 +70,8 @@ const ModalKeyDetails = ({
 				</div>
 
 				<TableKeyDetails
-					assetsPath={assetsPath}
 					currentActivationKey={currentActivationKey}
+					liferayWebDAV={liferayWebDAV}
 					setValueToCopyToClipboard={setValueToCopyToClipboard}
 				/>
 

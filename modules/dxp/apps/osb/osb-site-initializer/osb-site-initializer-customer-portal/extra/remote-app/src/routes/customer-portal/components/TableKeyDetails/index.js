@@ -31,7 +31,7 @@ const NO_EXPIRATION_DATE = 100;
 
 const TableKeyDetails = ({
 	activationKeys,
-	assetsPath,
+	liferayWebDAV,
 	setValueToCopyToClipboard,
 }) => {
 	const [actionToCopy, setActionToCopy] = useState('');
@@ -112,7 +112,7 @@ const TableKeyDetails = ({
 						<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 							<img
 								className="mr-2"
-								src={`${assetsPath}/assets/navigation-menu/${SUBSCRIPTION_IMAGE_FILE}`}
+								src={`${liferayWebDAV}/assets/navigation-menu/${SUBSCRIPTION_IMAGE_FILE}`}
 							/>
 
 							{getFormatedProductName(

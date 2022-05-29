@@ -12,8 +12,8 @@
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import i18n from '../../../../common/I18n';
+import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import ModalCardSubscription from '../../containers/ModalCardSubscription';
-import {useCustomerPortal} from '../../context';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/getDateCustomFormat';
 import getKebabCase from '../../utils/getKebabCase';
@@ -38,7 +38,7 @@ const CardSubscription = ({
 	cardSubscriptionData,
 	selectedSubscriptionGroup,
 }) => {
-	const [{assetsPath}] = useCustomerPortal();
+	const {liferayWebDAV} = useApplicationProvider();
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
@@ -71,7 +71,7 @@ const CardSubscription = ({
 				<div className="text-center">
 					<img
 						className="w-25"
-						src={`${assetsPath}/assets/navigation-menu/${
+						src={`${liferayWebDAV}/assets/navigation-menu/${
 							SUBSCRIPTION_IMAGE_FILE[
 								selectedSubscriptionGroup
 							] || 'portal_icon.svg'

@@ -20,13 +20,13 @@ import ClayProvider from './common/providers/ClayProvider';
 import CustomerPortal from './routes/customer-portal';
 import Onboarding from './routes/onboarding';
 
-const CustomerPortalApplication = ({liferayWebDAV, page, route}) => {
+const CustomerPortalApplication = ({route}) => {
 	if (route === 'portal') {
-		return <CustomerPortal assetsPath={liferayWebDAV} page={page} />;
+		return <CustomerPortal />;
 	}
 
 	if (route === 'onboarding') {
-		return <Onboarding assetsPath={liferayWebDAV} />;
+		return <Onboarding />;
 	}
 };
 
@@ -59,11 +59,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 			<ClayProvider>
 				<ApolloProvider client={apolloClient}>
 					<AppContextProvider properties={properties}>
-						<CustomerPortalApplication
-							liferayWebDAV={properties.liferayWebDAV}
-							page={properties.page}
-							route={properties.route}
-						/>
+						<CustomerPortalApplication route={properties.route} />
 					</AppContextProvider>
 				</ApolloProvider>
 			</ClayProvider>,

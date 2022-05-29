@@ -19,6 +19,7 @@ import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import SetupDXPCloud from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
@@ -88,7 +89,8 @@ const ActivationStatusDXPCloud = ({
 		subscriptionGroupActivationStatus,
 		setSubscriptionGroupActivationStatus,
 	] = useState(subscriptionGroupDXPCloud?.activationStatus);
-	const [{assetsPath}, dispatch] = useCustomerPortal();
+	const [, dispatch] = useCustomerPortal();
+	const {liferayWebDAV} = useApplicationProvider();
 	const [hasFinishedUpdate, setHasFinishedUpdate] = useState(false);
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [visibleSetup, setVisibleSetup] = useState(false);
@@ -243,7 +245,7 @@ const ActivationStatusDXPCloud = ({
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
-				iconPath={`${assetsPath}/assets/navigation-menu/dxp_icon.svg`}
+				iconPath={`${liferayWebDAV}/assets/navigation-menu/dxp_icon.svg`}
 				project={project}
 				subscriptionGroupActivationStatus={
 					subscriptionGroupActivationStatus

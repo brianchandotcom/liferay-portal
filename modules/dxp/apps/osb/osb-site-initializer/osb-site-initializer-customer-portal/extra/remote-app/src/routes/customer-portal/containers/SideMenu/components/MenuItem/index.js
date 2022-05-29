@@ -13,10 +13,10 @@ import classNames from 'classnames';
 import {memo, useEffect} from 'react';
 import {Link, useMatch, useResolvedPath} from 'react-router-dom';
 import {Button} from '../../../../../../common/components';
-import {useCustomerPortal} from '../../../../context';
+import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 
 const MenuItem = ({children, iconKey, setActive, to}) => {
-	const [{assetsPath}] = useCustomerPortal();
+	const {liferayWebDAV} = useApplicationProvider();
 	const isActive = !!useMatch({path: useResolvedPath(to)?.pathname});
 
 	useEffect(() => {
@@ -39,7 +39,7 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 					isImagePrependIcon={!!iconKey}
 					prependIcon={
 						iconKey &&
-						`${assetsPath}/assets/navigation-menu/${iconKey}_icon${
+						`${liferayWebDAV}/assets/navigation-menu/${iconKey}_icon${
 							isActive ? '' : '_gray'
 						}.svg`
 					}

@@ -17,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
@@ -43,7 +44,8 @@ const ActivationStatusAnalyticsCloud = ({
 	subscriptionGroupAnalyticsCloud,
 	userAccount,
 }) => {
-	const [{assetsPath}, dispatch] = useCustomerPortal();
+	const [, dispatch] = useCustomerPortal();
+	const {liferayWebDAV} = useApplicationProvider();
 	const [groupIdValue, setGroupIdValue] = useState('');
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
@@ -251,7 +253,7 @@ const ActivationStatusAnalyticsCloud = ({
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
-				iconPath={`${assetsPath}/assets/navigation-menu/analytics_icon.svg`}
+				iconPath={`${liferayWebDAV}/assets/navigation-menu/analytics_icon.svg`}
 				project={project}
 				subscriptionGroupActivationStatus={
 					subscriptionGroupActivationStatus

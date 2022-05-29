@@ -12,9 +12,9 @@
 import {AppContextProvider} from './context';
 import Pages from './pages';
 
-const Onboarding = (props) => {
+const Onboarding = () => {
 	return (
-		<AppContextProvider {...props}>
+		<AppContextProvider>
 			<Pages />
 		</AppContextProvider>
 	);

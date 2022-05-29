@@ -56,12 +56,10 @@ const eventKoroneikiAccounts = Liferay.publish(
 	}
 );
 
-const AppContextProvider = ({assetsPath, children, page}) => {
+const AppContextProvider = ({children}) => {
 	const {oktaSessionAPI} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
-		assetsPath,
 		isQuickLinksExpanded: true,
-		page,
 		project: undefined,
 		quickLinks: undefined,
 		sessionId: '',

@@ -17,7 +17,7 @@ import TableKeyDetails from '../TableKeyDetails';
 
 const ModalKeyDetails = ({
 	activationKeys,
-	assetsPath,
+	liferayWebDAV,
 	downloadActivationLicenseKey,
 	provisioningServerAPI,
 	observer,
@@ -53,7 +53,7 @@ const ModalKeyDetails = ({
 
 				<TableKeyDetails
 					activationKeys={activationKeys}
-					assetsPath={assetsPath}
+					liferayWebDAV={liferayWebDAV}
 					setValueToCopyToClipboard={setValueToCopyToClipboard}
 				/>
 

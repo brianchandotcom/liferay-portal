@@ -33,11 +33,10 @@ const AppContext = createContext();
 
 const MAX_PAGE_SIZE = 9999;
 
-const AppContextProvider = ({assetsPath, children}) => {
+const AppContextProvider = ({children}) => {
 	const {oktaSessionAPI} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
 		analyticsCloudActivationSubmittedStatus: undefined,
-		assetsPath,
 		dxpCloudActivationSubmittedStatus: undefined,
 		koroneikiAccount: {},
 		project: undefined,

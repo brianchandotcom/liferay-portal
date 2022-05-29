@@ -15,7 +15,7 @@ import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
 import {
 	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,
@@ -40,7 +40,7 @@ const ActivationKeysInputs = ({
 	const {
 		provisioningServerAPI,
 		submitSupportTicketURL,
-	} = useApplicationProvider();
+	} = useAppPropertiesContext();
 
 	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
 

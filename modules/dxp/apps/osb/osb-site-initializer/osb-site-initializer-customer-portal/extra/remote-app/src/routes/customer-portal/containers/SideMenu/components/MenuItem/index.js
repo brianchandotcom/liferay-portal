@@ -13,10 +13,10 @@ import classNames from 'classnames';
 import {memo, useEffect} from 'react';
 import {Link, useMatch, useResolvedPath} from 'react-router-dom';
 import {Button} from '../../../../../../common/components';
-import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../common/context/AppPropertiesProvider';
 
 const MenuItem = ({children, iconKey, setActive, to}) => {
-	const {liferayWebDAV} = useApplicationProvider();
+	const {liferayWebDAV} = useAppPropertiesContext();
 	const isActive = !!useMatch({path: useResolvedPath(to)?.pathname});
 
 	useEffect(() => {

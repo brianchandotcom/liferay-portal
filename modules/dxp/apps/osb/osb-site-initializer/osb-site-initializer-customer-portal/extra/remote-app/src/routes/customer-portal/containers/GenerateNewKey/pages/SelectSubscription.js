@@ -18,7 +18,7 @@ import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {Radio} from '../../../../../common/components/Radio';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
 import {getNewGenerateKeyFormValues} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../../context';
@@ -34,7 +34,7 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useCustomerPortal();
-	const {provisioningServerAPI} = useApplicationProvider();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const [generateFormValues, setGenerateFormValues] = useState();
 

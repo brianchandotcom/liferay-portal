@@ -16,7 +16,7 @@ import {useLocation, useOutletContext} from 'react-router-dom';
 import i18n from '../../../../common/I18n';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
-import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../common/context/AppPropertiesProvider';
 import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
 import DownloadAlert from './components/DownloadAlert';
 import ActivationKeysTableHeader from './components/Header';
@@ -38,7 +38,7 @@ import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
 const ActivationKeysTable = ({productName, project, sessionId}) => {
-	const {provisioningServerAPI} = useApplicationProvider();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
 	const {state} = useLocation();

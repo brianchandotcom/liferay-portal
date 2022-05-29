@@ -12,7 +12,7 @@
 
 import {memo} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
 import {getInitials} from '../../getInitials';
@@ -20,7 +20,7 @@ import {getInitials} from '../../getInitials';
 const AVATAR_SIZE_IN_PX = 40;
 
 const Avatar = ({emailAddress, userName}) => {
-	const {gravatarAPI} = useApplicationProvider();
+	const {gravatarAPI} = useAppPropertiesContext();
 	const emailAddressMD5 = getMd5Hash(emailAddress);
 	const uiAvatarURL = `https://ui-avatars.com/api/${getInitials(
 		userName

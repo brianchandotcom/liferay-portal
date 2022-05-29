@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useApplicationProvider} from '../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../common/context/AppPropertiesProvider';
 import {useCustomerPortal} from '../context';
 import {PAGE_TYPES} from '../utils/constants';
 import Home from './Home';
@@ -18,7 +18,7 @@ import ProjectRoutes from './Project/routes/project.routes';
 
 const Pages = () => {
 	const [{userAccount}] = useCustomerPortal();
-	const {page} = useApplicationProvider();
+	const {page} = useAppPropertiesContext();
 
 	const PageLayout = {
 		[PAGE_TYPES.home]: {

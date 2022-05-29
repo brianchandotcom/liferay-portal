@@ -19,7 +19,7 @@ import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import SetupDXPCloud from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
@@ -90,7 +90,7 @@ const ActivationStatusDXPCloud = ({
 		setSubscriptionGroupActivationStatus,
 	] = useState(subscriptionGroupDXPCloud?.activationStatus);
 	const [, dispatch] = useCustomerPortal();
-	const {liferayWebDAV} = useApplicationProvider();
+	const {liferayWebDAV} = useAppPropertiesContext();
 	const [hasFinishedUpdate, setHasFinishedUpdate] = useState(false);
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [visibleSetup, setVisibleSetup] = useState(false);

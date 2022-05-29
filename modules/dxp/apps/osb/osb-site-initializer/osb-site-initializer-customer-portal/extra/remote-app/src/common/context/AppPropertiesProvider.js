@@ -11,7 +11,7 @@
 
 import {createContext, useContext} from 'react';
 
-const defaultProperties = {
+export const AppPropertiesContext = createContext({
 	articleAccountSupportURL: '',
 	articleDeployingActivationKeysURL: '',
 	gravatarAPI: '',
@@ -21,16 +21,8 @@ const defaultProperties = {
 	provisioningServerAPI: '',
 	route: '',
 	submitSupportTicketURL: '',
-};
+});
 
-export const AppContext = createContext(defaultProperties);
-
-const AppContextProvider = ({children, properties}) => (
-	<AppContext.Provider value={properties}>{children}</AppContext.Provider>
-);
-
-export default AppContextProvider;
-
-const useApplicationProvider = () => useContext(AppContext);
-
-export {useApplicationProvider};
+export function useAppPropertiesContext() {
+	return useContext(AppPropertiesContext);
+}

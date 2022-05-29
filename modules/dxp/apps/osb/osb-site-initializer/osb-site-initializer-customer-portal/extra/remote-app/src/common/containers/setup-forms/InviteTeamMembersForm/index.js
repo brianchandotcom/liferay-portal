@@ -16,7 +16,7 @@ import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import i18n from '../../../I18n';
 import {Badge, Button} from '../../../components';
-import {useApplicationProvider} from '../../../context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../context/AppPropertiesProvider';
 import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
@@ -48,7 +48,7 @@ const InviteTeamMembersPage = ({
 	const {
 		articleAccountSupportURL,
 		provisioningServerAPI,
-	} = useApplicationProvider();
+	} = useAppPropertiesContext();
 
 	const [addTeamMemberInvitation, {error: addTeamMemberError}] = useMutation(
 		addTeamMembersInvitation

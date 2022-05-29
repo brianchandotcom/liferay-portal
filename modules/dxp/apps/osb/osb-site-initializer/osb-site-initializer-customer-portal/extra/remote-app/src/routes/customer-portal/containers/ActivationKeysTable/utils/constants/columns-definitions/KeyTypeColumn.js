@@ -11,12 +11,12 @@
 
 import {useCallback} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../../common/context/AppPropertiesProvider';
 import {hasCluster} from '../../hasCluster';
 import {hasVirtualCluster} from '../../index';
 
 const KeyTypeColumn = ({activationKey}) => {
-	const {liferayWebDAV} = useApplicationProvider();
+	const {liferayWebDAV} = useAppPropertiesContext();
 
 	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
 		activationKey?.licenseEntryType

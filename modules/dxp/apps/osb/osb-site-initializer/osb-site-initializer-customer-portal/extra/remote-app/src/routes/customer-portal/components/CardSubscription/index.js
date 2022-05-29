@@ -12,7 +12,7 @@
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import i18n from '../../../../common/I18n';
-import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../common/context/AppPropertiesProvider';
 import ModalCardSubscription from '../../containers/ModalCardSubscription';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/getDateCustomFormat';
@@ -38,7 +38,7 @@ const CardSubscription = ({
 	cardSubscriptionData,
 	selectedSubscriptionGroup,
 }) => {
-	const {liferayWebDAV} = useApplicationProvider();
+	const {liferayWebDAV} = useAppPropertiesContext();
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),

@@ -11,7 +11,7 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
-import {useApplicationProvider} from '../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
@@ -57,7 +57,7 @@ const eventKoroneikiAccounts = Liferay.publish(
 );
 
 const AppContextProvider = ({children}) => {
-	const {oktaSessionAPI} = useApplicationProvider();
+	const {oktaSessionAPI} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		isQuickLinksExpanded: true,
 		project: undefined,

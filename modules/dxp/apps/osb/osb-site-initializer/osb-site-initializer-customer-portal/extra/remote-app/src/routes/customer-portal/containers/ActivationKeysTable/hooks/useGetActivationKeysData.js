@@ -10,7 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
 import {getActivationLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 
 const MAX_ITEMS = 9999;
@@ -21,7 +21,7 @@ export default function useGetActivationKeysData(
 	sessionId,
 	productName
 ) {
-	const {provisioningServerAPI} = useApplicationProvider();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const [loading, setLoading] = useState(true);
 	const [activationKeys, setActivationKeys] = useState([]);

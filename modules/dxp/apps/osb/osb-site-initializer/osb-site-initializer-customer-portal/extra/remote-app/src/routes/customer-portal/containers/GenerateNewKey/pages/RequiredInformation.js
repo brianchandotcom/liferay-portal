@@ -18,7 +18,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
 import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
@@ -37,7 +37,7 @@ const RequiredInformation = ({
 	urlPreviousPage,
 	values,
 }) => {
-	const {provisioningServerAPI} = useApplicationProvider();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);

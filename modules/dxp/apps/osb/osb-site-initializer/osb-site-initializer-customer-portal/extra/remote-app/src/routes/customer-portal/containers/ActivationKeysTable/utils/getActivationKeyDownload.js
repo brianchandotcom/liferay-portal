@@ -12,7 +12,7 @@
 import {downloadActivationLicenseKey} from './downloadActivationLicenseKey';
 
 export async function getActivationKeyDownload(
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	handleAlertStatus,
 	activationKey,
@@ -20,7 +20,7 @@ export async function getActivationKeyDownload(
 ) {
 	const downloadedKey = await downloadActivationLicenseKey(
 		activationKey?.id,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId,
 		activationKey?.productName,
 		activationKey?.productVersion,

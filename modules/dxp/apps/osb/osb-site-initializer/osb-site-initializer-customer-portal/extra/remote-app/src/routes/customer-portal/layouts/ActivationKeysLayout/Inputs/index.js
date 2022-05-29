@@ -38,8 +38,8 @@ const ActivationKeysInputs = ({
 	const [{project, userAccount}] = useCustomerPortal();
 
 	const {
-		createSupportRequest,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
+		submitSupportTicketURL,
 	} = useApplicationProvider();
 
 	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
@@ -120,7 +120,7 @@ const ActivationKeysInputs = ({
 			selectDateInterval.endDate.toISOString(),
 			selectDateInterval.startDate.toISOString(),
 			selectedAccountSubscriptionName.toLowerCase(),
-			licenseKeyDownloadURL,
+			provisioningServerAPI,
 			encodeURI(productTitle),
 			sessionId
 		);
@@ -153,7 +153,7 @@ const ActivationKeysInputs = ({
 					)}
 
 					<a
-						href={createSupportRequest}
+						href={submitSupportTicketURL}
 						rel="noreferrer"
 						target="_blank"
 					>
@@ -172,7 +172,7 @@ const ActivationKeysInputs = ({
 				</p>
 			),
 		}),
-		[createSupportRequest, productTitle]
+		[submitSupportTicketURL, productTitle]
 	);
 
 	const currentEnterpriseMessage = useMemo(() => {

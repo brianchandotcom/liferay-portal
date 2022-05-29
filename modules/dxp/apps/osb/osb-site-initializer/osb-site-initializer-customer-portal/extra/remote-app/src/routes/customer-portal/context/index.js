@@ -57,7 +57,7 @@ const eventKoroneikiAccounts = Liferay.publish(
 );
 
 const AppContextProvider = ({assetsPath, children, page}) => {
-	const {oktaSessionURL} = useApplicationProvider();
+	const {oktaSessionAPI} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
 		assetsPath,
 		isQuickLinksExpanded: true,
@@ -201,7 +201,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 		};
 
 		const getSessionId = async () => {
-			const session = await getCurrentSession(oktaSessionURL);
+			const session = await getCurrentSession(oktaSessionAPI);
 
 			if (session) {
 				dispatch({
@@ -261,8 +261,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
-					else {
+					} else {
 						accountBrief = user.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===
@@ -280,7 +279,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [oktaSessionURL]);
+	}, [oktaSessionAPI]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

@@ -28,7 +28,7 @@ const ActionButton = ({
 	sessionId,
 	setStatus,
 }) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 	const navigate = useNavigate();
 
 	const handleAlertStatus = useCallback(
@@ -57,7 +57,7 @@ const ActionButton = ({
 		const activationKeysDownloadItems = getActivationKeysDownloadItems(
 			isAbleToDownloadAggregateKeys,
 			filterCheckedActivationKeys,
-			licenseKeyDownloadURL,
+			provisioningServerAPI,
 			sessionId,
 			handleMultipleAlertStatus,
 			handleAlertStatus,
@@ -82,7 +82,7 @@ const ActionButton = ({
 				className="btn btn-primary"
 				onClick={async () =>
 					getActivationKeyDownload(
-						licenseKeyDownloadURL,
+						provisioningServerAPI,
 						sessionId,
 						handleAlertStatus,
 						activationKeysByStatusPaginatedChecked[0],
@@ -100,7 +100,7 @@ const ActionButton = ({
 
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		project?.accountKey,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId,
 		handleAlertStatus,
 		handleRedirectPage,

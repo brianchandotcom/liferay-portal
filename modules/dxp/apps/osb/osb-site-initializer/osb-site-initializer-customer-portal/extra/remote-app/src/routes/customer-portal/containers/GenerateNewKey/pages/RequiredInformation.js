@@ -37,7 +37,7 @@ const RequiredInformation = ({
 	urlPreviousPage,
 	values,
 }) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
@@ -115,8 +115,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 			const sizing = `Sizing ${
 				infoSelectedKey?.selectedSubscription?.instanceSize || 1
@@ -142,12 +141,11 @@ const RequiredInformation = ({
 			if (infoSelectedKey.hasNotPermanentLicence) {
 				await createNewGenerateKey(
 					accountKey,
-					licenseKeyDownloadURL,
+					provisioningServerAPI,
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {
@@ -163,7 +161,7 @@ const RequiredInformation = ({
 
 							return createNewGenerateKey(
 								accountKey,
-								licenseKeyDownloadURL,
+								provisioningServerAPI,
 								sessionId,
 								licenseKey
 							);

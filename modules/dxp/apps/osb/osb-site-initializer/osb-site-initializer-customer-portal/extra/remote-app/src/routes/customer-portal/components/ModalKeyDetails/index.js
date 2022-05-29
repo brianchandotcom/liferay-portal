@@ -19,7 +19,7 @@ const ModalKeyDetails = ({
 	activationKeys,
 	assetsPath,
 	downloadActivationLicenseKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	observer,
 	onClose,
 	sessionId,
@@ -68,7 +68,7 @@ const ModalKeyDetails = ({
 						onClick={() =>
 							downloadActivationLicenseKey(
 								activationKeys.id,
-								licenseKeyDownloadURL,
+								provisioningServerAPI,
 								sessionId
 							)
 						}

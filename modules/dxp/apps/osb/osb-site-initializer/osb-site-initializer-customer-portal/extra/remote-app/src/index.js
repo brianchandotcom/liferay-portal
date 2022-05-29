@@ -20,13 +20,13 @@ import ClayProvider from './common/providers/ClayProvider';
 import CustomerPortal from './routes/customer-portal';
 import Onboarding from './routes/onboarding';
 
-const CustomerPortalApplication = ({liferaywebdavurl, page, route}) => {
+const CustomerPortalApplication = ({liferayWebDAV, page, route}) => {
 	if (route === 'portal') {
-		return <CustomerPortal assetsPath={liferaywebdavurl} page={page} />;
+		return <CustomerPortal assetsPath={liferayWebDAV} page={page} />;
 	}
 
 	if (route === 'onboarding') {
-		return <Onboarding assetsPath={liferaywebdavurl} />;
+		return <Onboarding assetsPath={liferayWebDAV} />;
 	}
 };
 
@@ -37,28 +37,30 @@ class CustomerPortalWebComponent extends HTMLElement {
 
 	connectedCallback() {
 		const properties = {
-			createSupportRequest: super.getAttribute(
-				'submit-support-ticket-url'
+			articleAccountSupportURL: super.getAttribute(
+				'article-account-support-url'
 			),
-			deployingActivationKeysURL: super.getAttribute(
+			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
 			),
-			gravatarAvatarURL: super.getAttribute('gravatar-api'),
-			licenseKeyDownloadURL: super.getAttribute(
+			gravatarAPI: super.getAttribute('gravatar-api'),
+			liferayWebDAV: super.getAttribute('liferaywebdavurl'),
+			oktaSessionAPI: super.getAttribute('okta-session-api'),
+			page: super.getAttribute('page'),
+			provisioningServerAPI: super.getAttribute(
 				'provisioning-server-api'
 			),
-			liferaywebdavurl: super.getAttribute('liferaywebdavurl'),
-			oktaSessionURL: super.getAttribute('okta-session-api'),
-			page: super.getAttribute('page'),
 			route: super.getAttribute('route'),
-			supportLink: super.getAttribute('article-account-support-url'),
+			submitSupportTicketURL: super.getAttribute(
+				'submit-support-ticket-url'
+			),
 		};
 		ReactDOM.render(
 			<ClayProvider>
 				<ApolloProvider client={apolloClient}>
 					<AppContextProvider properties={properties}>
 						<CustomerPortalApplication
-							liferaywebdavurl={properties.liferaywebdavurl}
+							liferayWebDAV={properties.liferayWebDAV}
 							page={properties.page}
 							route={properties.route}
 						/>

@@ -38,7 +38,7 @@ import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
 const ActivationKeysTable = ({productName, project, sessionId}) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
 	const {state} = useLocation();
@@ -118,7 +118,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 					displayType="null"
 					onClick={() =>
 						getActivationKeyDownload(
-							licenseKeyDownloadURL,
+							provisioningServerAPI,
 							sessionId,
 							handleAlertStatus,
 							activationKey,
@@ -148,7 +148,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 			keyType: <KeyTypeColumn activationKey={activationKey} />,
 			status: <StatusColumn activationKey={activationKey} />,
 		}),
-		[handleAlertStatus, licenseKeyDownloadURL, project.name, sessionId]
+		[handleAlertStatus, provisioningServerAPI, project.name, sessionId]
 	);
 
 	return (

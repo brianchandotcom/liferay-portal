@@ -34,7 +34,7 @@ const AppContext = createContext();
 const MAX_PAGE_SIZE = 9999;
 
 const AppContextProvider = ({assetsPath, children}) => {
-	const {oktaSessionURL} = useApplicationProvider();
+	const {oktaSessionAPI} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
 		analyticsCloudActivationSubmittedStatus: undefined,
 		assetsPath,
@@ -160,7 +160,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		const getSessionId = async () => {
-			const session = await getCurrentSession(oktaSessionURL);
+			const session = await getCurrentSession(oktaSessionAPI);
 
 			if (session) {
 				dispatch({
@@ -275,7 +275,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		};
 
 		fetchData();
-	}, [oktaSessionURL]);
+	}, [oktaSessionAPI]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

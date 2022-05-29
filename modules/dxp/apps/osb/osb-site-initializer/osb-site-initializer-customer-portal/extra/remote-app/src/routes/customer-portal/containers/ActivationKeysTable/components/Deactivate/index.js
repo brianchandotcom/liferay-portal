@@ -26,7 +26,7 @@ const DeactivateButton = ({
 	sessionId,
 	setDeactivateKeysStatus,
 }) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 	const [isDeactivating, setIsDeactivating] = useState(false);
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [alreadyDeactivated, setAlreadyDeactivated] = useState(false);
@@ -41,7 +41,7 @@ const DeactivateButton = ({
 		setIsDeactivating(true);
 
 		const response = await putDeactivateKeys(
-			licenseKeyDownloadURL,
+			provisioningServerAPI,
 			filterCheckedActivationKeys,
 			sessionId
 		);

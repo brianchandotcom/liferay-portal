@@ -14,13 +14,13 @@ export async function getCommonLicenseKey(
 	dateEnd,
 	dateStart,
 	environment,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	productName,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -33,14 +33,14 @@ export async function getCommonLicenseKey(
 
 export async function getDevelopmentLicenseKey(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	selectedVersion,
 	productName
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/${productName}/product-version/${selectedVersion}/development-license-key`,
+		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-version/${selectedVersion}/development-license-key`,
 
 		{
 			headers: {
@@ -54,7 +54,7 @@ export async function getDevelopmentLicenseKey(
 
 export async function getActivationLicenseKey(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	filter,
 	page,
 	pageSize,
@@ -62,7 +62,7 @@ export async function getActivationLicenseKey(
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys?filter=${filter}&page=${page}&pageSize=${pageSize}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/license-keys?filter=${filter}&page=${page}&pageSize=${pageSize}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -75,12 +75,12 @@ export async function getActivationLicenseKey(
 
 export async function getActivationDownloadKey(
 	licenseKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/license-keys/${licenseKey}/download`,
+		`${provisioningServerAPI}/license-keys/${licenseKey}/download`,
 
 		{
 			headers: {
@@ -94,12 +94,12 @@ export async function getActivationDownloadKey(
 
 export async function getAggregatedActivationDownloadKey(
 	selectedKeysIDs,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/license-keys/download?${selectedKeysIDs}`,
+		`${provisioningServerAPI}/license-keys/download?${selectedKeysIDs}`,
 
 		{
 			headers: {
@@ -113,12 +113,12 @@ export async function getAggregatedActivationDownloadKey(
 
 export async function getMultipleActivationDownloadKey(
 	selectedKeysIDs,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/license-keys/download-zip?${selectedKeysIDs}`,
+		`${provisioningServerAPI}/license-keys/download-zip?${selectedKeysIDs}`,
 
 		{
 			headers: {
@@ -132,13 +132,13 @@ export async function getMultipleActivationDownloadKey(
 
 export async function getExportedLicenseKeys(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	productName
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys/export?filter=active+eq+true+and+startswith(productName,'${productName}')`,
+		`${provisioningServerAPI}/accounts/${accountKey}/license-keys/export?filter=active+eq+true+and+startswith(productName,'${productName}')`,
 
 		{
 			headers: {
@@ -152,14 +152,14 @@ export async function getExportedLicenseKeys(
 
 export async function associateContactRoleNameByEmailByProject(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	emailURI,
 	roleName
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -173,14 +173,14 @@ export async function associateContactRoleNameByEmailByProject(
 
 export async function deleteContactRoleNameByEmailByProject(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	emailURI,
 	rolesToDelete
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${rolesToDelete}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${rolesToDelete}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -193,13 +193,13 @@ export async function deleteContactRoleNameByEmailByProject(
 }
 
 export async function putDeactivateKeys(
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	licenseKeyIds,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/license-keys/deactivate?${licenseKeyIds}`,
+		`${provisioningServerAPI}/license-keys/deactivate?${licenseKeyIds}`,
 
 		{
 			headers: {
@@ -214,13 +214,13 @@ export async function putDeactivateKeys(
 
 export async function getNewGenerateKeyFormValues(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	productGroupName,
 	sessionId
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/${productGroupName}/generate-form`,
+		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productGroupName}/generate-form`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -233,13 +233,13 @@ export async function getNewGenerateKeyFormValues(
 
 export async function createNewGenerateKey(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	licenseKey
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys`,
+		`${provisioningServerAPI}/accounts/${accountKey}/license-keys`,
 		{
 			body: JSON.stringify([licenseKey]),
 			headers: {

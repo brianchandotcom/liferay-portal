@@ -46,7 +46,7 @@ import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 const ROLE_FILTER_NAME = 'contactRoleNames';
 const ALERT_TIMEOUT = 3000;
 
-const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
+const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
 	const {accountRoles} = useAccountRoles(project);
 
 	const {
@@ -136,7 +136,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 			associateContactRoleNameByEmailByProject(
 				project.accountKey,
-				licenseKeyDownloadURL,
+				provisioningServerAPI,
 				sessionId,
 				encodeURI(userAccount?.emailAddress),
 				currentRole?.raysourceName
@@ -194,7 +194,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 			deleteContactRoleNameByEmailByProject(
 				project.accountKey,
-				licenseKeyDownloadURL,
+				provisioningServerAPI,
 				sessionId,
 				encodeURI(userToBeRemoved?.emailAddress),
 				rolesToBeRemoved

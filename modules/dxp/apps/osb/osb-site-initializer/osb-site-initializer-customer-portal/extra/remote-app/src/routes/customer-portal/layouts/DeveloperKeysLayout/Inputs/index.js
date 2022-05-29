@@ -42,8 +42,8 @@ const DeveloperKeysInputs = ({
 	sessionId,
 }) => {
 	const {
-		deployingActivationKeysURL,
-		licenseKeyDownloadURL,
+		articleDeployingActivationKeysURL,
+		provisioningServerAPI,
 	} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
@@ -81,7 +81,7 @@ const DeveloperKeysInputs = ({
 		const [selectedVersionSplitted] = selectedVersion.split(' ');
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
-			licenseKeyDownloadURL,
+			provisioningServerAPI,
 			sessionId,
 			encodeURI(selectedVersionSplitted),
 			productName
@@ -155,7 +155,7 @@ const DeveloperKeysInputs = ({
 				)} `}
 
 				<a
-					href={deployingActivationKeysURL}
+					href={articleDeployingActivationKeysURL}
 					rel="noreferrer noopener"
 					target="_blank"
 				>

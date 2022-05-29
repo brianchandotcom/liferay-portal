@@ -20,7 +20,7 @@ import {useCustomerPortal} from '../../../context';
 const TeamMembers = () => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const [{project, sessionId, subscriptionGroups}] = useCustomerPortal();
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 
 	useEffect(() => {
 		setHasQuickLinksPanel(false);
@@ -45,8 +45,8 @@ const TeamMembers = () => {
 
 			<div className="mt-4">
 				<TeamMembersTable
-					licenseKeyDownloadURL={licenseKeyDownloadURL}
 					project={project}
+					provisioningServerAPI={provisioningServerAPI}
 					sessionId={sessionId}
 				/>
 			</div>

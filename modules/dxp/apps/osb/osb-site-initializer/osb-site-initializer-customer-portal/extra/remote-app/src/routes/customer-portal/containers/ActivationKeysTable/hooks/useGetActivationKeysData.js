@@ -21,7 +21,7 @@ export default function useGetActivationKeysData(
 	sessionId,
 	productName
 ) {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 
 	const [loading, setLoading] = useState(true);
 	const [activationKeys, setActivationKeys] = useState([]);
@@ -34,7 +34,7 @@ export default function useGetActivationKeysData(
 		const fetchActivationKeysData = async () => {
 			const {items} = await getActivationLicenseKey(
 				project?.accountKey,
-				licenseKeyDownloadURL,
+				provisioningServerAPI,
 				encodeURI(filterTerm),
 				PAGE,
 				MAX_ITEMS,
@@ -49,7 +49,7 @@ export default function useGetActivationKeysData(
 		};
 
 		fetchActivationKeysData();
-	}, [filterTerm, licenseKeyDownloadURL, project?.accountKey, sessionId]);
+	}, [filterTerm, provisioningServerAPI, project?.accountKey, sessionId]);
 
 	return {
 		activationKeysState: [activationKeys, setActivationKeys],

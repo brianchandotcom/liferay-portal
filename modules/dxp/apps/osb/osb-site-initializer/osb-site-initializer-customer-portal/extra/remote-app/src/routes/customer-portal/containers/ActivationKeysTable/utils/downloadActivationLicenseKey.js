@@ -20,7 +20,7 @@ import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
 
 export async function downloadActivationLicenseKey(
 	licenseKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	activationKeyName,
 	activationKeyVersion,
@@ -28,7 +28,7 @@ export async function downloadActivationLicenseKey(
 ) {
 	const license = await getActivationDownloadKey(
 		licenseKey,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId
 	);
 
@@ -51,14 +51,14 @@ export async function downloadActivationLicenseKey(
 
 export async function downloadAggregatedActivationKey(
 	selectedKeysIDs,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	selectedKeysObjects,
 	projectName
 ) {
 	const license = await getAggregatedActivationDownloadKey(
 		selectedKeysIDs,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId
 	);
 
@@ -110,13 +110,13 @@ export async function downloadAggregatedActivationKey(
 
 export async function downloadMultipleActivationKey(
 	selectedKeysIDs,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	projectName
 ) {
 	const license = await getMultipleActivationDownloadKey(
 		selectedKeysIDs,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId
 	);
 
@@ -136,13 +136,13 @@ export async function downloadMultipleActivationKey(
 
 export async function downloadAllKeysDetails(
 	accountKey,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	productName
 ) {
 	const license = await getExportedLicenseKeys(
 		accountKey,
-		licenseKeyDownloadURL,
+		provisioningServerAPI,
 		sessionId,
 		productName
 	);

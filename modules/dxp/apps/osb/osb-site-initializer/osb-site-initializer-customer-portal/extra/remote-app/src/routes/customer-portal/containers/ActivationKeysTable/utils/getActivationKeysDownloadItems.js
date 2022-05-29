@@ -20,7 +20,7 @@ import {
 export function getActivationKeysDownloadItems(
 	isAbleToDownloadAggregateKeys,
 	selectedKeysIDs,
-	licenseKeyDownloadURL,
+	provisioningServerAPI,
 	sessionId,
 	handleMultipleAlertStatus,
 	handleAlertStatus,
@@ -37,7 +37,7 @@ export function getActivationKeysDownloadItems(
 			onClick: async () => {
 				const downloadedAggregated = await downloadAggregatedActivationKey(
 					selectedKeysIDs,
-					licenseKeyDownloadURL,
+					provisioningServerAPI,
 					sessionId,
 					selectedKeysObjects,
 					projectName
@@ -53,7 +53,7 @@ export function getActivationKeysDownloadItems(
 			onClick: async () => {
 				const downloadedMultiple = await downloadMultipleActivationKey(
 					selectedKeysIDs,
-					licenseKeyDownloadURL,
+					provisioningServerAPI,
 					sessionId,
 					projectName
 				);

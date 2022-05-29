@@ -34,7 +34,7 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useCustomerPortal();
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 
 	const [generateFormValues, setGenerateFormValues] = useState();
 
@@ -56,7 +56,7 @@ const SelectSubscription = ({
 		const fetchGenerateFormData = async () => {
 			const data = await getNewGenerateKeyFormValues(
 				accountKey,
-				licenseKeyDownloadURL,
+				provisioningServerAPI,
 				productGroupName,
 				sessionId
 			);
@@ -69,7 +69,7 @@ const SelectSubscription = ({
 		if (sessionId) {
 			fetchGenerateFormData();
 		}
-	}, [accountKey, licenseKeyDownloadURL, productGroupName, sessionId]);
+	}, [accountKey, provisioningServerAPI, productGroupName, sessionId]);
 
 	const productVersions = useMemo(() => {
 		if (generateFormValues?.versions) {

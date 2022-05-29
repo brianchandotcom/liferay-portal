@@ -11,9 +11,9 @@
 
 import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
 
-export async function getCurrentSession(oktaSessionURL) {
+export async function getCurrentSession(oktaSessionAPI) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(oktaSessionURL, {
+	const response = await fetch(oktaSessionAPI, {
 		credentials: 'include',
 	});
 	const responseContentType = response.headers.get('content-type');

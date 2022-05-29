@@ -29,7 +29,7 @@ const ModalKeyDetails = ({
 	sessionId,
 }) => {
 	const [{assetsPath}] = useCustomerPortal();
-	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {provisioningServerAPI} = useApplicationProvider();
 
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
@@ -88,7 +88,7 @@ const ModalKeyDetails = ({
 						onClick={async () => {
 							const isAbleToDownloadKey = await downloadActivationLicenseKey(
 								currentActivationKey.id,
-								licenseKeyDownloadURL,
+								provisioningServerAPI,
 								sessionId,
 								currentActivationKey.productName,
 								currentActivationKey.productVersion,

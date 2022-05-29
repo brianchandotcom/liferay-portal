@@ -51,6 +51,7 @@ export default {
 	'build': 'Build',
 	'build-history': 'Build History',
 	'build-name': 'Build Name',
+	'cancel': 'Cancel',
 	'case': 'Case',
 	'case-details': 'Case Details',
 	'case-name': 'Case Name',

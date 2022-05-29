@@ -27,7 +27,8 @@ const useLocalStorage = <T = string>(
 			storageValue = window.localStorage.getItem(key);
 
 			return storageValue ? JSON.parse(storageValue) : initialValue;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 
 			return storageValue || initialValue;
@@ -39,7 +40,8 @@ const useLocalStorage = <T = string>(
 			setStoredValue(value);
 
 			window.localStorage.setItem(key, JSON.stringify(value));
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};

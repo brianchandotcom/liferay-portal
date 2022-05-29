@@ -16,7 +16,7 @@ import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
 import {getDevelopmentLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';

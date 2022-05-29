@@ -11,7 +11,7 @@
 
 import {useCallback} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
 import {hasCluster} from '../../hasCluster';
 import {hasVirtualCluster} from '../../index';
 

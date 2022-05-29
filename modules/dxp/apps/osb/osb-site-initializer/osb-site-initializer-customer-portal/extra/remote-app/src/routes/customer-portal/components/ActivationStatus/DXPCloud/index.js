@@ -19,7 +19,7 @@ import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import SetupDXPCloud from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
-import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,

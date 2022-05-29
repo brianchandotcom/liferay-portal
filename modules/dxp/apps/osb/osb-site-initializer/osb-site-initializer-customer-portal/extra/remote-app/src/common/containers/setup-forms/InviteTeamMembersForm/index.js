@@ -16,7 +16,7 @@ import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import i18n from '../../../I18n';
 import {Badge, Button} from '../../../components';
-import {useAppPropertiesContext} from '../../../context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../contexts/AppPropertiesContext';
 import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,

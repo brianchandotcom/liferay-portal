@@ -11,7 +11,7 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import client from '../../../apolloClient';
-import {useAppPropertiesContext} from '../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,

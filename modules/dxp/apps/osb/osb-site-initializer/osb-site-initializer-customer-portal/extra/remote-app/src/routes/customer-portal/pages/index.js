@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useAppPropertiesContext} from '../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '../context';
 import {PAGE_TYPES} from '../utils/constants';
 import Home from './Home';

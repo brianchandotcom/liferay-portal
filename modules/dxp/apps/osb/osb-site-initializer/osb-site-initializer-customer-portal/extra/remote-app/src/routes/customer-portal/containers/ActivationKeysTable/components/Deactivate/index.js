@@ -13,7 +13,7 @@ import {Button as ClayButton} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import i18n from '../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
 import {putDeactivateKeys} from '../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../../utils/constants';
 import ConfirmationMessageModal from './ConfirmationMessageModal';

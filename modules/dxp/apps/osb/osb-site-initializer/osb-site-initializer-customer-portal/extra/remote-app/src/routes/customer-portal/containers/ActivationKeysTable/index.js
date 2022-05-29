@@ -16,7 +16,7 @@ import {useLocation, useOutletContext} from 'react-router-dom';
 import i18n from '../../../../common/I18n';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
-import {useAppPropertiesContext} from '../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
 import DownloadAlert from './components/DownloadAlert';
 import ActivationKeysTableHeader from './components/Header';

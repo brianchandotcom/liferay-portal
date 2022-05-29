@@ -12,7 +12,7 @@
 
 import {memo} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
 import {getInitials} from '../../getInitials';

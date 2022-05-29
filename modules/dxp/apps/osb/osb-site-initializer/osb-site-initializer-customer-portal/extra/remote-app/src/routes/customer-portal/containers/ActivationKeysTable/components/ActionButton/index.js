@@ -13,7 +13,7 @@ import {useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';

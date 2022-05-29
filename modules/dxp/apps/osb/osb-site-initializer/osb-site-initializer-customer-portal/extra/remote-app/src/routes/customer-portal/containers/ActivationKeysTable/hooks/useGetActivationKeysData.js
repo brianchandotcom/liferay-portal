@@ -10,7 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getActivationLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 
 const MAX_ITEMS = 9999;

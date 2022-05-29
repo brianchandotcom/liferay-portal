@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {memo, useEffect} from 'react';
 import {Link, useMatch, useResolvedPath} from 'react-router-dom';
 import {Button} from '../../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
 
 const MenuItem = ({children, iconKey, setActive, to}) => {
 	const {liferayWebDAV} = useAppPropertiesContext();

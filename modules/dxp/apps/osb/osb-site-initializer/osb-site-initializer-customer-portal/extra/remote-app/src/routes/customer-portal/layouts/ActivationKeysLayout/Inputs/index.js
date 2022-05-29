@@ -15,7 +15,7 @@ import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../common/context/AppPropertiesProvider';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptions,
 	getAccountSubscriptionsTerms,

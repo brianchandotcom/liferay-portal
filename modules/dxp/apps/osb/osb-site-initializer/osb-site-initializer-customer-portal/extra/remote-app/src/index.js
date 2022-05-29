@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 import './common/styles/global.scss';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import apolloClient from './apolloClient';
-import {AppPropertiesContext} from './common/context/AppPropertiesProvider';
+import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
 import Onboarding from './routes/onboarding';

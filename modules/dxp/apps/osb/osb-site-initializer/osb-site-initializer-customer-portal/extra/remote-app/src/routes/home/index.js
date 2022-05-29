@@ -9,8 +9,15 @@
  * distribution rights of the Software.
  */
 
+import SearchBar from './components/SearchBar';
+
 const Home = () => {
-	return <>Hello!</>;
+	const onSearchSubmit = (term) => {
+		// eslint-disable-next-line no-console
+		console.log('New Search submit', term);
+	};
+
+	return <SearchBar onSearchSubmit={(term) => onSearchSubmit(term)} />;
 };
 
 export default Home;

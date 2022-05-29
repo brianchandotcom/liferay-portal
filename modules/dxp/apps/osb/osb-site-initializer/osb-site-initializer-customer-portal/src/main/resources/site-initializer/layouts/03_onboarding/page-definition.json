@@ -22,7 +22,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 									"portletSetupPortletDecoratorId": "barebone",
-									"properties": "okta-session-url=https://login-dev.liferay.com/api/v1/sessions/me/\nroute=onboarding\nlicense-key-download-url=https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"
+									"properties": "okta-session-api=https://login-dev.liferay.com/api/v1/sessions/me/\nroute=onboarding\nprovisioning-server-api=https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}

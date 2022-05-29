@@ -37,22 +37,21 @@ class CustomerPortalWebComponent extends HTMLElement {
 
 	connectedCallback() {
 		const properties = {
-			createSupportRequest: super.getAttribute('create-support-request'),
-			customerPortalRoles: super.getAttribute(
-				'customer-portal-roles-url'
+			createSupportRequest: super.getAttribute(
+				'submit-support-ticket-url'
 			),
 			deployingActivationKeysURL: super.getAttribute(
-				'deploying-activation-keys-url'
+				'article-deploying-activation-keys-url'
 			),
-			gravatarAvatarURL: super.getAttribute('gravatar-avatar-url'),
+			gravatarAvatarURL: super.getAttribute('gravatar-api'),
 			licenseKeyDownloadURL: super.getAttribute(
-				'license-key-download-url'
+				'provisioning-server-api'
 			),
 			liferaywebdavurl: super.getAttribute('liferaywebdavurl'),
-			oktaSessionURL: super.getAttribute('okta-session-url'),
+			oktaSessionURL: super.getAttribute('okta-session-api'),
 			page: super.getAttribute('page'),
 			route: super.getAttribute('route'),
-			supportLink: super.getAttribute('support-link'),
+			supportLink: super.getAttribute('article-account-support-url'),
 		};
 		ReactDOM.render(
 			<ClayProvider>

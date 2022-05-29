@@ -15,7 +15,7 @@ import ClayPopover from '@clayui/popover';
 import i18n from '../../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 const PopoverIconButton = ({alignPosition = 'bottom'}) => {
-	const {customerPortalRoles} = useApplicationProvider();
+	const {supportLink} = useApplicationProvider();
 
 	return (
 		<ClayPopover
@@ -36,11 +36,7 @@ const PopoverIconButton = ({alignPosition = 'bottom'}) => {
 					'the-limit-of-support-seats-available-counts-the-total-of-administrators-requesters-roles-assigned-due-to-both-have-role-permissions-to-open-support-tickets'
 				)}
 
-				<a
-					href={customerPortalRoles}
-					rel="noopener noreferrer"
-					target="_blank"
-				>
+				<a href={supportLink} rel="noopener noreferrer" target="_blank">
 					{i18n.translate('learn-more-about-customer-portal-roles')}
 				</a>
 			</p>

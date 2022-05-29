@@ -8,6 +8,14 @@
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 
-	<liferay-remote-app-customer-portal create-support-request="https://help.liferay.com/hc/requests/new" customer-portal-roles-url="https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support" deploying-activation-keys-url="https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys" gravatar-avatar-url="https://www.gravatar.com/avatar" license-key-download-url="https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0/accounts" okta-session-url="https://login-dev.liferay.com/api/v1/sessions/me/" route="onboarding" support-link="https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support" />
+		<liferay-remote-app-customer-portal
+			submit-support-ticket-url="https://help.liferay.com/hc/requests/new"
+			article-deploying-activation-keys-url="https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys"
+			gravatar-api="https://www.gravatar.com/avatar"
+			provisioning-server-api="https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0/accounts"
+			okta-session-api="https://login-dev.liferay.com/api/v1/sessions/me/"
+			route="onboarding"
+			article-account-support-url="https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support"
+		/>
 	</body>
 </html>

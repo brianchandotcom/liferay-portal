@@ -12,7 +12,7 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import classNames from 'classnames';
 import i18n from '../../../../common/I18n';
-import {getIconSpriteMap} from '../../../providers/ClayProvider';
+import getIconSpriteMap from '../../../utils/getIconSpriteMap';
 
 const TablePagination = ({
 	activePage,

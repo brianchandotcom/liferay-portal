@@ -10,25 +10,35 @@
  */
 
 import {ApolloProvider} from '@apollo/client';
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './common/styles/global.scss';
+import {ClayIconSpriteContext} from '@clayui/icon';
 import apolloClient from './apolloClient';
 import AppContextProvider from './common/context/AppPropertiesProvider';
-import ClayProvider from './common/providers/ClayProvider';
+import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
 import Onboarding from './routes/onboarding';
 
-const CustomerPortalApplication = ({route}) => {
-	if (route === 'portal') {
-		return <CustomerPortal />;
-	}
+const ELEMENT_ID = 'liferay-remote-app-customer-portal';
 
-	if (route === 'onboarding') {
-		return <Onboarding />;
-	}
+const RouteApps = {
+	onboarding: <Onboarding />,
+	portal: <CustomerPortal />,
 };
+
+const CustomerPortalApp = ({apis, route, ...properties}) => (
+	<ApolloProvider client={apolloClient}>
+		<AppContextProvider
+			properties={{
+				...properties,
+				...apis,
+			}}
+		>
+			{RouteApps[route]}
+		</AppContextProvider>
+	</ApolloProvider>
+);
 
 class CustomerPortalWebComponent extends HTMLElement {
 	constructor() {
@@ -43,26 +53,29 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
 			),
-			gravatarAPI: super.getAttribute('gravatar-api'),
 			liferayWebDAV: super.getAttribute('liferaywebdavurl'),
-			oktaSessionAPI: super.getAttribute('okta-session-api'),
 			page: super.getAttribute('page'),
-			provisioningServerAPI: super.getAttribute(
-				'provisioning-server-api'
-			),
-			route: super.getAttribute('route'),
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'
 			),
 		};
+
+		const apis = {
+			gravatarAPI: super.getAttribute('gravatar-api'),
+			oktaSessionAPI: super.getAttribute('okta-session-api'),
+			provisioningServerAPI: super.getAttribute(
+				'provisioning-server-api'
+			),
+		};
+
 		ReactDOM.render(
-			<ClayProvider>
-				<ApolloProvider client={apolloClient}>
-					<AppContextProvider properties={properties}>
-						<CustomerPortalApplication route={properties.route} />
-					</AppContextProvider>
-				</ApolloProvider>
-			</ClayProvider>,
+			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+				<CustomerPortalApp
+					{...properties}
+					apis={apis}
+					route={super.getAttribute('route')}
+				/>
+			</ClayIconSpriteContext.Provider>,
 			this
 		);
 	}
@@ -71,8 +84,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 		ReactDOM.unmountComponentAtNode(this);
 	}
 }
-
-const ELEMENT_ID = 'liferay-remote-app-customer-portal';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, CustomerPortalWebComponent);

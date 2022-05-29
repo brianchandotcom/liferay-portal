@@ -9,16 +9,14 @@
  * distribution rights of the Software.
  */
 
-module.exports = {
-	env: {
-		node: true,
-	},
-	rules: {
-		'@liferay/group-imports': 'off',
-		'@liferay/portal/no-loader-import-specifier': 'off',
-		'@liferay/portal/no-react-dom-render': 'off',
-		'no-case-declarations': 'off',
-		'no-empty': ['error', {allowEmptyCatch: true}],
-		'no-prototype-builtins': 'off',
-	},
-};
+import {Liferay} from '../services/liferay';
+
+export default function getIconSpriteMap() {
+	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
+
+	if (pathThemeImages) {
+		return `${pathThemeImages}/clay/icons.svg`;
+	}
+
+	return require('@clayui/css/lib/images/icons/icons.svg').default;
+}

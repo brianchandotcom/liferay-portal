@@ -18,11 +18,13 @@ import apolloClient from './apolloClient';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
+import Home from './routes/home';
 import Onboarding from './routes/onboarding';
 
 const ELEMENT_ID = 'liferay-remote-app-customer-portal';
 
-const RouteApps = {
+const AppRoutes = {
+	home: <Home />,
 	onboarding: <Onboarding />,
 	portal: <CustomerPortal />,
 };
@@ -35,7 +37,7 @@ const CustomerPortalApp = ({apis, route, ...properties}) => (
 				...apis,
 			}}
 		>
-			{RouteApps[route]}
+			{AppRoutes[route]}
 		</AppPropertiesContext.Provider>
 	</ApolloProvider>
 );
@@ -54,7 +56,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 				'article-deploying-activation-keys-url'
 			),
 			liferayWebDAV: super.getAttribute('liferaywebdavurl'),
-			page: super.getAttribute('page'),
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'
 			),

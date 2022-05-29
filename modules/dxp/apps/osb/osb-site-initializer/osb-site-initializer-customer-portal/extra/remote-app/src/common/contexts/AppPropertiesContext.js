@@ -17,9 +17,7 @@ export const AppPropertiesContext = createContext({
 	gravatarAPI: '',
 	liferayWebDAV: '',
 	oktaSessionAPI: '',
-	page: '',
 	provisioningServerAPI: '',
-	route: '',
 	submitSupportTicketURL: '',
 });
 

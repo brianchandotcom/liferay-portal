@@ -9,18 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {useCustomerPortal} from '../context';
-import Overview from './Project/Overview';
-import ProjectRoutes from './Project/routes/project.routes';
-
-const Pages = () => {
-	const [{userAccount}] = useCustomerPortal();
-
-	if (userAccount) {
-		return <ProjectRoutes />;
-	}
-
-	return <Overview.Skeleton />;
+const Home = () => {
+	return <>Hello!</>;
 };
 
-export default Pages;
+export default Home;

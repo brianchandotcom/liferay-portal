@@ -22,7 +22,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 									"portletSetupPortletDecoratorId": "barebone",
-									"properties": "page=home\nroute=portal"
+									"properties": "route=home\nokta-session-api=https://login-dev.liferay.com/api/v1/sessions/me/"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}

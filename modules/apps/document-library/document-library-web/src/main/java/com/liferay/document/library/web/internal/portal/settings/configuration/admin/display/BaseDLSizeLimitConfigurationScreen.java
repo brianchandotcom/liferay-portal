@@ -70,7 +70,7 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 			httpServletRequest.setAttribute(
 				DLSizeLimitConfigurationDisplayContext.class.getName(),
 				new DLSizeLimitConfigurationDisplayContext(
-					dlSizeLimitConfigurationProvider,
+					dlSizeLimitConfigurationProvider, httpServletRequest,
 					PortalUtil.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),

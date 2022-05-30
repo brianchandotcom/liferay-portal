@@ -19,10 +19,13 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
@@ -31,10 +34,12 @@ public class DLSizeLimitConfigurationDisplayContext {
 
 	public DLSizeLimitConfigurationDisplayContext(
 		DLSizeLimitConfigurationProvider dlSizeLimitConfigurationProvider,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, String scope,
 		long scopePK) {
 
 		_dlSizeLimitConfigurationProvider = dlSizeLimitConfigurationProvider;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_scope = scope;
 		_scopePK = scopePK;
@@ -45,6 +50,8 @@ public class DLSizeLimitConfigurationDisplayContext {
 			_liferayPortletResponse
 		).setActionName(
 			"/instance_settings/edit_size_limits"
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
 		).setParameter(
 			"scope", _scope
 		).setParameter(
@@ -121,6 +128,7 @@ public class DLSizeLimitConfigurationDisplayContext {
 
 	private final DLSizeLimitConfigurationProvider
 		_dlSizeLimitConfigurationProvider;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _scope;
 	private final long _scopePK;

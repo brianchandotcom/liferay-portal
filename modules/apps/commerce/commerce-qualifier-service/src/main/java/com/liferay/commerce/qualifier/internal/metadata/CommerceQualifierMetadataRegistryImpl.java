@@ -20,8 +20,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -40,9 +43,28 @@ public class CommerceQualifierMetadataRegistryImpl
 
 	@Override
 	public CommerceQualifierMetadata getCommerceQualifierMetadata(
+		String commerceQualifierMetadataKey) {
+
+		return _serviceTrackerMap.getService(commerceQualifierMetadataKey);
+	}
+
+	@Override
+	public CommerceQualifierMetadata getCommerceQualifierMetadataByClassName(
 		String className) {
 
-		return _serviceTrackerMap.getService(className);
+		Collection<CommerceQualifierMetadata> commerceQualifierMetadatas =
+			_serviceTrackerMap.values();
+
+		Stream<CommerceQualifierMetadata> stream =
+			commerceQualifierMetadatas.stream();
+
+		return stream.filter(
+			commerceQualifierMetadata -> Objects.equals(
+				commerceQualifierMetadata.getModelClassName(), className)
+		).findAny(
+		).orElse(
+			null
+		);
 	}
 
 	@Override
@@ -69,9 +91,8 @@ public class CommerceQualifierMetadataRegistryImpl
 					bundleContext.getService(serviceReference);
 
 				try {
-					if (commerceQualifierMetadata.getModelClassName() != null) {
-						emitter.emit(
-							commerceQualifierMetadata.getModelClassName());
+					if (commerceQualifierMetadata.getKey() != null) {
+						emitter.emit(commerceQualifierMetadata.getKey());
 					}
 				}
 				finally {

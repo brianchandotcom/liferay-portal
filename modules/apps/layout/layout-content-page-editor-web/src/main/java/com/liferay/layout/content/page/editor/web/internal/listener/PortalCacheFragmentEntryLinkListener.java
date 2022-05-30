@@ -14,8 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.listener;
 
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;

@@ -245,6 +245,7 @@ export default function () {
 			setYoyTotalCommission(totalFirstCurrentCommissionValue);
 			setYoyLastYearCommission(YoyCommision);
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const options = [

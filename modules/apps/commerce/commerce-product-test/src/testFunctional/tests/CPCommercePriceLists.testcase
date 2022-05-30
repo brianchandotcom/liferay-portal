@@ -879,6 +879,8 @@ definition {
 			channelsEligibility = "Site1 Portal",
 			unpublish = "true");
 
+		Refresh();	
+
 		CommerceEntry.viewEntryEligibility(
 			accountsEligibility = "Account1",
 			channelsEligibility = "Site1 Portal");
@@ -896,6 +898,8 @@ definition {
 			channelsEligibility = "Site2 Portal",
 			unpublish = "true");
 
+		Refresh();	
+
 		CommerceEntry.viewEntryEligibility(
 			accountsEligibility = "Account2",
 			channelsEligibility = "Site2 Portal");
@@ -911,7 +915,7 @@ definition {
 		Type(
 			key_title = "Add SKUs",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "MIN55861 ");
+			value1 = "MIN55861");
 
 		Pause(locator1 = "2000");
 
@@ -934,7 +938,7 @@ definition {
 		Type(
 			key_title = "Add SKUs",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "MIN55861 ");
+			value1 = "MIN55861");
 
 		Pause(locator1 = "2000");
 
@@ -1021,8 +1025,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		Click(
-			key_radioOption = "All Accounts",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
+			radioLabel = "All Accounts",
+			locator1 = "Radio#ANY");
 
 		Button.clickPublish();
 
@@ -1033,8 +1037,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		Click(
-			key_radioOption = "All Accounts",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
+			radioLabel = "All Accounts",
+			locator1 = "Radio#ANY");
 
 		Button.clickPublish();
 

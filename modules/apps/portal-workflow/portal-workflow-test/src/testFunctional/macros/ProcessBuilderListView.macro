@@ -43,7 +43,6 @@ definition {
 				locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
 				value1 = "${numberResults} Results for ${workflowName}");
 		}
-
 	}
 
 	macro viewDefinitionPublicationStatus {

@@ -278,8 +278,8 @@ definition {
 			ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
 
 			ProcessBuilderListView.validateIfSearchItem(
-				singleResult = "true",
 				numberResults = "1",
+				singleResult = "true",
 				workflowName = "&quot;workflow content&quot;");
 
 			AssertElementPresent(
@@ -303,7 +303,6 @@ definition {
 	@description = "Verify that the user is able to search by Workflow title"
 	@priority = "4"
 	test CanSearchByTitle {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -312,8 +311,8 @@ definition {
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
 
 		ProcessBuilderListView.validateIfSearchItem(
-			singleResult = "true",
 			numberResults = "1",
+			singleResult = "true",
 			workflowName = "&quot;Approver&quot;");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");

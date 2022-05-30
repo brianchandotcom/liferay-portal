@@ -1386,8 +1386,8 @@ definition {
 			nodeYPosition = "100");
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
-			nodePosition = "100,-50",
-			nodeLabel = "Start");
+			nodeLabel = "Start",
+			nodePosition = "100,-50");
 
 		ProcessBuilderKaleoDesignerReact.viewNodePosition(
 			firstNodeXPosition = "300",
@@ -2646,8 +2646,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
-			nodePosition = "100,-50",
-			nodeLabel = "Start");
+			nodeLabel = "Start",
+			nodePosition = "100,-50");
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 

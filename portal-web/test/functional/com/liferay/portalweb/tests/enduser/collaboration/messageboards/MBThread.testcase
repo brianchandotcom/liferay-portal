@@ -699,12 +699,50 @@ definition {
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly when publication is enabled."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewImageInThreadWithPublication {
+		JSONPublications.enablePublications();
 
-		// TODO LPS-154391 CanViewImageInMBWithPublication pending implementation
+		JSONPublications.addPublication(publicationName = "Publication Name");
 
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToEditThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(
+			skipNavigation = "true",
+			threadBodyEdit = "MB Thread Message Body",
+			threadBodyImageEdit = "DM Document Title");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadBodyImage = "dm-document-title",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
 	}
 
 	@priority = "4"

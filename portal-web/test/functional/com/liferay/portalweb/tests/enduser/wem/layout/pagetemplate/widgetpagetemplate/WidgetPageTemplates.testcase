@@ -44,7 +44,7 @@ definition {
 	@priority = "5"
 	test AddPageBasedOnGlobalPageTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
+		property testray.component.names = "Training,Widget Page Templates";
 
 		task ("Add an active page template") {
 			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(

@@ -18,6 +18,7 @@ import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvid
 import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
@@ -69,13 +70,43 @@ public class DLSizeLimitConfigurationProviderImpl
 	}
 
 	@Override
+	public void updateCompanyMimeTypeSizeLimit(
+			long companyId, Map<String, Long> mimeTypeSizeLimit)
+		throws Exception {
+
+		Dictionary<String, Object> properties = null;
+
+		Configuration configuration = _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				DLSizeLimitConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				companyId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
+
+		configuration.update(properties);
+	}
+
+	@Override
 	public void updateGroupMimeTypeSizeLimit(
 			long groupId, Map<String, Long> mimeTypeSizeLimit)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
 
-		Configuration configuration = _getGroupConfiguration(groupId);
+		Configuration configuration = _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
 		if (configuration == null) {
 			configuration = _configurationAdmin.createFactoryConfiguration(
@@ -90,6 +121,51 @@ public class DLSizeLimitConfigurationProviderImpl
 		else {
 			properties = configuration.getProperties();
 		}
+
+		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
+
+		configuration.update(properties);
+	}
+
+	@Override
+	public void updateSystemMimeTypeSizeLimit(
+			Map<String, Long> mimeTypeSizeLimit)
+		throws Exception {
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			DLSizeLimitConfiguration.class.getName(), StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
+		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
+
+		configuration.update(properties);
+	}
+
+	private Configuration _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				DLSizeLimitConfiguration.class.getName() + ".scoped",
+				scope.getPropertyKey(), scopePK));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
+	}
+
+	private void _updateMimeTypeSizeLimitProperty(
+		Dictionary<String, Object> properties,
+		Map<String, Long> mimeTypeSizeLimit) {
 
 		if (mimeTypeSizeLimit.isEmpty()) {
 			properties.put("mimeTypeSizeLimit", new String[0]);
@@ -109,25 +185,6 @@ public class DLSizeLimitConfigurationProviderImpl
 
 			properties.put("mimeTypeSizeLimit", mimeTypeSizeLimitArray);
 		}
-
-		configuration.update(properties);
-	}
-
-	private Configuration _getGroupConfiguration(long groupId)
-		throws Exception {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				DLSizeLimitConfiguration.class.getName() + ".scoped",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId));
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
 	}
 
 	@Reference

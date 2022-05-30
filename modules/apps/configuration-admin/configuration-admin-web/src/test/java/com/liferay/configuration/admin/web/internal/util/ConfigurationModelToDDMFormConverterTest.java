@@ -77,6 +77,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.ALL);
+
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
 			ExtendedObjectClassDefinition.OPTIONAL);

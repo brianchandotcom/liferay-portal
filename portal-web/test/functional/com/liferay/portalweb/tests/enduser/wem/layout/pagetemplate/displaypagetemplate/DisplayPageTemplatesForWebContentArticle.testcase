@@ -646,6 +646,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-150919. Canonical URL should be valid for DPT."
+	@priority = "2"
+	test ViewCanonicalURL {
+		task ("Given I select Use Localized URL as Canonical URL") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "SEO",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.selectOptionSetting(
+				fieldName = "Canonical URL",
+				selectOption = "Use Localized URL");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("When I get the previously created web content DPT URL") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			MouseOver(
+				key_text = "Web Content Title",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+			Click.mouseOverClick(
+				key_listEntry = "Web Content Title",
+				key_text = "view",
+				locator1 = "LexiconList#ANY_ICON");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Display Page Name");
+
+			var jornalURL = Navigator.getCurrentURL();
+
+			echo("${jornalURL}");
+
+			User.logoutPG();
+
+			Navigator.openSpecificURL(url = "${jornalURL}");
+		}
+
+		task ("Then it should use Localized URL as Canonical URL") {
+			var canonicalText = '''<link data-senna-track="temporary" href="http://localhost:8080/web/test-site-name/w/web-content-title" rel="canonical" />''';
+			var alternateText = '''<link data-senna-track="temporary" href="http://localhost:8080/zh/web/test-site-name/w/web-content-title" hreflang="zh-CN" rel="alternate" />''';
+
+			AssertHTMLSourceTextPresent(value1 = "${canonicalText}");
+
+			AssertHTMLSourceTextPresent(value1 = "${alternateText}");
+		}
+	}
+
 	@description = "This is a test for LPS-96438. Guests should be able to view display page template."
 	@priority = "5"
 	test ViewDisplayPageTemplateAsGuest {

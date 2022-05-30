@@ -16,9 +16,12 @@ package com.liferay.document.library.configuration;
 
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface DLSizeLimitConfigurationProvider {
 
 	public long getCompanyFileMaxSize(long companyId);

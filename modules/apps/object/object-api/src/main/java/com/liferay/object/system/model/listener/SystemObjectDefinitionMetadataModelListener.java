@@ -171,6 +171,8 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		String dtoConverterType = _getDTOConverterType();
 
 		return JSONUtil.put(
+			"classPK", baseModel.getPrimaryKeyObj()
+		).put(
 			"model" + _modelClass.getSimpleName(),
 			_jsonFactory.createJSONObject(_jsonFactory.serialize(baseModel))
 		).put(

@@ -146,6 +146,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		User user = _userLocalService.getUser(userId);
 
 		return JSONUtil.put(
+			"classPK", objectEntry.getObjectEntryId()
+		).put(
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
 			"objectEntry",

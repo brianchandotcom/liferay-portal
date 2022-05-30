@@ -17,18 +17,14 @@ package com.liferay.segments.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -37,17 +33,12 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Arrays;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -65,18 +56,6 @@ public class SegmentsEntryRetrieverTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser(_group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setRequest(new MockHttpServletRequest());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
-
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -89,29 +68,9 @@ public class SegmentsEntryRetrieverTest {
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
 		Assert.assertEquals(
-			segmentsEntry.getSegmentsEntryId(), segmentsEntryIds[0]);
+			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[0]);
 		Assert.assertEquals(
-			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[1]);
-	}
-
-	@Test
-	public void testGetSegmentsEntryIdsWithCachedSegmentsEntry() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		httpServletRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, new long[] {1234567L});
-
-		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-			_group.getGroupId(), _user.getUserId(), null);
-
-		Assert.assertEquals(
-			Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
-		Assert.assertEquals(1234567L, segmentsEntryIds[0]);
-		Assert.assertEquals(
-			SegmentsEntryConstants.ID_DEFAULT, segmentsEntryIds[1]);
+			segmentsEntry.getSegmentsEntryId(), segmentsEntryIds[1]);
 	}
 
 	@Test

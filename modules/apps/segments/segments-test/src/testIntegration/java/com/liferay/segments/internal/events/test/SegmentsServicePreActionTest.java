@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -110,6 +111,50 @@ public class SegmentsServicePreActionTest {
 		Assert.assertNotNull(
 			mockHttpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
+	}
+
+	@Test
+	public void testProcessLifecycleEventWithCachedSegmentsEntryId()
+		throws Exception {
+
+		LifecycleAction lifecycleAction = _getLifecycleAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, nameMap, nameMap,
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			false, false, Collections.emptyMap(), 0, serviceContext);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		LifecycleEvent lifecycleEvent = new LifecycleEvent(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		mockHttpServletRequest.setAttribute(
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, new long[] {1234567890L});
+
+		lifecycleAction.processLifecycleEvent(lifecycleEvent);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				(long[])mockHttpServletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_ENTRY_IDS),
+				1234567890L));
 	}
 
 	@Test

@@ -388,6 +388,10 @@ public class FragmentEntryLinkManager {
 				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 					fragmentEntryLink.getFragmentEntryLinkId());
 
+		if (fragmentStyledLayoutStructureItem == null) {
+			return null;
+		}
+
 		LayoutStructureItem layoutStructureItem =
 			LayoutStructureItemUtil.getAncestor(
 				fragmentStyledLayoutStructureItem.getItemId(),

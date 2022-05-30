@@ -215,12 +215,44 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is possible a Custom User to view the System Object Account, if it to have permission"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUserViewSystemAccountWhenAllowed {
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		// TODO LPS-153529 CanUserViewSystemAccountWhenAllowed pending implementation
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.object.model.ObjectDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.assertCustomObject(labelName = "Account");
 	}
 
 	@description = "LPS-151765 - Verify if is possible to choose by Description Field on entries, when Title Field is Description"

@@ -81,7 +81,7 @@ public class GetExperienceDataMVCResourceCommand
 		boolean loadFragmentEntryLinks = ParamUtil.getBoolean(
 			resourceRequest, "loadFragmentEntryLinks");
 
-		if (loadFragmentEntryLinks) {
+		if (!loadFragmentEntryLinks) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(

@@ -47,8 +47,15 @@ const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
 
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
+const LABEL_CONFIGURATION_KEY = 'inputLabel';
 const REQUIRED_CONFIGURATION_KEY = 'inputRequired';
 const SHOW_HELP_TEXT_CONFIGURATION_KEY = 'inputShowHelpText';
+
+function getFieldLabel(fieldKey, fields) {
+	const flattenedFields = fields.flatMap((fieldSet) => fieldSet.fields);
+
+	return flattenedFields.find((field) => field.key === fieldKey)?.label;
+}
 
 function getInputCommonConfiguration(configurationValues, formFields) {
 	const fields = [];
@@ -80,7 +87,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			defaultValue: '',
 			label: Liferay.Language.get('label'),
 			localizable: true,
-			name: 'inputLabel',
+			name: LABEL_CONFIGURATION_KEY,
 			type: 'text',
 		},
 		{
@@ -196,6 +203,12 @@ export function FormInputGeneralPanel({item}) {
 					REQUIRED_CONFIGURATION_KEY,
 				],
 				isFormRequiredField(value, formFields)
+			);
+
+			editableValues = setIn(
+				editableValues,
+				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, LABEL_CONFIGURATION_KEY],
+				getFieldLabel(value, formFields)
 			);
 		}
 

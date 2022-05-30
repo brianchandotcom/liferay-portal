@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.listener;
+package com.liferay.fragment.listener;
 
-import com.liferay.fragment.model.FragmentEntryLink;
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface FragmentEntryLinkListener {
+public interface FragmentEntryLinkListenerTracker {
 
-	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
-
-	public void onDeleteFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
-
-	public void onUpdateFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
-
-	public void onUpdateFragmentEntryLinkConfigurationValues(
-		FragmentEntryLink fragmentEntryLink);
+	public List<FragmentEntryLinkListener> getFragmentEntryLinkListeners();
 
 }

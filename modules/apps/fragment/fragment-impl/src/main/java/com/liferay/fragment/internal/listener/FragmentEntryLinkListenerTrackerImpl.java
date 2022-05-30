@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.internal.listener;
+package com.liferay.fragment.internal.listener;
 
-import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
-import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListenerTracker;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 
 import java.util.ArrayList;
 import java.util.List;

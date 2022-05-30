@@ -257,14 +257,13 @@ public class DBTest {
 	@Test
 	public void testAlterTableName() throws Exception {
 		_db.runSQL(
-			StringBundler.concat(
-				"alter_table_name ", _TABLE_NAME, " DBTestSecond"));
+			StringBundler.concat("alter_table_name ", _TABLE_NAME, " DBTest2"));
 
-		Assert.assertTrue(_dbInspector.hasTable("DBTestSecond"));
+		Assert.assertTrue(_dbInspector.hasTable("DBTest2"));
 
 		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME));
 
-		_db.runSQL("DROP_TABLE_IF_EXISTS(DBTestSecond)");
+		_db.runSQL("DROP_TABLE_IF_EXISTS(DBTest2)");
 	}
 
 	private void _addIndex(String[] columnNames) {

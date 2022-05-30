@@ -78,7 +78,9 @@
 		</field>
 		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
-		<field name="properties" type="String" />
+		<field name="properties" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
@@ -160,7 +162,9 @@
 		</field>
 		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
-		<field name="properties" type="String" />
+		<field name="properties" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />

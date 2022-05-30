@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.layout.content.page.editor.api
 Bundle-Version: 4.0.2
 Export-Package:\
 	com.liferay.layout.content.page.editor.constants,\
-	com.liferay.layout.content.page.editor.listener,\
 	com.liferay.layout.content.page.editor.sidebar.panel

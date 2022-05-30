@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132422. The list of actions appear in right order for page templates."
+	@description = "This is a test for LPS-132422 and LPS-154130. The list of actions appear in right order for page templates. The portlet is named Page Templates on a local site."
 	@priority = "3"
 	test ViewOrderOfPageTemplatesActions {
 		task ("Add a content page template") {
@@ -45,7 +45,13 @@ definition {
 		}
 
 		task ("Change template to draft") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			Navigator.gotoNavTab(navTab = "Page Templates");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

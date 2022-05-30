@@ -28,8 +28,6 @@ ThemeCSSURLs themeCSSURLs = themeClientExtensions.getThemeCSSURLs(request);
 
 <link href="<%= themeClientExtensions.getFaviconURL(request) %>" rel="icon" />
 
-<link href="<%= themeDisplay.getFavicon() %>" rel="icon" />
-
 <%-- Portal CSS --%>
 
 <link class="lfr-css-file" data-senna-track="temporary" href="<%= themeCSSURLs.getPortal() %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />

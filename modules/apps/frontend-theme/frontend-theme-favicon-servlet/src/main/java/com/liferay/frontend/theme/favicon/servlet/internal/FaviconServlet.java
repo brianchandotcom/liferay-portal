@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.theme.favicon.servlet.internal;
 
+import com.liferay.portal.kernel.client.extension.ThemeClientExtensions;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -54,7 +56,8 @@ public class FaviconServlet extends HttpServlet {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			httpServletResponse.sendRedirect(themeDisplay.getFavicon());
+			httpServletResponse.sendRedirect(
+				_themeClientExtensions.getFaviconURL(httpServletRequest));
 
 			return;
 		}
@@ -72,5 +75,8 @@ public class FaviconServlet extends HttpServlet {
 	}
 
 	private static final long serialVersionUID = 1L;
+
+	@Reference
+	private ThemeClientExtensions _themeClientExtensions;
 
 }

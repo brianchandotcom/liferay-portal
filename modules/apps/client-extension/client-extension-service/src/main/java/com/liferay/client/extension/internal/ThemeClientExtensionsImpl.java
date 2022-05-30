@@ -17,10 +17,14 @@ package com.liferay.client.extension.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.client.extension.ThemeCSSURLs;
 import com.liferay.portal.kernel.client.extension.ThemeClientExtensions;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -42,6 +46,16 @@ public class ThemeClientExtensionsImpl implements ThemeClientExtensions {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout != null) {
+			String favicon = layout.getFavicon();
+
+			if (Validator.isNotNull(favicon)) {
+				return favicon;
+			}
+		}
 
 		return themeDisplay.getPathThemeImages() + StringPool.SLASH +
 			PropsValues.THEME_SHORTCUT_ICON;

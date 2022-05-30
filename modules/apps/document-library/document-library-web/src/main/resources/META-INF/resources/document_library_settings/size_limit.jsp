@@ -20,27 +20,33 @@
 DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = (DLSizeLimitConfigurationDisplayContext)request.getAttribute(DLSizeLimitConfigurationDisplayContext.class.getName());
 %>
 
-<clay:sheet>
-	<clay:sheet-header>
-		<h2>
-			<liferay-ui:message key="dl-size-limit-configuration-name" />
-		</h2>
-	</clay:sheet-header>
+<aui:form action="<%= dlSizeLimitConfigurationDisplayContext.getEditDLSizeLimitConfigurationURL() %>" method="post" name="fm">
+	<clay:sheet>
+		<clay:sheet-header>
+			<h2>
+				<liferay-ui:message key="dl-size-limit-configuration-name" />
+			</h2>
+		</clay:sheet-header>
 
-	<clay:sheet-section>
-		<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
+		<clay:sheet-section>
+			<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
 
-		<p class="text-muted">
-			<liferay-ui:message key="file-max-size-help" />
-		</p>
-	</clay:sheet-section>
+			<p class="text-muted">
+				<liferay-ui:message key="file-max-size-help" />
+			</p>
+		</clay:sheet-section>
 
-	<clay:sheet-section>
-		<span aria-hidden="true" class="loading-animation"></span>
+		<clay:sheet-section>
+			<span aria-hidden="true" class="loading-animation"></span>
 
-		<react:component
-			module="document_library/js/file-size-limit/FileSizeMimetypes"
-			props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
-		/>
-	</clay:sheet-section>
-</clay:sheet>
+			<react:component
+				module="document_library/js/file-size-limit/FileSizeMimetypes"
+				props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
+			/>
+		</clay:sheet-section>
+
+		<clay:sheet-footer>
+			<aui:button primary="<%= true %>" type="submit" />
+		</clay:sheet-footer>
+	</clay:sheet>
+</aui:form>

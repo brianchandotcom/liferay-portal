@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -70,8 +71,9 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 				DLSizeLimitConfigurationDisplayContext.class.getName(),
 				new DLSizeLimitConfigurationDisplayContext(
 					dlSizeLimitConfigurationProvider,
-					(PortletResponse)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE),
+					PortalUtil.getLiferayPortletResponse(
+						(PortletResponse)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE)),
 					getScope(), _getScopePk(httpServletRequest)));
 
 			RequestDispatcher requestDispatcher =

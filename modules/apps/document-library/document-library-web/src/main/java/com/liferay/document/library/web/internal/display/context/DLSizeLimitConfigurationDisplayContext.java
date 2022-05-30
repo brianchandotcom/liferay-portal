@@ -15,14 +15,14 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -31,12 +31,25 @@ public class DLSizeLimitConfigurationDisplayContext {
 
 	public DLSizeLimitConfigurationDisplayContext(
 		DLSizeLimitConfigurationProvider dlSizeLimitConfigurationProvider,
-		PortletResponse portletResponse, String scope, long scopePK) {
+		LiferayPortletResponse liferayPortletResponse, String scope,
+		long scopePK) {
 
 		_dlSizeLimitConfigurationProvider = dlSizeLimitConfigurationProvider;
-		_portletResponse = portletResponse;
+		_liferayPortletResponse = liferayPortletResponse;
 		_scope = scope;
 		_scopePK = scopePK;
+	}
+
+	public String getEditDLSizeLimitConfigurationURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/instance_settings/edit_size_limits"
+		).setParameter(
+			"scope", _scope
+		).setParameter(
+			"scopePK", _scopePK
+		).buildString();
 	}
 
 	public long getFileMaxSize() {
@@ -76,7 +89,7 @@ public class DLSizeLimitConfigurationDisplayContext {
 				).build()));
 
 		return HashMapBuilder.<String, Object>put(
-			"portletNamespace", _portletResponse.getNamespace()
+			"portletNamespace", _liferayPortletResponse.getNamespace()
 		).put(
 			"sizeList", sizeList
 		).build();
@@ -108,7 +121,7 @@ public class DLSizeLimitConfigurationDisplayContext {
 
 	private final DLSizeLimitConfigurationProvider
 		_dlSizeLimitConfigurationProvider;
-	private final PortletResponse _portletResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _scope;
 	private final long _scopePK;
 

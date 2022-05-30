@@ -2596,6 +2596,8 @@ definition {
 	}
 
 	macro tearDownCP {
+		var key_dmDocumentTitle = "tree.png";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2605,11 +2607,17 @@ definition {
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
-			Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
+			if (IsElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX")) {
+				Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+			}
 
-			MenuItem.viewPresent(menuItem = "Delete");
+			if (IsElementPresent(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS")) {
+				Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 
-			PortletEntry.clickMoveToRecycleBin();
+				MenuItem.viewPresent(menuItem = "Delete");
+
+				PortletEntry.clickMoveToRecycleBin();
+			}
 		}
 
 		JSONRecycleBin.emptyRecycleBin();

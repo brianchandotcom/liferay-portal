@@ -20,8 +20,8 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -155,14 +155,14 @@ public class AddFragmentEntryLinksMVCActionCommand
 					layoutStructure,
 					editableValuesJSONObject.getString("portletId")));
 
-			List<ContentPageEditorListener> contentPageEditorListeners =
-				_contentPageEditorListenerTracker.
-					getContentPageEditorListeners();
+			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners();
 
-			for (ContentPageEditorListener contentPageEditorListener :
-					contentPageEditorListeners) {
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					fragmentEntryLinkListeners) {
 
-				contentPageEditorListener.onAddFragmentEntryLink(
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
 					fragmentEntryLink);
 			}
 		}
@@ -183,14 +183,14 @@ public class AddFragmentEntryLinksMVCActionCommand
 	}
 
 	@Reference
-	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
-
-	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private FragmentCompositionService _fragmentCompositionService;
+
+	@Reference
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

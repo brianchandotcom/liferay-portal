@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.listener;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = ContentPageEditorListener.class)
-public class PortalCacheContentPageEditorListener
-	implements ContentPageEditorListener {
+@Component(immediate = true, service = FragmentEntryLinkListener.class)
+public class PortalCacheFragmentEntryLinkListener
+	implements FragmentEntryLinkListener {
 
 	@Override
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {

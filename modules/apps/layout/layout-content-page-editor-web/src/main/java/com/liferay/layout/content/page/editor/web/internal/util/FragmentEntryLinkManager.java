@@ -33,8 +33,8 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -100,13 +100,13 @@ public class FragmentEntryLinkManager {
 			String.valueOf(fragmentEntryLinkId),
 			_portal.getClassNameId(FragmentEntryLink.class), plid);
 
-		List<ContentPageEditorListener> contentPageEditorListeners =
-			_contentPageEditorListenerTracker.getContentPageEditorListeners();
+		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+			_fragmentEntryLinkListenerTracker.getFragmentEntryLinkListeners();
 
-		for (ContentPageEditorListener contentPageEditorListener :
-				contentPageEditorListeners) {
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				fragmentEntryLinkListeners) {
 
-			contentPageEditorListener.onDeleteFragmentEntryLink(
+			fragmentEntryLinkListener.onDeleteFragmentEntryLink(
 				fragmentEntryLink);
 		}
 	}
@@ -407,14 +407,14 @@ public class FragmentEntryLinkManager {
 	private CommentManager _commentManager;
 
 	@Reference
-	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
-
-	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

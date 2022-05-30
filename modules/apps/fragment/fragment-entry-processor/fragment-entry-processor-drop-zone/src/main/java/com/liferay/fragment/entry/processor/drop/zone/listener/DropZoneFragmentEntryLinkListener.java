@@ -18,7 +18,7 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
@@ -45,9 +45,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ContentPageEditorListener.class)
-public class DropZoneContentPageEditorListener
-	implements ContentPageEditorListener {
+@Component(service = FragmentEntryLinkListener.class)
+public class DropZoneFragmentEntryLinkListener
+	implements FragmentEntryLinkListener {
 
 	@Override
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
@@ -226,7 +226,7 @@ public class DropZoneContentPageEditorListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DropZoneContentPageEditorListener.class);
+		DropZoneFragmentEntryLinkListener.class);
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

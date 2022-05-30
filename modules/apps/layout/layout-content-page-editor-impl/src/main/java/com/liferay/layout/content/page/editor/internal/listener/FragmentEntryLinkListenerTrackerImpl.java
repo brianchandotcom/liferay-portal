@@ -14,8 +14,8 @@
 
 package com.liferay.layout.content.page.editor.internal.listener;
 
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListenerTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,32 +29,32 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ContentPageEditorListenerTracker.class)
-public class ContentPageEditorListenerTrackerImpl
-	implements ContentPageEditorListenerTracker {
+@Component(immediate = true, service = FragmentEntryLinkListenerTracker.class)
+public class FragmentEntryLinkListenerTrackerImpl
+	implements FragmentEntryLinkListenerTracker {
 
 	@Override
-	public List<ContentPageEditorListener> getContentPageEditorListeners() {
-		return new ArrayList<>(_contentPageEditorListeners);
+	public List<FragmentEntryLinkListener> getFragmentEntryLinkListeners() {
+		return new ArrayList<>(_fragmentEntryLinkListeners);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
-	protected void setContentPageEditorListener(
-		ContentPageEditorListener contentPageEditorListener) {
+	protected void setFragmentEntryLinkListener(
+		FragmentEntryLinkListener fragmentEntryLinkListener) {
 
-		_contentPageEditorListeners.add(contentPageEditorListener);
+		_fragmentEntryLinkListeners.add(fragmentEntryLinkListener);
 	}
 
-	protected void unsetContentPageEditorListener(
-		ContentPageEditorListener contentPageEditorListener) {
+	protected void unsetFragmentEntryLinkListener(
+		FragmentEntryLinkListener fragmentEntryLinkListener) {
 
-		_contentPageEditorListeners.remove(contentPageEditorListener);
+		_fragmentEntryLinkListeners.remove(fragmentEntryLinkListener);
 	}
 
-	private final List<ContentPageEditorListener> _contentPageEditorListeners =
+	private final List<FragmentEntryLinkListener> _fragmentEntryLinkListeners =
 		new CopyOnWriteArrayList<>();
 
 }

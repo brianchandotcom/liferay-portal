@@ -23,8 +23,8 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
-import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListener;
+import com.liferay.layout.content.page.editor.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -183,13 +183,13 @@ public class AddFragmentEntryLinkMVCActionCommand
 				jsonObject.put("addedItemId", layoutStructureItem.getItemId());
 			});
 
-		List<ContentPageEditorListener> contentPageEditorListeners =
-			_contentPageEditorListenerTracker.getContentPageEditorListeners();
+		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+			_fragmentEntryLinkListenerTracker.getFragmentEntryLinkListeners();
 
-		for (ContentPageEditorListener contentPageEditorListener :
-				contentPageEditorListeners) {
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				fragmentEntryLinkListeners) {
 
-			contentPageEditorListener.onAddFragmentEntryLink(fragmentEntryLink);
+			fragmentEntryLinkListener.onAddFragmentEntryLink(fragmentEntryLink);
 		}
 
 		LayoutStructure layoutStructure =
@@ -209,7 +209,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 	}
 
 	@Reference
-	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

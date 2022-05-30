@@ -56,18 +56,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROJECT_LOGO</td>
+	<td>//div[contains(@class, 'card-subscription')]//img[contains(@src, '${logo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_NAME</td>
 	<td>//div[contains(@class, 'cards-subscription')]//h5[(text()='${cardName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_STATUS</td>
-	<td>//div[contains(@class, 'card-subscription')]//h5[(text()='${cardName}')]//..//span[(text()='${status}')]</td>
+	<td>//div[contains(@class, 'card-subscription')]//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_DATE</td>
+	<td>//div[contains(@class, 'card-subscription')]//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_INSTANCE</td>
+	<td>//div[contains(@class, 'card-subscription')]//..//p[contains(text(), '${title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_INFO</td>
+	<td>//div[contains(@class, 'card-subscription')]//h5[(text()='${cardName}')]//..//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_NAVBAR1</td>
+	<td>//div[@id='subscription-navbar']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_NAVBAR</td>
 	<td>//div[@id='subscription-navbar']/button[@value='${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(text(), 'Partnership')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -88,8 +89,25 @@ public class ImportCommerceOrderItemsMVCActionCommand
 		String commerceOrderImporterTypeKey = ParamUtil.getString(
 			actionRequest, "commerceOrderImporterTypeKey");
 
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
 		try {
 			if (cmd.equals(Constants.IMPORT)) {
+				CommerceOrderImporterDateFormatConfiguration
+					commerceOrderImporterDateFormatConfiguration =
+						_configurationProvider.getConfiguration(
+							CommerceOrderImporterDateFormatConfiguration.class,
+							new GroupServiceSettingsLocator(
+								commerceOrder.getGroupId(),
+								CommerceConstants.
+									SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
+
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					commerceOrderImporterDateFormatConfiguration.
+						orderImporterDateFormat());
+
 				CommerceOrderImporterType commerceOrderImporterType =
 					_commerceOrderImporterTypeRegistry.
 						getCommerceOrderImporterType(
@@ -130,29 +148,18 @@ public class ImportCommerceOrderItemsMVCActionCommand
 										actionRequest));
 
 						try {
-							CommerceOrderImporterDateFormatConfiguration
-								commerceOrderImporterDateFormatConfiguration =
-									_configurationProvider.getConfiguration(
-										CommerceOrderImporterDateFormatConfiguration.class,
-										new GroupServiceSettingsLocator(
-											commerceOrder.getGroupId(),
-											CommerceConstants.
-												SERVICE_NAME_COMMERCE_ORDER_IMPORTER_DATE_FORMAT));
-
-							SimpleDateFormat simpleDateFormat =
-								new SimpleDateFormat(
-									commerceOrderImporterDateFormatConfiguration.
-										orderImporterDateFormat());
-
 							String requestedDeliveryDate =
 								commerceOrderImporterItem.
 									getRequestedDeliveryDateString();
 
-							_commerceOrderItemService.
-								updateCommerceOrderItemDeliveryDate(
-									commerceOrderItem.getCommerceOrderItemId(),
-									simpleDateFormat.parse(
-										requestedDeliveryDate));
+							if (requestedDeliveryDate != null) {
+								_commerceOrderItemService.
+									updateCommerceOrderItemDeliveryDate(
+										commerceOrderItem.
+											getCommerceOrderItemId(),
+										simpleDateFormat.parse(
+											requestedDeliveryDate));
+							}
 						}
 						catch (IllegalArgumentException | ParseException
 									exception) {
@@ -195,6 +202,8 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			}
 		}
 		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+
 			commerceOrder.setManuallyAdjusted(false);
 
 			_commerceOrderService.updateCommerceOrder(commerceOrder);

@@ -183,12 +183,62 @@ definition {
 	}
 
 	@description = "This ensures that an image in Asset Publisher can be rendered correctly after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageViaAPAfterMovingToFolder {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154372 CanViewImageViaAPAfterMovingToFolder pending implementation
+		JSONAssetlist.addManualAssetListEntryWithItemType(
+			groupName = "Site Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			title = "Manual Collection");
 
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document_1",
+			assetType = "Basic Document");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "Document_1",
+			assetType = "Basic Document");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Document_1",
+			folderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1");
 	}
 
 	@description = "This ensures that an image in DM widget can be rendered correctly after moving it to a folder."

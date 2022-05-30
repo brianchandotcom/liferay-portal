@@ -222,7 +222,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceSpecificationProducts(serviceContext);
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
-			_assertCustomFields(serviceContext);
+			_assertExpandoColumns(serviceContext);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
@@ -629,26 +629,13 @@ public class BundleSiteInitializerTest {
 			cpDefinitionOptionRels.size());
 	}
 
-	private void _assertCustomFields(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			serviceContext.getCompanyId(),
-			"com.liferay.commerce.product.model.CPDefinition");
-
-		Assert.assertNotNull(expandoBridge);
-		Assert.assertNotNull(
-			expandoBridge.getAttribute("Test Expando Column 1"));
-		Assert.assertNotNull(
-			expandoBridge.getAttribute("Test Expando Column 2"));
-		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
-		_assertCustomValue(expandoBridge);
-	}
-
 	private void _assertCustomValue(ExpandoBridge expandoBridge) {
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
 			expandoBridge.getAttribute("Test Expando Column 1"), 0.1);
 		Assert.assertEquals(
-			"Test", expandoBridge.getAttribute("Test Expando Column 2"));
+			"Test Expando Column Value 2",
+			expandoBridge.getAttribute("Test Expando Column 2"));
 	}
 
 	private void _assertDDMStructure(Group group) {
@@ -710,6 +697,20 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Genesis"));
 		Assert.assertTrue(string.contains("## New Testament"));
 		Assert.assertTrue(string.contains("1. Revelation"));
+	}
+
+	private void _assertExpandoColumns(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			serviceContext.getCompanyId(),
+			"com.liferay.commerce.product.model.CPDefinition");
+
+		Assert.assertNotNull(expandoBridge);
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 1"));
+		Assert.assertNotNull(
+			expandoBridge.getAttribute("Test Expando Column 2"));
+		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
+		_assertCustomValue(expandoBridge);
 	}
 
 	private void _assertFragmentEntries(Group group) {

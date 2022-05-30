@@ -5,7 +5,6 @@
 		"categories": [
 			"Test Asset Category 1"
 		],
-		"description": "This is the description for Test Commerce Product.",
 		"customFields": [
 			{
 				"customValue": {
@@ -16,12 +15,13 @@
 			},
 			{
 				"customValue": {
-					"data": "Test"
+					"data": "Test Expando Column Value 2"
 				},
 				"dataType": "Text",
 				"name": "Test Expando Column 2"
 			}
 		],
+		"description": "This is the description for Test Commerce Product.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "TESTPROD001",

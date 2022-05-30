@@ -16,6 +16,32 @@ import {axios} from './liferay/api';
 
 const DeliveryAPI = 'o/c/raylifepolicies';
 
+function convertDateToString(date) {
+	const newDate = date.toISOString().substring(0, 10);
+
+	return newDate;
+}
+
+const currentDate = convertDateToString(new Date());
+
+const currentYear = new Date().getFullYear();
+
+const lastYear = currentYear - 1;
+
+const sixMonthsAgo = new Date().getMonth() - 5;
+
+const oneYearAgoDate = convertDateToString(
+	new Date(new Date().setFullYear(lastYear))
+);
+
+const sixMonthsAgoDate = convertDateToString(
+	new Date(new Date().setMonth(sixMonthsAgo))
+).split('-');
+
+const lastYearSixMonthsAgoPeriod = convertDateToString(
+	new Date(new Date(new Date().setFullYear(lastYear)).setMonth(sixMonthsAgo))
+).split('-');
+
 export function getPoliciesStatus(totalCount) {
 	return new Promise((resolve) => {
 		resolve({data: {totalCount}});
@@ -24,4 +50,28 @@ export function getPoliciesStatus(totalCount) {
 
 export function getPolicies() {
 	return axios.get(`${DeliveryAPI}/`);
+}
+
+export function getSixMonthsAgoPolicies() {
+	return axios.get(
+		`${DeliveryAPI}/?filter=startDate le ${currentDate} and startDate ge ${sixMonthsAgoDate[0]}-${sixMonthsAgoDate[1]}-01`
+	);
+}
+
+export function getLastYearSixMonthsPolicies() {
+	return axios.get(
+		`${DeliveryAPI}/?filter=startDate le ${oneYearAgoDate} and startDate ge ${lastYearSixMonthsAgoPeriod[0]}-${lastYearSixMonthsAgoPeriod[1]}-01`
+	);
+}
+
+export function getPoliciesUntilCurrentMonth() {
+	return axios.get(
+		`${DeliveryAPI}/?filter=startDate le ${currentDate} and startDate ge ${currentYear}-01-01`
+	);
+}
+
+export function getPoliciesUntilCurrentMonthLastYear() {
+	return axios.get(
+		`${DeliveryAPI}/?filter=startDate le ${oneYearAgoDate} and startDate ge ${lastYear}-01-01`
+	);
 }

@@ -12,19 +12,19 @@
  * details.
  */
 export const CONSTANTS = {
-	MONTHS: [
-		'January',
-		'February',
-		'March',
-		'April',
+	MONTHS_ABREVIATIONS: [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
 		'May',
 		'June',
 		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
+		'Aug',
+		'Sept',
+		'Oct',
+		'Nov',
+		'Dec',
 	],
 	STATUS: {
 		APPROVED: 'approved',

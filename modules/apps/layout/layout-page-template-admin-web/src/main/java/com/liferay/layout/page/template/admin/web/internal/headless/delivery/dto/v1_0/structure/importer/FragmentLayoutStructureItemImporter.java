@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashMap;
@@ -302,14 +303,26 @@ public class FragmentLayoutStructureItemImporter
 			defaultEditableValuesJSONObject,
 			fragmentEntryProcessorValuesJSONObject);
 
+		long segmentsExperienceId =
+			layoutStructureItemImporterContext.getSegmentsExperienceId();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if (segmentsExperience == null) {
+			segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid());
+		}
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId,
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layout.getPlid(), css, html, js, configuration,
-				jsonObject.toString(), StringUtil.randomId(), position,
-				fragmentKey, ServiceContextThreadLocal.getServiceContext());
+				segmentsExperienceId, layout.getPlid(), css, html, js,
+				configuration, jsonObject.toString(), StringUtil.randomId(),
+				position, fragmentKey,
+				ServiceContextThreadLocal.getServiceContext());
 
 		List<Object> widgetInstances = (List<Object>)definitionMap.get(
 			"widgetInstances");

@@ -20,21 +20,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.simulator.SegmentsEntrySimulator;
-
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,43 +57,12 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 			_log.error(portalException);
 		}
 
-		Optional<long[]> segmentsEntryIdsOptional =
-			_getSegmentsEntryIdsOptional();
-
-		long[] segmentsEntryIds = ArrayUtil.append(
-			segmentsEntryIdsOptional.orElseGet(
-				() -> {
-					if ((_segmentsEntrySimulator != null) &&
-						_segmentsEntrySimulator.isSimulationActive(userId)) {
-
-						return _segmentsEntrySimulator.
-							getSimulatedSegmentsEntryIds(userId);
-					}
-
-					try {
-						return _segmentsEntryProviderRegistry.
-							getSegmentsEntryIds(
-								groupId, User.class.getName(), userId, context,
-								segmentEntryIds);
-					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(portalException);
-						}
-
-						return new long[0];
-					}
-				}),
-			SegmentsEntryConstants.ID_DEFAULT);
-
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			_getHttpServletRequestOptional();
-
-		httpServletRequestOptional.ifPresent(
-			httpServletRequest -> httpServletRequest.setAttribute(
-				SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds));
-
-		return segmentsEntryIds;
+		return ArrayUtil.toLongArray(
+			SetUtil.fromArray(
+				ArrayUtil.append(
+					_getSegmentEntryIds(
+						groupId, userId, context, segmentEntryIds),
+					SegmentsEntryConstants.ID_DEFAULT)));
 	}
 
 	private long _getCompanyId(long groupId) throws PortalException {
@@ -112,28 +75,27 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 		return group.getCompanyId();
 	}
 
-	private Optional<HttpServletRequest> _getHttpServletRequestOptional() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+	private long[] _getSegmentEntryIds(
+		long groupId, long userId, Context context, long[] segmentEntryIds) {
 
-		if (serviceContext == null) {
-			return Optional.empty();
+		if ((_segmentsEntrySimulator != null) &&
+			_segmentsEntrySimulator.isSimulationActive(userId)) {
+
+			return _segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
 		}
 
-		return Optional.ofNullable(serviceContext.getRequest());
-	}
+		try {
+			return _segmentsEntryProviderRegistry.getSegmentsEntryIds(
+				groupId, User.class.getName(), userId, context,
+				segmentEntryIds);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
 
-	private Optional<long[]> _getSegmentsEntryIdsOptional() {
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			_getHttpServletRequestOptional();
-
-		return Optional.ofNullable(
-			httpServletRequestOptional.map(
-				httpServletRequest -> (long[])httpServletRequest.getAttribute(
-					SegmentsWebKeys.SEGMENTS_ENTRY_IDS)
-			).orElse(
-				null
-			));
+			return new long[0];
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

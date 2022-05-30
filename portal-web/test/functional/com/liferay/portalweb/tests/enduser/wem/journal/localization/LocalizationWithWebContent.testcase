@@ -670,85 +670,85 @@ definition {
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."
 	@priority = "3"
 	test ViewLocalizedFriendlyURLInWCD {
-		task ("Add a display page template with Web Content Article and Basic Web Content") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
+		task ("Given a site designer has a web content with selected custom template, display page template and translated friendly URL") {
+			task ("Add a display page template with Web Content Article and Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+			}
+
+			task ("Add a Display Page Content fragment to display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Display Page Content");
+
+				PageEditor.clickPublish();
+			}
+
+			task ("Add a template with Content and Friendly URL for Basic Web Content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				NavItem.gotoTemplates();
+
+				WebContentTemplates.addCP(
+					structureName = "Basic Web Content",
+					templateFieldNames = "Content,Friendly URL",
+					templateName = "WC Template Name");
+			}
+
+			task ("Add a web content article based on Basic Web Content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoAddCP();
+			}
+
+			task ("Type title and content") {
+				WebContent.addCP(
+					webContentContent = "Web Content Content",
+					webContentTitle = "Web Content Title");
+			}
+
+			task ("Select the new template") {
+				WebContent.selectTemplateCP(
+					structureName = "Basic Web Content",
+					templateName = "WC Template Name");
+			}
+
+			task ("Select the display page template") {
+				WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
+			}
+
+			task ("Set up Friendly URL in English") {
+				WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
+			}
+
+			task ("Set up Friendly URL in Spanish") {
+				Click(
+					key_fieldName = "friendlyURL",
+					locator1 = "WC#LOCALIZED_BUTTON");
+
+				Click(
+					key_locale = "es-ES",
+					locator1 = "Translation#LOCALIZATION_NAME");
+
+				Type(
+					inputFieldId = "friendlyURL",
+					locator1 = "TextInput#INPUT_ID",
+					value1 = "webcontentspanish");
+
+				PortletEntry.publish();
+			}
 		}
 
-		task ("Add a Display Page Content fragment to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Display Page Content");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Add a template with Content and Friendly URL for Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoTemplates();
-
-			WebContentTemplates.addCP(
-				structureName = "Basic Web Content",
-				templateFieldNames = "Content,Friendly URL",
-				templateName = "WC Template Name");
-		}
-
-		task ("Add a web content article based on Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-		}
-
-		task ("Type title and content") {
-			WebContent.addCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("Select the new template") {
-			WebContent.selectTemplateCP(
-				structureName = "Basic Web Content",
-				templateName = "WC Template Name");
-		}
-
-		task ("Select the display page template") {
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-		}
-
-		task ("Set up Friendly URL in English") {
-			WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
-		}
-
-		task ("Set up Friendly URL in Spanish") {
-			Click(
-				key_fieldName = "friendlyURL",
-				locator1 = "WC#LOCALIZED_BUTTON");
-
-			Click(
-				key_locale = "es-ES",
-				locator1 = "Translation#LOCALIZATION_NAME");
-
-			Type(
-				inputFieldId = "friendlyURL",
-				locator1 = "TextInput#INPUT_ID",
-				value1 = "webcontentspanish");
-		}
-
-		task ("Publish the web content article") {
-			PortletEntry.publish();
-		}
-
-		task ("Add a Web Content Display and a Language Selector to widget page") {
+		task ("When the site designer displays the web content in Web Content Display widget") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -758,9 +758,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				widgetName = "Language Selector");
-		}
 
-		task ("Display the web content article in Web Content Display") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -768,7 +766,9 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 			IFrame.closeFrame();
+		}
 
+		task ("Then the site designer could view the web content with English friendly URL") {
 			var baseURL = PropsUtil.get("portal.url");
 
 			for (var content : list "Web Content Content,${baseURL}/web/test-site-name/w/webcontentenglish") {
@@ -778,11 +778,13 @@ definition {
 			}
 		}
 
-		task ("Change the language to Spanish") {
+		task ("When the site designer changes the user language to Spanish") {
 			LanguagePortlet.selectLanguagePG(
 				locale = "es_ES",
 				textIcon = "español-España");
+		}
 
+		task ("Then the site designer could view the web content with Spanish friendly URL") {
 			var baseURL = PropsUtil.get("portal.url");
 
 			for (var content : list "Web Content Content,${baseURL}/web/test-site-name/w/webcontentspanish") {

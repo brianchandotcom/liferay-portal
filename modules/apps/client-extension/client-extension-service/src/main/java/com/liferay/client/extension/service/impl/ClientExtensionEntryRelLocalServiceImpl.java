@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.constants;
+package com.liferay.client.extension.service.impl;
+
+import com.liferay.client.extension.service.base.ClientExtensionEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class ClientExtensionUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY = {
-		"userId", "statusByUserId"
-	};
-
-	public static final String[]
-		USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY_REL = {"userId"};
-
+@Component(
+	property = "model.class.name=com.liferay.client.extension.model.ClientExtensionEntryRel",
+	service = AopService.class
+)
+public class ClientExtensionEntryRelLocalServiceImpl
+	extends ClientExtensionEntryRelLocalServiceBaseImpl {
 }

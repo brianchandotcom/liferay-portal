@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.constants;
+package com.liferay.client.extension.uad.anonymizer;
+
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class ClientExtensionUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY = {
-		"userId", "statusByUserId"
-	};
-
-	public static final String[]
-		USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY_REL = {"userId"};
-
+@Component(immediate = true, service = UADAnonymizer.class)
+public class ClientExtensionEntryRelUADAnonymizer
+	extends BaseClientExtensionEntryRelUADAnonymizer {
 }

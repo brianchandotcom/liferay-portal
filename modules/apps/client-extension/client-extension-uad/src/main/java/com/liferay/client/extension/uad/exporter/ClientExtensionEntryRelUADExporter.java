@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.constants;
+package com.liferay.client.extension.uad.exporter;
+
+import com.liferay.user.associated.data.exporter.UADExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class ClientExtensionUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY = {
-		"userId", "statusByUserId"
-	};
-
-	public static final String[]
-		USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY_REL = {"userId"};
-
+@Component(immediate = true, service = UADExporter.class)
+public class ClientExtensionEntryRelUADExporter
+	extends BaseClientExtensionEntryRelUADExporter {
 }

@@ -34,18 +34,24 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceQualifierHelperImpl implements CommerceQualifierHelper {
 
 	public CommerceQualifierEntryTable getAliasCommerceQualifierEntryTable(
-		String sourceClassName, String targetClassName) {
+		String sourceCommerceQualifierMetadataKey,
+		String targetCommerceQualifierMetadataKey) {
 
 		return CommerceQualifierEntryTable.INSTANCE.as(
 			StringBundler.concat(
-				_getTableNameByClassName(sourceClassName), StringPool.UNDERLINE,
-				_getTableNameByClassName(targetClassName)));
+				_getTableNameByCommerceQualifierMetadataKey(
+					sourceCommerceQualifierMetadataKey),
+				StringPool.UNDERLINE,
+				_getTableNameByCommerceQualifierMetadataKey(
+					targetCommerceQualifierMetadataKey)));
 	}
 
-	private String _getTableNameByClassName(String className) {
+	private String _getTableNameByCommerceQualifierMetadataKey(
+		String commerceQualifierMetadataKey) {
+
 		CommerceQualifierMetadata commerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				className);
+				commerceQualifierMetadataKey);
 
 		if (commerceQualifierMetadata == null) {
 			return StringPool.BLANK;

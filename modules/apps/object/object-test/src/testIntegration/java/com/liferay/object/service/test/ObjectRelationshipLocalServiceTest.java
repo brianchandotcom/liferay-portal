@@ -140,24 +140,17 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testAddSystemObjectRelationship() throws Exception {
-		try {
+		ObjectRelationship objectRelationship =
 			_testAddSystemObjectRelationship(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-			Assert.fail();
-		}
-		catch (ObjectRelationshipTypeException
-					objectRelationshipTypeException) {
+		Assert.assertNotNull(objectRelationship);
 
-			String message = objectRelationshipTypeException.getMessage();
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
 
-			Assert.assertTrue(
-				message.contains("Invalid type for system object definition"));
-		}
-
-		ObjectRelationship objectRelationship =
-			_testAddSystemObjectRelationship(
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		objectRelationship = _testAddSystemObjectRelationship(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertNotNull(objectRelationship);
 

@@ -355,7 +355,7 @@ public class ObjectEntryDisplayContext {
 			() -> {
 				ObjectEntry objectEntry = getObjectEntry();
 
-				return GetterUtil.getLong(objectEntry.getObjectEntryId());
+				return GetterUtil.getLong(objectEntry.getId());
 			}
 		).setParameter(
 			"objectRelationshipId", objectRelationship.getObjectRelationshipId()

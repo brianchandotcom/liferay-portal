@@ -114,7 +114,7 @@ public class RelatedModelsFDSDataProvider
 							modelAttributes.get(
 								objectDefinition.
 									getPKObjectFieldDBColumnName())),
-						GetterUtil.getString(value), true);
+						value.toString(), true);
 				});
 		}
 

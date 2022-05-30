@@ -94,13 +94,16 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 
 	if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] !== false) {
 		fields.push({
-			defaultValue: Liferay.Language.get(
-				'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
-			),
+			defaultValue: '',
 			label: Liferay.Language.get('help-text'),
 			localizable: true,
 			name: HELP_TEXT_CONFIGURATION_KEY,
 			type: 'text',
+			typeOptions: {
+				placeholder: Liferay.Language.get(
+					'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
+				),
+			},
 		});
 	}
 

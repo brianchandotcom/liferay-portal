@@ -165,7 +165,6 @@ public class FreeMarkerFragmentEntryProcessor
 				"input",
 				_toInputTemplateNode(
 					fragmentEntryLink,
-					fragmentEntryProcessorContext.getHttpServletRequest(),
 					fragmentEntryProcessorContext.getInfoFormOptional(),
 					fragmentEntryProcessorContext.getLocale()));
 		}
@@ -318,7 +317,6 @@ public class FreeMarkerFragmentEntryProcessor
 
 	private InputTemplateNode _toInputTemplateNode(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
 		Optional<InfoForm> infoFormOptional, Locale locale) {
 
 		InfoField infoField = null;
@@ -336,16 +334,11 @@ public class FreeMarkerFragmentEntryProcessor
 			infoField = infoForm.getInfoField(fieldName);
 		}
 
-		String defaultHelpTextValue = LanguageUtil.get(
-			httpServletRequest,
-			"guide-your-users-to-fill-in-the-field-by-adding-help-text-here");
-
 		String inputHelpText = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getEditableValues(),
 				new FragmentConfigurationField(
-					"inputHelpText", "string", defaultHelpTextValue, true,
-					"text"),
+					"inputHelpText", "string", "", true, "text"),
 				locale));
 
 		String defaultLabelValue = StringPool.BLANK;

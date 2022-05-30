@@ -879,7 +879,7 @@ definition {
 			channelsEligibility = "Site1 Portal",
 			unpublish = "true");
 
-		Refresh();	
+		Refresh();
 
 		CommerceEntry.viewEntryEligibility(
 			accountsEligibility = "Account1",
@@ -898,7 +898,7 @@ definition {
 			channelsEligibility = "Site2 Portal",
 			unpublish = "true");
 
-		Refresh();	
+		Refresh();
 
 		CommerceEntry.viewEntryEligibility(
 			accountsEligibility = "Account2",
@@ -1025,8 +1025,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		Click(
-			radioLabel = "All Accounts",
-			locator1 = "Radio#ANY");
+			locator1 = "Radio#ANY",
+			radioLabel = "All Accounts");
 
 		Button.clickPublish();
 
@@ -1037,8 +1037,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		Click(
-			radioLabel = "All Accounts",
-			locator1 = "Radio#ANY");
+			locator1 = "Radio#ANY",
+			radioLabel = "All Accounts");
 
 		Button.clickPublish();
 

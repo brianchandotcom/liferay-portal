@@ -272,14 +272,13 @@ definition {
 	@description = "Verify that the user is not able to search by Workflow description"
 	@priority = "3"
 	test CanSearchByDescription {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		task ("Search for existing Description") {
 			ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
 
 			ProcessBuilderListView.validateIfSearchItem(
+				singleResult = "true",
 				numberResults = "1",
 				workflowName = "&quot;workflow content&quot;");
 
@@ -304,7 +303,6 @@ definition {
 	@description = "Verify that the user is able to search by Workflow title"
 	@priority = "4"
 	test CanSearchByTitle {
-		property portal.upstream = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -314,6 +312,7 @@ definition {
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
 
 		ProcessBuilderListView.validateIfSearchItem(
+			singleResult = "true",
 			numberResults = "1",
 			workflowName = "&quot;Approver&quot;");
 

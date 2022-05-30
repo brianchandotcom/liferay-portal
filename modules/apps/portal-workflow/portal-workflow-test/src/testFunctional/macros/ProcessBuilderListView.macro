@@ -33,9 +33,17 @@ definition {
 	}
 
 	macro validateIfSearchItem {
-		AssertTextEquals(
-			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "${numberResults} Results for ${workflowName}");
+		if (isSet(singleResult)) {
+			AssertTextEquals(
+				locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
+				value1 = "${numberResults} Result for ${workflowName}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
+				value1 = "${numberResults} Results for ${workflowName}");
+		}
+
 	}
 
 	macro viewDefinitionPublicationStatus {

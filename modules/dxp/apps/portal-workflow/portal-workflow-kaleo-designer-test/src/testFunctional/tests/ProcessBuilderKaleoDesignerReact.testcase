@@ -45,8 +45,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
 			actionsTemplateValue = "Action Template",
@@ -71,8 +70,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
@@ -86,7 +84,6 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
 	@priority = "5"
 	test CanAddConditionNode {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddConditionNode";
 
 		Workflow.openWorkflowListView();
@@ -95,8 +92,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "20,-100",
-			nodeType = "condition");
+			nodePosition = "0,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
 	}
@@ -112,8 +108,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "End",
-			nodePosition = "90,-300",
-			nodeType = "end");
+			nodePosition = "90,-300");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "end");
 	}
@@ -129,8 +124,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "-20,-40",
-			nodeType = "fork");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "fork");
 	}
@@ -146,8 +140,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join",
-			nodePosition = "-20,-40",
-			nodeType = "join");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join");
 	}
@@ -163,8 +156,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join XOR",
-			nodePosition = "-40,-200",
-			nodeType = "join-xor");
+			nodePosition = "-40,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join-xor");
 	}
@@ -216,8 +208,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
 			name = "Liferay Notification",
@@ -252,8 +243,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Start",
-			nodePosition = "70,-200",
-			nodeType = "start");
+			nodePosition = "70,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "start");
 	}
@@ -269,8 +259,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
-			nodePosition = "50,-420",
-			nodeType = "state");
+			nodePosition = "50,-420");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "state");
 	}
@@ -286,8 +275,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
 	}
@@ -303,8 +291,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
@@ -439,8 +426,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
 			cancel = "true",
@@ -459,8 +445,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
 			close = "true",
@@ -601,8 +586,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "task",
@@ -670,7 +654,6 @@ definition {
 	@description = "Verify that the user can delete Nodes of Condition"
 	@priority = "4"
 	test CanDeleteConditionNode {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
 
 		Workflow.openWorkflowListView();
@@ -679,8 +662,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "-20,-100",
-			nodeType = "condition");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected condition node?",
@@ -720,8 +702,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "20,-500",
-			nodeType = "fork");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected fork node?",
@@ -742,8 +723,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join",
-			nodePosition = "-80,-40",
-			nodeType = "join");
+			nodePosition = "-80,-40");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected join node?",
@@ -764,8 +744,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join XOR",
-			nodePosition = "-40,-200",
-			nodeType = "join-xor");
+			nodePosition = "-40,-200");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected join xor node?",
@@ -795,8 +774,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-500",
-			nodeType = "task");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
 			delete = "true",
@@ -815,8 +793,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-500",
-			nodeType = "task");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected task node?",
@@ -874,8 +851,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
-			nodePosition = "50,-420",
-			nodeType = "state");
+			nodePosition = "50,-420");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected state node?",
@@ -896,8 +872,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
 			modalMessage = "Are you sure you want to delete the selected task node?",
@@ -985,8 +960,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Description",
@@ -1108,8 +1082,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
@@ -1135,8 +1108,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
@@ -1246,8 +1218,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer Action",
@@ -1334,7 +1305,6 @@ definition {
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
 	@priority = "2"
 	test CanHideShowInformationArea {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanHideShowInformationArea";
 
 		Workflow.openWorkflowListView();
@@ -1343,8 +1313,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "-20,-100",
-			nodeType = "condition");
+			nodePosition = "0,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			descriptionValue = "Execute conditional logic.",
@@ -1402,7 +1371,6 @@ definition {
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
 	@priority = "4"
 	test CanMoveNode {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanMoveNode";
 
 		Workflow.openWorkflowListView();
@@ -1419,7 +1387,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodePosition = "100,-50",
-			nodeType = "start");
+			nodeLabel = "Start");
 
 		ProcessBuilderKaleoDesignerReact.viewNodePosition(
 			firstNodeXPosition = "300",
@@ -1518,8 +1486,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Id",
@@ -1745,8 +1712,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
@@ -1781,8 +1747,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
 			executionTypeOption = "On Assignment",
@@ -1929,8 +1894,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
 			name = "New Notification",
@@ -2196,7 +2160,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "Start");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
@@ -2229,8 +2193,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "-20,-100",
-			nodeType = "condition");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
 
@@ -2324,8 +2287,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-100",
-			nodeType = "task");
+			nodePosition = "20,-100");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			idValue = "item_2",
@@ -2336,7 +2298,6 @@ definition {
 	@description = "Verify that default names for nodes are provided"
 	@priority = "4"
 	test DefaultLabelsAreProvided {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelsAreProvided";
 
 		Workflow.openWorkflowListView();
@@ -2349,15 +2310,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "20,-300",
-			nodeType = "condition");
+			nodePosition = "20,-300");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-100",
-			nodeType = "task");
+			nodePosition = "20,100");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2476,8 +2435,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "-20,-100",
-			nodeType = "fork");
+			nodePosition = "-20,-300");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "fork",
@@ -2523,8 +2481,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join",
-			nodePosition = "-80,-40",
-			nodeType = "join");
+			nodePosition = "-80,-40");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "join");
 
@@ -2536,8 +2493,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join XOR",
-			nodePosition = "-40,-200",
-			nodeType = "join-xor");
+			nodePosition = "-40,-200");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "join-xor");
 
@@ -2549,8 +2505,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
-			nodePosition = "50,-420",
-			nodeType = "state");
+			nodePosition = "50,-420");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "state");
 
@@ -2562,8 +2517,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-500",
-			nodeType = "task");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
@@ -2573,7 +2527,6 @@ definition {
 	@description = "Verify that each type of Node has Description property"
 	@priority = "4"
 	test HasDescriptionProperty {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasDescriptionProperty";
 
 		Workflow.openWorkflowListView();
@@ -2592,8 +2545,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "20,-500",
-			nodeType = "fork");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			descriptionValue = "Split the workflow into multiple paths.",
@@ -2603,8 +2555,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "20,-100",
-			nodeType = "condition");
+			nodePosition = "20,100");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			descriptionValue = "Execute conditional logic.",
@@ -2614,7 +2565,6 @@ definition {
 	@description = "Verify that each type of Node has Notifications property"
 	@priority = "4"
 	test HasNotificationsProperty {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasNotificationsProperty";
 
 		Workflow.openWorkflowListView();
@@ -2635,8 +2585,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "20,-500",
-			nodeType = "fork");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "fork");
 
@@ -2648,8 +2597,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
-			nodePosition = "20,-100",
-			nodeType = "condition");
+			nodePosition = "20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
 
@@ -2699,7 +2647,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodePosition = "100,-50",
-			nodeType = "start");
+			nodeLabel = "Start");
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
@@ -2731,8 +2679,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "20,-500",
-			nodeType = "task");
+			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Id",
@@ -2754,8 +2701,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewActiveNodeHighlighted(nodeType = "task");
 
@@ -2823,8 +2769,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "end",
@@ -2866,8 +2811,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Id",
@@ -2907,8 +2851,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
@@ -2939,8 +2882,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-100",
-			nodeType = "task");
+			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
@@ -2958,8 +2900,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "task",
@@ -2999,8 +2940,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "-20,-40",
-			nodeType = "task");
+			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "task",

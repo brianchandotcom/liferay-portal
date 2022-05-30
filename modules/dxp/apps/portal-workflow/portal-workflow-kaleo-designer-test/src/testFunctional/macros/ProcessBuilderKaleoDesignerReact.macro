@@ -144,27 +144,26 @@ definition {
 
 	macro dragAndDropDiagramNode {
 		DragAndDrop.dragAndDrop(
-			key_nodeType = "${nodeType}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+			key_nodeLabel = "${nodeLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
 			value1 = "${nodePosition}");
 	}
 
 	macro dragSidebarNodeAndMove {
 		var key_nodeLabel = "${nodeLabel}";
-		var key_nodeType = "${nodeType}";
 
 		AssertClick.pauseAssertTextClickAt(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
 			value1 = "${nodeLabel}");
 
-		DragAndDrop.javaScriptDragAndDropToUp(
+		DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
 			locator2 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL",
 			nodeLabel = "${nodeLabel}");
 
 		DragAndDrop.dragAndDrop(
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
-			nodeType = "${nodeType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
+			nodeLabel = "${nodeLabel}",
 			value1 = "${nodePosition}");
 	}
 

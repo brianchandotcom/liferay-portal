@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
-	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
+	<td>//span[contains(.,'Results') and @class='text-truncate'] | //span[contains(.,'Result') and @class='text-truncate']</td>
 	<td></td>
 </tr>
 <tr>

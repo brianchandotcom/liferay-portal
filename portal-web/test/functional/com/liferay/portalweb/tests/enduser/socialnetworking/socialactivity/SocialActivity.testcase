@@ -44,15 +44,21 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "enableUserSocialActivityTracking");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Activities Page");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Activities");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",
@@ -62,11 +68,13 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		AssertTextEquals(
 			key_assetName = "DM Document Title",
@@ -96,15 +104,21 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enable");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Activities Page");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Activities");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",
@@ -114,11 +128,13 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		Navigator.gotoPage(pageName = "Activities Page");
+		Navigator.openSitePage(
+			pageName = "Activities Page",
+			siteName = "Site Name");
 
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",

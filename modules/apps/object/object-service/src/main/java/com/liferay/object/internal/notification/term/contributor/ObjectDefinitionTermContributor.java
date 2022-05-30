@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -46,12 +44,11 @@ public class ObjectDefinitionTermContributor
 		ObjectFieldLocalService objectFieldLocalService,
 		UserLocalService userLocalService) {
 
-		_objectDefinitionId = objectDefinitionId;
 		_objectFieldLocalService = objectFieldLocalService;
 		_userLocalService = userLocalService;
 
 		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(_objectDefinitionId);
+			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldIds.put(
@@ -68,26 +65,21 @@ public class ObjectDefinitionTermContributor
 	public String getFilledTerm(String term, Object object, Locale locale)
 		throws PortalException {
 
-		if (!(object instanceof ObjectEntry)) {
+		if (!(object instanceof Map)) {
 			return term;
 		}
 
-		ObjectEntry objectEntry = (ObjectEntry)object;
+		Map<String, Object> values = (Map<String, Object>)object;
 
 		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
-			User user = _userLocalService.getUser(objectEntry.getUserId());
+			User user = _userLocalService.getUser(
+				(long)values.get("currentUserId"));
 
 			return user.getFullName(true, true);
 		}
 
-		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
-			return String.valueOf(objectEntry.getObjectEntryId());
-		}
-
-		long objectEntryId = _objectFieldIds.get(term);
-
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectEntryId);
+			_objectFieldIds.get(term));
 
 		if (objectField == null) {
 			return term;
@@ -98,8 +90,6 @@ public class ObjectDefinitionTermContributor
 				"Processing term for object field " + objectField.getName());
 		}
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		return String.valueOf(values.get(objectField.getName()));
 	}
 
@@ -109,14 +99,8 @@ public class ObjectDefinitionTermContributor
 			return LanguageUtil.get(locale, "creator");
 		}
 
-		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
-			return LanguageUtil.get(locale, "id");
-		}
-
-		long objectFieldId = _objectFieldIds.get(term);
-
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectFieldId);
+			_objectFieldIds.get(term));
 
 		return objectField.getLabel(locale);
 	}
@@ -129,11 +113,8 @@ public class ObjectDefinitionTermContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionTermContributor.class);
 
-	private final long _objectDefinitionId;
 	private final Map<String, Long> _objectFieldIds = HashMapBuilder.put(
 		"[%OBJECT_ENTRY_CREATOR%]", 0L
-	).put(
-		"[%OBJECT_ENTRY_ID%]", 0L
 	).build();
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserLocalService _userLocalService;

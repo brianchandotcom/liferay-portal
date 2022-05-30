@@ -580,7 +580,12 @@ definition {
 		}
 
 		task ("Go to Blogs, check empty state message") {
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about blogs.");
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about blogs.");
 
@@ -594,7 +599,12 @@ definition {
 		task ("Go to Documents and Media Tab, check empty state message") {
 			ACNavigation.switchTab(tabName = "Documents and Media");
 
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about documents and media.");
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about documents and media.");
 
@@ -608,7 +618,12 @@ definition {
 		task ("Go to Forms Tab, check empty state message") {
 			ACNavigation.switchTab(tabName = "Forms");
 
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about forms.");
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about forms.");
 
@@ -622,7 +637,12 @@ definition {
 		task ("Go to Web Content Tab, check empty state message") {
 			ACNavigation.switchTab(tabName = "Web Content");
 
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about web content.");
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about web content.");
 
@@ -636,7 +656,12 @@ definition {
 		task ("Go to Custom Tab, check empty state message") {
 			ACNavigation.switchTab(tabName = "Custom");
 
-			ACUtils.viewGenericText(textValueList = "There are no visitors data found.,Check back later to verify if data has been received from your data sources, or you can try a different date range.,Learn more about custom assets.");
+			ACUtils.viewGenericText(textValueList = "There are no visitors data found.");
+
+			AssertTextEquals(
+				key_textValue = "Check back later to verify if data has been received from your data sources, or you can try a different date range.",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "Check back later to verify if data has been received from your data sources, or you can try a different date range.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about custom assets.");
 

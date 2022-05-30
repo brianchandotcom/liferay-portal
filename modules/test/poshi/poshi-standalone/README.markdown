@@ -114,7 +114,7 @@ testrayUserPassword=[liferay_user_password]
 Default configurations are defined with the following properties and values:
 ```
 environmentBrowserName=Google Chrome 86
-environmentOperatingSystemName=Cent OS 7
+environmentOperatingSystemName=CentOS 7
 
 projectDir=.
 
@@ -133,7 +133,7 @@ testrayTeamName=DXP Cloud Client Team
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `environmentBrowserName` | `String` | Google Chrome 86 | The browser name and version used in the test environment
-`environmentOperatingSystemName` | `String` | Cent OS 7 | The operating system name and version used in the test environment
+`environmentOperatingSystemName` | `String` | CentOS 7 | The operating system name and version used in the test environment
 `projectDir` | `File` | `.` | The location of the project directory
 `testrayBuildName` | `String` | DXP Cloud Client Build - $(start.time) | The Testray build name
 `testrayCasePriority` | `Integer` | `1` | The priority of the test case result(s)

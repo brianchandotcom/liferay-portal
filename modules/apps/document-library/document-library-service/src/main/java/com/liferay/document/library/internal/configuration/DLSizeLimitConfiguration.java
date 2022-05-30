@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
-	category = "documents-and-media",
+	category = "documents-and-media", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(

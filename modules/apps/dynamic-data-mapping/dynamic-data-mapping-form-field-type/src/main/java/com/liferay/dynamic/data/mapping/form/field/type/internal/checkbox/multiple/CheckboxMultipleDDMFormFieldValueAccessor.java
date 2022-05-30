@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -178,7 +177,7 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 				optionValue);
 
 			if (optionLabel != null) {
-				sb.append(HtmlUtil.escape(optionLabel.getString(locale)));
+				sb.append(optionLabel.getString(locale));
 			}
 			else {
 				sb.append(optionValue);

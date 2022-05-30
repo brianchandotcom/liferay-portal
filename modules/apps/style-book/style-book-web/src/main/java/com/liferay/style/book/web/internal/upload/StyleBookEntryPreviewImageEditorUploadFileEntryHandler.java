@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.fragment.web.internal.upload;
+package com.liferay.style.book.web.internal.upload;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.constants.StyleBookActionKeys;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
 import com.liferay.upload.UniqueFileNameProvider;
 
@@ -32,9 +32,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, service = FragmentEntryPreviewUploadFileEntryHandler.class
+	immediate = true,
+	service = StyleBookEntryPreviewImageEditorUploadFileEntryHandler.class
 )
-public class FragmentEntryPreviewUploadFileEntryHandler
+public class StyleBookEntryPreviewImageEditorUploadFileEntryHandler
 	extends BaseImageEditorUploadFileEntryHandler {
 
 	@Override
@@ -47,7 +48,7 @@ public class FragmentEntryPreviewUploadFileEntryHandler
 
 		_portletResourcePermission.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 	}
 
 	@Override
@@ -57,7 +58,8 @@ public class FragmentEntryPreviewUploadFileEntryHandler
 
 	@Override
 	protected String getFolderName() {
-		return FragmentEntryPreviewUploadFileEntryHandler.class.getName();
+		return StyleBookEntryPreviewImageEditorUploadFileEntryHandler.class.
+			getName();
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class FragmentEntryPreviewUploadFileEntryHandler
 	private DLAppService _dlAppService;
 
 	@Reference(
-		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

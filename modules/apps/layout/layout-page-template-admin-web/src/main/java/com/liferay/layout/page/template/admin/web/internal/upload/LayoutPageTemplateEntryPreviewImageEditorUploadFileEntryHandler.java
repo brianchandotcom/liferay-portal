@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = LayoutPageTemplateEntryPreviewUploadFileEntryHandler.class
+	service = LayoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler.class
 )
-public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
+public class LayoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler
 	extends BaseImageEditorUploadFileEntryHandler {
 
 	@Override
@@ -62,8 +62,8 @@ public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
 
 	@Override
 	protected String getFolderName() {
-		return LayoutPageTemplateEntryPreviewUploadFileEntryHandler.class.
-			getName();
+		return LayoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler.
+			class.getName();
 	}
 
 	@Override

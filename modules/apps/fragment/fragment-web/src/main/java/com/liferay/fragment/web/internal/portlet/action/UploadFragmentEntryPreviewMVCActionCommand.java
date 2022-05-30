@@ -15,7 +15,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.web.internal.upload.FragmentEntryPreviewUploadFileEntryHandler;
+import com.liferay.fragment.web.internal.upload.FragmentEntryPreviewImageEditorUploadFileEntryHandler;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -47,13 +47,13 @@ public class UploadFragmentEntryPreviewMVCActionCommand
 		throws Exception {
 
 		_uploadHandler.upload(
-			_fragmentEntryPreviewUploadFileEntryHandler,
+			_fragmentEntryPreviewImageEditorUploadFileEntryHandler,
 			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
-	private FragmentEntryPreviewUploadFileEntryHandler
-		_fragmentEntryPreviewUploadFileEntryHandler;
+	private FragmentEntryPreviewImageEditorUploadFileEntryHandler
+		_fragmentEntryPreviewImageEditorUploadFileEntryHandler;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler

@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.style.book.web.internal.upload;
+package com.liferay.fragment.web.internal.upload;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.style.book.constants.StyleBookActionKeys;
-import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
 import com.liferay.upload.UniqueFileNameProvider;
 
@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = StyleBookEntryPreviewUploadFileEntryHandler.class
+	service = FragmentEntryPreviewImageEditorUploadFileEntryHandler.class
 )
-public class StyleBookEntryPreviewUploadFileEntryHandler
+public class FragmentEntryPreviewImageEditorUploadFileEntryHandler
 	extends BaseImageEditorUploadFileEntryHandler {
 
 	@Override
@@ -48,7 +48,7 @@ public class StyleBookEntryPreviewUploadFileEntryHandler
 
 		_portletResourcePermission.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
-			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 	}
 
 	@Override
@@ -58,7 +58,8 @@ public class StyleBookEntryPreviewUploadFileEntryHandler
 
 	@Override
 	protected String getFolderName() {
-		return StyleBookEntryPreviewUploadFileEntryHandler.class.getName();
+		return FragmentEntryPreviewImageEditorUploadFileEntryHandler.class.
+			getName();
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class StyleBookEntryPreviewUploadFileEntryHandler
 	private DLAppService _dlAppService;
 
 	@Reference(
-		target = "(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

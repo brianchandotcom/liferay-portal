@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = FragmentCollectionResourceUploadFileEntryHandler.class
+	service = FragmentCollectionResourceImageEditorUploadFileEntryHandler.class
 )
-public class FragmentCollectionResourceUploadFileEntryHandler
+public class FragmentCollectionResourceImageEditorUploadFileEntryHandler
 	extends BaseImageEditorUploadFileEntryHandler {
 
 	@Override
@@ -58,7 +58,8 @@ public class FragmentCollectionResourceUploadFileEntryHandler
 
 	@Override
 	protected String getFolderName() {
-		return FragmentCollectionResourceUploadFileEntryHandler.class.getName();
+		return FragmentCollectionResourceImageEditorUploadFileEntryHandler.
+			class.getName();
 	}
 
 	@Override

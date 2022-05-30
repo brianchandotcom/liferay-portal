@@ -16,7 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.upload.LayoutPageTemplateEntryPreviewUploadFileEntryHandler;
+import com.liferay.layout.page.template.admin.web.internal.upload.LayoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
@@ -47,7 +47,7 @@ public class UploadLayoutPageTemplateEntryPreviewMVCActionCommand
 		throws Exception {
 
 		_uploadHandler.upload(
-			_layoutPageTemplateEntryPreviewUploadFileEntryHandler,
+			_layoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler,
 			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
 	}
 
@@ -56,8 +56,8 @@ public class UploadLayoutPageTemplateEntryPreviewMVCActionCommand
 		_itemSelectorUploadResponseHandler;
 
 	@Reference
-	private LayoutPageTemplateEntryPreviewUploadFileEntryHandler
-		_layoutPageTemplateEntryPreviewUploadFileEntryHandler;
+	private LayoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler
+		_layoutPageTemplateEntryPreviewImageEditorUploadFileEntryHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;

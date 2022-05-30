@@ -181,24 +181,15 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		if (objectRelationship.isReverse()) {
-			objectRelationship =
-				_objectRelationshipLocalService.fetchReverseObjectRelationship(
-					objectRelationship, false);
-		}
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
 				new DynamicObjectRelationshipMappingTable(
 					objectDefinition1.getPKObjectFieldDBColumnName(),
-					objectDefinition2.getPKObjectFieldDBColumnName(),
+					objectDefinition.getPKObjectFieldDBColumnName(),
 					objectRelationship.getDBTableName());
 
 		PersistedModelLocalService persistedModelLocalService =
@@ -226,29 +217,24 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					}
 				).and(
 					() -> {
-						Column<?, Long> primaryKeyColumn = _table.getColumn(
-							objectDefinition.getPKObjectFieldDBColumnName());
-
-						String foreignKeyColumnName =
+						String primaryKeyColumnName1 =
 							objectDefinition1.getPKObjectFieldDBColumnName();
 
-						if (objectDefinition.getObjectDefinitionId() ==
-								objectDefinition1.getObjectDefinitionId()) {
-
-							foreignKeyColumnName =
-								objectDefinition2.
-									getPKObjectFieldDBColumnName();
-						}
-
 						Column<DynamicObjectRelationshipMappingTable, Long>
-							foreignKeyColumn =
+							primaryKeyColumn1 =
 								(Column
 									<DynamicObjectRelationshipMappingTable,
 									 Long>)
 										 dynamicObjectRelationshipMappingTable.
-											 getColumn(foreignKeyColumnName);
+											 getColumn(primaryKeyColumnName1);
 
-						return primaryKeyColumn.notIn(
+						String primaryKeyColumnName2 =
+							objectDefinition.getPKObjectFieldDBColumnName();
+
+						Column<?, Long> primaryKeyColumn2 = _table.getColumn(
+							primaryKeyColumnName2);
+
+						return primaryKeyColumn2.notIn(
 							DSLQueryFactoryUtil.select(
 								dynamicObjectRelationshipMappingTable.getColumn(
 									objectDefinition.
@@ -256,7 +242,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 							).from(
 								dynamicObjectRelationshipMappingTable
 							).where(
-								foreignKeyColumn.eq(objectEntryId)
+								primaryKeyColumn1.eq(objectEntryId)
 							));
 					}
 				)

@@ -180,8 +180,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 					type, draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
-					draftLayout.getMasterLayoutPlid(), styleBookEntryId,
-					faviconFileEntryId, serviceContext);
+					styleBookEntryId, faviconFileEntryId,
+					draftLayout.getMasterLayoutPlid(), serviceContext);
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);

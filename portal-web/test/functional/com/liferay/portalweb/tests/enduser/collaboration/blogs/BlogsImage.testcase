@@ -584,12 +584,9 @@ definition {
 			folderName = "DM Folder Name",
 			groupName = "Guest");
 
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Blogs Entry With Small Image",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsEntry.viewSmallImage(dmImage = "true");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This is a test for LPS-67276. It ensures that the success message for the cover image does not display after publishing with the empty required fields."

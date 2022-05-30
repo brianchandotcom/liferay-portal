@@ -8801,7 +8801,7 @@ public class PortalImpl implements Portal {
 			if (groupFriendlyURL.contains(
 					StringBundler.concat(
 						_PUBLIC_GROUP_SERVLET_MAPPING, siteGroupFriendlyURL,
-						layoutFriendlyURL))) {
+						StringUtil.toLowerCase(layoutFriendlyURL)))) {
 
 				return true;
 			}

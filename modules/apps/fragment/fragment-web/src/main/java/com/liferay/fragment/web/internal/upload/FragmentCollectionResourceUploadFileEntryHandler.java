@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.upload.ImageEditorUploadHandler;
+import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentCollectionResourceUploadFileEntryHandler.class
 )
 public class FragmentCollectionResourceUploadFileEntryHandler
-	extends ImageEditorUploadHandler {
+	extends BaseImageEditorUploadFileEntryHandler {
 
 	@Override
 	protected void checkPermissions(UploadPortletRequest uploadPortletRequest)

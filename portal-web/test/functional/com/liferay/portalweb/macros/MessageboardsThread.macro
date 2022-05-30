@@ -529,6 +529,16 @@ definition {
 				value1 = "${threadBodyEdit}");
 
 			SelectFrameTop();
+
+			if (isSet(threadBodyImageEdit)) {
+				var key_imageFileName = "${threadBodyImageEdit}";
+
+				ItemSelector.gotoItemSelectorViaCKEditor();
+
+				SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+				Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+			}
 		}
 	}
 
@@ -1336,6 +1346,13 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1",
 				value1 = "${mbAttachmentFile}");
+		}
+
+		if (isSet(threadBodyImage)) {
+			AssertVisible(
+				key_imageFileName = "${threadBodyImage}",
+				key_threadBody = "${threadBody}",
+				locator1 = "MessageBoardsThread#THREAD_BODY_IMAGE");
 		}
 	}
 

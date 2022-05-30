@@ -35,13 +35,13 @@ definition {
 		}
 	}
 
-	@description = "The Web Content creator can add a localized web content from source editor via Web Content Display widget."
+	@description = "The Web Content creator can add a localized web content via source editor."
 	@priority = "5"
 	test AddLocalizedWebContentViaSourceEditor {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
 
-		task ("Given a site designer has a page where a Web Content Display widget adds a web content with source editor") {
+		task ("Given a site designer has a page with a Web Content Display and Language Selector widgets") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -51,7 +51,9 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				widgetName = "Language Selector");
+		}
 
+		task ("When the site designer adds a web content in English via source editor") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -66,8 +68,10 @@ definition {
 <p class="text-center">Dare to Dream out of this world</p>
 ''');
 
-			Button.clickPublish();
+			PortletEntry.publish();
+		}
 
+		task ("Then the site designer could view web content in Web Content Display") {
 			WaitForElementNotPresent(
 				key_text = "Publish",
 				locator1 = "Button#ANY");
@@ -77,7 +81,7 @@ definition {
 				webContentTitle = "Basic S.P.A.C.E. Banner");
 		}
 
-		task ("When the site designer adds a Chinese translation to web content via Web Content Display") {
+		task ("When the site designer adds a Chinese translation to web content via source editor") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "Edit Web Content",
 				webContentTitle = "Basic S.P.A.C.E. Banner");
@@ -207,7 +211,7 @@ definition {
 					widgetName = "Language Selector");
 			}
 
-			task ("Add a translated web content structure") {
+			task ("Add a web content structure with Chinese translation") {
 				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 				WebContentStructures.addCP(
@@ -227,7 +231,7 @@ definition {
 				WebContentStructures.saveCP();
 			}
 
-			task ("Add a translated web content template") {
+			task ("Add a web content template with Chinese translation") {
 				WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 				WebContentTemplates.addCP(
@@ -246,7 +250,7 @@ definition {
 				DDLDataDefinition.save();
 			}
 
-			task ("Add a translated web content") {
+			task ("Add a web content with French translation") {
 				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 				WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
@@ -283,23 +287,27 @@ definition {
 			}
 		}
 
-		task ("When the site designer opens the web content at edit mode via Web Content Display after change the user language to French") {
+		task ("When the site designer changes the user language to French") {
 			LanguagePortlet.selectLanguagePG(
 				locale = "fr_FR",
 				textIcon = "français-France");
+		}
 
+		task ("Then the site designer could see the French translations on Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Contenu de Contenu Web",
 				webContentTitle = "Titre du contenu Web");
+		}
 
+		task ("When the site designer changes the user language to French in web content editor") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "Modifier le contenu de Web",
 				webContentTitle = "Titre du contenu Web");
+
+			PortletEntry.changeLocale(locale = "fr-FR");
 		}
 
-		task ("Then the site designer could view the French web content, structure and template") {
-			PortletEntry.changeLocale(locale = "fr-FR");
-
+		task ("Then the site designer could view the French translations") {
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
 				value1 = "Titre du contenu Web");
@@ -315,7 +323,7 @@ definition {
 				templateLocalizationName = "Modele de contenu Web");
 		}
 
-		task ("When the site designer opens the web content at edit mode via Web Content Display after change the user language to Chinese") {
+		task ("When the site designer changes the user language to Chinese on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -323,24 +331,28 @@ definition {
 			LanguagePortlet.selectLanguagePG(
 				locale = "zh-CN",
 				textIcon = "中文-中国");
+		}
 
+		task ("Then the site designer should see web content in English on Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Text",
 				webContentTitle = "Web Content Title");
+		}
 
+		task ("When the site designer changes the user language to Chinese in web content editor") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "编辑 Web 内容",
 				webContentTitle = "Web Content Title");
 		}
 
-		task ("Then the site designer could view the Chinese web content structure and template") {
+		task ("Then the site designer could view the Chinese translations") {
 			WebContent.viewStructureAndTemplateLocalization(
 				panel = "默认模板",
 				structureLocalizationName = "wc 结构名称",
 				templateLocalizationName = "wc 模板名称");
 		}
 
-		task ("When the site designer changes the user language to English") {
+		task ("When the site designer changes the user language to English on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -350,7 +362,7 @@ definition {
 				textIcon = "english-United States");
 		}
 
-		task ("Then the site designer could view the web content in English") {
+		task ("Then the site designer could view the web content in English on Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Text",
 				webContentTitle = "Web Content Title");

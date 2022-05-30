@@ -72,27 +72,20 @@ public class NotificationHelperImpl implements NotificationHelper {
 
 		User user = _userLocalService.getUser(userId);
 
-		long groupId = user.getGroupId();
-
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
-
-		Locale userLocale = user.getLocale();
-
 		String fromName = notificationTemplate.getFromName(
 			user.getLanguageId());
-
-		String subject = _formatString(
-			notificationType, _SUBJECTFIELD,
-			notificationTemplate.getSubject(userLocale), object, userLocale);
-
-		String body = _formatString(
-			notificationType, _BODYFIELD,
-			notificationTemplate.getBody(userLocale), object, userLocale);
+		long groupId = user.getGroupId();
 
 		if (Validator.isNull(fromName)) {
 			fromName = notificationTemplate.getFromName(
 				_portal.getSiteDefaultLocale(groupId));
 		}
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+		String subject = _formatString(
+			notificationType, _SUBJECTFIELD,
+			notificationTemplate.getSubject(user.getLocale()), object,
+			user.getLocale());
 
 		if (Validator.isNull(subject)) {
 			subject = _formatString(
@@ -101,16 +94,22 @@ public class NotificationHelperImpl implements NotificationHelper {
 				siteDefaultLocale);
 		}
 
+		String body = _formatString(
+			notificationType, _BODYFIELD,
+			notificationTemplate.getBody(user.getLocale()), object,
+			user.getLocale());
+
 		if (Validator.isNull(body)) {
-			_formatString(
+			body = _formatString(
 				notificationType, _BODYFIELD,
 				notificationTemplate.getBody(siteDefaultLocale), object,
 				siteDefaultLocale);
 		}
 
 		String to = _formatString(
-			notificationType, _TOFIELD, notificationTemplate.getTo(userLocale),
-			object, userLocale);
+			notificationType, _TOFIELD,
+			notificationTemplate.getTo(user.getLocale()), object,
+			user.getLocale());
 
 		if (Validator.isNull(to)) {
 			to = _formatString(
@@ -140,56 +139,33 @@ public class NotificationHelperImpl implements NotificationHelper {
 						_log.info("No User found with key: " + toUserString);
 					}
 
-					_addNotificationQueueEntry(
-						body, fromName, notificationTemplate, notificationType,
-						object, toUserString, toUserString, subject);
-				}
-				else {
-					_addNotificationQueueEntry(
-						userId, body, fromName, notificationTemplate,
-						notificationType, object, toUser, subject);
+					User defaultUser = _userLocalService.getDefaultUser(
+						CompanyThreadLocal.getCompanyId());
+
+					_notificationQueueEntryLocalService.
+						addNotificationQueueEntry(
+							defaultUser.getUserId(),
+							notificationTemplate.getNotificationTemplateId(),
+							notificationTemplate.getBcc(), body,
+							notificationTemplate.getCc(),
+							notificationType.getClassName(object),
+							notificationType.getClassPK(object),
+							notificationTemplate.getFrom(), fromName, 0,
+							subject, toUserString, toUserString);
+
+					continue;
 				}
 			}
-			else {
-				_addNotificationQueueEntry(
-					userId, body, fromName, notificationTemplate,
-					notificationType, object, toUser, subject);
-			}
+
+			_notificationQueueEntryLocalService.addNotificationQueueEntry(
+				userId, notificationTemplate.getNotificationTemplateId(),
+				notificationTemplate.getBcc(), body,
+				notificationTemplate.getCc(),
+				notificationType.getClassName(object),
+				notificationType.getClassPK(object),
+				notificationTemplate.getFrom(), fromName, 0, subject,
+				toUser.getEmailAddress(), notificationTemplate.getName());
 		}
-	}
-
-	private void _addNotificationQueueEntry(
-			long userId, String body, String fromName,
-			NotificationTemplate notificationTemplate,
-			NotificationType notificationType, Object object, User toUser,
-			String subject)
-		throws PortalException {
-
-		_notificationQueueEntryLocalService.addNotificationQueueEntry(
-			userId, notificationTemplate.getNotificationTemplateId(),
-			notificationTemplate.getBcc(), body, notificationTemplate.getCc(),
-			notificationType.getClassName(object),
-			notificationType.getClassPK(object), notificationTemplate.getFrom(),
-			fromName, 0, subject, toUser.getEmailAddress(),
-			notificationTemplate.getName());
-	}
-
-	private void _addNotificationQueueEntry(
-			String body, String fromName,
-			NotificationTemplate notificationTemplate,
-			NotificationType notificationType, Object object,
-			String toEmailAddress, String toFullName, String subject)
-		throws PortalException {
-
-		User user = _userLocalService.getDefaultUser(
-			CompanyThreadLocal.getCompanyId());
-
-		_notificationQueueEntryLocalService.addNotificationQueueEntry(
-			user.getUserId(), notificationTemplate.getNotificationTemplateId(),
-			notificationTemplate.getBcc(), body, notificationTemplate.getCc(),
-			notificationType.getClassName(object),
-			notificationType.getClassPK(object), notificationTemplate.getFrom(),
-			fromName, 0, subject, toEmailAddress, toFullName);
 	}
 
 	private String _formatString(

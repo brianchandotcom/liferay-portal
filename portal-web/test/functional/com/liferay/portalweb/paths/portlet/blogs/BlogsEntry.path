@@ -196,11 +196,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SMALL_IMAGE_DM_IMAGE</td>
-	<td>//img[@class='current-image']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIDEO_EMBED_HELP_MESSAGE</td>
 	<td>//div[@class='embed-help-message']//span</td>
 	<td></td>

@@ -68,23 +68,25 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 				"Invalid scope primary key 0 for " + scope + " scope");
 		}
 
+		long fileMaxSize = ParamUtil.getLong(actionRequest, "fileMaxSize");
+
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateCompanyMimeTypeSizeLimit(
-				scopePK, _getMimeTypeSizeLimits(actionRequest));
+				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateGroupMimeTypeSizeLimit(
-				scopePK, _getMimeTypeSizeLimits(actionRequest));
+				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateSystemMimeTypeSizeLimit(
-				_getMimeTypeSizeLimits(actionRequest));
+				fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else {
 			throw new PortalException("Unsupported scope: " + scope);

@@ -955,7 +955,7 @@ definition {
 	macro checkDocumentCheckboxPG {
 		var key_listEntry = "${dmDocumentTitle}";
 
-		Check(locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+		Check.checkNotVisible(locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
 	}
 
 	macro checkinCP {

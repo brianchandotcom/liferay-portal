@@ -37,8 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -54,8 +52,6 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_messageBoardsSimilarResultsContributor =
 			new MessageBoardsSimilarResultsContributor();
 	}
@@ -106,7 +102,7 @@ public class MessageBoardsSimilarResultsContributorTest
 		).when(
 			_mbMessageLocalService
 		).fetchMBMessage(
-			Matchers.anyLong()
+			Mockito.anyLong()
 		);
 
 		setUpAssetEntryLocalServiceFetchEntry(
@@ -145,7 +141,7 @@ public class MessageBoardsSimilarResultsContributorTest
 		).when(
 			_mbCategoryLocalService
 		).fetchMBCategory(
-			Matchers.anyLong()
+			Mockito.anyLong()
 		);
 
 		setUpCriteriaHelper("type", "category");
@@ -195,12 +191,10 @@ public class MessageBoardsSimilarResultsContributorTest
 			destinationBuilderImpl.build());
 	}
 
-	@Mock
-	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
+	private final MBCategoryLocalService _mbCategoryLocalService = Mockito.mock(
+		MBCategoryLocalService.class);
+	private final MBMessageLocalService _mbMessageLocalService = Mockito.mock(
+		MBMessageLocalService.class);
 	private MessageBoardsSimilarResultsContributor
 		_messageBoardsSimilarResultsContributor;
 

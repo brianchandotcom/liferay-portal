@@ -68,10 +68,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -86,8 +83,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_httpHelperImpl = new HttpHelperImpl();
 
 		PortalUtil portalUtil = new PortalUtil();
@@ -559,7 +554,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		).getEntryId();
 
 		Mockito.when(
-			_assetEntryLocalService.fetchAssetEntry(Matchers.anyLong())
+			_assetEntryLocalService.fetchAssetEntry(Mockito.anyLong())
 		).thenReturn(
 			assetEntry
 		);
@@ -700,11 +695,11 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 		Mockito.doAnswer(
 			invocationOnMock -> similarResultsRoute.getRouteParameter(
-				invocationOnMock.getArgumentAt(0, String.class))
+				invocationOnMock.getArgument(0, String.class))
 		).when(
 			destinationHelper
 		).getRouteParameter(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		similarResultsContributor.writeDestination(
@@ -713,8 +708,8 @@ public class SimilarResultsUidsAndDestinationsTest {
 		return destinationBuilderImpl.build();
 	}
 
-	@Mock
-	protected DestinationHelper destinationHelper;
+	protected DestinationHelper destinationHelper = Mockito.mock(
+		DestinationHelper.class);
 
 	private void _assertSimilarResultsContributor(
 		String urlString, String expectedUID, String expectedDestination) {
@@ -902,14 +897,14 @@ public class SimilarResultsUidsAndDestinationsTest {
 		).when(
 			_assetEntryLocalService
 		).fetchEntry(
-			Matchers.eq(groupId), Matchers.eq(uuid)
+			Mockito.eq(groupId), Mockito.eq(uuid)
 		);
 	}
 
 	private void _setUpAssetEntryLocalServiceFetchUUID(AssetEntry assetEntry) {
 		Mockito.when(
 			_assetEntryLocalService.fetchEntry(
-				Matchers.anyLong(), Matchers.anyString())
+				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
 			assetEntry
 		);
@@ -918,7 +913,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 	private void _setUpBlogsEntryLocalService(BlogsEntry blogsEntry) {
 		Mockito.when(
 			_blogsEntryLocalService.fetchEntry(
-				Matchers.anyLong(), Matchers.anyString())
+				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
 			blogsEntry
 		);
@@ -952,7 +947,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	private void _setUpDLFileEntryLocalService(DLFileEntry dlFileEntry) {
 		Mockito.when(
-			_dlFileEntryLocalService.fetchDLFileEntry(Matchers.anyLong())
+			_dlFileEntryLocalService.fetchDLFileEntry(Mockito.anyLong())
 		).thenReturn(
 			dlFileEntry
 		);
@@ -982,7 +977,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		).getCategoryId();
 
 		Mockito.when(
-			_mbCategoryLocalService.fetchMBCategory(Matchers.anyLong())
+			_mbCategoryLocalService.fetchMBCategory(Mockito.anyLong())
 		).thenReturn(
 			mbCategory
 		);
@@ -998,7 +993,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		).getRootMessageId();
 
 		Mockito.when(
-			_mbMessageLocalService.fetchMBMessage(Matchers.anyLong())
+			_mbMessageLocalService.fetchMBMessage(Mockito.anyLong())
 		).thenReturn(
 			mbMessage
 		);
@@ -1006,7 +1001,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	private void _setUpUIDFactory(String uid) {
 		Mockito.when(
-			_uidFactory.getUID(Matchers.any(ClassedModel.class))
+			_uidFactory.getUID(Mockito.any(ClassedModel.class))
 		).thenReturn(
 			uid
 		);
@@ -1015,7 +1010,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 	private void _setUpWikiNodeLocalService(WikiNode wikiNode) {
 		Mockito.when(
 			_wikiNodeLocalService.fetchNode(
-				Matchers.anyLong(), Matchers.anyString())
+				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
 			wikiNode
 		);
@@ -1024,43 +1019,33 @@ public class SimilarResultsUidsAndDestinationsTest {
 	private void _setUpWikiPageLocalService(WikiPage wikiPage) {
 		Mockito.when(
 			_wikiPageLocalService.fetchPage(
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong())
+				Mockito.anyLong(), Mockito.nullable(String.class),
+				Mockito.anyDouble())
 		).thenReturn(
 			wikiPage
 		);
 	}
 
-	@Mock
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Mock
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Mock
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Mock
-	private DLFolderLocalService _dlFolderLocalService;
-
+	private final AssetEntryLocalService _assetEntryLocalService = Mockito.mock(
+		AssetEntryLocalService.class);
+	private final BlogsEntryLocalService _blogsEntryLocalService = Mockito.mock(
+		BlogsEntryLocalService.class);
+	private final DLFileEntryLocalService _dlFileEntryLocalService =
+		Mockito.mock(DLFileEntryLocalService.class);
+	private final DLFolderLocalService _dlFolderLocalService = Mockito.mock(
+		DLFolderLocalService.class);
 	private long _groupId;
 	private HttpHelperImpl _httpHelperImpl;
-
-	@Mock
-	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
+	private final MBCategoryLocalService _mbCategoryLocalService = Mockito.mock(
+		MBCategoryLocalService.class);
+	private final MBMessageLocalService _mbMessageLocalService = Mockito.mock(
+		MBMessageLocalService.class);
 	private SimilarResultsContributorsRegistry
 		_similarResultsContributorsRegistry;
-
-	@Mock
-	private UIDFactory _uidFactory;
-
-	@Mock
-	private WikiNodeLocalService _wikiNodeLocalService;
-
-	@Mock
-	private WikiPageLocalService _wikiPageLocalService;
+	private final UIDFactory _uidFactory = Mockito.mock(UIDFactory.class);
+	private final WikiNodeLocalService _wikiNodeLocalService = Mockito.mock(
+		WikiNodeLocalService.class);
+	private final WikiPageLocalService _wikiPageLocalService = Mockito.mock(
+		WikiPageLocalService.class);
 
 }

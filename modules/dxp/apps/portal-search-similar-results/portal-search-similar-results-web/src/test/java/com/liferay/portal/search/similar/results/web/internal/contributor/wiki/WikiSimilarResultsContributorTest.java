@@ -50,8 +50,6 @@ public class WikiSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_wikiSimilarResultsContributor = new WikiSimilarResultsContributor();
 	}
 

@@ -46,8 +46,6 @@ public class UIDSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_uidSimilarResultsContributor = new UIDSimilarResultsContributor();
 	}
 

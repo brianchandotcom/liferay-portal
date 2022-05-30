@@ -36,8 +36,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -53,8 +51,6 @@ public class BlogsSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_blogsSimilarResultsContributor = new BlogsSimilarResultsContributor();
 	}
 
@@ -89,7 +85,7 @@ public class BlogsSimilarResultsContributorTest
 		).when(
 			_blogsEntryLocalService
 		).fetchEntry(
-			Matchers.anyLong(), Matchers.anyString()
+			Mockito.anyLong(), Mockito.anyString()
 		);
 
 		_blogsSimilarResultsContributor.setBlogsEntryLocalService(
@@ -177,9 +173,8 @@ public class BlogsSimilarResultsContributorTest
 		).getScopeGroupId();
 	}
 
-	@Mock
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
+	private final BlogsEntryLocalService _blogsEntryLocalService = Mockito.mock(
+		BlogsEntryLocalService.class);
 	private BlogsSimilarResultsContributor _blogsSimilarResultsContributor;
 
 }

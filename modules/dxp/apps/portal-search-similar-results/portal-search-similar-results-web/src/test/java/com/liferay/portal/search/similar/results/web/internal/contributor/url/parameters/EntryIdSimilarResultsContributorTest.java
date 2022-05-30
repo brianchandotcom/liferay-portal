@@ -45,8 +45,6 @@ public class EntryIdSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_entryIdSimilarResultsContributor =
 			new EntryIdSimilarResultsContributor();
 	}

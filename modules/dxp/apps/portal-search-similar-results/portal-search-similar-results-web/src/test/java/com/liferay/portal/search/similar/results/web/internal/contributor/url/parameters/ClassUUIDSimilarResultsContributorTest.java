@@ -48,8 +48,6 @@ public class ClassUUIDSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_classUUIDSimilarResultsContributor =
 			new ClassUUIDSimilarResultsContributor();
 	}

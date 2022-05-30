@@ -47,8 +47,6 @@ public class AssetPublisherSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_assetPublisherSimilarResultsContributor =
 			new AssetPublisherSimilarResultsContributor();
 	}

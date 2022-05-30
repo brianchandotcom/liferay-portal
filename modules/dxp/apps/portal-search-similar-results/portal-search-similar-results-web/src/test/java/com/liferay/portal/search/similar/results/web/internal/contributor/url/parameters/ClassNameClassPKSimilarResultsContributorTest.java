@@ -44,8 +44,6 @@ public class ClassNameClassPKSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_classNameClassPKSimilarResultsContributor =
 			new ClassNameClassPKSimilarResultsContributor();
 	}

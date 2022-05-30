@@ -45,7 +45,7 @@ const ACTIONS = {
 				);
 
 				const parentCategoryId = item.categoryId || 0;
-				const vocabularyId = item.vocabularyId || 0;
+				const vocabularyId = item.vocabularyId;
 
 				if (categoryId === parentCategoryId) {
 					openToast({

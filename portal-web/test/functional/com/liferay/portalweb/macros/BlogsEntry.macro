@@ -1523,9 +1523,14 @@ definition {
 	}
 
 	macro viewSmallImage {
-		AssertVisible(
-			key_imageFileName = "${uploadFileName}",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		if ("${dmImage}" == "true") {
+			AssertElementPresent(locator1 = "BlogsEntry#SMALL_IMAGE_DM_IMAGE");
+		}
+		else {
+			AssertVisible(
+				key_imageFileName = "${uploadFileName}",
+				locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		}
 	}
 
 	macro viewStatus {

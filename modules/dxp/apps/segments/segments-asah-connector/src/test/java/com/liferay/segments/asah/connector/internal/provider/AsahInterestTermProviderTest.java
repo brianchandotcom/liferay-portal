@@ -27,16 +27,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Sarai Díaz
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AsahInterestTermProviderTest {
 
 	@ClassRule
@@ -110,13 +106,10 @@ public class AsahInterestTermProviderTest {
 		);
 	}
 
-	@Mock
-	private AsahInterestTermCache _asahInterestTermCache;
-
+	private final AsahInterestTermCache _asahInterestTermCache = Mockito.mock(
+		AsahInterestTermCache.class);
 	private final AsahInterestTermProvider _asahInterestTermProvider =
 		new AsahInterestTermProvider();
-
-	@Mock
-	private MessageBus _messageBus;
+	private final MessageBus _messageBus = Mockito.mock(MessageBus.class);
 
 }

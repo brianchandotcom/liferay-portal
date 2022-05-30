@@ -40,16 +40,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AsahSegmentsEntryProviderTest {
 
 	@ClassRule
@@ -249,19 +245,14 @@ public class AsahSegmentsEntryProviderTest {
 		return segmentsEntryRel;
 	}
 
-	@Mock
-	private AsahSegmentsEntryCache _asahSegmentsEntryCache;
-
+	private final AsahSegmentsEntryCache _asahSegmentsEntryCache = Mockito.mock(
+		AsahSegmentsEntryCache.class);
 	private final AsahSegmentsEntryProvider _asahSegmentsEntryProvider =
 		new AsahSegmentsEntryProvider();
-
-	@Mock
-	private GroupLocalService _groupLocalService;
-
-	@Mock
-	private MessageBus _messageBus;
-
-	@Mock
-	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	private final MessageBus _messageBus = Mockito.mock(MessageBus.class);
+	private final SegmentsEntryRelLocalService _segmentsEntryRelLocalService =
+		Mockito.mock(SegmentsEntryRelLocalService.class);
 
 }

@@ -27,15 +27,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Sarai Díaz
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AsahFaroBackendClientImplTest {
 
 	@ClassRule
@@ -61,9 +58,9 @@ public class AsahFaroBackendClientImplTest {
 
 		Mockito.when(
 			_jsonWebServiceClient.doPost(
-				Mockito.eq(String.class), Mockito.anyString(),
-				Mockito.anyString(), Mockito.any(ExperimentSettings.class),
-				Mockito.anyMapOf(String.class, String.class))
+				Mockito.eq(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class),
+				Mockito.any(ExperimentSettings.class), Mockito.anyMap())
 		).thenReturn(
 			days
 		);
@@ -81,7 +78,7 @@ public class AsahFaroBackendClientImplTest {
 			_jsonWebServiceClient.doPost(
 				Mockito.eq(String.class), Mockito.anyString(),
 				Mockito.anyString(), Mockito.any(ExperimentSettings.class),
-				Mockito.anyMapOf(String.class, String.class))
+				Mockito.anyMap())
 		).thenReturn(
 			StringPool.BLANK
 		);
@@ -98,7 +95,7 @@ public class AsahFaroBackendClientImplTest {
 			_jsonWebServiceClient.doPost(
 				Mockito.eq(String.class), Mockito.anyString(),
 				Mockito.anyString(), Mockito.any(ExperimentSettings.class),
-				Mockito.anyMapOf(String.class, String.class))
+				Mockito.anyMap())
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);

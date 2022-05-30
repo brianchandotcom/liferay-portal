@@ -25,16 +25,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AsahSegmentsEntryCacheTest {
 
 	@ClassRule
@@ -111,8 +107,7 @@ public class AsahSegmentsEntryCacheTest {
 
 	private final AsahSegmentsEntryCache _asahSegmentsEntryCache =
 		new AsahSegmentsEntryCache();
-
-	@Mock
-	private PortalCache<String, long[]> _portalCache;
+	private final PortalCache<String, long[]> _portalCache = Mockito.mock(
+		PortalCache.class);
 
 }

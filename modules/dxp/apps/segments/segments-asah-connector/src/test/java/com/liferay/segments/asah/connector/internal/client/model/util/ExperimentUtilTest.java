@@ -38,16 +38,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class ExperimentUtilTest {
 
 	@ClassRule
@@ -385,10 +381,10 @@ public class ExperimentUtilTest {
 		return segmentsExperiment;
 	}
 
-	@Mock
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
-	@Mock
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+	private final SegmentsEntryLocalService _segmentsEntryLocalService =
+		Mockito.mock(SegmentsEntryLocalService.class);
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService = Mockito.mock(
+			SegmentsExperienceLocalService.class);
 
 }

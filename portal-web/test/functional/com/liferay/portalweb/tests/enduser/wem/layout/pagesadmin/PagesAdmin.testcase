@@ -849,6 +849,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154130. Given I'm in Page Administration When I search for a page Then relative path is clickable."
+	@priority = "3"
+	test NavigateToPageItemViaRelativePathFromSearchResults {
+		task ("Given a page creator has a page hierary") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Product Details",
+				parentLayoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Release Information",
+				parentLayoutName = "Product Details");
+		}
+
+		task ("When the page creator searchs pages in Page admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Release");
+		}
+
+		task ("Then the page creator could navigate to the page item via relative path") {
+			Click(
+				key_breadcrumbName = "Product Details",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+			AssertVisible(
+				key_itemName = "Product Details",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Product Details");
+		}
+	}
+
 	@description = "This is a test for LPS-139064. Users can preview draft for a collection page from Pages admin when they exist."
 	@priority = "3"
 	test PreviewDraftCollectionPage {

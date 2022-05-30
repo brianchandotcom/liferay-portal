@@ -546,12 +546,48 @@ definition {
 	}
 
 	@description = "This ensures that an image in the Blogs small image can be rendered correctly after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewSmallImageAfterMovingToFolder {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154371 CanViewSmallImageAfterMovingToFolder pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry With Small Image");
 
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry With Small Image",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.addSmallImage(
+			currentSiteImage = "true",
+			imageFileName = "DM Document Title",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry With Small Image",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewSmallImage(dmImage = "true");
 	}
 
 	@description = "This is a test for LPS-67276. It ensures that the success message for the cover image does not display after publishing with the empty required fields."

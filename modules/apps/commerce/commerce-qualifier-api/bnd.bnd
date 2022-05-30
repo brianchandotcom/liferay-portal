@@ -2,6 +2,7 @@ Bundle-Name: Liferay Commerce Qualifier API
 Bundle-SymbolicName: com.liferay.commerce.qualifier.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.commerce.qualifier.configuration,\
 	com.liferay.commerce.qualifier.exception,\
 	com.liferay.commerce.qualifier.helper,\
 	com.liferay.commerce.qualifier.metadata,\

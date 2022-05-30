@@ -60,6 +60,7 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -153,7 +154,7 @@ public class CPDefinitionsImporter {
 	}
 
 	public List<CPDefinition> importCPDefinitions(
-			JSONArray jsonArray1, String assetVocabularyName,
+			JSONArray jsonArray, String assetVocabularyName,
 			long catalogGroupId, long commerceChannelId,
 			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
 			String imageDependenciesPath, long scopeGroupId, long userId)
@@ -161,40 +162,14 @@ public class CPDefinitionsImporter {
 
 		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
 
-		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray1.length());
+		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray.length());
 
-		for (int i = 0; i < jsonArray1.length(); i++) {
+		for (int i = 0; i < jsonArray.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
-				jsonArray1.getJSONObject(i), assetVocabularyName,
+				jsonArray.getJSONObject(i), assetVocabularyName,
 				catalogGroupId, commerceChannelId,
 				commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
-
-			ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
-			if (expandoBridge == null) {
-				continue;
-			}
-
-			JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
-
-			if (jsonObject1.getString("customFields") != null) {
-				JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(
-					jsonObject1.getString("customFields"));
-
-				for (int j = 0; j < jsonArray2.length(); j++) {
-					JSONObject jsonObject2 = jsonArray2.getJSONObject(j);
-
-					JSONObject jsonObject3 = (JSONObject)jsonObject2.get(
-						"customValue");
-
-					if (jsonObject2.getString("customValue") != null) {
-						expandoBridge.setAttributeDefault(
-							jsonObject2.getString("name"),
-							(Serializable)jsonObject3.get("data"));
-					}
-				}
-			}
 
 			cpDefinitions.add(cpDefinition);
 		}
@@ -339,7 +314,31 @@ public class CPDefinitionsImporter {
 		return cpTaxCategory.getCPTaxCategoryId();
 	}
 
-	private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
+	private void _addExpandoBridge(CPDefinition cpDefinition, JSONObject jsonObject1)
+		throws JSONException {
+		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
+
+		if (expandoBridge == null){
+			return;
+		}
+
+		JSONArray jsonArray = jsonObject1.getJSONArray("customFields");
+
+		if (jsonArray != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+
+				JSONObject jsonObject3 = jsonObject2.getJSONObject("customValue");
+
+				if (jsonObject2.getString("customValue") != null) {
+					expandoBridge.setAttributeDefault(
+						jsonObject2.getString("name"),
+						(Serializable)jsonObject3.get("data"));
+				}
+			}
+		}
+	}
+		private UnicodeProperties _getSubscriptionTypeSettingsUnicodeProperties(
 		JSONObject subscriptionInfoJSONObject) {
 
 		if (subscriptionInfoJSONObject == null) {
@@ -408,6 +407,8 @@ public class CPDefinitionsImporter {
 					externalReferenceCode, company.getCompanyId());
 
 		if (cpDefinition != null) {
+			_addExpandoBridge(cpDefinition,jsonObject);
+
 			_commerceChannelRelLocalService.addCommerceChannelRel(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 				commerceChannelId, serviceContext);
@@ -469,6 +470,8 @@ public class CPDefinitionsImporter {
 				subscriptionInfoJSONObject),
 			maxSubscriptionCycles, assetCategoryIds, assetTagNames,
 			serviceContext);
+
+		_addExpandoBridge(cpDefinition,jsonObject);
 
 		serviceContext.setWorkflowAction(originalWorkflowAction);
 

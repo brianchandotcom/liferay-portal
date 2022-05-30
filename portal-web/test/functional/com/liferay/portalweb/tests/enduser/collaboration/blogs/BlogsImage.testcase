@@ -579,11 +579,10 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.moveToFolderCP(
+		JSONDocument.moveFileEntryToFolder(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name");
+			folderName = "DM Folder Name",
+			groupName = "Guest");
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry With Small Image",

@@ -64,7 +64,10 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	@Override
 	public String getIcon() {
 		if (Validator.isNull(_icon)) {
-			if (getType() == FragmentConstants.TYPE_REACT) {
+			if (getType() == FragmentConstants.TYPE_INPUT) {
+				_icon = "forms";
+			}
+			else if (getType() == FragmentConstants.TYPE_REACT) {
 				_icon = "react";
 			}
 			else {

@@ -1117,8 +1117,7 @@ definition {
 	@description = "LPS-70446 - Verify that a Rule with 'Autofill' action can be created with Data Providers"
 	@priority = "5"
 	test CanUtilizeDataProvidersToCreateAnAutofillRule {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersToCreateAnAutofillRule";
 
 		var portalURL = PropsUtil.get("portal.url");

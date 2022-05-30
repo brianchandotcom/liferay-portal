@@ -734,7 +734,7 @@ definition {
 
 		DMDocument.viewPGViaMG(
 			mgDocumentTitle = "Document_1.jpg",
-			staging = "false");
+			staging = "true");
 	}
 
 	@description = "This test covers LPS-154423."

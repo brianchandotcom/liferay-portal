@@ -5,7 +5,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "false";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Customer Portal";
+	property testray.main.component.name = "Site Initializer Customer Portal";
 
 	setUp {
 		TestCase.setUpPortalInstance();

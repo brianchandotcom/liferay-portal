@@ -117,15 +117,15 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			Layout layout = _layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
 
-			long masterLayoutPlid = ParamUtil.getLong(
-				uploadPortletRequest, "masterLayoutPlid",
-				layout.getMasterLayoutPlid());
 			long styleBookEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "styleBookEntryId",
 				layout.getStyleBookEntryId());
 			long faviconFileEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "faviconFileEntryId",
 				layout.getFaviconFileEntryId());
+			long masterLayoutPlid = ParamUtil.getLong(
+				uploadPortletRequest, "masterLayoutPlid",
+				layout.getMasterLayoutPlid());
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);

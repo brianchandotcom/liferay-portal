@@ -742,9 +742,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					friendlyURLMap = (Map<Locale, String>)arguments[11];
 				}
 
-				long masterLayoutPlid = 0;
 				long styleBookEntryId = 0;
 				long faviconFileEntryId = 0;
+				long masterLayoutPlid = 0;
 
 				ServiceContext serviceContext = null;
 

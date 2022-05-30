@@ -100,6 +100,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			name: HELP_TEXT_CONFIGURATION_KEY,
 			type: 'text',
 			typeOptions: {
+				component: 'textarea',
 				placeholder: Liferay.Language.get(
 					'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
 				),

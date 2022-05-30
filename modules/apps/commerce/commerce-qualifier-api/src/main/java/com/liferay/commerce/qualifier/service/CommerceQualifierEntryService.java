@@ -64,16 +64,8 @@ public interface CommerceQualifierEntryService extends BaseService {
 			String sourceClassName, long sourceClassPK)
 		throws PortalException;
 
-	public void deleteSourceCommerceQualifierEntries(
-			String sourceClassName, long sourceClassPK, String targetClassName)
-		throws PortalException;
-
 	public void deleteTargetCommerceQualifierEntries(
 			String targetClassName, long targetClassPK)
-		throws PortalException;
-
-	public void deleteTargetCommerceQualifierEntries(
-			String sourceClassName, String targetClassName, long targetClassPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -97,25 +89,27 @@ public interface CommerceQualifierEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getSourceCommerceQualifierEntries(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords, int start, int end)
+			String targetCommerceQualifierMetadataKey, String keywords,
+			int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords)
+			String targetCommerceQualifierMetadataKey, String keywords)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getTargetCommerceQualifierEntries(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords, int start, int end)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords,
+			int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords)
 		throws PortalException;
 
 }

@@ -119,25 +119,23 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115361. Add a widget page template in normal site."
+	@description = "This is a use case for LPS-115361 and LPS-154130. Add a widget page template in normal site. Given I have some Page Templates When create a new page Then I’m redirected by default to Basic Templates."
 	@priority = "5"
 	test AddPageTemplate {
 		property portal.acceptance = "true";
 
-		task ("Add a new site") {
+		task ("Given a site designer has a page template set") {
 			JSONGroup.addGroup(groupName = "Site Name");
-		}
 
-		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
+				layoutPageTemplateCollectionName = "Page Template Set");
 		}
 
-		task ("Add a widget page template") {
+		task ("When the site designer adds a widget page template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Set");
 
 			PageTemplatesAdmin.addPageTemplate(
 				pageTemplateName = "Page Template Name",
@@ -148,10 +146,22 @@ definition {
 				value1 = "Page Template Name");
 		}
 
-		task ("Add a Web Content Display portlet to widget page template") {
+		task ("Then the site designer could add a Web Content Display portlet to widget page template") {
 			Portlet.addPG(portletName = "Web Content Display");
 
 			Portlet.viewPG(portletName = "Web Content Display");
+		}
+
+		task ("When the site designer adds a page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+		}
+
+		task ("Then the site designer could view the Basic Templates is selected by default") {
+			AssertElementPresent(
+				key_navNested = "Basic Templates",
+				locator1 = "NavNested#ACTIVE_NAV_NESTED_LINK");
 		}
 	}
 

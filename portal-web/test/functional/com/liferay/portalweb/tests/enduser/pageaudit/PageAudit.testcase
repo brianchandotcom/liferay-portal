@@ -56,7 +56,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Check if proper failures are displayed at Accessibility section") {
@@ -104,7 +104,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#PANEL_PAGE_TITLE",
@@ -138,7 +138,7 @@ definition {
 		task ("Open Page Audit panel and change locale/language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.changeLocale(locale = "Finnish");
 
@@ -204,7 +204,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel and change locale/language") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.changeLocale(locale = "Portuguese");
 
@@ -236,7 +236,7 @@ definition {
 		task ("Open Page Audit panel and change locale/language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.changeLocale(locale = "Hungarian");
 
@@ -269,7 +269,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		task ("Open Page Audit panel and assert the progress bar") {
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
@@ -304,7 +304,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Navigate to second page") {
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("Assert if warning is displayed") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
 
@@ -350,7 +350,7 @@ definition {
 		task ("Open Page Audit panel and change locale/language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.changeLocale(locale = "French");
 
@@ -360,7 +360,7 @@ definition {
 		}
 
 		task ("Run Page Audit") {
-			PageAudit.openPanelAfterConfiguration();
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check if Page Audit returned expected failures") {
@@ -401,7 +401,7 @@ definition {
 		task ("Open Page Audit panel and change locale/language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.changeLocale(locale = "Dutch");
 
@@ -411,7 +411,7 @@ definition {
 		}
 
 		task ("Run Page Audit") {
-			PageAudit.openPanelAfterConfiguration();
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check if Page Audit returned expected failures") {
@@ -444,9 +444,9 @@ definition {
 		task ("Open Page Audit panel and assert 'Show details' link") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAuditWithError();
 
-			WaitForElementPresent(
+			AssertElementPresent(
 				errorTitle = "The API key is invalid.",
 				locator1 = "PageAudit#ERROR_WARNING_TITLE");
 
@@ -488,7 +488,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Illegible Font Sizes");
 
@@ -524,7 +524,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Incorrect Image Aspect Ratios");
 
@@ -572,7 +572,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
 
@@ -651,7 +651,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Open detailed view and check text") {
@@ -697,7 +697,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Invalid Hreflang");
 
@@ -737,7 +737,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Not All Links Are Crawlable");
 
@@ -777,7 +777,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Link Texts");
 
@@ -821,7 +821,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
 
@@ -861,7 +861,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Img ALT Attributes");
 
@@ -901,7 +901,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Input ALT Attributes");
 
@@ -941,7 +941,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
 
@@ -1024,7 +1024,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Open detailed view and check text") {
@@ -1070,7 +1070,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Missing <title> Element");
 
@@ -1103,11 +1103,11 @@ definition {
 		}
 
 		task ("Open Page Audit tab and Assert reload button id not present") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
-			IsElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
+			AssertVisible(locator1 = "PageAudit#ERROR_WARNING_BOX");
 
-			IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+			AssertElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
 		}
 	}
 
@@ -1117,7 +1117,7 @@ definition {
 	@priority = "3"
 	test CheckPageAuditClosedAfterLogout {
 		task ("Open Content Performance panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertVisible(locator1 = "PageAudit#SIDEBAR");
 		}
@@ -2978,7 +2978,7 @@ definition {
 	@priority = "3"
 	test CheckPageAuditOpenAfterNavigation {
 		task ("Open Content Performance panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			PageAudit.connectToGooglePageAudit();
 		}
@@ -3018,7 +3018,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
 
@@ -3101,7 +3101,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Open detailed view and check text") {
@@ -3147,7 +3147,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Small Tap Targets");
 
@@ -3182,7 +3182,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -3230,7 +3230,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -3265,7 +3265,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -3303,7 +3303,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -3338,7 +3338,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -3377,7 +3377,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Check the number of failures and view more fails") {
@@ -3467,9 +3467,9 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAuditWithError();
 
-			WaitForElementPresent(
+			AssertVisible(
 				errorTitle = "The API key is invalid.",
 				locator1 = "PageAudit#ERROR_WARNING_TITLE");
 		}
@@ -3477,7 +3477,7 @@ definition {
 		task ("Navigate to Site Settings") {
 			Button.click(button = "Set API Key");
 
-			AssertElementPresent(
+			AssertVisible(
 				key_breadcrumbName = "Site Settings",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
@@ -3514,7 +3514,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Navigate to second page") {
@@ -3526,7 +3526,7 @@ definition {
 		}
 
 		task ("Assert if cached data is displayed") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertElementPresent(
 				failingCheckName = "Small Tap Targets",
@@ -3555,7 +3555,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Check that data is retrieved") {
@@ -3590,7 +3590,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -3638,7 +3638,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -3673,7 +3673,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -3717,7 +3717,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
 
@@ -3754,7 +3754,7 @@ definition {
 		task ("Open Page Audit panel") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -3809,7 +3809,7 @@ definition {
 		task ("Run Page Audit for first language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Navigate to second page") {
@@ -3821,7 +3821,7 @@ definition {
 		}
 
 		task ("Check that language has cache data") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertVisible(
 				failingCheckName = "Small Tap Targets",
@@ -3857,7 +3857,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -3901,7 +3901,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -3945,7 +3945,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -4030,7 +4030,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -4138,7 +4138,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -4201,7 +4201,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		task ("Open Page Audit panel and assert there are no issues") {
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 
 			AssertElementPresent(locator1 = "PageAudit#IMAGE_SUCCESS");
 
@@ -4232,7 +4232,7 @@ definition {
 		task ("Open Page Audit sidebar") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelBeforeConfiguration();
+			PageAudit.openPageAuditSidebar();
 		}
 
 		task ("Check that sidebar has an image, a help texts and a button") {
@@ -4267,7 +4267,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Check if proper failures are displayed at Accessibility section") {
@@ -4342,7 +4342,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if mobile failures are checked") {
@@ -4399,7 +4399,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+			PageAudit.runPageAudit(pageName = "Content Page");
 		}
 
 		task ("Assert if mobile failures are checked") {

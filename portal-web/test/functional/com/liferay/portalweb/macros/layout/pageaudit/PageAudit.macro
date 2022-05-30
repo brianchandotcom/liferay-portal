@@ -196,26 +196,7 @@ definition {
 			configurationScope = "Site Scope");
 	}
 
-	macro openPanelAfterConfiguration {
-		if ((IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON"))) {
-			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
-			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
-		}
-		else {
-			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-		}
-
-		if (IsElementNotPresent(locator1 = "PageAudit#ERROR_WARNING_BOX")) {
-			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
-		}
-
-		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
-	}
-
-	macro openPanelBeforeConfiguration {
+	macro openPageAuditSidebar {
 		if ((IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON"))) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
@@ -227,6 +208,34 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Reset Default Values");
 		}
+	}
+
+	macro runPageAudit {
+		PageAudit.openPageAuditSidebar();
+
+		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
+			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+		}
+		else {
+			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+		}
+
+		AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
+
+		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
+	}
+
+	macro runPageAuditWithError {
+		PageAudit.openPageAuditSidebar();
+
+		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
+			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+		}
+		else {
+			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+		}
+
+		WaitForElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
 	}
 
 	macro setAPIViaInstanceSettings {

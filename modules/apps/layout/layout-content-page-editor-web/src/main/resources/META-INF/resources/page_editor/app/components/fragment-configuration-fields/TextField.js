@@ -27,9 +27,12 @@ export function TextField({field, onValueSelect, value}) {
 
 	const [nextValue, setNextValue] = useControlledState(value);
 
-	const {additionalProps = {}, type = 'text'} = parseTypeOptions(
-		field.typeOptions
-	);
+	const {
+		additionalProps = {},
+		component = 'input',
+		placeholder = '',
+		type = 'text',
+	} = parseTypeOptions(field.typeOptions);
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
@@ -37,6 +40,7 @@ export function TextField({field, onValueSelect, value}) {
 
 			<ClayInput
 				aria-describedby={helpTextId}
+				component={component}
 				id={inputId}
 				onBlur={(event) => {
 					if (event.target.checkValidity()) {
@@ -65,9 +69,7 @@ export function TextField({field, onValueSelect, value}) {
 
 					setNextValue(event.target.value);
 				}}
-				placeholder={
-					field.typeOptions ? field.typeOptions.placeholder : ''
-				}
+				placeholder={placeholder}
 				sizing="sm"
 				type={type}
 				value={nextValue || ''}
@@ -95,12 +97,13 @@ export function TextField({field, onValueSelect, value}) {
 
 function parseTypeOptions(typeOptions = {}) {
 	if (!typeOptions.validation) {
-		return {type: 'text'};
+		return {...typeOptions, type: 'text'};
 	}
 
 	const {type: validationType, ...properties} = typeOptions.validation;
 
 	const result = {
+		...typeOptions,
 		additionalProps: {},
 		type: 'text',
 	};

@@ -1819,8 +1819,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Click(
-			key_radioOption = "Tiered Pricing",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
+			radioLabel = "Tiered Pricing",
+			locator1 = "Radio#ANY");
 
 		Button.clickSave();
 

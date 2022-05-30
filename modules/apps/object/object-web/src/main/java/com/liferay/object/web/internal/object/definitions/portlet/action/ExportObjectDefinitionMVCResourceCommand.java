@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Objects;
 
@@ -88,6 +90,10 @@ public class ExportObjectDefinitionMVCResourceCommand
 
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinition.toString());
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+			objectDefinitionJSONObject.remove("storageType");
+		}
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
 			if (Objects.equals(

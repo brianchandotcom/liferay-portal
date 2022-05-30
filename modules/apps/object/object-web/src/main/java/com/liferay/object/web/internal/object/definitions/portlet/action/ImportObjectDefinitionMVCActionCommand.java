@@ -26,6 +26,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitiontUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,11 +40,13 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Objects;
 
@@ -193,6 +196,10 @@ public class ImportObjectDefinitionMVCActionCommand
 		}
 
 		postObjectDefinition.setPortlet(objectDefinition.getPortlet());
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+			postObjectDefinition.setStorageType(StringPool.BLANK);
+		}
 
 		objectDefinitionResource.putObjectDefinition(
 			postObjectDefinition.getId(), postObjectDefinition);

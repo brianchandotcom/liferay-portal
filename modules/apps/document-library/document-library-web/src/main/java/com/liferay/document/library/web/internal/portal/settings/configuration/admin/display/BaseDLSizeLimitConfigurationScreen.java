@@ -15,11 +15,21 @@
 package com.liferay.document.library.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.document.library.web.internal.display.context.DLSizeLimitConfigurationDisplayContext;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -56,6 +66,14 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 		throws IOException {
 
 		try {
+			httpServletRequest.setAttribute(
+				DLSizeLimitConfigurationDisplayContext.class.getName(),
+				new DLSizeLimitConfigurationDisplayContext(
+					dlSizeLimitConfigurationProvider,
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE),
+					getScope(), _getScopePk(httpServletRequest)));
+
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(
 					"/document_library_settings/size_limit.jsp");
@@ -67,9 +85,44 @@ public abstract class BaseDLSizeLimitConfigurationScreen
 		}
 	}
 
+	@Reference
+	protected DLSizeLimitConfigurationProvider dlSizeLimitConfigurationProvider;
+
+	@Reference
+	protected Portal portal;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.web)"
 	)
 	protected ServletContext servletContext;
+
+	private long _getScopePk(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Objects.equals(
+				getScope(),
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return themeDisplay.getCompanyId();
+		}
+		else if (Objects.equals(
+					getScope(),
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			return themeDisplay.getScopeGroupId();
+		}
+		else if (Objects.equals(
+					getScope(),
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return 0L;
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Unsupported scope: " + getScope());
+		}
+	}
 
 }

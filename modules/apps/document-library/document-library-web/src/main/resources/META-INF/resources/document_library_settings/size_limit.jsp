@@ -16,6 +16,10 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = (DLSizeLimitConfigurationDisplayContext)request.getAttribute(DLSizeLimitConfigurationDisplayContext.class.getName());
+%>
+
 <clay:sheet>
 	<clay:sheet-header>
 		<h2>
@@ -24,7 +28,7 @@
 	</clay:sheet-header>
 
 	<clay:sheet-section>
-		<aui:input label="file-max-size" name="fileMaxSize" value="<%= 0 %>" />
+		<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
 
 		<p class="text-muted">
 			<liferay-ui:message key="file-max-size-help" />
@@ -36,11 +40,7 @@
 
 		<react:component
 			module="document_library/js/file-size-limit/FileSizeMimetypes"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"portletNamespace", liferayPortletResponse.getNamespace()
-				).build()
-			%>'
+			props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
 		/>
 	</clay:sheet-section>
 </clay:sheet>

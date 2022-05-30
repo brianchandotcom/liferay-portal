@@ -184,17 +184,14 @@ export function FormInputGeneralPanel({item}) {
 
 		let editableValues = fragmentEntryLinkRef.current.editableValues;
 
-		if (
-			key === FIELD_ID_CONFIGURATION_KEY &&
-			isFormRequiredField(value, formFields)
-		) {
+		if (key === FIELD_ID_CONFIGURATION_KEY) {
 			editableValues = setIn(
 				fragmentEntryLinkRef.current.editableValues,
 				[
 					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					REQUIRED_CONFIGURATION_KEY,
 				],
-				true
+				isFormRequiredField(value, formFields)
 			);
 		}
 

@@ -548,12 +548,9 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"
-	@ignore = "true"
 	@priority = "2"
 	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
 		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesWhenHasPropertyAndDataSourceButNoData";
-
-		// AC Refactor: Depends on bug fix (LRAC-11153)
 
 		task ("Close the onboarding modal") {
 			ACUtils.closeModal();

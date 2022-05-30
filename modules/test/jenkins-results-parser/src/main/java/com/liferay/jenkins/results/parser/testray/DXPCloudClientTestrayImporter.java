@@ -529,7 +529,7 @@ public class DXPCloudClientTestrayImporter {
 	private static final long _START_TIME = System.currentTimeMillis();
 
 	private static String _environmentBrowserName = "Google Chrome 86";
-	private static String _environmentOperatingSystemName = "Cent OS 7";
+	private static String _environmentOperatingSystemName = "CentOS 7";
 	private static final LocalDate _localDate = LocalDate.now();
 	private static final Pattern _pattern = Pattern.compile(
 		"test\\[(?<testName>[^\\]]{1,150})[^\\]]*\\]");

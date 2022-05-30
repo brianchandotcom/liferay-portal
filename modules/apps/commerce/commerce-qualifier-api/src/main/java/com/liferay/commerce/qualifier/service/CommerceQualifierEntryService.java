@@ -52,8 +52,9 @@ public interface CommerceQualifierEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.qualifier.service.impl.CommerceQualifierEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce qualifier entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceQualifierEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException;
 
 	public CommerceQualifierEntry deleteCommerceQualifierEntry(
@@ -64,16 +65,8 @@ public interface CommerceQualifierEntryService extends BaseService {
 			String sourceClassName, long sourceClassPK)
 		throws PortalException;
 
-	public void deleteSourceCommerceQualifierEntries(
-			String sourceClassName, long sourceClassPK, String targetClassName)
-		throws PortalException;
-
 	public void deleteTargetCommerceQualifierEntries(
 			String targetClassName, long targetClassPK)
-		throws PortalException;
-
-	public void deleteTargetCommerceQualifierEntries(
-			String sourceClassName, String targetClassName, long targetClassPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -97,25 +90,27 @@ public interface CommerceQualifierEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getSourceCommerceQualifierEntries(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords, int start, int end)
+			String targetCommerceQualifierMetadataKey, String keywords,
+			int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords)
+			String targetCommerceQualifierMetadataKey, String keywords)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getTargetCommerceQualifierEntries(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords, int start, int end)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords,
+			int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords)
 		throws PortalException;
 
 }

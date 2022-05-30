@@ -39,12 +39,14 @@ public class CommerceQualifierEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.qualifier.service.impl.CommerceQualifierEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException {
 
 		return getService().addCommerceQualifierEntry(
-			sourceClassName, sourceClassPK, targetClassName, targetClassPK);
+			sourceClassName, sourceClassPK, sourceCommerceQualifierMetadataKey,
+			targetClassName, targetClassPK, targetCommerceQualifierMetadataKey);
 	}
 
 	public static CommerceQualifierEntry deleteCommerceQualifierEntry(
@@ -63,28 +65,12 @@ public class CommerceQualifierEntryServiceUtil {
 			sourceClassName, sourceClassPK);
 	}
 
-	public static void deleteSourceCommerceQualifierEntries(
-			String sourceClassName, long sourceClassPK, String targetClassName)
-		throws PortalException {
-
-		getService().deleteSourceCommerceQualifierEntries(
-			sourceClassName, sourceClassPK, targetClassName);
-	}
-
 	public static void deleteTargetCommerceQualifierEntries(
 			String targetClassName, long targetClassPK)
 		throws PortalException {
 
 		getService().deleteTargetCommerceQualifierEntries(
 			targetClassName, targetClassPK);
-	}
-
-	public static void deleteTargetCommerceQualifierEntries(
-			String sourceClassName, String targetClassName, long targetClassPK)
-		throws PortalException {
-
-		getService().deleteTargetCommerceQualifierEntries(
-			sourceClassName, targetClassName, targetClassPK);
 	}
 
 	public static CommerceQualifierEntry fetchCommerceQualifierEntry(
@@ -115,43 +101,45 @@ public class CommerceQualifierEntryServiceUtil {
 	public static List<CommerceQualifierEntry>
 			getSourceCommerceQualifierEntries(
 				long companyId, String sourceClassName, long sourceClassPK,
-				String targetClassName, String keywords, int start, int end)
+				String targetCommerceQualifierMetadataKey, String keywords,
+				int start, int end)
 		throws PortalException {
 
 		return getService().getSourceCommerceQualifierEntries(
-			companyId, sourceClassName, sourceClassPK, targetClassName,
-			keywords, start, end);
+			companyId, sourceClassName, sourceClassPK,
+			targetCommerceQualifierMetadataKey, keywords, start, end);
 	}
 
 	public static int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords)
+			String targetCommerceQualifierMetadataKey, String keywords)
 		throws PortalException {
 
 		return getService().getSourceCommerceQualifierEntriesCount(
-			companyId, sourceClassName, sourceClassPK, targetClassName,
-			keywords);
+			companyId, sourceClassName, sourceClassPK,
+			targetCommerceQualifierMetadataKey, keywords);
 	}
 
 	public static List<CommerceQualifierEntry>
 			getTargetCommerceQualifierEntries(
-				long companyId, String sourceClassName, String targetClassName,
-				long targetClassPK, String keywords, int start, int end)
+				long companyId, String sourceCommerceQualifierMetadataKey,
+				String targetClassName, long targetClassPK, String keywords,
+				int start, int end)
 		throws PortalException {
 
 		return getService().getTargetCommerceQualifierEntries(
-			companyId, sourceClassName, targetClassName, targetClassPK,
-			keywords, start, end);
+			companyId, sourceCommerceQualifierMetadataKey, targetClassName,
+			targetClassPK, keywords, start, end);
 	}
 
 	public static int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords)
 		throws PortalException {
 
 		return getService().getTargetCommerceQualifierEntriesCount(
-			companyId, sourceClassName, targetClassName, targetClassPK,
-			keywords);
+			companyId, sourceCommerceQualifierMetadataKey, targetClassName,
+			targetClassPK, keywords);
 	}
 
 	public static CommerceQualifierEntryService getService() {

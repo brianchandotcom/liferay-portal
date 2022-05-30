@@ -22,6 +22,9 @@ import java.util.List;
 public interface CommerceQualifierMetadataRegistry {
 
 	public CommerceQualifierMetadata getCommerceQualifierMetadata(
+		String commerceQualifierMetadataKey);
+
+	public CommerceQualifierMetadata getCommerceQualifierMetadataByClassName(
 		String className);
 
 	public List<CommerceQualifierMetadata> getCommerceQualifierMetadatas();

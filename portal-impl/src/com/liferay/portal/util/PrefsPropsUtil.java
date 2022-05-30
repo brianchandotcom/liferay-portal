@@ -85,8 +85,7 @@ public class PrefsPropsUtil {
 				PrefsPropsUtil.class.getClassLoader(), PropsUtil.get(name));
 		}
 		catch (IOException ioException) {
-			_log.error(
-				"Unable to read the content for " + PropsUtil.get(name));
+			_log.error("Unable to read the content for " + PropsUtil.get(name));
 
 			return null;
 		}

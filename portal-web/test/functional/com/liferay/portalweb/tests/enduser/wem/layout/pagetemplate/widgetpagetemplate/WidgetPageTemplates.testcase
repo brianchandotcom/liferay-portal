@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "Add a page using gloabl page template, disable inherit changes and check it works."
+	@description = "This is a test for LPS-154130. Add a page using gloabl page template, disable inherit changes and check it works. The portlet is named Widget Page Templates on the global site."
 	@priority = "5"
 	test AddPageBasedOnGlobalPageTemplate {
 		property portal.acceptance = "true";
@@ -71,7 +71,11 @@ definition {
 		}
 
 		task ("Edit page template and add a blogs widget") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			ApplicationsMenu.gotoSite(site = "Global");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Widget Page Templates");
 
 			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 

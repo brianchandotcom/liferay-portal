@@ -196,7 +196,7 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "element-text", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				contentPageName = "Content Page Name",
-				elementText = "Üerschrift");
+				elementText = "Überschrift");
 
 			PortletEntry.publish();
 
@@ -209,7 +209,7 @@ definition {
 				locale = "de-DE");
 
 			PageEditor.viewFragmentEditableText(
-				editableText = "Üerschrift",
+				editableText = "Überschrift",
 				fragmentName = "Heading",
 				id = "element-text");
 
@@ -226,7 +226,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				text = "Üerschrift");
+				text = "Überschrift");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "element-text", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

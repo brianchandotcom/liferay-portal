@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -84,8 +85,17 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		_commerceOrderImporterItems = _getCommerceOrderImporterItems(
-			httpServletRequest);
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
+		try {
+			_commerceOrderImporterItems = _getCommerceOrderImporterItems(
+				httpServletRequest);
+		}
+		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+		}
 
 		if (_commerceOrderImporterItems == null) {
 			return Collections.emptyList();

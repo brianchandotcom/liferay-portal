@@ -108,7 +108,11 @@ public class ContributedFragmentEntryVerticalCard
 			(type == FragmentConstants.TYPE_SECTION) ||
 			(type == FragmentConstants.TYPE_REACT)) {
 
-			return "fragment-entry-sticker";
+			return "fragment-entry-basic-sticker";
+		}
+
+		if (type == FragmentConstants.TYPE_INPUT) {
+			return "fragment-entry-input-sticker";
 		}
 
 		return "fragment-composition-sticker";

@@ -5,8 +5,17 @@
 	color: $white;
 }
 
-.fragment-entry-sticker {
+.fragment-entry-basic-sticker {
 	background-color: $teal;
+	color: $white;
+
+	.lexicon-icon {
+		font-size: 22px;
+	}
+}
+
+.fragment-entry-input-sticker {
+	background-color: $orange;
 	color: $white;
 
 	.lexicon-icon {

@@ -123,6 +123,7 @@ export default function ImportTranslation({
 							<input
 								accept={VALID_EXTENSIONS}
 								className="d-none"
+								data-testid="filesInput"
 								multiple
 								name="file"
 								onChange={(event) => {

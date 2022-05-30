@@ -283,12 +283,30 @@ definition {
 	}
 
 	@description = "This ensures that an image in MG widget can be rendered correctly after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageViaMGAfterMovingToFolder {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154374 CanViewImageViaMGAfterMovingToFolder pending implementation
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Document_1",
+			folderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		MGPortlet.setRootFolder(dmRootFolderName = "DM Folder Name");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1");
 	}
 
 	@priority = "5"

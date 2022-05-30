@@ -174,6 +174,68 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-61632. Add a web content based on structure with translated default values."
+	@priority = "4"
+	test AddWebContentBasedOnStructureWithTranslatedDefaultValue {
+		task ("Given a site designer has a web content structure with translated default values") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit Default Values",
+				rowEntry = "WC Structure Name");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			Type(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "This is a Text field");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			Type(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "Este es un campo de texto");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the site designer adds a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Then the site designer could view the translated default values in web content editor") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "This is a Text field");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "Este es un campo de texto");
+		}
+	}
+
 	@description = "The User can add a web content with multiples translation and visualize it on the page."
 	@priority = "4"
 	test AddWebContentWithMultipleTranslations {
@@ -282,7 +344,7 @@ definition {
 	@description = "This is a use case for LRQA-61632. Add web content with translated Text field."
 	@priority = "4"
 	test AddWebContentWithTranslatedTextField {
-		task ("Given a site designer has a structure with two texts fields") {
+		task ("Given a site designer has a structure with two Text fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -355,7 +417,7 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("When the site designer changes the user language to Spanish on the web content") {
+		task ("When the site designer changes the user language to Spanish in web content editor") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentAdmin.gotoEntry(entry = "Web Content Title");
@@ -363,13 +425,13 @@ definition {
 			PortletEntry.changeLocale(locale = "ca-ES");
 		}
 
-		task ("Then the site designer could view the web content in English since it was not translated to Spanish") {
+		task ("Then the site designer could view the web content in English") {
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
 
-		task ("When the site designer changes the user language to Dutch after add a Chinese translation") {
+		task ("When the site designer changes the user language to Dutch after adding a Chinese translation") {
 			PortletEntry.changeLocale(locale = "zh-CN");
 
 			WebContent.addCP(
@@ -379,7 +441,7 @@ definition {
 			PortletEntry.changeLocale(locale = "nl-NL");
 		}
 
-		task ("Then the site designer could view the web content in English since it was not translated to Dutch") {
+		task ("Then the site designer could still view the web content in English") {
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -392,12 +454,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ChangeWebContentDefaultLanguage";
 
-		task ("Given the site designer has a translated web content in a site with Changeable Default Language for web content") {
-			JSONWebcontent.addBasicWebContentLocalized(
-				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
-				groupName = "Test Site Name",
-				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
-
+		task ("Given the site designer enables the Changeable Default Language for web content") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -413,7 +470,12 @@ definition {
 				settingFieldName = "Changeable Default Language");
 		}
 
-		task ("When the site designer changes the default user language of web content to es-ES") {
+		task ("When the site designer changes the default user language to es-ES in web content editor") {
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
+				groupName = "Test Site Name",
+				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -454,19 +516,19 @@ definition {
 				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
 		}
 
-		task ("When the site designer opens to web content at edit mode") {
+		task ("When the site designer changes to es-ES in web content editor") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-		}
 
-		task ("Then the site designer could view the translations on web content") {
 			WebContent.viewCP(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
 			PortletEntry.changeLocale(locale = "es-ES");
+		}
 
+		task ("Then the site designer could view the translations") {
 			WebContent.viewCP(
 				webContentContent = "Contenido de contenido web",
 				webContentTitle = "Título del contenido web");
@@ -494,7 +556,7 @@ definition {
 	test ViewAvailableTranslations {
 		property testray.component.names = "Localization,Web Content Administration";
 
-		task ("Given a site designer has a page where a Web Content Display widget displays a web content with tools translations enabled") {
+		task ("Given a site designer has a page where a Web Content Display widget displays a web content with Translations tool") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				groupName = "Test Site Name",
@@ -522,7 +584,7 @@ definition {
 				webContentTitle = "Web Content Title");
 		}
 
-		task ("When the site designer adds a Chinese translation to web content via Web Content Displayt") {
+		task ("When the site designer adds a Chinese translation to web content via Web Content Display") {
 			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "Edit Web Content",
 				webContentTitle = "Web Content Title");
@@ -567,7 +629,7 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
 		property testray.component.names = "Localization,Web Content Administration";
 
-		task ("Given a site designer has a web content with and without translation") {
+		task ("Given a site designer has web contents with and without translation") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 1",
 				groupName = "Test Site Name",
@@ -750,7 +812,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("When the site designer opens the friendly URL panel of translated web content at edit mode") {
+		task ("When the site designer changes to pt-BR in web content editor") {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			Panel.expandPanel(panel = "Friendly URL");
@@ -763,68 +825,6 @@ definition {
 				inputFieldId = "friendlyURL",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "");
-		}
-	}
-
-	@description = "This is a use case for LRQA-61632. View structure default value in translated Text field."
-	@priority = "4"
-	test ViewStructureDefaultValueInTranslatedTextField {
-		task ("Given a site designer has a web content structure with custom default values to translated text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP();
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit Default Values",
-				rowEntry = "WC Structure Name");
-
-			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-			Type(
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "This is a Text field");
-
-			PortletEntry.changeLocale(locale = "es-ES");
-
-			Type(
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "Este es un campo de texto");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("When the site designer adds a web content based on new structure") {
-			NavItem.click(navItem = "Web Content");
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-		}
-
-		task ("Then the site designer could view the translated text fields at edit mode") {
-			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "This is a Text field");
-
-			PortletEntry.changeLocale(locale = "es-ES");
-
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "Este es un campo de texto");
 		}
 	}
 

@@ -38,7 +38,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -134,13 +133,13 @@ public class LocationVariableResolverTest {
 			LocaleUtil.ENGLISH, LocaleUtil.FRENCH, LocaleUtil.GERMAN);
 
 		Mockito.when(
-			language.getCompanyAvailableLocales(Matchers.anyLong())
+			language.getCompanyAvailableLocales(Mockito.anyLong())
 		).thenReturn(
 			locales
 		);
 
 		Mockito.when(
-			language.get((Locale)Matchers.any(), Matchers.eq(invalidKey))
+			language.get((Locale)Mockito.any(), Mockito.eq(invalidKey))
 		).thenReturn(
 			invalidKey
 		);
@@ -149,7 +148,7 @@ public class LocationVariableResolverTest {
 			String value = validKey + "_" + locale.getLanguage();
 
 			Mockito.when(
-				language.get(Matchers.eq(locale), Matchers.eq(validKey))
+				language.get(Mockito.eq(locale), Mockito.eq(validKey))
 			).thenReturn(
 				value
 			);

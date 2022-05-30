@@ -50,7 +50,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -104,8 +103,6 @@ public class ComboServletTest {
 
 	@Before
 	public void setUp() throws ServletException {
-		MockitoAnnotations.initMocks(this);
-
 		ReflectionTestUtil.setFieldValue(
 			PortletLocalServiceUtil.class, "_service",
 			new PortletLocalServiceWrapper() {

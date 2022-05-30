@@ -341,17 +341,11 @@ public class FreeMarkerFragmentEntryProcessor
 					"inputHelpText", "string", "", true, "text"),
 				locale));
 
-		String defaultLabelValue = StringPool.BLANK;
-
-		if (infoField != null) {
-			defaultLabelValue = infoField.getLabel(locale);
-		}
-
 		String inputLabel = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getEditableValues(),
 				new FragmentConfigurationField(
-					"inputLabel", "string", defaultLabelValue, true, "text"),
+					"inputLabel", "string", StringPool.BLANK, true, "text"),
 				locale));
 
 		String name = "name";

@@ -36,9 +36,36 @@ public class DLSizeLimitConfigurationProviderImpl
 	implements DLSizeLimitConfigurationProvider {
 
 	@Override
+	public long getCompanyFileMaxSize(long companyId) {
+		return _dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+			companyId);
+	}
+
+	@Override
+	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId) {
+		return _dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			companyId);
+	}
+
+	@Override
+	public long getGroupFileMaxSize(long groupId) {
+		return _dlSizeLimitManagedServiceFactory.getGroupFileMaxSize(groupId);
+	}
+
+	@Override
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
 		return _dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
 			groupId);
+	}
+
+	@Override
+	public long getSystemFileMaxSize() {
+		return _dlSizeLimitManagedServiceFactory.getSystemFileMaxSize();
+	}
+
+	@Override
+	public Map<String, Long> getSystemMimeTypeSizeLimit() {
+		return _dlSizeLimitManagedServiceFactory.getSystemMimeTypeSizeLimit();
 	}
 
 	@Override

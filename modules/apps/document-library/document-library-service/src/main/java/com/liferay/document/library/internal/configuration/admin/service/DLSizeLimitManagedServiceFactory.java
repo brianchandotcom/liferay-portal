@@ -67,6 +67,11 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		return dlSizeLimitConfiguration.fileMaxSize();
 	}
 
+	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId) {
+		return _companyMimeTypeSizeLimitsMap.computeIfAbsent(
+			companyId, this::_computeCompanyMimeTypeSizeLimit);
+	}
+
 	public long getCompanyMimeTypeSizeLimit(long companyId, String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return 0;
@@ -121,6 +126,14 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	public String getName() {
 		return "com.liferay.document.library.internal.configuration." +
 			"DLSizeLimitConfiguration.scoped";
+	}
+
+	public long getSystemFileMaxSize() {
+		return _systemDLSizeLimitConfiguration.fileMaxSize();
+	}
+
+	public Map<String, Long> getSystemMimeTypeSizeLimit() {
+		return _computeMimeTypeSizeLimit(_systemDLSizeLimitConfiguration);
 	}
 
 	@Override

@@ -21,7 +21,17 @@ import java.util.Map;
  */
 public interface DLSizeLimitConfigurationProvider {
 
+	public long getCompanyFileMaxSize(long companyId);
+
+	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId);
+
+	public long getGroupFileMaxSize(long groupId);
+
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId);
+
+	public long getSystemFileMaxSize();
+
+	public Map<String, Long> getSystemMimeTypeSizeLimit();
 
 	public void updateGroupMimeTypeSizeLimit(
 			long groupId, Map<String, Long> mimeTypeSizeLimit)

@@ -87,9 +87,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -105,8 +103,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_sxpBlueprintSearchRequestEnhancerImpl =
 			new SXPBlueprintSearchRequestEnhancerImpl();
 
@@ -802,9 +798,8 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		).build();
 	}
 
-	@Mock
-	private DTOConverterRegistry _dtoConverterRegistry;
-
+	private final DTOConverterRegistry _dtoConverterRegistry = Mockito.mock(
+		DTOConverterRegistry.class);
 	private SXPBlueprintSearchRequestEnhancerImpl
 		_sxpBlueprintSearchRequestEnhancerImpl;
 

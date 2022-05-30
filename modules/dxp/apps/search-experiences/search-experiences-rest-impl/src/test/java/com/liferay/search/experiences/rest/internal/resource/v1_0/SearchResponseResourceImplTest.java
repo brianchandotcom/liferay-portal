@@ -62,9 +62,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -79,8 +77,6 @@ public class SearchResponseResourceImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_searchResponseResourceImpl = new SearchResponseResourceImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -140,7 +136,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			searchRequestBuilder
 		).queryString(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		Mockito.doReturn(
@@ -156,7 +152,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			searchRequestBuilder
 		).withSearchContext(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		SearchResponseBuilder searchResponseBuilder = Mockito.mock(
@@ -167,7 +163,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			searchRequestBuilder
 		).withSearchContextGet(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -183,7 +179,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			_sxpBlueprintSearchRequestEnhancer
 		).enhance(
-			Mockito.any(), Mockito.anyString()
+			Mockito.any(), Mockito.nullable(String.class)
 		);
 
 		SearchResponse searchResponse = _searchResponseResourceImpl.search(
@@ -246,7 +242,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			_sxpBlueprintSearchRequestEnhancer
 		).enhance(
-			Mockito.any(), Mockito.anyString()
+			Mockito.any(), Mockito.nullable(String.class)
 		);
 
 		SearchResponse searchResponse = _searchResponseResourceImpl.search(
@@ -444,7 +440,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			_sxpBlueprintSearchRequestEnhancer
 		).enhance(
-			Mockito.any(), Mockito.anyString()
+			Mockito.any(), Mockito.nullable(String.class)
 		);
 
 		NumberFormatException numberFormatException =
@@ -625,7 +621,7 @@ public class SearchResponseResourceImplTest {
 		).when(
 			searchResponse
 		).withSearchContextGet(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		return searchResponse;
@@ -649,16 +645,12 @@ public class SearchResponseResourceImplTest {
 		};
 	}
 
-	@Mock
-	private Searcher _searcher;
-
-	@Mock
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
+	private final Searcher _searcher = Mockito.mock(Searcher.class);
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory =
+		Mockito.mock(SearchRequestBuilderFactory.class);
 	private SearchResponseResourceImpl _searchResponseResourceImpl;
-
-	@Mock
-	private SXPBlueprintSearchRequestEnhancer
-		_sxpBlueprintSearchRequestEnhancer;
+	private final SXPBlueprintSearchRequestEnhancer
+		_sxpBlueprintSearchRequestEnhancer = Mockito.mock(
+			SXPBlueprintSearchRequestEnhancer.class);
 
 }

@@ -233,34 +233,22 @@ export default function propsTransformer({
 	};
 
 	const permissions = () => {
-		const searchContainer = Liferay.SearchContainer.get(
-			otherProps.searchContainerId
-		);
+		const keys = getAllSelectedElements().get('value');
 
-		if (searchContainer.select) {
-			const keys = searchContainer.select
-				.getAllSelectedElements()
-				.get('value');
+		const url = new URL(permissionsURL);
 
-			if (keys) {
-				const url = new URL(permissionsURL);
+		const urlSearchParams = new URLSearchParams(url.search);
 
-				const urlSearchParams = new URLSearchParams(url.search);
+		const paramName = `_${urlSearchParams.get('p_p_id')}_resourcePrimKey`;
 
-				const paramName = `_${urlSearchParams.get(
-					'p_p_id'
-				)}_resourcePrimKey`;
-
-				for (const key of keys) {
-					url.searchParams.append(paramName, key);
-				}
-
-				openSelectionModal({
-					title: Liferay.Language.get('permissions'),
-					url: url.toString(),
-				});
-			}
+		for (const key of keys) {
+			url.searchParams.append(paramName, key);
 		}
+
+		openSelectionModal({
+			title: Liferay.Language.get('permissions'),
+			url: url.toString(),
+		});
 	};
 
 	return {

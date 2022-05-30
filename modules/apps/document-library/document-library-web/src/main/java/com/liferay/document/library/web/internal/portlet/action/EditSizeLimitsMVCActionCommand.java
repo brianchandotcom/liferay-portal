@@ -73,19 +73,19 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			_dlSizeLimitConfigurationProvider.updateCompanyMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationProvider.updateCompanySizeLimit(
 				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			_dlSizeLimitConfigurationProvider.updateGroupMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
 				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
-			_dlSizeLimitConfigurationProvider.updateSystemMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationProvider.updateSystemSizeLimit(
 				fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
 		}
 		else {

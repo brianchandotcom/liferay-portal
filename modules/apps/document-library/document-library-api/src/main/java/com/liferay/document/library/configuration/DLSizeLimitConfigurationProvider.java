@@ -36,16 +36,16 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit();
 
-	public void updateCompanyMimeTypeSizeLimit(
+	public void updateCompanySizeLimit(
 			long companyId, long fileMaxSize,
 			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception;
 
-	public void updateGroupMimeTypeSizeLimit(
+	public void updateGroupSizeLimit(
 			long groupId, long fileMaxSize, Map<String, Long> mimeTypeSizeLimit)
 		throws Exception;
 
-	public void updateSystemMimeTypeSizeLimit(
+	public void updateSystemSizeLimit(
 			long fileMaxSize, Map<String, Long> mimeTypeSizeLimit)
 		throws Exception;
 

@@ -32,7 +32,7 @@ import java.io.InputStream;
 /**
  * @author Alicia García
  */
-public abstract class ImageEditorUploadHandler
+public abstract class BaseImageEditorUploadHandler
 	implements UploadFileEntryHandler {
 
 	@Override
@@ -133,6 +133,6 @@ public abstract class ImageEditorUploadHandler
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ImageEditorUploadHandler.class);
+		BaseImageEditorUploadHandler.class);
 
 }

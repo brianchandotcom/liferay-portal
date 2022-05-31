@@ -695,11 +695,9 @@ definition {
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Test YouTube Video",
-			groupName = "Test Depot Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test YouTube Video");
 
 		DMDocument.editFriendlyURL(
 			dmDocumentTitle = "Test YouTube Video",
@@ -741,11 +739,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name");
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
 
 		DMDocument.editFriendlyURL(
 			dmDocumentTitle = "DM Document Title",

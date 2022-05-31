@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
+import com.liferay.object.util.ObjectActionDataConverterUtil;
 
 import java.util.Map;
 
@@ -46,7 +47,10 @@ public class ObjectActionUtil {
 				objectActionTriggerKey =
 					serviceBuilderObjectAction.getObjectActionTriggerKey();
 				parameters =
-					serviceBuilderObjectAction.getParametersUnicodeProperties();
+					ObjectActionDataConverterUtil.
+						convertParametersUnicodeProperties(
+							serviceBuilderObjectAction.
+								getParametersUnicodeProperties());
 			}
 		};
 

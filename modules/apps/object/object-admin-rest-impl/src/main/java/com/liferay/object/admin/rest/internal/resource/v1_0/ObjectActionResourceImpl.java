@@ -20,21 +20,19 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.service.ObjectActionService;
+import com.liferay.object.util.ObjectActionDataConverterUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,9 +120,8 @@ public class ObjectActionResourceImpl
 				objectAction.getDescription(), objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
-				UnicodePropertiesBuilder.create(
-					(Map<String, String>)objectAction.getParameters(), true
-				).build()));
+				ObjectActionDataConverterUtil.convertObjectActionParameters(
+					objectAction.getParameters())));
 	}
 
 	@Override
@@ -149,9 +146,8 @@ public class ObjectActionResourceImpl
 				objectAction.getDescription(), objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
-				UnicodePropertiesBuilder.create(
-					(Map<String, String>)objectAction.getParameters(), true
-				).build()));
+				ObjectActionDataConverterUtil.convertObjectActionParameters(
+					objectAction.getParameters())));
 	}
 
 	private ObjectAction _toObjectAction(

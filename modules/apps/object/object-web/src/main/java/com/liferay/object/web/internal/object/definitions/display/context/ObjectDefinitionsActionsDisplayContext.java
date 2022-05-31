@@ -23,6 +23,7 @@ import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.util.ObjectActionDataConverterUtil;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -175,7 +176,9 @@ public class ObjectDefinitionsActionsDisplayContext
 		).put(
 			"objectActionTriggerKey", objectAction.getObjectActionTriggerKey()
 		).put(
-			"parameters", objectAction.getParametersUnicodeProperties()
+			"parameters",
+			ObjectActionDataConverterUtil.convertParametersUnicodeProperties(
+				objectAction.getParametersUnicodeProperties())
 		);
 	}
 

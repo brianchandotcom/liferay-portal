@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.configurator;
 
+import com.bmuschko.gradle.docker.DockerRegistryCredentials;
 import com.bmuschko.gradle.docker.DockerRemoteApiPlugin;
 import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer;
 import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer;
@@ -24,6 +25,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
+import com.bmuschko.gradle.docker.tasks.image.DockerTagImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
@@ -170,11 +172,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String PROVIDED_MODULES_CONFIGURATION_NAME =
 		"providedModules";
 
-	public static final String PULL_DOCKER_IMAGE_TASK_NAME =
-		"pullDockerImage";
+	public static final String PULL_DOCKER_IMAGE_TASK_NAME = "pullDockerImage";
 
-	public static final String PUSH_DOCKER_IMAGE_TASK_NAME =
-		"pushDockerImage";
+	public static final String PUSH_DOCKER_IMAGE_TASK_NAME = "pushDockerImage";
 
 	public static final String REMOVE_DOCKER_CONTAINER_TASK_NAME =
 		"removeDockerContainer";
@@ -187,6 +187,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String STOP_DOCKER_CONTAINER_TASK_NAME =
 		"stopDockerContainer";
+
+	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
 
 	public static final String VERIFY_BUNDLE_TASK_NAME = "verifyBundle";
 
@@ -350,9 +352,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_addTaskStartDockerContainer(project, dockerCreateContainer);
 
 		_addTaskLogsDockerContainer(project);
+
+		DockerTagImage dockerTagImage = _addTaskDockerTagImage(
+			project, workspaceExtension);
+
 		_addTaskPullDockerImage(project, workspaceExtension, verifyProductTask);
 
-		_addTaskPushDockerImage(project, workspaceExtension);
+		_addTaskPushDockerImage(project, workspaceExtension, dockerTagImage);
 	}
 
 	private DockerBuildImage _addTaskBuildDockerImage(
@@ -933,6 +939,43 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
+	private DockerTagImage _addTaskDockerTagImage(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		DockerTagImage dockerTagImage = GradleUtil.addTask(
+			project, TAG_DOCKER_IMAGE_TASK_NAME, DockerTagImage.class);
+
+		dockerTagImage.setGroup(DOCKER_GROUP);
+		dockerTagImage.setDescription("Tag the Docker image.");
+
+		Property<String> imageIdProperty = dockerTagImage.getImageId();
+
+		imageIdProperty.set(workspaceExtension.getDockerImageId());
+
+		String dockerUserName = workspaceExtension.getDockerUserName();
+
+		Property<String> repositoryProperty = dockerTagImage.getRepository();
+
+		if (Objects.nonNull(workspaceExtension.getDockerLocalRegistryUrl())) {
+			repositoryProperty.set(
+				workspaceExtension.getDockerLocalRegistryUrl() + "/" +
+					workspaceExtension.getDockerImageId());
+		}
+		else if (Objects.nonNull(dockerUserName)) {
+			repositoryProperty.set(
+				dockerUserName + "/" + workspaceExtension.getDockerImageId());
+		}
+		else {
+			repositoryProperty.set(workspaceExtension.getDockerImageId());
+		}
+
+		Property<String> tagProperty = dockerTagImage.getTag();
+
+		tagProperty.set(_getDockerImageTag(project, workspaceExtension));
+
+		return dockerTagImage;
+	}
+
 	private Download _addTaskDownloadBundle(
 		final Project project, VerifyProductTask verifyProductTask,
 		final WorkspaceExtension workspaceExtension) {
@@ -1157,14 +1200,33 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Property<String> property = dockerPullImage.getImage();
 
-		String dockerLocalRegistryUrl =
-			workspaceExtension.getDockerLocalRegistryUrl();
+		String dockerUserName = workspaceExtension.getDockerUserName();
 
-		if (dockerLocalRegistryUrl != null) {
-			property.set(workspaceExtension.getDockerImageId());		}
+		if (workspaceExtension.getDockerPullPolicy() &&
+			Objects.nonNull(workspaceExtension.getDockerLocalRegistryUrl())) {
+
+			property.set(
+				workspaceExtension.getDockerLocalRegistryUrl() + "/" +
+					workspaceExtension.getDockerImageId());
+		}
+		else if (Objects.nonNull(dockerUserName)) {
+			property.set(
+				dockerUserName + "/" + workspaceExtension.getDockerImageId());
+		}
 		else {
 			property.set(workspaceExtension.getDockerImageLiferay());
 		}
+
+		DockerRegistryCredentials credentials =
+			dockerPullImage.getRegistryCredentials();
+
+		Property<String> userNameProperty = credentials.getUsername();
+
+		userNameProperty.set(workspaceExtension.getDockerUserName());
+
+		Property<String> passwordProperty = credentials.getPassword();
+
+		passwordProperty.set(workspaceExtension.getDockerAccessToken());
 
 		dockerPullImage.setGroup(DOCKER_GROUP);
 		dockerPullImage.setDescription("Pull the Docker image.");
@@ -1174,24 +1236,50 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerPushImage _addTaskPushDockerImage(
-		Project project, WorkspaceExtension workspaceExtension) {
+		Project project, WorkspaceExtension workspaceExtension,
+		DockerTagImage dockerTagImage) {
 
 		DockerPushImage dockerPushImage = GradleUtil.addTask(
 			project, PUSH_DOCKER_IMAGE_TASK_NAME, DockerPushImage.class);
 
 		dockerPushImage.setGroup(DOCKER_GROUP);
 		dockerPushImage.setDescription("Push the Docker iamge.");
+		dockerPushImage.dependsOn(dockerTagImage);
 
 		SetProperty<String> property = dockerPushImage.getImages();
 
 		String dockerLocalRegistryUrl =
 			workspaceExtension.getDockerLocalRegistryUrl();
 
-		if (dockerLocalRegistryUrl != null) {
-			property.add(workspaceExtension.getDockerImageId());
+		String dockerUserName = workspaceExtension.getDockerUserName();
+
+		if (Objects.nonNull(dockerLocalRegistryUrl)) {
+			property.add(
+				workspaceExtension.getDockerLocalRegistryUrl() + "/" +
+					workspaceExtension.getDockerImageId());
+		}
+		else if (Objects.nonNull(dockerUserName)) {
+			property.add(
+				workspaceExtension.getDockerUserName() + "/" +
+					workspaceExtension.getDockerImageId());
 		}
 		else {
-			property.add(workspaceExtension.getDockerImageLiferay());
+			property.add(workspaceExtension.getDockerImageId());
+		}
+
+		DockerRegistryCredentials credentials =
+			dockerPushImage.getRegistryCredentials();
+
+		Property<String> userNameProperty = credentials.getUsername();
+
+		if (Objects.nonNull(userNameProperty)) {
+			userNameProperty.set(dockerUserName);
+		}
+
+		Property<String> passwordProperty = credentials.getPassword();
+
+		if (Objects.nonNull(passwordProperty)) {
+			passwordProperty.set(workspaceExtension.getDockerAccessToken());
 		}
 
 		return dockerPushImage;
@@ -1792,39 +1880,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		String dockerImageId = workspaceExtension.getDockerImageId();
 
 		if (dockerImageId == null) {
-			Object version = project.getVersion();
+			String version = _getDockerImageTag(project, workspaceExtension);
 
-			String dockerImageLiferay =
-				workspaceExtension.getDockerImageLiferay();
-
-			if (Objects.nonNull(dockerImageLiferay) &&
-				Objects.equals(version, "unspecified")) {
-
-				int index = dockerImageLiferay.indexOf(":");
-
-				version = dockerImageLiferay.substring(index + 1);
-			}
-			else {
-				version = project.getVersion();
-			}
-
-			String dockerLocalRegistryUrl =
-				workspaceExtension.getDockerLocalRegistryUrl();
-
-			if (dockerLocalRegistryUrl != null) {
-				workspaceExtension.setDockerImageId(
-					String.format(
-						"%s/%s-liferay:%s", dockerLocalRegistryUrl,
-						StringUtil.getDockerSafeName(project.getName()),
-						version));
-			}
-			else {
-				workspaceExtension.setDockerImageId(
-					String.format(
-						"%s-liferay:%s",
-						StringUtil.getDockerSafeName(project.getName()),
-						version));
-			}
+			workspaceExtension.setDockerImageId(
+				String.format(
+					"%s-liferay:%s",
+					StringUtil.getDockerSafeName(project.getName()), version));
 		}
 	}
 
@@ -1850,6 +1911,24 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		return workspaceExtension.getDockerImageId();
+	}
+
+	private String _getDockerImageTag(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Object version = project.getVersion();
+
+		String dockerImageLiferay = workspaceExtension.getDockerImageLiferay();
+
+		if (Objects.nonNull(dockerImageLiferay) &&
+			Objects.equals(version, "unspecified")) {
+
+			int index = dockerImageLiferay.indexOf(":");
+
+			version = dockerImageLiferay.substring(index + 1);
+		}
+
+		return version.toString();
 	}
 
 	private File _getDownloadFile(Download download) {

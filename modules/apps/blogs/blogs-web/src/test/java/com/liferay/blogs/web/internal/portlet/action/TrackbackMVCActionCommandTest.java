@@ -44,7 +44,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -146,11 +145,10 @@ public class TrackbackMVCActionCommandTest {
 		Mockito.verify(
 			_trackback
 		).addTrackback(
-			Matchers.same(_blogsEntry), Matchers.same(_themeDisplay),
-			Matchers.eq("__excerpt__"),
-			Matchers.eq(_mockHttpServletRequest.getRemoteAddr()),
-			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
-			Matchers.any()
+			Mockito.same(_blogsEntry), Mockito.same(_themeDisplay),
+			Mockito.eq("__excerpt__"),
+			Mockito.eq(_mockHttpServletRequest.getRemoteAddr()),
+			Mockito.eq("__blogName__"), Mockito.eq("__title__"), Mockito.any()
 		);
 	}
 
@@ -243,19 +241,19 @@ public class TrackbackMVCActionCommandTest {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
-			portal.getOriginalServletRequest(Matchers.any())
+			portal.getOriginalServletRequest(Mockito.any())
 		).thenReturn(
 			_originalMockHttpServletRequest
 		);
 
 		Mockito.when(
-			portal.getHttpServletRequest(Matchers.any())
+			portal.getHttpServletRequest(Mockito.any())
 		).thenReturn(
 			_mockHttpServletRequest
 		);
 
 		Mockito.when(
-			portal.getHttpServletResponse(Matchers.any())
+			portal.getHttpServletResponse(Mockito.any())
 		).thenReturn(
 			_mockHttpServletResponse
 		);

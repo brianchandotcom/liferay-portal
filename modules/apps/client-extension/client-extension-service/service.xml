@@ -29,6 +29,13 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="ClientExtensionEntryRel" remote-service="false" trash-enabled="false" uuid="true">
 

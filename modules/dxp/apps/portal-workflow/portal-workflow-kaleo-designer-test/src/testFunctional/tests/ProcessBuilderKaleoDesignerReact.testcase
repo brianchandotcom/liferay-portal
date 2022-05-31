@@ -2201,6 +2201,7 @@ definition {
 	}
 
 	@description = "Verify that the Condition node must have at least two outgoing transitions"
+	@ignore = "true"
 	@priority = "4"
 	test ConditionMustHaveMoreThanOneTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionMustHaveMoreThanOneTransition";
@@ -2357,6 +2358,7 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no End Node And View Error Message"
+	@ignore = "true"
 	@priority = "4"
 	test DefinitionRequiresEndNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
@@ -2375,6 +2377,7 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"
+	@ignore = "true"
 	@priority = "4"
 	test DefinitionRequiresStartNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresStartNodeToPublish";
@@ -2425,6 +2428,7 @@ definition {
 	}
 
 	@description = "Verify that each fork node requires a join node"
+	@ignore = "true"
 	@priority = "4"
 	test ForkNodeRequiresJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeRequiresJoinNode";

@@ -16,10 +16,13 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.internal.action.util.ObjectActionDataConverterUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.runtime.scripting.executor.GroovyScriptingExecutor;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.util.ObjectActionDataConverterUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.HashSet;
 
@@ -38,9 +41,13 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				payloadJSONObject.getLong("objectDefinitionId"));
+
 		_groovyScriptingExecutor.execute(
 			ObjectActionDataConverterUtil.convertPayloadJSONObject(
-				payloadJSONObject),
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));
 	}
 
@@ -50,6 +57,12 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 	}
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private GroovyScriptingExecutor _groovyScriptingExecutor;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

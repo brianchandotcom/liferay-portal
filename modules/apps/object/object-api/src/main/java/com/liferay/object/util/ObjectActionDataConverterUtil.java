@@ -12,35 +12,27 @@
  * details.
  */
 
-package com.liferay.object.internal.action.util;
+package com.liferay.object.util;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(immediate = true, service = {})
 public class ObjectActionDataConverterUtil {
 
 	public static Map<String, Object> convertPayloadJSONObject(
-		JSONObject payloadJSONObject) {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				payloadJSONObject.getLong("objectDefinitionId"));
+		DTOConverterRegistry dtoConverterRegistry,
+		ObjectDefinition objectDefinition, JSONObject payloadJSONObject) {
 
 		if (objectDefinition.isSystem()) {
 			return _convertSystemObjectPayloadJSONObject(
-				objectDefinition, payloadJSONObject);
+				dtoConverterRegistry, objectDefinition, payloadJSONObject);
 		}
 
 		return _convertObjectEntryPayloadJSONObject(payloadJSONObject);
@@ -66,9 +58,10 @@ public class ObjectActionDataConverterUtil {
 	}
 
 	private static Map<String, Object> _convertSystemObjectPayloadJSONObject(
+		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinition objectDefinition, JSONObject payloadJSONObject) {
 
-		DTOConverter<?, ?> dtoConverter = _dtoConverterRegistry.getDTOConverter(
+		DTOConverter<?, ?> dtoConverter = dtoConverterRegistry.getDTOConverter(
 			objectDefinition.getClassName());
 
 		JSONObject modelDTOJSONObject = payloadJSONObject.getJSONObject(
@@ -84,22 +77,5 @@ public class ObjectActionDataConverterUtil {
 
 		return modelDTOJSONObject.toMap();
 	}
-
-	@Reference(unbind = "-")
-	private void _setDTOConverterRegistry(
-		DTOConverterRegistry dtoConverterRegistry) {
-
-		_dtoConverterRegistry = dtoConverterRegistry;
-	}
-
-	@Reference(unbind = "-")
-	private void _setObjectDefinitionLocalService(
-		ObjectDefinitionLocalService objectDefinitionLocalService) {
-
-		_objectDefinitionLocalService = objectDefinitionLocalService;
-	}
-
-	private static DTOConverterRegistry _dtoConverterRegistry;
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

@@ -619,26 +619,6 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long userId, long fragmentEntryId, long fragmentCollectionId,
-			String name, String css, String html, String js, boolean cacheable,
-			String configuration, long previewFileEntryId, int status)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
-
-		return fragmentEntryLocalService.updateFragmentEntry(
-			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, fragmentEntry.getIcon(),
-			previewFileEntryId, status);
-	}
-
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
@@ -712,46 +692,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return fragmentEntry;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long userId, long fragmentEntryId, String name, String css,
-			String html, String js, String configuration, int status)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
-
-		return fragmentEntryLocalService.updateFragmentEntry(
-			userId, fragmentEntryId, fragmentEntry.getFragmentCollectionId(),
-			name, css, html, js, fragmentEntry.isCacheable(), configuration,
-			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
-			status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long userId, long fragmentEntryId, String name, String css,
-			String html, String js, String configuration,
-			long previewFileEntryId, int status)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
-
-		return fragmentEntryLocalService.updateFragmentEntry(
-			userId, fragmentEntryId, fragmentEntry.getFragmentCollectionId(),
-			name, css, html, js, fragmentEntry.isCacheable(), configuration,
-			fragmentEntry.getIcon(), previewFileEntryId, status);
 	}
 
 	@Override

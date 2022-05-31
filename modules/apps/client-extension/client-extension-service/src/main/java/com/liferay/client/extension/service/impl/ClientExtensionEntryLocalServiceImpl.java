@@ -24,6 +24,9 @@ import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLExcep
 import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
+import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -67,7 +70,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -601,18 +604,35 @@ public class ClientExtensionEntryLocalServiceImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		// TODO Context URL does not seem relevant
+
+		Map<String, Serializable> workflowContext = null;
+
+		if (Objects.equals(
+				clientExtensionEntry.getType(),
+				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+
+			CETCustomElement cetCustomElement = _cetFactory.customElement(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetCustomElement.getURLs());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_IFRAME)) {
+
+			CETIFrame cetIFrame = _cetFactory.iFrame(clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetIFrame.getURL());
+		}
+
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			clientExtensionEntry.getCompanyId(), company.getGroupId(), userId,
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId(),
-			clientExtensionEntry, serviceContext,
-			Collections.singletonMap(
-				WorkflowConstants.CONTEXT_URL,
-				Optional.ofNullable(
-					clientExtensionEntry.getCustomElementURLs()
-				).orElse(
-					clientExtensionEntry.getIFrameURL()
-				)));
+			clientExtensionEntry, serviceContext, workflowContext);
 	}
 
 	private void _validateCustomElement(
@@ -736,6 +756,9 @@ public class ClientExtensionEntryLocalServiceImpl
 		"[A-Za-z0-9-_]*");
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CETFactory _cetFactory;
 
 	@Reference
 	private ClientExtensionEntryDeployer _clientExtensionEntryDeployer;

@@ -214,9 +214,7 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "Document_1",
-			assetType = "Basic Document");
+		AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",

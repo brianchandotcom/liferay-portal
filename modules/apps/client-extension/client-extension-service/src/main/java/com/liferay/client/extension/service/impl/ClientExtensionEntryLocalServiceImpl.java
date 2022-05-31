@@ -210,6 +210,13 @@ public class ClientExtensionEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getClientExtensionEntriesByTypeCount(
+		long companyId, String type) {
+
+		return clientExtensionEntryPersistence.countByC_T(companyId, type);
+	}
+
+	@Override
 	public List<ClientExtensionEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {

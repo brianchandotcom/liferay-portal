@@ -28,7 +28,9 @@
 	<td></td>
 	<td></td>
 </tr>
+
 <!--APP_STORE-->
+
 <tr>
 	<td>APP_FILTER_LABEL</td>
 	<td>//span[contains(@class,'aui-field-select')]/span[contains(@class,'aui-field-content')]/label[contains(.,'${key_filterName}')]</td>
@@ -109,6 +111,7 @@
 	<td>//a[contains(@class,'btn-secondary')]/span</td>
 	<td></td>
 </tr>
+
 <!--BREADCRUMB-->
 
 <tr>

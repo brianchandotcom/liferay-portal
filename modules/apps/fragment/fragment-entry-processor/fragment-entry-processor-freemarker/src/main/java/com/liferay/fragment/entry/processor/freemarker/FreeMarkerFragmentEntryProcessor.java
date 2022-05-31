@@ -28,6 +28,7 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -56,6 +57,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -389,9 +392,26 @@ public class FreeMarkerFragmentEntryProcessor
 			type = infoFieldType.getName();
 		}
 
-		return new InputTemplateNode(
+		InputTemplateNode inputTemplateNode = new InputTemplateNode(
 			inputHelpText, inputLabel, name, required, inputShowHelpText,
 			inputShowLabel, type, "value");
+
+		if ((infoField != null) &&
+			(infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE)) {
+
+			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
+				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+
+			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
+				new ArrayList<>());
+
+			for (SelectInfoFieldType.Option option : options) {
+				inputTemplateNode.addOption(
+					option.getLabel(locale), option.getValue());
+			}
+		}
+
+		return inputTemplateNode;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

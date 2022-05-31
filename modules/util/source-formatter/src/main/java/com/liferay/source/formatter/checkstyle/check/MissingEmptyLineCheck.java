@@ -32,8 +32,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
-			TokenTypes.ASSIGN, TokenTypes.METHOD_CALL, TokenTypes.VARIABLE_DEF,
-			TokenTypes.INSTANCE_INIT
+			TokenTypes.ASSIGN, TokenTypes.INSTANCE_INIT, TokenTypes.METHOD_CALL,
+			TokenTypes.VARIABLE_DEF
 		};
 	}
 

@@ -861,6 +861,11 @@
 	<td>//h4[contains(.,'Payment Status')]//..//div//span[contains(@class,'label')]//*[contains(.,'${paymentStatus}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ORDER_PAYMENT_METHOD</td>
+	<td>//h4[contains(.,'Payment Method')]//..//div//span[contains(@class,'payment-name') and contains(.,'${paymentMethod}')]</td>
+	<td></td>
+</tr>
 <!--CHANNELS-->
 
 <tr>

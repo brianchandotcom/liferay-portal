@@ -78,7 +78,8 @@ portletDisplay.setURLBack(backURL);
 			);
 
 			const postPath = scope === 'site' ? pathScopedBySite : contextPath;
-			const putPath = contextPath.concat(
+			let putPath = scope === 'site' ? pathScopedBySite : contextPath;
+			putPath = putPath.concat(
 				'/by-external-reference-code/',
 				`\${externalReferenceCode}`
 			);

@@ -433,6 +433,7 @@ definition {
 			nodeNotificationsDescription = "Review Notification Description",
 			nodeNotificationsExecutionType = "On Exit",
 			nodeNotificationsName = "Review Completed With Comments User Notification",
+			nodeNotificationsRecipientType = "Asset Creator",
 			nodeNotificationsTemplate = '''Submission reviewed. The reviewer left the following: $taskComments.''',
 			nodeNotificationsTemplateLanguage = "Velocity",
 			nodeNotificationsType = "User Notification");

@@ -17,9 +17,7 @@ import React from 'react';
 
 import {FieldBase} from './FieldBase';
 
-export const Input: React.ForwardRefExoticComponent<
-	IProps & React.RefAttributes<HTMLInputElement>
-> = React.forwardRef(
+export const Input = React.forwardRef<HTMLInputElement, IProps>(
 	(
 		{
 			className,
@@ -37,7 +35,7 @@ export const Input: React.ForwardRefExoticComponent<
 			value,
 			...otherProps
 		},
-		forwardRef
+		ref
 	) => {
 		return (
 			<FieldBase
@@ -57,7 +55,7 @@ export const Input: React.ForwardRefExoticComponent<
 					name={name}
 					onChange={onChange}
 					onInput={onInput}
-					ref={forwardRef}
+					ref={ref}
 					type={type}
 					value={value}
 				/>

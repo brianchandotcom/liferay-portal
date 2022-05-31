@@ -66,6 +66,102 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9381 | Specific Delivery Terms Eligibility is shown at checkout"
+	@priority = "3"
+	test ShippingOptionEligibleForSpecificDeliveryTerms {
+		task ("Given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given an active delivery term") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "1",
+				termsType = "Delivery");
+		}
+
+		task ("And given one of the shipping option's eligibility is set specifically to Delivery Term 1") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And when the configuration is saved") {
+			Button.clickSave();
+		}
+
+		task ("And when the buyer user is logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer checks out an order using the edited shipping option") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("Then the delivery term should be applied to the order") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				deliveryTerm = "Delivery Term 1",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer checks out an order using the non-edited shipping option") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("The the delivery term should not be applied to the order") {
+		    CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				deliveryTern = "",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Expedited");
+		}
+
+	}
+
 	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
 	@priority = "3"
 	test ActiveAllTaxCalculations {

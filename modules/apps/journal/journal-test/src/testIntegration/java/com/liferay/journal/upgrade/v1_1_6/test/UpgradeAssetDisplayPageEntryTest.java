@@ -163,9 +163,10 @@ public class UpgradeAssetDisplayPageEntryTest {
 				StringBundler.concat(
 					"insert into JournalArticle (uuid_, id_, resourcePrimKey, ",
 					"groupId, companyId, userId, userName, createDate, ",
-					"modifiedDate, folderId, classNameId, classPK, treePath, ",
-					"articleId, version, layoutUuid) values (?, ?, ?, ?, ?, ",
-					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+					"modifiedDate, externalReferenceCode, folderId, ",
+					"classNameId, classPK, treePath, articleId, version, ",
+					"layoutUuid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+					"?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setString(1, PortalUUIDUtil.generate());
 			preparedStatement.setLong(2, _counterLocalService.increment());
@@ -176,13 +177,14 @@ public class UpgradeAssetDisplayPageEntryTest {
 			preparedStatement.setString(7, null);
 			preparedStatement.setTimestamp(8, _timestamp);
 			preparedStatement.setTimestamp(9, _timestamp);
-			preparedStatement.setLong(10, 0);
+			preparedStatement.setString(10, RandomTestUtil.randomString());
 			preparedStatement.setLong(11, 0);
 			preparedStatement.setLong(12, 0);
-			preparedStatement.setString(13, "/");
-			preparedStatement.setString(14, RandomTestUtil.randomString());
-			preparedStatement.setDouble(15, version);
-			preparedStatement.setString(16, layoutUuid);
+			preparedStatement.setLong(13, 0);
+			preparedStatement.setString(14, "/");
+			preparedStatement.setString(15, RandomTestUtil.randomString());
+			preparedStatement.setDouble(16, version);
+			preparedStatement.setString(17, layoutUuid);
 
 			preparedStatement.executeUpdate();
 		}

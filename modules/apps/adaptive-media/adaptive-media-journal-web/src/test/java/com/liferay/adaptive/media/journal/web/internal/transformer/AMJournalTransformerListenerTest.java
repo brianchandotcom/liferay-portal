@@ -30,16 +30,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AMJournalTransformerListenerTest {
 
 	@ClassRule
@@ -101,7 +97,7 @@ public class AMJournalTransformerListenerTest {
 
 		Assert.assertSame(originalScript, newScript);
 
-		Mockito.verifyZeroInteractions(_document);
+		Mockito.verifyNoInteractions(_document);
 	}
 
 	@Test
@@ -111,23 +107,18 @@ public class AMJournalTransformerListenerTest {
 
 		Assert.assertSame(_document, newDocument);
 
-		Mockito.verifyZeroInteractions(_document);
+		Mockito.verifyNoInteractions(_document);
 	}
 
 	private static final String _LANGUAGE_ID = "en";
 
 	private final AMJournalTransformerListener _amJournalTransformerListener =
 		new AMJournalTransformerListener();
-
-	@Mock
-	private ContentTransformerHandler _contentTransformerHandler;
-
-	@Mock
-	private Document _document;
-
-	@Mock
-	private JournalContent _journalContent;
-
+	private final ContentTransformerHandler _contentTransformerHandler =
+		Mockito.mock(ContentTransformerHandler.class);
+	private final Document _document = Mockito.mock(Document.class);
+	private final JournalContent _journalContent = Mockito.mock(
+		JournalContent.class);
 	private final Map<String, String> _tokens = new HashMap<>();
 
 }

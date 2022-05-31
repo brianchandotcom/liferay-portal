@@ -461,7 +461,7 @@ public class AMImageRequestHandlerTest {
 		).thenAnswer(
 			invocation -> {
 				Function<AMImageQueryBuilder, AMQuery<?, ?>>
-					amImageQueryBuilderFunction = invocation.getArgumentAt(
+					amImageQueryBuilderFunction = invocation.getArgument(
 						0, Function.class);
 
 				AMImageQueryBuilderImpl amImageQueryBuilderImpl =
@@ -514,7 +514,7 @@ public class AMImageRequestHandlerTest {
 		).thenAnswer(
 			invocation -> {
 				Function<AMImageQueryBuilder, AMQuery<?, ?>>
-					amImageQueryBuilderFunction = invocation.getArgumentAt(
+					amImageQueryBuilderFunction = invocation.getArgument(
 						0, Function.class);
 
 				AMImageQueryBuilderImpl amImageQueryBuilderImpl =

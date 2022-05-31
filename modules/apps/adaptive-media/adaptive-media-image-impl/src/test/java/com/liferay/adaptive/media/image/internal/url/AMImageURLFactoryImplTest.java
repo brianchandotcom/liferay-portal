@@ -31,16 +31,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AMImageURLFactoryImplTest {
 
 	@ClassRule
@@ -109,13 +105,9 @@ public class AMImageURLFactoryImplTest {
 		new AMImageConfigurationEntryImpl("small", _UUID, new HashMap<>());
 	private final AMImageURLFactoryImpl _amImageURLFactoryImpl =
 		new AMImageURLFactoryImpl();
-
-	@Mock
-	private AMURIResolver _amURIResolver;
-
-	@Mock
-	private FileVersion _fileVersion;
-
+	private final AMURIResolver _amURIResolver = Mockito.mock(
+		AMURIResolver.class);
+	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
 	private final Date _modifiedDate = new Date();
 
 }

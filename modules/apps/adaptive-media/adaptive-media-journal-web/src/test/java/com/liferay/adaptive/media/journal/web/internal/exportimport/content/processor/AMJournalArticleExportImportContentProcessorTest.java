@@ -69,9 +69,9 @@ public class AMJournalArticleExportImportContentProcessorTest {
 		).then(
 			answer -> {
 				AMJournalArticleContentHTMLReplacer.Replace replace =
-					answer.getArgumentAt(
+					answer.getArgument(
 						1, AMJournalArticleContentHTMLReplacer.Replace.class);
-				String content = answer.getArgumentAt(0, String.class);
+				String content = answer.getArgument(0, String.class);
 
 				return replace.apply(content);
 			}

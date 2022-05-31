@@ -14,7 +14,6 @@
 
 package com.liferay.adaptive.media.web.internal.servlet;
 
-import com.liferay.adaptive.media.exception.AMException;
 import com.liferay.adaptive.media.handler.AMRequestHandler;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -76,7 +75,8 @@ public class AMServletTest {
 		Mockito.verify(
 			_httpServletResponse
 		).sendError(
-			Mockito.eq(HttpServletResponse.SC_BAD_REQUEST), Mockito.anyString()
+			Mockito.eq(HttpServletResponse.SC_BAD_REQUEST),
+			Mockito.nullable(String.class)
 		);
 	}
 
@@ -106,7 +106,8 @@ public class AMServletTest {
 		Mockito.verify(
 			_httpServletResponse
 		).sendError(
-			Mockito.eq(HttpServletResponse.SC_NOT_FOUND), Mockito.anyString()
+			Mockito.eq(HttpServletResponse.SC_NOT_FOUND),
+			Mockito.nullable(String.class)
 		);
 	}
 
@@ -127,8 +128,8 @@ public class AMServletTest {
 
 		Mockito.when(
 			_amRequestHandler.handleRequest(_httpServletRequest)
-		).thenThrow(
-			AMException.AMNotFound.class
+		).thenReturn(
+			Optional.empty()
 		);
 
 		_amServlet.doGet(_httpServletRequest, _httpServletResponse);
@@ -136,7 +137,8 @@ public class AMServletTest {
 		Mockito.verify(
 			_httpServletResponse
 		).sendError(
-			Mockito.eq(HttpServletResponse.SC_NOT_FOUND), Mockito.anyString()
+			Mockito.eq(HttpServletResponse.SC_NOT_FOUND),
+			Mockito.nullable(String.class)
 		);
 	}
 
@@ -166,7 +168,8 @@ public class AMServletTest {
 		Mockito.verify(
 			_httpServletResponse
 		).sendError(
-			Mockito.eq(HttpServletResponse.SC_FORBIDDEN), Mockito.anyString()
+			Mockito.eq(HttpServletResponse.SC_FORBIDDEN),
+			Mockito.nullable(String.class)
 		);
 	}
 
@@ -189,7 +192,8 @@ public class AMServletTest {
 		Mockito.verify(
 			_httpServletResponse
 		).sendError(
-			Mockito.eq(HttpServletResponse.SC_NOT_FOUND), Mockito.anyString()
+			Mockito.eq(HttpServletResponse.SC_NOT_FOUND),
+			Mockito.nullable(String.class)
 		);
 	}
 

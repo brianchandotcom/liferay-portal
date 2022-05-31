@@ -31,17 +31,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Tardín
  * @author Sergio González
  */
-@RunWith(MockitoJUnitRunner.class)
 public class HtmlContentTransformerImplTest {
 
 	@ClassRule
@@ -226,15 +222,11 @@ public class HtmlContentTransformerImplTest {
 		return text + StringPool.NEW_LINE + text;
 	}
 
-	@Mock
-	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
-
-	@Mock
-	private DLAppLocalService _dlAppLocalService;
-
-	@Mock
-	private FileEntry _fileEntry;
-
+	private final AMImageHTMLTagFactory _amImageHTMLTagFactory = Mockito.mock(
+		AMImageHTMLTagFactory.class);
+	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
+		DLAppLocalService.class);
+	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
 	private final HtmlContentTransformerImpl _htmlContentTransformerImpl =
 		new HtmlContentTransformerImpl();
 

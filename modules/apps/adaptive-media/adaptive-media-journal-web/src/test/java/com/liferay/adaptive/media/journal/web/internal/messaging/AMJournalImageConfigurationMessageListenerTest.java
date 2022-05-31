@@ -23,16 +23,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(MockitoJUnitRunner.class)
 public class AMJournalImageConfigurationMessageListenerTest {
 
 	@ClassRule
@@ -61,8 +57,7 @@ public class AMJournalImageConfigurationMessageListenerTest {
 	private final AMJournalImageConfigurationMessageListener
 		_amJournalImageConfigurationMessageListener =
 			new AMJournalImageConfigurationMessageListener();
-
-	@Mock
-	private JournalContent _journalContent;
+	private final JournalContent _journalContent = Mockito.mock(
+		JournalContent.class);
 
 }

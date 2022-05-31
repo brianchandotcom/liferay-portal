@@ -54,7 +54,7 @@ public class AMHTMLImageAttachmentElementHandlerTest {
 			_defaultAttachmentElementReplacer.replace(
 				Mockito.anyString(), Mockito.eq(_fileEntry))
 		).thenAnswer(
-			arguments -> arguments.getArgumentAt(0, String.class)
+			arguments -> arguments.getArgument(0, String.class)
 		);
 
 		_amHTMLImageAttachmentElementReplacer =

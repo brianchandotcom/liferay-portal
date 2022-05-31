@@ -52,6 +52,9 @@ public class CPDefinitionEntrySystemObjectDefinitionMetadata
 		return Arrays.asList(
 			createObjectField(
 				"Text", "String", "description", "description", false),
+			createObjectField(
+				"Text", "String", "external-reference-code",
+				"externalReferenceCode", false),
 			createObjectField("Text", "String", "name", "name", false),
 			createObjectField(
 				"Text", "String", "product-id", "productId", false),

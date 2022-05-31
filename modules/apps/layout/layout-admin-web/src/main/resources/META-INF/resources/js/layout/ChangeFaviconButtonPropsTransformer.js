@@ -27,8 +27,12 @@ export default function propsTransformer({
 			openSelectionModal({
 				onSelect(selectedItem) {
 					if (selectedItem) {
-						const faviconClientExtensionEntryName = document.getElementById(
-							`${portletNamespace}faviconClientExtensionEntryName`
+						const faviconClientExtensionEntryId = document.getElementById(
+							`${portletNamespace}faviconClientExtensionEntryId`
+						);
+
+						const faviconClientExtensionEntryType = document.getElementById(
+							`${portletNamespace}faviconClientExtensionEntryType`
 						);
 
 						const faviconFileEntryId = document.getElementById(
@@ -44,7 +48,7 @@ export default function propsTransformer({
 						if (
 							selectedItem &&
 							selectedItem.value &&
-							faviconClientExtensionEntryName &&
+							faviconClientExtensionEntryId &&
 							faviconFileEntryId &&
 							faviconFileEntryImage &&
 							faviconFileEntryTitle
@@ -55,8 +59,10 @@ export default function propsTransformer({
 								selectedItem.returnType ===
 								'com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType'
 							) {
-								faviconClientExtensionEntryName.value =
+								faviconClientExtensionEntryId.value =
 									itemValue.clientExtensionEntryId;
+								faviconClientExtensionEntryType.value =
+									itemValue.type;
 							}
 							else {
 								faviconFileEntryId.value =

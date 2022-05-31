@@ -27,7 +27,8 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconFileEntryTitle"><%= layoutsAdminDisplayContext.getFaviconTitle() %></span>
 	</p>
 
-	<aui:input name="faviconClientExtensionEntryName" type="hidden" />
+	<aui:input name="faviconClientExtensionEntryId" type="hidden" />
+	<aui:input name="faviconClientExtensionEntryType" type="hidden" />
 	<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayoutSet.getFaviconFileEntryId() %>" />
 
 	<aui:button name="selectFaviconButton" value="change-favicon" />
@@ -44,8 +45,12 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
-					const faviconClientExtensionEntryName = document.getElementById(
-						'<portlet:namespace />faviconClientExtensionEntryName'
+					const faviconClientExtensionEntryId = document.getElementById(
+						'<portlet:namespace />faviconClientExtensionEntryId'
+					);
+
+					const faviconClientExtensionEntryType = document.getElementById(
+						'<portlet:namespace />faviconClientExtensionEntryType'
 					);
 
 					const faviconFileEntryId = document.getElementById(
@@ -59,7 +64,8 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 					);
 
 					if (
-						faviconClientExtensionEntryName &&
+						faviconClientExtensionEntryId &&
+						faviconClientExtensionEntryType &&
 						faviconFileEntryId &&
 						faviconFileEntryImage &&
 						faviconFileEntryTitle &&
@@ -72,8 +78,9 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 							selectedItem.returnType ===
 							'<%= ClientExtensionItemSelectorReturnType.class.getName() %>'
 						) {
-							faviconClientExtensionEntryName.value =
+							faviconClientExtensionEntryId.value =
 								itemValue.clientExtensionEntryId;
+							faviconClientExtensionEntryType.value = itemValue.type;
 						}
 						else {
 							faviconFileEntryId.value = itemValue.fileEntryId;

@@ -2202,4 +2202,91 @@ definition {
 				totalValue = "39");
 		}
 	}
+
+	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"
+	@priority = "3"
+	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given the Admin already created a Minium Site and a buyer account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task("Given the Admin create an order using API and the Admin change the Payment Status to 'Authorized' but PayPal is disabled") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				paymentMethod = "paypal",
+				paymentStatus = "2",
+				orderStatus = "2",
+				accountEntryName = "Commerce Account");
+
+			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceNavigator.gotoEntry(entryName = "${orderId}");
+
+			Button.click(button = "Check Out");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			AssertElementPresent(
+				paymentStatus = "Authorized",
+				locator1 = "CommerceEntry#ORDER_PAYMENT_STATUS");
+
+			AssertElementPresent(
+				paymentMethod = "PayPal",
+				locator1 = "CommerceEntry#ORDER_PAYMENT_METHOD");
+		}
+
+		task ("When the Buyer goes to Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And goes into the 'Placed Orders' page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+		}
+
+		task ("Then the button 'Re-try payment' is not present because PayPal is disabled") {
+			Click(
+				key_orderAuthor = "Commerce Account",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			AssertElementPresent(
+				key_orderStatus = "In Progress",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_STATUS");
+
+			AssertElementNotPresent(
+				key_text = "Re-try payment",
+				locator1 = "Button#ANY");
+		}
+
+		task ("But the 'Reorder' is present") {
+			AssertElementPresent(
+				key_text = "Reorder",
+				locator1 = "Button#ANY");
+		}
+	}
 }

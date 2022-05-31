@@ -482,38 +482,53 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	}
 
 	private void _checkMissingEmptyLineInInstanceInit(DetailAST detailAST) {
-		DetailAST tmpDetailAST = detailAST.getFirstChild();
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		int preDetailASTType = -1;
-		int preDetailASTEndLineNo = -1;
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.SLIST)) {
 
-		while (tmpDetailAST != null) {
-			if (tmpDetailAST.getType() == TokenTypes.SLIST) {
-				tmpDetailAST = tmpDetailAST.getFirstChild();
+			return;
+		}
+
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			firstChildDetailAST, false, TokenTypes.EXPR);
+
+		if (exprDetailASTList.size() < 2) {
+			return;
+		}
+
+		DetailAST previousExprDetailAST = null;
+
+		for (DetailAST exprDetailAST : exprDetailASTList) {
+			if (previousExprDetailAST == null) {
+				previousExprDetailAST = exprDetailAST;
 
 				continue;
 			}
-			else if (tmpDetailAST.getType() == TokenTypes.EXPR) {
-				DetailAST firstChildDetailAST = tmpDetailAST.getFirstChild();
 
-				if ((preDetailASTType == TokenTypes.ASSIGN) &&
-					(firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
-					((preDetailASTEndLineNo + 1) ==
-						firstChildDetailAST.getLineNo())) {
+			firstChildDetailAST = exprDetailAST.getFirstChild();
+			DetailAST previousExprFirstChildDetailAST =
+				previousExprDetailAST.getFirstChild();
 
-					log(
-						preDetailASTEndLineNo,
-						_MSG_MISSING_EMPTY_LINE_LINE_NUMBER, "after",
-						preDetailASTEndLineNo);
-				}
+			if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+				(previousExprFirstChildDetailAST.getType() !=
+					TokenTypes.ASSIGN)) {
 
-				preDetailASTType = firstChildDetailAST.getType();
-			}
-			else if (tmpDetailAST.getType() == TokenTypes.SEMI) {
-				preDetailASTEndLineNo = tmpDetailAST.getLineNo();
+				previousExprDetailAST = exprDetailAST;
+
+				continue;
 			}
 
-			tmpDetailAST = tmpDetailAST.getNextSibling();
+			int previousExprEndLineNo = getEndLineNumber(previousExprDetailAST);
+
+			if ((previousExprEndLineNo + 1) == exprDetailAST.getLineNo()) {
+				log(
+					previousExprFirstChildDetailAST,
+					_MSG_MISSING_EMPTY_LINE_LINE_NUMBER, "after",
+					previousExprEndLineNo);
+			}
+
+			previousExprDetailAST = exprDetailAST;
 		}
 	}
 

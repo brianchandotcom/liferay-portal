@@ -638,6 +638,18 @@ definition {
 			}
 		}
 
+		if (isSet(embedVideo)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
+
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.addVideoFromDM(
+					navTab = "${navTab}",
+					videoShortcutTitle = "${videoShortcutTitle}");
+			}
+		}
+
 		if ("${cancel}" == "true") {
 			Button.clickCancel();
 		}

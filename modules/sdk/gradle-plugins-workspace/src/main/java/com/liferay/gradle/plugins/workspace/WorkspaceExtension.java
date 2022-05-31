@@ -75,7 +75,8 @@ public class WorkspaceExtension {
 
 		_projectConfigurators.add(new DesignPacksProjectConfigurator(settings));
 		_projectConfigurators.add(new ExtProjectConfigurator(settings));
-		_projectConfigurators.add(new LXCExtensionProjectConfigurator(settings));
+		_projectConfigurators.add(
+			new LXCExtensionProjectConfigurator(settings));
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));

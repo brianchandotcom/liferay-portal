@@ -117,9 +117,9 @@ dependencies {
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 	compile group: "net.java.dev.jna", name: "jna", version: "5.8.0"
 	//compile group: "org.yaml", name: "snakeyaml", version: "1.27"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.3"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.3"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.3"
+	compile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	compile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
+	compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
 	compile group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.13.3"
 
 	compileInclude files("lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")

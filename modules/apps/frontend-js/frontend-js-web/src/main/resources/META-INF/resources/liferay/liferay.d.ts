@@ -307,13 +307,13 @@ declare module Liferay {
 			form: HTMLFormElement,
 			except: string,
 			name?: string
-		): Array<number> | [];
+		): Array<number> | '';
 
 		export function getUncheckedCheckboxes(
 			form: HTMLFormElement,
 			except: string,
 			name?: string
-		): Array<number> | [];
+		): Array<number> | '';
 
 		/**
 		 * Returns dimensions and coordinates representing a cropped region

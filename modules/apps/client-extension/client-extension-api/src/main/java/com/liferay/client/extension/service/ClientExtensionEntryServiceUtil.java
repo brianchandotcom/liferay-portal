@@ -65,6 +65,33 @@ public class ClientExtensionEntryServiceUtil {
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
+	public static ClientExtensionEntry addThemeCSSClientExtensionEntry(
+			String clayURL, String description, String mainURL,
+			Map<java.util.Locale, String> nameMap, String sourceCodeURL)
+		throws PortalException {
+
+		return getService().addThemeCSSClientExtensionEntry(
+			clayURL, description, mainURL, nameMap, sourceCodeURL);
+	}
+
+	public static ClientExtensionEntry addThemeFaviconClientExtensionEntry(
+			String description, Map<java.util.Locale, String> nameMap,
+			String sourceCodeURL, String url)
+		throws PortalException {
+
+		return getService().addThemeFaviconClientExtensionEntry(
+			description, nameMap, sourceCodeURL, url);
+	}
+
+	public static ClientExtensionEntry addThemeJSClientExtensionEntry(
+			String description, Map<java.util.Locale, String> nameMap,
+			String sourceCodeURL, String urls)
+		throws PortalException {
+
+		return getService().addThemeJSClientExtensionEntry(
+			description, nameMap, sourceCodeURL, urls);
+	}
+
 	public static ClientExtensionEntry deleteClientExtensionEntry(
 			long clientExtensionEntryId)
 		throws PortalException {
@@ -113,6 +140,37 @@ public class ClientExtensionEntryServiceUtil {
 		return getService().updateIFrameClientExtensionEntry(
 			clientExtensionEntryId, description, friendlyURLMapping, iFrameURL,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
+	}
+
+	public static ClientExtensionEntry updateThemeCSSClientExtensionEntry(
+			long clientExtensionEntryId, String clayURL, String description,
+			String mainURL, Map<java.util.Locale, String> nameMap,
+			String sourceCodeURL)
+		throws PortalException {
+
+		return getService().updateThemeCSSClientExtensionEntry(
+			clientExtensionEntryId, clayURL, description, mainURL, nameMap,
+			sourceCodeURL);
+	}
+
+	public static ClientExtensionEntry updateThemeFaviconClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			Map<java.util.Locale, String> nameMap, String sourceCodeURL,
+			String url)
+		throws PortalException {
+
+		return getService().updateThemeFaviconClientExtensionEntry(
+			clientExtensionEntryId, description, nameMap, sourceCodeURL, url);
+	}
+
+	public static ClientExtensionEntry updateThemeJSClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			Map<java.util.Locale, String> nameMap, String sourceCodeURL,
+			String urls)
+		throws PortalException {
+
+		return getService().updateThemeJSClientExtensionEntry(
+			clientExtensionEntryId, description, nameMap, sourceCodeURL, urls);
 	}
 
 	public static ClientExtensionEntryService getService() {

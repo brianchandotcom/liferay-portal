@@ -111,6 +111,24 @@ public interface ClientExtensionEntryLocalService
 			String properties, String sourceCodeURL)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry addThemeCSSClientExtensionEntry(
+			long userId, String clayURL, String description, String mainURL,
+			Map<Locale, String> nameMap, String sourceCodeURL)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry addThemeFaviconClientExtensionEntry(
+			long userId, String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String url)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry addThemeJSClientExtensionEntry(
+			long userId, String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String urls)
+		throws PortalException;
+
 	/**
 	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
 	 *
@@ -412,6 +430,25 @@ public interface ClientExtensionEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry updateStatus(
 			long userId, long clientExtensionEntryId, int status)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry updateThemeCSSClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String clayURL,
+			String description, String mainURL, Map<Locale, String> nameMap,
+			String sourceCodeURL)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry updateThemeFaviconClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String url)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry updateThemeJSClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String urls)
 		throws PortalException;
 
 }

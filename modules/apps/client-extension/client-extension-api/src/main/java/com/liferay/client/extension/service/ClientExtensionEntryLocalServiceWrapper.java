@@ -116,6 +116,44 @@ public class ClientExtensionEntryLocalServiceWrapper
 				sourceCodeURL);
 	}
 
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			addThemeCSSClientExtensionEntry(
+				long userId, String clayURL, String description, String mainURL,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			addThemeCSSClientExtensionEntry(
+				userId, clayURL, description, mainURL, nameMap, sourceCodeURL);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			addThemeFaviconClientExtensionEntry(
+				long userId, String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			addThemeFaviconClientExtensionEntry(
+				userId, description, nameMap, sourceCodeURL, url);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			addThemeJSClientExtensionEntry(
+				long userId, String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL, String urls)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.addThemeJSClientExtensionEntry(
+			userId, description, nameMap, sourceCodeURL, urls);
+	}
+
 	/**
 	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
 	 *
@@ -588,6 +626,49 @@ public class ClientExtensionEntryLocalServiceWrapper
 
 		return _clientExtensionEntryLocalService.updateStatus(
 			userId, clientExtensionEntryId, status);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			updateThemeCSSClientExtensionEntry(
+				long userId, long clientExtensionEntryId, String clayURL,
+				String description, String mainURL,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			updateThemeCSSClientExtensionEntry(
+				userId, clientExtensionEntryId, clayURL, description, mainURL,
+				nameMap, sourceCodeURL);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			updateThemeFaviconClientExtensionEntry(
+				long userId, long clientExtensionEntryId, String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			updateThemeFaviconClientExtensionEntry(
+				userId, clientExtensionEntryId, description, nameMap,
+				sourceCodeURL, url);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			updateThemeJSClientExtensionEntry(
+				long userId, long clientExtensionEntryId, String description,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sourceCodeURL, String urls)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			updateThemeJSClientExtensionEntry(
+				userId, clientExtensionEntryId, description, nameMap,
+				sourceCodeURL, urls);
 	}
 
 	@Override

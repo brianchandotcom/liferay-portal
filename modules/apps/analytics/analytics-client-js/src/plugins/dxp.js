@@ -17,6 +17,7 @@ import {
 	MARK_NAVIGATION_START,
 	MARK_PAGE_LOAD_TIME,
 	MARK_VIEW_DURATION,
+	PAGE,
 	PARAM_CONFIGURATION_PORTLET_NAME,
 	PARAM_MODE_KEY,
 	PARAM_PAGE_EDITOR_PORTLET_NAME,
@@ -26,7 +27,7 @@ import {
 import {getSearchParams} from '../utils/params';
 import {createMark, getDuration} from '../utils/performance';
 
-const pageApplicationId = 'Page';
+const pageApplicationId = PAGE;
 
 /**
  * Plugin function that registers listeners related to DXP

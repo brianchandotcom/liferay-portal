@@ -15,6 +15,7 @@
 import {getNumberOfWords} from '../utils/assets';
 import {
 	DEBOUNCE,
+	PAGE,
 	READ_CHARS_PER_MIN,
 	READ_LOGOGRAPHIC_LANGUAGES,
 	READ_MINIMUM_SCROLL_DEPTH,
@@ -26,7 +27,7 @@ import {onReady} from '../utils/events';
 import {ReadTracker} from '../utils/read';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = 'Page';
+const applicationId = PAGE;
 
 const MIN_TO_MS = 60000;
 

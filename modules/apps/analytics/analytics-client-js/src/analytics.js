@@ -226,18 +226,18 @@ class Analytics {
 	track(eventId, eventProps, options = {}) {
 		const {assetType, ...otherEventProps} = eventProps || {};
 
-		if (
-			this._isTrackingDisabled() ||
-			instance._disposed ||
-			!isValidEvent({eventId, eventProps: otherEventProps})
-		) {
-			return;
-		}
-
 		// eslint-disable-next-line
 		const mergedOptions = Object.assign({}, TRACK_DEFAULT_OPTIONS, options);
 
 		const applicationId = assetType || mergedOptions.applicationId;
+
+		if (
+			this._isTrackingDisabled() ||
+			instance._disposed ||
+			!isValidEvent({applicationId, eventId, eventProps: otherEventProps})
+		) {
+			return;
+		}
 
 		const currentContextHash = this._getCurrentContextHash();
 

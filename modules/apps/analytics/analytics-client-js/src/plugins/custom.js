@@ -13,12 +13,12 @@
  */
 
 import {closest, getClosestAssetElement} from '../utils/assets';
-import {DEBOUNCE} from '../utils/constants';
+import {CUSTOM, DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onReady} from '../utils/events';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = 'Custom';
+const applicationId = CUSTOM;
 
 /**
  * Returns analytics payload with Custom Asset information.

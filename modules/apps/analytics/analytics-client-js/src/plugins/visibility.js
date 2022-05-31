@@ -12,7 +12,9 @@
  * details.
  */
 
-const applicationId = 'Page';
+import {PAGE} from '../utils/constants';
+
+const applicationId = PAGE;
 const beforeunloadEventListener = 'beforeunload';
 let enableTabEvent = true;
 

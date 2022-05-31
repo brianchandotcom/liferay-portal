@@ -13,11 +13,12 @@
  */
 
 import {getNumberOfWords} from '../utils/assets';
+import {WEB_CONTENT} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onEvents, onReady} from '../utils/events';
 import {isPartiallyInViewport} from '../utils/scroll';
 
-const applicationId = 'WebContent';
+const applicationId = WEB_CONTENT;
 
 /**
  * Returns analytics payload with WebContent information.

@@ -12,9 +12,10 @@
  * details.
  */
 
+import {FORM} from '../utils/constants';
 import {onReady} from '../utils/events';
 
-const applicationId = 'Form';
+const applicationId = FORM;
 
 /**
  * Returns an identifier for a form element.

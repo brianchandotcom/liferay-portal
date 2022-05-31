@@ -13,12 +13,13 @@
  */
 
 import {
+	DXP_APPLICATION_IDS,
 	VALIDATION_PROPERTIES_MAXIMUM_LENGTH,
 	VALIDATION_PROPERTY_NAME_MAXIMUM_LENGTH,
 	VALIDATION_PROPERTY_VALUE_MAXIMUM_LENGTH,
 } from './constants';
 
-const isValidEvent = ({eventId, eventProps}) => {
+const isValidEvent = ({applicationId, eventId, eventProps}) => {
 	const validationsEventId = _validate([
 		validateIsString('eventId'),
 		validateEmptyString('eventId'),
@@ -29,13 +30,18 @@ const isValidEvent = ({eventId, eventProps}) => {
 		validateEmptyString('eventPropKey'),
 		validateMaxLength(),
 	]);
-	const validationsValue = _validate([
+	const validateValue = [
 		validateMaxLength(VALIDATION_PROPERTY_VALUE_MAXIMUM_LENGTH),
+	];
 
-		// LRAC-11274 Avoid make validation to prevent bugs for now
-		// validateAttributeType
+	// Ignore validation by attribute if applicationId is from DXP
 
-	]);
+	if (!DXP_APPLICATION_IDS.includes(applicationId)) {
+		validateValue.push(validateAttributeType);
+	}
+
+	const validationsValue = _validate(validateValue);
+
 	let errors = [];
 
 	errors = errors.concat(validationsEventId(eventId));

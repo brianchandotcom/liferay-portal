@@ -13,9 +13,10 @@
  */
 
 import {closest, getClosestAssetElement} from '../utils/assets';
+import {DOCUMENT} from '../utils/constants';
 import {onReady} from '../utils/events';
 
-const applicationId = 'Document';
+const applicationId = DOCUMENT;
 
 /**
  * Returns analytics payload with Document information.

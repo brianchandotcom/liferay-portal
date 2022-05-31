@@ -524,16 +524,15 @@ public class PoshiRunnerExecutor {
 				PoshiStackTraceUtil.popStackTrace();
 
 				if (_functionExecuteElement == executeElement) {
-					String attributeValue = executeElement.attributeValue(
-						"function");
-
 					PoshiStackTraceUtil.setCurrentElement(executeElement);
 
 					SummaryLogger.failSummary(
 						_functionExecuteElement, throwable.getMessage(),
 						_poshiLogger.getDetailsLinkId());
 
-					if (attributeValue.equals("OcularAssertElementImage")) {
+					if (namespacedClassCommandName.equals(
+							"OcularAssertElementImage")) {
+
 						_poshiLogger.ocularCommand(_functionExecuteElement);
 					}
 					else {

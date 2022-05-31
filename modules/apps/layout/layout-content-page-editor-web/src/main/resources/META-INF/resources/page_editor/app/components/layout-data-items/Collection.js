@@ -390,14 +390,15 @@ const Collection = React.memo(
 
 		return (
 			<div
-				className={classNames('page-editor__collection', {
-					[getLayoutDataItemClassName(
-						item.type
-					)]: config.featureFlagLps132571,
-					[getLayoutDataItemUniqueClassName(
-						item.itemId
-					)]: config.featureFlagLps132571,
-				})}
+				className={classNames(
+					'page-editor__collection',
+					getLayoutDataItemUniqueClassName(item.itemId),
+					{
+						[getLayoutDataItemClassName(
+							item.type
+						)]: config.featureFlagLps132571,
+					}
+				)}
 				ref={ref}
 				style={style}
 			>

@@ -124,31 +124,37 @@ const Row = React.forwardRef(
 
 		const rowContent = (
 			<ClayLayout.Row
-				className={classNames(className, {
-					[getLayoutDataItemClassName(
-						item.type
-					)]: config.featureFlagLps132571,
-					[getLayoutDataItemUniqueClassName(
-						item.itemId
-					)]: config.featureFlagLps132571,
-					'flex-column-reverse':
-						item.config.numberOfColumns === 2 &&
-						modulesPerRow === 1 &&
-						reverseOrder,
-					[`pb-${paddingBottom}`]: isValidSpacingOption(
-						paddingBottom
-					),
-					[`pl-${paddingLeft}`]: isValidSpacingOption(paddingLeft),
-					[`pr-${paddingRight}`]: isValidSpacingOption(paddingRight),
-					[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
-					'no-gutters': !item.config.gutters,
-					[textAlign
-						? textAlign.startsWith('text-')
-							? textAlign
-							: `text-${textAlign}`
-						: `text-${textAlignDefaultValue}`]:
-						!config.featureFlagLps132571 && textAlignDefaultValue,
-				})}
+				className={classNames(
+					className,
+					getLayoutDataItemUniqueClassName(item.itemId),
+					{
+						[getLayoutDataItemClassName(
+							item.type
+						)]: config.featureFlagLps132571,
+						'flex-column-reverse':
+							item.config.numberOfColumns === 2 &&
+							modulesPerRow === 1 &&
+							reverseOrder,
+						[`pb-${paddingBottom}`]: isValidSpacingOption(
+							paddingBottom
+						),
+						[`pl-${paddingLeft}`]: isValidSpacingOption(
+							paddingLeft
+						),
+						[`pr-${paddingRight}`]: isValidSpacingOption(
+							paddingRight
+						),
+						[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
+						'no-gutters': !item.config.gutters,
+						[textAlign
+							? textAlign.startsWith('text-')
+								? textAlign
+								: `text-${textAlign}`
+							: `text-${textAlignDefaultValue}`]:
+							!config.featureFlagLps132571 &&
+							textAlignDefaultValue,
+					}
+				)}
 				id={elementId}
 				ref={ref}
 				style={checkStylesFF(item.itemId, style)}

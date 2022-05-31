@@ -170,59 +170,65 @@ const Container = React.memo(
 			const content = (
 				<HTMLTag
 					{...(link ? {} : data)}
-					className={classNames(className, {
-						[getLayoutDataItemClassName(
-							item.type
-						)]: config.featureFlagLps132571,
-						[getLayoutDataItemUniqueClassName(
-							item.itemId
-						)]: config.featureFlagLps132571,
-						[align]: !!align,
-						[`container-fluid`]:
-							widthType === CONTAINER_WIDTH_TYPES.fixed,
-						[`container-fluid-max-xl`]:
-							widthType === CONTAINER_WIDTH_TYPES.fixed,
-						'd-flex flex-column':
-							contentDisplay ===
-							CONTAINER_DISPLAY_OPTIONS.flexColumn,
-						'd-flex flex-row':
-							contentDisplay ===
-							CONTAINER_DISPLAY_OPTIONS.flexRow,
-						'empty': !item.children.length && !height,
-						[`bg-${backgroundColor}`]:
-							backgroundColor && !backgroundColor.startsWith('#'),
-						[flexWrap]: Boolean(flexWrap),
-						[justify]: Boolean(justify),
-						[`mb-${marginBottom}`]: isValidSpacingOption(
-							marginBottom
-						),
-						[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
-						[`pb-${paddingBottom}`]: isValidSpacingOption(
-							paddingBottom
-						),
-						[`pl-${paddingLeft || 0}`]:
-							isValidSpacingOption(paddingLeft) ||
-							CONTAINER_WIDTH_TYPES.fixed,
-						[`pr-${paddingRight || 0}`]:
-							isValidSpacingOption(paddingRight) ||
-							CONTAINER_WIDTH_TYPES.fixed,
-						[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
-						[`ml-${marginLeft}`]:
-							isValidSpacingOption(marginLeft) &&
-							widthType !== CONTAINER_WIDTH_TYPES.fixed &&
-							!withinTopper,
-						[`mr-${marginRight}`]:
-							isValidSpacingOption(marginRight) &&
-							widthType !== CONTAINER_WIDTH_TYPES.fixed &&
-							!withinTopper,
-						[textAlign
-							? textAlign.startsWith('text-')
-								? textAlign
-								: `text-${textAlign}`
-							: `text-${textAlignDefaultValue}`]:
-							!config.featureFlagLps132571 &&
-							textAlignDefaultValue,
-					})}
+					className={classNames(
+						className,
+						getLayoutDataItemUniqueClassName(item.itemId),
+						{
+							[getLayoutDataItemClassName(
+								item.type
+							)]: config.featureFlagLps132571,
+							[align]: !!align,
+							[`container-fluid`]:
+								widthType === CONTAINER_WIDTH_TYPES.fixed,
+							[`container-fluid-max-xl`]:
+								widthType === CONTAINER_WIDTH_TYPES.fixed,
+							'd-flex flex-column':
+								contentDisplay ===
+								CONTAINER_DISPLAY_OPTIONS.flexColumn,
+							'd-flex flex-row':
+								contentDisplay ===
+								CONTAINER_DISPLAY_OPTIONS.flexRow,
+							'empty': !item.children.length && !height,
+							[`bg-${backgroundColor}`]:
+								backgroundColor &&
+								!backgroundColor.startsWith('#'),
+							[flexWrap]: Boolean(flexWrap),
+							[justify]: Boolean(justify),
+							[`mb-${marginBottom}`]: isValidSpacingOption(
+								marginBottom
+							),
+							[`mt-${marginTop}`]: isValidSpacingOption(
+								marginTop
+							),
+							[`pb-${paddingBottom}`]: isValidSpacingOption(
+								paddingBottom
+							),
+							[`pl-${paddingLeft || 0}`]:
+								isValidSpacingOption(paddingLeft) ||
+								CONTAINER_WIDTH_TYPES.fixed,
+							[`pr-${paddingRight || 0}`]:
+								isValidSpacingOption(paddingRight) ||
+								CONTAINER_WIDTH_TYPES.fixed,
+							[`pt-${paddingTop}`]: isValidSpacingOption(
+								paddingTop
+							),
+							[`ml-${marginLeft}`]:
+								isValidSpacingOption(marginLeft) &&
+								widthType !== CONTAINER_WIDTH_TYPES.fixed &&
+								!withinTopper,
+							[`mr-${marginRight}`]:
+								isValidSpacingOption(marginRight) &&
+								widthType !== CONTAINER_WIDTH_TYPES.fixed &&
+								!withinTopper,
+							[textAlign
+								? textAlign.startsWith('text-')
+									? textAlign
+									: `text-${textAlign}`
+								: `text-${textAlignDefaultValue}`]:
+								!config.featureFlagLps132571 &&
+								textAlignDefaultValue,
+						}
+					)}
 					id={elementId}
 					ref={ref}
 					style={checkStylesFF(item.itemId, style)}

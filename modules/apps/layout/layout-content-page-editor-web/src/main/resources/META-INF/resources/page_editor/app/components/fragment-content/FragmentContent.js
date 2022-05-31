@@ -299,9 +299,9 @@ const FragmentContent = ({
 						'page-editor__fragment-content',
 						{
 							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
-							[getLayoutDataItemUniqueClassName(item.itemId)]:
-								config.featureFlagLps132571 &&
-								!hasInnerCommonStyles(fragmentEntryLink),
+							[getLayoutDataItemUniqueClassName(
+								item.itemId
+							)]: !hasInnerCommonStyles(fragmentEntryLink),
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 							[`mb-${marginBottom}`]:
 								isValidSpacingOption(marginBottom) &&

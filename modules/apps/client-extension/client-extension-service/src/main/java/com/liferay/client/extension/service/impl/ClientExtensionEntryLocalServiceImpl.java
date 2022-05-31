@@ -129,16 +129,8 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setCompanyId(user.getCompanyId());
 		clientExtensionEntry.setUserId(user.getUserId());
 		clientExtensionEntry.setUserName(user.getFullName());
-		clientExtensionEntry.setCustomElementCSSURLs(customElementCSSURLs);
-		clientExtensionEntry.setCustomElementHTMLElementName(
-			customElementHTMLElementName);
-		clientExtensionEntry.setCustomElementURLs(customElementURLs);
-		clientExtensionEntry.setCustomElementUseESM(customElementUseESM);
 		clientExtensionEntry.setDescription(description);
-		clientExtensionEntry.setFriendlyURLMapping(friendlyURLMapping);
-		clientExtensionEntry.setInstanceable(instanceable);
 		clientExtensionEntry.setNameMap(nameMap);
-		clientExtensionEntry.setPortletCategoryName(portletCategoryName);
 		clientExtensionEntry.setProperties(properties);
 		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
 		clientExtensionEntry.setType(
@@ -198,11 +190,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setUserName(user.getFullName());
 
 		clientExtensionEntry.setDescription(description);
-		clientExtensionEntry.setFriendlyURLMapping(friendlyURLMapping);
-		clientExtensionEntry.setIFrameURL(iFrameURL);
-		clientExtensionEntry.setInstanceable(instanceable);
 		clientExtensionEntry.setNameMap(nameMap);
-		clientExtensionEntry.setPortletCategoryName(portletCategoryName);
 		clientExtensionEntry.setProperties(properties);
 		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
 		clientExtensionEntry.setType(ClientExtensionEntryConstants.TYPE_IFRAME);
@@ -410,15 +398,8 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntryLocalService.undeployClientExtensionEntry(
 			clientExtensionEntry);
 
-		clientExtensionEntry.setCustomElementCSSURLs(customElementCSSURLs);
-		clientExtensionEntry.setCustomElementHTMLElementName(
-			customElementHTMLElementName);
-		clientExtensionEntry.setCustomElementURLs(customElementURLs);
-		clientExtensionEntry.setCustomElementUseESM(customElementUseESM);
 		clientExtensionEntry.setDescription(description);
-		clientExtensionEntry.setFriendlyURLMapping(friendlyURLMapping);
 		clientExtensionEntry.setNameMap(nameMap);
-		clientExtensionEntry.setPortletCategoryName(portletCategoryName);
 		clientExtensionEntry.setProperties(properties);
 		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
 		clientExtensionEntry.setTypeSettings(
@@ -470,10 +451,7 @@ public class ClientExtensionEntryLocalServiceImpl
 			clientExtensionEntry);
 
 		clientExtensionEntry.setDescription(description);
-		clientExtensionEntry.setFriendlyURLMapping(friendlyURLMapping);
-		clientExtensionEntry.setIFrameURL(iFrameURL);
 		clientExtensionEntry.setNameMap(nameMap);
-		clientExtensionEntry.setPortletCategoryName(portletCategoryName);
 		clientExtensionEntry.setProperties(properties);
 		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
 		clientExtensionEntry.setTypeSettings(

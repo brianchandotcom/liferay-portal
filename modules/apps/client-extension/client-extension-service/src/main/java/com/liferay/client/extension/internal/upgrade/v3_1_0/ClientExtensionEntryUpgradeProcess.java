@@ -44,8 +44,9 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 		String selectSQL = StringBundler.concat(
 			"select clientExtensionEntryId, customElementCSSURLs, ",
 			"customElementHTMLElementName, customElementURLs, ",
-			"customElementUseESM, iFrameURL, instanceable, ",
-			"portletCategoryName, type_ from ClientExtensionEntry");
+			"customElementUseESM, friendlyURLMapping, iFrameURL, ",
+			"instanceable, portletCategoryName, type_ from ",
+			"ClientExtensionEntry");
 		String updateSQL =
 			"update ClientExtensionEntry set typeSettings = ? where " +
 				"clientExtensionEntryId = ?";
@@ -80,6 +81,16 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+
+		alterTableDropColumn("ClientExtensionEntry", "customElementCSSURLs");
+		alterTableDropColumn(
+			"ClientExtensionEntry", "customElementHTMLElementName");
+		alterTableDropColumn("ClientExtensionEntry", "customElementURLs");
+		alterTableDropColumn("ClientExtensionEntry", "customElementUseESM");
+		alterTableDropColumn("ClientExtensionEntry", "friendlyURLMapping");
+		alterTableDropColumn("ClientExtensionEntry", "iFrameURL");
+		alterTableDropColumn("ClientExtensionEntry", "instanceable");
+		alterTableDropColumn("ClientExtensionEntry", "portletCategoryName");
 	}
 
 	private String _getTypeSettings(ResultSet resultSet, String type)

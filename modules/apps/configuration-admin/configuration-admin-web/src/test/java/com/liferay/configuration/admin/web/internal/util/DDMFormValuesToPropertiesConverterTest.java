@@ -42,9 +42,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.service.cm.Configuration;
 
@@ -60,8 +58,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_jsonFactory = new JSONFactoryImpl();
 	}
 
@@ -507,7 +503,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		when(
 			extendedObjectClassDefinition.getAttributeDefinitions(
-				Matchers.anyInt())
+				Mockito.anyInt())
 		).thenReturn(
 			extendedAttributeDefinitions
 		);

@@ -29,9 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.metatype.AttributeDefinition;
@@ -48,8 +46,6 @@ public class AttributeDefinitionUtilTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		Mockito.doReturn(
 			_ID
 		).when(
@@ -171,12 +167,10 @@ public class AttributeDefinitionUtilTest {
 
 	private static final String _ID = RandomTestUtil.randomString();
 
-	@Mock
-	private AttributeDefinition _attributeDefinition;
-
-	@Mock
-	private Configuration _configuration;
-
+	private final AttributeDefinition _attributeDefinition = Mockito.mock(
+		AttributeDefinition.class);
+	private final Configuration _configuration = Mockito.mock(
+		Configuration.class);
 	private final Dictionary<String, Object> _properties = new Hashtable<>();
 
 }

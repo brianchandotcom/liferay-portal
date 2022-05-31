@@ -36,9 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Artur Aquino
@@ -51,8 +49,6 @@ public class ReplicasManagerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_replicasClusterContext = createReplicasClusterContext();
 	}
 
@@ -231,9 +227,8 @@ public class ReplicasManagerImplTest {
 		Thread.sleep(60000);
 	}
 
-	@Mock
-	private CompanyLocalService _companyLocalService;
-
+	private final CompanyLocalService _companyLocalService = Mockito.mock(
+		CompanyLocalService.class);
 	private ReplicasClusterContext _replicasClusterContext;
 	private final TestCluster _testCluster = new TestCluster(4, this);
 

@@ -29,9 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -45,8 +43,6 @@ public class ElasticsearchConnectionManagerTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_resetAndSetUpMocks();
 
 		_elasticsearchConnectionManager = _createElasticsearchConnectionManager(
@@ -748,31 +744,23 @@ public class ElasticsearchConnectionManagerTest {
 
 	private static final String _REMOTE_3_CONNECTION_ID = "remote 3";
 
-	@Mock
-	private ElasticsearchConnection _defaultRemoteElasticsearchConnection;
-
-	@Mock
-	private ElasticsearchConfigurationWrapper
-		_elasticsearchConfigurationWrapper;
-
+	private final ElasticsearchConnection
+		_defaultRemoteElasticsearchConnection = Mockito.mock(
+			ElasticsearchConnection.class);
+	private final ElasticsearchConfigurationWrapper
+		_elasticsearchConfigurationWrapper = Mockito.mock(
+			ElasticsearchConfigurationWrapper.class);
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-
-	@Mock
-	private Http _http;
-
-	@Mock
-	private OperationModeResolver _operationModeResolver;
-
-	@Mock
-	private ElasticsearchConnection _remoteElasticsearchConnection1;
-
-	@Mock
-	private ElasticsearchConnection _remoteElasticsearchConnection2;
-
-	@Mock
-	private ElasticsearchConnection _remoteElasticsearchConnection3;
-
-	@Mock
-	private ElasticsearchConnection _sidecarElasticsearchConnection;
+	private final Http _http = Mockito.mock(Http.class);
+	private final OperationModeResolver _operationModeResolver = Mockito.mock(
+		OperationModeResolver.class);
+	private final ElasticsearchConnection _remoteElasticsearchConnection1 =
+		Mockito.mock(ElasticsearchConnection.class);
+	private final ElasticsearchConnection _remoteElasticsearchConnection2 =
+		Mockito.mock(ElasticsearchConnection.class);
+	private final ElasticsearchConnection _remoteElasticsearchConnection3 =
+		Mockito.mock(ElasticsearchConnection.class);
+	private final ElasticsearchConnection _sidecarElasticsearchConnection =
+		Mockito.mock(ElasticsearchConnection.class);
 
 }

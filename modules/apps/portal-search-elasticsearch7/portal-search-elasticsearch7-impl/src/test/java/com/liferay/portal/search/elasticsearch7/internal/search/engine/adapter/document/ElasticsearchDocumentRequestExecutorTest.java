@@ -28,9 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Dylan Rebelak
@@ -44,8 +42,6 @@ public class ElasticsearchDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_elasticsearchDocumentRequestExecutor =
 			new ElasticsearchDocumentRequestExecutor() {
 				{
@@ -138,24 +134,19 @@ public class ElasticsearchDocumentRequestExecutorTest {
 		);
 	}
 
-	@Mock
-	private DeleteByQueryDocumentRequestExecutor
-		_deleteByQueryDocumentRequestExecutor;
-
-	@Mock
-	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
-
+	private final DeleteByQueryDocumentRequestExecutor
+		_deleteByQueryDocumentRequestExecutor = Mockito.mock(
+			DeleteByQueryDocumentRequestExecutor.class);
+	private final DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor =
+		Mockito.mock(DeleteDocumentRequestExecutor.class);
 	private ElasticsearchDocumentRequestExecutor
 		_elasticsearchDocumentRequestExecutor;
-
-	@Mock
-	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
-
-	@Mock
-	private UpdateByQueryDocumentRequestExecutor
-		_updateByQueryDocumentRequestExecutor;
-
-	@Mock
-	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
+	private final IndexDocumentRequestExecutor _indexDocumentRequestExecutor =
+		Mockito.mock(IndexDocumentRequestExecutor.class);
+	private final UpdateByQueryDocumentRequestExecutor
+		_updateByQueryDocumentRequestExecutor = Mockito.mock(
+			UpdateByQueryDocumentRequestExecutor.class);
+	private final UpdateDocumentRequestExecutor _updateDocumentRequestExecutor =
+		Mockito.mock(UpdateDocumentRequestExecutor.class);
 
 }

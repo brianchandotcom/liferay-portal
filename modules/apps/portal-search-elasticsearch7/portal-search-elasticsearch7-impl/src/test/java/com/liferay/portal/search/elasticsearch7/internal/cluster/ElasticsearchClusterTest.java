@@ -29,9 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Artur Aquino
@@ -45,8 +43,6 @@ public class ElasticsearchClusterTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_replicasClusterContext = createReplicasClusterContext();
 	}
 
@@ -114,9 +110,8 @@ public class ElasticsearchClusterTest {
 		return company;
 	}
 
-	@Mock
-	private CompanyLocalService _companyLocalService;
-
+	private final CompanyLocalService _companyLocalService = Mockito.mock(
+		CompanyLocalService.class);
 	private ReplicasClusterContext _replicasClusterContext;
 
 }

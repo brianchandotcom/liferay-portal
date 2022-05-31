@@ -68,13 +68,13 @@ public class ElasticsearchEngineConfiguratorTest {
 		Mockito.verify(
 			searchDestinationHelper, Mockito.times(1)
 		).createSearchReaderDestination(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		Mockito.verify(
 			searchDestinationHelper, Mockito.times(1)
 		).createSearchWriterDestination(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 	}
 
@@ -131,7 +131,7 @@ public class ElasticsearchEngineConfiguratorTest {
 		).when(
 			searchDestinationHelper
 		).createSearchReaderDestination(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		Mockito.doReturn(
@@ -139,7 +139,7 @@ public class ElasticsearchEngineConfiguratorTest {
 		).when(
 			searchDestinationHelper
 		).createSearchWriterDestination(
-			Mockito.anyString()
+			Mockito.nullable(String.class)
 		);
 
 		return searchDestinationHelper;

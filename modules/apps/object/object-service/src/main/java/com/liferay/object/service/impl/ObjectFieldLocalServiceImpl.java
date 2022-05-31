@@ -380,7 +380,7 @@ public class ObjectFieldLocalServiceImpl
 			}
 		}
 		else {
-			_validateName(objectFieldId, objectDefinition, name);
+			_validateName(objectFieldId, objectDefinition, name, false);
 		}
 
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);
@@ -414,7 +414,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
-		_validateName(0, objectDefinition, name);
+		_validateName(0, objectDefinition, name, system);
 
 		ObjectField objectField = objectFieldPersistence.create(
 			counterLocalService.increment());
@@ -646,7 +646,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateName(
-			long objectFieldId, ObjectDefinition objectDefinition, String name)
+			long objectFieldId, ObjectDefinition objectDefinition, String name,
+			boolean system)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -670,7 +671,8 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldNameException.MustBeLessThan41Characters();
 		}
 
-		if (_reservedNames.contains(StringUtil.toLowerCase(name)) ||
+		if ((!system &&
+			 _reservedNames.contains(StringUtil.toLowerCase(name))) ||
 			StringUtil.equalsIgnoreCase(
 				objectDefinition.getPKObjectFieldName(), name)) {
 

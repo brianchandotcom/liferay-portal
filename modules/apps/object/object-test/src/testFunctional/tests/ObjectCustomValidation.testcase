@@ -409,7 +409,7 @@ definition {
 
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
 	@priority = "4"
-	test LabelFieldIsRequiredWhenThereIsValidation {
+	test LabelFieldIsRequiredOnValidation {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153548",
 			objectName = "CustomObject153548",

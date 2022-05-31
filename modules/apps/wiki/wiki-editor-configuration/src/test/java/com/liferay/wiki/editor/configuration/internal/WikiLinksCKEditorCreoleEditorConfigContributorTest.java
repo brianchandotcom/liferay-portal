@@ -35,7 +35,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -60,8 +59,9 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest {
 
 		Mockito.when(
 			itemSelector.getItemSelectorURL(
-				Matchers.any(RequestBackedPortletURLFactory.class),
-				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class))
+				Mockito.nullable(RequestBackedPortletURLFactory.class),
+				Mockito.nullable(String.class),
+				Mockito.nullable(ItemSelectorCriterion.class))
 		).thenReturn(
 			new PortletURLWrapper(null) {
 
@@ -75,9 +75,10 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest {
 
 		Mockito.when(
 			itemSelector.getItemSelectorURL(
-				Matchers.any(RequestBackedPortletURLFactory.class),
-				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class),
-				Matchers.any(ItemSelectorCriterion.class))
+				Mockito.nullable(RequestBackedPortletURLFactory.class),
+				Mockito.nullable(String.class),
+				Mockito.any(ItemSelectorCriterion.class),
+				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
 			new PortletURLWrapper(null) {
 

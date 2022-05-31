@@ -41,9 +41,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -66,8 +64,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 	}
@@ -81,8 +77,9 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 		Mockito.when(
 			_itemSelector.getItemSelectorURL(
-				Mockito.any(RequestBackedPortletURLFactory.class),
-				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
+				Mockito.nullable(RequestBackedPortletURLFactory.class),
+				Mockito.nullable(String.class),
+				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
 			new PortletURLWrapper(null) {
 
@@ -292,8 +289,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 	private final Map<String, Object> _inputEditorTaglibAttributes =
 		new HashMap<>();
-
-	@Mock
-	private ItemSelector _itemSelector;
+	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
 
 }

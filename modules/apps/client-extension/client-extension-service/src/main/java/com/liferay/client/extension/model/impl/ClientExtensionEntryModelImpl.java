@@ -87,17 +87,11 @@ public class ClientExtensionEntryModelImpl
 		{"clientExtensionEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"customElementCSSURLs", Types.CLOB},
-		{"customElementHTMLElementName", Types.VARCHAR},
-		{"customElementURLs", Types.CLOB},
-		{"customElementUseESM", Types.BOOLEAN}, {"description", Types.CLOB},
-		{"friendlyURLMapping", Types.VARCHAR}, {"iFrameURL", Types.VARCHAR},
-		{"instanceable", Types.BOOLEAN}, {"name", Types.VARCHAR},
-		{"portletCategoryName", Types.VARCHAR}, {"properties", Types.CLOB},
-		{"sourceCodeURL", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.CLOB}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"description", Types.CLOB}, {"name", Types.VARCHAR},
+		{"properties", Types.CLOB}, {"sourceCodeURL", Types.VARCHAR},
+		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -113,16 +107,8 @@ public class ClientExtensionEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("customElementUseESM", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("friendlyURLMapping", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("iFrameURL", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("instanceable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("portletCategoryName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("properties", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("sourceCodeURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
@@ -134,7 +120,7 @@ public class ClientExtensionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,customElementUseESM BOOLEAN,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,name STRING null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ClientExtensionEntry";
@@ -345,68 +331,16 @@ public class ClientExtensionEntryModelImpl
 			(BiConsumer<ClientExtensionEntry, Date>)
 				ClientExtensionEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"customElementCSSURLs",
-			ClientExtensionEntry::getCustomElementCSSURLs);
-		attributeSetterBiConsumers.put(
-			"customElementCSSURLs",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setCustomElementCSSURLs);
-		attributeGetterFunctions.put(
-			"customElementHTMLElementName",
-			ClientExtensionEntry::getCustomElementHTMLElementName);
-		attributeSetterBiConsumers.put(
-			"customElementHTMLElementName",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setCustomElementHTMLElementName);
-		attributeGetterFunctions.put(
-			"customElementURLs", ClientExtensionEntry::getCustomElementURLs);
-		attributeSetterBiConsumers.put(
-			"customElementURLs",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setCustomElementURLs);
-		attributeGetterFunctions.put(
-			"customElementUseESM",
-			ClientExtensionEntry::getCustomElementUseESM);
-		attributeSetterBiConsumers.put(
-			"customElementUseESM",
-			(BiConsumer<ClientExtensionEntry, Boolean>)
-				ClientExtensionEntry::setCustomElementUseESM);
-		attributeGetterFunctions.put(
 			"description", ClientExtensionEntry::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setDescription);
-		attributeGetterFunctions.put(
-			"friendlyURLMapping", ClientExtensionEntry::getFriendlyURLMapping);
-		attributeSetterBiConsumers.put(
-			"friendlyURLMapping",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setFriendlyURLMapping);
-		attributeGetterFunctions.put(
-			"iFrameURL", ClientExtensionEntry::getIFrameURL);
-		attributeSetterBiConsumers.put(
-			"iFrameURL",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setIFrameURL);
-		attributeGetterFunctions.put(
-			"instanceable", ClientExtensionEntry::getInstanceable);
-		attributeSetterBiConsumers.put(
-			"instanceable",
-			(BiConsumer<ClientExtensionEntry, Boolean>)
-				ClientExtensionEntry::setInstanceable);
 		attributeGetterFunctions.put("name", ClientExtensionEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setName);
-		attributeGetterFunctions.put(
-			"portletCategoryName",
-			ClientExtensionEntry::getPortletCategoryName);
-		attributeSetterBiConsumers.put(
-			"portletCategoryName",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setPortletCategoryName);
 		attributeGetterFunctions.put(
 			"properties", ClientExtensionEntry::getProperties);
 		attributeSetterBiConsumers.put(
@@ -662,89 +596,6 @@ public class ClientExtensionEntryModelImpl
 
 	@JSON
 	@Override
-	public String getCustomElementCSSURLs() {
-		if (_customElementCSSURLs == null) {
-			return "";
-		}
-		else {
-			return _customElementCSSURLs;
-		}
-	}
-
-	@Override
-	public void setCustomElementCSSURLs(String customElementCSSURLs) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_customElementCSSURLs = customElementCSSURLs;
-	}
-
-	@JSON
-	@Override
-	public String getCustomElementHTMLElementName() {
-		if (_customElementHTMLElementName == null) {
-			return "";
-		}
-		else {
-			return _customElementHTMLElementName;
-		}
-	}
-
-	@Override
-	public void setCustomElementHTMLElementName(
-		String customElementHTMLElementName) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_customElementHTMLElementName = customElementHTMLElementName;
-	}
-
-	@JSON
-	@Override
-	public String getCustomElementURLs() {
-		if (_customElementURLs == null) {
-			return "";
-		}
-		else {
-			return _customElementURLs;
-		}
-	}
-
-	@Override
-	public void setCustomElementURLs(String customElementURLs) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_customElementURLs = customElementURLs;
-	}
-
-	@JSON
-	@Override
-	public boolean getCustomElementUseESM() {
-		return _customElementUseESM;
-	}
-
-	@JSON
-	@Override
-	public boolean isCustomElementUseESM() {
-		return _customElementUseESM;
-	}
-
-	@Override
-	public void setCustomElementUseESM(boolean customElementUseESM) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_customElementUseESM = customElementUseESM;
-	}
-
-	@JSON
-	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return "";
@@ -761,67 +612,6 @@ public class ClientExtensionEntryModelImpl
 		}
 
 		_description = description;
-	}
-
-	@JSON
-	@Override
-	public String getFriendlyURLMapping() {
-		if (_friendlyURLMapping == null) {
-			return "";
-		}
-		else {
-			return _friendlyURLMapping;
-		}
-	}
-
-	@Override
-	public void setFriendlyURLMapping(String friendlyURLMapping) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_friendlyURLMapping = friendlyURLMapping;
-	}
-
-	@JSON
-	@Override
-	public String getIFrameURL() {
-		if (_iFrameURL == null) {
-			return "";
-		}
-		else {
-			return _iFrameURL;
-		}
-	}
-
-	@Override
-	public void setIFrameURL(String iFrameURL) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_iFrameURL = iFrameURL;
-	}
-
-	@JSON
-	@Override
-	public boolean getInstanceable() {
-		return _instanceable;
-	}
-
-	@JSON
-	@Override
-	public boolean isInstanceable() {
-		return _instanceable;
-	}
-
-	@Override
-	public void setInstanceable(boolean instanceable) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_instanceable = instanceable;
 	}
 
 	@JSON
@@ -929,26 +719,6 @@ public class ClientExtensionEntryModelImpl
 			LocalizationUtil.updateLocalization(
 				nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
-	public String getPortletCategoryName() {
-		if (_portletCategoryName == null) {
-			return "";
-		}
-		else {
-			return _portletCategoryName;
-		}
-	}
-
-	@Override
-	public void setPortletCategoryName(String portletCategoryName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_portletCategoryName = portletCategoryName;
 	}
 
 	@JSON
@@ -1357,20 +1127,8 @@ public class ClientExtensionEntryModelImpl
 		clientExtensionEntryImpl.setUserName(getUserName());
 		clientExtensionEntryImpl.setCreateDate(getCreateDate());
 		clientExtensionEntryImpl.setModifiedDate(getModifiedDate());
-		clientExtensionEntryImpl.setCustomElementCSSURLs(
-			getCustomElementCSSURLs());
-		clientExtensionEntryImpl.setCustomElementHTMLElementName(
-			getCustomElementHTMLElementName());
-		clientExtensionEntryImpl.setCustomElementURLs(getCustomElementURLs());
-		clientExtensionEntryImpl.setCustomElementUseESM(
-			isCustomElementUseESM());
 		clientExtensionEntryImpl.setDescription(getDescription());
-		clientExtensionEntryImpl.setFriendlyURLMapping(getFriendlyURLMapping());
-		clientExtensionEntryImpl.setIFrameURL(getIFrameURL());
-		clientExtensionEntryImpl.setInstanceable(isInstanceable());
 		clientExtensionEntryImpl.setName(getName());
-		clientExtensionEntryImpl.setPortletCategoryName(
-			getPortletCategoryName());
 		clientExtensionEntryImpl.setProperties(getProperties());
 		clientExtensionEntryImpl.setSourceCodeURL(getSourceCodeURL());
 		clientExtensionEntryImpl.setType(getType());
@@ -1408,27 +1166,10 @@ public class ClientExtensionEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		clientExtensionEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		clientExtensionEntryImpl.setCustomElementCSSURLs(
-			this.<String>getColumnOriginalValue("customElementCSSURLs"));
-		clientExtensionEntryImpl.setCustomElementHTMLElementName(
-			this.<String>getColumnOriginalValue(
-				"customElementHTMLElementName"));
-		clientExtensionEntryImpl.setCustomElementURLs(
-			this.<String>getColumnOriginalValue("customElementURLs"));
-		clientExtensionEntryImpl.setCustomElementUseESM(
-			this.<Boolean>getColumnOriginalValue("customElementUseESM"));
 		clientExtensionEntryImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
-		clientExtensionEntryImpl.setFriendlyURLMapping(
-			this.<String>getColumnOriginalValue("friendlyURLMapping"));
-		clientExtensionEntryImpl.setIFrameURL(
-			this.<String>getColumnOriginalValue("iFrameURL"));
-		clientExtensionEntryImpl.setInstanceable(
-			this.<Boolean>getColumnOriginalValue("instanceable"));
 		clientExtensionEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
-		clientExtensionEntryImpl.setPortletCategoryName(
-			this.<String>getColumnOriginalValue("portletCategoryName"));
 		clientExtensionEntryImpl.setProperties(
 			this.<String>getColumnOriginalValue("properties"));
 		clientExtensionEntryImpl.setSourceCodeURL(
@@ -1580,43 +1321,6 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		clientExtensionEntryCacheModel.customElementCSSURLs =
-			getCustomElementCSSURLs();
-
-		String customElementCSSURLs =
-			clientExtensionEntryCacheModel.customElementCSSURLs;
-
-		if ((customElementCSSURLs != null) &&
-			(customElementCSSURLs.length() == 0)) {
-
-			clientExtensionEntryCacheModel.customElementCSSURLs = null;
-		}
-
-		clientExtensionEntryCacheModel.customElementHTMLElementName =
-			getCustomElementHTMLElementName();
-
-		String customElementHTMLElementName =
-			clientExtensionEntryCacheModel.customElementHTMLElementName;
-
-		if ((customElementHTMLElementName != null) &&
-			(customElementHTMLElementName.length() == 0)) {
-
-			clientExtensionEntryCacheModel.customElementHTMLElementName = null;
-		}
-
-		clientExtensionEntryCacheModel.customElementURLs =
-			getCustomElementURLs();
-
-		String customElementURLs =
-			clientExtensionEntryCacheModel.customElementURLs;
-
-		if ((customElementURLs != null) && (customElementURLs.length() == 0)) {
-			clientExtensionEntryCacheModel.customElementURLs = null;
-		}
-
-		clientExtensionEntryCacheModel.customElementUseESM =
-			isCustomElementUseESM();
-
 		clientExtensionEntryCacheModel.description = getDescription();
 
 		String description = clientExtensionEntryCacheModel.description;
@@ -1625,46 +1329,12 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.description = null;
 		}
 
-		clientExtensionEntryCacheModel.friendlyURLMapping =
-			getFriendlyURLMapping();
-
-		String friendlyURLMapping =
-			clientExtensionEntryCacheModel.friendlyURLMapping;
-
-		if ((friendlyURLMapping != null) &&
-			(friendlyURLMapping.length() == 0)) {
-
-			clientExtensionEntryCacheModel.friendlyURLMapping = null;
-		}
-
-		clientExtensionEntryCacheModel.iFrameURL = getIFrameURL();
-
-		String iFrameURL = clientExtensionEntryCacheModel.iFrameURL;
-
-		if ((iFrameURL != null) && (iFrameURL.length() == 0)) {
-			clientExtensionEntryCacheModel.iFrameURL = null;
-		}
-
-		clientExtensionEntryCacheModel.instanceable = isInstanceable();
-
 		clientExtensionEntryCacheModel.name = getName();
 
 		String name = clientExtensionEntryCacheModel.name;
 
 		if ((name != null) && (name.length() == 0)) {
 			clientExtensionEntryCacheModel.name = null;
-		}
-
-		clientExtensionEntryCacheModel.portletCategoryName =
-			getPortletCategoryName();
-
-		String portletCategoryName =
-			clientExtensionEntryCacheModel.portletCategoryName;
-
-		if ((portletCategoryName != null) &&
-			(portletCategoryName.length() == 0)) {
-
-			clientExtensionEntryCacheModel.portletCategoryName = null;
 		}
 
 		clientExtensionEntryCacheModel.properties = getProperties();
@@ -1825,17 +1495,9 @@ public class ClientExtensionEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _customElementCSSURLs;
-	private String _customElementHTMLElementName;
-	private String _customElementURLs;
-	private boolean _customElementUseESM;
 	private String _description;
-	private String _friendlyURLMapping;
-	private String _iFrameURL;
-	private boolean _instanceable;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private String _portletCategoryName;
 	private String _properties;
 	private String _sourceCodeURL;
 	private String _type;
@@ -1885,18 +1547,8 @@ public class ClientExtensionEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put(
-			"customElementCSSURLs", _customElementCSSURLs);
-		_columnOriginalValues.put(
-			"customElementHTMLElementName", _customElementHTMLElementName);
-		_columnOriginalValues.put("customElementURLs", _customElementURLs);
-		_columnOriginalValues.put("customElementUseESM", _customElementUseESM);
 		_columnOriginalValues.put("description", _description);
-		_columnOriginalValues.put("friendlyURLMapping", _friendlyURLMapping);
-		_columnOriginalValues.put("iFrameURL", _iFrameURL);
-		_columnOriginalValues.put("instanceable", _instanceable);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("portletCategoryName", _portletCategoryName);
 		_columnOriginalValues.put("properties", _properties);
 		_columnOriginalValues.put("sourceCodeURL", _sourceCodeURL);
 		_columnOriginalValues.put("type_", _type);
@@ -1947,41 +1599,25 @@ public class ClientExtensionEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("customElementCSSURLs", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("customElementHTMLElementName", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("customElementURLs", 2048L);
+		columnBitmasks.put("properties", 2048L);
 
-		columnBitmasks.put("customElementUseESM", 4096L);
+		columnBitmasks.put("sourceCodeURL", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
-		columnBitmasks.put("friendlyURLMapping", 16384L);
+		columnBitmasks.put("typeSettings", 16384L);
 
-		columnBitmasks.put("iFrameURL", 32768L);
+		columnBitmasks.put("status", 32768L);
 
-		columnBitmasks.put("instanceable", 65536L);
+		columnBitmasks.put("statusByUserId", 65536L);
 
-		columnBitmasks.put("name", 131072L);
+		columnBitmasks.put("statusByUserName", 131072L);
 
-		columnBitmasks.put("portletCategoryName", 262144L);
-
-		columnBitmasks.put("properties", 524288L);
-
-		columnBitmasks.put("sourceCodeURL", 1048576L);
-
-		columnBitmasks.put("type_", 2097152L);
-
-		columnBitmasks.put("typeSettings", 4194304L);
-
-		columnBitmasks.put("status", 8388608L);
-
-		columnBitmasks.put("statusByUserId", 16777216L);
-
-		columnBitmasks.put("statusByUserName", 33554432L);
-
-		columnBitmasks.put("statusDate", 67108864L);
+		columnBitmasks.put("statusDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

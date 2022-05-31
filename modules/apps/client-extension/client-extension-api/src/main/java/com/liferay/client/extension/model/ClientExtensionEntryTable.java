@@ -62,40 +62,11 @@ public class ClientExtensionEntryTable
 	public final Column<ClientExtensionEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> customElementCSSURLs =
-		createColumn(
-			"customElementCSSURLs", Clob.class, Types.CLOB,
-			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String>
-		customElementHTMLElementName = createColumn(
-			"customElementHTMLElementName", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> customElementURLs =
-		createColumn(
-			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Boolean>
-		customElementUseESM = createColumn(
-			"customElementUseESM", Boolean.class, Types.BOOLEAN,
-			Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Clob> description =
 		createColumn(
 			"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> friendlyURLMapping =
-		createColumn(
-			"friendlyURLMapping", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> iFrameURL =
-		createColumn(
-			"iFrameURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Boolean> instanceable =
-		createColumn(
-			"instanceable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> portletCategoryName =
-		createColumn(
-			"portletCategoryName", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Clob> properties =
 		createColumn("properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> sourceCodeURL =

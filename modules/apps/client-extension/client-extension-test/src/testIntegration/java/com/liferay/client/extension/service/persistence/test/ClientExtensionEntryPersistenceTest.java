@@ -144,31 +144,9 @@ public class ClientExtensionEntryPersistenceTest {
 
 		newClientExtensionEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newClientExtensionEntry.setCustomElementCSSURLs(
-			RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setCustomElementHTMLElementName(
-			RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setCustomElementURLs(
-			RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setCustomElementUseESM(
-			RandomTestUtil.randomBoolean());
-
 		newClientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		newClientExtensionEntry.setFriendlyURLMapping(
-			RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setInstanceable(RandomTestUtil.randomBoolean());
-
 		newClientExtensionEntry.setName(RandomTestUtil.randomString());
-
-		newClientExtensionEntry.setPortletCategoryName(
-			RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setProperties(RandomTestUtil.randomString());
 
@@ -224,35 +202,11 @@ public class ClientExtensionEntryPersistenceTest {
 				existingClientExtensionEntry.getModifiedDate()),
 			Time.getShortTimestamp(newClientExtensionEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingClientExtensionEntry.getCustomElementCSSURLs(),
-			newClientExtensionEntry.getCustomElementCSSURLs());
-		Assert.assertEquals(
-			existingClientExtensionEntry.getCustomElementHTMLElementName(),
-			newClientExtensionEntry.getCustomElementHTMLElementName());
-		Assert.assertEquals(
-			existingClientExtensionEntry.getCustomElementURLs(),
-			newClientExtensionEntry.getCustomElementURLs());
-		Assert.assertEquals(
-			existingClientExtensionEntry.isCustomElementUseESM(),
-			newClientExtensionEntry.isCustomElementUseESM());
-		Assert.assertEquals(
 			existingClientExtensionEntry.getDescription(),
 			newClientExtensionEntry.getDescription());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getFriendlyURLMapping(),
-			newClientExtensionEntry.getFriendlyURLMapping());
-		Assert.assertEquals(
-			existingClientExtensionEntry.getIFrameURL(),
-			newClientExtensionEntry.getIFrameURL());
-		Assert.assertEquals(
-			existingClientExtensionEntry.isInstanceable(),
-			newClientExtensionEntry.isInstanceable());
-		Assert.assertEquals(
 			existingClientExtensionEntry.getName(),
 			newClientExtensionEntry.getName());
-		Assert.assertEquals(
-			existingClientExtensionEntry.getPortletCategoryName(),
-			newClientExtensionEntry.getPortletCategoryName());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getProperties(),
 			newClientExtensionEntry.getProperties());
@@ -338,12 +292,9 @@ public class ClientExtensionEntryPersistenceTest {
 			"ClientExtensionEntry", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "clientExtensionEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "customElementHTMLElementName", true,
-			"customElementUseESM", true, "friendlyURLMapping", true,
-			"iFrameURL", true, "instanceable", true, "name", true,
-			"portletCategoryName", true, "sourceCodeURL", true, "type", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "modifiedDate", true, "name", true, "sourceCodeURL", true,
+			"type", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -673,31 +624,9 @@ public class ClientExtensionEntryPersistenceTest {
 
 		clientExtensionEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		clientExtensionEntry.setCustomElementCSSURLs(
-			RandomTestUtil.randomString());
-
-		clientExtensionEntry.setCustomElementHTMLElementName(
-			RandomTestUtil.randomString());
-
-		clientExtensionEntry.setCustomElementURLs(
-			RandomTestUtil.randomString());
-
-		clientExtensionEntry.setCustomElementUseESM(
-			RandomTestUtil.randomBoolean());
-
 		clientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		clientExtensionEntry.setFriendlyURLMapping(
-			RandomTestUtil.randomString());
-
-		clientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
-
-		clientExtensionEntry.setInstanceable(RandomTestUtil.randomBoolean());
-
 		clientExtensionEntry.setName(RandomTestUtil.randomString());
-
-		clientExtensionEntry.setPortletCategoryName(
-			RandomTestUtil.randomString());
 
 		clientExtensionEntry.setProperties(RandomTestUtil.randomString());
 

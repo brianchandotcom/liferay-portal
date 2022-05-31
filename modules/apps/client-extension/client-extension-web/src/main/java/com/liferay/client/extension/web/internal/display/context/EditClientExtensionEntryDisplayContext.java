@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -201,14 +202,36 @@ public class EditClientExtensionEntryDisplayContext {
 		return _clientExtensionEntry.getName(themeDisplay.getLocale());
 	}
 
+	public List<SelectOption> getTypeSelectOptions() {
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		return Arrays.asList(
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "custom-element"),
+				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
+				isEditingClientExtensionEntryType(
+					ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "iframe"),
+				ClientExtensionEntryConstants.TYPE_IFRAME,
+				isEditingClientExtensionEntryType(
+					ClientExtensionEntryConstants.TYPE_IFRAME)));
+	}
+
 	public boolean isCustomElementUseESM() {
 		return BeanParamUtil.getBoolean(
 			_clientExtensionEntry, _getHttpServletRequest(),
 			"customElementUseESM");
 	}
 
-	public boolean isEditingClientExtensionEntryType(String type) {
-		return type.equals(_getClientExtensionEntryType());
+	public boolean isEditingClientExtensionEntryType(String... types) {
+		for (String type : types) {
+			if (type.equals(_getClientExtensionEntryType())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isInstanceable() {

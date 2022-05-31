@@ -45,106 +45,13 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:field-wrapper label="name" name="name">
-				<liferay-ui:input-localized
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					name="name"
-					xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
-				/>
-			</aui:field-wrapper>
+			<%@ include file="/admin/edit_common_fields.jspf" %>
 
-			<liferay-editor:editor
-				contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
-				editorName="contentEditor"
-				name="description"
-				placeholder="description"
-			/>
+			<%@ include file="/admin/edit_custom_element_fields.jspf" %>
 
-			<aui:input label="source-code-url" name="sourceCodeURL" type="text" />
+			<%@ include file="/admin/edit_iframe_fields.jspf" %>
 
-			<clay:select
-				disabled="<%= editClientExtensionEntryDisplayContext.isTypeDisabled() %>"
-				label="type"
-				name="type"
-				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), ClientExtensionEntryConstants.TYPE_IFRAME, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME)))
-				%>'
-				propsTransformer="admin/js/clientExtensionEntryTypeSelectPropsTransformer"
-			/>
-
-			<liferay-frontend:fieldset
-				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME) %>"
-				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
-			>
-				<aui:input label="url" name="iFrameURL">
-					<aui:validator name="urlAllowRelative" />
-				</aui:input>
-			</liferay-frontend:fieldset>
-
-			<liferay-frontend:fieldset
-				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT) %>"
-				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
-			>
-				<aui:input label="html-element-name" name="customElementHTMLElementName">
-					<aui:validator name="customElementName" />
-				</aui:input>
-
-				<aui:input label="use-esm" name="customElementUseESM" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isCustomElementUseESM() %>" />
-
-				<div id="<portlet:namespace />_type_customElementURLs">
-
-					<%
-					for (String customElementURL : editClientExtensionEntryDisplayContext.getCustomElementURLs()) {
-					%>
-
-						<div class="lfr-form-row">
-							<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
-								<aui:validator name="urlAllowRelative" />
-							</aui:input>
-						</div>
-
-					<%
-					}
-					%>
-
-				</div>
-
-				<div id="<portlet:namespace />_type_customElementCSSURLs">
-
-					<%
-					for (String customElementCSSURL : editClientExtensionEntryDisplayContext.getCustomElementCSSURLs()) {
-					%>
-
-						<div class="lfr-form-row">
-							<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
-								<aui:validator name="urlAllowRelative" />
-							</aui:input>
-						</div>
-
-					<%
-					}
-					%>
-
-				</div>
-			</liferay-frontend:fieldset>
-
-			<aui:input disabled="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
-
-			<clay:select
-				label="portlet-category-name"
-				name="portletCategoryName"
-				options="<%=
-					editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions()
-				%>"
-			/>
-
-			<aui:input label="friendly-url-mapping" name="friendlyURLMapping">
-				<aui:validator name="friendlyURLMapping" />
-			</aui:input>
-
-			<aui:input label="properties" name="properties" type="textarea" />
+			<%@ include file="/admin/edit_portlet_fields.jspf" %>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
@@ -162,17 +69,3 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />_type_customElementURLs',
-		minimumRows: 1,
-		namespace: '<portlet:namespace />',
-	}).render();
-
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />_type_customElementCSSURLs',
-		minimumRows: 1,
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>

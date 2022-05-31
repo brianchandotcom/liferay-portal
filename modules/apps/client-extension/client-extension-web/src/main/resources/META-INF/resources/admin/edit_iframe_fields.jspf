@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,25 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onChange: (event) => {
-			const {value} = event.currentTarget;
-
-			document
-				.querySelectorAll(`fieldset[id*='${portletNamespace}_fields_']`)
-				.forEach((fieldset) => {
-					fieldset.classList.add('d-none');
-					fieldset.setAttribute('disabled', true);
-
-					if (fieldset.id.includes('_' + value)) {
-						fieldset.classList.remove('d-none');
-						fieldset.removeAttribute('disabled');
-					}
-				});
-		},
-		portletNamespace,
-	};
-}
+<liferay-frontend:fieldset
+	cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
+	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME) %>"
+	id='<%= liferayPortletResponse.getNamespace() + "_fields_iframe" %>'
+>
+	<aui:input label="url" name="iFrameURL">
+		<aui:validator name="urlAllowRelative" />
+	</aui:input>
+</liferay-frontend:fieldset>

@@ -14,154 +14,6 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-9380 | Delivery Terms Eligibility can be modified"
-	@priority = "3"
-	test CanSetAndEditDeliveryTermsEligibility {
-		task ("And given an active delivery term") {
-			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
-				termsCount = "2",
-				termsType = "Delivery");
-		}
-
-		task ("And given channel's details is opened") {
-			CommerceChannels.openChannelsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-		}
-
-		task ("When the user sets the payment method's eligibility to a specific delivery term") {
-			CommerceEntry.setEntryEligibility(
-				deliveryTermsEligibility = "Delivery Term 1",
-				shippingMethod = "Flat Rate",
-				shippingOption = "Standard Delivery");
-		}
-
-		task ("Then the delivery term should be shown under Delivery Terms in the eligibility tab") {
-			AssertElementPresent(
-				key_entryName = "delivery-term-1",
-				key_table = "Delivery Terms",
-				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
-
-			Button.clickSave();
-
-			Refresh();
-		}
-
-		task ("When the user changes the delivery method's eligibility to No Delivery Terms") {
-			CommerceEntry.setEntryEligibility(
-				deliveryTermsEligibility = "No Delivery Terms",
-				shippingMethod = "Flat Rate",
-				shippingOption = "Standard Delivery",
-				unpublish = "true");
-
-			Button.clickSave();
-		}
-
-
-		task ("Then no delivery terms should be shown in the eligibility tabt") {
-			AssertElementNotPresent(
-				key_entryName = "delivery-term-1",
-				key_table = "Delivery Terms",
-				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
-		}
-	}
-
-	@description = "COMMERCE-9381 | Specific Delivery Terms Eligibility is shown at checkout"
-	@priority = "3"
-	test ShippingOptionEligibleForSpecificDeliveryTerms {
-		task ("Given an account with a buyer user") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And given an active delivery term") {
-			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
-				termsCount = "1",
-				termsType = "Delivery");
-		}
-
-		task ("And given one of the shipping option's eligibility is set specifically to Delivery Term 1") {
-			CommerceChannels.openChannelsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-			CommerceEntry.setEntryEligibility(
-				deliveryTermsEligibility = "Delivery Term 1",
-				shippingMethod = "Flat Rate",
-				shippingOption = "Standard Delivery");
-		}
-
-		task ("And when the configuration is saved") {
-			Button.clickSave();
-		}
-
-		task ("And when the buyer user is logged in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer checks out an order using the edited shipping option") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-
-			CommerceCheckout.gotoCheckout();
-		}
-
-		task ("Then the delivery term should be applied to the order") {
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				deliveryTerm = "Delivery Term 1",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
-				shippingMethod = "Standard");
-		}
-
-		task ("When the buyer checks out an order using the non-edited shipping option") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-
-			CommerceCheckout.gotoCheckout();
-		}
-
-		task ("The the delivery term should not be applied to the order") {
-		    CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				deliveryTern = "",
-				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
-				shippingMethod = "Expedited");
-		}
-
-	}
-
 	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
 	@priority = "3"
 	test ActiveAllTaxCalculations {
@@ -673,6 +525,55 @@ definition {
 		AssertElementPresent(
 			key_entryName = "Normal Product",
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+	}
+
+	@description = "COMMERCE-9380 | Verify users can set and edit delivery term eligibility for shipping options"
+	@priority = "3"
+	test CanSetAndEditDeliveryTermsEligibility {
+		task ("Given an active delivery term") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "2",
+				termsType = "Delivery");
+		}
+
+		task ("When the user sets a shipping options eligibility to a specific delivery term") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then the delivery term should be shown under Delivery Terms in the eligibility tab") {
+			AssertElementPresent(
+				key_entryName = "delivery-term-1",
+				key_table = "Delivery Terms",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("When the user changes the delivery method's eligibility to No Delivery Terms") {
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "No Delivery Terms",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery",
+				unpublish = "true");
+
+			Button.clickSave();
+		}
+
+		task ("Then no delivery terms should be shown in the eligibility tabt") {
+			AssertElementNotPresent(
+				key_entryName = "delivery-term-1",
+				key_table = "Delivery Terms",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+		}
 	}
 
 	@description = "[Please Update]"
@@ -2505,6 +2406,97 @@ definition {
 			AssertElementPresent(
 				key_radioOption = "Expedited",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
+	@description = "COMMERCE-9381 | Verify users can configure shipping option eligibility to specific delivery terms"
+	@priority = "3"
+	test ShippingOptionEligibleForSpecificDeliveryTerms {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		task ("Given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given an active delivery term") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "1",
+				termsType = "Delivery");
+		}
+
+		task ("And given one of the shipping option's eligibility is set specifically to Delivery Term 1") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("When the buyer checks out an order using the edited shipping option") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("Then the delivery term should be applied to the order") {
+			CommerceCheckout.initializersCheckout(
+				deliveryTerm = "Delivery Term 1",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer checks out an order using the non-edited shipping option") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("The the delivery term should not be applied to the order") {
+			CommerceCheckout.initializersCheckout(
+				deliveryTern = "",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Expedited");
 		}
 	}
 

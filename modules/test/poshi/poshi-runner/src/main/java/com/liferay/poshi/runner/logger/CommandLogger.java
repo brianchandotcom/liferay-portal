@@ -20,7 +20,7 @@ import com.liferay.poshi.core.PoshiVariablesUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
@@ -159,10 +159,9 @@ public final class CommandLogger {
 			String imageName, String filePath, int detailsLinkId)
 		throws IOException {
 
-		String dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-
 		Path sourcePath = Paths.get(
-			dependenciesDir + "/ocular/" + imageName + "/" + filePath);
+			PropsValues.TEST_DEPENDENCIES_DIR_NAME + "/ocular/" + imageName +
+				"/" + filePath);
 
 		String testClassCommandName =
 			PoshiContext.getTestCaseNamespacedClassCommandName();

@@ -52,11 +52,11 @@ const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
 
 	return (
 		<div
-			className="lfr-walkthough-hotspot"
+			className="lfr-walkthrough-hotspot"
 			onClick={onHotspotClick}
 			ref={ref}
 		>
-			<div className="lfr-walkthough-hotspot-inner" />
+			<div className="lfr-walkthrough-hotspot-inner" />
 		</div>
 	);
 });
@@ -286,10 +286,10 @@ const WalkthroughStep = ({
 			}
 
 			if (!darkbg && previousTrigger !== trigger) {
-				trigger.classList.add('lfr-walkthough-element-shadow');
+				trigger.classList.add('lfr-walkthrough-element-shadow');
 
 				previousTrigger.classList.remove(
-					'lfr-walkthough-element-shadow'
+					'lfr-walkthrough-element-shadow'
 				);
 			}
 		}

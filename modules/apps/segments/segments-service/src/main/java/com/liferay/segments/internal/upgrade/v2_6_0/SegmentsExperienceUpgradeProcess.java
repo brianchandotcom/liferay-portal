@@ -55,7 +55,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select segmentsExperienceId, priority from " +
 					"SegmentsExperience where priority >= 0 and " +
-						"segmentsExperienceKey != ?")) {
+						"segmentsExperienceKey != ? order by priority desc")) {
 
 			preparedStatement.setString(
 				1, SegmentsExperienceConstants.KEY_DEFAULT);

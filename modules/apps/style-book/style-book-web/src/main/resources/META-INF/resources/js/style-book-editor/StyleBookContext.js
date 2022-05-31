@@ -226,6 +226,7 @@ export function useMultipleUndo() {
 	const undoHistory = useUndoHistory();
 	const redoHistory = useRedoHistory();
 	const frontendTokensValues = useFrontendTokensValues();
+	let tokens = {};
 
 	return ({numberOfActions, type}) => {
 		let remainingUndos;
@@ -273,13 +274,14 @@ export function useMultipleUndo() {
 			};
 		}
 
+		for (const undo of undosToUndo) {
+			tokens = {...tokens, [undo.name]: undo.value}
+		}
+
 		return internalSaveTokenValues({
 			dispatch,
 			frontendTokensValues,
-			tokens: undosToUndo.reduce(
-				(acc, {name, value}) => ({...acc, [name]: value}),
-				{}
-			),
+			tokens,
 		}).then(() => {
 			dispatch(updateHistoryAction);
 		});

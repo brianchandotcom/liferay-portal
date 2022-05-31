@@ -675,3 +675,9 @@ export function toggleBoxes(
 	displayWhenUnchecked?: boolean,
 	toggleChildCheckboxes?: boolean
 ): void;
+
+export function toggleRadio(
+	radioId: string,
+	showBoxIds: string | string[],
+	hideBoxIds?: string | string[]
+): void;

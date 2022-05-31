@@ -515,6 +515,12 @@ declare module Liferay {
 			toggleChildCheckboxes?: boolean
 		): void;
 
+		export function toggleRadio(
+			radioId: string,
+			showBoxIds: string | string[],
+			hideBoxIds?: string | string[]
+		): void;
+
 		/**
 		 * Unescapes HTML from the given string.
 		 */

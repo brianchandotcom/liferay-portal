@@ -27,6 +27,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconFileEntryTitle"><%= layoutsAdminDisplayContext.getFaviconTitle() %></span>
 	</p>
 
+	<aui:input name="faviconClientExtensionEntryName" type="hidden" />
 	<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayoutSet.getFaviconFileEntryId() %>" />
 
 	<aui:button name="selectFaviconButton" value="change-favicon" />
@@ -43,6 +44,10 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
+					const faviconClientExtensionEntryName = document.getElementById(
+						'<portlet:namespace />faviconClientExtensionEntryName'
+					);
+
 					const faviconFileEntryId = document.getElementById(
 						'<portlet:namespace />faviconFileEntryId'
 					);
@@ -53,24 +58,36 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 						'<portlet:namespace />faviconFileEntryTitle'
 					);
 
-					if (faviconFileEntryId &&
+					if (
+						faviconClientExtensionEntryName &&
+						faviconFileEntryId &&
 						faviconFileEntryImage &&
 						faviconFileEntryTitle &&
 						selectedItem &&
-						selectedItem.value) {
-
+						selectedItem.value
+					) {
 						const itemValue = JSON.parse(selectedItem.value);
 
-						faviconFileEntryId.value = itemValue.fileEntryId;
-
-						if (itemValue.url) {
-							faviconFileEntryImage.src = itemValue.url;
+						if (
+							selectedItem.returnType ===
+							'<%= ClientExtensionItemSelectorReturnType.class.getName() %>'
+						) {
+							faviconClientExtensionEntryName.value =
+								itemValue.clientExtensionEntryId;
 						}
 						else {
-							faviconFileEntryImage.classList.add('d-none');
+							faviconFileEntryId.value = itemValue.fileEntryId;
+
+							if (itemValue.url) {
+								faviconFileEntryImage.src = itemValue.url;
+							}
+							else {
+								faviconFileEntryImage.classList.add('d-none');
+							}
 						}
 
-						faviconFileEntryTitle.innerHTML = itemValue.title;
+						faviconFileEntryTitle.innerHTML =
+							itemValue.title || itemValue.name;
 					}
 				},
 				selectEventName:

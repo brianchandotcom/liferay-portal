@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType;
+import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -506,9 +509,20 @@ public class LayoutsAdminDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
+		ClientExtensionItemSelectorCriterion
+			clientExtensionItemSelectorCriterion =
+				new ClientExtensionItemSelectorCriterion();
+
+		clientExtensionItemSelectorCriterion.setType(
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		clientExtensionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new ClientExtensionItemSelectorReturnType());
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			getSelectFaviconEventName(), itemSelectorCriterion);
+			getSelectFaviconEventName(), itemSelectorCriterion,
+			clientExtensionItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}

@@ -802,11 +802,11 @@ function EditSXPBlueprintForm({
 									value: keywordQueryContributors,
 								},
 								{
-									label: 'ModelPrefilterContributor',
+									label: 'ModelPreFilterContributor',
 									value: modelPrefilterContributors,
 								},
 								{
-									label: 'QueryPrefilterContributor',
+									label: 'QueryPreFilterContributor',
 									value: queryPrefilterContributors,
 								},
 							]}

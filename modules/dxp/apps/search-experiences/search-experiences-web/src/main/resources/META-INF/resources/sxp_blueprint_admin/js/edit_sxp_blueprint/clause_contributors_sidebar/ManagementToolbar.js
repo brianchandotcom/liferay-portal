@@ -150,9 +150,7 @@ function ManagementToolbar({
 											displayType="unstyled"
 										>
 											<span className="navbar-text-truncate">
-												{Liferay.Language.get(
-													'filter-and-order'
-												)}
+												{Liferay.Language.get('filter')}
 											</span>
 
 											<ClayIcon

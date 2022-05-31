@@ -3,7 +3,6 @@ const RAPID_TEXT_DELAY = 300;
 let rapidText = '';
 let rapidTextTime = Date.now();
 
-const editMode = document.body.classList.contains('has-edit-mode-menu');
 const wrapper = fragmentElement;
 
 const button = wrapper.querySelector('.form-control');
@@ -169,7 +168,7 @@ function handleWindowResizeOrScroll() {
 	}
 }
 
-if (!editMode && listbox.children.length) {
+if (listbox.children.length) {
 	button.addEventListener('click', handleButtonClick);
 	button.addEventListener('keydown', handleButtonKeydown);
 	listbox.addEventListener('click', handleListboxClick);
@@ -191,7 +190,4 @@ if (!editMode && listbox.children.length) {
 	dropdown.style.top = '0';
 
 	repositionDropdown();
-}
-else {
-	button.disabled = true;
 }

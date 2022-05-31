@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_DATE</td>
+	<td>//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_EDIT_BUTTON</td>
 	<td>//h4[contains(text(),'${key_titleName}')]/a[contains(text(),'Edit')]</td>
 	<td></td>
@@ -108,6 +113,11 @@
 <tr>
 	<td>PENDING_ORDERS_SHIPPING_ADDRESS_DROPDOWN</td>
 	<td>//select[@title= 'shipping-address-id']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLACED_ORDERS_LIST_DATE</td>
+	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::div[4]</td>
 	<td></td>
 </tr>
 <tr>

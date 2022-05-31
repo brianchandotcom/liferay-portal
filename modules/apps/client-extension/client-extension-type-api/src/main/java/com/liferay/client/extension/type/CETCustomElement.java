@@ -21,4 +21,19 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CETCustomElement {
+
+	public String getCSSURLs();
+
+	public String getFriendlyURLMapping();
+
+	public String getHTMLElementName();
+
+	public String getPortletCategoryName();
+
+	public String getURLs();
+
+	public boolean isInstanceable();
+
+	public boolean isUseESM();
+
 }

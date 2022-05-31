@@ -15,31 +15,29 @@
 package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CETIFrameImpl extends BaseCETImpl implements CETIFrame {
+public abstract class BaseCETImpl {
 
-	public CETIFrameImpl(ClientExtensionEntry clientExtensionEntry) {
-		super(clientExtensionEntry);
+	public BaseCETImpl(ClientExtensionEntry clientExtensionEntry) {
+		_unicodeProperties = UnicodePropertiesBuilder.load(
+			clientExtensionEntry.getTypeSettings()
+		).build();
 	}
 
-	public String getFriendlyURLMapping() {
-		return getString("friendlyURLMapping");
+	protected boolean getBoolean(String key) {
+		return GetterUtil.getBoolean(_unicodeProperties.getProperty(key));
 	}
 
-	public String getPortletCategoryName() {
-		return getString("portletCategoryName");
+	protected String getString(String key) {
+		return GetterUtil.getString(_unicodeProperties.getProperty(key));
 	}
 
-	public String getURL() {
-		return getString("url");
-	}
-
-	public boolean isInstanceable() {
-		return getBoolean("instanceable");
-	}
+	private final UnicodeProperties _unicodeProperties;
 
 }

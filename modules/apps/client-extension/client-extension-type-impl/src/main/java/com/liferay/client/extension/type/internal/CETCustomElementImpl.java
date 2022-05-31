@@ -14,10 +14,45 @@
 
 package com.liferay.client.extension.type.internal;
 
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CETCustomElement;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class CETCustomElementImpl implements CETCustomElement {
+public class CETCustomElementImpl
+	extends BaseCETImpl implements CETCustomElement {
+
+	public CETCustomElementImpl(ClientExtensionEntry clientExtensionEntry) {
+		super(clientExtensionEntry);
+	}
+
+	public String getCSSURLs() {
+		return getString("cssURLs");
+	}
+
+	public String getFriendlyURLMapping() {
+		return getString("friendlyURLMapping");
+	}
+
+	public String getHTMLElementName() {
+		return getString("friendlyURLMapping");
+	}
+
+	public String getPortletCategoryName() {
+		return getString("portletCategoryName");
+	}
+
+	public String getURLs() {
+		return getString("urls");
+	}
+
+	public boolean isInstanceable() {
+		return getBoolean("instanceable");
+	}
+
+	public boolean isUseESM() {
+		return getBoolean("useESM");
+	}
+
 }

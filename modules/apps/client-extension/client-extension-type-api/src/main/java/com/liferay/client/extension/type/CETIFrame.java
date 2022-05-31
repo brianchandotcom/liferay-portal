@@ -21,4 +21,13 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CETIFrame {
+
+	public String getFriendlyURLMapping();
+
+	public String getPortletCategoryName();
+
+	public String getURL();
+
+	public boolean isInstanceable();
+
 }

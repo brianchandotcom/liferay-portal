@@ -32,11 +32,11 @@ public class CETFactoryImpl implements CETFactory {
 	public CETCustomElement customElement(
 		ClientExtensionEntry clientExtensionEntry) {
 
-		return new CETCustomElementImpl();
+		return new CETCustomElementImpl(clientExtensionEntry);
 	}
 
 	public CETIFrame iFrame(ClientExtensionEntry clientExtensionEntry) {
-		return new CETIFrameImpl();
+		return new CETIFrameImpl(clientExtensionEntry);
 	}
 
 }

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal K8s Agent Testing Dependency
-Bundle-SymbolicName: com.liferay.portal.k8s.agent.testing.dependency
+Bundle-Name: Liferay Portal K8s Agent Test Dependencies
+Bundle-SymbolicName: com.liferay.portal.k8s.agent.test.dependencies
 Bundle-Version: 1.0.0
 Export-Package: io.fabric8.kubernetes.client.*;version=5.12.2
 Import-Package:\

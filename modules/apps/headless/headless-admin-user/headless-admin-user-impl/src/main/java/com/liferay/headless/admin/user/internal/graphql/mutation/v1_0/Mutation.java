@@ -1553,9 +1553,6 @@ public class Mutation {
 		roleResource.setContextUser(_user);
 		roleResource.setGroupLocalService(_groupLocalService);
 		roleResource.setRoleLocalService(_roleLocalService);
-
-		roleResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -1571,9 +1568,6 @@ public class Mutation {
 		subscriptionResource.setContextUser(_user);
 		subscriptionResource.setGroupLocalService(_groupLocalService);
 		subscriptionResource.setRoleLocalService(_roleLocalService);
-
-		subscriptionResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(

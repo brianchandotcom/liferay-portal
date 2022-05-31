@@ -52,6 +52,32 @@ public final class CommandLogger {
 		_commandLogLoggerElement.setName("ul");
 	}
 
+	public void copyOcularImage(
+			String imageName, String filePath, int detailsLinkId)
+		throws IOException {
+
+		Path sourcePath = Paths.get(
+			PropsValues.TEST_DEPENDENCIES_DIR_NAME + "/ocular/" + imageName +
+				"/" + filePath);
+
+		String testClassCommandName =
+			PoshiContext.getTestCaseNamespacedClassCommandName();
+
+		testClassCommandName = StringUtil.replace(
+			testClassCommandName, "#", "_");
+
+		Path targetPath = Paths.get(
+			"test-results/" + testClassCommandName + "/screenshots/" +
+				imageName + detailsLinkId + ".jpg");
+
+		try {
+			Files.copy(sourcePath, targetPath);
+		}
+		catch (IOException ioException) {
+			throw ioException;
+		}
+	}
+
 	public void failCommand(Element element, SyntaxLogger syntaxLogger)
 		throws PoshiRunnerLoggerException {
 
@@ -153,32 +179,6 @@ public final class CommandLogger {
 		}
 
 		_commandElement = null;
-	}
-
-	public void setOcularScreenshots(
-			String imageName, String filePath, int detailsLinkId)
-		throws IOException {
-
-		Path sourcePath = Paths.get(
-			PropsValues.TEST_DEPENDENCIES_DIR_NAME + "/ocular/" + imageName +
-				"/" + filePath);
-
-		String testClassCommandName =
-			PoshiContext.getTestCaseNamespacedClassCommandName();
-
-		testClassCommandName = StringUtil.replace(
-			testClassCommandName, "#", "_");
-
-		Path targetPath = Paths.get(
-			"test-results/" + testClassCommandName + "/screenshots/" +
-				imageName + detailsLinkId + ".jpg");
-
-		try {
-			Files.copy(sourcePath, targetPath);
-		}
-		catch (IOException ioException) {
-			throw ioException;
-		}
 	}
 
 	public void startCommand(Element element, SyntaxLogger syntaxLogger)
@@ -568,12 +568,12 @@ public final class CommandLogger {
 
 		String filePath = element.attributeValue("value1");
 
-		setOcularScreenshots("baseline", filePath, detailsLinkId);
+		copyOcularImage("baseline", filePath, detailsLinkId);
 
 		loggerElement.addChildLoggerElement(
 			_getScreenshotContainerLoggerElement("baseline", detailsLinkId));
 
-		setOcularScreenshots("result", filePath, detailsLinkId);
+		copyOcularImage("result", filePath, detailsLinkId);
 
 		loggerElement.addChildLoggerElement(
 			_getScreenshotContainerLoggerElement("result", detailsLinkId));

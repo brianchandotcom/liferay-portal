@@ -21,7 +21,7 @@ import com.google.gson.stream.JsonReader;
 
 import com.liferay.gradle.plugins.workspace.configurators.DesignPacksProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ExtProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.LXCExtensionProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurators.ClientExtensionProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
@@ -76,7 +76,7 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new DesignPacksProjectConfigurator(settings));
 		_projectConfigurators.add(new ExtProjectConfigurator(settings));
 		_projectConfigurators.add(
-			new LXCExtensionProjectConfigurator(settings));
+			new ClientExtensionProjectConfigurator(settings));
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));

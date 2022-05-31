@@ -1453,9 +1453,7 @@ public class ServicePreAction extends Action {
 		themeDisplay.setDoAsUserId(doAsUserId);
 		themeDisplay.setDoAsUserLanguageId(doAsUserLanguageId);
 
-		if ((layout != null) &&
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153902"))) {
-
+		if (layout != null) {
 			themeDisplay.setFavicon(layout.getFavicon());
 		}
 

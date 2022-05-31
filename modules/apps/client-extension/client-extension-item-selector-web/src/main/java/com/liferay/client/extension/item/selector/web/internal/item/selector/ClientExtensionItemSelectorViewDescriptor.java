@@ -86,6 +86,11 @@ public class ClientExtensionItemSelectorViewDescriptor
 		return searchContainer;
 	}
 
+	@Override
+	public boolean isShowBreadcrumb() {
+		return false;
+	}
+
 	private static final ItemSelectorReturnType
 		_supportedItemSelectorReturnType =
 			new ClientExtensionItemSelectorReturnType();

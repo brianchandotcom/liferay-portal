@@ -124,6 +124,7 @@ class Analytics {
 	 */
 	static create(config = {}, middlewares = []) {
 		const self = new Analytics(config, middlewares);
+		const Liferay = window.Liferay;
 
 		ENV.Analytics = self;
 		ENV.Analytics.create = Analytics.create;

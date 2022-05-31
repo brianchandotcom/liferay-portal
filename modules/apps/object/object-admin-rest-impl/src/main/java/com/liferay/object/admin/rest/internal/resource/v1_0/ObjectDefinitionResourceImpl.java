@@ -305,7 +305,13 @@ public class ObjectDefinitionResourceImpl
 								objectDefinition.getStatus()));
 					}
 				};
-				storageType = objectDefinition.getStorageType();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-135430"))) {
+
+					storageType = objectDefinition.getStorageType();
+				}
+
 				system = objectDefinition.isSystem();
 				titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
 			}

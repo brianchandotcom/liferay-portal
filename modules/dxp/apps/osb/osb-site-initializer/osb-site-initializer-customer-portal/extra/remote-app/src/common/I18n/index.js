@@ -39,7 +39,12 @@ const sub = (word, words) => {
 	return translatedWord;
 };
 
+const pluralize = (count, word, plural = word + 's') => {
+	return translate(count <= 1 ? word : plural);
+};
+
 const i18n = {
+	pluralize,
 	sub,
 	translate,
 };

@@ -11,19 +11,18 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useEffect, useState} from 'react';
-import i18n from '../../../../common/I18n';
-import useDebounce from '../../../../common/hooks/useDebounce';
+import {memo, useEffect, useState} from 'react';
+import i18n from '../../../../../../common/I18n';
+import useDebounce from '../../../../../../common/hooks/useDebounce';
 
 const SearchBar = ({onSearchSubmit}) => {
 	const [term, setTerm] = useState('');
 	const debouncedTerm = useDebounce(term, 500);
 
-	useEffect(() => {
-		if (debouncedTerm) {
-			onSearchSubmit(debouncedTerm);
-		}
-	}, [debouncedTerm, onSearchSubmit]);
+	useEffect(() => onSearchSubmit(debouncedTerm), [
+		debouncedTerm,
+		onSearchSubmit,
+	]);
 
 	return (
 		<div className="position-relative">
@@ -43,4 +42,4 @@ const SearchBar = ({onSearchSubmit}) => {
 	);
 };
 
-export default SearchBar;
+export default memo(SearchBar);

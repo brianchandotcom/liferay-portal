@@ -9,15 +9,70 @@
  * distribution rights of the Software.
  */
 
-import SearchBar from './components/SearchBar';
+import './styles/index.scss';
+
+import classNames from 'classnames';
+
+import {useEffect, useState} from 'react';
+import ProjectList from './components/ProjectsList';
+import SearchHeader from './components/SearchHeader';
+import useKoroneikiAccounts from './hooks/useKoroneikiAccounts';
+
+const THRESHOLD_COUNT = 4;
 
 const Home = () => {
-	const onSearchSubmit = (term) => {
-		// eslint-disable-next-line no-console
-		console.log('New Search submit', term);
-	};
+	const {data, fetchMore, loading, search} = useKoroneikiAccounts();
+	const [maxTotalCount, setMaxTotalCount] = useState(0);
 
-	return <SearchBar onSearchSubmit={(term) => onSearchSubmit(term)} />;
+	const koroneikiAccounts = data?.c?.koroneikiAccounts;
+	const hasManyProjects = maxTotalCount > THRESHOLD_COUNT;
+
+	useEffect(() => {
+		const totalCount = koroneikiAccounts?.totalCount;
+
+		if (totalCount > maxTotalCount) {
+			setMaxTotalCount(totalCount);
+		}
+	}, [maxTotalCount, koroneikiAccounts?.totalCount]);
+
+	if (loading) {
+		return <>Loading</>;
+	}
+
+	return (
+		<div
+			className={classNames({
+				'cp-project-cards-container': !hasManyProjects,
+				'mx-auto cp-project-cards-container-sm': hasManyProjects,
+			})}
+		>
+			<div
+				className={classNames({
+					'd-flex flex-column w-100': hasManyProjects,
+					'ml-3': !hasManyProjects,
+				})}
+			>
+				{hasManyProjects && (
+					<SearchHeader
+						count={koroneikiAccounts?.items.length}
+						onSearchSubmit={(term) => search(term)}
+					/>
+				)}
+
+				<ProjectList
+					hasManyProjects={hasManyProjects}
+					items={koroneikiAccounts?.items}
+					onIntersect={(currentPage) =>
+						fetchMore({
+							variables: {
+								page: currentPage + 1,
+							},
+						})
+					}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default Home;

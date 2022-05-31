@@ -1286,7 +1286,7 @@ definition {
 			MultiFactorAuthentication.viewOTPOrderFieldAvailable();
 
 			AssertElementPresent(
-				key_fieldName = "service.ranking",
+				key_fieldName = "serviceRanking",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD");
 		}
 	}

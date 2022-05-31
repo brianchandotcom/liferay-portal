@@ -77,29 +77,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getChangeStyleBookButtonAdditionalProps() {
-		return HashMapBuilder.<String, Object>put(
-			"url",
-			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/select_style_book.jsp"
-			).setParameter(
-				"editableMasterLayout", hasEditableMasterLayout()
-			).setParameter(
-				"selPlid",
-				() -> {
-					Layout selLayout =
-						_layoutsAdminDisplayContext.getSelLayout();
-
-					return selLayout.getPlid();
-				}
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
-		).build();
-	}
-
 	public Map<String, Object> getClearFaviconButtonAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"faviconFileEntryTitleValue", _getClearFaviconButtonFileEntryTitle()
@@ -294,6 +271,38 @@ public class LayoutLookAndFeelDisplayContext {
 		_masterLayoutName = masterLayoutName;
 
 		return _masterLayoutName;
+	}
+
+	public Map<String, Object> getStyleBookConfigurationProps() {
+		return HashMapBuilder.<String, Object>put(
+			"changeStyleBookURL",
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/select_style_book.jsp"
+			).setParameter(
+				"editableMasterLayout", hasEditableMasterLayout()
+			).setParameter(
+				"selPlid",
+				() -> {
+					Layout selLayout =
+						_layoutsAdminDisplayContext.getSelLayout();
+
+					return selLayout.getPlid();
+				}
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
+		).put(
+			"styleBookEntryId",
+			() -> {
+				Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+				return String.valueOf(selLayout.getStyleBookEntryId());
+			}
+		).put(
+			"styleBookEntryName", getStyleBookEntryName()
+		).build();
 	}
 
 	public String getStyleBookEntryName() {

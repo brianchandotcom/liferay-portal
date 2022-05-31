@@ -38,7 +38,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <aui:input name="devices" type="hidden" value="regular" />
-<aui:input name="styleBookEntryId" type="hidden" />
 <aui:input name="faviconCETExternalReferenceCode" type="hidden" />
 <aui:input name="faviconFileEntryId" type="hidden" />
 
@@ -97,24 +96,10 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 </c:if>
 
 <clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="style-book" /></h3>
-
-	<p>
-		<b><liferay-ui:message key="style-book-name" />:</b> <span id="<portlet:namespace />styleBookName"><%= layoutLookAndFeelDisplayContext.getStyleBookEntryName() %></span>
-	</p>
-
-	<div class="button-holder">
-		<clay:button
-			additionalProps="<%=
-				layoutLookAndFeelDisplayContext.getChangeStyleBookButtonAdditionalProps()
-			%>"
-			displayType="secondary"
-			id='<%= liferayPortletResponse.getNamespace() + "changeStyleBookButton" %>'
-			label="change-style-book"
-			propsTransformer="js/layout/ChangeStyleBookButtonPropsTransformer"
-			small="<%= true %>"
-		/>
-	</div>
+	<react:component
+		module="js/layout/look_and_feel/StyleBookConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
+	/>
 </clay:sheet-section>
 
 <liferay-util:buffer

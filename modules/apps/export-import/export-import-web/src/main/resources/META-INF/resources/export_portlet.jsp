@@ -466,7 +466,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<aui:button-row>
 				<aui:button type="submit" value="export" />
 
-				<aui:button href="<%= currentURL %>" type="cancel" />
+				<aui:button type="cancel" />
 			</aui:button-row>
 		</aui:form>
 

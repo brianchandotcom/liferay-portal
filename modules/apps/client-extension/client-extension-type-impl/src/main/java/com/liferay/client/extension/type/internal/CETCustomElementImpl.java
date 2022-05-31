@@ -36,7 +36,7 @@ public class CETCustomElementImpl
 	}
 
 	public String getHTMLElementName() {
-		return getString("friendlyURLMapping");
+		return getString("htmlElementName");
 	}
 
 	public String getPortletCategoryName() {

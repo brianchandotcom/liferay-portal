@@ -29,7 +29,7 @@ function getCheckboxes(form, except, name, state) {
 	const checkboxes = Array.from(form.querySelectorAll(selector));
 
 	if (!checkboxes.length) {
-		return [];
+		return '';
 	}
 
 	return checkboxes

@@ -6,6 +6,5 @@ createDockerContainer {
 
 runGradleTest {
 	dependsOn "assertLog"
-
 	finalizedBy cleanDockerImage
 }

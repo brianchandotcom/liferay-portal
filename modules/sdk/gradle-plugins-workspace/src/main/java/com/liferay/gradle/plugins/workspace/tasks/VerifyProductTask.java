@@ -41,6 +41,12 @@ public class VerifyProductTask extends DefaultTask {
 
 	@Input
 	@Optional
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
+	@Input
+	@Optional
 	public String getTargetPlatformVersion() {
 		return _targetPlatformVersion;
 	}
@@ -64,8 +70,7 @@ public class VerifyProductTask extends DefaultTask {
 	@TaskAction
 	public void verifyProduct() throws Exception {
 		if (!_errorMessage.isEmpty()) {
-			throw new GradleException(
-				"Please check the product key in Liferay workspace");
+			throw new GradleException(_errorMessage);
 		}
 
 		if (Objects.isNull(_bundleUrl) || _bundleUrl.isEmpty()) {

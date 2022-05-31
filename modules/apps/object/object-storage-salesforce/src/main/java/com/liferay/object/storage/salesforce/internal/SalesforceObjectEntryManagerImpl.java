@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.manager.v1_0;
+package com.liferay.object.storage.salesforce.internal;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -26,13 +28,18 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Guilherme Camacho
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration",
+	enabled = false, immediate = true,
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )
@@ -160,5 +167,14 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return null;
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_salesforceConfiguration = ConfigurableUtil.createConfigurable(
+			SalesforceConfiguration.class, properties);
+	}
+
+	private volatile SalesforceConfiguration _salesforceConfiguration;
 
 }

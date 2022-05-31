@@ -178,6 +178,8 @@ public class ObjectRelationshipLocalServiceTest {
 			Assert.assertTrue(
 				message.contains("Invalid type for system object definition"));
 		}
+
+		_testSystemObjectRelationshipOneToMany();
 	}
 
 	@Test
@@ -274,6 +276,41 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), type);
+	}
+
+	private void _testSystemObjectRelationshipOneToMany() throws Exception {
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_systemObjectDefinition.getObjectDefinitionId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		String objectFieldNamePrefix =
+			"r_" + objectRelationship.getName() + "_";
+
+		Assert.assertTrue(
+			_hasColumn(
+				_systemObjectDefinition.getExtensionDBTableName(),
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
+		Assert.assertNotNull(
+			_objectFieldLocalService.fetchObjectField(
+				_systemObjectDefinition.getObjectDefinitionId(),
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				_systemObjectDefinition.getObjectDefinitionId(),
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
 	}
 
 	@DeleteAfterTestRun

@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENDING_ORDERS_ORDER_STATUS</td>
+	<td>//dt[contains(text(),'Order Status')]/..//dd[contains(text(),'${key_orderStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PENDING_ORDERS_BILLING_ADDRESS_DROPDOWN</td>
 	<td>//select[@title= 'billing-address-id']</td>
 	<td></td>

@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(minium = "true");
 	}
 
 	tearDown {
@@ -20,8 +20,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -50,8 +48,6 @@ definition {
 		property portal.acceptance = "Intern Test";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -86,8 +82,6 @@ definition {
 	@priority = "3"
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -205,8 +199,6 @@ definition {
 
 		// TODO Review
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
@@ -265,8 +257,6 @@ definition {
 
 		// TODO Review
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
@@ -310,8 +300,6 @@ definition {
 	@priority = "3"
 	test SearchOrderInPlacedOrdersPage {
 		property portal.acceptance = "false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -391,8 +379,6 @@ definition {
 	test UseADTInPendingOrdersWidget {
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		ProductMenu.gotoPortlet(
@@ -435,8 +421,6 @@ definition {
 	@priority = "3"
 	test UseADTInPlacedOrdersWidget {
 		property portal.acceptance = "false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -495,8 +479,6 @@ definition {
 		property portal.acceptance = "true";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

@@ -81,6 +81,46 @@ public class ClientExtensionEntryServiceImpl
 	}
 
 	@Override
+	public ClientExtensionEntry addThemeCSSClientExtensionEntry(
+			String clayURL, String description, String mainURL,
+			Map<Locale, String> nameMap, String sourceCodeURL)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
+
+		return clientExtensionEntryLocalService.addThemeCSSClientExtensionEntry(
+			getUserId(), clayURL, description, mainURL, nameMap, sourceCodeURL);
+	}
+
+	@Override
+	public ClientExtensionEntry addThemeFaviconClientExtensionEntry(
+			String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String url)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
+
+		return clientExtensionEntryLocalService.
+			addThemeFaviconClientExtensionEntry(
+				getUserId(), description, nameMap, sourceCodeURL, url);
+	}
+
+	@Override
+	public ClientExtensionEntry addThemeJSClientExtensionEntry(
+			String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String urls)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
+
+		return clientExtensionEntryLocalService.addThemeJSClientExtensionEntry(
+			getUserId(), description, nameMap, sourceCodeURL, urls);
+	}
+
+	@Override
 	public ClientExtensionEntry deleteClientExtensionEntry(
 			long clientExtensionEntryId)
 		throws PortalException {
@@ -140,6 +180,51 @@ public class ClientExtensionEntryServiceImpl
 				getUserId(), clientExtensionEntryId, description,
 				friendlyURLMapping, iFrameURL, nameMap, portletCategoryName,
 				properties, sourceCodeURL);
+	}
+
+	@Override
+	public ClientExtensionEntry updateThemeCSSClientExtensionEntry(
+			long clientExtensionEntryId, String clayURL, String description,
+			String mainURL, Map<Locale, String> nameMap, String sourceCodeURL)
+		throws PortalException {
+
+		_clientExtensionEntryModelResourcePermission.check(
+			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
+
+		return clientExtensionEntryLocalService.
+			updateThemeCSSClientExtensionEntry(
+				getUserId(), clientExtensionEntryId, clayURL, description,
+				mainURL, nameMap, sourceCodeURL);
+	}
+
+	@Override
+	public ClientExtensionEntry updateThemeFaviconClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String url)
+		throws PortalException {
+
+		_clientExtensionEntryModelResourcePermission.check(
+			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
+
+		return clientExtensionEntryLocalService.
+			updateThemeFaviconClientExtensionEntry(
+				getUserId(), clientExtensionEntryId, description, nameMap,
+				sourceCodeURL, url);
+	}
+
+	@Override
+	public ClientExtensionEntry updateThemeJSClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String urls)
+		throws PortalException {
+
+		_clientExtensionEntryModelResourcePermission.check(
+			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
+
+		return clientExtensionEntryLocalService.
+			updateThemeJSClientExtensionEntry(
+				getUserId(), clientExtensionEntryId, description, nameMap,
+				sourceCodeURL, urls);
 	}
 
 	@Reference(

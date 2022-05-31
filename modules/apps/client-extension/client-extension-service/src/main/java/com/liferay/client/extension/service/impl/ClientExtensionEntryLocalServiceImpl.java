@@ -26,8 +26,12 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.client.extension.type.CETCustomElement;
 import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.client.extension.type.CETThemeCSS;
+import com.liferay.client.extension.type.CETThemeFavicon;
+import com.liferay.client.extension.type.CETThemeJS;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -254,6 +258,128 @@ public class ClientExtensionEntryLocalServiceImpl
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, instanceable,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry addThemeCSSClientExtensionEntry(
+			long userId, String clayURL, String description, String mainURL,
+			Map<Locale, String> nameMap, String sourceCodeURL)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		clientExtensionEntry.setCompanyId(user.getCompanyId());
+		clientExtensionEntry.setUserId(user.getUserId());
+		clientExtensionEntry.setUserName(user.getFullName());
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setType(
+			ClientExtensionEntryConstants.TYPE_THEME_CSS);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.create(
+				false
+			).put(
+				"clayURL", clayURL
+			).put(
+				"mainURL", mainURL
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		_addResources(clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry addThemeFaviconClientExtensionEntry(
+			long userId, String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String url)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		clientExtensionEntry.setCompanyId(user.getCompanyId());
+		clientExtensionEntry.setUserId(user.getUserId());
+		clientExtensionEntry.setUserName(user.getFullName());
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setType(
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.create(
+				false
+			).put(
+				"url", url
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		_addResources(clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry addThemeJSClientExtensionEntry(
+			long userId, String description, Map<Locale, String> nameMap,
+			String sourceCodeURL, String urls)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		clientExtensionEntry.setCompanyId(user.getCompanyId());
+		clientExtensionEntry.setUserId(user.getUserId());
+		clientExtensionEntry.setUserName(user.getFullName());
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setType(
+			ClientExtensionEntryConstants.TYPE_THEME_JS);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.create(
+				false
+			).put(
+				"urls", urls
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		_addResources(clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
 	}
 
 	@Override
@@ -512,6 +638,108 @@ public class ClientExtensionEntryLocalServiceImpl
 		return clientExtensionEntryPersistence.update(clientExtensionEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry updateThemeCSSClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String clayURL,
+			String description, String mainURL, Map<Locale, String> nameMap,
+			String sourceCodeURL)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.findByPrimaryKey(
+				clientExtensionEntryId);
+
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(
+			clientExtensionEntry);
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.load(
+				clientExtensionEntry.getTypeSettings()
+			).put(
+				"clayURL", clayURL
+			).put(
+				"mainURL", mainURL
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry updateThemeFaviconClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String url)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.findByPrimaryKey(
+				clientExtensionEntryId);
+
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(
+			clientExtensionEntry);
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.load(
+				clientExtensionEntry.getTypeSettings()
+			).put(
+				"url", url
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ClientExtensionEntry updateThemeJSClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String description,
+			Map<Locale, String> nameMap, String sourceCodeURL, String urls)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.findByPrimaryKey(
+				clientExtensionEntryId);
+
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(
+			clientExtensionEntry);
+
+		clientExtensionEntry.setDescription(description);
+		clientExtensionEntry.setNameMap(nameMap);
+		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.load(
+				clientExtensionEntry.getTypeSettings()
+			).put(
+				"urls", urls
+			).buildString());
+		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		clientExtensionEntry.setStatusByUserId(userId);
+		clientExtensionEntry.setStatusDate(new Date());
+
+		clientExtensionEntry = clientExtensionEntryPersistence.update(
+			clientExtensionEntry);
+
+		return _startWorkflowInstance(userId, clientExtensionEntry);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -626,6 +854,38 @@ public class ClientExtensionEntryLocalServiceImpl
 
 			workflowContext = Collections.singletonMap(
 				WorkflowConstants.CONTEXT_URL, cetIFrame.getURL());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
+
+			CETThemeCSS cetThemeCSS = _cetFactory.themeCSS(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL,
+				StringBundler.concat(
+					cetThemeCSS.getClayURL(), StringPool.NEW_LINE,
+					cetThemeCSS.getMainURL()));
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
+
+			CETThemeFavicon cetThemeFavicon = _cetFactory.themeFavicon(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetThemeFavicon.getURL());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_THEME_JS)) {
+
+			CETThemeJS cetThemeJS = _cetFactory.themeJS(clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetThemeJS.getURLs());
 		}
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(

@@ -1,0 +1,2 @@
+FROM rotty3000/lxc-static-resources:latest\n\
+COPY META-INF/resources /resources/

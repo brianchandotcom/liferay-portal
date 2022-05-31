@@ -97,6 +97,10 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		Project project, Object sourcePath,
 		WorkspaceExtension workspaceExtension) {
 
+		if (GradleUtil.hasTask(project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME)) {
+			return GradleUtil.getTaskProvider(project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME, Copy.class).get();
+		}
+		
 		Copy copy = GradleUtil.addTask(
 			project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME,
 			Copy.class);

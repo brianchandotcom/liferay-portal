@@ -1,0 +1,22 @@
+{\n\
+  "kind": "Deployment",\n\
+  "id": "${project.name}",\n\
+  "cpu": 0.1,\n\
+  "scale": 1,\n\
+  "memory": 50,\n\
+  "loadBalancer": {\n\
+    "targetPort": 80,\n\
+    "cdn": true\n\
+  },\n\
+  "environments": {\n\
+    "infra": {\n\
+      "deploy": false\n\
+    },\n\
+    "dev": {\n\
+      "loadBalancer": {\n\
+        "targetPort": 80,\n\
+        "cdn": false\n\
+      }\n\
+    }\n\
+  }\n\
+}

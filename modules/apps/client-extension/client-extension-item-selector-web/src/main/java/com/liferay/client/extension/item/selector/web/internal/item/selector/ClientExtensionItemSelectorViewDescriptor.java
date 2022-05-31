@@ -77,11 +77,15 @@ public class ClientExtensionItemSelectorViewDescriptor
 				_portletURL, null, "there-are-no-items-to-display");
 
 		searchContainer.setResultsAndTotal(
-			ClientExtensionEntryLocalServiceUtil.
+			() -> ClientExtensionEntryLocalServiceUtil.
 				getClientExtensionEntriesByType(
 					themeDisplay.getCompanyId(),
 					_clientExtensionItemSelectorCriterion.getType(),
-					searchContainer.getStart(), searchContainer.getEnd()));
+					searchContainer.getStart(), searchContainer.getEnd()),
+			ClientExtensionEntryLocalServiceUtil.
+				getClientExtensionEntriesByTypeCount(
+					themeDisplay.getCompanyId(),
+					_clientExtensionItemSelectorCriterion.getType()));
 
 		return searchContainer;
 	}

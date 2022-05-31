@@ -338,12 +338,13 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WidgetButtonDisabledByDefault {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153531 WidgetButtonDisabledByDefault pending implementation
+		ObjectPortlet.selectSystemObject(label = "Account");
 
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 	}
 
 }

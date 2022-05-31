@@ -128,6 +128,10 @@ public class ContributedFragmentEntryVerticalCard
 			return "code";
 		}
 
+		if (type == FragmentConstants.TYPE_INPUT) {
+			return "forms";
+		}
+
 		if (type == FragmentConstants.TYPE_REACT) {
 			return "react";
 		}

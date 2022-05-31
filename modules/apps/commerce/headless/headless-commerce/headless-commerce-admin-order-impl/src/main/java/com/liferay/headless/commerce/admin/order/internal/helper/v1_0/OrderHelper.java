@@ -16,7 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.helper.v1_0;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderDTOConverter;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -106,8 +106,8 @@ public class OrderHelper {
 	private long[] _getCommerceChannelGroupIds(long companyId)
 		throws Exception {
 
-		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
-			companyId);
+		List<CommerceChannel> commerceChannels =
+			_commerceChannelLocalService.getCommerceChannels(companyId);
 
 		Stream<CommerceChannel> stream = commerceChannels.stream();
 
@@ -117,7 +117,7 @@ public class OrderHelper {
 	}
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

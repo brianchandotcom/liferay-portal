@@ -670,7 +670,7 @@ definition {
 	@description = "This is a use case for LPS-110938. The localized Friendly URL of WC is shown in WCD when select template with Friendly URL field and it is displayed in DPT."
 	@priority = "3"
 	test ViewLocalizedFriendlyURLInWCD {
-		task ("Given a site designer has a web content with selected custom template, display page template and translated friendly URL") {
+		task ("Given a site designer has a web content with an associated display page template and a template with Friendly URL field") {
 			task ("Add a display page template with Web Content Article and Basic Web Content") {
 				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 					contentType = "Web Content Article",
@@ -748,7 +748,7 @@ definition {
 			}
 		}
 
-		task ("When the site designer displays the web content in Web Content Display widget") {
+		task ("When the site designer displays the web content in Web Content Display with custom template") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",

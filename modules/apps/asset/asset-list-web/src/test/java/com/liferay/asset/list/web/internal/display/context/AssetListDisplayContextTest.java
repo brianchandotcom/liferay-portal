@@ -34,10 +34,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -51,8 +48,6 @@ public class AssetListDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpPortalGetHttpServletRequest();
 		_setUpPortalUtil();
 		_setUpPortletPreferencesFactoryUtil();
@@ -95,7 +90,7 @@ public class AssetListDisplayContextTest {
 		).when(
 			_portal
 		).getHttpServletRequest(
-			Matchers.any(PortletRequest.class)
+			Mockito.any(PortletRequest.class)
 		);
 
 		return httpServletRequest;
@@ -115,14 +110,11 @@ public class AssetListDisplayContextTest {
 			Mockito.mock(PortletPreferencesFactory.class));
 	}
 
-	@Mock
-	private AssetRendererFactory<?> _assetRendererFactory;
-
-	@Mock
-	private AssetRendererFactoryClassProvider
-		_assetRendererFactoryClassProvider;
-
-	@Mock
-	private Portal _portal;
+	private final AssetRendererFactory<?> _assetRendererFactory = Mockito.mock(
+		AssetRendererFactory.class);
+	private final AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider = Mockito.mock(
+			AssetRendererFactoryClassProvider.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

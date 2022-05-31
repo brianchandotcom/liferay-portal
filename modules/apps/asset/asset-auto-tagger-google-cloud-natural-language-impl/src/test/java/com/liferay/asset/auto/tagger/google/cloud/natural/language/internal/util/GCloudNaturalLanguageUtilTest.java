@@ -28,13 +28,10 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Alicia García
@@ -44,11 +41,6 @@ public class GCloudNaturalLanguageUtilTest {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testGetDocumentPayload() throws Exception {
@@ -218,10 +210,7 @@ public class GCloudNaturalLanguageUtilTest {
 		return RandomTestUtil.randomInt(1, 100);
 	}
 
-	@Mock
-	private FileEntry _fileEntry;
-
-	@Mock
-	private FileVersion _fileVersion;
+	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
+	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
 
 }

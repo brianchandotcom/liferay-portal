@@ -928,6 +928,9 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.update(childCommerceOrderItem);
 		}
 
+		commerceOrderItem = commerceOrderItemPersistence.findByPrimaryKey(
+			commerceOrderItemId);
+
 		_setCommerceOrderItemPrice(commerceOrderItem, null, commerceContext);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
@@ -1180,7 +1183,7 @@ public class CommerceOrderItemLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void updateWorkflow(
+	protected CommerceOrder updateWorkflow(
 			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1191,11 +1194,13 @@ public class CommerceOrderItemLocalServiceImpl
 				CommerceOrderConstants.TYPE_PK_APPROVAL, true);
 
 		if ((workflowDefinitionLink != null) && commerceOrder.isApproved()) {
-			commerceOrderLocalService.updateStatus(
+			return commerceOrderLocalService.updateStatus(
 				serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext,
 				Collections.emptyMap());
 		}
+
+		return commerceOrder;
 	}
 
 	protected void validate(
@@ -1877,7 +1882,7 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem.getBookedQuantityId(), quantity,
 			commerceOrderItem.getQuantity());
 
-		updateWorkflow(commerceOrder, serviceContext);
+		commerceOrder = updateWorkflow(commerceOrder, serviceContext);
 
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setQuantity(quantity);

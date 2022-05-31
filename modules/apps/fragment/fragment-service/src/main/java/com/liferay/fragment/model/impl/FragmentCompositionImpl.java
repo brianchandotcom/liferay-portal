@@ -46,7 +46,9 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (Validator.isNotNull(_imagePreviewURL)) {
+		if (Validator.isNotNull(_imagePreviewURL) &&
+			!_imagePreviewURL.endsWith(StringPool.SLASH)) {
+
 			return _imagePreviewURL;
 		}
 

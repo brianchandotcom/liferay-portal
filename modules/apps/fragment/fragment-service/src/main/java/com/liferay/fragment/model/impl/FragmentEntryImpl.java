@@ -80,7 +80,9 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (Validator.isNotNull(_imagePreviewURL)) {
+		if (Validator.isNotNull(_imagePreviewURL) &&
+			!_imagePreviewURL.endsWith(StringPool.SLASH)) {
+
 			return _imagePreviewURL;
 		}
 

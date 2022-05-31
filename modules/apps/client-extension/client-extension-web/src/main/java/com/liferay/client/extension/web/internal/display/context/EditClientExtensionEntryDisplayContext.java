@@ -192,6 +192,38 @@ public class EditClientExtensionEntryDisplayContext {
 		return ParamUtil.getString(_portletRequest, "redirect");
 	}
 
+	public String getThemeCSSMainURL() {
+		return "";
+	}
+
+	public String getThemeCSSClayURL() {
+		return "";
+	}
+
+	public String getThemeFaviconURL() {
+		return "";
+	}
+
+	public String[] getThemeJSURLs() {
+		String[] themeJSURLs = StringPool.EMPTY_ARRAY;
+
+		if (_clientExtensionEntry != null) {
+			String themeJSURLsString =
+"";//				_clientExtensionEntry.getThemeJSURLs();
+
+			themeJSURLs = themeJSURLsString.split(StringPool.NEW_LINE);
+		}
+
+		themeJSURLs = ParamUtil.getStringValues(
+			_portletRequest, "themeJSURLs", themeJSURLs);
+
+		if (themeJSURLs.length == 0) {
+			themeJSURLs = new String[1];
+		}
+
+		return themeJSURLs;
+	}
+
 	public String getTitle() {
 		if (_clientExtensionEntry == null) {
 			return LanguageUtil.get(_getHttpServletRequest(), "new-remote-app");
@@ -215,7 +247,22 @@ public class EditClientExtensionEntryDisplayContext {
 				LanguageUtil.get(httpServletRequest, "iframe"),
 				ClientExtensionEntryConstants.TYPE_IFRAME,
 				isEditingClientExtensionEntryType(
-					ClientExtensionEntryConstants.TYPE_IFRAME)));
+					ClientExtensionEntryConstants.TYPE_IFRAME)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "theme-css"),
+				ClientExtensionEntryConstants.TYPE_THEME_CSS,
+				isEditingClientExtensionEntryType(
+					ClientExtensionEntryConstants.TYPE_THEME_CSS)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "theme-favicon"),
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				isEditingClientExtensionEntryType(
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON)),
+			new SelectOption(
+				LanguageUtil.get(httpServletRequest, "theme-js"),
+				ClientExtensionEntryConstants.TYPE_THEME_JS,
+				isEditingClientExtensionEntryType(
+					ClientExtensionEntryConstants.TYPE_THEME_JS)));
 	}
 
 	public boolean isCustomElementUseESM() {

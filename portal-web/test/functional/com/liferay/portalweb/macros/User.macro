@@ -1444,7 +1444,7 @@ definition {
 			locator1 = "Modal#HEADER",
 			value1 = "Select ${vocabularyName}");
 
-		AssetCategorization.selectCategory(categoryName = "${categoryName}");
+		AssetCategorization.selectCategories(categoryNameList = "${categoryName}");
 
 		PortletEntry.save();
 	}

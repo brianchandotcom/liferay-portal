@@ -195,4 +195,46 @@ definition {
 		return "${ordersCount}";
 	}
 
+	macro _addCommerceOrder {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var paymentMethod = StringUtil.lowerCase("${paymentMethod}");
+
+		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+
+		if (!(isSet(paymentStatus))) {
+			var paymentStatus = "1";
+		}
+
+		if (!(isSet(orderStatus))) {
+			var orderStatus = "2";
+		}
+
+		echo("Account id: ${accountEntryId}");
+
+		echo("Channel id: ${commerceChannelIds}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+  			-H 'Content-Type: application/json' \
+  			-d '{
+				  	"accountId": "${accountEntryId}",
+            		"channelId": "${commerceChannelIds}",
+            		"currencyCode": "USD",
+            		"paymentStatus": "${paymentStatus}",
+					"paymentMethod": "${paymentMethod}",
+					"orderStatus": ${orderStatus}
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
 }

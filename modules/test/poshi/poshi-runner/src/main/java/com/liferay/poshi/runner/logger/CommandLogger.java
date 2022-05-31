@@ -682,8 +682,6 @@ public final class CommandLogger {
 	private LoggerElement _getScreenshotSpanLoggerElement(
 		String screenshotName) {
 
-		// this sets the text of the screenshot names
-
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setName("span");

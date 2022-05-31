@@ -339,10 +339,17 @@ definition {
 		}
 
 		if (isSet(deliveryTerm)) {
+			if ("${deliveryTerm}" == "") {
+				AssertElementNotPresent(
+					key_deliveryTerm = "",
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_TERM");
+			}
+			else {
 			AssertTextEquals(
 				key_paymentMethod = "${deliveryTerm}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
 				value1 = "${deliveryTerm}");
+			}
 		}
 
 		if (isSet(productName)) {

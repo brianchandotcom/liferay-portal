@@ -74,6 +74,21 @@ public interface StructuredContentResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAssetLibraryStructuredContentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContent
+			getAssetLibraryStructuredContentByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContent
+			putAssetLibraryStructuredContentByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				StructuredContent structuredContent)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getAssetLibraryStructuredContentPermissionsPage(
 				Long assetLibraryId, String roleNames)

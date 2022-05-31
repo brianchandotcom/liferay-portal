@@ -5781,6 +5781,7 @@ paths:
             # @review
             description:
                 Deletes the asset library's structured content by external reference code.
+            operationId: deleteAssetLibraryStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5800,6 +5801,7 @@ paths:
                         application/xml: {}
             tags: ["StructuredContent"]
         get:
+            operationId: getAssetLibraryStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5827,6 +5829,7 @@ paths:
             description:
                 Updates the asset library's structured content with the given external reference code, or creates it if
                 it not exists.
+            operationId: putAssetLibraryStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId

@@ -78,6 +78,11 @@ public interface ClientExtensionEntryRelLocalService
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
 		ClientExtensionEntryRel clientExtensionEntryRel);
 
+	public ClientExtensionEntryRel addClientExtensionEntryRel(
+			long companyId, long userId, long classNameId, long classPK,
+			String type, String clientExtensionName)
+		throws PortalException;
+
 	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
@@ -296,6 +301,10 @@ public interface ClientExtensionEntryRelLocalService
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type, int start, int end);
+
 	/**
 	 * Returns the number of client extension entry rels.
 	 *
@@ -303,6 +312,10 @@ public interface ClientExtensionEntryRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getClientExtensionEntryRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getClientExtensionEntryRelsCount(
+		long classNameId, long classPK, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

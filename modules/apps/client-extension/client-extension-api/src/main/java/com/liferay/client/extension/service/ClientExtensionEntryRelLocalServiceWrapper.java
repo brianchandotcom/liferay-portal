@@ -59,6 +59,17 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			clientExtensionEntryRel);
 	}
 
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntryRel
+			addClientExtensionEntryRel(
+				long companyId, long userId, long classNameId, long classPK,
+				String type, String clientExtensionName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			companyId, userId, classNameId, classPK, type, clientExtensionName);
+	}
+
 	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
@@ -376,6 +387,17 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.client.extension.model.ClientExtensionEntryRel>
+			getClientExtensionEntryRels(
+				long classNameId, long classPK, String type, int start,
+				int end) {
+
+		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+			classNameId, classPK, type, start, end);
+	}
+
 	/**
 	 * Returns the number of client extension entry rels.
 	 *
@@ -385,6 +407,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	public int getClientExtensionEntryRelsCount() {
 		return _clientExtensionEntryRelLocalService.
 			getClientExtensionEntryRelsCount();
+	}
+
+	@Override
+	public int getClientExtensionEntryRelsCount(
+		long classNameId, long classPK, String type) {
+
+		return _clientExtensionEntryRelLocalService.
+			getClientExtensionEntryRelsCount(classNameId, classPK, type);
 	}
 
 	@Override

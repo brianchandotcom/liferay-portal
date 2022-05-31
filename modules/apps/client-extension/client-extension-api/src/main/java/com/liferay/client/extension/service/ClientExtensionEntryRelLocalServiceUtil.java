@@ -61,6 +61,15 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 		return getService().addClientExtensionEntryRel(clientExtensionEntryRel);
 	}
 
+	public static ClientExtensionEntryRel addClientExtensionEntryRel(
+			long companyId, long userId, long classNameId, long classPK,
+			String type, String clientExtensionName)
+		throws PortalException {
+
+		return getService().addClientExtensionEntryRel(
+			companyId, userId, classNameId, classPK, type, clientExtensionName);
+	}
+
 	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
@@ -336,6 +345,13 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 		return getService().getClientExtensionEntryRels(start, end);
 	}
 
+	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type, int start, int end) {
+
+		return getService().getClientExtensionEntryRels(
+			classNameId, classPK, type, start, end);
+	}
+
 	/**
 	 * Returns the number of client extension entry rels.
 	 *
@@ -343,6 +359,13 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 	 */
 	public static int getClientExtensionEntryRelsCount() {
 		return getService().getClientExtensionEntryRelsCount();
+	}
+
+	public static int getClientExtensionEntryRelsCount(
+		long classNameId, long classPK, String type) {
+
+		return getService().getClientExtensionEntryRelsCount(
+			classNameId, classPK, type);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

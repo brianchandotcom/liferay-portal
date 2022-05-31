@@ -56,6 +56,8 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 
 export function useGetKoroneikiAccounts(options) {
 	return useQuery(GET_KORONEIKI_ACCOUNTS, {
+		fetchPolicy: options.fetchPolicy,
+		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
 		skip: options.skip,
 		variables: {
 			filter: options.filter || '',

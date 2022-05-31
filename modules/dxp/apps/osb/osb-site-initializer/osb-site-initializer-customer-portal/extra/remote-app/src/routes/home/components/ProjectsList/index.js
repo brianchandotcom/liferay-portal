@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
@@ -18,19 +19,28 @@ import getCurrentPage from './utils/getCurrentPage';
 
 const DEFAULT_PAGE_SIZE = 20;
 
-const ProjectList = ({hasManyProjects, items, onIntersect}) => {
-	const [, isIntersecting] = useIntersectionObserver();
+const ProjectList = ({
+	fetching,
+	hasManyProjects,
+	koroneikiAccounts,
+	loading,
+	onIntersect,
+}) => {
+	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
 
 	useEffect(() => {
 		if (isIntersecting) {
-			const currentPage = getCurrentPage(items, DEFAULT_PAGE_SIZE);
+			const currentPage = getCurrentPage(
+				koroneikiAccounts?.items,
+				DEFAULT_PAGE_SIZE
+			);
 
 			onIntersect(currentPage);
 		}
-	}, [isIntersecting, items, onIntersect]);
+	}, [isIntersecting, koroneikiAccounts?.items, onIntersect]);
 
 	const getProjects = () => {
-		return items.map((koroneikiAccount, index) => (
+		return koroneikiAccounts?.items.map((koroneikiAccount, index) => (
 			<ProjectCard
 				compressed={hasManyProjects}
 				key={`${koroneikiAccount.accountKey}-${index}`}
@@ -39,6 +49,10 @@ const ProjectList = ({hasManyProjects, items, onIntersect}) => {
 		));
 	};
 
+	if (loading) {
+		return <>Loading</>;
+	}
+
 	return (
 		<div
 			className={classNames('d-flex flex-wrap', {
@@ -46,8 +60,17 @@ const ProjectList = ({hasManyProjects, items, onIntersect}) => {
 				'cp-home-projects-sm pt-2': hasManyProjects,
 			})}
 		>
-			{items.length ? (
-				getProjects()
+			{koroneikiAccounts?.totalCount ? (
+				<>
+					{getProjects()}
+					{koroneikiAccounts?.items.length <
+						koroneikiAccounts?.totalCount &&
+						!fetching && (
+							<p className="mx-auto" ref={setTrackedRefCurrent}>
+								<ClayLoadingIndicator small />
+							</p>
+						)}
+				</>
 			) : (
 				<p className="mx-auto">
 					{i18n.translate('no-projects-match-these-criteria')}

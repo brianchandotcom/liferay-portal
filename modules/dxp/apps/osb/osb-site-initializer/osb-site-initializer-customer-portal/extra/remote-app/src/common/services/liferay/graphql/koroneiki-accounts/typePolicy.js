@@ -10,6 +10,7 @@
  */
 
 import {STATUS_TAG_TYPES} from '../../../../../routes/customer-portal/utils/constants';
+import pagePageSizePagination from '../common/utils/pagePageSizePagination';
 
 export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
@@ -49,6 +50,13 @@ export const koroneikiAccountsTypePolicy = {
 			},
 		},
 		keyFields: ['accountKey'],
+	},
+	C_KoroneikiAccountPage: {
+		fields: {
+			items: {
+				...pagePageSizePagination(),
+			},
+		},
 	},
 };
 

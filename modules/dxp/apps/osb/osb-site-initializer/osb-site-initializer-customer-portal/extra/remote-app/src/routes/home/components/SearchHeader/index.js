@@ -13,7 +13,7 @@ import {useState} from 'react';
 import i18n from '../../../../common/I18n';
 import SearchBar from './components/SearchBar';
 
-const SearchHeader = ({count, onSearchSubmit}) => {
+const SearchHeader = ({count, loading, onSearchSubmit}) => {
 	const [hasTerm, setHasTerm] = useState();
 
 	const getCounter = () => {
@@ -33,7 +33,11 @@ const SearchHeader = ({count, onSearchSubmit}) => {
 				}}
 			/>
 
-			<h5 className="m-0 text-neutral-7">{getCounter()}</h5>
+			{loading ? (
+				<>Loading</>
+			) : (
+				<h5 className="m-0 text-neutral-7">{getCounter()}</h5>
+			)}
 		</div>
 	);
 };

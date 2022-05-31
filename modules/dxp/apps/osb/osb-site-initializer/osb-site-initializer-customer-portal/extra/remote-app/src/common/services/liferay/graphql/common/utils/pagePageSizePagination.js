@@ -9,6 +9,24 @@
  * distribution rights of the Software.
  */
 
-export default function getCurrentPage(items, pageSize) {
-	return Math.ceil(items.length / pageSize);
+export default function pagePageSizePagination(keyArgs = false) {
+	return {
+		keyArgs,
+		merge(existing = [], incoming, {variables}) {
+			const merged = [...existing];
+
+			if (variables) {
+				const {page = 1, pageSize = 20} = variables;
+				const offset = (page - 1) * pageSize;
+
+				for (let i = 0; i < incoming.length; ++i) {
+					merged[offset + i] = incoming[i];
+				}
+
+				return merged;
+			}
+
+			return merged.concat(incoming);
+		},
+	};
 }

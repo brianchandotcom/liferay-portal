@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {NetworkStatus} from '@apollo/client';
 import {useCallback, useMemo} from 'react';
 import {Liferay} from '../../../common/services/liferay';
 import {useGetKoroneikiAccounts} from '../../../common/services/liferay/graphql/koroneiki-accounts';
@@ -34,15 +35,15 @@ export default function useKoroneikiAccounts() {
 		[userAccount?.accountBriefs, userAccount?.isLiferayStaff]
 	);
 
-	const {
-		data,
-		fetchMore,
-		loading: koroneikiAccountsLoading,
-		refetch,
-	} = useGetKoroneikiAccounts({
+	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
 		filter: filterKoroneikiAccounts,
+		notifyOnNetworkStatusChange: true,
 		skip: userAccountLoading,
 	});
+
+	const loadingKoroneikiAccounts =
+		networkStatus === NetworkStatus.loading ||
+		networkStatus === NetworkStatus.setVariables;
 
 	const getFilterKoroneikiAccountsBySearch = useCallback(
 		(searchTerm) => {
@@ -67,7 +68,9 @@ export default function useKoroneikiAccounts() {
 	return {
 		data,
 		fetchMore,
-		loading: koroneikiAccountsLoading || userAccountLoading,
+		fetching: networkStatus === NetworkStatus.fetchMore,
+		loading: loadingKoroneikiAccounts || userAccountLoading,
+		networkStatus,
 		refetch,
 		search,
 	};

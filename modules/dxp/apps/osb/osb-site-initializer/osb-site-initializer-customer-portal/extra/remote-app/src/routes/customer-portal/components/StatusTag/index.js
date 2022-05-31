@@ -10,6 +10,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
 import i18n from '../../../../common/I18n';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 
@@ -41,17 +42,20 @@ const labelProps = {
 };
 
 const StatusTag = ({currentStatus}) => {
-	if (Object.values(STATUS_TAG_TYPES).includes(currentStatus)) {
-		const labelProp = labelProps[currentStatus];
+	const labelProp = labelProps[currentStatus];
 
-		return (
-			<ClayLabel
-				className={`px-2 m-0 font-weight-normal label-tonal-${labelProp.displayType} text-paragraph-sm`}
-			>
-				{labelProp.label}
-			</ClayLabel>
-		);
-	}
+	return (
+		<ClayLabel
+			className={classNames(
+				'px-2 m-0 font-weight-normal text-paragraph-sm',
+				{
+					[`label-tonal-${labelProp.displayType}`]: labelProp.displayType,
+				}
+			)}
+		>
+			{labelProp.label}
+		</ClayLabel>
+	);
 };
 
 export default StatusTag;

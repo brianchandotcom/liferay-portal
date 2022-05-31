@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import './styles/index.scss';
-
 import classNames from 'classnames';
 
 import {useEffect, useState} from 'react';
@@ -21,7 +19,7 @@ import useKoroneikiAccounts from './hooks/useKoroneikiAccounts';
 const THRESHOLD_COUNT = 4;
 
 const Home = () => {
-	const {data, fetchMore, loading, search} = useKoroneikiAccounts();
+	const {data, fetchMore, fetching, loading, search} = useKoroneikiAccounts();
 	const [maxTotalCount, setMaxTotalCount] = useState(0);
 
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
@@ -34,10 +32,6 @@ const Home = () => {
 			setMaxTotalCount(totalCount);
 		}
 	}, [maxTotalCount, koroneikiAccounts?.totalCount]);
-
-	if (loading) {
-		return <>Loading</>;
-	}
 
 	return (
 		<div
@@ -55,13 +49,16 @@ const Home = () => {
 				{hasManyProjects && (
 					<SearchHeader
 						count={koroneikiAccounts?.items.length}
+						loading={loading}
 						onSearchSubmit={(term) => search(term)}
 					/>
 				)}
 
 				<ProjectList
+					fetching={fetching}
 					hasManyProjects={hasManyProjects}
-					items={koroneikiAccounts?.items}
+					koroneikiAccounts={koroneikiAccounts}
+					loading={loading}
 					onIntersect={(currentPage) =>
 						fetchMore({
 							variables: {

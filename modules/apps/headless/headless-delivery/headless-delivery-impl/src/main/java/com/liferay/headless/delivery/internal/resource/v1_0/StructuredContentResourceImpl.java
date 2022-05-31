@@ -146,6 +146,20 @@ public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAssetLibraryStructuredContentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticleByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		_journalArticleService.deleteArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getArticleResourceUuid(), new ServiceContext());
+	}
+
+	@Override
 	public void deleteSiteStructuredContentByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
@@ -178,6 +192,17 @@ public class StructuredContentResourceImpl
 		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
 
 		spiRatingResource.deleteRating(structuredContentId);
+	}
+
+	@Override
+	public StructuredContent
+			getAssetLibraryStructuredContentByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		return _getStructuredContent(
+			_journalArticleService.getLatestArticleByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode));
 	}
 
 	@Override
@@ -523,6 +548,27 @@ public class StructuredContentResourceImpl
 
 		return spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), structuredContentId);
+	}
+
+	@Override
+	public StructuredContent
+			putAssetLibraryStructuredContentByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				StructuredContent structuredContent)
+		throws Exception {
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					assetLibraryId, externalReferenceCode);
+
+		if (journalArticle != null) {
+			return _updateStructuredContent(journalArticle, structuredContent);
+		}
+
+		return _addStructuredContent(
+			externalReferenceCode, assetLibraryId,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, structuredContent);
 	}
 
 	@Override

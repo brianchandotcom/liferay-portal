@@ -75,7 +75,8 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
+			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getProperties(), fragmentEntry.getType(),
 			fragmentEntry.getStatus(), serviceContext);
 	}
 
@@ -162,7 +163,8 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getStatus());
+			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getProperties(), fragmentEntry.getStatus());
 	}
 
 	private void _deleteFragmentEntryLinks(

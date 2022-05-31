@@ -230,7 +230,8 @@ public class ObjectEntryDisplayContext {
 		try {
 			_objectEntry = objectEntryManager.getObjectEntry(
 				_getDTOConverterContext(), externalReferenceCode,
-				_objectRequestHelper.getCompanyId(), objectDefinition, null);
+				_objectRequestHelper.getCompanyId(), objectDefinition,
+				String.valueOf(_getGroupId()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

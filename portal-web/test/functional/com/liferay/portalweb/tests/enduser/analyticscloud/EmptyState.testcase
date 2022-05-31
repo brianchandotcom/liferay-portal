@@ -1334,15 +1334,16 @@ definition {
 			ACUtils.launchAC(workspaceName = "New AC Workspace");
 		}
 
-		task ("Check empty state of tooltip in sites activities") {
-			MouseOver(locator1 = "ACCards#GRAPH_WITHOUT_DATA");
+		task ("Check empty state of site activities card") {
+			ACUtils.viewGenericText(textValueList = "There is no data for site activity.,Check back later to verify if data has been received from your data sources.");
 
-			for (var type : list "Known,Anonymous,Total") {
-				AssertElementPresent(
-					key_value = "0",
-					key_visitors = "${type}",
-					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
-			}
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about site activity.");
+
+			SelectWindow(locator1 = "title=Sites Dashboard — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Site Activities");
+
+			Close.closeWindow();
 		}
 
 		task ("Check the empty state and documentation link of the top pages card") {

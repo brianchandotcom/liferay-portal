@@ -41,7 +41,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <aui:input name="styleBookEntryId" type="hidden" />
 <aui:input name="faviconCETExternalReferenceCode" type="hidden" />
 <aui:input name="faviconFileEntryId" type="hidden" />
-<aui:input name="masterLayoutPlid" type="hidden" />
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
@@ -90,37 +89,10 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
 	<clay:sheet-section>
-		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
-
-		<p>
-			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= layoutLookAndFeelDisplayContext.getMasterLayoutName() %></span>
-		</p>
-
-		<clay:content-row>
-			<clay:content-col
-				cssClass='<%= !layoutLookAndFeelDisplayContext.hasMasterLayout() ? "hide" : "mr-4" %>'
-			>
-				<clay:button
-					additionalProps="<%= layoutLookAndFeelDisplayContext.getEditMasterLayoutButtonAdditionalProps() %>"
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
-					label="edit-master"
-					propsTransformer="js/layout/EditMasterLayoutButtonPropsTransformer"
-					small="<%= true %>"
-				/>
-			</clay:content-col>
-
-			<clay:content-col>
-				<clay:button
-					additionalProps="<%= layoutLookAndFeelDisplayContext.getChangeMasterLayoutButtonAdditionalProps() %>"
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
-					label="change-master"
-					propsTransformer="js/layout/ChangeMasterLayoutButtonPropsTransformer"
-					small="<%= true %>"
-				/>
-			</clay:content-col>
-		</clay:content-row>
+		<react:component
+			module="js/layout/look_and_feel/MasterLayoutConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
+		/>
 	</clay:sheet-section>
 </c:if>
 

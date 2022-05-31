@@ -856,7 +856,11 @@
 	<td>(//*[contains(@class, 'table-list-title')])[1]/a</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>ORDER_PAYMENT_STATUS</td>
+	<td>//h4[contains(.,'Payment Status')]//..//div//span[contains(@class,'label')]//*[contains(.,'${paymentStatus}')]</td>
+	<td></td>
+</tr>
 <!--CHANNELS-->
 
 <tr>

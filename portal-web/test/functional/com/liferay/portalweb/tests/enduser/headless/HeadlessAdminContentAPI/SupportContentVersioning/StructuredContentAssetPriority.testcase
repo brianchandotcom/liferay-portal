@@ -49,8 +49,8 @@ definition {
 		}
 
 		task ("Then the response body includes the default priority field") {
-			HeadlessWebcontentAPI.assertPriorityFieldWithDefaultValue(
-				expectedPriorityDefaultValue = "0.0",
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
+				expectedPriorityValue = "0.0",
 				responseToParse = "${responseToParse}");
 		}
 	}
@@ -72,8 +72,8 @@ definition {
 		}
 
 		task ("Then the response body includes the set priority") {
-			HeadlessWebcontentAPI.assertPriorityFieldWithDefaultValue(
-				expectedPriorityDefaultValue = "1.0",
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
+				expectedPriorityValue = "1.0",
 				responseToParse = "${responseToParse}");
 		}
 	}

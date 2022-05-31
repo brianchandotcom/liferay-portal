@@ -19,7 +19,7 @@
 	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT) %>"
 	id='<%= liferayPortletResponse.getNamespace() + "_fields_customElement" %>'
 >
-	<aui:input label="html-element-name" name="customElementHTMLElementName">
+	<aui:input label="html-element-name" name="customElementHTMLElementName" type="text" value="<%= editClientExtensionEntryDisplayContext.getCustomElementHTMLName() %>">
 		<aui:validator name="customElementName" />
 	</aui:input>
 

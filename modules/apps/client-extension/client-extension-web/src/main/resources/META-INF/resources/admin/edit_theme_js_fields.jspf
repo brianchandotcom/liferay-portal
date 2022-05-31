@@ -22,17 +22,17 @@
 	<div id="<portlet:namespace />_themeJSURLs_field">
 
 		<%
-			for (String themeJSURLs : editClientExtensionEntryDisplayContext.getThemeJSURLs()) {
+		for (String themeJSURLs : editClientExtensionEntryDisplayContext.getThemeJSURLs()) {
 		%>
 
-		<div class="lfr-form-row">
-			<aui:input ignoreRequestValue="<%= true %>" label="url" name="themeJSURLs" type="text" value="<%= themeJSURLs %>">
-				<aui:validator name="urlAllowRelative" />
-			</aui:input>
-		</div>
+			<div class="lfr-form-row">
+				<aui:input ignoreRequestValue="<%= true %>" label="url" name="themeJSURLs" type="text" value="<%= themeJSURLs %>">
+					<aui:validator name="urlAllowRelative" />
+				</aui:input>
+			</div>
 
 		<%
-			}
+		}
 		%>
 
 	</div>

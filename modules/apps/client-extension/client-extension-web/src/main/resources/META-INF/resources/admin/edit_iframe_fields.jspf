@@ -19,7 +19,7 @@
 	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_IFRAME) %>"
 	id='<%= liferayPortletResponse.getNamespace() + "_fields_iframe" %>'
 >
-	<aui:input label="url" name="iFrameURL">
+	<aui:input label="url" name="iFrameURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getIFrameURL() %>">
 		<aui:validator name="urlAllowRelative" />
 	</aui:input>
 </liferay-frontend:fieldset>

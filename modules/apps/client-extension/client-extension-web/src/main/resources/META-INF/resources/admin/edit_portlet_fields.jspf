@@ -27,9 +27,9 @@
 		options="<%= editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions() %>"
 	/>
 
-	<aui:input label="friendly-url-mapping" name="friendlyURLMapping">
+	<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= editClientExtensionEntryDisplayContext.getFriendlyURLMapping() %>">
 		<aui:validator name="friendlyURLMapping" />
 	</aui:input>
 
-	<aui:input label="properties" name="properties" type="textarea" />
+	<aui:input label="properties" name="properties" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
 </liferay-frontend:fieldset>

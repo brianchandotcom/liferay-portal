@@ -16,6 +16,7 @@ package com.liferay.client.extension.web.internal.portlet.action;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext;
@@ -54,7 +55,8 @@ public class EditClientExtensionEntryMVCRenderCommand
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					renderRequest, _getClientExtensionEntry(renderRequest)));
+					_cetFactory, _getClientExtensionEntry(renderRequest),
+					renderRequest));
 
 			return "/admin/edit_client_extension_entry.jsp";
 		}
@@ -77,6 +79,9 @@ public class EditClientExtensionEntryMVCRenderCommand
 
 		return null;
 	}
+
+	@Reference
+	private CETFactory _cetFactory;
 
 	@Reference
 	private ClientExtensionEntryService _clientExtensionEntryService;

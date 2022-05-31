@@ -14,8 +14,9 @@
 
 package com.liferay.client.extension.web.internal.portlet;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETIFrame;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -53,10 +54,13 @@ import javax.portlet.RenderResponse;
 public class ClientExtensionEntryPortlet extends MVCPortlet {
 
 	public ClientExtensionEntryPortlet(
-		NPMResolver npmResolver, ClientExtensionEntry clientExtensionEntry) {
+		CETCustomElement cetCustomElement, CETIFrame cetIFrame,
+		ClientExtensionEntry clientExtensionEntry, NPMResolver npmResolver) {
 
-		_npmResolver = npmResolver;
+		_cetCustomElement = cetCustomElement;
+		_cetIFrame = cetIFrame;
 		_clientExtensionEntry = clientExtensionEntry;
+		_npmResolver = npmResolver;
 	}
 
 	@Override
@@ -64,16 +68,16 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		String type = _clientExtensionEntry.getType();
-
-		if (type.equals(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (_cetCustomElement != null) {
 			_renderCustomElement(renderRequest, renderResponse);
 		}
-		else if (type.equals(ClientExtensionEntryConstants.TYPE_IFRAME)) {
+		else if (_cetIFrame != null) {
 			_renderIFrame(renderRequest, renderResponse);
 		}
 		else {
-			throw new IOException("Invalid remote app entry type: " + type);
+			throw new IOException(
+				"Invalid remote app entry type: " +
+					_clientExtensionEntry.getType());
 		}
 	}
 
@@ -120,8 +124,7 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print(StringPool.LESS_THAN);
-		printWriter.print(
-			_clientExtensionEntry.getCustomElementHTMLElementName());
+		printWriter.print(_cetCustomElement.getHTMLElementName());
 
 		Properties properties = _getProperties(renderRequest);
 
@@ -158,8 +161,7 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 		}
 
 		printWriter.print("></");
-		printWriter.print(
-			_clientExtensionEntry.getCustomElementHTMLElementName());
+		printWriter.print(_cetCustomElement.getHTMLElementName());
 		printWriter.print(StringPool.GREATER_THAN);
 
 		printWriter.flush();
@@ -195,7 +197,7 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 
 		printWriter.print("<iframe src=\"");
 
-		String iFrameURL = _clientExtensionEntry.getIFrameURL();
+		String iFrameURL = _cetIFrame.getURL();
 
 		Properties properties = _getProperties(renderRequest);
 
@@ -214,6 +216,8 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClientExtensionEntryPortlet.class);
 
+	private final CETCustomElement _cetCustomElement;
+	private final CETIFrame _cetIFrame;
 	private final ClientExtensionEntry _clientExtensionEntry;
 	private final NPMResolver _npmResolver;
 

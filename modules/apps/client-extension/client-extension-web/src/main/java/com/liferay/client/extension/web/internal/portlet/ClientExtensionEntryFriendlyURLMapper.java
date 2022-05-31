@@ -36,9 +36,9 @@ public class ClientExtensionEntryFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper {
 
 	public ClientExtensionEntryFriendlyURLMapper(
-		ClientExtensionEntry clientExtensionEntry) {
+		ClientExtensionEntry clientExtensionEntry, String friendlyURLMapping) {
 
-		_mapping = clientExtensionEntry.getFriendlyURLMapping();
+		_mapping = friendlyURLMapping;
 
 		Router router = new RouterImpl();
 

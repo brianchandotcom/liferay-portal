@@ -17,6 +17,9 @@ package com.liferay.client.extension.web.internal.deployer;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.deployer.ClientExtensionEntryDeployer;
 import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionEntryConfigurationAction;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
@@ -54,19 +58,62 @@ public class ClientExtensionEntryDeployerImpl
 	public List<ServiceRegistration<?>> deploy(
 		ClientExtensionEntry clientExtensionEntry) {
 
+		if (!Objects.equals(
+				clientExtensionEntry.getType(),
+				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT) &&
+			!Objects.equals(
+				clientExtensionEntry.getType(),
+				ClientExtensionEntryConstants.TYPE_IFRAME)) {
+
+			return Collections.emptyList();
+		}
+
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		serviceRegistrations.add(
 			_registerConfigurationAction(clientExtensionEntry));
 
-		if (!clientExtensionEntry.isInstanceable() &&
-			Validator.isNotNull(clientExtensionEntry.getFriendlyURLMapping())) {
+		CETCustomElement cetCustomElement = null;
+		CETIFrame cetIFrame = null;
+		String friendlyURLMapping = null;
+		boolean instanceable = false;
+		String portletCategoryName = null;
 
-			serviceRegistrations.add(
-				_registerFriendlyURLMapper(clientExtensionEntry));
+		if (Objects.equals(
+				clientExtensionEntry.getType(),
+				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+
+			cetCustomElement = _cetFactory.customElement(clientExtensionEntry);
+
+			friendlyURLMapping = cetCustomElement.getFriendlyURLMapping();
+			instanceable = cetCustomElement.isInstanceable();
+			portletCategoryName = cetCustomElement.getPortletCategoryName();
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_IFRAME)) {
+
+			cetIFrame = _cetFactory.iFrame(clientExtensionEntry);
+
+			friendlyURLMapping = cetIFrame.getFriendlyURLMapping();
+			instanceable = cetIFrame.isInstanceable();
+			portletCategoryName = cetIFrame.getPortletCategoryName();
 		}
 
-		serviceRegistrations.add(_registerPortlet(clientExtensionEntry));
+		if (Validator.isNull(portletCategoryName)) {
+			portletCategoryName = "category.remote-apps";
+		}
+
+		if (!instanceable && Validator.isNotNull(friendlyURLMapping)) {
+			serviceRegistrations.add(
+				_registerFriendlyURLMapper(
+					clientExtensionEntry, friendlyURLMapping));
+		}
+
+		serviceRegistrations.add(
+			_registerPortlet(
+				cetCustomElement, cetIFrame, clientExtensionEntry, instanceable,
+				portletCategoryName));
 
 		return serviceRegistrations;
 	}
@@ -74,19 +121,6 @@ public class ClientExtensionEntryDeployerImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-	}
-
-	private String _getPortletCategoryName(
-		ClientExtensionEntry clientExtensionEntry) {
-
-		String portletCategoryName =
-			clientExtensionEntry.getPortletCategoryName();
-
-		if (Validator.isNull(portletCategoryName)) {
-			return "category.remote-apps";
-		}
-
-		return portletCategoryName;
 	}
 
 	private String _getPortletId(ClientExtensionEntry clientExtensionEntry) {
@@ -108,18 +142,21 @@ public class ClientExtensionEntryDeployerImpl
 	}
 
 	private ServiceRegistration<FriendlyURLMapper> _registerFriendlyURLMapper(
-		ClientExtensionEntry clientExtensionEntry) {
+		ClientExtensionEntry clientExtensionEntry, String friendlyURLMapping) {
 
 		return _bundleContext.registerService(
 			FriendlyURLMapper.class,
-			new ClientExtensionEntryFriendlyURLMapper(clientExtensionEntry),
+			new ClientExtensionEntryFriendlyURLMapper(
+				clientExtensionEntry, friendlyURLMapping),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(clientExtensionEntry)
 			).build());
 	}
 
 	private ServiceRegistration<Portlet> _registerPortlet(
-		ClientExtensionEntry clientExtensionEntry) {
+		CETCustomElement cetCustomElement, CETIFrame cetIFrame,
+		ClientExtensionEntry clientExtensionEntry, boolean instanceable,
+		String portletCategoryName) {
 
 		String portletName = _getPortletId(clientExtensionEntry);
 
@@ -130,11 +167,9 @@ public class ClientExtensionEntryDeployerImpl
 			).put(
 				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
 			).put(
-				"com.liferay.portlet.display-category",
-				_getPortletCategoryName(clientExtensionEntry)
+				"com.liferay.portlet.display-category", portletCategoryName
 			).put(
-				"com.liferay.portlet.instanceable",
-				clientExtensionEntry.isInstanceable()
+				"com.liferay.portlet.instanceable", instanceable
 			).put(
 				"javax.portlet.display-name",
 				clientExtensionEntry.getName(LocaleUtil.US)
@@ -144,36 +179,28 @@ public class ClientExtensionEntryDeployerImpl
 				"javax.portlet.security-role-ref", "power-user,user"
 			).build();
 
-		if (Objects.equals(
-				clientExtensionEntry.getType(),
-				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (cetCustomElement != null) {
+			String cssURLs = cetCustomElement.getCSSURLs();
 
-			String customElementURLs =
-				clientExtensionEntry.getCustomElementURLs();
+			if (Validator.isNotNull(cssURLs)) {
+				dictionary.put(
+					"com.liferay.portlet.footer-portal-css",
+					cssURLs.split(StringPool.NEW_LINE));
+			}
 
-			if (clientExtensionEntry.isCustomElementUseESM()) {
+			String urls = cetCustomElement.getURLs();
+
+			if (cetCustomElement.isUseESM()) {
 				_clientExtensionTopHeadDynamicInclude.registerURLs(
-					portletName, customElementURLs.split(StringPool.NEW_LINE));
+					portletName, urls.split(StringPool.NEW_LINE));
 			}
 			else {
 				dictionary.put(
 					"com.liferay.portlet.footer-portal-javascript",
-					customElementURLs.split(StringPool.NEW_LINE));
-			}
-
-			String customElementCSSURLs =
-				clientExtensionEntry.getCustomElementCSSURLs();
-
-			if (Validator.isNotNull(customElementCSSURLs)) {
-				dictionary.put(
-					"com.liferay.portlet.footer-portal-css",
-					customElementCSSURLs.split(StringPool.NEW_LINE));
+					urls.split(StringPool.NEW_LINE));
 			}
 		}
-		else if (Objects.equals(
-					clientExtensionEntry.getType(),
-					ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
+		else if (cetIFrame != null) {
 			dictionary.put(
 				"com.liferay.portlet.footer-portlet-css",
 				"/display/css/main.css");
@@ -186,11 +213,16 @@ public class ClientExtensionEntryDeployerImpl
 
 		return _bundleContext.registerService(
 			Portlet.class,
-			new ClientExtensionEntryPortlet(_npmResolver, clientExtensionEntry),
+			new ClientExtensionEntryPortlet(
+				cetCustomElement, cetIFrame, clientExtensionEntry,
+				_npmResolver),
 			dictionary);
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CETFactory _cetFactory;
 
 	@Reference
 	private ClientExtensionTopHeadDynamicInclude

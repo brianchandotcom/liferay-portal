@@ -44,19 +44,17 @@ public class DeleteVocabularyMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteVocabularyIds = null;
-
 		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
 
 		if (vocabularyId > 0) {
-			deleteVocabularyIds = new long[] {vocabularyId};
-		}
-		else {
-			deleteVocabularyIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
+			_assetVocabularyService.deleteVocabulary(vocabularyId);
+
+			return;
 		}
 
-		for (long deleteVocabularyId : deleteVocabularyIds) {
+		for (long deleteVocabularyId :
+				ParamUtil.getLongValues(actionRequest, "rowIds")) {
+
 			_assetVocabularyService.deleteVocabulary(deleteVocabularyId);
 		}
 	}

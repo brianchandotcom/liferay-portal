@@ -84,13 +84,13 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 						}
 						else {
 							faviconFileEntryId.value = itemValue.fileEntryId;
+						}
 
-							if (itemValue.url) {
-								faviconFileEntryImage.src = itemValue.url;
-							}
-							else {
-								faviconFileEntryImage.classList.add('d-none');
-							}
+						if (itemValue.url) {
+							faviconFileEntryImage.src = itemValue.url;
+						}
+						else {
+							faviconFileEntryImage.classList.add('d-none');
 						}
 
 						faviconFileEntryTitle.innerHTML =

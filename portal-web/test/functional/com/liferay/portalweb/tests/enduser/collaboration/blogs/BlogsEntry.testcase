@@ -1335,12 +1335,50 @@ definition {
 	}
 
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewInlineVideoAfterMovingToFolder {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-154370 CanViewInlineVideoAfterMovingToFolder pending implementation
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.editContent(
+			embedVideo = "Test YouTube Video Name",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Test YouTube Video Name",
+			folderName = "DM Folder Name",
+			groupName = "Guest");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryCP(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly when publication is enabled."

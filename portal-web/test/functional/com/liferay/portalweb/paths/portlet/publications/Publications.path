@@ -36,6 +36,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_PUBLICATIONS_TOGGLE_SWITCH</td>
+	<td>//input[contains(@id,'enablePublications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH</td>
+	<td>//input[contains(@id,'enableSandboxOnly')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEYWORD_TEXTFIELD</td>
 	<td>//*[@class='form-control-inset']</td>
 	<td></td>
@@ -123,11 +133,6 @@
 <tr>
 	<td>PUBLICATIONS_INDICATOR_TITLE</td>
 	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATIONS_TOGGLE_SWITCH</td>
-	<td>//input[contains(@id,'enablePublications')]</td>
 	<td></td>
 </tr>
 <tr>

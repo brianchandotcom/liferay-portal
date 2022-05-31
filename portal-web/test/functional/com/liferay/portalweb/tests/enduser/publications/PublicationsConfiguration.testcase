@@ -36,7 +36,7 @@ definition {
 			panel = "Applications",
 			portlet = "Publications");
 
-		Check.checkToggleSwitch(locator1 = "Publications#PUBLICATIONS_TOGGLE_SWITCH");
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SUBMIT");
 

@@ -158,6 +158,23 @@ public class PoshiRunnerExecutor {
 		return conditionalValue;
 	}
 
+	public boolean isOcularFunction(Element functionCommandElement) {
+		for (Element executeElement :
+				functionCommandElement.elements("execute")) {
+
+			String seleniumAttributeValue = executeElement.attributeValue(
+				"selenium");
+
+			if ((seleniumAttributeValue != null) &&
+				seleniumAttributeValue.startsWith("ocularAssertElementImage")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void parseElement(Element element) throws Exception {
 		List<Element> childElements = element.elements();
 
@@ -530,9 +547,7 @@ public class PoshiRunnerExecutor {
 						_functionExecuteElement, throwable.getMessage(),
 						_poshiLogger.getDetailsLinkId());
 
-					if (namespacedClassCommandName.equals(
-							"OcularAssertElementImage")) {
-
+					if (isOcularFunction(commandElement)) {
 						_poshiLogger.ocularCommand(_functionExecuteElement);
 					}
 					else {

@@ -231,28 +231,12 @@ definition {
 		return "${curl}";
 	}
 
-	macro assertPriorityFieldIsFilteredWithCorrectValue {
-		var actualPriorityValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
+	macro assertPriorityFieldWithCorrectValue {
+		var actualPriorityValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..priority");
 
 		TestUtils.assertEquals(
 			actual = "${actualPriorityValue}",
 			expected = "${expectedPriorityValue}");
-	}
-
-	macro assertPriorityFieldIsSortedWithCorrectValue {
-		var actualPriorityValueList = JSONUtil.getWithJSONPath("${responseToParse}", "$..['priority']");
-
-		TestUtils.assertEquals(
-			actual = "${actualPriorityValueList}",
-			expected = "${expectedPriorityValueList}");
-	}
-
-	macro assertPriorityFieldWithDefaultValue {
-		var actualPriorityDefaultValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.priority");
-
-		TestUtils.assertEquals(
-			actual = "${actualPriorityDefaultValue}",
-			expected = "${expectedPriorityDefaultValue}");
 	}
 
 	macro assertProperNumberOfItems {

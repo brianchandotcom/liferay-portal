@@ -639,7 +639,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
 		}
 	}
 
@@ -893,7 +893,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Content Page");
 
-			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
 		}
 
 		task ("Given the Minium site has a public widget page with a Product Details widget") {

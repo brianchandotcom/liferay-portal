@@ -195,6 +195,10 @@ else {
 	</div>
 </clay:sheet-section>
 
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
+	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
+</c:if>
+
 <aui:script>
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />regularInheritLookAndFeel',

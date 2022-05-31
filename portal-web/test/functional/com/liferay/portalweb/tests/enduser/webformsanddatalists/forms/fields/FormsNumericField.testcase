@@ -2145,14 +2145,6 @@ definition {
 			affixValue = "ABC123@$&*",
 			inputMaskValue = "0,00");
 
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
-
-		FormFields.viewTextValue(
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
-
 		AssertElementPresent(
 			key_affixValue = "ABC123@$&*",
 			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
@@ -2169,10 +2161,9 @@ definition {
 
 		FormsAdminNavigator.gotoView();
 
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "10000,00");
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0,00");
 
 		AssertElementPresent(
 			key_affixValue = "ABC123@$&*",

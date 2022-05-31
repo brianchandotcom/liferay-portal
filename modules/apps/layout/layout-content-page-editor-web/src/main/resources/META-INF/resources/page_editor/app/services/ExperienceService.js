@@ -16,12 +16,13 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 function getExperienceData({body, dispatch}) {
-	const {segmentsExperienceId} = body;
+	const {loadFragmentEntryLinks, segmentsExperienceId} = body;
 
 	return serviceFetch(
 		config.getExperienceDataURL,
 		{
 			body: {
+				loadFragmentEntryLinks,
 				segmentsExperienceId,
 			},
 		},

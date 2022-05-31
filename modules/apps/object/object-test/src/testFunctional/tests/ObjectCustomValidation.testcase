@@ -290,15 +290,6 @@ definition {
 
 	}
 
-	@description = "LPS-144474 - Verify that, when managing an Object validation, the Error Message field is required"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewErrorMessageWhenFieldIsRequired {
-
-		// TODO LPS-153555 CanViewErrorMessageWhenFieldIsRequired pending implementation
-
-	}
-
 	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -385,6 +376,35 @@ definition {
 		ObjectAdmin.goToValidationsTab();
 
 		ObjectAdmin.viewSelectedTabOnObject(selectedTab = "Validations");
+	}
+
+	@description = "LPS-144474 - Verify that, when managing an Object validation, the Error Message field is required"
+	@priority = "4"
+	test ErrorMessageFieldIsRequired {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153555",
+			objectName = "CustomObject153555",
+			pluralLabelName = "Custom Objects 153555");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153555");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
+
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"

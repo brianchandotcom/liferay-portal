@@ -4,7 +4,6 @@ buildService {
 }
 
 dependencies {
-	compileInclude group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.2.0"
 	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
@@ -17,6 +16,7 @@ dependencies {
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

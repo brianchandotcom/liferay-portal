@@ -1,10 +1,10 @@
 dependencies {
-	compileInclude group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.2.0"
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
 	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.5"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

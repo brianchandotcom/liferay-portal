@@ -101,6 +101,7 @@ definition {
 	@priority = "3"
 	test CanRemoveUserFromGroupThroughLDAP {
 		property apacheds.enabled = "true";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "LDAP#CanRemoveUserFromGroupThroughLDAP";
 

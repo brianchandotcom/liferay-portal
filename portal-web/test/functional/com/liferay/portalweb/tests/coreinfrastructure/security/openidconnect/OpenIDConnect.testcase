@@ -530,6 +530,7 @@ definition {
 	@priority = "4"
 	test VerifyTokenRefreshOffsetMinimum {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OpenIDConnect#VerifyTokenRefreshOffsetMinimum";
 

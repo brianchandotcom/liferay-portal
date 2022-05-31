@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -127,6 +128,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, "masterLayoutPlid",
 				layout.getMasterLayoutPlid());
 
+			long faviconClientExtensionEntryId = ParamUtil.getLong(
+				uploadPortletRequest, "faviconClientExtensionEntryId");
+			String faviconClientExtensionEntryType = ParamUtil.getString(
+				uploadPortletRequest, "faviconClientExtensionEntryType");
+
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
@@ -161,6 +167,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
 				faviconFileEntryId, masterLayoutPlid, serviceContext);
 
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), faviconClientExtensionEntryId,
+				faviconClientExtensionEntryType);
+
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
@@ -182,6 +193,12 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
 					styleBookEntryId, faviconFileEntryId,
 					draftLayout.getMasterLayoutPlid(), serviceContext);
+
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					themeDisplay.getUserId(),
+					_portal.getClassNameId(Layout.class), draftLayout.getPlid(),
+					faviconClientExtensionEntryId,
+					faviconClientExtensionEntryType);
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);
@@ -275,6 +292,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

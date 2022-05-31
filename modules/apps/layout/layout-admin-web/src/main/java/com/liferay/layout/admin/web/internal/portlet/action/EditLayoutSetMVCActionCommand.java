@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -71,6 +73,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
 
+		_updateClientExtensions(actionRequest, layoutSet, themeDisplay);
+
 		_updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
 
 		updateLookAndFeel(
@@ -111,6 +115,22 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, companyId, groupId, true,
 				typeSettingsUnicodeProperties);
 		}
+	}
+
+	private void _updateClientExtensions(
+			ActionRequest actionRequest, LayoutSet layoutSet,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long faviconClientExtensionEntryId = ParamUtil.getLong(
+			actionRequest, "faviconClientExtensionEntryId");
+		String faviconClientExtensionEntryType = ParamUtil.getString(
+			actionRequest, "faviconClientExtensionEntryType");
+
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			themeDisplay.getUserId(), _portal.getClassNameId(LayoutSet.class),
+			layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
+			faviconClientExtensionEntryType);
 	}
 
 	private void _updateLogo(
@@ -218,6 +238,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -231,5 +255,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutSetService _layoutSetService;
+
+	@Reference
+	private Portal _portal;
 
 }

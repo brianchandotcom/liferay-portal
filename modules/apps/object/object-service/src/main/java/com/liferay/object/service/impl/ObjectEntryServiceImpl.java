@@ -14,13 +14,18 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -31,7 +36,9 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -42,6 +49,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.object.configuration.ObjectConfiguration",
 	property = {
 		"json.web.service.context.name=object",
 		"json.web.service.context.path=ObjectEntry"
@@ -58,6 +66,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		_checkPortletResourcePermission(
 			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_validateSubmissionLimit(objectDefinitionId, getUser());
 
 		return objectEntryLocalService.addObjectEntry(
 			getUserId(), groupId, objectDefinitionId, values, serviceContext);
@@ -210,6 +220,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getUserId(), objectEntryId, values, serviceContext);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_objectConfiguration = ConfigurableUtil.createConfigurable(
+			ObjectConfiguration.class, properties);
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -289,8 +306,32 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, actionId);
 	}
 
+	private void _validateSubmissionLimit(long objectDefinitionId, User user)
+		throws PortalException {
+
+		if (!user.isDefaultUser()) {
+			return;
+		}
+
+		int count = objectEntryPersistence.countByU_ODI(
+			user.getUserId(), objectDefinitionId);
+		long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
+			_objectConfiguration.
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+
+		if (count >= maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+			throw new ObjectEntryCountException(
+				StringBundler.concat(
+					"Unable to exceed ",
+					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition,
+					" guest object entries for object definition ",
+					objectDefinitionId));
+		}
+	}
+
 	private final Map<String, ModelResourcePermission<ObjectEntry>>
 		_modelResourcePermissions = new ConcurrentHashMap<>();
+	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

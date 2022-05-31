@@ -18,6 +18,7 @@ import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorRet
 import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,10 +38,12 @@ public class ClientExtensionItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<ClientExtensionEntry> {
 
 	public ClientExtensionItemSelectorViewDescriptor(
+		CETFactory cetFactory,
 		ClientExtensionItemSelectorCriterion
 			clientExtensionItemSelectorCriterion,
 		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
+		_cetFactory = cetFactory;
 		_clientExtensionItemSelectorCriterion =
 			clientExtensionItemSelectorCriterion;
 		_httpServletRequest = httpServletRequest;
@@ -56,7 +59,9 @@ public class ClientExtensionItemSelectorViewDescriptor
 	public ItemDescriptor getItemDescriptor(
 		ClientExtensionEntry clientExtensionEntry) {
 
-		return new ClientExtensionItemDescriptor(clientExtensionEntry);
+		return new ClientExtensionItemDescriptor(
+			_cetFactory, clientExtensionEntry,
+			_clientExtensionItemSelectorCriterion.getType());
 	}
 
 	@Override
@@ -100,6 +105,7 @@ public class ClientExtensionItemSelectorViewDescriptor
 		_supportedItemSelectorReturnType =
 			new ClientExtensionItemSelectorReturnType();
 
+	private final CETFactory _cetFactory;
 	private final ClientExtensionItemSelectorCriterion
 		_clientExtensionItemSelectorCriterion;
 	private final HttpServletRequest _httpServletRequest;

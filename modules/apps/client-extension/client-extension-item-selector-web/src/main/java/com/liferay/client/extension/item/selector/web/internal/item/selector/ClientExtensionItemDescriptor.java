@@ -15,6 +15,8 @@
 package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETThemeFavicon;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -29,9 +31,12 @@ public class ClientExtensionItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 	public ClientExtensionItemDescriptor(
-		ClientExtensionEntry clientExtensionEntry) {
+		CETFactory cetFactory, ClientExtensionEntry clientExtensionEntry,
+		String type) {
 
+		_cetFactory = cetFactory;
 		_clientExtensionEntry = clientExtensionEntry;
+		_type = type;
 	}
 
 	@Override
@@ -57,6 +62,16 @@ public class ClientExtensionItemDescriptor
 		).put(
 			"name",
 			_clientExtensionEntry.getName(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"type", _type
+		).put(
+			"url",
+			() -> {
+				CETThemeFavicon cetThemeFavicon = _cetFactory.themeFavicon(
+					_clientExtensionEntry);
+
+				return cetThemeFavicon.getURL();
+			}
 		).toString();
 	}
 
@@ -85,6 +100,8 @@ public class ClientExtensionItemDescriptor
 		return true;
 	}
 
+	private final CETFactory _cetFactory;
 	private final ClientExtensionEntry _clientExtensionEntry;
+	private final String _type;
 
 }

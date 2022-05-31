@@ -16,6 +16,7 @@ package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
 import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType;
 import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -72,13 +73,16 @@ public class ClientExtensionItemSelectorView
 			servletRequest, servletResponse, itemSelectorCriterion, portletURL,
 			itemSelectedEventName, true,
 			new ClientExtensionItemSelectorViewDescriptor(
-				itemSelectorCriterion, (HttpServletRequest)servletRequest,
-				portletURL));
+				_cetFactory, itemSelectorCriterion,
+				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new ClientExtensionItemSelectorReturnType());
+
+	@Reference
+	private CETFactory _cetFactory;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

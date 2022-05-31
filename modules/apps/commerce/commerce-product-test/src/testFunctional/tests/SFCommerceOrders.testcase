@@ -8,6 +8,10 @@ definition {
 
 	setUp {
 		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Commerce Account",
+			accountEntryType = "Business");
 	}
 
 	tearDown {
@@ -22,12 +26,6 @@ definition {
 		// TODO Review
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Test");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -51,12 +49,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
@@ -64,7 +56,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Click(
-			key_orderAuthor = "Test Account",
+			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
 		ClickNoError(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -74,7 +66,7 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		AssertElementNotPresent(
-			key_orderAuthor = "Test Account",
+			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 	}
 
@@ -83,15 +75,9 @@ definition {
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Test");
-
 		Accounts.openAccountsAdmin();
 
-		CommerceNavigator.gotoEntry(entryName = "Test Test");
+		CommerceNavigator.gotoEntry(entryName = "Commerce Account");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Addresses");
 
@@ -140,7 +126,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Click(
-			key_orderAuthor = "Test Test",
+			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
 		Click(
@@ -201,12 +187,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
@@ -259,10 +239,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Test");
-
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		Click.mouseDownMouseUp(
@@ -302,10 +278,6 @@ definition {
 		property portal.acceptance = "false";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
 
 		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
@@ -393,12 +365,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
@@ -435,12 +401,6 @@ definition {
 			fieldNameList = "Commerce Orders*");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
@@ -482,14 +442,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
@@ -528,7 +480,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
 		Click(
-			key_orderAuthor = "Test Account",
+			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
 		ClickNoError(

@@ -125,6 +125,17 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro enableSandboxOnly {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro inviteUsers {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",

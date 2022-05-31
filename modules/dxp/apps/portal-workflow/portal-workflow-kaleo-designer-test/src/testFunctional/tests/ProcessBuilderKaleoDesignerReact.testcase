@@ -1585,7 +1585,6 @@ definition {
 		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
-
 	}
 
 	@description = "Verify that the user can can publish a definition with Task node"

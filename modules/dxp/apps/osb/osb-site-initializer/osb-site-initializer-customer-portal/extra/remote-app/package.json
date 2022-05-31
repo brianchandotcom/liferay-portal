@@ -17,9 +17,8 @@
 		]
 	},
 	"dependencies": {
-		"@apollo/client": "^3.4.17",
+		"@apollo/client": "^3.6.5",
 		"@clayui/alert": "^3.40.0",
-		"@clayui/badge": "^3.40.0",
 		"@clayui/card": "^3.36.0",
 		"@clayui/core": "3.45.1",
 		"@clayui/css": "^3.36.0",
@@ -28,27 +27,37 @@
 		"@clayui/form": "^3.36.0",
 		"@clayui/icon": "^3.32.0",
 		"@clayui/label": "^3.32.0",
-		"@clayui/layout": "^3.32.0",
-		"@clayui/pagination": "^3.41.0",
+		"@clayui/loading-indicator": "^3.56.0",
 		"@clayui/pagination-bar": "^3.41.0",
 		"@clayui/popover": "^3.47.0",
 		"@clayui/tooltip": "^3.40.0",
+		"apollo-link-rest": "^0.9.0-rc.1",
+		"apollo3-cache-persist": "^0.14.0",
 		"classnames": "^2.3.1",
 		"dompurify": "^2.3.4",
 		"formik": "^2.2.9",
-		"graphql": "^16.0.1",
+		"graphql": "^16.5.0",
+		"graphql-anywhere": "^4.2.7",
 		"md5": "^2.3.0",
+		"qs": "^6.10.3",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-router-dom": "^6.2.1",
-		"react-scripts": "^4.0.3"
+		"react-scripts": "^4.0.3",
+		"yarn": "^1.22.18"
 	},
 	"name": "@liferay/osb-site-initializer-customer-portal-remote-app",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
-		"format": "eslint src --ext js --fix",
-		"start": "react-scripts start"
+		"start": "react-scripts start",
+		"test": "react-scripts test"
 	},
-	"version": "1.0.0"
+	"version": "1.0.0",
+	"devDependencies": {
+		"@faker-js/faker": "^7.1.0",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^12.1.5",
+		"@testing-library/user-event": "^14.2.0"
+	}
 }

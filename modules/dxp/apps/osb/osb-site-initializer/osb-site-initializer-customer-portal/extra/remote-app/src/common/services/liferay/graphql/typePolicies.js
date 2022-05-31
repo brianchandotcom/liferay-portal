@@ -9,17 +9,22 @@
  * distribution rights of the Software.
  */
 
-module.exports = {
-	env: {
-		jest: true,
-		node: true,
+import {
+	koroneikiAccountsQueryTypePolicy,
+	koroneikiAccountsTypePolicy,
+} from './koroneiki-accounts/typePolicy';
+import {userAccountsTypePolicy} from './user-accounts/typePolicy';
+
+export const liferayTypePolicies = {
+	...userAccountsTypePolicy,
+	...koroneikiAccountsTypePolicy,
+	Mutationc: {
+		merge: true,
 	},
-	rules: {
-		'@liferay/group-imports': 'off',
-		'@liferay/portal/no-loader-import-specifier': 'off',
-		'@liferay/portal/no-react-dom-render': 'off',
-		'no-case-declarations': 'off',
-		'no-empty': ['error', {allowEmptyCatch: true}],
-		'no-prototype-builtins': 'off',
+	c: {
+		fields: {
+			...koroneikiAccountsQueryTypePolicy,
+		},
+		merge: true,
 	},
 };

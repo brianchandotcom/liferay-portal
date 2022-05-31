@@ -10,12 +10,13 @@
  */
 
 import {ApolloProvider} from '@apollo/client';
-import ReactDOM from 'react-dom';
-
 import './common/styles/global.scss';
 import {ClayIconSpriteContext} from '@clayui/icon';
-import apolloClient from './apolloClient';
+
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ReactDOM from 'react-dom';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
+import useApollo from './common/hooks/useApollo';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
@@ -29,24 +30,28 @@ const AppRoutes = {
 	portal: <CustomerPortal />,
 };
 
-const CustomerPortalApp = ({apis, route, ...properties}) => (
-	<ApolloProvider client={apolloClient}>
-		<AppPropertiesContext.Provider
-			value={{
-				...properties,
-				...apis,
-			}}
-		>
-			{AppRoutes[route]}
-		</AppPropertiesContext.Provider>
-	</ApolloProvider>
-);
+const CustomerPortalApp = ({apis, route, ...properties}) => {
+	const apolloClient = useApollo();
 
-class CustomerPortalWebComponent extends HTMLElement {
-	constructor() {
-		super();
+	if (!apolloClient) {
+		return <ClayLoadingIndicator />;
 	}
 
+	return (
+		<ApolloProvider client={apolloClient}>
+			<AppPropertiesContext.Provider
+				value={{
+					...properties,
+					...apis,
+				}}
+			>
+				{AppRoutes[route]}
+			</AppPropertiesContext.Provider>
+		</ApolloProvider>
+	);
+};
+
+class CustomerPortalWebComponent extends HTMLElement {
 	connectedCallback() {
 		const properties = {
 			articleAccountSupportURL: super.getAttribute(
@@ -79,10 +84,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 			</ClayIconSpriteContext.Provider>,
 			this
 		);
-	}
-
-	disconnectedCallback() {
-		ReactDOM.unmountComponentAtNode(this);
 	}
 }
 

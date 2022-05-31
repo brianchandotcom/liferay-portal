@@ -15,10 +15,12 @@ export const Liferay = window.Liferay || {
 		TABLET: 0,
 	},
 	ThemeDisplay: {
+		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => window.location.href,
 		getCompanyGroupId: () => 0,
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => null,
+		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
 		getUserId: () => 0,

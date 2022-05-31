@@ -15,6 +15,8 @@
 package com.liferay.layout.page.template.internal.upgrade.v5_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -69,6 +71,16 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			long userId)
 		throws Exception {
 
+		Layout layout = _layoutLocalService.fetchLayout(classPK);
+
+		if (layout == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Layout not found, classPK: " + classPK);
+			}
+
+			return;
+		}
+
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				classPK);
@@ -90,8 +102,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		long draftClassPK = 0;
 		long publishedClassPK = 0;
-
-		Layout layout = _layoutLocalService.fetchLayout(classPK);
 
 		if (layout.isDraftLayout()) {
 			draftClassPK = layout.getPlid();
@@ -193,6 +203,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			preparedStatement.executeUpdate();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateStructureUpgradeProcess.class);
 
 	private final LayoutLocalService _layoutLocalService;
 	private final SegmentsExperienceLocalService

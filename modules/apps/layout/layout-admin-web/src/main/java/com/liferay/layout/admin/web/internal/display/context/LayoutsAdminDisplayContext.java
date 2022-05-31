@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
@@ -508,6 +509,14 @@ public class LayoutsAdminDisplayContext {
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457"))) {
+			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				getSelectFaviconEventName(), itemSelectorCriterion);
+
+			return itemSelectorURL.toString();
+		}
 
 		ClientExtensionItemSelectorCriterion
 			clientExtensionItemSelectorCriterion =

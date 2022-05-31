@@ -86,6 +86,12 @@ const ObjectField = ({
 				) {
 					return true;
 				}
+				else if (
+					focusedFieldType === 'document_library' &&
+					type === 'Long'
+				) {
+					return true;
+				}
 				else if (relationshipType) {
 					return false;
 				}

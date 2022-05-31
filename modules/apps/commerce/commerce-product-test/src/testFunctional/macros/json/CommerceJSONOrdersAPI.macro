@@ -270,4 +270,24 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
+
+	macro _getCommerceOrder {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var orderId = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		echo("The Commerce order id is: ${orderId}");
+
+		return "${orderId}";
+	}
 }

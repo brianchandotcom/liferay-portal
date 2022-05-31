@@ -51,7 +51,7 @@ public class RadioDDMFormFieldValueRendererTest {
 			ddmFormField.getDDMFormFieldOptions();
 
 		ddmFormFieldOptions.addOptionLabel(
-			"value 1", LocaleUtil.US, "option 1");
+			"value 1", LocaleUtil.US, "option with &");
 		ddmFormFieldOptions.addOptionLabel(
 			"value 2", LocaleUtil.US, "option 2");
 
@@ -70,7 +70,7 @@ public class RadioDDMFormFieldValueRendererTest {
 			_createRadioDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
-			"option 1",
+			"option with &amp;",
 			radioDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}

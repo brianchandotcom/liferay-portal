@@ -74,39 +74,8 @@ public class CheckboxMultipleDDMFormFieldValueRendererTest {
 			"value 1", LocaleUtil.US, "option 1");
 		ddmFormFieldOptions.addOptionLabel(
 			"value 2", LocaleUtil.US, "option 2");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"CheckboxMultiple", new UnlocalizedValue("[\"value 1\"]"));
-
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		Assert.assertEquals(
-			"option 1",
-			_checkboxMultipleDDMFormFieldValueRenderer.render(
-				ddmFormFieldValue, LocaleUtil.US));
-	}
-
-	@Test
-	public void testRender2() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"CheckboxMultiple", "Checkbox Multiple", "checkbox-multiple",
-			"string", false, false, false);
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
 		ddmFormFieldOptions.addOptionLabel(
-			"value 1", LocaleUtil.US, "option 1");
-		ddmFormFieldOptions.addOptionLabel(
-			"value 2", LocaleUtil.US, "option 2");
+			"value 3", LocaleUtil.US, "option with &");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -116,12 +85,12 @@ public class CheckboxMultipleDDMFormFieldValueRendererTest {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"CheckboxMultiple",
-				new UnlocalizedValue("[\"value 1\",\"value 2\"]"));
+				new UnlocalizedValue("[\"value 1\",\"value 3\"]"));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		Assert.assertEquals(
-			"option 1, option 2",
+			"option 1, option with &amp;",
 			_checkboxMultipleDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}

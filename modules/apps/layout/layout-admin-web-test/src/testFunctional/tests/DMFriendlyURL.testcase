@@ -282,12 +282,62 @@ definition {
 	}
 
 	@description = "This ensures that the friendlyURL can be used when a user accesses a document template."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageWithTemplate {
+		var portalURL = PropsUtil.get("portal.url");
 
-		// TODO LPS-154501 CanViewImageWithTemplate pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplate.addFragment(
+			collectionName = "Basic Components",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Image",
+			siteURLKey = "site-name");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Template Name",
+			item = "Edit");
+
+		PageEditor.editFragmentImage(
+			fragmentName = "Image",
+			id = "image-square",
+			imageFileName = "DM Document Title");
+
+		Button.clickPublish();
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "DM Document Title",
+			groupName = "Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "site-name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/d/document_1_edit");
+
+		ContentPages.viewFragmentImage(
+			fragmentName = "image",
+			id = "image-square",
+			image = "document_1_edit");
 	}
 
 }

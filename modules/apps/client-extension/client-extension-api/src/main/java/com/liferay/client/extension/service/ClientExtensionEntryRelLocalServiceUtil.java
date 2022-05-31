@@ -62,12 +62,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 	}
 
 	public static ClientExtensionEntryRel addClientExtensionEntryRel(
-			long companyId, long userId, long classNameId, long classPK,
-			String type, String clientExtensionName)
+			long userId, long classNameId, long classPK,
+			long clientExtensionEntryId, String type)
 		throws PortalException {
 
 		return getService().addClientExtensionEntryRel(
-			companyId, userId, classNameId, classPK, type, clientExtensionName);
+			userId, classNameId, classPK, clientExtensionEntryId, type);
 	}
 
 	/**
@@ -127,6 +127,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 		return getService().deleteClientExtensionEntryRel(
 			clientExtensionEntryRelId);
+	}
+
+	public static void deleteClientExtensionEntryRels(
+		long classNameId, long classPK) {
+
+		getService().deleteClientExtensionEntryRels(classNameId, classPK);
 	}
 
 	/**
@@ -229,6 +235,13 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 		return getService().fetchClientExtensionEntryRel(
 			clientExtensionEntryRelId);
+	}
+
+	public static ClientExtensionEntryRel fetchClientExtensionEntryRel(
+		long classNameId, long classPK, String type) {
+
+		return getService().fetchClientExtensionEntryRel(
+			classNameId, classPK, type);
 	}
 
 	/**
@@ -343,6 +356,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getClientExtensionEntryRels(start, end);
+	}
+
+	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK) {
+
+		return getService().getClientExtensionEntryRels(classNameId, classPK);
 	}
 
 	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(

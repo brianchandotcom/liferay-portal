@@ -485,6 +485,196 @@ public class ClientExtensionEntryRelUtil {
 	}
 
 	/**
+	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByC_C(
+		long classNameId, long classPK) {
+
+		return getPersistence().findByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @return the range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching client extension entry rels
+	 */
+	public static List<ClientExtensionEntryRel> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel findByC_C_First(
+			long classNameId, long classPK,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByC_C_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the first client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel fetchByC_C_First(
+		long classNameId, long classPK,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().fetchByC_C_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel findByC_C_Last(
+			long classNameId, long classPK,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByC_C_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
+	 */
+	public static ClientExtensionEntryRel fetchByC_C_Last(
+		long classNameId, long classPK,
+		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return getPersistence().fetchByC_C_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next client extension entry rel
+	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
+	 */
+	public static ClientExtensionEntryRel[] findByC_C_PrevAndNext(
+			long clientExtensionEntryRelId, long classNameId, long classPK,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryRelException {
+
+		return getPersistence().findByC_C_PrevAndNext(
+			clientExtensionEntryRelId, classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Removes all the client extension entry rels where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public static void removeByC_C(long classNameId, long classPK) {
+		getPersistence().removeByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns the number of client extension entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching client extension entry rels
+	 */
+	public static int countByC_C(long classNameId, long classPK) {
+		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
 	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * @param classNameId the class name ID

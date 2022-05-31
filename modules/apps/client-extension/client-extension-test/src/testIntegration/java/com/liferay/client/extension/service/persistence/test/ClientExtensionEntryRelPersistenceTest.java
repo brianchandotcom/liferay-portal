@@ -225,6 +225,14 @@ public class ClientExtensionEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_T() throws Exception {
 		_persistence.countByC_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");

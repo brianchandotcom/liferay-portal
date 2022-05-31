@@ -79,8 +79,8 @@ public interface ClientExtensionEntryRelLocalService
 		ClientExtensionEntryRel clientExtensionEntryRel);
 
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
-			long companyId, long userId, long classNameId, long classPK,
-			String type, String clientExtensionName)
+			long userId, long classNameId, long classPK,
+			long clientExtensionEntryId, String type)
 		throws PortalException;
 
 	/**
@@ -128,6 +128,8 @@ public interface ClientExtensionEntryRelLocalService
 	public ClientExtensionEntryRel deleteClientExtensionEntryRel(
 			long clientExtensionEntryRelId)
 		throws PortalException;
+
+	public void deleteClientExtensionEntryRels(long classNameId, long classPK);
 
 	/**
 	 * @throws PortalException
@@ -211,6 +213,10 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
 		long clientExtensionEntryRelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
+		long classNameId, long classPK, String type);
 
 	/**
 	 * Returns the client extension entry rel with the matching external reference code and company.
@@ -300,6 +306,10 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(

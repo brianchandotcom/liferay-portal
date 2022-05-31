@@ -313,6 +313,20 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return getService().getClientExtensionEntries(start, end);
 	}
 
+	public static List<ClientExtensionEntry> getClientExtensionEntriesByType(
+		long companyId, String type, int start, int end) {
+
+		return getService().getClientExtensionEntriesByType(
+			companyId, type, start, end);
+	}
+
+	public static int getClientExtensionEntriesByTypeCount(
+		long companyId, String type) {
+
+		return getService().getClientExtensionEntriesByTypeCount(
+			companyId, type);
+	}
+
 	/**
 	 * Returns the number of client extension entries.
 	 *

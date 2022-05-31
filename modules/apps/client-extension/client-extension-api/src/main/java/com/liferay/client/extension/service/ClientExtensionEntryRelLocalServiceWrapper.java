@@ -62,12 +62,12 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntryRel
 			addClientExtensionEntryRel(
-				long companyId, long userId, long classNameId, long classPK,
-				String type, String clientExtensionName)
+				long userId, long classNameId, long classPK,
+				long clientExtensionEntryId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			companyId, userId, classNameId, classPK, type, clientExtensionName);
+			userId, classNameId, classPK, clientExtensionEntryId, type);
 	}
 
 	/**
@@ -134,6 +134,12 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 		return _clientExtensionEntryRelLocalService.
 			deleteClientExtensionEntryRel(clientExtensionEntryRelId);
+	}
+
+	@Override
+	public void deleteClientExtensionEntryRels(long classNameId, long classPK) {
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			classNameId, classPK);
 	}
 
 	/**
@@ -258,6 +264,15 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRel(clientExtensionEntryRelId);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntryRel
+		fetchClientExtensionEntryRel(
+			long classNameId, long classPK, String type) {
+
+		return _clientExtensionEntryRelLocalService.
+			fetchClientExtensionEntryRel(classNameId, classPK, type);
 	}
 
 	/**
@@ -385,6 +400,15 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 			start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.client.extension.model.ClientExtensionEntryRel>
+			getClientExtensionEntryRels(long classNameId, long classPK) {
+
+		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+			classNameId, classPK);
 	}
 
 	@Override

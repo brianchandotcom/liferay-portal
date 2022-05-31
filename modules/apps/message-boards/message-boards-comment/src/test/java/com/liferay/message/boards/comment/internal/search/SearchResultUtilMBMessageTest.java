@@ -107,7 +107,7 @@ public class SearchResultUtilMBMessageTest
 			commentRelatedSearchResults.toString(),
 			commentRelatedSearchResults.isEmpty());
 
-		Mockito.verifyZeroInteractions(_mbMessageLocalService);
+		Mockito.verifyNoInteractions(_mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 

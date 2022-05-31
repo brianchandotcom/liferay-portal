@@ -53,18 +53,18 @@ public class MBUtilTest {
 	public static void setUpClass() {
 		Html html = Mockito.mock(Html.class);
 
-		Mockito.stub(
+		Mockito.when(
 			html.escape(Mockito.anyString())
-		).toAnswer(
+		).thenAnswer(
 			MBUtilTest::_getFirstArgument
 		);
 
 		Language language = Mockito.mock(Language.class);
 
-		Mockito.stub(
+		Mockito.when(
 			language.get(
 				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).toAnswer(
+		).thenAnswer(
 			MBUtilTest::_getSecondArgument
 		);
 
@@ -74,9 +74,9 @@ public class MBUtilTest {
 
 		Portal portal = Mockito.mock(Portal.class);
 
-		Mockito.stub(
+		Mockito.when(
 			portal.getUserName(Mockito.any(MBMessage.class))
-		).toReturn(
+		).thenReturn(
 			"USER[]"
 		);
 

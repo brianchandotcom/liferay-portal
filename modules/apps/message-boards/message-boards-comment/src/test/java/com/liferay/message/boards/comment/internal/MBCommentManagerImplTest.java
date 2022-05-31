@@ -40,10 +40,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -57,8 +54,6 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		ReflectionTestUtil.setFieldValue(
 			_mbCommentManagerImpl, "_mbMessageLocalService",
 			_mbMessageLocalService);
@@ -419,27 +414,27 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 
 		when(
-			_mbMessageLocalService.getMessage(Matchers.anyLong())
+			_mbMessageLocalService.getMessage(Mockito.anyLong())
 		).thenReturn(
 			_mbMessage
 		);
 
 		when(
 			_mbMessageLocalService.addDiscussionMessage(
-				Matchers.anyString(), Matchers.anyLong(), Matchers.anyString(),
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
-				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
-				Matchers.anyString(), Matchers.any())
+				Mockito.nullable(String.class), Mockito.anyLong(),
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.any())
 		).thenReturn(
 			_mbMessage
 		);
 
 		when(
 			_mbMessageLocalService.addDiscussionMessage(
-				Matchers.anyString(), Matchers.anyLong(), Matchers.anyString(),
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
-				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
-				Matchers.anyString(), Matchers.any())
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.any())
 		).thenReturn(
 			_mbMessage
 		);
@@ -504,25 +499,15 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	private final MBCommentManagerImpl _mbCommentManagerImpl =
 		new MBCommentManagerImpl();
-
-	@Mock
-	private MBMessage _mbMessage;
-
-	@Mock
-	private MBMessageDisplay _mbMessageDisplay;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Mock
-	private MBThread _mbThread;
-
-	@Mock
-	private Portal _portal;
-
+	private final MBMessage _mbMessage = Mockito.mock(MBMessage.class);
+	private final MBMessageDisplay _mbMessageDisplay = Mockito.mock(
+		MBMessageDisplay.class);
+	private final MBMessageLocalService _mbMessageLocalService = Mockito.mock(
+		MBMessageLocalService.class);
+	private final MBThread _mbThread = Mockito.mock(MBThread.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
 	private final ServiceContext _serviceContext = new ServiceContext();
-
-	@Mock
-	private Function<String, ServiceContext> _serviceContextFunction;
+	private final Function<String, ServiceContext> _serviceContextFunction =
+		Mockito.mock(Function.class);
 
 }

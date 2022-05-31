@@ -30,16 +30,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(MockitoJUnitRunner.class)
 public class MBMessageHTMLFormatUploadHandlerTest {
 
 	@ClassRule
@@ -70,7 +66,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 		).when(
 			_portletFileRepository
 		).getPortletFileEntryURL(
-			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+			Mockito.nullable(ThemeDisplay.class), Mockito.eq(fileEntry),
 			Mockito.eq(StringPool.BLANK)
 		);
 
@@ -104,7 +100,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 		).when(
 			_portletFileRepository
 		).getPortletFileEntryURL(
-			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+			Mockito.nullable(ThemeDisplay.class), Mockito.eq(fileEntry),
 			Mockito.eq(StringPool.BLANK)
 		);
 
@@ -140,7 +136,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 			).when(
 				_portletFileRepository
 			).getPortletFileEntryURL(
-				Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
+				Mockito.nullable(ThemeDisplay.class), Mockito.eq(fileEntry),
 				Mockito.eq(StringPool.BLANK)
 			);
 
@@ -164,8 +160,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 	private final MBMessageHTMLFormatUploadHandler
 		_mbMessageHTMLFormatUploadHandler =
 			new MBMessageHTMLFormatUploadHandler();
-
-	@Mock
-	private PortletFileRepository _portletFileRepository;
+	private final PortletFileRepository _portletFileRepository = Mockito.mock(
+		PortletFileRepository.class);
 
 }

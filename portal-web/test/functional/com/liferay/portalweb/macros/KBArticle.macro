@@ -626,6 +626,18 @@ definition {
 				value1 = "${customFieldTextEdit}");
 		}
 
+		if (isSet(dmImage)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.selectDMImage(
+					imageFileName = "${dmImage}",
+					navTab = "${navTab}");
+			}
+		}
+
 		if ("${cancel}" == "true") {
 			Button.clickCancel();
 		}

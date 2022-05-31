@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -128,7 +129,7 @@ public class AssetListEntryLocalServiceImpl
 						eq(assetListEntryId)
 				)));
 
-		for (long assetEntryId : assetEntryIds) {
+		for (long assetEntryId : SetUtil.fromArray(assetEntryIds)) {
 			if (selectedAssetEntryIds.contains(assetEntryId)) {
 				continue;
 			}
@@ -137,8 +138,6 @@ public class AssetListEntryLocalServiceImpl
 				addAssetListEntryAssetEntryRel(
 					assetListEntryId, assetEntryId, segmentsEntryId,
 					serviceContext);
-
-			selectedAssetEntryIds.add(assetEntryId);
 		}
 
 		// Asset list entry

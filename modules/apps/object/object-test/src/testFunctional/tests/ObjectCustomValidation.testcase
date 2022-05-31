@@ -388,12 +388,36 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test LabelFieldIsRequiredWhenThereIsValidation {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153548",
+			objectName = "CustomObject153548",
+			pluralLabelName = "Custom Objects 153548");
 
-		// TODO LPS-153548 LabelFieldIsRequiredWhenThereIsValidation pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153548");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "",
+			validationType = "Groovy");
+
+		ObjectAdmin.assertRequiredErrorPresent();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "");
+
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 }

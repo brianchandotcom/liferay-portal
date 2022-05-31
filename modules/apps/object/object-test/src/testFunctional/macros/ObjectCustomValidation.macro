@@ -44,6 +44,12 @@ definition {
 		Uncheck.uncheckToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 	}
 
+	macro editLabelOnCustomValidation {
+		Type(
+			locator1 = "ObjectCustomValidation#LABEL_EDIT_VALIDATION",
+			value1 = "${editValidationName}");
+	}
+
 	macro gotoConditionsTab {
 		Click(locator1 = "ObjectCustomValidation#OBJECT_CONDITIONS_TAB");
 	}

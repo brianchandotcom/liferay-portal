@@ -690,12 +690,53 @@ definition {
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly after it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageInThreadAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154378 CanViewImageInThreadAfterMovingToFolder pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToEditThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(
+			skipNavigation = "true",
+			threadBodyEdit = "MB Thread Message Body",
+			threadBodyImageEdit = "DM Document Title");
+
+		PortletEntry.publish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadBodyImage = "dm-document-title",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly when publication is enabled."

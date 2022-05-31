@@ -12,30 +12,28 @@
  * details.
  */
 
-package com.liferay.client.extension.type.factory;
+package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.CETCustomElement;
-import com.liferay.client.extension.type.CETIFrame;
 import com.liferay.client.extension.type.CETThemeCSS;
-import com.liferay.client.extension.type.CETThemeFavicon;
-import com.liferay.client.extension.type.CETThemeJS;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
-public interface CETFactory {
+public class CETThemeCSSImpl extends BaseCETImpl implements CETThemeCSS {
 
-	public CETCustomElement customElement(
-		ClientExtensionEntry clientExtensionEntry);
+	public CETThemeCSSImpl(ClientExtensionEntry clientExtensionEntry) {
+		super(clientExtensionEntry);
+	}
 
-	public CETIFrame iFrame(ClientExtensionEntry clientExtensionEntry);
+	@Override
+	public String getClayURL() {
+		return getString("clayURL");
+	}
 
-	public CETThemeCSS themeCSS(ClientExtensionEntry clientExtensionEntry);
-
-	public CETThemeFavicon themeFavicon(
-		ClientExtensionEntry clientExtensionEntry);
-
-	public CETThemeJS themeJS(ClientExtensionEntry clientExtensionEntry);
+	@Override
+	public String getMainURL() {
+		return getString("mainURL");
+	}
 
 }

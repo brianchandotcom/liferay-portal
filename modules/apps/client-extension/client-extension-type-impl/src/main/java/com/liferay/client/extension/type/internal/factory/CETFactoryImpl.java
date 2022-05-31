@@ -17,9 +17,15 @@ package com.liferay.client.extension.type.internal.factory;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CETCustomElement;
 import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.client.extension.type.CETThemeCSS;
+import com.liferay.client.extension.type.CETThemeFavicon;
+import com.liferay.client.extension.type.CETThemeJS;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.internal.CETCustomElementImpl;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
+import com.liferay.client.extension.type.internal.CETThemeCSSImpl;
+import com.liferay.client.extension.type.internal.CETThemeFaviconImpl;
+import com.liferay.client.extension.type.internal.CETThemeJSImpl;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,14 +35,33 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = CETFactory.class)
 public class CETFactoryImpl implements CETFactory {
 
+	@Override
 	public CETCustomElement customElement(
 		ClientExtensionEntry clientExtensionEntry) {
 
 		return new CETCustomElementImpl(clientExtensionEntry);
 	}
 
+	@Override
 	public CETIFrame iFrame(ClientExtensionEntry clientExtensionEntry) {
 		return new CETIFrameImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETThemeCSS themeCSS(ClientExtensionEntry clientExtensionEntry) {
+		return new CETThemeCSSImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETThemeFavicon themeFavicon(
+		ClientExtensionEntry clientExtensionEntry) {
+
+		return new CETThemeFaviconImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETThemeJS themeJS(ClientExtensionEntry clientExtensionEntry) {
+		return new CETThemeJSImpl(clientExtensionEntry);
 	}
 
 }

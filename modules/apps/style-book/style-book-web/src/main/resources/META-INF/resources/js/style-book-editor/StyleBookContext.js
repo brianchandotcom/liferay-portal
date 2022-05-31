@@ -98,10 +98,12 @@ function internalSaveTokenValues({dispatch, frontendTokensValues, tokens}) {
 				value: DRAFT_STATUS.draftSaved,
 			});
 
-			dispatch({
-				tokens,
-				type: SET_TOKEN_VALUES,
-			});
+			if (Object.keys(tokens).length !== 0) {
+				dispatch({
+					tokens,
+					type: SET_TOKEN_VALUES,
+				});
+			}
 		})
 		.catch((error) => {
 			if (process.env.NODE_ENV === 'development') {
@@ -173,10 +175,14 @@ export function useOnUndo() {
 		const [lastUndo, ...undos] = undoHistory;
 		const previousValue = frontendTokensValues[lastUndo.name];
 
+		if (!lastUndo.value) {
+			delete frontendTokensValues[lastUndo.name];
+		}
+
 		internalSaveTokenValues({
 			dispatch,
 			frontendTokensValues,
-			tokens: {[lastUndo.name]: lastUndo.value},
+			tokens: lastUndo.value ? {[lastUndo.name]: lastUndo.value} : {},
 		}).then(() => {
 			dispatch({
 				type: UPDATE_UNDO_REDO_HISTORY,
@@ -275,7 +281,12 @@ export function useMultipleUndo() {
 		}
 
 		for (const undo of undosToUndo) {
-			tokens = {...tokens, [undo.name]: undo.value}
+			if (undo.value) {
+				tokens = {...tokens, [undo.name]: undo.value};
+			}
+			else {
+				delete frontendTokensValues[undo.name];
+			}
 		}
 
 		return internalSaveTokenValues({

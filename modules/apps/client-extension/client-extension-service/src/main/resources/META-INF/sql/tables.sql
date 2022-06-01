@@ -8,6 +8,7 @@ create table ClientExtensionEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	baseURL STRING null,
 	description TEXT null,
 	name STRING null,
 	properties TEXT null,

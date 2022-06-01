@@ -40,14 +40,15 @@ public class ClientExtensionEntryServiceWrapper
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			addClientExtensionEntry(
-				String externalReferenceCode, String description,
+				String externalReferenceCode, String baseURL,
+				String description,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String properties, String sourceCodeURL, String type,
 				String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.addClientExtensionEntry(
-			externalReferenceCode, description, nameMap, properties,
+			externalReferenceCode, baseURL, description, nameMap, properties,
 			sourceCodeURL, type, typeSettings);
 	}
 
@@ -82,13 +83,13 @@ public class ClientExtensionEntryServiceWrapper
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			updateClientExtensionEntry(
-				long clientExtensionEntryId, String description,
+				long clientExtensionEntryId, String baseURL, String description,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String properties, String sourceCodeURL, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.updateClientExtensionEntry(
-			clientExtensionEntryId, description, nameMap, properties,
+			clientExtensionEntryId, baseURL, description, nameMap, properties,
 			sourceCodeURL, typeSettings);
 	}
 

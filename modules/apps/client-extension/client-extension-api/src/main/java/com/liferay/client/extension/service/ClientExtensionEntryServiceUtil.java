@@ -39,13 +39,13 @@ public class ClientExtensionEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ClientExtensionEntry addClientExtensionEntry(
-			String externalReferenceCode, String description,
+			String externalReferenceCode, String baseURL, String description,
 			Map<java.util.Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
 
 		return getService().addClientExtensionEntry(
-			externalReferenceCode, description, nameMap, properties,
+			externalReferenceCode, baseURL, description, nameMap, properties,
 			sourceCodeURL, type, typeSettings);
 	}
 
@@ -73,13 +73,13 @@ public class ClientExtensionEntryServiceUtil {
 	}
 
 	public static ClientExtensionEntry updateClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+			long clientExtensionEntryId, String baseURL, String description,
 			Map<java.util.Locale, String> nameMap, String properties,
 			String sourceCodeURL, String typeSettings)
 		throws PortalException {
 
 		return getService().updateClientExtensionEntry(
-			clientExtensionEntryId, description, nameMap, properties,
+			clientExtensionEntryId, baseURL, description, nameMap, properties,
 			sourceCodeURL, typeSettings);
 	}
 

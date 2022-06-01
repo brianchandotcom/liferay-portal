@@ -226,6 +226,21 @@ public interface ClientExtensionEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the base url of this client extension entry.
+	 *
+	 * @return the base url of this client extension entry
+	 */
+	@AutoEscape
+	public String getBaseURL();
+
+	/**
+	 * Sets the base url of this client extension entry.
+	 *
+	 * @param baseURL the base url of this client extension entry
+	 */
+	public void setBaseURL(String baseURL);
+
+	/**
 	 * Returns the description of this client extension entry.
 	 *
 	 * @return the description of this client extension entry

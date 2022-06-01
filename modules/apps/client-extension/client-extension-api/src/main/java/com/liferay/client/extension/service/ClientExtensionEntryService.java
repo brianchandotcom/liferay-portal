@@ -53,7 +53,7 @@ public interface ClientExtensionEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the client extension entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public ClientExtensionEntry addClientExtensionEntry(
-			String externalReferenceCode, String description,
+			String externalReferenceCode, String baseURL, String description,
 			Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException;
@@ -75,7 +75,7 @@ public interface ClientExtensionEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ClientExtensionEntry updateClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+			long clientExtensionEntryId, String baseURL, String description,
 			Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String typeSettings)
 		throws PortalException;

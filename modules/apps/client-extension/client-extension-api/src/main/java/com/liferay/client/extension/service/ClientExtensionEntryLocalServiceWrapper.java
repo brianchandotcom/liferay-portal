@@ -60,21 +60,23 @@ public class ClientExtensionEntryLocalServiceWrapper
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			addClientExtensionEntry(
-				String externalReferenceCode, long userId, String description,
+				String externalReferenceCode, long userId, String baseURL,
+				String description,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String properties, String sourceCodeURL, String type,
 				String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.addClientExtensionEntry(
-			externalReferenceCode, userId, description, nameMap, properties,
-			sourceCodeURL, type, typeSettings);
+			externalReferenceCode, userId, baseURL, description, nameMap,
+			properties, sourceCodeURL, type, typeSettings);
 	}
 
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			addOrUpdateClientExtensionEntry(
-				String externalReferenceCode, long userId, String description,
+				String externalReferenceCode, long userId, String baseURL,
+				String description,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String properties, String sourceCodeURL, String type,
 				String typeSettings)
@@ -82,8 +84,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 
 		return _clientExtensionEntryLocalService.
 			addOrUpdateClientExtensionEntry(
-				externalReferenceCode, userId, description, nameMap, properties,
-				sourceCodeURL, type, typeSettings);
+				externalReferenceCode, userId, baseURL, description, nameMap,
+				properties, sourceCodeURL, type, typeSettings);
 	}
 
 	/**
@@ -516,14 +518,15 @@ public class ClientExtensionEntryLocalServiceWrapper
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			updateClientExtensionEntry(
-				long userId, long clientExtensionEntryId, String description,
+				long userId, long clientExtensionEntryId, String baseURL,
+				String description,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String properties, String sourceCodeURL, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.updateClientExtensionEntry(
-			userId, clientExtensionEntryId, description, nameMap, properties,
-			sourceCodeURL, typeSettings);
+			userId, clientExtensionEntryId, baseURL, description, nameMap,
+			properties, sourceCodeURL, typeSettings);
 	}
 
 	@Override

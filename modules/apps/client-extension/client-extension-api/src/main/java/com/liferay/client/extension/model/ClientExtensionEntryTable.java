@@ -62,6 +62,9 @@ public class ClientExtensionEntryTable
 	public final Column<ClientExtensionEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, String> baseURL =
+		createColumn(
+			"baseURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Clob> description =
 		createColumn(
 			"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);

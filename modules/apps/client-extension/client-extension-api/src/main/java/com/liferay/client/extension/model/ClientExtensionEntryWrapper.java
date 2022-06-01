@@ -54,6 +54,7 @@ public class ClientExtensionEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("baseURL", getBaseURL());
 		attributes.put("description", getDescription());
 		attributes.put("name", getName());
 		attributes.put("properties", getProperties());
@@ -126,6 +127,12 @@ public class ClientExtensionEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String baseURL = (String)attributes.get("baseURL");
+
+		if (baseURL != null) {
+			setBaseURL(baseURL);
+		}
+
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
@@ -195,6 +202,16 @@ public class ClientExtensionEntryWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the base url of this client extension entry.
+	 *
+	 * @return the base url of this client extension entry
+	 */
+	@Override
+	public String getBaseURL() {
+		return model.getBaseURL();
 	}
 
 	/**
@@ -616,6 +633,16 @@ public class ClientExtensionEntryWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets the base url of this client extension entry.
+	 *
+	 * @param baseURL the base url of this client extension entry
+	 */
+	@Override
+	public void setBaseURL(String baseURL) {
+		model.setBaseURL(baseURL);
 	}
 
 	/**

@@ -86,15 +86,15 @@ public interface ClientExtensionEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry addClientExtensionEntry(
-			String externalReferenceCode, long userId, String description,
-			Map<Locale, String> nameMap, String properties,
+			String externalReferenceCode, long userId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry addOrUpdateClientExtensionEntry(
-			String externalReferenceCode, long userId, String description,
-			Map<Locale, String> nameMap, String properties,
+			String externalReferenceCode, long userId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException;
 
@@ -380,8 +380,8 @@ public interface ClientExtensionEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry updateClientExtensionEntry(
-			long userId, long clientExtensionEntryId, String description,
-			Map<Locale, String> nameMap, String properties,
+			long userId, long clientExtensionEntryId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String typeSettings)
 		throws PortalException;
 

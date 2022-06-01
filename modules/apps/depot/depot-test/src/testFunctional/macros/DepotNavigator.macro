@@ -473,6 +473,43 @@ definition {
 		}
 	}
 
+	macro openToEditDMEntryInDepot {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		if (isSet(staging)) {
+			if (isSet(folderName)) {
+				var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${depotName}-staging",
+					name = "${folderName}");
+			}
+
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "${dmDocumentTitle}",
+				folderId = "${folderId}",
+				groupName = "${depotName} (Staging)",
+				portalURL = "${baseURL}",
+				site = "false");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fedit_file_entry&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryId=${fileEntryId}");
+		}
+		else {
+			if (isSet(folderName)) {
+				var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${depotName}",
+					name = "${folderName}");
+			}
+
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "${dmDocumentTitle}",
+				folderId = "${folderId}",
+				groupName = "${depotName}",
+				portalURL = "${baseURL}",
+				site = "false");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fedit_file_entry&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryId=${fileEntryId}");
+		}
+	}
+
 	macro openToEditWCEntry {
 		var baseURL = "${baseURL}";
 

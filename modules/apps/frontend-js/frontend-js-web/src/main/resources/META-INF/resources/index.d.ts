@@ -693,3 +693,9 @@ export function toggleRadio(
 	showBoxIds: string | string[],
 	hideBoxIds?: string | string[]
 ): void;
+
+export function toggleSelectBox(
+	selectBoxId: string,
+	value: any,
+	toggleBoxId: string
+): void;

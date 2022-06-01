@@ -521,6 +521,12 @@ declare module Liferay {
 			hideBoxIds?: string | string[]
 		): void;
 
+		export function toggleSelectBox(
+			selectBoxId: string,
+			value: any,
+			toggleBoxId: string
+		): void;
+
 		/**
 		 * Unescapes HTML from the given string.
 		 */

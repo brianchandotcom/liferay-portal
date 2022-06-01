@@ -1,0 +1,145 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Setup: Add 3 addresses to the account(Billing, Shipping, Billing & Shipping)") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				Accounts.addAddressViaSetDefaultAddress(
+					addressCity = "Diamond Bar",
+					addressCountry = "United States",
+					addressName = "Liferay ${typeList}",
+					addressPostalCode = "91765",
+					addressRegion = "California",
+					addressStreet1 = "1400 Montefino Ave",
+					addressType = "${typeList}",
+					phoneNumber = "+1-877-543-3729");
+			}
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "Verify buyers without the Manage Addresses permission cannot add a shipping and billing address at checkout, only select existing ones."
+	@priority = "3"
+	test CanOnlySelectPreDefinedShippingAndBillingAddressesWhithouPermission {
+		task ("Given the buyer role doesn't have permission to manage addresses") {
+			Permissions.removePermissionViaAPI(
+				groupName = "Minium",
+				resourceAction = "MANAGE_ADDRESSES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("When the buyer checks out an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("Then the buyer can select a Shipping address between the pre-defined list of existing Shipping addresses") {
+			AssertElementPresent(
+				key_selectFieldLabel = "Choose Shipping Address",
+				locator1 = "Select#ANY",
+				value1 = "Liferay Billing and Shipping");
+
+			Select(
+				key_selectFieldLabel = "Choose Shipping Address",
+				locator1 = "Select#ANY",
+				value1 = "Liferay Shipping");
+		}
+
+		task ("And the 'Use shipping address as billing address' checkbox is not visible") {
+			AssertElementNotPresent(
+				checkboxName = "Use shipping address as billing address",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("And the buyer is not able to add a new shipping address as fields are disabled") {
+			AssertElementPresent(
+				key_fieldName = "Name",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+
+			AssertElementPresent(
+				key_fieldName = "Address",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+
+			AssertElementPresent(
+				key_fieldName = "Zip",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+		}
+
+		task ("When the buyer reaches the Billing Address step") {
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then the buyer can select a billing address between the pre-defined list of existing billing addresses") {
+			AssertElementPresent(
+				key_selectFieldLabel = "Choose Billing Address",
+				locator1 = "Select#ANY",
+				value1 = "Liferay Billing and Shipping");
+
+			Select(
+				key_selectFieldLabel = "Choose Billing Address",
+				locator1 = "Select#ANY",
+				value1 = "Liferay Billing");
+		}
+
+		task ("But the buyer is not able to add a new shipping address as fields are disabled") {
+			AssertElementPresent(
+				key_fieldName = "Name",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+
+			AssertElementPresent(
+				key_fieldName = "Address",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+
+			AssertElementPresent(
+				key_fieldName = "Zip",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+		}
+	}
+
+}

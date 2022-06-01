@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-payment-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":apps:commerce:commerce-shipping-engine-fixed-api")
+	testIntegrationCompile project(":apps:commerce:commerce-term-api")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-channel-api")

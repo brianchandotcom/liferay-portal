@@ -16,6 +16,8 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
@@ -845,6 +847,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Reference
 	private CommentManager _commentManager;
 
 	@Reference
@@ -947,6 +953,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			_copyLayoutSEOEntry(_sourceLayout, _targetLayout);
 
+			_copyLayoutClientExtensions(_sourceLayout, _targetLayout);
+
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 
@@ -976,6 +984,31 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_sourceSegmentsExperiencesIds = sourceSegmentsExperiencesIds;
 			_targetLayout = targetLayout;
 			_targetSegmentsExperiencesIds = targetSegmentsExperiencesIds;
+		}
+
+		private void _copyLayoutClientExtensions(
+				Layout sourceLayout, Layout targetLayout)
+			throws Exception {
+
+			long classNameId = _portal.getClassNameId(Layout.class);
+
+			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+				classNameId, targetLayout.getPlid());
+
+			List<ClientExtensionEntryRel> clientExtensionEntryRels =
+				_clientExtensionEntryRelLocalService.
+					getClientExtensionEntryRels(
+						classNameId, sourceLayout.getPlid());
+
+			for (ClientExtensionEntryRel clientExtensionEntryRel :
+					clientExtensionEntryRels) {
+
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					targetLayout.getUserId(), classNameId,
+					targetLayout.getPlid(),
+					clientExtensionEntryRel.getClientExtensionEntryId(),
+					clientExtensionEntryRel.getType());
+			}
 		}
 
 		private final Consumer<Layout> _consumer;

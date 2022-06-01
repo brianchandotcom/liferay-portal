@@ -60,6 +60,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="C_C_T" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.storage.salesforce.internal;
+package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;

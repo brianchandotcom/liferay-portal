@@ -19,7 +19,7 @@ interface IViewContextProps extends Array<TState | Function> {
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 declare const ViewContext: React.Context<IViewContextProps>;
-export declare const METADATAS: {
+export declare const METADATA: {
 	businessType: string;
 	checked: boolean;
 	filtered: boolean;

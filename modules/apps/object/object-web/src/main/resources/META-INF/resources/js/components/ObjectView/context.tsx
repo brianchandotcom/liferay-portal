@@ -39,7 +39,7 @@ interface TInitialFilterColumn extends TObjectViewFilterColumn {
 
 const ViewContext = createContext({} as IViewContextProps);
 
-export const METADATAS = [
+export const METADATA = [
 	{
 		businessType: 'Author',
 		checked: false,
@@ -362,7 +362,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			const newObjectFields: TObjectField[] = [];
 
-			METADATAS.map((field) => {
+			METADATA.map((field) => {
 				newObjectFields.push(field);
 			});
 

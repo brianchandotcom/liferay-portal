@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {defaultLanguageId} from '../../utils/locale';
-import {METADATAS} from '../ObjectView/context';
+import {METADATA} from '../ObjectView/context';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
 
 import './index.scss';
@@ -47,7 +47,7 @@ export default function CodeEditor({
 				<EditorSidebar
 					defaultLanguageId={defaultLanguageId}
 					editorRef={editorRef}
-					metadatasFields={METADATAS}
+					metadataFields={METADATA}
 					sidebarElements={elements}
 				/>
 			)}

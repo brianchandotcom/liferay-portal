@@ -23,13 +23,13 @@ import './EditorSidebar.scss';
 export function EditorSidebar({
 	defaultLanguageId,
 	editorRef,
-	metadatasFields,
+	metadataFields,
 	sidebarElements,
 }: IProps) {
 	const onItemClick = (item: ObjectValidationRuleElementItem) =>
 		editorRef.current?.replaceSelection(item.content);
 
-	const metadatas = metadatasFields.map((metadata) => ({
+	const metadata = metadataFields.map((metadata) => ({
 		content: metadata.name,
 		label: metadata.label[defaultLanguageId],
 		tooltip: '',
@@ -38,7 +38,7 @@ export function EditorSidebar({
 	const objectFields = {...sidebarElements[0]};
 
 	objectFields.items = useMemo(
-		() => objectFields.items.concat(metadatas),
+		() => objectFields.items.concat(metadata),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
@@ -72,6 +72,6 @@ interface IProps {
 	className?: string;
 	defaultLanguageId: Locale;
 	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	metadatasFields: any[];
+	metadataFields: any[];
 	sidebarElements: ObjectValidationRuleElement[];
 }

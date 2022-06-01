@@ -18,14 +18,14 @@ import './EditorSidebar.scss';
 export declare function EditorSidebar({
 	defaultLanguageId,
 	editorRef,
-	metadatasFields,
+	metadataFields,
 	sidebarElements,
 }: IProps): JSX.Element;
 interface IProps {
 	className?: string;
 	defaultLanguageId: Locale;
 	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	metadatasFields: any[];
+	metadataFields: any[];
 	sidebarElements: ObjectValidationRuleElement[];
 }
 export {};

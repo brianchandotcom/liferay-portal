@@ -196,14 +196,9 @@ public class PoshiRunner {
 			String disableWebdriver = properties.getProperty(
 				"disable-webdriver");
 
-			if (Validator.isNotNull(disableWebdriver)) {
-				boolean openBrowser = GetterUtil.getBoolean(disableWebdriver);
+			if (!(Validator.isNotNull(disableWebdriver) &&
+				  GetterUtil.getBoolean(disableWebdriver))) {
 
-				if (!openBrowser) {
-					SeleniumUtil.startSelenium();
-				}
-			}
-			else {
 				SeleniumUtil.startSelenium();
 			}
 

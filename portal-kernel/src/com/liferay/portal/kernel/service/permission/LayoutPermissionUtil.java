@@ -56,6 +56,22 @@ public class LayoutPermissionUtil {
 		_layoutPermission.check(permissionChecker, plid, actionId);
 	}
 
+	public static void checkLayoutBasicUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		_layoutPermission.checkLayoutBasicUpdatePermission(
+			permissionChecker, layout);
+	}
+
+	public static void checkLayoutBasicUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException {
+
+		_layoutPermission.checkLayoutBasicUpdatePermission(
+			permissionChecker, plid);
+	}
+
 	public static void checkLayoutUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {
@@ -101,6 +117,22 @@ public class LayoutPermissionUtil {
 		throws PortalException {
 
 		return _layoutPermission.contains(permissionChecker, plid, actionId);
+	}
+
+	public static boolean containsLayoutBasicUpdatePermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		return _layoutPermission.containsLayoutBasicUpdatePermission(
+			permissionChecker, layout);
+	}
+
+	public static boolean containsLayoutBasicUpdatePermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException {
+
+		return _layoutPermission.containsLayoutBasicUpdatePermission(
+			permissionChecker, plid);
 	}
 
 	public static boolean containsLayoutUpdatePermission(

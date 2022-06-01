@@ -16,20 +16,51 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {Dispatch} from 'react';
+import {Dispatch, useState} from 'react';
+
+import i18n from '../../i18n';
+import {RendererFields} from '../Form/Renderer';
+import ManagementToolbarFilter from './ManagementToolbarFilter';
+
+export type IItem = {
+	active?: boolean;
+	checked?: boolean;
+	disabled?: boolean;
+	href?: string;
+	items?: IItem[];
+	label?: string;
+	name?: string;
+	onChange?: Function;
+	onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+	symbolLeft?: string;
+	symbolRight?: string;
+	type?:
+		| 'checkbox'
+		| 'contextual'
+		| 'group'
+		| 'item'
+		| 'radio'
+		| 'radiogroup'
+		| 'divider';
+	value?: string;
+};
 
 type ManagementToolbarRightProps = {
 	addButton?: () => void;
+	columns: IItem[];
+	disabled: boolean;
+	filterFields?: RendererFields[];
 	setShowMobile: Dispatch<boolean>;
-	viewTypes: any[];
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	addButton,
+	columns,
+	disabled,
+	filterFields,
 	setShowMobile,
-	viewTypes,
 }) => {
-	const viewTypeActive = viewTypes.find((type) => type.active);
+	const [pinned, setPinned] = useState(false);
 
 	return (
 		<ClayManagementToolbar.ItemList>
@@ -43,38 +74,54 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				</ClayButton>
 			</ClayManagementToolbar.Item>
 
-			<ClayManagementToolbar.Item>
-				<ClayButton
-					className="nav-link nav-link-monospaced"
-					displayType="unstyled"
-					onClick={() => {}}
-				>
-					<ClayIcon symbol="info-circle-open" />
-				</ClayButton>
-			</ClayManagementToolbar.Item>
-
-			<ClayManagementToolbar.Item>
-				<ClayDropDownWithItems
-					items={viewTypes}
-					trigger={
-						<ClayButton
-							className="nav-link nav-link-monospaced"
+			{filterFields?.length && (
+				<>
+					<ClayManagementToolbar.Item>
+						<ClayButtonWithIcon
+							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
-						>
-							<ClayIcon
-								symbol={
-									viewTypeActive
-										? viewTypeActive.symbolLeft
-										: ''
-								}
-							/>
-						</ClayButton>
-					}
-				/>
-			</ClayManagementToolbar.Item>
+							onClick={() => setPinned(!pinned)}
+							symbol={pinned ? 'unpin' : 'pin'}
+							title={pinned ? 'Unpin' : 'Pin'}
+						/>
+					</ClayManagementToolbar.Item>
+
+					<ManagementToolbarFilter filterFields={filterFields} />
+				</>
+			)}
+
+			<ClayDropDownWithItems
+				items={columns}
+				trigger={
+					<ClayButton
+						className="nav-link"
+						disabled={disabled}
+						displayType="unstyled"
+					>
+						<span className="navbar-breakpoint-down-d-none">
+							<span
+								className="navbar-text-truncate"
+								title={i18n.translate('columns')}
+							>
+								<ClayIcon
+									className="inline-item inline-item-after"
+									symbol="columns"
+								/>
+							</span>
+						</span>
+
+						<span className="navbar-breakpoint-d-none">
+							<ClayIcon symbol="columns" />
+						</span>
+					</ClayButton>
+				}
+			/>
 
 			{addButton && (
-				<ClayManagementToolbar.Item onClick={() => addButton()}>
+				<ClayManagementToolbar.Item
+					className="ml-2"
+					onClick={addButton}
+				>
 					<ClayButtonWithIcon
 						className="nav-btn nav-btn-monospaced"
 						symbol="plus"

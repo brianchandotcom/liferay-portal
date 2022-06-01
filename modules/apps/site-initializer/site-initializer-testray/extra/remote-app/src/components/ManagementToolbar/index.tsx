@@ -17,64 +17,36 @@ import {useContext, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
-import {SortOption} from '../../types';
+import {RendererFields} from '../Form/Renderer';
 import {TableProps} from '../Table';
-import ManagementToolbarFilterAndOrder, {
-	IItem,
-} from './ManagementToolbarFilterAndOrder';
+import ManagementToolbarLeft from './ManagementToolbarLeft';
 import ManagementToolbarResultsBar from './ManagementToolbarResultsBar';
-import ManagementToolbarRight from './ManagementToolbarRight';
+import ManagementToolbarRight, {IItem} from './ManagementToolbarRight';
 import ManagementToolbarSearch from './ManagementToolbarSearch';
 
 export type ManagementToolbarProps = {
 	addButton?: () => void;
+	filterFields?: RendererFields[];
 	onSelectAllRows: () => void;
+	rowSelectable?: boolean;
 	tableProps: Omit<TableProps, 'items'>;
 	totalItems: number;
 };
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	addButton,
+	filterFields,
 	onSelectAllRows,
+	rowSelectable,
 	tableProps,
 	totalItems,
 }) => {
-	const [{filters, keywords, sort, viewType}, dispatch] = useContext(
-		ListViewContext
-	);
+	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
 	const [showMobile, setShowMobile] = useState(false);
 
 	const disabled = totalItems === 0;
 
-	const viewTypes = [
-		{
-			active: viewType === 'table',
-			label: 'Table',
-			onClick: () =>
-				dispatch({payload: 'table', type: ListViewTypes.SET_VIEW_TYPE}),
-			symbolLeft: 'table',
-		},
-		{
-			active: viewType === 'list',
-			label: 'List',
-			onClick: () =>
-				dispatch({payload: 'list', type: ListViewTypes.SET_VIEW_TYPE}),
-			symbolLeft: 'list',
-		},
-		{
-			active: viewType === 'cards',
-			label: 'Card',
-			onClick: () =>
-				dispatch({payload: 'cards', type: ListViewTypes.SET_VIEW_TYPE}),
-			symbolLeft: 'cards2',
-		},
-	];
-
-	const sorteableColumns = tableProps.columns.filter(
-		({sorteable}) => sorteable
-	);
-
-	let filterItems: IItem[] = [
+	const columns = [
 		{
 			items: tableProps.columns.map((column) => ({
 				checked: (filters.columns || {})[column.key] ?? true,
@@ -100,31 +72,6 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 		},
 	];
 
-	if (sorteableColumns.length) {
-		filterItems = [
-			...filterItems,
-			{
-				items: sorteableColumns.map((column) => ({
-					active:
-						column.key === sort.key ||
-						sorteableColumns.length === 1,
-					label: column.value,
-					onClick: () =>
-						dispatch({
-							payload: {
-								direction: sort.direction,
-								key: column.key,
-							},
-							type: ListViewTypes.SET_SORT,
-						}),
-					type: 'item',
-				})),
-				label: i18n.translate('order-by'),
-				type: 'group',
-			},
-		];
-	}
-
 	const onSearch = (searchText: string) => {
 		dispatch({payload: searchText, type: ListViewTypes.SET_SEARCH});
 	};
@@ -132,23 +79,10 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	return (
 		<>
 			<ClayManagementToolbar>
-				<ManagementToolbarFilterAndOrder
+				<ManagementToolbarLeft
 					disabled={disabled}
-					filterItems={filterItems}
 					onSelectAllRows={onSelectAllRows}
-					onSort={() =>
-						dispatch({
-							payload: {
-								...sort,
-								direction:
-									sort.direction === SortOption.ASC
-										? SortOption.DESC
-										: SortOption.ASC,
-							},
-							type: ListViewTypes.SET_SORT,
-						})
-					}
-					sort={sort}
+					rowSelectable={rowSelectable}
 				/>
 
 				<ManagementToolbarSearch
@@ -161,8 +95,10 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 
 				<ManagementToolbarRight
 					addButton={addButton}
+					columns={columns as IItem[]}
+					disabled={disabled}
+					filterFields={filterFields}
 					setShowMobile={setShowMobile}
-					viewTypes={viewTypes}
 				/>
 			</ClayManagementToolbar>
 

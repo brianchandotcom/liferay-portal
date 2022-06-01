@@ -12,30 +12,35 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import getCN from 'classnames';
-import React, {useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import FieldList from './FieldList';
+import SelectSXPBlueprintModal from './select_sxp_blueprint_modal/SelectSXPBlueprintModal';
 
 const CONTRIBUTORS = {
 	BASIC: 'basic',
-	BLUEPRINT: 'blueprint',
+	SXP_BLUEPRINT: 'blueprint',
 };
 
 const DEFAULT_ATTRIBUTES = {
-	blueprintKey: '',
 	fields: [],
 	includeAssetSummary: true,
 	includeAssetURL: true,
+	sxpBlueprintId: '',
 };
 
 /**
  * Cleans up the fields array by removing those that do not have the required
  * fields (contributorName, displayGroupName, size). If blueprint, check
- * for blueprintKey as well.
+ * for sxpBlueprintId as well.
  * @param {Array} fields The list of fields.
  * @return {Array} The cleaned up list of fields.
  */
@@ -49,11 +54,17 @@ const removeEmptyFields = (fields) =>
 			contributorName &&
 			displayGroupName &&
 			size &&
-			attributes?.blueprintKey
+			attributes?.sxpBlueprintId
 		);
 	});
 
-function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
+function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
+	const [showModal, setShowModal] = useState(false);
+	const [sxpBlueprint, setSXPBlueprint] = useState({
+		loading: false,
+		title: '',
+	});
+
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [multiSelectItems, setMultiSelectItems] = useState(
 		(value.attributes?.fields || []).map((field) => ({
@@ -61,42 +72,45 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 			value: field,
 		}))
 	);
-	const [touched, setTouched] = useState({
-		blueprintKey: false,
-		displayGroupName: false,
-		size: false,
+
+	const {observer, onClose} = useModal({
+		onClose: () => setShowModal(false),
 	});
 
-	const _handleBlur = (field) => () => {
-		setTouched({...touched, [field]: true});
+	const _handleSXPBlueprintSelectorSubmit = (id, title) => {
+		onChange({
+			attributes: {
+				...value.attributes,
+				sxpBlueprintId: id,
+			},
+		});
+
+		setSXPBlueprint({loading: false, title});
 	};
 
-	const _handleChange = (property) => (event) => {
-		onChange({[property]: event.target.value});
+	const _handleSXPBlueprintSelectorClickRemove = () => {
+		_handleSXPBlueprintSelectorSubmit('', '');
+
+		onBlur('sxpBlueprintId')();
+	};
+
+	const _handleSXPBlueprintSelectorClickSelect = () => {
+		setShowModal(true);
+	};
+
+	const _handleSXPBlueprintSelectorChange = (event) => {
+
+		// To use validation from 'required' field, keep the onChange and value
+		// properties but make its behavior resemble readOnly (input can only be
+		// changed with the selector modal).
+
+		event.preventDefault();
 	};
 
 	const _handleChangeAttribute = (property) => (event) => {
 		onChange({
 			attributes: {...value.attributes, [property]: event.target.value},
 		});
-	};
-
-	const _handleChangeContributorName = (event) => {
-		if (event.target.value === CONTRIBUTORS.BASIC) {
-			onReplace({
-				contributorName: event.target.value,
-				displayGroupName: value.displayGroupName,
-				size: value.size,
-			});
-		}
-		else {
-			onChange({
-				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: event.target.value,
-				displayGroupName: value.displayGroupName,
-				size: value.size,
-			});
-		}
 	};
 
 	const _handleMultiSelectBlur = () => {
@@ -121,6 +135,206 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 			},
 		});
 		setMultiSelectItems(newValue);
+	};
+
+	useEffect(() => {
+
+		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
+		// title is not saved within initialSuggestionsContributorConfiguration.
+
+		if (value.attributes?.sxpBlueprintId) {
+			setSXPBlueprint({loading: true, title: ''});
+
+			fetch(
+				`${window.location.origin}/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
+				{
+					headers: new Headers({
+						'Accept': 'application/json',
+						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+						'Content-Type': 'application/json',
+					}),
+					method: 'GET',
+				}
+			)
+				.then((response) =>
+					response.json().then((data) => ({
+						data,
+						ok: response.ok,
+					}))
+				)
+				.then(({data, ok}) => {
+					setSXPBlueprint({
+						loading: false,
+						title:
+							!ok || data.status === 'NOT_FOUND'
+								? `${value.attributes?.sxpBlueprintId}`
+								: data.title,
+					});
+				})
+				.catch(() => {
+					setSXPBlueprint({
+						loading: false,
+						title: `${value.attributes?.sxpBlueprintId}`,
+					});
+				});
+		}
+	}, []); //eslint-disable-line
+
+	return (
+		<>
+			{showModal && (
+				<SelectSXPBlueprintModal
+					observer={observer}
+					onClose={onClose}
+					onSubmit={_handleSXPBlueprintSelectorSubmit}
+					selectedId={value.attributes?.sxpBlueprintId || ''}
+				/>
+			)}
+
+			<div className="form-group-autofit">
+				<ClayInput.GroupItem
+					className={getCN({
+						'has-error':
+							!value.attributes?.sxpBlueprintId &&
+							touched.sxpBlueprintId,
+					})}
+				>
+					<label>
+						{Liferay.Language.get('blueprint')}
+
+						<span className="reference-mark">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<div className="select-sxp-blueprint">
+						{sxpBlueprint.loading ? (
+							<div className="form-control" readOnly>
+								<ClayLoadingIndicator small />
+							</div>
+						) : (
+							<ClayInput
+								onBlur={onBlur('sxpBlueprintId')}
+								onChange={_handleSXPBlueprintSelectorChange}
+								required
+								type="text"
+								value={sxpBlueprint.title}
+							/>
+						)}
+
+						{sxpBlueprint.title && (
+							<ClayButton
+								className="remove-sxp-blueprint"
+								displayType="secondary"
+								onClick={_handleSXPBlueprintSelectorClickRemove}
+								small
+							>
+								<ClayIcon symbol="times-circle" />
+							</ClayButton>
+						)}
+
+						<ClayButton
+							displayType="secondary"
+							onClick={_handleSXPBlueprintSelectorClickSelect}
+						>
+							{Liferay.Language.get('select')}
+						</ClayButton>
+					</div>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem className="include-input">
+					<label>{Liferay.Language.get('include-asset-url')}</label>
+
+					<ClaySelect
+						aria-label={Liferay.Language.get('include-asset-url')}
+						onChange={_handleChangeAttribute('includeAssetURL')}
+						value={value.attributes?.includeAssetURL}
+					>
+						<ClaySelect.Option
+							label={Liferay.Language.get('true')}
+							value={true}
+						/>
+
+						<ClaySelect.Option
+							label={Liferay.Language.get('false')}
+							value={false}
+						/>
+					</ClaySelect>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem className="include-input">
+					<label>
+						{Liferay.Language.get('include-asset-summary')}
+					</label>
+
+					<ClaySelect
+						aria-label={Liferay.Language.get(
+							'include-asset-summary'
+						)}
+						onChange={_handleChangeAttribute('includeAssetSummary')}
+						value={value.attributes?.includeAssetSummary}
+					>
+						<ClaySelect.Option
+							label={Liferay.Language.get('true')}
+							value={true}
+						/>
+
+						<ClaySelect.Option
+							label={Liferay.Language.get('false')}
+							value={false}
+						/>
+					</ClaySelect>
+				</ClayInput.GroupItem>
+			</div>
+
+			<div className="form-group-autofit">
+				<ClayInput.GroupItem>
+					<label>{Liferay.Language.get('fields')}</label>
+
+					<ClayMultiSelect
+						items={multiSelectItems}
+						onBlur={_handleMultiSelectBlur}
+						onChange={setMultiSelectValue}
+						onItemsChange={_handleMultiSelectChange}
+						value={multiSelectValue}
+					/>
+				</ClayInput.GroupItem>
+			</div>
+		</>
+	);
+}
+
+function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
+	const [touched, setTouched] = useState({
+		displayGroupName: false,
+		size: false,
+		sxpBlueprintId: false,
+	});
+
+	const _handleBlur = (field) => () => {
+		setTouched({...touched, [field]: true});
+	};
+
+	const _handleChange = (property) => (event) => {
+		onChange({[property]: event.target.value});
+	};
+
+	const _handleChangeContributorName = (event) => {
+		if (event.target.value === CONTRIBUTORS.BASIC) {
+			onReplace({
+				contributorName: event.target.value,
+				displayGroupName: value.displayGroupName,
+				size: value.size,
+			});
+		}
+		else {
+			onChange({
+				attributes: DEFAULT_ATTRIBUTES,
+				contributorName: event.target.value,
+				displayGroupName: value.displayGroupName,
+				size: value.size,
+			});
+		}
 	};
 
 	return (
@@ -194,102 +408,13 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 				</ClayInput.GroupItem>
 			</div>
 
-			{value.contributorName === CONTRIBUTORS.BLUEPRINT && (
-				<>
-					<div className="form-group-autofit">
-						<ClayInput.GroupItem
-							className={getCN({
-								'has-error':
-									!value.attributes?.blueprintKey &&
-									touched.blueprintKey,
-							})}
-						>
-							<label>
-								{Liferay.Language.get('blueprint-key')}
-
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
-
-							<ClayInput
-								onBlur={_handleBlur('blueprintKey')}
-								onChange={_handleChangeAttribute(
-									'blueprintKey'
-								)}
-								required
-								type="text"
-								value={value.attributes?.blueprintKey || ''}
-							/>
-						</ClayInput.GroupItem>
-
-						<ClayInput.GroupItem>
-							<label>
-								{Liferay.Language.get('include-asset-url')}
-							</label>
-
-							<ClaySelect
-								aria-label={Liferay.Language.get(
-									'include-asset-url'
-								)}
-								onChange={_handleChangeAttribute(
-									'includeAssetURL'
-								)}
-								value={value.attributes?.includeAssetURL}
-							>
-								<ClaySelect.Option
-									label={Liferay.Language.get('true')}
-									value={true}
-								/>
-
-								<ClaySelect.Option
-									label={Liferay.Language.get('false')}
-									value={false}
-								/>
-							</ClaySelect>
-						</ClayInput.GroupItem>
-
-						<ClayInput.GroupItem>
-							<label>
-								{Liferay.Language.get('include-asset-summary')}
-							</label>
-
-							<ClaySelect
-								aria-label={Liferay.Language.get(
-									'include-asset-summary'
-								)}
-								onChange={_handleChangeAttribute(
-									'includeAssetSummary'
-								)}
-								value={value.attributes?.includeAssetSummary}
-							>
-								<ClaySelect.Option
-									label={Liferay.Language.get('true')}
-									value={true}
-								/>
-
-								<ClaySelect.Option
-									label={Liferay.Language.get('false')}
-									value={false}
-								/>
-							</ClaySelect>
-						</ClayInput.GroupItem>
-					</div>
-
-					<div className="form-group-autofit">
-						<ClayInput.GroupItem>
-							<label>{Liferay.Language.get('fields')}</label>
-
-							<ClayMultiSelect
-								items={multiSelectItems}
-								onBlur={_handleMultiSelectBlur}
-								onChange={setMultiSelectValue}
-								onItemsChange={_handleMultiSelectChange}
-								value={multiSelectValue}
-							/>
-						</ClayInput.GroupItem>
-					</div>
-				</>
+			{value.contributorName === CONTRIBUTORS.SXP_BLUEPRINT && (
+				<SXPBlueprintAttributes
+					onBlur={_handleBlur}
+					onChange={onChange}
+					touched={touched}
+					value={value}
+				/>
 			)}
 		</ClayInput.GroupItem>
 	);
@@ -331,7 +456,7 @@ function SearchBarConfigurationSuggestions({
 			return (
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTORS.BLUEPRINT}
+					value={CONTRIBUTORS.SXP_BLUEPRINT}
 				/>
 			);
 		}
@@ -345,7 +470,7 @@ function SearchBarConfigurationSuggestions({
 
 				<ClaySelect.Option
 					label={Liferay.Language.get('blueprint')}
-					value={CONTRIBUTORS.BLUEPRINT}
+					value={CONTRIBUTORS.SXP_BLUEPRINT}
 				/>
 			</>
 		);
@@ -359,7 +484,7 @@ function SearchBarConfigurationSuggestions({
 		) {
 			return {
 				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: CONTRIBUTORS.BLUEPRINT,
+				contributorName: CONTRIBUTORS.SXP_BLUEPRINT,
 				displayGroupName: '',
 				size: '',
 			};

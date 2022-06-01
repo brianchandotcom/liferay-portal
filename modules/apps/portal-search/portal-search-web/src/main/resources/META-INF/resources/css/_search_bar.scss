@@ -24,8 +24,64 @@
 			}
 		}
 
-		.size-input {
-			max-width: 136px;
+		.input-group-item {
+			&.include-input {
+				max-width: 172px;
+			}
+
+			&.size-input {
+				max-width: 136px;
+			}
+		}
+
+		.has-error {
+			.select-sxp-blueprint {
+				.form-control {
+					background-color: #feefef;
+					border-color: #f48989;
+				}
+			}
+		}
+
+		.select-sxp-blueprint {
+			display: flex;
+			width: 100%;
+
+			.form-control {
+				background-color: #fff;
+				border-bottom-right-radius: 0;
+				border-color: #cdced9;
+				border-right: 0;
+				border-top-right-radius: 0;
+				caret-color: transparent;
+				opacity: 1;
+				padding-right: 0;
+
+				&:focus {
+					box-shadow: none;
+				}
+
+				.loading-animation {
+					margin-bottom: 0;
+					margin-top: 0;
+				}
+			}
+
+			.btn {
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+
+				&:focus {
+					box-shadow: none;
+				}
+
+				&.remove-sxp-blueprint {
+					border-bottom-right-radius: 0;
+					border-left: 0;
+					border-right: 0;
+					border-top-right-radius: 0;
+				}
+			}
 		}
 	}
 

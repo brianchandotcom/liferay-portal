@@ -1,0 +1,57 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		RaylifeAP.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Verify if Raylife AP can be created"
+	@priority = "5"
+	test CanRaylifeAPCreated {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Raylife AP");
+
+		SelectFrame(
+			key_title = "Add Site",
+			locator1 = "IFrame#MODAL_ANY");
+
+		PortletEntry.inputName(name = "Raylife AP");
+
+		Click(locator1 = "Button#ADD");
+
+		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
+
+		while (IsElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION")) {
+			Pause(locator1 = "1500");
+		}
+
+        Alert.viewSuccessMessage();
+	}
+
+}

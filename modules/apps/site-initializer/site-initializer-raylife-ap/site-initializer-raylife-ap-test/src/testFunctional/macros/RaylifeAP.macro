@@ -1,0 +1,50 @@
+definition {
+
+    macro createRaylifeAPSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Raylife AP");
+
+		SelectFrame(
+			key_title = "Add Site",
+			locator1 = "IFrame#MODAL_ANY");
+
+		PortletEntry.inputName(name = "${siteName}");
+
+		Click(locator1 = "Button#ADD");
+
+		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
+
+		while (IsElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION")) {
+			Pause(locator1 = "1500");
+		}
+
+        Alert.viewSuccessMessage();
+	}
+
+    macro tearDownCP {
+		Refresh();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Refresh();
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Click(locator1 = "Button#MODAL_DELETE");
+
+		Alert.viewSuccessMessage();
+	}
+}

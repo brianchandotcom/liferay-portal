@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>RaylifeAP</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeAP</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SAVE_LOADING_ANIMATION</td>
+	<td>//span[contains(@class, 'loading-animation')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

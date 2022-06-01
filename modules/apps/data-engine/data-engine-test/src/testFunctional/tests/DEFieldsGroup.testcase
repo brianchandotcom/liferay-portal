@@ -83,19 +83,17 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
+		WebContentStructures.addTranslations(localeList = "pt-BR");
 
-			PortletEntry.changeLocale(locale = "${language}");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text",
-				fieldFieldLabelEdit = "Text ${language}");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text pt-BR");
 
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Numeric",
-				fieldFieldLabelEdit = "Numeric ${language}");
-		}
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric pt-BR");
 
 		DEBuilder.collapsibleFieldsGroup(fieldsGroup = "Fields Group");
 
@@ -123,23 +121,27 @@ definition {
 
 		DERenderer.clickCollapseFieldsGroup();
 
-		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+		DataEngine.waitForAutoSave();
 
-			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text ${language}");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-			Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric ${language}");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-			DERenderer.clickCollapseFieldsGroup();
+		Form.viewExpandedCollapseButton();
 
-			Form.viewCollapsedCollapseButton();
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text pt-BR");
 
-			Form.viewFieldsGroupCollapsedField(fieldLabel = "Text ${language}");
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric pt-BR");
 
-			Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric ${language}");
+		DERenderer.clickCollapseFieldsGroup();
 
-			DERenderer.clickCollapseFieldsGroup();
-		}
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text pt-BR");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric pt-BR");
+
+		DERenderer.clickCollapseFieldsGroup();
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by adding a field from the sidebar into a field that is on the builder."

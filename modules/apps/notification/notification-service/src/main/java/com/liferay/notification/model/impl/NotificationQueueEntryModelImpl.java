@@ -21,7 +21,6 @@ import com.liferay.notification.model.NotificationQueueEntryModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -61,7 +60,6 @@ import java.util.function.Function;
  * @see NotificationQueueEntryImpl
  * @generated
  */
-@JSON(strict = true)
 public class NotificationQueueEntryModelImpl
 	extends BaseModelImpl<NotificationQueueEntry>
 	implements NotificationQueueEntryModel {
@@ -401,7 +399,6 @@ public class NotificationQueueEntryModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -416,7 +413,6 @@ public class NotificationQueueEntryModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
-	@JSON
 	@Override
 	public long getNotificationQueueEntryId() {
 		return _notificationQueueEntryId;
@@ -431,7 +427,6 @@ public class NotificationQueueEntryModelImpl
 		_notificationQueueEntryId = notificationQueueEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -446,7 +441,6 @@ public class NotificationQueueEntryModelImpl
 		_companyId = companyId;
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -477,7 +471,6 @@ public class NotificationQueueEntryModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -497,7 +490,6 @@ public class NotificationQueueEntryModelImpl
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -512,7 +504,6 @@ public class NotificationQueueEntryModelImpl
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -533,7 +524,6 @@ public class NotificationQueueEntryModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public long getNotificationTemplateId() {
 		return _notificationTemplateId;
@@ -558,7 +548,6 @@ public class NotificationQueueEntryModelImpl
 			this.<Long>getColumnOriginalValue("notificationTemplateId"));
 	}
 
-	@JSON
 	@Override
 	public String getBcc() {
 		if (_bcc == null) {
@@ -578,7 +567,6 @@ public class NotificationQueueEntryModelImpl
 		_bcc = bcc;
 	}
 
-	@JSON
 	@Override
 	public String getBody() {
 		if (_body == null) {
@@ -598,7 +586,6 @@ public class NotificationQueueEntryModelImpl
 		_body = body;
 	}
 
-	@JSON
 	@Override
 	public String getCc() {
 		if (_cc == null) {
@@ -638,7 +625,6 @@ public class NotificationQueueEntryModelImpl
 		setClassNameId(classNameId);
 	}
 
-	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -653,7 +639,6 @@ public class NotificationQueueEntryModelImpl
 		_classNameId = classNameId;
 	}
 
-	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -668,7 +653,6 @@ public class NotificationQueueEntryModelImpl
 		_classPK = classPK;
 	}
 
-	@JSON
 	@Override
 	public String getFrom() {
 		if (_from == null) {
@@ -688,7 +672,6 @@ public class NotificationQueueEntryModelImpl
 		_from = from;
 	}
 
-	@JSON
 	@Override
 	public String getFromName() {
 		if (_fromName == null) {
@@ -708,7 +691,6 @@ public class NotificationQueueEntryModelImpl
 		_fromName = fromName;
 	}
 
-	@JSON
 	@Override
 	public double getPriority() {
 		return _priority;
@@ -723,13 +705,11 @@ public class NotificationQueueEntryModelImpl
 		_priority = priority;
 	}
 
-	@JSON
 	@Override
 	public boolean getSent() {
 		return _sent;
 	}
 
-	@JSON
 	@Override
 	public boolean isSent() {
 		return _sent;
@@ -754,7 +734,6 @@ public class NotificationQueueEntryModelImpl
 			this.<Boolean>getColumnOriginalValue("sent"));
 	}
 
-	@JSON
 	@Override
 	public Date getSentDate() {
 		return _sentDate;
@@ -778,7 +757,6 @@ public class NotificationQueueEntryModelImpl
 		return getColumnOriginalValue("sentDate");
 	}
 
-	@JSON
 	@Override
 	public String getSubject() {
 		if (_subject == null) {
@@ -798,7 +776,6 @@ public class NotificationQueueEntryModelImpl
 		_subject = subject;
 	}
 
-	@JSON
 	@Override
 	public String getTo() {
 		if (_to == null) {
@@ -818,7 +795,6 @@ public class NotificationQueueEntryModelImpl
 		_to = to;
 	}
 
-	@JSON
 	@Override
 	public String getToName() {
 		if (_toName == null) {

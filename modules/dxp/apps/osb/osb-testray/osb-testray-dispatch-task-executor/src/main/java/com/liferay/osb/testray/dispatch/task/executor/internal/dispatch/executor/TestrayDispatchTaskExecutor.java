@@ -61,7 +61,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -386,7 +385,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		ObjectEntry recipientTestrayCaseResultComposite = null;
 		ObjectEntry sourceTestrayCaseResultComposite = null;
-		Collection<ObjectEntry> sourceIssueItems = null;
+		List<ObjectEntry> sourceIssueItems = null;
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
 			issueCompositeAEntriesPage = _objectEntryManager.getObjectEntries(
@@ -407,10 +406,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		Map<String, Object> caseResultCompositeMapB =
 			testrayCaseResultCompositeB.getProperties();
 
-		Collection<ObjectEntry> issueCompositeAItems =
-			issueCompositeAEntriesPage.getItems();
-		Collection<ObjectEntry> issueCompositeBItems =
-			issueCompositeBEntriesPage.getItems();
+		List<ObjectEntry> issueCompositeAItems =
+			(List<ObjectEntry>)issueCompositeAEntriesPage.getItems();
+		List<ObjectEntry> issueCompositeBItems =
+			(List<ObjectEntry>)issueCompositeBEntriesPage.getItems();
 
 		if (((Long)caseResultCompositeMapA.get("r_userToCaseResults_userId") >
 				0) &&
@@ -501,7 +500,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				"routineId eq '" + testrayRoutineId + "'", null, null,
 				new Sort[] {new Sort("createDate_sortable", 3, false)});
 
-		Collection<ObjectEntry> builds = buildsEntriesPage.getItems();
+		List<ObjectEntry> builds =
+			(List<ObjectEntry>)buildsEntriesPage.getItems();
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry> runsEntriesPage =
 			_objectEntryManager.getObjectEntries(
@@ -512,7 +512,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					testrayRunId, "'"),
 				null, null, null);
 
-		Collection<ObjectEntry> runs = runsEntriesPage.getItems();
+		List<ObjectEntry> runs = (List<ObjectEntry>)runsEntriesPage.getItems();
 
 		return _getBuildInRun(builds, runs);
 	}
@@ -534,7 +534,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private ObjectEntry _getBuildInRun(
-		Collection<ObjectEntry> builds, Collection<ObjectEntry> runs) {
+		List<ObjectEntry> builds, List<ObjectEntry> runs) {
 
 		String buildsString = builds.toString();
 

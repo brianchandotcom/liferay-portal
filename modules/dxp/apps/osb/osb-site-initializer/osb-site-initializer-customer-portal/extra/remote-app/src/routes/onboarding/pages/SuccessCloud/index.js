@@ -17,7 +17,7 @@ import {PRODUCT_TYPES} from '../../../customer-portal/utils/constants/productTyp
 const successTexts = {
 	[PRODUCT_TYPES.analyticsCloud]: {
 		helper: i18n.translate(
-			'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace-s'
+			'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspaces'
 		),
 		paragraph: i18n.translate(
 			'thank-you-for-submitting-this-request-your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready'
@@ -26,7 +26,7 @@ const successTexts = {
 	},
 	[PRODUCT_TYPES.dxpCloud]: {
 		helper: i18n.translate(
-			'we-ll-need-a-few-details-to-finish-building-your-dxp-environment-s'
+			'we-ll-need-a-few-details-to-finish-building-your-dxp-environments'
 		),
 		paragraph: i18n.translate(
 			'thank-you-for-submitting-this-request-your-dxp-cloud-project-will-be-provisioned-in-2-3-business-days-at-that-time-dxp-cloud-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-dxp-cloud-environments-and-tools-included-in-your-subscription'

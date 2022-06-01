@@ -361,13 +361,60 @@ definition {
 
 	}
 
-	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
+	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageInMBAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154386 CanViewImageInMBAfterMovingToFolder pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONMBMessage.addMessage(
+			groupName = "Site Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToEditThread(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.editCP(
+			depotName = "Test Depot Name",
+			skipNavigation = "true",
+			threadBodyEdit = "MB Thread Message Body",
+			threadBodyImageEdit = "DM Document Title");
+
+		PortletEntry.publish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadBodyImage = "dm-document-title",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
 	}
 
 	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site when publication is enabled."

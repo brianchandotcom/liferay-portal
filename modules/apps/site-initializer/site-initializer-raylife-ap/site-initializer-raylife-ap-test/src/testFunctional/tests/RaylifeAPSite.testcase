@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-        RaylifeAP.createRaylifeAPSite();
+		RaylifeAP.createRaylifeAPSite();
 	}
 
 	tearDown {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "Verify if Raylife AP can be created"
-    @ignore = "Test Stub"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRaylifeAPCreated {
 
@@ -36,8 +36,8 @@ definition {
 
 	}
 
-    @description = "Verify if when Raylife AP is created, the Raylife Applications will be created for it as well"
-    @ignore = "Test Stub"
+	@description = "Verify if when Raylife AP is created, the Raylife Applications will be created for it as well"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test RaylifeApplicationsForRaylifeAPIsCreated {
 
@@ -45,8 +45,8 @@ definition {
 
 	}
 
-    @description = "Verify if when Raylife AP is created, the Raylife Policies will be created for it as well"
-    @ignore = "Test Stub"
+	@description = "Verify if when Raylife AP is created, the Raylife Policies will be created for it as well"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test RaylifePoliciesForRaylifeAPIsCreated {
 

@@ -275,10 +275,9 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				key_masterLayoutName = "Custom Masters Page Template",
-				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
-				value1 = "Custom Masters Page Template");
+				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 		}
 	}
 

@@ -37,6 +37,112 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a user is redirected to the new friendly URL when he accesses a previous DM display page URL."
+	@priority = "4"
+	test CanAccessDisplayPageWithOldFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "site-name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "Document_1",
+			groupName = "Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "site-name");
+
+		for (var customURL : list "document_1_edit,document_1_edit_again") {
+			DMNavigator.openToEditEntryInSite(
+				dmDocumentTitle = "Document_1",
+				groupName = "Site Name",
+				siteURLKey = "site-name");
+
+			DMDocument.editFriendlyURL(friendlyURLEdit = "${customURL}");
+		}
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/d/document_1_edit");
+
+		AssertLocation(value1 = "${portalURL}/web/site-name/d/document_1_edit_again");
+
+		ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+	}
+
+	@description = "This ensures that a user is redirected to a restored friendly URL when he accesses a previous DM display page URL."
+	@priority = "4"
+	test CanAccessDisplayPageWithOldFriendlyURLAfterRestoring {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "site-name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "Document_1",
+			groupName = "Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "site-name");
+
+		for (var customURL : list "document_1_edit,document_1_edit_again") {
+			DMNavigator.openToEditEntryInSite(
+				dmDocumentTitle = "Document_1",
+				groupName = "Site Name",
+				siteURLKey = "site-name");
+
+			DMDocument.editFriendlyURL(friendlyURLEdit = "${customURL}");
+		}
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMNavigator.gotoFriendlyURLHistory();
+
+		DMDocument.restoreOldFriendlyURL(
+			activeURL = "document_1_edit_again",
+			oldFriendlyURL = "document_1_edit",
+			restoredURL = "document_1_edit");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/d/document_1_edit_again");
+
+		AssertLocation(value1 = "${portalURL}/web/site-name/d/document_1_edit");
+
+		ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
+	}
+
 	@description = "This ensures that an image cannot be previewed when using a removed friendlyURL."
 	@priority = "5"
 	test CannotPreviewImageWithRemovedFriendlyURL {

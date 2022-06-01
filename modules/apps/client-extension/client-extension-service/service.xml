@@ -19,6 +19,7 @@
 
 		<!-- Other fields -->
 
+		<column name="baseURL" type="String" />
 		<column name="description" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="properties" type="String" />

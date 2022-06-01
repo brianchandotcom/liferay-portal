@@ -44,7 +44,7 @@ public class ClientExtensionEntryServiceImpl
 
 	@Override
 	public ClientExtensionEntry addClientExtensionEntry(
-			String externalReferenceCode, String description,
+			String externalReferenceCode, String baseURL, String description,
 			Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
@@ -53,7 +53,7 @@ public class ClientExtensionEntryServiceImpl
 			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
 
 		return clientExtensionEntryLocalService.addClientExtensionEntry(
-			externalReferenceCode, getUserId(), description, nameMap,
+			externalReferenceCode, getUserId(), baseURL, description, nameMap,
 			properties, sourceCodeURL, type, typeSettings);
 	}
 
@@ -83,7 +83,7 @@ public class ClientExtensionEntryServiceImpl
 
 	@Override
 	public ClientExtensionEntry updateClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+			long clientExtensionEntryId, String baseURL, String description,
 			Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String typeSettings)
 		throws PortalException {
@@ -92,7 +92,7 @@ public class ClientExtensionEntryServiceImpl
 			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
 
 		return clientExtensionEntryLocalService.updateClientExtensionEntry(
-			getUserId(), clientExtensionEntryId, description, nameMap,
+			getUserId(), clientExtensionEntryId, baseURL, description, nameMap,
 			properties, sourceCodeURL, typeSettings);
 	}
 

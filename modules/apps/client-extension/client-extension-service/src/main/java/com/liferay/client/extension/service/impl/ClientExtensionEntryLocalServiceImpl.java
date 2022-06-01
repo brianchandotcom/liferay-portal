@@ -88,8 +88,8 @@ public class ClientExtensionEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ClientExtensionEntry addClientExtensionEntry(
-			String externalReferenceCode, long userId, String description,
-			Map<Locale, String> nameMap, String properties,
+			String externalReferenceCode, long userId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
 
@@ -113,6 +113,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setCompanyId(user.getCompanyId());
 		clientExtensionEntry.setUserId(user.getUserId());
 		clientExtensionEntry.setUserName(user.getFullName());
+		clientExtensionEntry.setBaseURL(baseURL);
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setNameMap(nameMap);
 		clientExtensionEntry.setProperties(properties);
@@ -134,8 +135,8 @@ public class ClientExtensionEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ClientExtensionEntry addOrUpdateClientExtensionEntry(
-			String externalReferenceCode, long userId, String description,
-			Map<Locale, String> nameMap, String properties,
+			String externalReferenceCode, long userId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
 
@@ -149,12 +150,13 @@ public class ClientExtensionEntryLocalServiceImpl
 		if (clientExtensionEntry != null) {
 			return clientExtensionEntryLocalService.updateClientExtensionEntry(
 				userId, clientExtensionEntry.getClientExtensionEntryId(),
-				description, nameMap, properties, sourceCodeURL, typeSettings);
+				baseURL, description, nameMap, properties, sourceCodeURL,
+				typeSettings);
 		}
 
 		return addClientExtensionEntry(
-			externalReferenceCode, userId, description, nameMap, properties,
-			sourceCodeURL, type, typeSettings);
+			externalReferenceCode, userId, baseURL, description, nameMap,
+			properties, sourceCodeURL, type, typeSettings);
 	}
 
 	@Override
@@ -276,8 +278,8 @@ public class ClientExtensionEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ClientExtensionEntry updateClientExtensionEntry(
-			long userId, long clientExtensionEntryId, String description,
-			Map<Locale, String> nameMap, String properties,
+			long userId, long clientExtensionEntryId, String baseURL,
+			String description, Map<Locale, String> nameMap, String properties,
 			String sourceCodeURL, String typeSettings)
 		throws PortalException {
 
@@ -292,6 +294,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntryLocalService.undeployClientExtensionEntry(
 			clientExtensionEntry);
 
+		clientExtensionEntry.setBaseURL(baseURL);
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setNameMap(nameMap);
 		clientExtensionEntry.setProperties(properties);

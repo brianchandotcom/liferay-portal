@@ -35,63 +35,68 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("ClientExtensionEntry", "typeSettings")) {
-			return;
+		if (!hasColumn("ClientExtensionEntry", "baseURL")) {
+			alterTableAddColumn(
+				"ClientExtensionEntry", "baseURL", "STRING null");
 		}
 
-		alterTableAddColumn(
-			"ClientExtensionEntry", "typeSettings", "TEXT null");
+		if (!hasColumn("ClientExtensionEntry", "typeSettings")) {
+			alterTableAddColumn(
+				"ClientExtensionEntry", "typeSettings", "TEXT null");
 
-		String selectSQL = StringBundler.concat(
-			"select clientExtensionEntryId, customElementCSSURLs, ",
-			"customElementHTMLElementName, customElementURLs, ",
-			"customElementUseESM, friendlyURLMapping, iFrameURL, ",
-			"instanceable, portletCategoryName, type_ from ",
-			"ClientExtensionEntry");
-		String updateSQL =
-			"update ClientExtensionEntry set typeSettings = ? where " +
-				"clientExtensionEntryId = ?";
+			String selectSQL = StringBundler.concat(
+				"select clientExtensionEntryId, customElementCSSURLs, ",
+				"customElementHTMLElementName, customElementURLs, ",
+				"customElementUseESM, friendlyURLMapping, iFrameURL, ",
+				"instanceable, portletCategoryName, type_ from ",
+				"ClientExtensionEntry");
+			String updateSQL =
+				"update ClientExtensionEntry set typeSettings = ? where " +
+					"clientExtensionEntryId = ?";
 
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(selectSQL);
-			PreparedStatement preparedStatement =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(updateSQL))) {
+			try (Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(selectSQL);
+				PreparedStatement preparedStatement =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(updateSQL))) {
 
-			while (resultSet.next()) {
-				String type = resultSet.getString("type_");
+				while (resultSet.next()) {
+					String type = resultSet.getString("type_");
 
-				String typeSettings = _getTypeSettings(resultSet, type);
+					String typeSettings = _getTypeSettings(resultSet, type);
 
-				if (typeSettings == null) {
-					_log.error("Unknown client extension entry type " + type);
+					if (typeSettings == null) {
+						_log.error(
+							"Unknown client extension entry type " + type);
 
-					continue;
+						continue;
+					}
+
+					preparedStatement.setString(1, typeSettings);
+
+					preparedStatement.setLong(
+						2, resultSet.getLong("clientExtensionEntryId"));
+
+					preparedStatement.addBatch();
 				}
 
-				preparedStatement.setString(1, typeSettings);
-
-				preparedStatement.setLong(
-					2, resultSet.getLong("clientExtensionEntryId"));
-
-				preparedStatement.addBatch();
+				preparedStatement.executeBatch();
+			}
+			catch (Exception exception) {
+				_log.error(exception);
 			}
 
-			preparedStatement.executeBatch();
+			alterTableDropColumn(
+				"ClientExtensionEntry", "customElementCSSURLs");
+			alterTableDropColumn(
+				"ClientExtensionEntry", "customElementHTMLElementName");
+			alterTableDropColumn("ClientExtensionEntry", "customElementURLs");
+			alterTableDropColumn("ClientExtensionEntry", "customElementUseESM");
+			alterTableDropColumn("ClientExtensionEntry", "friendlyURLMapping");
+			alterTableDropColumn("ClientExtensionEntry", "iFrameURL");
+			alterTableDropColumn("ClientExtensionEntry", "instanceable");
+			alterTableDropColumn("ClientExtensionEntry", "portletCategoryName");
 		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		alterTableDropColumn("ClientExtensionEntry", "customElementCSSURLs");
-		alterTableDropColumn(
-			"ClientExtensionEntry", "customElementHTMLElementName");
-		alterTableDropColumn("ClientExtensionEntry", "customElementURLs");
-		alterTableDropColumn("ClientExtensionEntry", "customElementUseESM");
-		alterTableDropColumn("ClientExtensionEntry", "friendlyURLMapping");
-		alterTableDropColumn("ClientExtensionEntry", "iFrameURL");
-		alterTableDropColumn("ClientExtensionEntry", "instanceable");
-		alterTableDropColumn("ClientExtensionEntry", "portletCategoryName");
 	}
 
 	private String _getTypeSettings(ResultSet resultSet, String type)

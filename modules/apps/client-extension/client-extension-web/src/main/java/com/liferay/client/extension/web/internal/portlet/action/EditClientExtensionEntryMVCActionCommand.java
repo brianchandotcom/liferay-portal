@@ -104,7 +104,7 @@ public class EditClientExtensionEntryMVCActionCommand
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		_clientExtensionEntryService.addClientExtensionEntry(
-			StringPool.BLANK, description, nameMap,
+			StringPool.BLANK, StringPool.BLANK, description, nameMap,
 			ParamUtil.getString(actionRequest, "properties"), sourceCodeURL,
 			type, _cetFactory.typeSettings(actionRequest, type));
 	}
@@ -136,8 +136,8 @@ public class EditClientExtensionEntryMVCActionCommand
 			actionRequest, "sourceCodeURL");
 
 		_clientExtensionEntryService.updateClientExtensionEntry(
-			clientExtensionEntry.getClientExtensionEntryId(), description,
-			nameMap, properties, sourceCodeURL,
+			clientExtensionEntry.getClientExtensionEntryId(), StringPool.BLANK,
+			description, nameMap, properties, sourceCodeURL,
 			_cetFactory.typeSettings(
 				actionRequest, clientExtensionEntry.getType()));
 	}

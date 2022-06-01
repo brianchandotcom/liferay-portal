@@ -11,6 +11,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="baseURL" type="String">
+			<hint-collection name="URL" />
+		</field>
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />

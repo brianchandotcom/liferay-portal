@@ -58,7 +58,7 @@ function FileUpload({portletNamespace}) {
 
 	const [parserOptions, setParserOptions] = useState({
 		CSVContainsHeaders: true,
-		CSVEnclosingCharacter: '',
+		CSVEnclosingCharacter: '"',
 		CSVSeparator: ',',
 	});
 

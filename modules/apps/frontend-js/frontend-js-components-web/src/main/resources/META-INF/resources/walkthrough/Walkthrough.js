@@ -61,49 +61,6 @@ const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
 	);
 });
 
-const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
-	const [currentStepIndex, setCurrentStepIndex] = useState(0);
-
-	const memoizedTriggerReference = useMemo(() => {
-		const currentNode = steps[currentStepIndex].nodeToHighlight;
-
-		if (currentNode) {
-			return document.querySelector(currentNode);
-		}
-	}, [steps, currentStepIndex]);
-
-	const previousTrigger = usePrevious(memoizedTriggerReference);
-
-	return (
-		<>
-			<WalkthroughStep
-				closeOnClickOutside={closeOnClickOutside}
-				closeable={closeable}
-				onNext={() => {
-					const maybeNextIndex = currentStepIndex + 1;
-
-					if (steps[maybeNextIndex]) {
-						setCurrentStepIndex(maybeNextIndex);
-					}
-				}}
-				onPrevious={() => {
-					const maybePreviousIndex = currentStepIndex - 1;
-
-					if (steps[maybePreviousIndex]) {
-						setCurrentStepIndex(maybePreviousIndex);
-					}
-				}}
-				previousTrigger={previousTrigger}
-				skippable={skippable}
-				stepIndex={currentStepIndex}
-				stepLength={steps.length}
-				trigger={memoizedTriggerReference}
-				{...steps[currentStepIndex]}
-			/>
-		</>
-	);
-};
-
 /**
  * This map humanize tuples received from dom-align
  * library to be passed in a format that ClayPopover allows
@@ -122,23 +79,6 @@ const ALIGNMENTS_MAP = {
 	'top-left': ['bl', 'tl'],
 	'top-right': ['br', 'tr'],
 };
-
-Walkthrough.propTypes = {
-	closeOnClickOutside: PropTypes.bool,
-	closeable: PropTypes.bool,
-	darkbg: PropTypes.bool,
-	skippable: PropTypes.bool,
-	steps: PropTypes.arrayOf(
-		PropTypes.shape({
-			content: PropTypes.string,
-			nodeToHighlight: PropTypes.string.isRequired,
-			positioning: PropTypes.oneOf(Object.keys(ALIGNMENTS_MAP)),
-			title: PropTypes.string,
-		})
-	),
-};
-
-export default Walkthrough;
 
 const OVERLAY_OFFSET_X = 15;
 const OVERLAY_OFFSET_Y = -10;
@@ -225,30 +165,74 @@ const WalkthroughOverlay = ({popoverVisible, trigger}) => {
 	);
 };
 
-const WalkthroughStep = ({
-	closeOnClickOutside,
-	closeable,
-	content,
-	darkbg,
-	onNext,
-	onPrevious,
-	positioning: defaultPositioning = 'right-top',
-	previousTrigger,
-	skippable,
-	stepIndex,
-	stepLength,
-	title,
-	trigger,
-}) => {
+const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
+	const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
 	const popoverRef = useRef(null);
 
 	const hotspotRef = useRef(null);
 
 	const [popoverVisible, setPopoverVisible] = useState(false);
 
+	const {
+		content,
+		darkbg,
+		positioning: defaultPositioning = 'right-top',
+		title,
+	} = steps[currentStepIndex];
+
 	const [currentAlignment, setCurrentAlignment] = useState(
 		defaultPositioning
 	);
+
+	const memoizedTrigger = useMemo(() => {
+		const currentNode = steps[currentStepIndex].nodeToHighlight;
+
+		if (currentNode) {
+			return document.querySelector(currentNode);
+		}
+	}, [steps, currentStepIndex]);
+
+	const previousTrigger = usePrevious(memoizedTrigger);
+
+	const changeStep = useCallback(
+		(isNext, index) => {
+			const hasElement = document.querySelector(
+				steps[index].nodeToHighlight
+			);
+
+			if (hasElement) {
+				setCurrentStepIndex(index);
+			}
+			else {
+				setCurrentStepIndex(
+					index === steps.length - 1
+						? index - 1
+						: isNext
+						? index + 1
+						: index - 1
+				);
+				setPopoverVisible(false);
+			}
+		},
+		[steps]
+	);
+
+	const onNext = useCallback(() => {
+		const maybeNextIndex = currentStepIndex + 1;
+
+		if (steps[maybeNextIndex]) {
+			changeStep(true, maybeNextIndex);
+		}
+	}, [changeStep, currentStepIndex, steps]);
+
+	const onPrevious = useCallback(() => {
+		const maybePreviousIndex = currentStepIndex - 1;
+
+		if (steps[maybePreviousIndex]) {
+			changeStep(false, maybePreviousIndex);
+		}
+	}, [changeStep, currentStepIndex, steps]);
 
 	/**
 	 * This useEffect was necessary because Walkthrough(Step) components
@@ -260,7 +244,7 @@ const WalkthroughStep = ({
 	}, [defaultPositioning]);
 
 	const align = useCallback(() => {
-		if (popoverVisible && popoverRef.current) {
+		if (popoverVisible && popoverRef.current && memoizedTrigger) {
 			const points = ALIGNMENTS_MAP[currentAlignment];
 
 			const alignment = doAlign({
@@ -271,7 +255,7 @@ const WalkthroughStep = ({
 				},
 				points,
 				sourceElement: popoverRef.current,
-				targetElement: trigger,
+				targetElement: memoizedTrigger,
 			});
 
 			const alignmentString = alignment.points.join('');
@@ -285,8 +269,12 @@ const WalkthroughStep = ({
 				setCurrentAlignment(ALIGNMENTS_INVERSE_MAP[alignmentString]);
 			}
 
-			if (!darkbg && previousTrigger !== trigger) {
-				trigger.classList.add('lfr-walkthrough-element-shadow');
+			if (
+				!darkbg &&
+				previousTrigger &&
+				previousTrigger !== memoizedTrigger
+			) {
+				memoizedTrigger.classList.add('lfr-walkthrough-element-shadow');
 
 				previousTrigger.classList.remove(
 					'lfr-walkthrough-element-shadow'
@@ -299,7 +287,7 @@ const WalkthroughStep = ({
 		popoverRef,
 		popoverVisible,
 		previousTrigger,
-		trigger,
+		memoizedTrigger,
 	]);
 
 	useEffect(() => {
@@ -314,14 +302,14 @@ const WalkthroughStep = ({
 				<Hotspot
 					onHotspotClick={() => setPopoverVisible(true)}
 					ref={hotspotRef}
-					trigger={trigger}
+					trigger={memoizedTrigger}
 				/>
 			)}
 
 			{darkbg && (
 				<WalkthroughOverlay
 					popoverVisible={popoverVisible}
-					trigger={trigger}
+					trigger={memoizedTrigger}
 				/>
 			)}
 
@@ -337,9 +325,9 @@ const WalkthroughStep = ({
 								verticalAlign="center"
 							>
 								<ClayLayout.ContentCol expand>
-									<span>{`Step ${
-										stepIndex + 1
-									} of ${stepLength}: ${title}`}</span>
+									<span>{`Step ${currentStepIndex + 1} of ${
+										steps.length
+									}: ${title}`}</span>
 								</ClayLayout.ContentCol>
 
 								{closeable && (
@@ -369,7 +357,7 @@ const WalkthroughStep = ({
 							dangerouslySetInnerHTML={{
 								__html: content,
 							}}
-						></div>
+						/>
 
 						<ClayLayout.ContentRow noGutters verticalAlign="center">
 							{skippable && (
@@ -384,7 +372,7 @@ const WalkthroughStep = ({
 
 							<ClayLayout.ContentCol>
 								<ClayButton.Group spaced>
-									{stepIndex > 0 && (
+									{currentStepIndex > 0 && (
 										<ClayButton
 											displayType="secondary"
 											onClick={() => onPrevious()}
@@ -394,7 +382,7 @@ const WalkthroughStep = ({
 										</ClayButton>
 									)}
 
-									{stepIndex + 1 !== stepLength ? (
+									{currentStepIndex + 1 !== steps.length ? (
 										<ClayButton
 											onClick={() => onNext()}
 											small
@@ -420,3 +408,20 @@ const WalkthroughStep = ({
 		</>
 	);
 };
+
+Walkthrough.propTypes = {
+	closeOnClickOutside: PropTypes.bool,
+	closeable: PropTypes.bool,
+	darkbg: PropTypes.bool,
+	skippable: PropTypes.bool,
+	steps: PropTypes.arrayOf(
+		PropTypes.shape({
+			content: PropTypes.string,
+			nodeToHighlight: PropTypes.string.isRequired,
+			positioning: PropTypes.oneOf(Object.keys(ALIGNMENTS_MAP)),
+			title: PropTypes.string,
+		})
+	),
+};
+
+export default Walkthrough;

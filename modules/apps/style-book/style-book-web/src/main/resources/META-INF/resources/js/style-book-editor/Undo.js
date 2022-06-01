@@ -13,6 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -28,6 +29,31 @@ export default function Undo() {
 	const onRedo = useOnRedo();
 	const redoHistory = useRedoHistory();
 	const undoHistory = useUndoHistory();
+
+	useEventListener(
+		'keydown',
+		(event) => {
+			const ctrlOrMeta = (event) =>
+				(event.ctrlKey && !event.metaKey) ||
+				(!event.ctrlKey && event.metaKey);
+
+			if (
+				ctrlOrMeta(event) &&
+				event.key === 'z' &&
+				!event.target.closest('.style-book-editor__sidebar-content')
+			) {
+				if (!event.shiftKey && undoHistory.length !== 0) {
+					onUndo();
+				}
+
+				if (event.shiftKey && redoHistory.length !== 0) {
+					onRedo();
+				}
+			}
+		},
+		true,
+		window
+	);
 
 	return (
 		<>

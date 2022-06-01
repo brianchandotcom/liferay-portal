@@ -12,25 +12,16 @@
  * details.
  */
 
-package com.liferay.client.extension.constants;
+package com.liferay.client.extension.type;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Eudaldo Alonso
  */
-public class ClientExtensionEntryConstants {
+@ProviderType
+public interface CETGlobalCSS extends CET {
 
-	public static final String TYPE_CUSTOM_ELEMENT = "customElement";
-
-	public static final String TYPE_GLOBAL_CSS = "globalCSS";
-
-	public static final String TYPE_GLOBAL_JS = "globalJS";
-
-	public static final String TYPE_IFRAME = "iframe";
-
-	public static final String TYPE_THEME_CSS = "themeCSS";
-
-	public static final String TYPE_THEME_FAVICON = "themeFavicon";
-
-	public static final String TYPE_THEME_JS = "themeJS";
+	public String getURL();
 
 }

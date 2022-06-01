@@ -19,6 +19,8 @@ import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExter
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETGlobalCSS;
+import com.liferay.client.extension.type.CETGlobalJS;
 import com.liferay.client.extension.type.CETIFrame;
 import com.liferay.client.extension.type.CETThemeCSS;
 import com.liferay.client.extension.type.CETThemeFavicon;
@@ -467,6 +469,26 @@ public class ClientExtensionEntryLocalServiceImpl
 
 			workflowContext = Collections.singletonMap(
 				WorkflowConstants.CONTEXT_URL, cetCustomElement.getURLs());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			CETGlobalCSS cetGlobalCSS = _cetFactory.cetGlobalCSS(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetGlobalCSS.getURL());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			CETGlobalJS cetGlobalJS = _cetFactory.cetGlobalJS(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL, cetGlobalJS.getURL());
 		}
 		else if (Objects.equals(
 					clientExtensionEntry.getType(),

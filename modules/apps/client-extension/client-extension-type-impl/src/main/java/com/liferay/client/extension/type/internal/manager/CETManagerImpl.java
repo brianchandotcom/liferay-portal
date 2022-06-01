@@ -21,6 +21,8 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.internal.CETCustomElementImpl;
+import com.liferay.client.extension.type.internal.CETGlobalCSSImpl;
+import com.liferay.client.extension.type.internal.CETGlobalJSImpl;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
 import com.liferay.client.extension.type.internal.CETThemeCSSImpl;
 import com.liferay.client.extension.type.internal.CETThemeFaviconImpl;
@@ -63,6 +65,20 @@ public class CETManagerImpl implements CETManager {
 				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
 			cet = new CETCustomElementImpl(
+				baseURL, companyId, description, name, primaryKey, properties,
+				sourceCodeURL, typeSettings);
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			cet = new CETGlobalCSSImpl(
+				baseURL, companyId, description, name, primaryKey, properties,
+				sourceCodeURL, typeSettings);
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			cet = new CETGlobalJSImpl(
 				baseURL, companyId, description, name, primaryKey, properties,
 				sourceCodeURL, typeSettings);
 		}

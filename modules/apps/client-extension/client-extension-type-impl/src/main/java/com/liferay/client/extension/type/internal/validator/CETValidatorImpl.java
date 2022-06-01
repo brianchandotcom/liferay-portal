@@ -47,6 +47,12 @@ public class CETValidatorImpl implements CETValidator {
 			new CETCustomElementValidator(newTypeSettings, oldTypeSettings);
 		}
 		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+		}
+		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
 
 			new CETIFrameValidator(newTypeSettings, oldTypeSettings);

@@ -228,7 +228,12 @@ export async function loadData(
 	page = 1,
 	sorting = []
 ) {
-	const url = new URL(apiURL, themeDisplay.getPortalURL());
+	const fullUrl = apiURL.startsWith('/')
+		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
+		: apiURL;
+
+	const url = new URL(fullUrl);
+
 	const providedFilters = url.searchParams.get('filter');
 
 	url.searchParams.delete('filter');

@@ -69,7 +69,8 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		try {
 			_appURL =
 				PortalUtil.getPortalURL(httpServletRequest) +
-					"/o/frontend-data-set-taglib/app";
+					PortalUtil.getPathContext() +
+						"/o/frontend-data-set-taglib/app";
 
 			StringBundler sb = new StringBundler(
 				11 + (_contextParams.size() * 4));

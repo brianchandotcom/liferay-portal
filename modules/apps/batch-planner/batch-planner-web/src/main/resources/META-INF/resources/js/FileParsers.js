@@ -23,19 +23,19 @@ export function parseCSV(content, separator, enclosingCharacter) {
 	const rows = content.split(/\r?\n/);
 
 	const formattedRows = rows.map((row) => {
-		const columns = separator ? row.split(separator) : row;
+		let sanitizedRow = row;
 
-		const formattedColumns = enclosingCharacter
-			? columns.map((column) => {
-					if (column.charAt(0) === enclosingCharacter) {
-						return column.substring(1, column.length - 1);
-					}
+		if (sanitizedRow.indexOf(enclosingCharacter) === 0) {
+			sanitizedRow = sanitizedRow.substring(1);
+		}
 
-					return column;
-			  })
-			: columns;
+		if (sanitizedRow.endsWith(enclosingCharacter)) {
+			sanitizedRow = sanitizedRow.substring(0, sanitizedRow.length - 1);
+		}
 
-		return formattedColumns;
+		const regex = `${enclosingCharacter}${separator}${enclosingCharacter}|${separator}|${separator}${enclosingCharacter}|${enclosingCharacter}${separator}`;
+
+		return sanitizedRow.split(new RegExp(regex));
 	});
 
 	return formattedRows;

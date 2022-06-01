@@ -52,6 +52,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 	public final Column<ObjectDefinitionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Long>
+		accountEntryRestrictionObjectFieldId = createColumn(
+			"accountERObjectFieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Long> descriptionObjectFieldId =
 		createColumn(
 			"descriptionObjectFieldId", Long.class, Types.BIGINT,
@@ -59,6 +63,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 	public final Column<ObjectDefinitionTable, Long> titleObjectFieldId =
 		createColumn(
 			"titleObjectFieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean>
+		accountEntryRestriction = createColumn(
+			"accountEntryRestriction", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

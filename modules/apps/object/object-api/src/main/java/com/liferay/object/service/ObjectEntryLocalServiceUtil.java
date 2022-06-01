@@ -482,23 +482,24 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId,
+			long objectDefinitionId, long groupId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search, int start, int end)
+			String search, long[] accountEntryIds, int start, int end)
 		throws PortalException {
 
 		return getService().getValuesList(
-			objectDefinitionId, predicate, search, start, end);
+			objectDefinitionId, groupId, predicate, search, accountEntryIds,
+			start, end);
 	}
 
 	public static int getValuesListCount(
-			long objectDefinitionId,
+			long objectDefinitionId, long groupId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search)
+			String search, long[] accountEntryIds)
 		throws PortalException {
 
 		return getService().getValuesListCount(
-			objectDefinitionId, predicate, search);
+			objectDefinitionId, groupId, predicate, search, accountEntryIds);
 	}
 
 	public static void insertIntoOrUpdateExtensionTable(

@@ -209,6 +209,21 @@ public interface ObjectDefinitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the account entry restriction object field ID of this object definition.
+	 *
+	 * @return the account entry restriction object field ID of this object definition
+	 */
+	public long getAccountEntryRestrictionObjectFieldId();
+
+	/**
+	 * Sets the account entry restriction object field ID of this object definition.
+	 *
+	 * @param accountEntryRestrictionObjectFieldId the account entry restriction object field ID of this object definition
+	 */
+	public void setAccountEntryRestrictionObjectFieldId(
+		long accountEntryRestrictionObjectFieldId);
+
+	/**
 	 * Returns the description object field ID of this object definition.
 	 *
 	 * @return the description object field ID of this object definition
@@ -235,6 +250,27 @@ public interface ObjectDefinitionModel
 	 * @param titleObjectFieldId the title object field ID of this object definition
 	 */
 	public void setTitleObjectFieldId(long titleObjectFieldId);
+
+	/**
+	 * Returns the account entry restriction of this object definition.
+	 *
+	 * @return the account entry restriction of this object definition
+	 */
+	public boolean getAccountEntryRestriction();
+
+	/**
+	 * Returns <code>true</code> if this object definition is account entry restriction.
+	 *
+	 * @return <code>true</code> if this object definition is account entry restriction; <code>false</code> otherwise
+	 */
+	public boolean isAccountEntryRestriction();
+
+	/**
+	 * Sets whether this object definition is account entry restriction.
+	 *
+	 * @param accountEntryRestriction the account entry restriction of this object definition
+	 */
+	public void setAccountEntryRestriction(boolean accountEntryRestriction);
 
 	/**
 	 * Returns the active of this object definition.

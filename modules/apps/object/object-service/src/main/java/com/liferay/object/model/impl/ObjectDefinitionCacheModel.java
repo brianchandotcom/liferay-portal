@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,10 +96,14 @@ public class ObjectDefinitionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", accountEntryRestrictionObjectFieldId=");
+		sb.append(accountEntryRestrictionObjectFieldId);
 		sb.append(", descriptionObjectFieldId=");
 		sb.append(descriptionObjectFieldId);
 		sb.append(", titleObjectFieldId=");
 		sb.append(titleObjectFieldId);
+		sb.append(", accountEntryRestriction=");
+		sb.append(accountEntryRestriction);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append(", dbTableName=");
@@ -175,9 +179,13 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectDefinitionImpl.setAccountEntryRestrictionObjectFieldId(
+			accountEntryRestrictionObjectFieldId);
 		objectDefinitionImpl.setDescriptionObjectFieldId(
 			descriptionObjectFieldId);
 		objectDefinitionImpl.setTitleObjectFieldId(titleObjectFieldId);
+		objectDefinitionImpl.setAccountEntryRestriction(
+			accountEntryRestriction);
 		objectDefinitionImpl.setActive(active);
 
 		if (dbTableName == null) {
@@ -283,9 +291,13 @@ public class ObjectDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		accountEntryRestrictionObjectFieldId = objectInput.readLong();
+
 		descriptionObjectFieldId = objectInput.readLong();
 
 		titleObjectFieldId = objectInput.readLong();
+
+		accountEntryRestriction = objectInput.readBoolean();
 
 		active = objectInput.readBoolean();
 		dbTableName = objectInput.readUTF();
@@ -336,9 +348,13 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(accountEntryRestrictionObjectFieldId);
+
 		objectOutput.writeLong(descriptionObjectFieldId);
 
 		objectOutput.writeLong(titleObjectFieldId);
+
+		objectOutput.writeBoolean(accountEntryRestriction);
 
 		objectOutput.writeBoolean(active);
 
@@ -436,8 +452,10 @@ public class ObjectDefinitionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long accountEntryRestrictionObjectFieldId;
 	public long descriptionObjectFieldId;
 	public long titleObjectFieldId;
+	public boolean accountEntryRestriction;
 	public boolean active;
 	public String dbTableName;
 	public String label;

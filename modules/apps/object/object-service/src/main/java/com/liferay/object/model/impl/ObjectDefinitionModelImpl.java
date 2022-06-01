@@ -84,8 +84,10 @@ public class ObjectDefinitionModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"accountERObjectFieldId", Types.BIGINT},
 		{"descriptionObjectFieldId", Types.BIGINT},
-		{"titleObjectFieldId", Types.BIGINT}, {"active_", Types.BOOLEAN},
+		{"titleObjectFieldId", Types.BIGINT},
+		{"accountEntryRestriction", Types.BOOLEAN}, {"active_", Types.BOOLEAN},
 		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"className", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
@@ -108,8 +110,10 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("accountERObjectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("descriptionObjectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("titleObjectFieldId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("accountEntryRestriction", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
@@ -129,7 +133,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,descriptionObjectFieldId LONG,titleObjectFieldId LONG,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,titleObjectFieldId LONG,accountEntryRestriction BOOLEAN,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -342,6 +346,13 @@ public class ObjectDefinitionModelImpl
 			(BiConsumer<ObjectDefinition, Date>)
 				ObjectDefinition::setModifiedDate);
 		attributeGetterFunctions.put(
+			"accountEntryRestrictionObjectFieldId",
+			ObjectDefinition::getAccountEntryRestrictionObjectFieldId);
+		attributeSetterBiConsumers.put(
+			"accountEntryRestrictionObjectFieldId",
+			(BiConsumer<ObjectDefinition, Long>)
+				ObjectDefinition::setAccountEntryRestrictionObjectFieldId);
+		attributeGetterFunctions.put(
 			"descriptionObjectFieldId",
 			ObjectDefinition::getDescriptionObjectFieldId);
 		attributeSetterBiConsumers.put(
@@ -354,6 +365,13 @@ public class ObjectDefinitionModelImpl
 			"titleObjectFieldId",
 			(BiConsumer<ObjectDefinition, Long>)
 				ObjectDefinition::setTitleObjectFieldId);
+		attributeGetterFunctions.put(
+			"accountEntryRestriction",
+			ObjectDefinition::getAccountEntryRestriction);
+		attributeSetterBiConsumers.put(
+			"accountEntryRestriction",
+			(BiConsumer<ObjectDefinition, Boolean>)
+				ObjectDefinition::setAccountEntryRestriction);
 		attributeGetterFunctions.put("active", ObjectDefinition::getActive);
 		attributeSetterBiConsumers.put(
 			"active",
@@ -617,6 +635,24 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public long getAccountEntryRestrictionObjectFieldId() {
+		return _accountEntryRestrictionObjectFieldId;
+	}
+
+	@Override
+	public void setAccountEntryRestrictionObjectFieldId(
+		long accountEntryRestrictionObjectFieldId) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_accountEntryRestrictionObjectFieldId =
+			accountEntryRestrictionObjectFieldId;
+	}
+
+	@JSON
+	@Override
 	public long getDescriptionObjectFieldId() {
 		return _descriptionObjectFieldId;
 	}
@@ -643,6 +679,27 @@ public class ObjectDefinitionModelImpl
 		}
 
 		_titleObjectFieldId = titleObjectFieldId;
+	}
+
+	@JSON
+	@Override
+	public boolean getAccountEntryRestriction() {
+		return _accountEntryRestriction;
+	}
+
+	@JSON
+	@Override
+	public boolean isAccountEntryRestriction() {
+		return _accountEntryRestriction;
+	}
+
+	@Override
+	public void setAccountEntryRestriction(boolean accountEntryRestriction) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_accountEntryRestriction = accountEntryRestriction;
 	}
 
 	@JSON
@@ -1345,9 +1402,13 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setUserName(getUserName());
 		objectDefinitionImpl.setCreateDate(getCreateDate());
 		objectDefinitionImpl.setModifiedDate(getModifiedDate());
+		objectDefinitionImpl.setAccountEntryRestrictionObjectFieldId(
+			getAccountEntryRestrictionObjectFieldId());
 		objectDefinitionImpl.setDescriptionObjectFieldId(
 			getDescriptionObjectFieldId());
 		objectDefinitionImpl.setTitleObjectFieldId(getTitleObjectFieldId());
+		objectDefinitionImpl.setAccountEntryRestriction(
+			isAccountEntryRestriction());
 		objectDefinitionImpl.setActive(isActive());
 		objectDefinitionImpl.setDBTableName(getDBTableName());
 		objectDefinitionImpl.setLabel(getLabel());
@@ -1391,10 +1452,14 @@ public class ObjectDefinitionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectDefinitionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectDefinitionImpl.setAccountEntryRestrictionObjectFieldId(
+			this.<Long>getColumnOriginalValue("accountERObjectFieldId"));
 		objectDefinitionImpl.setDescriptionObjectFieldId(
 			this.<Long>getColumnOriginalValue("descriptionObjectFieldId"));
 		objectDefinitionImpl.setTitleObjectFieldId(
 			this.<Long>getColumnOriginalValue("titleObjectFieldId"));
+		objectDefinitionImpl.setAccountEntryRestriction(
+			this.<Boolean>getColumnOriginalValue("accountEntryRestriction"));
 		objectDefinitionImpl.setActive(
 			this.<Boolean>getColumnOriginalValue("active_"));
 		objectDefinitionImpl.setDBTableName(
@@ -1545,10 +1610,16 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		objectDefinitionCacheModel.accountEntryRestrictionObjectFieldId =
+			getAccountEntryRestrictionObjectFieldId();
+
 		objectDefinitionCacheModel.descriptionObjectFieldId =
 			getDescriptionObjectFieldId();
 
 		objectDefinitionCacheModel.titleObjectFieldId = getTitleObjectFieldId();
+
+		objectDefinitionCacheModel.accountEntryRestriction =
+			isAccountEntryRestriction();
 
 		objectDefinitionCacheModel.active = isActive();
 
@@ -1754,8 +1825,10 @@ public class ObjectDefinitionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _accountEntryRestrictionObjectFieldId;
 	private long _descriptionObjectFieldId;
 	private long _titleObjectFieldId;
+	private boolean _accountEntryRestriction;
 	private boolean _active;
 	private String _dbTableName;
 	private String _label;
@@ -1813,8 +1886,12 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put(
+			"accountERObjectFieldId", _accountEntryRestrictionObjectFieldId);
+		_columnOriginalValues.put(
 			"descriptionObjectFieldId", _descriptionObjectFieldId);
 		_columnOriginalValues.put("titleObjectFieldId", _titleObjectFieldId);
+		_columnOriginalValues.put(
+			"accountEntryRestriction", _accountEntryRestriction);
 		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("label", _label);
@@ -1840,6 +1917,8 @@ public class ObjectDefinitionModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put(
+			"accountERObjectFieldId", "accountEntryRestrictionObjectFieldId");
 		attributeNames.put("active_", "active");
 		attributeNames.put("system_", "system");
 
@@ -1873,41 +1952,45 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("descriptionObjectFieldId", 256L);
+		columnBitmasks.put("accountERObjectFieldId", 256L);
 
-		columnBitmasks.put("titleObjectFieldId", 512L);
+		columnBitmasks.put("descriptionObjectFieldId", 512L);
 
-		columnBitmasks.put("active_", 1024L);
+		columnBitmasks.put("titleObjectFieldId", 1024L);
 
-		columnBitmasks.put("dbTableName", 2048L);
+		columnBitmasks.put("accountEntryRestriction", 2048L);
 
-		columnBitmasks.put("label", 4096L);
+		columnBitmasks.put("active_", 4096L);
 
-		columnBitmasks.put("className", 8192L);
+		columnBitmasks.put("dbTableName", 8192L);
 
-		columnBitmasks.put("name", 16384L);
+		columnBitmasks.put("label", 16384L);
 
-		columnBitmasks.put("panelAppOrder", 32768L);
+		columnBitmasks.put("className", 32768L);
 
-		columnBitmasks.put("panelCategoryKey", 65536L);
+		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("pkObjectFieldDBColumnName", 131072L);
+		columnBitmasks.put("panelAppOrder", 131072L);
 
-		columnBitmasks.put("pkObjectFieldName", 262144L);
+		columnBitmasks.put("panelCategoryKey", 262144L);
 
-		columnBitmasks.put("pluralLabel", 524288L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 524288L);
 
-		columnBitmasks.put("portlet", 1048576L);
+		columnBitmasks.put("pkObjectFieldName", 1048576L);
 
-		columnBitmasks.put("scope", 2097152L);
+		columnBitmasks.put("pluralLabel", 2097152L);
 
-		columnBitmasks.put("storageType", 4194304L);
+		columnBitmasks.put("portlet", 4194304L);
 
-		columnBitmasks.put("system_", 8388608L);
+		columnBitmasks.put("scope", 8388608L);
 
-		columnBitmasks.put("version", 16777216L);
+		columnBitmasks.put("storageType", 16777216L);
 
-		columnBitmasks.put("status", 33554432L);
+		columnBitmasks.put("system_", 33554432L);
+
+		columnBitmasks.put("version", 67108864L);
+
+		columnBitmasks.put("status", 134217728L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

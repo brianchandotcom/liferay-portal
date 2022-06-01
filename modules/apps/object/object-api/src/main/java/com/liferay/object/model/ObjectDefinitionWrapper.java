@@ -52,8 +52,12 @@ public class ObjectDefinitionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
+			"accountEntryRestrictionObjectFieldId",
+			getAccountEntryRestrictionObjectFieldId());
+		attributes.put(
 			"descriptionObjectFieldId", getDescriptionObjectFieldId());
 		attributes.put("titleObjectFieldId", getTitleObjectFieldId());
+		attributes.put("accountEntryRestriction", isAccountEntryRestriction());
 		attributes.put("active", isActive());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
@@ -125,6 +129,14 @@ public class ObjectDefinitionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long accountEntryRestrictionObjectFieldId = (Long)attributes.get(
+			"accountEntryRestrictionObjectFieldId");
+
+		if (accountEntryRestrictionObjectFieldId != null) {
+			setAccountEntryRestrictionObjectFieldId(
+				accountEntryRestrictionObjectFieldId);
+		}
+
 		Long descriptionObjectFieldId = (Long)attributes.get(
 			"descriptionObjectFieldId");
 
@@ -136,6 +148,13 @@ public class ObjectDefinitionWrapper
 
 		if (titleObjectFieldId != null) {
 			setTitleObjectFieldId(titleObjectFieldId);
+		}
+
+		Boolean accountEntryRestriction = (Boolean)attributes.get(
+			"accountEntryRestriction");
+
+		if (accountEntryRestriction != null) {
+			setAccountEntryRestriction(accountEntryRestriction);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -239,6 +258,26 @@ public class ObjectDefinitionWrapper
 	@Override
 	public ObjectDefinition cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the account entry restriction of this object definition.
+	 *
+	 * @return the account entry restriction of this object definition
+	 */
+	@Override
+	public boolean getAccountEntryRestriction() {
+		return model.getAccountEntryRestriction();
+	}
+
+	/**
+	 * Returns the account entry restriction object field ID of this object definition.
+	 *
+	 * @return the account entry restriction object field ID of this object definition
+	 */
+	@Override
+	public long getAccountEntryRestrictionObjectFieldId() {
+		return model.getAccountEntryRestrictionObjectFieldId();
 	}
 
 	/**
@@ -694,6 +733,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is account entry restriction.
+	 *
+	 * @return <code>true</code> if this object definition is account entry restriction; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isAccountEntryRestriction() {
+		return model.isAccountEntryRestriction();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is active.
 	 *
 	 * @return <code>true</code> if this object definition is active; <code>false</code> otherwise
@@ -751,6 +800,29 @@ public class ObjectDefinitionWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets whether this object definition is account entry restriction.
+	 *
+	 * @param accountEntryRestriction the account entry restriction of this object definition
+	 */
+	@Override
+	public void setAccountEntryRestriction(boolean accountEntryRestriction) {
+		model.setAccountEntryRestriction(accountEntryRestriction);
+	}
+
+	/**
+	 * Sets the account entry restriction object field ID of this object definition.
+	 *
+	 * @param accountEntryRestrictionObjectFieldId the account entry restriction object field ID of this object definition
+	 */
+	@Override
+	public void setAccountEntryRestrictionObjectFieldId(
+		long accountEntryRestrictionObjectFieldId) {
+
+		model.setAccountEntryRestrictionObjectFieldId(
+			accountEntryRestrictionObjectFieldId);
 	}
 
 	/**

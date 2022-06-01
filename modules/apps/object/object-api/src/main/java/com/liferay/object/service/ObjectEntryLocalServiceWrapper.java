@@ -551,24 +551,25 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.List<java.util.Map<String, java.io.Serializable>>
 			getValuesList(
-				long objectDefinitionId,
+				long objectDefinitionId, long groupId,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
-				String search, int start, int end)
+				String search, long[] accountEntryIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getValuesList(
-			objectDefinitionId, predicate, search, start, end);
+			objectDefinitionId, groupId, predicate, search, accountEntryIds,
+			start, end);
 	}
 
 	@Override
 	public int getValuesListCount(
-			long objectDefinitionId,
+			long objectDefinitionId, long groupId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search)
+			String search, long[] accountEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getValuesListCount(
-			objectDefinitionId, predicate, search);
+			objectDefinitionId, groupId, predicate, search, accountEntryIds);
 	}
 
 	@Override

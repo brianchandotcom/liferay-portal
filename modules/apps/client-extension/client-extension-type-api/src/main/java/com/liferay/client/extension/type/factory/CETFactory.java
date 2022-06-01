@@ -17,6 +17,8 @@ package com.liferay.client.extension.type.factory;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETGlobalCSS;
+import com.liferay.client.extension.type.CETGlobalJS;
 import com.liferay.client.extension.type.CETIFrame;
 import com.liferay.client.extension.type.CETThemeCSS;
 import com.liferay.client.extension.type.CETThemeFavicon;
@@ -37,6 +39,14 @@ public interface CETFactory {
 		ClientExtensionEntry clientExtensionEntry);
 
 	public CETCustomElement cetCustomElement(PortletRequest portletRequest);
+
+	public CETGlobalCSS cetGlobalCSS(ClientExtensionEntry clientExtensionEntry);
+
+	public CETGlobalCSS cetGlobalCSS(PortletRequest portletRequest);
+
+	public CETGlobalJS cetGlobalJS(ClientExtensionEntry clientExtensionEntry);
+
+	public CETGlobalJS cetGlobalJS(PortletRequest portletRequest);
 
 	public CETIFrame cetIFrame(ClientExtensionEntry clientExtensionEntry);
 

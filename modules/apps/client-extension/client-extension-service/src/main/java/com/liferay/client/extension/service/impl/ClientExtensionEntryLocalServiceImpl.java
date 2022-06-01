@@ -19,6 +19,8 @@ import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExter
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.CETGlobalCSS;
+import com.liferay.client.extension.type.CETGlobalJS;
 import com.liferay.client.extension.type.CETIFrame;
 import com.liferay.client.extension.type.CETThemeCSS;
 import com.liferay.client.extension.type.CETThemeFavicon;
@@ -29,6 +31,7 @@ import com.liferay.client.extension.type.validator.CETValidator;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -467,6 +470,28 @@ public class ClientExtensionEntryLocalServiceImpl
 
 			workflowContext = Collections.singletonMap(
 				WorkflowConstants.CONTEXT_URL, cetCustomElement.getURLs());
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			CETGlobalCSS cetGlobalCSS = _cetFactory.cetGlobalCSS(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL,
+				StringUtil.merge(cetGlobalCSS.getURLs(), StringPool.NEW_LINE));
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			CETGlobalJS cetGlobalJS = _cetFactory.cetGlobalJS(
+				clientExtensionEntry);
+
+			workflowContext = Collections.singletonMap(
+				WorkflowConstants.CONTEXT_URL,
+				StringUtil.merge(cetGlobalJS.getURLs(), StringPool.NEW_LINE));
 		}
 		else if (Objects.equals(
 					clientExtensionEntry.getType(),

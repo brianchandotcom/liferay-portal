@@ -55,6 +55,16 @@ public class CETFDSEntry {
 			return LanguageUtil.get(_locale, "custom-element");
 		}
 		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			return LanguageUtil.get(_locale, "global-css");
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			return LanguageUtil.get(_locale, "global-js");
+		}
+		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
 
 			return LanguageUtil.get(_locale, "iframe");

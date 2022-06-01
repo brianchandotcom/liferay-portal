@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeFaviconConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.petra.string.StringBundler;
@@ -65,6 +66,7 @@ public class ClientExtensionProjectConfigurator
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
 
+		_clientExtensionConfigurers.put("themeCSS", new ThemeCSSConfigurer());
 		_clientExtensionConfigurers.put(
 			"themeFavicon", new ThemeFaviconConfigurer());
 

@@ -27,9 +27,9 @@ const Layout = () => (
 				<HeaderContextProvider>
 					<Header />
 
-					<div className="testray-content">
+					<section className="testray-content">
 						<Outlet />
-					</div>
+					</section>
 				</HeaderContextProvider>
 			</div>
 		</div>

@@ -58,7 +58,7 @@ const Header = () => {
 	);
 
 	return (
-		<div className="d-flex flex-column header-container pt-4">
+		<header className="d-flex flex-column header-container pt-4">
 			<div className="d-flex">
 				<div className="align-items-center d-flex justify-content-center mx-3">
 					{dropdown.length ? (
@@ -152,7 +152,7 @@ const Header = () => {
 					</ClayTabs.Item>
 				))}
 			</ClayTabs>
-		</div>
+		</header>
 	);
 };
 

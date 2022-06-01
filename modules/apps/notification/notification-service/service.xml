@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.notification" short-no-such-exception-enabled="false">
 	<author>Gabriel Albuquerque</author>
 	<namespace>Notification</namespace>
-	<entity local-service="true" name="NotificationQueueEntry" remote-service="true" uuid="false">
+	<entity local-service="true" name="NotificationQueueEntry" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 

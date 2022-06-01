@@ -168,6 +168,17 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 
 	@Override
 	public List<DDMFormInstance> search(
+		long companyId, long groupId, String keywords, boolean published,
+		int start, int end,
+		OrderByComparator<DDMFormInstance> orderByComparator) {
+
+		return ddmFormInstanceFinder.filterFindByKeywords(
+			companyId, groupId, keywords, published, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<DDMFormInstance> search(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, OrderByComparator<DDMFormInstance> orderByComparator) {
 
@@ -200,6 +211,14 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	public int searchCount(long companyId, long groupId, String keywords) {
 		return ddmFormInstanceFinder.filterCountByKeywords(
 			companyId, groupId, keywords);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, String keywords, boolean published) {
+
+		return ddmFormInstanceFinder.filterCountByKeywords(
+			companyId, groupId, keywords, published);
 	}
 
 	@Override

@@ -57,6 +57,23 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.countByC_G_N_D_P">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDMFormInstance.formInstanceId) AS COUNT_VALUE
+			FROM
+				DDMFormInstance, DDMFormInstanceVersion
+			WHERE
+				(DDMFormInstance.formInstanceId = DDMFormInstanceVersion.formInstanceId) AND
+				(DDMFormInstance.groupId = ?) AND
+				(DDMFormInstance.companyId = ?) AND
+				(
+					(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
+				) AND
+				(DDMFormInstance.settings_ LIKE '%"fieldReference":"published","value":"[$PUBLISHED$]"%')
+		]]>
+	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT
@@ -91,6 +108,34 @@
 							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 						)
+				)
+				TEMP_TABLE
+					INNER JOIN
+						DDMFormInstance ON
+							TEMP_TABLE.formInstanceId = DDMFormInstance.formInstanceId
+			ORDER BY
+				DDMFormInstance.formInstanceId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.findByC_G_N_D_P">
+		<![CDATA[
+			SELECT
+				{DDMFormInstance.*}
+			FROM
+				(
+					SELECT
+						DISTINCT DDMFormInstance.formInstanceId
+					FROM
+						DDMFormInstance, DDMFormInstanceVersion
+					WHERE
+						(DDMFormInstance.formInstanceId = DDMFormInstanceVersion.formInstanceId) AND
+						(DDMFormInstance.groupId = ?) AND
+						(DDMFormInstance.companyId = ?) AND
+						(
+							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
+						) AND
+						(DDMFormInstance.settings_ LIKE '%"fieldReference":"published","value":"[$PUBLISHED$]"%')
 				)
 				TEMP_TABLE
 					INNER JOIN

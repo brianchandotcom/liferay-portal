@@ -47,11 +47,17 @@ public class DDMFormInstanceFinderImpl
 	public static final String COUNT_BY_C_G_N_D =
 		DDMFormInstanceFinder.class.getName() + ".countByC_G_N_D";
 
+	public static final String COUNT_BY_C_G_N_D_P =
+		DDMFormInstanceFinder.class.getName() + ".countByC_G_N_D_P";
+
 	public static final String COUNT_BY_C_G_N_D_S =
 		DDMFormInstanceFinder.class.getName() + ".countByC_G_N_D_S";
 
 	public static final String FIND_BY_C_G_N_D =
 		DDMFormInstanceFinder.class.getName() + ".findByC_G_N_D";
+
+	public static final String FIND_BY_C_G_N_D_P =
+		DDMFormInstanceFinder.class.getName() + ".findByC_G_N_D_P";
 
 	public static final String FIND_BY_C_G_N_D_S =
 		DDMFormInstanceFinder.class.getName() + ".findByC_G_N_D_S";
@@ -79,6 +85,13 @@ public class DDMFormInstanceFinderImpl
 
 	@Override
 	public int filterCountByKeywords(
+		long companyId, long groupId, String keywords, boolean published) {
+
+		return doCountByKeywords(companyId, groupId, keywords, published, true);
+	}
+
+	@Override
+	public int filterCountByKeywords(
 		long companyId, long groupId, String keywords, int status) {
 
 		return doCountByKeywords(companyId, groupId, keywords, status, true);
@@ -96,6 +109,29 @@ public class DDMFormInstanceFinderImpl
 
 		return doCountByC_G_N_D(
 			companyId, groupId, names, descriptions, andOperator, true);
+	}
+
+	@Override
+	public List<DDMFormInstance> filterFindByKeywords(
+		long companyId, long groupId, String keywords, boolean published,
+		int start, int end,
+		OrderByComparator<DDMFormInstance> orderByComparator) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return filterFindByC_G_N_D_P(
+			companyId, groupId, names, descriptions, published, andOperator,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -146,6 +182,17 @@ public class DDMFormInstanceFinderImpl
 		return doFindByC_G_N_D(
 			companyId, groupId, names, descriptions, andOperator, start, end,
 			orderByComparator, true);
+	}
+
+	@Override
+	public List<DDMFormInstance> filterFindByC_G_N_D_P(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean published, boolean andOperator, int start, int end,
+		OrderByComparator<DDMFormInstance> orderByComparator) {
+
+		return doFindByC_G_N_D_P(
+			companyId, groupId, names, descriptions, published, andOperator,
+			start, end, orderByComparator, true);
 	}
 
 	@Override
@@ -202,6 +249,27 @@ public class DDMFormInstanceFinderImpl
 	}
 
 	protected int doCountByKeywords(
+		long companyId, long groupId, String keywords, boolean published,
+		boolean inlineSQLHelper) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_G_N_D_P(
+			companyId, groupId, names, descriptions, published, andOperator,
+			inlineSQLHelper);
+	}
+
+	protected int doCountByKeywords(
 		long companyId, long groupId, String keywords, int status,
 		boolean inlineSQLHelper) {
 
@@ -229,6 +297,77 @@ public class DDMFormInstanceFinderImpl
 		return doCountByC_G_N_D_S(
 			companyId, groupId, names, descriptions,
 			WorkflowConstants.STATUS_ANY, andOperator, inlineSQLHelper);
+	}
+
+	protected int doCountByC_G_N_D_P(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean published, boolean andOperator, boolean inlineSQLHelper) {
+
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D_P);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDMFormInstance.class.getName(),
+					"DDMFormInstance.formInstanceId", groupId);
+			}
+
+			if (groupId <= 0) {
+				sql = StringUtil.removeSubstring(
+					sql, "(DDMFormInstance.groupId = ?) AND");
+			}
+
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
+				names);
+			sql = _customSQL.replaceKeywords(
+				sql, "DDMFormInstance.description", StringPool.LIKE, true,
+				descriptions);
+
+			sql = StringUtil.replace(
+				sql, "[$PUBLISHED$]", Boolean.toString(published));
+
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (groupId > 0) {
+				queryPos.add(groupId);
+			}
+
+			queryPos.add(companyId);
+			queryPos.add(names, 2);
+			queryPos.add(descriptions, 2);
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountByC_G_N_D_S(
@@ -319,6 +458,71 @@ public class DDMFormInstanceFinderImpl
 			companyId, groupId, names, descriptions,
 			WorkflowConstants.STATUS_ANY, andOperator, start, end,
 			orderByComparator, inlineSQLHelper);
+	}
+
+	protected List<DDMFormInstance> doFindByC_G_N_D_P(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean published, boolean andOperator, int start, int end,
+		OrderByComparator<DDMFormInstance> orderByComparator,
+		boolean inlineSQLHelper) {
+
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D_P);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDMFormInstance.class.getName(),
+					"DDMFormInstance.formInstanceId", groupId);
+			}
+
+			if (groupId <= 0) {
+				sql = StringUtil.removeSubstring(
+					sql, "(DDMFormInstance.groupId = ?) AND");
+			}
+
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
+				names);
+			sql = _customSQL.replaceKeywords(
+				sql, "DDMFormInstance.description", StringPool.LIKE, true,
+				descriptions);
+
+			sql = StringUtil.replace(
+				sql, "[$PUBLISHED$]", Boolean.toString(published));
+
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity("DDMFormInstance", DDMFormInstanceImpl.class);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (groupId > 0) {
+				queryPos.add(groupId);
+			}
+
+			queryPos.add(companyId);
+			queryPos.add(names, 2);
+			queryPos.add(descriptions, 2);
+
+			return (List<DDMFormInstance>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected List<DDMFormInstance> doFindByC_G_N_D_S(

@@ -53,7 +53,7 @@
 				"name": "urls",
 				"type": "list",
 				"default": [
-					
+					"custom-element.js"					
 				]
 			},
 			{
@@ -182,6 +182,11 @@
 				"default": "This is a sample ThemeFavicon"
 			},
 			{
+				"name": "sourceCodeUrl",
+				"type": "string",
+				"default": "https://www.liferay.com"
+			},
+			{
 				"name": "url",
 				"type": "string",
 				"default": "favicon.ico"
@@ -210,6 +215,11 @@
 				"name": "description",
 				"type": "string",
 				"default": "This is a sample ThemeJS"
+			},
+			{
+				"name": "sourceCodeUrl",
+				"type": "string",
+				"default": "https://www.liferay.com"
 			},
 			{
 				"name": "urls",

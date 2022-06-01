@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, toggleSelectBox} from 'frontend-js-web';
 
 export default function ({classTypes, namespace}) {
 	const mapDDMStructures = {};
@@ -224,7 +224,7 @@ export default function ({classTypes, namespace}) {
 	};
 
 	classTypes.forEach(({className, classSubtypes}) => {
-		Liferay.Util.toggleSelectBox(
+		toggleSelectBox(
 			`${namespace}anyClassType${className}`,
 			'false',
 			`${namespace}${className}Boxes`
@@ -417,7 +417,7 @@ export default function ({classTypes, namespace}) {
 
 	eventDelegates.push(clickOpenModal);
 
-	Liferay.Util.toggleSelectBox(
+	toggleSelectBox(
 		`${namespace}anyAssetType`,
 		'false',
 		`${namespace}classNamesBoxes`

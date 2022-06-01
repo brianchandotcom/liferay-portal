@@ -57,7 +57,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.countByC_G_N_D_S">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.countByC_G_N_D_P_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DDMFormInstance.formInstanceId) AS COUNT_VALUE
@@ -71,6 +71,7 @@
 					(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
+				(DDMFormInstance.settings_ LIKE '%"fieldReference":"published","value":"[$PUBLISHED$]"%') AND
 				(DDMFormInstanceVersion.status = ?)
 		]]>
 	</sql>
@@ -100,7 +101,7 @@
 				DDMFormInstance.formInstanceId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.findByC_G_N_D_S">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder.findByC_G_N_D_P_S">
 		<![CDATA[
 			SELECT
 				{DDMFormInstance.*}
@@ -118,6 +119,7 @@
 							(LOWER(DDMFormInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(DDMFormInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
 						) AND
+						(DDMFormInstance.settings_ LIKE '%"fieldReference":"published","value":"[$PUBLISHED$]"%') AND
 						(DDMFormInstanceVersion.status = ?)
 				)
 				TEMP_TABLE

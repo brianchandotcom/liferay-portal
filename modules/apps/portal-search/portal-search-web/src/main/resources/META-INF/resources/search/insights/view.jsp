@@ -18,8 +18,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -54,6 +53,15 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 	</c:when>
 	<c:otherwise>
 		<div class="full-query">
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"selector", ".search-insights-copy-to-clipboard"
+					).build()
+				%>'
+				module="js/utils/initializeClipboard"
+			/>
+
 			<liferay-ui:panel-container
 				extended="<%= true %>"
 				id='<%= liferayPortletResponse.getNamespace() + "insightsPanelContainer" %>'
@@ -68,10 +76,11 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 					title="request-string"
 				>
 					<clay:button
+						cssClass="search-insights-copy-to-clipboard"
+						data-clipboard-text="<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>"
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"
-						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('" + insightsRequestId + "');" %>'
 						small="<%= true %>"
 					/>
 
@@ -97,10 +106,11 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 					title="response-string"
 				>
 					<clay:button
+						cssClass="search-insights-copy-to-clipboard"
+						data-clipboard-text="<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>"
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"
-						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('" + insightsResponseId + "');" %>'
 						small="<%= true %>"
 					/>
 
@@ -121,25 +131,3 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<aui:script>
-	function <portlet:namespace />copyToClipboard(id) {
-		const text = document.getElementById(id).value;
-
-		navigator.clipboard.writeText(text).then(
-			() => {
-				Liferay.Util.openToast({
-					message: '<liferay-ui:message key="copied-to-clipboard" />',
-					type: 'success',
-				});
-			},
-			() => {
-				Liferay.Util.openToast({
-					message:
-						'<liferay-ui:message key="an-unexpected-error-occurred" />',
-					type: 'danger',
-				});
-			}
-		);
-	}
-</aui:script>

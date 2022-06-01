@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"clipboard": "2.0.4",
 		"codemirror": "^5.59.0",
 		"moment": "^2.24.0"
 	},

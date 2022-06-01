@@ -16,16 +16,13 @@ package com.liferay.segments.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -93,20 +90,8 @@ public class SegmentsExperimentModelResourcePermissionRegistrar {
 				SegmentsExperiment segmentsExperiment, String actionId)
 			throws PortalException {
 
-			if (_layoutPermission.contains(
-					permissionChecker, segmentsExperiment.getClassPK(),
-					ActionKeys.UPDATE)) {
-
-				return true;
-			}
-			else if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-132571")) &&
-					 (_layoutPermission.contains(
-						 permissionChecker, segmentsExperiment.getClassPK(),
-						 ActionKeys.UPDATE_LAYOUT_BASIC) ||
-					  _layoutPermission.contains(
-						  permissionChecker, segmentsExperiment.getClassPK(),
-						  ActionKeys.UPDATE_LAYOUT_LIMITED))) {
+			if (_layoutPermission.containsLayoutBasicUpdatePermission(
+					permissionChecker, segmentsExperiment.getClassPK())) {
 
 				return true;
 			}

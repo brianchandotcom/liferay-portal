@@ -18,12 +18,9 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -64,29 +61,13 @@ public class FragmentsContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-132571"))) {
-
-				if (_layoutPermission.contains(
-						permissionChecker, plid, ActionKeys.UPDATE) ||
-					_layoutPermission.contains(
-						permissionChecker, plid,
-						ActionKeys.UPDATE_LAYOUT_BASIC) ||
-					_layoutPermission.contains(
-						permissionChecker, plid,
-						ActionKeys.UPDATE_LAYOUT_LIMITED)) {
-
-					return true;
-				}
-
-				return false;
-			}
-
-			if (_layoutPermission.contains(
-					permissionChecker, plid, ActionKeys.UPDATE)) {
+			if (_layoutPermission.containsLayoutBasicUpdatePermission(
+					permissionChecker, plid)) {
 
 				return true;
 			}
+
+			return false;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

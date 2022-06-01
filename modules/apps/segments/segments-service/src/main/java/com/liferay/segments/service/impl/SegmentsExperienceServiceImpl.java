@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -278,19 +276,8 @@ public class SegmentsExperienceServiceImpl
 			return false;
 		}
 
-		if (_layoutPermission.contains(
-				getPermissionChecker(), layout, ActionKeys.UPDATE)) {
-
-			return true;
-		}
-		else if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-132571")) &&
-				 (_layoutPermission.contains(
-					 getPermissionChecker(), plid,
-					 ActionKeys.UPDATE_LAYOUT_BASIC) ||
-				  _layoutPermission.contains(
-					  getPermissionChecker(), plid,
-					  ActionKeys.UPDATE_LAYOUT_LIMITED))) {
+		if (_layoutPermission.containsLayoutBasicUpdatePermission(
+				getPermissionChecker(), layout)) {
 
 			return true;
 		}

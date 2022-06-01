@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -24,10 +25,23 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -39,10 +53,12 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -263,6 +279,60 @@ public class EditFragmentEntryDisplayContext {
 		return _cssContent;
 	}
 
+	private JSONObject _getFieldTypeJSONObject(
+		InfoFieldType infoFieldType, JSONArray fieldTypesJSONArray) {
+
+		return JSONUtil.put(
+			"checked",
+			() -> {
+				if ((fieldTypesJSONArray == null) ||
+					!JSONUtil.hasValue(
+						fieldTypesJSONArray, infoFieldType.getName())) {
+
+					return false;
+				}
+
+				return true;
+			}
+		).put(
+			"key", infoFieldType.getName()
+		).put(
+			"label", infoFieldType.getLabel(_themeDisplay.getLocale())
+		);
+	}
+
+	private JSONArray _getFieldTypesJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry == null) ||
+			(fragmentEntry.getType() != FragmentConstants.TYPE_INPUT)) {
+
+			return jsonArray;
+		}
+
+		JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		try {
+			JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntry.getTypeOptions());
+
+			fieldTypesJSONArray = typeOptionsJSONObject.getJSONArray(
+				"fieldTypes");
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			jsonArray.put(
+				_getFieldTypeJSONObject(infoFieldType, fieldTypesJSONArray));
+		}
+
+		return jsonArray;
+	}
+
 	private String _getFragmentEntryRenderURL(String mvcRenderCommandName)
 		throws Exception {
 
@@ -371,6 +441,8 @@ public class EditFragmentEntryDisplayContext {
 			"dataAttributes",
 			_fragmentEntryProcessorRegistry.getDataAttributesJSONArray()
 		).put(
+			"fieldTypes", _getFieldTypesJSONArray()
+		).put(
 			"fragmentCollectionId", getFragmentCollectionId()
 		).put(
 			"fragmentEntryId", getFragmentEntryId()
@@ -407,6 +479,8 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"initialCSS", _getCssContent()
 		).put(
+			"initialFieldTypes", _getFieldTypesJSONArray()
+		).put(
 			"initialHTML", _getHtmlContent()
 		).put(
 			"initialJS", _getJsContent()
@@ -428,6 +502,8 @@ public class EditFragmentEntryDisplayContext {
 			"readOnly", _isReadOnlyFragmentEntry()
 		).put(
 			"resources", resources
+		).put(
+			"showFieldTypes", _showFieldTypes()
 		).put(
 			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).put(
@@ -528,6 +604,31 @@ public class EditFragmentEntryDisplayContext {
 						fragmentEntry.getStatus())),
 				")"));
 	}
+
+	private boolean _showFieldTypes() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152938"))) {
+			return false;
+		}
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry == null) ||
+			(FragmentConstants.TYPE_INPUT != fragmentEntry.getType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final InfoFieldType[] _INFO_FIELD_TYPES = {
+		BooleanInfoFieldType.INSTANCE, DateInfoFieldType.INSTANCE,
+		NumberInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
+	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditFragmentEntryDisplayContext.class);
 
 	private String _configurationContent;
 	private String _cssContent;

@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+        RaylifeAP.createRaylifeAPSite();
 	}
 
 	tearDown {
@@ -26,10 +28,29 @@ definition {
 	}
 
 	@description = "Verify if Raylife AP can be created"
+    @ignore = "Test Stub"
 	@priority = "5"
 	test CanRaylifeAPCreated {
 
-		// TODO LPS-155172 - Verify if Raylife AP can be created
+		// TODO LPS-154296 - Verify if Raylife AP can be created
+
+	}
+
+    @description = "Verify if when Raylife AP is created, the Raylife Applications will be created for it as well"
+    @ignore = "Test Stub"
+	@priority = "5"
+	test RaylifeApplicationsForRaylifeAPIsCreated {
+
+		// TODO LPS-154296 - Verify if when Raylife AP is created, the Raylife Applications will be created for it as well
+
+	}
+
+    @description = "Verify if when Raylife AP is created, the Raylife Policies will be created for it as well"
+    @ignore = "Test Stub"
+	@priority = "5"
+	test RaylifePoliciesForRaylifeAPIsCreated {
+
+		// TODO LPS-154296 - Verify if when Raylife AP is created, the Raylife Policies will be created for it as well
 
 	}
 

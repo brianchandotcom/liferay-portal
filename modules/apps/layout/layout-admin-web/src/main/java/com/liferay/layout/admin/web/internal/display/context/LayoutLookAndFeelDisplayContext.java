@@ -14,6 +14,13 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
+import com.liferay.client.extension.type.CETThemeFavicon;
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -39,6 +46,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -63,6 +71,8 @@ public class LayoutLookAndFeelDisplayContext {
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_cetFactory = (CETFactory)httpServletRequest.getAttribute(
+			CETFactory.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -190,7 +200,13 @@ public class LayoutLookAndFeelDisplayContext {
 	public String getFaviconImage() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		String faviconImage = selLayout.getFavicon();
+		String faviconImage = _getCETThemeFaviconImage(selLayout);
+
+		if (Validator.isNotNull(faviconImage)) {
+			return faviconImage;
+		}
+
+		faviconImage = selLayout.getFavicon();
 
 		if (faviconImage != null) {
 			return faviconImage;
@@ -349,6 +365,31 @@ public class LayoutLookAndFeelDisplayContext {
 		return false;
 	}
 
+	private String _getCETThemeFaviconImage(Layout layout) {
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel == null) {
+			return null;
+		}
+
+		ClientExtensionEntry clientExtensionEntry =
+			ClientExtensionEntryLocalServiceUtil.fetchClientExtensionEntry(
+				clientExtensionEntryRel.getClientExtensionEntryId());
+
+		if (clientExtensionEntry == null) {
+			return null;
+		}
+
+		CETThemeFavicon cetThemeFavicon = _cetFactory.themeFavicon(
+			clientExtensionEntry);
+
+		return cetThemeFavicon.getURL();
+	}
+
 	private String _getClearFaviconButtonFileEntryTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -380,6 +421,7 @@ public class LayoutLookAndFeelDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLookAndFeelDisplayContext.class);
 
+	private final CETFactory _cetFactory;
 	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasMasterLayout;
 	private Boolean _hasStyleBooks;

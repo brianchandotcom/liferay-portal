@@ -14,10 +14,15 @@
 
 package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
+import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,6 +48,18 @@ public class LayoutLookAndFeelFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		httpServletRequest.setAttribute(
+			CETFactory.class.getName(), _cetFactory);
+
+		super.include(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
@@ -55,5 +72,8 @@ public class LayoutLookAndFeelFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/look_and_feel.jsp";
 	}
+
+	@Reference
+	private CETFactory _cetFactory;
 
 }

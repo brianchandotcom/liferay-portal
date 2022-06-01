@@ -545,24 +545,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return _favicon;
 		}
 
-		try {
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-				getFaviconFileEntryId());
+		String favicon = _getFavicon(getFaviconFileEntryId());
 
-			_favicon = HtmlUtil.escape(
-				StringBundler.concat(
-					PortalUtil.getPathContext(), "/documents/",
-					fileEntry.getRepositoryId(), StringPool.SLASH,
-					fileEntry.getFolderId(), StringPool.SLASH,
-					URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
-					StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
+		if (favicon != null) {
+			_favicon = favicon;
 
 			return _favicon;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
 		}
 
 		_favicon = _getInheritedFavicon();
@@ -1467,11 +1455,39 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
+	private String _getFavicon(long faviconFileEntryId) {
+		try {
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+				faviconFileEntryId);
+
+			return HtmlUtil.escape(
+				StringBundler.concat(
+					PortalUtil.getPathContext(), "/documents/",
+					fileEntry.getRepositoryId(), StringPool.SLASH,
+					fileEntry.getFolderId(), StringPool.SLASH,
+					URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
+					StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getInheritedFavicon() {
 		Layout masterLayout = _getMasterLayout();
 
-		if (masterLayout != null) {
-			return masterLayout.getFavicon();
+		if ((masterLayout != null) &&
+			(masterLayout.getFaviconFileEntryId() > 0)) {
+
+			String favicon = _getFavicon(masterLayout.getFaviconFileEntryId());
+
+			if (Validator.isNotNull(favicon)) {
+				return favicon;
+			}
 		}
 
 		LayoutSet layoutSet = getLayoutSet();

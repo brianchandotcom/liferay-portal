@@ -68,10 +68,19 @@ public class EditableValuesTransformerUtil {
 						editableProcessorKey,
 						_KEY_FREE_MARKER_FRAGMENT_ENTRY_PROCESSOR)) {
 
+					JSONObject freeMarkerFragmentEntryProcessorJSONObject =
+						_getFreeMarkerFragmentEntryProcessorJSONObject(
+							editableProcessorJSONObject, segmentsExperienceId);
+
+					if (freeMarkerFragmentEntryProcessorJSONObject.length() <=
+							0) {
+
+						continue;
+					}
+
 					newEditableValuesJSONObject.put(
 						editableProcessorKey,
-						_getFreeMarkerFragmentEntryProcessorJSONObject(
-							editableProcessorJSONObject, segmentsExperienceId));
+						freeMarkerFragmentEntryProcessorJSONObject);
 
 					continue;
 				}

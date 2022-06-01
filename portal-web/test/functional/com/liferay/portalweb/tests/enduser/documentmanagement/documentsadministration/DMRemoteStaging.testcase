@@ -141,13 +141,98 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154404."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154404. An image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."
 	@priority = "4"
 	test CanViewImageInManualCollectionViaAPAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154404
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
 
+		Depot.remoteStagingSetUpViaJson(
+			groupName = "Test Depot Name",
+			remotePort = "9080",
+			site = "false");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "DM Document Title",
+			friendlyURLEdit = "custom-url");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(
+			assetListTitle = "Depot Manual Asset List",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Depot Manual Asset List",
+			assetName = "DM Document Title",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(
+			assetListName = "Depot Manual Asset List",
+			depotName = "Test Depot Name");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title");
 	}
 
 	@description = "This test covers LPS-154432."

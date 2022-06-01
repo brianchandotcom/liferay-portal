@@ -192,12 +192,14 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
 				(variables as any).userAccountId = form.id;
 
 				await onUpdateUserAccount({variables});
-			} else {
+			}
+			else {
 				await onCreateUserAccount({variables});
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError();
 		}
 	};

@@ -79,7 +79,8 @@ const UserForm = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		} else {
+		}
+		else {
 			newRoles = [...newRoles, Number(value)];
 		}
 

@@ -14,6 +14,9 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -38,6 +41,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -51,6 +55,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -332,6 +337,24 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			}
 		}
 
+		long[] accountEntryIds = null;
+
+		if (objectDefinition.isAccountEntryRestriction()) {
+			List<AccountEntry> userAccountEntries =
+				_accountEntryLocalService.getUserAccountEntries(
+					dtoConverterContext.getUserId(),
+					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+					new String[] {
+						AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+						AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+					},
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			accountEntryIds = ListUtil.toLongArray(
+				userAccountEntries, AccountEntry::getAccountEntryId);
+		}
+
 		return Page.of(
 			HashMapBuilder.put(
 				"create",
@@ -353,7 +376,8 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			facets,
 			TransformUtil.transform(
 				_objectEntryLocalService.getValuesList(
-					objectDefinition.getObjectDefinitionId(), predicate, search,
+					objectDefinition.getObjectDefinitionId(), groupId,
+					predicate, search, accountEntryIds,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				values -> getObjectEntry(
 					dtoConverterContext, objectDefinition,
@@ -361,7 +385,8 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 						values.get(objectDefinition.getPKObjectFieldName())))),
 			pagination,
 			_objectEntryLocalService.getValuesListCount(
-				objectDefinition.getObjectDefinitionId(), predicate, search));
+				objectDefinition.getObjectDefinitionId(), groupId, predicate,
+				search, accountEntryIds));
 	}
 
 	@Override
@@ -757,6 +782,9 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultObjectEntryManagerImpl.class);
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private Aggregations _aggregations;

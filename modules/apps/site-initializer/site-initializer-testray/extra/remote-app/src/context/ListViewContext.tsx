@@ -17,8 +17,6 @@ import {ReactNode, createContext, useReducer} from 'react';
 
 import {ActionMap, SortOption} from '../types';
 
-type ViewType = 'cards' | 'list' | 'table';
-
 export type Sort = {
 	direction: SortOption;
 	key: string;
@@ -31,7 +29,6 @@ export type InitialState = {
 	pageSize: number;
 	selectedRows: number[];
 	sort: Sort;
-	viewType: ViewType;
 };
 
 const initialState: InitialState = {
@@ -41,7 +38,6 @@ const initialState: InitialState = {
 	pageSize: 20,
 	selectedRows: [],
 	sort: {direction: SortOption.ASC, key: ''},
-	viewType: 'table',
 };
 
 export enum ListViewTypes {
@@ -53,7 +49,6 @@ export enum ListViewTypes {
 	SET_SEARCH = 'SET_SEARCH',
 	SET_SORT = 'SET_SORT',
 	SET_UPDATE_FILTERS_AND_SORT = 'SET_UPDATE_FILTERS_AND_SORT',
-	SET_VIEW_TYPE = 'SET_VIEW_TYPE',
 }
 
 type ListViewPayload = {
@@ -65,7 +60,6 @@ type ListViewPayload = {
 	[ListViewTypes.SET_SEARCH]: string;
 	[ListViewTypes.SET_SORT]: Sort;
 	[ListViewTypes.SET_UPDATE_FILTERS_AND_SORT]: {filters?: any};
-	[ListViewTypes.SET_VIEW_TYPE]: ViewType;
 };
 
 type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<ListViewPayload>];
@@ -122,8 +116,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			if (rowAlreadyInserted) {
 				selectedRows = selectedRows.filter((row) => row !== rowId);
-			}
-			else {
+			} else {
 				selectedRows = [...selectedRows, rowId];
 			}
 
@@ -143,12 +136,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 				...state,
 				filters: action.payload.filters || state.filters,
 				page: 1,
-			};
-
-		case ListViewTypes.SET_VIEW_TYPE:
-			return {
-				...state,
-				viewType: action.payload,
 			};
 
 		default:

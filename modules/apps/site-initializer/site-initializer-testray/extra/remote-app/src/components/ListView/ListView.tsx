@@ -25,6 +25,7 @@ import ListViewContextProvider, {
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
+import {RendererFields} from '../Form/Renderer';
 import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
@@ -38,6 +39,7 @@ type LiferayQueryResponse<T = any> = {
 };
 
 export type ListViewProps<T = any> = {
+	filterFields?: RendererFields[];
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -46,6 +48,9 @@ export type ListViewProps<T = any> = {
 		'tableProps' | 'totalItems' | 'onSelectAllRows'
 	>;
 	onContextChange?: (context: ListViewContextState) => void;
+	pagination?: {
+		displayTop?: boolean;
+	};
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
@@ -63,6 +68,7 @@ const ListView: React.FC<ListViewProps> = ({
 	tableProps,
 	transformData,
 	variables,
+	pagination = {displayTop: false},
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
@@ -133,6 +139,7 @@ const ListView: React.FC<ListViewProps> = ({
 			activeDelta={pageSize}
 			activePage={page}
 			deltas={deltas}
+			disableEllipsis={totalCount > 100}
 			ellipsisBuffer={PAGINATION.ellipsisBuffer}
 			labels={{
 				paginationResults: i18n.translate('showing-x-to-x-of-x'),
@@ -151,6 +158,7 @@ const ListView: React.FC<ListViewProps> = ({
 				<ManagementToolbar
 					{...managementToolbarProps}
 					onSelectAllRows={onSelectAllRows}
+					rowSelectable={tableProps.rowSelectable}
 					tableProps={tableProps}
 					totalItems={items.length}
 				/>
@@ -160,7 +168,9 @@ const ListView: React.FC<ListViewProps> = ({
 
 			{!!items.length && (
 				<>
-					<div className="mt-4">{Pagination}</div>
+					{pagination?.displayTop && (
+						<div className="mt-4">{Pagination}</div>
+					)}
 
 					<Table
 						{...tableProps}

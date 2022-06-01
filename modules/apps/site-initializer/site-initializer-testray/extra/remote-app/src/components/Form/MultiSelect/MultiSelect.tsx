@@ -12,8 +12,28 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
+import Form from '..';
+import ClayMultiSelect from '@clayui/multi-select';
+import {useState} from 'react';
 
-export * from './AutoComplete';
+type MultiSelectProps = {
+	label?: string;
+};
 
-export default AutoComplete;
+const MultiSelect: React.FC<MultiSelectProps> = ({label}) => {
+	const [value, setValue] = useState('');
+	const [items, setItems] = useState([]);
+
+	return (
+		<Form.BaseWrapper label={label}>
+			<ClayMultiSelect
+				items={items}
+				onChange={setValue}
+				onItemsChange={(items: any) => setItems(items)}
+				value={value}
+			/>
+		</Form.BaseWrapper>
+	);
+};
+
+export default MultiSelect;

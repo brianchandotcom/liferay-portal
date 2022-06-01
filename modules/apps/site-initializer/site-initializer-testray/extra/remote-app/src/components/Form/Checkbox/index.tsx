@@ -12,8 +12,6 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
+import Checkbox from './Checkbox';
 
-export * from './AutoComplete';
-
-export default AutoComplete;
+export default Checkbox;

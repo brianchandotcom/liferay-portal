@@ -12,8 +12,24 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
+import {ClayCheckbox} from '@clayui/form';
+import {useState} from 'react';
 
-export * from './AutoComplete';
+type CheckboxProps = {
+	inline?: boolean;
+	label?: string;
+} & React.HTMLAttributes<HTMLInputElement>;
 
-export default AutoComplete;
+const Checkbox: React.FC<CheckboxProps> = (props) => {
+	const [value, setValue] = useState(false);
+
+	return (
+		<ClayCheckbox
+			checked={value}
+			onChange={() => setValue((value) => !value)}
+			{...props}
+		/>
+	);
+};
+
+export default Checkbox;

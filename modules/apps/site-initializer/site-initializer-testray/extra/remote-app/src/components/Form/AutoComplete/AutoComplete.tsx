@@ -19,7 +19,7 @@ import {useEffect, useMemo, useState} from 'react';
 
 import useDebounce from '../../../hooks/useDebounce';
 
-type AutoCompleteProps = {
+export type AutoCompleteProps = {
 	gqlQuery: TypedDocumentNode;
 	label?: string;
 	objectName: string;
@@ -84,7 +84,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 					)}
 
 					{!error &&
-						items.map((item: any) => (
+						items?.map((item: any) => (
 							<ClayAutocomplete.Item
 								key={item.id}
 								match={value}

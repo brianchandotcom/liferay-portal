@@ -12,8 +12,6 @@
  * details.
  */
 
-import AutoComplete from './AutoComplete';
+import MultiSelect from './MultiSelect';
 
-export * from './AutoComplete';
-
-export default AutoComplete;
+export default MultiSelect;

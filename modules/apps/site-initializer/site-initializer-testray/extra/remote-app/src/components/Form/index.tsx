@@ -12,25 +12,34 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
+
 import AutoComplete from './AutoComplete';
 import {BaseRow, BaseWarning, BaseWrapper} from './Base';
+import Checkbox from './Checkbox';
 import DualListBox from './DualListBox';
 import File from './File';
 import Footer from './Footer';
 import Input from './Input';
+import MultiSelect from './MultiSelect';
+import Renderer from './Renderer';
 import Select from './Select';
 
 const Form = () => {};
 
+Form.Clay = ClayForm;
 Form.AutoComplete = AutoComplete;
 Form.BaseRow = BaseRow;
 Form.BaseWarning = BaseWarning;
 Form.BaseWrapper = BaseWrapper;
+Form.Checkbox = Checkbox;
 Form.Divider = () => <hr />;
 Form.DualListBox = DualListBox;
 Form.File = File;
 Form.Footer = Footer;
 Form.Input = Input;
+Form.MultiSelect = MultiSelect;
+Form.Renderer = Renderer;
 Form.Select = Select;
 
 export default Form;

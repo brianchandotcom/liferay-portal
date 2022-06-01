@@ -134,7 +134,9 @@ class Analytics {
 			Liferay &&
 			Liferay.ThemeDisplay &&
 			Liferay.ThemeDisplay.getUserEmailAddress &&
-			Liferay.ThemeDisplay.getUserName
+			Liferay.ThemeDisplay.getUserEmailAddress().length > 0 &&
+			Liferay.ThemeDisplay.getUserName &&
+			Liferay.ThemeDisplay.getUserName().length > 0
 		) {
 			self.setIdentity({
 				email: Liferay.ThemeDisplay.getUserEmailAddress(),

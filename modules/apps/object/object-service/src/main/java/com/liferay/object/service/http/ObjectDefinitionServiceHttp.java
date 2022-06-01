@@ -369,8 +369,9 @@ public class ObjectDefinitionServiceHttp {
 	public static com.liferay.object.model.ObjectDefinition
 			updateCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, long objectDefinitionId,
+				long accountEntryRestrictedObjectFieldId,
 				long descriptionObjectFieldId, long titleObjectFieldId,
-				boolean active,
+				boolean accountEntryRestricted, boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -384,9 +385,11 @@ public class ObjectDefinitionServiceHttp {
 				_updateCustomObjectDefinitionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, descriptionObjectFieldId,
-				titleObjectFieldId, active, labelMap, name, panelAppOrder,
-				panelCategoryKey, portlet, pluralLabelMap, scope);
+				methodKey, objectDefinitionId,
+				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
+				titleObjectFieldId, accountEntryRestricted, active, labelMap,
+				name, panelAppOrder, panelCategoryKey, portlet, pluralLabelMap,
+				scope);
 
 			Object returnObj = null;
 
@@ -485,9 +488,9 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes8 = new Class[] {
-			long.class, long.class, long.class, boolean.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, String.class
+			long.class, long.class, long.class, long.class, boolean.class,
+			boolean.class, java.util.Map.class, String.class, String.class,
+			String.class, boolean.class, java.util.Map.class, String.class
 		};
 	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes9 =
 		new Class[] {long.class, long.class};

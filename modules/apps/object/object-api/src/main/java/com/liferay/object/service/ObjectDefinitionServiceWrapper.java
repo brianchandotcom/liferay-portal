@@ -119,8 +119,10 @@ public class ObjectDefinitionServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition
 			updateCustomObjectDefinition(
-				long objectDefinitionId, long descriptionObjectFieldId,
-				long titleObjectFieldId, boolean active,
+				long objectDefinitionId,
+				long accountEntryRestrictedObjectFieldId,
+				long descriptionObjectFieldId, long titleObjectFieldId,
+				boolean accountEntryRestricted, boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -128,9 +130,10 @@ public class ObjectDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.updateCustomObjectDefinition(
-			objectDefinitionId, descriptionObjectFieldId, titleObjectFieldId,
-			active, labelMap, name, panelAppOrder, panelCategoryKey, portlet,
-			pluralLabelMap, scope);
+			objectDefinitionId, accountEntryRestrictedObjectFieldId,
+			descriptionObjectFieldId, titleObjectFieldId,
+			accountEntryRestricted, active, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope);
 	}
 
 	@Override

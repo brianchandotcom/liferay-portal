@@ -358,8 +358,9 @@ public interface ObjectDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateCustomObjectDefinition(
-			long objectDefinitionId, long descriptionObjectFieldId,
-			long titleObjectFieldId, boolean active,
+			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
+			long descriptionObjectFieldId, long titleObjectFieldId,
+			boolean accountEntryRestricted, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
 			Map<Locale, String> pluralLabelMap, String scope)

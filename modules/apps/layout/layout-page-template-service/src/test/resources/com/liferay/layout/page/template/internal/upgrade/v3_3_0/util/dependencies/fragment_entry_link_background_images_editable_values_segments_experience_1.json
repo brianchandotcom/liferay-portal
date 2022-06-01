@@ -2,9 +2,5 @@
 	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
 		"banner-center": {
 		}
-	},
-	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 	}
 }

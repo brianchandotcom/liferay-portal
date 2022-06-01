@@ -1,6 +1,4 @@
 {
-	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"image-square": {
 			"config": {

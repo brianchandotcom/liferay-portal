@@ -1,6 +1,4 @@
 {
-	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"element-text": {
 			"config": {
@@ -8,7 +6,5 @@
 			"defaultValue": "Heading Example",
 			"en_US": "Hello World"
 		}
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 	}
 }

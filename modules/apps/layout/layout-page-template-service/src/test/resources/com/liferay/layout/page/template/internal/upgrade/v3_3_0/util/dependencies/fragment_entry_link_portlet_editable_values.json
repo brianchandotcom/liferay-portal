@@ -1,10 +1,4 @@
 {
-	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
-	},
-	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
-	},
 	"instanceId": "DfVeKU70nnk5",
 	"portletId": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
 }

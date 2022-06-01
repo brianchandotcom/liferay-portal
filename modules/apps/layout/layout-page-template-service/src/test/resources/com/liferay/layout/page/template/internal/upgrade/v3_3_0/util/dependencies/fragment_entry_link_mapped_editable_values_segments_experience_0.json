@@ -1,6 +1,4 @@
 {
-	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"element-text": {
 			"classNameId": "28701",
@@ -11,7 +9,5 @@
 			"defaultValue": "Heading Example",
 			"fieldId": "title"
 		}
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 	}
 }

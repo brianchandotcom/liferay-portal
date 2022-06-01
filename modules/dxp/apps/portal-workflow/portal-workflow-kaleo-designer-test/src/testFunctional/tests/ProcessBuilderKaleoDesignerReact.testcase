@@ -1561,12 +1561,37 @@ definition {
 	}
 
 	@description = "Verify that the user can can publish a definition with Task node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWithTaskNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithTaskNode";
 
-		// TODO CanPublishWithTaskNode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Task-end Connector",
+			connectorOut = "task",
+			key_direction = "top");
+
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Verify that the user can Publish workflow"

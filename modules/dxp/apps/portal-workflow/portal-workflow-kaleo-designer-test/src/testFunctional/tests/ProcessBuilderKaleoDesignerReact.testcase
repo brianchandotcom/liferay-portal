@@ -1316,8 +1316,8 @@ definition {
 			nodePosition = "0,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			descriptionValue = "Execute conditional logic.",
 			defaultIdValue = "true",
+			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
 			scriptValue = '''returnValue = "Transition Name"''');
@@ -1325,8 +1325,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.hideSidebarFields(property = "Information");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfoNotVisible(
-			descriptionValue = "Execute conditional logic.",
 			defaultIdValue = "true",
+			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
 			scriptValue = '''returnValue = "Transition Name"''');
@@ -1714,8 +1714,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
@@ -2289,8 +2288,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			defaultIdValue = "true",
@@ -2521,8 +2519,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
@@ -2772,11 +2769,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
-
-
-
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "end",
@@ -2909,8 +2902,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "task",

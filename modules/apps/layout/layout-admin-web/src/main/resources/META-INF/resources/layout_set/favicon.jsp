@@ -70,7 +70,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 						if (
 							selectedItem.returnType ===
-							'<%= ClientExtensionItemSelectorReturnType.class.getName() %>'
+							'<%= CETItemSelectorReturnType.class.getName() %>'
 						) {
 							faviconClientExtensionEntryId.value =
 								itemValue.clientExtensionEntryId;

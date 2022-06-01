@@ -29,10 +29,10 @@ import java.util.Objects;
 /**
  * @author Víctor Galán
  */
-public class ClientExtensionItemDescriptor
+public class CETItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
-	public ClientExtensionItemDescriptor(
+	public CETItemDescriptor(
 		CETFactory cetFactory, ClientExtensionEntry clientExtensionEntry,
 		String type) {
 

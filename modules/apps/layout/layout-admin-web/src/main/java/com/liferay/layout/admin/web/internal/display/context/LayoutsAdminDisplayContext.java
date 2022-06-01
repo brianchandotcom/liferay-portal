@@ -19,8 +19,8 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType;
-import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
+import com.liferay.client.extension.item.selector.CETItemSelectorReturnType;
+import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -520,19 +520,18 @@ public class LayoutsAdminDisplayContext {
 			return itemSelectorURL.toString();
 		}
 
-		ClientExtensionItemSelectorCriterion
-			clientExtensionItemSelectorCriterion =
-				new ClientExtensionItemSelectorCriterion();
+		CETItemSelectorCriterion cetItemSelectorCriterion =
+			new CETItemSelectorCriterion();
 
-		clientExtensionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new ClientExtensionItemSelectorReturnType());
-		clientExtensionItemSelectorCriterion.setType(
+		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new CETItemSelectorReturnType());
+		cetItemSelectorCriterion.setType(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			getSelectFaviconEventName(), itemSelectorCriterion,
-			clientExtensionItemSelectorCriterion);
+			cetItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}
@@ -1222,21 +1221,19 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"selectThemeCSSClientExtensionURL",
 			() -> {
-				ClientExtensionItemSelectorCriterion
-					clientExtensionItemSelectorCriterion =
-						new ClientExtensionItemSelectorCriterion();
+				CETItemSelectorCriterion cetItemSelectorCriterion =
+					new CETItemSelectorCriterion();
 
-				clientExtensionItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new ClientExtensionItemSelectorReturnType());
-				clientExtensionItemSelectorCriterion.setType(
+				cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new CETItemSelectorReturnType());
+				cetItemSelectorCriterion.setType(
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(
 						httpServletRequest),
 					selectThemeCSSClientExtensionEventName,
-					clientExtensionItemSelectorCriterion);
+					cetItemSelectorCriterion);
 
 				return itemSelectorURL.toString();
 			}

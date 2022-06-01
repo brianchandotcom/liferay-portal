@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
-import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType;
-import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
+import com.liferay.client.extension.item.selector.CETItemSelectorReturnType;
+import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -42,14 +42,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  */
 @Component(immediate = true, service = ItemSelectorView.class)
-public class ClientExtensionItemSelectorView
-	implements ItemSelectorView<ClientExtensionItemSelectorCriterion> {
+public class CETItemSelectorView
+	implements ItemSelectorView<CETItemSelectorCriterion> {
 
 	@Override
-	public Class<? extends ClientExtensionItemSelectorCriterion>
+	public Class<? extends CETItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return ClientExtensionItemSelectorCriterion.class;
+		return CETItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -65,28 +65,27 @@ public class ClientExtensionItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			ClientExtensionItemSelectorCriterion itemSelectorCriterion,
+			CETItemSelectorCriterion itemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			servletRequest, servletResponse, itemSelectorCriterion, portletURL,
 			itemSelectedEventName, true,
-			new ClientExtensionItemSelectorViewDescriptor(
+			new CETItemSelectorViewDescriptor(
 				_cetFactory, itemSelectorCriterion,
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new ClientExtensionItemSelectorReturnType());
+			new CETItemSelectorReturnType());
 
 	@Reference
 	private CETFactory _cetFactory;
 
 	@Reference
-	private ItemSelectorViewDescriptorRenderer
-		<ClientExtensionItemSelectorCriterion>
-			_itemSelectorViewDescriptorRenderer;
+	private ItemSelectorViewDescriptorRenderer<CETItemSelectorCriterion>
+		_itemSelectorViewDescriptorRenderer;
 
 }

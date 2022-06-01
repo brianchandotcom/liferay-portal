@@ -53,7 +53,7 @@ export default function propsTransformer({
 
 							if (
 								selectedItem.returnType ===
-								'com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType'
+								'com.liferay.client.extension.item.selector.CETItemSelectorReturnType'
 							) {
 								faviconClientExtensionEntryId.value =
 									itemValue.clientExtensionEntryId;

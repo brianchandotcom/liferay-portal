@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
-import com.liferay.client.extension.item.selector.ClientExtensionItemSelectorReturnType;
-import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
+import com.liferay.client.extension.item.selector.CETItemSelectorReturnType;
+import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
 import com.liferay.client.extension.type.factory.CETFactory;
@@ -34,18 +34,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
-public class ClientExtensionItemSelectorViewDescriptor
+public class CETItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<ClientExtensionEntry> {
 
-	public ClientExtensionItemSelectorViewDescriptor(
+	public CETItemSelectorViewDescriptor(
 		CETFactory cetFactory,
-		ClientExtensionItemSelectorCriterion
-			clientExtensionItemSelectorCriterion,
+		CETItemSelectorCriterion cetItemSelectorCriterion,
 		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 		_cetFactory = cetFactory;
-		_clientExtensionItemSelectorCriterion =
-			clientExtensionItemSelectorCriterion;
+		_cetItemSelectorCriterion = cetItemSelectorCriterion;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 	}
@@ -59,9 +57,9 @@ public class ClientExtensionItemSelectorViewDescriptor
 	public ItemDescriptor getItemDescriptor(
 		ClientExtensionEntry clientExtensionEntry) {
 
-		return new ClientExtensionItemDescriptor(
+		return new CETItemDescriptor(
 			_cetFactory, clientExtensionEntry,
-			_clientExtensionItemSelectorCriterion.getType());
+			_cetItemSelectorCriterion.getType());
 	}
 
 	@Override
@@ -85,11 +83,11 @@ public class ClientExtensionItemSelectorViewDescriptor
 			() ->
 				ClientExtensionEntryLocalServiceUtil.getClientExtensionEntries(
 					themeDisplay.getCompanyId(),
-					_clientExtensionItemSelectorCriterion.getType(),
+					_cetItemSelectorCriterion.getType(),
 					searchContainer.getStart(), searchContainer.getEnd()),
 			ClientExtensionEntryLocalServiceUtil.getClientExtensionEntriesCount(
 				themeDisplay.getCompanyId(),
-				_clientExtensionItemSelectorCriterion.getType()));
+				_cetItemSelectorCriterion.getType()));
 
 		return searchContainer;
 	}
@@ -100,12 +98,10 @@ public class ClientExtensionItemSelectorViewDescriptor
 	}
 
 	private static final ItemSelectorReturnType
-		_supportedItemSelectorReturnType =
-			new ClientExtensionItemSelectorReturnType();
+		_supportedItemSelectorReturnType = new CETItemSelectorReturnType();
 
 	private final CETFactory _cetFactory;
-	private final ClientExtensionItemSelectorCriterion
-		_clientExtensionItemSelectorCriterion;
+	private final CETItemSelectorCriterion _cetItemSelectorCriterion;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 

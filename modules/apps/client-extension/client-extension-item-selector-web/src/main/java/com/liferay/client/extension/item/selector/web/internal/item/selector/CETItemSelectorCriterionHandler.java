@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
-import com.liferay.client.extension.item.selector.criterion.ClientExtensionItemSelectorCriterion;
+import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 
@@ -27,15 +27,12 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Víctor Galán
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class ClientExtensionItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<ClientExtensionItemSelectorCriterion> {
+public class CETItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<CETItemSelectorCriterion> {
 
 	@Override
-	public Class<ClientExtensionItemSelectorCriterion>
-		getItemSelectorCriterionClass() {
-
-		return ClientExtensionItemSelectorCriterion.class;
+	public Class<CETItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return CETItemSelectorCriterion.class;
 	}
 
 	@Activate

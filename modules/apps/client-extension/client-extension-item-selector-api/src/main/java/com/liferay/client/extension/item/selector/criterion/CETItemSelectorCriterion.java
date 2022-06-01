@@ -19,8 +19,7 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Víctor Galán
  */
-public class ClientExtensionItemSelectorCriterion
-	extends BaseItemSelectorCriterion {
+public class CETItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public String getType() {
 		return _type;

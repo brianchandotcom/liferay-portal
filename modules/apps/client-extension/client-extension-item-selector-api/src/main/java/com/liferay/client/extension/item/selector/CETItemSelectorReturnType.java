@@ -19,6 +19,5 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 /**
  * @author Víctor Galán
  */
-public class ClientExtensionItemSelectorReturnType
-	implements ItemSelectorReturnType {
+public class CETItemSelectorReturnType implements ItemSelectorReturnType {
 }

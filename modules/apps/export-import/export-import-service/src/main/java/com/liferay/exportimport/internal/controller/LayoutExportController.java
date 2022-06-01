@@ -324,10 +324,12 @@ public class LayoutExportController implements ExportController {
 		_portletExportController.exportAssetLinks(portletDataContext);
 		_portletExportController.exportLocks(portletDataContext);
 
-		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(SegmentsExperience.class, Layout.class));
-		portletDataContext.addDeletionSystemEventStagedModelTypes(
-			new StagedModelType(StagedAssetLink.class));
+		if (Objects.equals(portletDataContext.getType(), "layout-set")) {
+			portletDataContext.addDeletionSystemEventStagedModelTypes(
+				new StagedModelType(SegmentsExperience.class, Layout.class));
+			portletDataContext.addDeletionSystemEventStagedModelTypes(
+				new StagedModelType(StagedAssetLink.class));
+		}
 
 		_deletionSystemEventExporter.exportDeletionSystemEvents(
 			portletDataContext);

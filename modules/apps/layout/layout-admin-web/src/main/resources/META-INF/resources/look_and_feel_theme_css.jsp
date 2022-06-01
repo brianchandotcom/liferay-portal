@@ -31,6 +31,7 @@
 	<div>
 		<react:component
 			module="js/ThemeCSSReplacementSelector"
+			props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
 		/>
 	</div>
 </clay:sheet-section>

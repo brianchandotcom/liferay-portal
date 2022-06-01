@@ -112,6 +112,11 @@ public class FragmentStyledLayoutStructureItem
 					editablesJSONObject.getJSONObject(
 						"com.liferay.fragment.entry.processor.freemarker." +
 							"FreeMarkerFragmentEntryProcessor");
+
+				if (_fragmentConfigurationJSONObject == null) {
+					_fragmentConfigurationJSONObject =
+						JSONFactoryUtil.createJSONObject();
+				}
 			}
 			catch (Exception exception) {
 				_log.error("Unable to parse editable values", exception);

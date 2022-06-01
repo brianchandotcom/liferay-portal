@@ -367,7 +367,7 @@ definition {
 	@priority = "3"
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
-		property osgi.module.configurations = "exportDraftLayout=true";
+		property osgi.module.configurations = "exportDraftLayout=&quot;true&quot;";
 		property testray.component.names = "Training";
 
 		SiteTemplates.addCP(

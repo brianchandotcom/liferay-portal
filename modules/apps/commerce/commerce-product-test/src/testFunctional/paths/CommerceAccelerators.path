@@ -337,6 +337,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_GENERIC_TEXT_INPUT_DISABLED</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}') and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_PORTLET_BODY</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet')]//section[contains(@id,'Checkout')]</td>
 	<td></td>

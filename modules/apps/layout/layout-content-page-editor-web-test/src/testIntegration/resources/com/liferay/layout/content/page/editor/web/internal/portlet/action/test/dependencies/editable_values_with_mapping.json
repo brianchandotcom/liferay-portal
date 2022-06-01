@@ -1,6 +1,4 @@
 {
-	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
 		"dropZones": [
 		]
@@ -18,7 +16,5 @@
 			"defaultValue": "Go Somewhere",
 			"fieldId": "title"
 		}
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 	}
 }

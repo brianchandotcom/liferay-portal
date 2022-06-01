@@ -7,9 +7,5 @@
 			"en_US": "http://myexample.com/myexample.png",
 			"es_ES": "http://miejemplo.es/miejemplo.png"
 		}
-	},
-	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
-	},
-	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 	}
 }

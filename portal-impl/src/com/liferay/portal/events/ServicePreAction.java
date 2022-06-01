@@ -1452,11 +1452,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setDoAsGroupId(doAsGroupId);
 		themeDisplay.setDoAsUserId(doAsUserId);
 		themeDisplay.setDoAsUserLanguageId(doAsUserLanguageId);
-
-		if (layout != null) {
-			themeDisplay.setFavicon(layout.getFavicon());
-		}
-
 		themeDisplay.setHubAction(hub.equals("0"));
 		themeDisplay.setHubPartialAction(hub.equals("1"));
 		themeDisplay.setHubResource(hub.equals("2"));

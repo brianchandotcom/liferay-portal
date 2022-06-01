@@ -147,8 +147,6 @@ public class PoshiRunner {
 	public PoshiRunner(String namespacedClassCommandName) throws Exception {
 		_testNamespacedClassCommandName = namespacedClassCommandName;
 
-		System.out.println(_testNamespacedClassCommandName);
-
 		_testNamespacedClassName =
 			PoshiGetterUtil.
 				getNamespacedClassNameFromNamespacedClassCommandName(

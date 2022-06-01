@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import ImportTranslationResultsPanelSuccess from '../../../src/main/resources/META-INF/resources/js/ImportTranslationResultsPanelSuccess';
+import ImportTranslationResultsPanelSuccess from '../../src/main/resources/META-INF/resources/js/ImportTranslationResultsPanelSuccess';
 
 const baseProps = {
 	defaultExpanded: false,

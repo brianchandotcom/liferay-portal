@@ -38,6 +38,30 @@ definition {
 		}
 	}
 
+	@description = "StructuredContent is created with defined priority"
+	@priority = "5"
+	test CanCreateStructuredContentWithDefinedPriorityValue {
+		property portal.acceptance = "true";
+
+		task ("When a web content is created with defined priority") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var response = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "6.1",
+				title = "WC WebContent Title");
+		}
+
+		task ("Then the response body includes the defined priority value") {
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
+				expectedPriorityValue = "6.1",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "StructuredContent can be modified priority value"
 	@priority = "5"
 	test CanModifyStructuredContentPriorityValue {

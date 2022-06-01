@@ -708,8 +708,8 @@ definition {
 		}
 
 		task ("Then it should use Localized URL as Canonical URL") {
-			var canonicalText = '''<link data-senna-track="temporary" href="http://localhost:8080/web/test-site-name/w/web-content-title" rel="canonical" />''';
-			var alternateText = '''<link data-senna-track="temporary" href="http://localhost:8080/zh/web/test-site-name/w/web-content-title" hreflang="zh-CN" rel="alternate" />''';
+			var canonicalText = '''<link data-senna-track="temporary" href="http://localhost:8080/web/test-site-name/w/web-content-title" rel="canonical"''';
+			var alternateText = '''<link data-senna-track="temporary" href="http://localhost:8080/zh/web/test-site-name/w/web-content-title" hreflang="zh-CN" rel="alternate"''';
 
 			AssertHTMLSourceTextPresent(value1 = "${canonicalText}");
 

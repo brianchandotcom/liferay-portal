@@ -28,26 +28,8 @@ definition {
 	@description = "Verify if Raylife AP can be created"
 	@priority = "5"
 	test CanRaylifeAPCreated {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Raylife AP");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "Raylife AP");
-
-		Click(locator1 = "Button#ADD");
-
-		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
-
-		Alert.viewSuccessMessage();
+		
+        // TODO LPS-155172 - Verify if Raylife AP can be created
 	}
 
 }

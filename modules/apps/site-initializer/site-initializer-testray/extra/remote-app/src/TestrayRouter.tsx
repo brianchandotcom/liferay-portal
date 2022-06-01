@@ -59,6 +59,7 @@ import SuiteOutlet from './pages/Project/Suites/SuiteOutlet';
 import Testflow from './pages/Testflow';
 import Subtasks from './pages/Testflow/Subtask';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
+import TestflowForm from './pages/Testflow/TestflowForm';
 import TestflowOutlet from './pages/Testflow/TestflowOutlet';
 import TestFlowTasks from './pages/Testflow/TestflowTasks';
 
@@ -210,6 +211,8 @@ const TestrayRoute = () => (
 						<Route element={<Testflow />} index />
 
 						<Route element={<TestflowArchived />} path="archived" />
+
+						<Route element={<TestflowForm />} path="create" />
 
 						<Route element={<Subtasks />} path="subtasks" />
 

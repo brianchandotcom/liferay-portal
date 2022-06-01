@@ -12,8 +12,10 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import {useRef} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
@@ -29,14 +31,22 @@ type BuildOverviewProps = {
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
+	const navigate = useNavigate();
+
 	const ref = useRef<any>();
 
 	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
-
 	const totalTestCases = useTotalTestCases();
 
 	return (
 		<>
+			<ClayButton
+				className="mb-4"
+				onClick={() => navigate('/testflow/create')}
+			>
+				{i18n.translate('analyze')}
+			</ClayButton>
+
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[

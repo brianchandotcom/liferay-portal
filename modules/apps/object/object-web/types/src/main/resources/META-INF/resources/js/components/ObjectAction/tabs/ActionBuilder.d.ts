@@ -14,8 +14,7 @@
 
 /// <reference types="react" />
 
-import {CustomItem} from '@liferay/object-js-components-web';
-import {FormError} from '../../../hooks/useForm';
+import {CustomItem, FormError} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
 export default function ActionBuilder({
 	errors,

@@ -15,10 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Input} from '@liferay/object-js-components-web';
+import {Input, useForm} from '@liferay/object-js-components-web';
 import React, {useContext} from 'react';
 
-import useForm from '../../../hooks/useForm';
 import {defaultLanguageId} from '../../../utils/locale';
 import LayoutContext, {TYPES} from '../context';
 

@@ -19,12 +19,11 @@ import {
 	CustomItem,
 	ExpressionBuilder,
 	FormCustomSelect,
+	FormError,
 	Input,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
-
-import {FormError} from '../../../hooks/useForm';
 
 import './ActionBuilder.scss';
 

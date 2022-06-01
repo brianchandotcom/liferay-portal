@@ -16,11 +16,10 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Input} from '@liferay/object-js-components-web';
+import {Input, useForm} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import useForm from '../hooks/useForm';
 import {defaultLanguageId} from '../utils/locale';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {

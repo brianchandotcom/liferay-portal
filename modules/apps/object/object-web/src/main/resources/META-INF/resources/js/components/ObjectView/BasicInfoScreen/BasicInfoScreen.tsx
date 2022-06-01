@@ -13,10 +13,13 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {Card, Input} from '@liferay/object-js-components-web';
+import {
+	Card,
+	Input,
+	invalidateRequired,
+} from '@liferay/object-js-components-web';
 import React, {useContext} from 'react';
 
-import {invalidateRequired} from '../../../hooks/useForm';
 import {defaultLanguageId} from '../../../utils/locale';
 import ViewContext, {TYPES} from '../context';
 

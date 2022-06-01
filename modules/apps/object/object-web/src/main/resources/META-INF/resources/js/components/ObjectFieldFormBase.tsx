@@ -17,13 +17,15 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FormCustomSelect,
+	FormError,
 	Input,
 	Select,
+	invalidateRequired,
+	useForm,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
-import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
 import {normalizeFieldSettings} from '../utils/fieldSettings';
 import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';

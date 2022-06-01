@@ -16,12 +16,12 @@ import ClayTabs from '@clayui/tabs';
 import {
 	SidePanelContent,
 	closeSidePanel,
+	invalidateRequired,
 	openToast,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {invalidateRequired} from '../../hooks/useForm';
 import {defaultLanguageId, locale} from '../../utils/locale';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';

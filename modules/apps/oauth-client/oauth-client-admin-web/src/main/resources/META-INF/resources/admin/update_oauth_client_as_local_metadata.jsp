@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String localWellKnownURI = (String)SessionErrors.get(renderRequest, "localWellKnownURI");
 
 if (Validator.isNull(localWellKnownURI)) {
@@ -30,15 +32,18 @@ if (Validator.isNull(metadataJSON)) {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
+portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client_as_local_metadata" var="updateOAuthClientASLocalMetadataURL">
-	<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
+	<portlet:param name="backURL" value='<%= redirect %>' />
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_as_local_metadata" />
+	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateOAuthClientASLocalMetadataURL %>" id="oauth-client-as-fm" method="post" name="oauth-client-as-fm" onSubmit="event.preventDefault();">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
 	<clay:container-fluid
 		cssClass="container-view"
 	>
@@ -52,7 +57,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
-					<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
+					<aui:button href="<%= HtmlUtil.escape(redirect) %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</div>

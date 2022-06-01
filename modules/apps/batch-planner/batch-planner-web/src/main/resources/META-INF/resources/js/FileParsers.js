@@ -19,15 +19,15 @@ import {
 	PARSE_FILE_CHUNK_SIZE,
 } from './constants';
 
-export function parseCSV(content, separator, delimiter) {
+export function parseCSV(content, separator, enclosingCharacter) {
 	const rows = content.split(/\r?\n/);
 
 	const formattedRows = rows.map((row) => {
 		const columns = separator ? row.split(separator) : row;
 
-		const formattedColumns = delimiter
+		const formattedColumns = enclosingCharacter
 			? columns.map((column) => {
-					if (column.charAt(0) === delimiter) {
+					if (column.charAt(0) === enclosingCharacter) {
 						return column.substring(1, column.length - 1);
 					}
 

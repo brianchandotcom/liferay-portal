@@ -296,6 +296,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_INFO_BUTTON</td>
+	<td>//button[contains(.,'Search Framework Indexer Clauses')]//span[*[name()='svg'][contains(@class,'lexicon-icon-question-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE</td>
 	<td>//div[contains(@class,'panel-unstyled')][.//*[contains(.,'Search Framework Indexer Clauses')]]//input[contains(@class,"toggle-switch-check")]</td>
 	<td></td>
@@ -342,7 +347,7 @@
 </tr>
 <tr>
 	<td>DOC_LINK_GENERIC</td>
-	<td>//div[contains(@class,'${linkContext}')]//a[contains(.,'${linkText}')]</td>
+	<td>//div[contains(@class,'${linkContext}')]//a[contains(.,'${linkText}')] | //div[span[contains(.,'${linkContext}')]]//a[contains(.,'${linkText}')]</td>
 	<td></td>
 </tr>
 <tr>

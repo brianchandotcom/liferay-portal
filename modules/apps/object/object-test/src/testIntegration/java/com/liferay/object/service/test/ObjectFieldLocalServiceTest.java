@@ -317,29 +317,6 @@ public class ObjectFieldLocalServiceTest {
 
 		// Reserved name
 
-		String[] reservedNames = {
-			"actions", "companyId", "createDate", "creator", "dateCreated",
-			"dateModified", "externalReferenceCode", "groupId", "id",
-			"lastPublishDate", "modifiedDate", "statusByUserId",
-			"statusByUserName", "statusDate", "userId", "userName"
-		};
-
-		for (String reservedName : reservedNames) {
-			try {
-				_testAddSystemObjectField(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", reservedName,
-						_getObjectFieldSettings("Text")));
-
-				Assert.fail();
-			}
-			catch (ObjectFieldNameException objectFieldNameException) {
-				Assert.assertEquals(
-					"Reserved name " + reservedName,
-					objectFieldNameException.getMessage());
-			}
-		}
-
 		String objectDefinitionName = "A" + RandomTestUtil.randomString();
 
 		String pkObjectFieldName = TextFormatter.format(

@@ -755,6 +755,23 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
+		task ("Given the Admin has already configured Paypal as an active payment method and is configured into Sandbox with the Client ID and Client Secret") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceChannels.configurationPaypal(mode = "Sandbox");
+
+			SelectFrame.selectFrameTop();
+		}
+
 		task ("Given the Admin create an order using API and the Admin change the Payment Status to 'Authorized' but PayPal is disabled") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
@@ -786,6 +803,52 @@ definition {
 		}
 
 		task ("When the Buyer goes to Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And goes into the 'Placed Orders' page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+		}
+
+		task ("Then the button 'Re-try payment' and 'Reorder' is present because PayPal is active") {
+			Click(
+				key_orderAuthor = "Commerce Account",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			AssertElementPresent(
+				key_orderStatus = "In Progress",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_STATUS");
+
+			AssertElementPresent(
+				key_text = "Re-try payment",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_text = "Reorder",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When the Admin disable Paypal ") {
+			User.logoutPG();
+
+			User.firstLoginPG();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.disablePaymentMethod(paymentMethod = "PayPal");
+		}
+
+		task ("And the Buyer goes back to Minium") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(

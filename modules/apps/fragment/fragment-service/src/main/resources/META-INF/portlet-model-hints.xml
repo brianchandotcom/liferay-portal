@@ -80,6 +80,7 @@
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
+		<field name="typeOptions" type="String" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -161,6 +162,7 @@
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
+		<field name="typeOptions" type="String" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

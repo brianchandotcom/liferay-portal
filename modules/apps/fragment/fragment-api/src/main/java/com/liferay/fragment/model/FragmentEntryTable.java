@@ -88,6 +88,8 @@ public class FragmentEntryTable extends BaseTable<FragmentEntryTable> {
 		"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryTable, String> typeOptions = createColumn(
+		"typeOptions", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

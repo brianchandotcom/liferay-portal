@@ -460,6 +460,21 @@ public interface FragmentEntryVersionModel
 	public void setType(int type);
 
 	/**
+	 * Returns the type options of this fragment entry version.
+	 *
+	 * @return the type options of this fragment entry version
+	 */
+	@AutoEscape
+	public String getTypeOptions();
+
+	/**
+	 * Sets the type options of this fragment entry version.
+	 *
+	 * @param typeOptions the type options of this fragment entry version
+	 */
+	public void setTypeOptions(String typeOptions);
+
+	/**
 	 * Returns the last publish date of this fragment entry version.
 	 *
 	 * @return the last publish date of this fragment entry version

@@ -68,6 +68,7 @@ public class FragmentEntryWrapper
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
+		attributes.put("typeOptions", getTypeOptions());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -216,6 +217,12 @@ public class FragmentEntryWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String typeOptions = (String)attributes.get("typeOptions");
+
+		if (typeOptions != null) {
+			setTypeOptions(typeOptions);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -549,6 +556,16 @@ public class FragmentEntryWrapper
 	@Override
 	public String getTypeLabel() {
 		return model.getTypeLabel();
+	}
+
+	/**
+	 * Returns the type options of this fragment entry.
+	 *
+	 * @return the type options of this fragment entry
+	 */
+	@Override
+	public String getTypeOptions() {
+		return model.getTypeOptions();
 	}
 
 	@Override
@@ -982,6 +999,16 @@ public class FragmentEntryWrapper
 	@Override
 	public void setType(int type) {
 		model.setType(type);
+	}
+
+	/**
+	 * Sets the type options of this fragment entry.
+	 *
+	 * @param typeOptions the type options of this fragment entry
+	 */
+	@Override
+	public void setTypeOptions(String typeOptions) {
+		model.setTypeOptions(typeOptions);
 	}
 
 	/**

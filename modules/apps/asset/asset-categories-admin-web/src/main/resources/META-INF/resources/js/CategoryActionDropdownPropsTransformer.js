@@ -29,7 +29,7 @@ const ACTIONS = {
 	},
 
 	moveCategory(
-		{categoryId, categoryTitle, moveCategoryURL},
+		{categoryId, categoryTitle, selectParentCategoryURL},
 		portletNamespace
 	) {
 		openSelectionModal({
@@ -84,7 +84,7 @@ const ACTIONS = {
 				Liferay.Language.get('move-x'),
 				categoryTitle
 			),
-			url: moveCategoryURL,
+			url: selectParentCategoryURL,
 		});
 	},
 

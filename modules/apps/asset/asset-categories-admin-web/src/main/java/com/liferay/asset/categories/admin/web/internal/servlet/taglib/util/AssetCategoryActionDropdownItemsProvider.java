@@ -150,7 +150,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 									category.getTitle(
 										_themeDisplay.getLocale())));
 							dropdownItem.putData(
-								"moveCategoryURL",
+								"selectParentCategoryURL",
 								_getSelectCategoryURL(
 									category.getVocabularyId()));
 							dropdownItem.setIcon("move-folder");

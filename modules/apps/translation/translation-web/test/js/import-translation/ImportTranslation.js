@@ -74,10 +74,18 @@ describe('ImportTranslation', () => {
 		});
 
 		describe('fire file selection', () => {
-			it('render a list of files', () => {
-				const {getByTestId, getByText} = renderComponent(baseProps);
+			let renderedComponent;
 
-				fireEvent.change(getByTestId('filesInput'), {target: {files}});
+			beforeEach(() => {
+				renderedComponent = renderComponent(baseProps);
+
+				fireEvent.change(renderedComponent.getByTestId('filesInput'), {
+					target: {files},
+				});
+			});
+
+			it('render a list of files', () => {
+				const {getByText} = renderedComponent;
 
 				files.forEach(({name: filename}) => {
 					expect(getByText(filename)).toBeInTheDocument();
@@ -85,9 +93,7 @@ describe('ImportTranslation', () => {
 			});
 
 			it('enable the save and publish button', () => {
-				const {getByRole, getByTestId} = renderComponent(baseProps);
-
-				fireEvent.change(getByTestId('filesInput'), {target: {files}});
+				const {getByRole} = renderedComponent;
 
 				expect(
 					getByRole('button', {
@@ -103,11 +109,7 @@ describe('ImportTranslation', () => {
 			});
 
 			it('select files button changes to replace files and remove files button is present', () => {
-				const {getByRole, getByTestId, queryByRole} = renderComponent(
-					baseProps
-				);
-
-				fireEvent.change(getByTestId('filesInput'), {target: {files}});
+				const {getByRole, queryByRole} = renderedComponent;
 
 				expect(
 					queryByRole('button', {

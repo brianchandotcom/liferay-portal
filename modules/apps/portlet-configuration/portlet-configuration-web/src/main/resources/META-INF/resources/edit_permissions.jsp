@@ -23,11 +23,7 @@ PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDis
 
 Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 
-List<Resource> resources = new ArrayList<>();
-
-if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-	resources = portletConfigurationPermissionsDisplayContext.getResources();
-}
+List<Resource> resources = portletConfigurationPermissionsDisplayContext.getResources();
 
 SearchContainer<Role> roleSearchContainer = portletConfigurationPermissionsDisplayContext.getRoleSearchContainer();
 
@@ -119,10 +115,19 @@ String resourceName = resource.getName();
 							continue;
 						}
 
+						boolean isActionActive = portletConfigurationPermissionsDisplayContext.isActionActive(action, resourceActionsMap);
 						boolean checked = false;
+						boolean indeterminate = false;
 
-						if (currentIndividualActions.contains(action) || currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action) || currentCompanyActions.contains(action)) {
-							checked = true;
+						if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+							checked = portletConfigurationPermissionsDisplayContext.isActionCommonToAllResources(action, resourceActionsMap);
+
+							indeterminate = (resources.size() > 1) && !checked && isActionActive;
+						}
+						else {
+							if (currentIndividualActions.contains(action) || currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action) || currentCompanyActions.contains(action)) {
+								checked = true;
+							}
 						}
 
 						String preselectedMsg = StringPool.BLANK;
@@ -163,6 +168,23 @@ String resourceName = resource.getName();
 						>
 							<c:if test="<%= disabled && checked %>">
 								<input name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
+							</c:if>
+
+							<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
+
+								<%
+								boolean allSelected = portletConfigurationPermissionsDisplayContext.isActionCommonToAllResources(action, resourceActionsMap);
+								boolean someSelected = portletConfigurationPermissionsDisplayContext.isActionActive(action, resourceActionsMap);
+								%>
+
+								<aui:script>
+									var checkbox = document.getElementById(
+										'<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>'
+									);
+									if (<%=resources.size() > 1%> && checkbox && <%=someSelected%>) {
+										checkbox.indeterminate = <%=!allSelected %>;
+									}
+								</aui:script>
 							</c:if>
 
 							<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />

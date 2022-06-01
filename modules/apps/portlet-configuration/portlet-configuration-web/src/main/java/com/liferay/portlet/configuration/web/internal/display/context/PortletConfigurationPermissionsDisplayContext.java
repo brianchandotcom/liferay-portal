@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -712,6 +713,32 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildPortletURL();
+	}
+
+	public boolean isActionActive(
+		String action, Map<String, List<String>> resourceActionsMap) {
+
+		List<String> resourceActions = resourceActionsMap.get(action);
+
+		if (ListUtil.isNull(resourceActions)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isActionCommonToAllResources(
+		String action, Map<String, List<String>> resourceActionsMap) {
+
+		List<String> resourceActions = resourceActionsMap.get(action);
+
+		if (ListUtil.isNull(resourceActions) ||
+			(resourceActions.size() < _resources.size())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {

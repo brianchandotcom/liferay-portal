@@ -41,8 +41,8 @@ public class ObjectActionDataConverterUtil {
 	private static Map<String, Object> _convertObjectEntryPayloadJSONObject(
 		JSONObject payloadJSONObject) {
 
-		Map<String, Object> map = (Map<String, Object>)payloadJSONObject.get(
-			"objectEntry");
+		Map<String, Object> map = new HashMap<>(
+			(Map)payloadJSONObject.get("objectEntry"));
 
 		Object values = map.get("values");
 

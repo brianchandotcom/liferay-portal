@@ -21,7 +21,9 @@ import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.PoshiVariablesUtil;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
@@ -37,6 +39,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.dom4j.Element;
 
@@ -144,6 +147,8 @@ public class PoshiRunner {
 	public PoshiRunner(String namespacedClassCommandName) throws Exception {
 		_testNamespacedClassCommandName = namespacedClassCommandName;
 
+		System.out.println(_testNamespacedClassCommandName);
+
 		_testNamespacedClassName =
 			PoshiGetterUtil.
 				getNamespacedClassNameFromNamespacedClassCommandName(
@@ -180,7 +185,27 @@ public class PoshiRunner {
 
 			SummaryLogger.startRunning();
 
-			SeleniumUtil.startSelenium();
+			String namespace =
+				PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+					_testNamespacedClassCommandName);
+
+			Properties properties =
+				PoshiContext.getNamespacedClassCommandNameProperties(
+					namespace + "." + _testNamespacedClassCommandName);
+
+			String disableWebdriver = properties.getProperty(
+				"disable-webdriver");
+
+			if (Validator.isNotNull(disableWebdriver)) {
+				boolean openBrowser = GetterUtil.getBoolean(disableWebdriver);
+
+				if (!openBrowser) {
+					SeleniumUtil.startSelenium();
+				}
+			}
+			else {
+				SeleniumUtil.startSelenium();
+			}
 
 			_runSetUp();
 		}

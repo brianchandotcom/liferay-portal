@@ -338,6 +338,120 @@ definition {
 		}
 	}
 
+	@description = "Verify the order time is shown in the order date when the Show Order Creation Time checkbox is checked in global settings."
+	@priority = "3"
+	test GlobalSettingsForOrderDateConfiguration {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#GlobalSettingsForOrderDateConfiguration";
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the Show Order Creation Time checkbox is checked by default in global settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Orders",
+				configurationName = "Placed Orders",
+				configurationScope = "Widget Scope");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Show Order Create Time",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("And given the buyer has placed an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer views the order from the placed orders details page") {
+			Button.click(button = "Go to Order Details");
+		}
+
+		task ("Then the order date and time is shown") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("Given the Show Order Creation Time checkbox is unchecked in global settings") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Orders",
+				configurationName = "Placed Orders",
+				configurationScope = "Widget Scope");
+
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Show Order Create Time",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer views the order from the placed orders details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order date is shown without the time") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+	}
+
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
 	@priority = "3"
 	test ReorderFromPlacedOrdersDetailsPage {

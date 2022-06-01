@@ -88,6 +88,16 @@ definition {
 		}
 	}
 
+	macro closeModal {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CLOSE_MODAL");
+	}
+
+	macro deleteLanguage {
+		Click(
+			key_language = "${translationOption}",
+			locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
+	}
+
 	macro deleteNodeByDeleteKey {
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = "${nodeType}");
 
@@ -192,6 +202,10 @@ definition {
 
 	macro editWorkflowTitle {
 		PortletEntry.inputTitle(title = "${title}");
+	}
+
+	macro gotoManageTranslations {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_BUTTON");
 	}
 
 	macro gotoNotification {
@@ -353,7 +367,7 @@ definition {
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentTypeOption}" == "Role") {
+		if ("${assignmentType}" == "Role") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
 				value1 = "${roleName}");
@@ -365,7 +379,7 @@ definition {
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentTypeOption}" == "Role Type") {
+		if ("${assignmentType}" == "Role Type") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
 				value1 = "${roleTypeName}");
@@ -763,6 +777,30 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
+	macro viewLanguageNotPresentAtManageTranslations {
+		AssertElementNotPresent(
+			key_language = "${languageName}",
+			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
+	}
+
+	macro viewLanguagePresentAtManageTranslations {
+		AssertElementPresent(
+			key_language = "${languageName}",
+			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
+	}
+
+	macro viewModalNotPresent {
+		AssertElementNotPresent(
+			key_modalTitle = "${modalTitle}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
+	}
+
+	macro viewModalPresent {
+		AssertElementPresent(
+			key_modalTitle = "${modalTitle}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
+	}
+
 	macro viewNodeInfo {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
 
@@ -1073,6 +1111,24 @@ definition {
 
 	macro viewTranslationDropdownNotPresent {
 		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
+	}
+
+	macro viewTranslationLanguageOptionNotPresent {
+		Click(
+			key_translationOptionSelected = "${currentTranslationOption}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
+
+		AssertElementNotPresent(
+			key_translationOption = "${translationOption}",
+			key_translationStatus = "warning",
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
+	}
+
+	macro viewTranslationLanguageOptionPresent {
+		AssertElementPresent(
+			key_translationOption = "${translationOption}",
+			key_translationStatus = "${translationStatus}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
 	macro viewTranslationLanguageStatus {

@@ -454,12 +454,23 @@ definition {
 	}
 
 	@description = "Verify that when the user click “X”, the Manage Translations window closes"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanCloseManageTranslationsWindowOnXClick {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseManageTranslationsWindowOnXClick";
 
-		// TODO CanCloseManageTranslationsWindowOnXClick pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.viewModalPresent(modalTitle = "Manage Translations");
+
+		ProcessBuilderKaleoDesignerReact.closeModal();
+
+		ProcessBuilderKaleoDesignerReact.viewModalNotPresent(modalTitle = "Manage Translations");
 	}
 
 	@description = "Verify that the user is able to complete the task through different types of users assigned at My Workflow Task"
@@ -901,12 +912,35 @@ definition {
 	}
 
 	@description = "Verify that is possible to delete translations"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteTranslations {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTranslations";
 
-		// TODO CanDeleteTranslations pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.viewLanguagePresentAtManageTranslations(languageName = "Catalan (Spain)");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguagePresentAtManageTranslations(languageName = "French (France)");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguagePresentAtManageTranslations(languageName = "Swedish (Sweden)");
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "Catalan");
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "French");
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "Swedish");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguageNotPresentAtManageTranslations(languageName = "Catalan (Spain)");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguageNotPresentAtManageTranslations(languageName = "French (France)");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguageNotPresentAtManageTranslations(languageName = "Swedish (Sweden)");
 	}
 
 	@description = "Verify that the user can Delete a Draft workflow"
@@ -2396,12 +2430,30 @@ definition {
 	}
 
 	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DeletedTranslationsAreNotDisplayedOnLanguageSelector {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DeletedTranslationsAreNotDisplayedOnLanguageSelector";
 
-		// TODO DeletedTranslationsAreNotDisplayedOnLanguageSelector pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageOptionPresent(
+			currentTranslationOption = "en-us",
+			translationOption = "ca_ES",
+			translationStatus = "warning");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "Catalan");
+
+		Button.clickDone();
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageOptionNotPresent(
+			currentTranslationOption = "en-us",
+			translationOption = "ca_ES");
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
@@ -3026,12 +3078,33 @@ definition {
 	}
 
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test WarningIsDisplayedWhenNewTransitionDefault {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsDisplayedWhenNewTransitionDefault";
 
-		// TODO LRQA-73832 WarningIsDisplayedWhenNewTransitionDefault pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Transition Label",
+			connectorOut = "start",
+			key_direction = "top");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Transition Label",
+			connectorOut = "start",
+			key_direction = "top");
+
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "True");
+
+		Alert.viewWarningSpecific(warningMessage = "Default Was Changed:Your workflow may have changed because the default was changed.");
 	}
 
 	@description = "Verify that a message warning is not displayed when the user adds another transition and do not selects it as default"

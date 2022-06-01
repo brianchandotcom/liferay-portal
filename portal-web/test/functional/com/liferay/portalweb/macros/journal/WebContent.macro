@@ -2452,7 +2452,9 @@ definition {
 
 	macro viewVideoPreview {
 		if (isSet(webContentTitle)) {
-			WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "${webContentTitle}");
+			WebContentNavigator.gotoPreviewEntryCP(
+				liveSite = "${liveSite}",
+				webContentTitle = "${webContentTitle}");
 
 			Pause(locator1 = "3000");
 

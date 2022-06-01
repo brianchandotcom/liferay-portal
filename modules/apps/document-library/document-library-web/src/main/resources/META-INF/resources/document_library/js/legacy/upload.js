@@ -1086,7 +1086,7 @@ AUI.add(
 					}
 
 					if (validFilesLength) {
-						var openToastProps = {
+						var openToastSuccessProps = {
 							message: Liferay.Util.sub(
 								instance._strings.xValidFilesUploaded,
 								validFilesLength
@@ -1100,17 +1100,17 @@ AUI.add(
 						if (!currentUploadData.folder && !invalidFilesLength) {
 							var reloadButtonClassName = 'dl-reload-button';
 
-							openToastProps.autoClose = 10000;
+							openToastSuccessProps.autoClose = 10000;
 
-							openToastProps.message =
-								openToastProps.message +
+							openToastSuccessProps.message =
+								openToastSuccessProps.message +
 								`<div class="alert-footer">
 										<div class="btn-group" role="group">
 											<button class="btn btn-sm btn-primary alert-btn ${reloadButtonClassName}">${instance._strings.reloadButton}</button>
 										</div>
 								</div>`;
 
-							openToastProps.onClick = ({event}) => {
+							openToastSuccessProps.onClick = ({event}) => {
 								if (
 									event.target.classList.contains(
 										reloadButtonClassName
@@ -1123,7 +1123,7 @@ AUI.add(
 							};
 						}
 
-						Liferay.Util.openToast(openToastProps);
+						Liferay.Util.openToast(openToastSuccessProps);
 					}
 
 					if (invalidFilesLength) {
@@ -1157,23 +1157,25 @@ AUI.add(
 							}
 						}
 
-						var message = TPL_ERROR_NOTIFICATION.parse({
-							invalidFiles: currentUploadData.invalidFiles,
-							title: Liferay.Util.sub(
-								instance._strings.xInvalidFilesUploaded,
-								invalidFilesLength
-							),
-						});
-
-						Liferay.Util.openToast({
-							autoClose:
-								invalidFilesLength > 3 ? undefined : false,
-							message,
+						var openToastErrorProps = {
+							message: TPL_ERROR_NOTIFICATION.parse({
+								invalidFiles: currentUploadData.invalidFiles,
+								title: Liferay.Util.sub(
+									instance._strings.xInvalidFilesUploaded,
+									invalidFilesLength
+								),
+							}),
 							toastProps: {
 								className: 'alert-full',
 							},
 							type: 'danger',
-						});
+						};
+
+						if (invalidFilesLength < 3) {
+							openToastErrorProps.autoClose = false;
+						}
+
+						Liferay.Util.openToast(openToastErrorProps);
 					}
 				},
 

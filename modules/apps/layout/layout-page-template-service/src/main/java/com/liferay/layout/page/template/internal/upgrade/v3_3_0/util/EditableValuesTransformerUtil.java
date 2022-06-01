@@ -56,42 +56,26 @@ public class EditableValuesTransformerUtil {
 				JSONObject editableProcessorJSONObject =
 					(JSONObject)editableProcessorObject;
 
-				if (editableProcessorJSONObject.length() <= 0) {
-					continue;
-				}
-
 				if (Objects.equals(
 						editableProcessorKey,
 						_KEY_FREE_MARKER_FRAGMENT_ENTRY_PROCESSOR)) {
 
-					JSONObject freeMarkerFragmentEntryProcessorJSONObject =
+					editableProcessorJSONObject =
 						_getFreeMarkerFragmentEntryProcessorJSONObject(
 							editableProcessorJSONObject, segmentsExperienceId);
-
-					if (freeMarkerFragmentEntryProcessorJSONObject.length() <=
-							0) {
-
-						continue;
-					}
-
-					newEditableValuesJSONObject.put(
-						editableProcessorKey,
-						freeMarkerFragmentEntryProcessorJSONObject);
-
-					continue;
+				}
+				else if (editableProcessorJSONObject.length() > 0) {
+					editableProcessorJSONObject =
+						_getFragmentEntryProcessorJSONObject(
+							editableProcessorJSONObject, segmentsExperienceId);
 				}
 
-				JSONObject fragmentEntryProcessorJSONObject =
-					_getFragmentEntryProcessorJSONObject(
-						editableProcessorJSONObject, segmentsExperienceId);
-
-				if (fragmentEntryProcessorJSONObject.length() <= 0) {
-
+				if (editableProcessorJSONObject.length() <= 0) {
 					continue;
 				}
 
 				newEditableValuesJSONObject.put(
-					editableProcessorKey, fragmentEntryProcessorJSONObject);
+					editableProcessorKey, editableProcessorJSONObject);
 			}
 		}
 		catch (JSONException jsonException) {

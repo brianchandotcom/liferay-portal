@@ -195,8 +195,15 @@ else {
 	</div>
 </clay:sheet-section>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
+<c:if test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
 	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
+
+	<clay:sheet-section>
+		<react:component
+			module="js/layout/look_and_feel/CSSExtensionConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getCSSExtensionConfigurationProps() %>"
+		/>
+	</clay:sheet-section>
 </c:if>
 
 <aui:script>

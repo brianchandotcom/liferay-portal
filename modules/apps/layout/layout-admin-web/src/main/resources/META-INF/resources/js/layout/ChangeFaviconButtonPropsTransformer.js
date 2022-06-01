@@ -31,10 +31,6 @@ export default function propsTransformer({
 							`${portletNamespace}faviconClientExtensionEntryId`
 						);
 
-						const faviconClientExtensionEntryType = document.getElementById(
-							`${portletNamespace}faviconClientExtensionEntryType`
-						);
-
 						const faviconFileEntryId = document.getElementById(
 							`${portletNamespace}faviconFileEntryId`
 						);
@@ -61,8 +57,6 @@ export default function propsTransformer({
 							) {
 								faviconClientExtensionEntryId.value =
 									itemValue.clientExtensionEntryId;
-								faviconClientExtensionEntryType.value =
-									itemValue.type;
 							}
 							else {
 								faviconFileEntryId.value =

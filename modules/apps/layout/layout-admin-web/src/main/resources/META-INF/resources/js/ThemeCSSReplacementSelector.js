@@ -25,7 +25,6 @@ export default function ThemeCSSReplacementSelector({
 }) {
 	const [extensionName, setExtensionName] = useState(themeCSSExtensionName);
 	const [extensionEntryId, setExtensionEntryId] = useState('');
-	const [extensionEntryType, setExtensionEntryType] = useState('');
 
 	const onClick = () => {
 		openSelectionModal({
@@ -33,7 +32,6 @@ export default function ThemeCSSReplacementSelector({
 				const item = JSON.parse(selectedItem.value);
 
 				setExtensionEntryId(item.clientExtensionEntryId);
-				setExtensionEntryType(item.type);
 				setExtensionName(item.name);
 			},
 			selectEventName: selectThemeCSSClientExtensionEventName,
@@ -48,11 +46,6 @@ export default function ThemeCSSReplacementSelector({
 				name={`${portletNamespace}themeCSSExtensionEntryId`}
 				type="hidden"
 				value={extensionEntryId}
-			/>
-			<ClayInput
-				name={`${portletNamespace}themeCSSExtensionEntryType`}
-				type="hidden"
-				value={extensionEntryType}
 			/>
 			<ClayForm.Group>
 				<label
@@ -91,7 +84,6 @@ export default function ThemeCSSReplacementSelector({
 									onClick={() => {
 										setExtensionName('');
 										setExtensionEntryId('');
-										setExtensionEntryType('');
 									}}
 									small
 									symbol="trash"

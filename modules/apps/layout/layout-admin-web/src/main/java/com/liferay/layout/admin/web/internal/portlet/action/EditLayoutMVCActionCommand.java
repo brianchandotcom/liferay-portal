@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -164,27 +165,24 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			long faviconClientExtensionEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "faviconClientExtensionEntryId");
-			String faviconClientExtensionEntryType = ParamUtil.getString(
-				uploadPortletRequest, "faviconClientExtensionEntryType");
 
 			if (faviconClientExtensionEntryId > 0) {
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					themeDisplay.getUserId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					faviconClientExtensionEntryId,
-					faviconClientExtensionEntryType);
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 			}
 
 			long themeCSSExtensionEntryId = ParamUtil.getLong(
 				actionRequest, "themeCSSExtensionEntryId");
-			String themeCSSExtensionEntryType = ParamUtil.getString(
-				actionRequest, "themeCSSExtensionEntryType");
 
 			if (themeCSSExtensionEntryId > 0) {
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					themeDisplay.getUserId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					themeCSSExtensionEntryId, themeCSSExtensionEntryType);
+					themeCSSExtensionEntryId,
+					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 			}
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
@@ -216,7 +214,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 							_portal.getClassNameId(Layout.class),
 							draftLayout.getPlid(),
 							faviconClientExtensionEntryId,
-							faviconClientExtensionEntryType);
+							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 				}
 
 				if (themeCSSExtensionEntryId > 0) {
@@ -225,7 +223,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 							themeDisplay.getUserId(),
 							_portal.getClassNameId(Layout.class),
 							layout.getPlid(), themeCSSExtensionEntryId,
-							themeCSSExtensionEntryType);
+							ClientExtensionEntryConstants.TYPE_THEME_CSS);
 				}
 			}
 

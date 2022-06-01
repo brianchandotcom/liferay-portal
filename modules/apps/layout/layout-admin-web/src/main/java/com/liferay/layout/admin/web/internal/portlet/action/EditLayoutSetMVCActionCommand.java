@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -126,28 +127,22 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "faviconClientExtensionEntryId");
 
 		if (faviconClientExtensionEntryId > 0) {
-			String faviconClientExtensionEntryType = ParamUtil.getString(
-				actionRequest, "faviconClientExtensionEntryType");
-
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
-				faviconClientExtensionEntryType);
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 
 		long themeCSSExtensionEntryId = ParamUtil.getLong(
 			actionRequest, "themeCSSExtensionEntryId");
 
 		if (themeCSSExtensionEntryId > 0) {
-			String themeCSSExtensionEntryType = ParamUtil.getString(
-				actionRequest, "themeCSSExtensionEntryType");
-
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), themeCSSExtensionEntryId,
-				themeCSSExtensionEntryType);
+				ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 	}
 

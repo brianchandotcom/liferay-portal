@@ -40,7 +40,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 <aui:input name="devices" type="hidden" value="regular" />
 <aui:input name="styleBookEntryId" type="hidden" />
 <aui:input name="faviconClientExtensionEntryId" type="hidden" />
-<aui:input name="faviconClientExtensionEntryType" type="hidden" />
 <aui:input name="faviconFileEntryId" type="hidden" />
 <aui:input name="masterLayoutPlid" type="hidden" />
 

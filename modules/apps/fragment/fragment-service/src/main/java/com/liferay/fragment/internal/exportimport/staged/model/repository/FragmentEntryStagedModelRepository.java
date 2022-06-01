@@ -163,7 +163,8 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getStatus());
+			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
 	}
 
 	private void _deleteFragmentEntryLinks(

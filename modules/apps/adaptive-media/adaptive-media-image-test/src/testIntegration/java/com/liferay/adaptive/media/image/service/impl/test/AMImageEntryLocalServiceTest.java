@@ -416,13 +416,18 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
-			amImageCounterServiceRegistration = _registerAMImageCounter(
-				"test", 100);
+			int counter = RandomTestUtil.randomInt(100, 300);
 
-			Assert.assertEquals(
-				100,
+			amImageCounterServiceRegistration = _registerAMImageCounter(
+				"test", counter);
+
+			int expectedAMImageEntriesCount =
 				AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
-					company.getCompanyId()));
+					company.getCompanyId());
+
+			Assert.assertTrue(
+				String.valueOf(expectedAMImageEntriesCount),
+				expectedAMImageEntriesCount >= counter);
 		}
 		finally {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);

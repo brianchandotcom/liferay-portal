@@ -594,11 +594,13 @@ definition {
 	}
 
 	macro editCP {
-		Click(
-			key_rowEntry = "${kbArticleTitle}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		if (!(isSet(skipNavigation))) {
+			Click(
+				key_rowEntry = "${kbArticleTitle}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Edit");
+			MenuItem.click(menuItem = "Edit");
+		}
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
@@ -627,8 +629,6 @@ definition {
 		}
 
 		if (isSet(dmImage)) {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
 			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
@@ -639,8 +639,6 @@ definition {
 		}
 
 		if (isSet(embedVideo)) {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
 			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
@@ -947,6 +945,24 @@ definition {
 		// Articles accessed in admin will stay in admin after publishing.
 
 		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
+	}
+
+	macro openToEditKBArticleInSite {
+
+		// You can use this navigation when you need to access the configuration quickly without checking the UI.
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+			groupName = "${groupName}",
+			kbArticleTitle = "${kbArticleTitle}",
+			site = "${site}");
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DkhoaN4dO&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}");
 	}
 
 	macro openToKBArticleInSite {

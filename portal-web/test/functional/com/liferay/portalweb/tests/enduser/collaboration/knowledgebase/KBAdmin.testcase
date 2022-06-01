@@ -658,13 +658,16 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
 
 		KBArticle.editCP(
 			dmImage = "DM Document Title",
-			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
-			navTab = "Documents and Media");
+			navTab = "Documents and Media",
+			skipNavigation = "true");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -854,13 +857,16 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
 
 		KBArticle.editCP(
 			embedVideo = "true",
-			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
 			navTab = "Documents and Media",
+			skipNavigation = "true",
 			videoShortcutTitle = "Test YouTube Video Name");
 
 		JSONFolder.addFolder(

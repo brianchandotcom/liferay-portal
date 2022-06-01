@@ -52,7 +52,7 @@
 			background-color: $primary-color;
 			border-radius: 50%;
 			color: #fff;
-			content: attr(data-badge-count);
+			content: unquote("'\\FEFF' attr(data-badge-count)");
 			display: flex;
 			font-size: 10px;
 			font-weight: bold;

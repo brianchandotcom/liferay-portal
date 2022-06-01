@@ -277,9 +277,20 @@ public class FragmentLayoutStructureItemImporter
 		JSONObject fragmentEntryProcessorValuesJSONObject = JSONUtil.put(
 			"com.liferay.fragment.entry.processor.background.image." +
 				"BackgroundImageFragmentEntryProcessor",
-			_toBackgroundImageFragmentEntryProcessorJSONObject(
-				layoutStructureItemImporterContext,
-				(List<Object>)definitionMap.get("fragmentFields"))
+			() -> {
+				JSONObject backgroundImageFragmentEntryProcessorJSONObject =
+					_toBackgroundImageFragmentEntryProcessorJSONObject(
+						layoutStructureItemImporterContext,
+						(List<Object>)definitionMap.get("fragmentFields"));
+
+				if (backgroundImageFragmentEntryProcessorJSONObject.length() >
+						0) {
+
+					return backgroundImageFragmentEntryProcessorJSONObject;
+				}
+
+				return null;
+			}
 		).put(
 			"com.liferay.fragment.entry.processor.editable." +
 				"EditableFragmentEntryProcessor",

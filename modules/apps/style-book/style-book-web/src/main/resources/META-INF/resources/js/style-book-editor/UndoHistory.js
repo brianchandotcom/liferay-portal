@@ -59,7 +59,7 @@ export default function UndoHistory() {
 				alignmentPosition={Align.BottomRight}
 				className="ml-2 mr-2"
 				menuElementAttrs={{
-					className: 'page-editor__undo-history',
+					className: 'style-book-editor__undo-history',
 					containerProps: {
 						className: 'cadmin',
 					},
@@ -108,7 +108,7 @@ export default function UndoHistory() {
 			</ClayDropDown>
 
 			{loading && (
-				<ReactPortal>
+				<ReactPortal className="cadmin">
 					<Overlay />
 				</ReactPortal>
 			)}
@@ -130,7 +130,7 @@ const Overlay = () => {
 
 	return (
 		<div
-			className="page-editor__undo-history__overlay"
+			className="style-book-editor__undo-history__overlay"
 			onClickCapture={(event) => {
 				event.preventDefault();
 				event.stopPropagation();

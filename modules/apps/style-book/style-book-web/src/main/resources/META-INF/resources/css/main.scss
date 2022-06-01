@@ -1,8 +1,10 @@
 @import 'cadmin-variables';
 
 $controlMenuDesktopHeight: 56px;
+$controlMenuHeight: 48px;
 $toolbarDesktopHeight: 56px;
 $previewSelectorWidth: 168px;
+$undoHistoryOverlayZIndex: 1001;
 
 html#{$cadmin-selector} {
 	.cadmin {
@@ -110,6 +112,43 @@ html#{$cadmin-selector} {
 				background-color: $cadmin-white;
 				border-bottom: 1px solid fade_out($cadmin-secondary-l2, 0.5);
 			}
+
+			&__undo-history {
+				&.dropdown-menu {
+					max-height: 320px;
+					max-width: 280px;
+					width: 280px;
+				}
+
+				.dropdown-item {
+					padding-right: 2.25rem;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+
+					span {
+						font-size: 0.75rem;
+					}
+				}
+
+				&__overlay {
+					height: 100vh;
+					left: 0;
+					position: fixed;
+					top: 0;
+					width: 100vw;
+					z-index: $undoHistoryOverlayZIndex;
+				}
+			}
+		}
+	}
+
+	body.has-control-menu .cadmin .style-book-editor__undo-history__overlay {
+		height: calc(100vh - #{$controlMenuHeight});
+		top: $controlMenuHeight;
+
+		@include media-breakpoint-up(sm) {
+			height: calc(100vh - #{$controlMenuDesktopHeight});
+			top: $controlMenuDesktopHeight;
 		}
 	}
 

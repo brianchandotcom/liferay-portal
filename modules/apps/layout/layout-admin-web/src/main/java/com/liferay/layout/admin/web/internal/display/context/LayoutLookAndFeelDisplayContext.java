@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -112,6 +113,14 @@ public class LayoutLookAndFeelDisplayContext {
 	public Map<String, Object> getClearFaviconButtonAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"faviconFileEntryTitleValue", _getClearFaviconButtonFileEntryTitle()
+		).build();
+	}
+
+	public Map<String, Object> getCSSExtensionConfigurationProps() {
+		return HashMapBuilder.<String, Object>put(
+			"cssExtensions", JSONFactoryUtil.createJSONArray()
+		).put(
+			"cssExtensionSelectorURL", StringPool.BLANK
 		).build();
 	}
 

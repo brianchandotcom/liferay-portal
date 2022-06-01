@@ -1,6 +1,6 @@
 definition {
 
-    macro createRaylifeAPSite {
+	macro createRaylifeAPSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -24,10 +24,10 @@ definition {
 			Pause(locator1 = "1500");
 		}
 
-        Alert.viewSuccessMessage();
+		Alert.viewSuccessMessage();
 	}
 
-    macro tearDownCP {
+	macro tearDownCP {
 		Refresh();
 
 		ApplicationsMenu.gotoPortlet(
@@ -47,4 +47,5 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+
 }

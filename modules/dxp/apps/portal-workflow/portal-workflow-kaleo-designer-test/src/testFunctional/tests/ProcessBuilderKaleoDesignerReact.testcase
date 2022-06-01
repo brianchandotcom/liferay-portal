@@ -367,24 +367,20 @@ definition {
 	test CanAssignSingleRoleTypeToTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignSingleRoleTypeToTaskNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-            nodeLabel = "Task",
-            nodePosition = "0,0");
-			
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
 
-        ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
-            assignmentType = "Role Type",
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role Type",
 			roleTypeName = "Organization",
-            roleTypeRoleName = "Organization User");
+			roleTypeRoleName = "Organization User");
 
-
-        ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role Type: Organization User");
-
-	
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role Type: Organization User");
 	}
 
 	@description = "Verify that the user is able to assign the task node to the Asset Creator"

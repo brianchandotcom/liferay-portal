@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -58,6 +59,10 @@ public class CETFDSActionProvider implements FDSActionProvider {
 		throws PortalException {
 
 		CETFDSEntry cetFDSEntry = (CETFDSEntry)model;
+
+		if (cetFDSEntry.isReadOnly()) {
+			return Collections.emptyList();
+		}
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> _buildEditClientExtensionEntryAction(

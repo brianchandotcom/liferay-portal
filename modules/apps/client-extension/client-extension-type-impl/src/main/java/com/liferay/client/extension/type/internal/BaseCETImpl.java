@@ -32,6 +32,8 @@ public abstract class BaseCETImpl implements CET {
 			(clientExtensionEntry == null) ? null :
 				clientExtensionEntry.getTypeSettings());
 
+		_readOnly = false;
+
 		if (clientExtensionEntry != null) {
 			_companyId = clientExtensionEntry.getCompanyId();
 			_description = clientExtensionEntry.getDescription();
@@ -100,6 +102,11 @@ public abstract class BaseCETImpl implements CET {
 	}
 
 	@Override
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
+	@Override
 	public String toString() {
 		return _unicodeProperties.toString();
 	}
@@ -117,6 +124,7 @@ public abstract class BaseCETImpl implements CET {
 	private String _description = StringPool.BLANK;
 	private String _name = StringPool.BLANK;
 	private String _primaryKey = StringPool.BLANK;
+	private boolean _readOnly = true;
 	private String _sourceCodeURL = StringPool.BLANK;
 	private int _status;
 	private final UnicodeProperties _unicodeProperties;

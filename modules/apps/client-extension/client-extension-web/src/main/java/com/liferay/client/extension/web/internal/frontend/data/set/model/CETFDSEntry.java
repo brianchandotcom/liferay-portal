@@ -78,6 +78,10 @@ public class CETFDSEntry {
 		return type;
 	}
 
+	public boolean isReadOnly() {
+		return _cet.isReadOnly();
+	}
+
 	private final CET _cet;
 	private final Locale _locale;
 

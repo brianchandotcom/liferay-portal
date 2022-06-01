@@ -38,4 +38,6 @@ public interface CET {
 
 	public String getType();
 
+	public boolean isReadOnly();
+
 }

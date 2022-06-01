@@ -124,7 +124,7 @@
 </tr>
 <tr>
 	<td>NO_COLLECTION_SELECTED_MESSAGE</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[@class='page-editor__collection' and contains(.,'${key_messageInfo}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection__message')][normalize-space(text())='${key_messageInfo}']</td>
 	<td></td>
 </tr>
 <tr>

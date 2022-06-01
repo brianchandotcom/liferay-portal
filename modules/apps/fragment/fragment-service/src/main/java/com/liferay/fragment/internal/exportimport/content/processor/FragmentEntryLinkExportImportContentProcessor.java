@@ -110,6 +110,20 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
 
+		for (String fragmentEntryProcessorKey :
+				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+
+			JSONObject fragmentEntryProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					fragmentEntryProcessorKey);
+
+			if ((fragmentEntryProcessorJSONObject != null) &&
+				(fragmentEntryProcessorJSONObject.length() == 0)) {
+
+				editableValuesJSONObject.remove(fragmentEntryProcessorKey);
+			}
+		}
+
 		for (ExportImportContentProcessor<JSONObject>
 				exportImportContentProcessor :
 					_fragmentEntryLinkEditableValuesExportImportProcessors) {
@@ -136,6 +150,15 @@ public class FragmentEntryLinkExportImportContentProcessor
 					(Class<?>)ExportImportContentProcessor.class,
 				"(content.processor.type=FragmentEntryLinkEditableValues)");
 	}
+
+	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
+		"com.liferay.fragment.entry.processor.background.image." +
+			"BackgroundImageFragmentEntryProcessor",
+		"com.liferay.fragment.entry.processor.editable." +
+			"EditableFragmentEntryProcessor",
+		"com.liferay.fragment.entry.processor.freemarker." +
+			"FreeMarkerFragmentEntryProcessor"
+	};
 
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>

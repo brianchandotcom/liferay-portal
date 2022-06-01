@@ -1361,7 +1361,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 
-	@Reference
+	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
 
 	@Reference

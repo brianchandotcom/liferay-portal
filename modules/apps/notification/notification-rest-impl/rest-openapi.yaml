@@ -1,39 +1,5 @@
 components:
     schemas:
-        NotificationQueueEntry:
-            properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
-                    type: object
-                bcc:
-                    type: string
-                body:
-                    type: string
-                cc:
-                    type: string
-                from:
-                    type: string
-                fromName:
-                    type: string
-                notificationTemplateId:
-                    format: int64
-                    readOnly: true
-                    type: integer
-                priority:
-                    format: int32
-                    minimum: 0
-                    type: integer
-                subject:
-                    type: string
-                to:
-                    type: string
-                toName:
-                    type: string
-            type: object
         NotificationTemplate:
             properties:
                 actions:
@@ -97,89 +63,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/notification-queue-entries":
-        get:
-            operationId: getNotificationQueueEntriesPage
-            parameters:
-                - in: query
-                  items:
-                      type: string
-                  name: aggregationTerms
-                  schema:
-                  type: array
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/NotificationQueueEntry"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/NotificationQueueEntry"
-                                type: array
-            tags: ["NotificationQueueEntry"]
-    "/notification-queue-entry/{notificationQueueEntryId}":
-        delete:
-            operationId: deleteNotificationQueueEntry
-            parameters:
-                - in: path
-                  name: notificationQueueEntryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["NotificationQueueEntry"]
-        get:
-            operationId: getNotificationQueueEntry
-            parameters:
-                - in: path
-                  name: notificationQueueEntryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/NotificationQueueEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/NotificationQueueEntry"
-            tags: ["NotificationQueueEntry"]
     "/notification-template/{notificationTemplateId}":
         delete:
             operationId: deleteNotificationTemplate

@@ -40,7 +40,7 @@ export const getCaseResultsAggregation = gql`
 		caseResultAggregation(aggregation: $aggregation, filter: $filter)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults/?aggregationTerms={args.aggregation}&filter={args.filter}"
+				path: "caseresults/?aggregationTerms={args.aggregation}&filter={args.filter}&fields=id"
 			) {
 			facets {
 				facetValues {

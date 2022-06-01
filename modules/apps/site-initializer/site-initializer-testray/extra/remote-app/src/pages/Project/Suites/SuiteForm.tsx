@@ -86,17 +86,20 @@ const SuiteForm = () => {
 			{refetchQueries: [{query: getSuites}]}
 		)
 			.then((response) => {
-				const suiteId =
-					response.data?.createSuite?.id || context.testraySuite?.id;
+				if (cases.length) {
+					const suiteId =
+						response.data?.createSuite?.id ||
+						context.testraySuite?.id;
 
-				return createSuiteCaseBatch({
-					variables: {
-						data: cases.map((caseId) => ({
-							caseId,
-							suiteId,
-						})),
-					},
-				});
+					return createSuiteCaseBatch({
+						variables: {
+							data: cases.map((caseId) => ({
+								caseId,
+								suiteId,
+							})),
+						},
+					});
+				}
 			})
 			.then(() => onSave())
 			.catch(() => onError());
@@ -121,12 +124,13 @@ const SuiteForm = () => {
 	return (
 		<Container className="container">
 			<Form.Input
+				{...inputProps}
 				label={i18n.translate('name')}
 				name="name"
-				{...inputProps}
 			/>
 
 			<Form.Input
+				{...inputProps}
 				label={i18n.translate('description')}
 				name="description"
 				required={false}

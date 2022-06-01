@@ -120,7 +120,9 @@ public class FragmentEntryProcessorRegistryImpl
 				fragmentEntryProcessor.getDefaultEditableValuesJSONObject(
 					html, configuration);
 
-			if (defaultEditableValuesJSONObject != null) {
+			if ((defaultEditableValuesJSONObject != null) &&
+				(defaultEditableValuesJSONObject.length() > 0)) {
+
 				Class<?> clazz = fragmentEntryProcessor.getClass();
 
 				jsonObject.put(

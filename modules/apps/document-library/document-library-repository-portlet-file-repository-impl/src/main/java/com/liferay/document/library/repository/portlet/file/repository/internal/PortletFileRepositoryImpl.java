@@ -392,7 +392,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		long groupId, long folderId, String fileName) {
 
 		try {
-			return getPortletFileEntry(groupId, folderId, fileName);
+			LocalRepository localRepository =
+				_repositoryProvider.getLocalRepository(groupId);
+
+			return localRepository.fetchFileEntry(folderId, fileName);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -641,19 +644,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		String uniqueFileName = fileName;
 
 		for (int i = 1;; i++) {
-			try {
-				getPortletFileEntry(groupId, folderId, uniqueFileName);
+			FileEntry fileEntry = fetchPortletFileEntry(
+				groupId, folderId, uniqueFileName);
 
-				uniqueFileName = FileUtil.appendParentheticalSuffix(
-					fileName, String.valueOf(i));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
+			if (fileEntry == null) {
 				break;
 			}
+
+			uniqueFileName = FileUtil.appendParentheticalSuffix(
+				fileName, String.valueOf(i));
 		}
 
 		return uniqueFileName;

@@ -401,11 +401,11 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.moveToFolderCP(
+		JSONDocument.moveFileEntryToFolder(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name");
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 

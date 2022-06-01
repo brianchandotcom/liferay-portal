@@ -378,7 +378,8 @@ definition {
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalURL = "${baseURL}",
+			site = "${site}");
 		var portalURL = JSONCompany.getPortalURL();
 		var newFolderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = "${groupName}",

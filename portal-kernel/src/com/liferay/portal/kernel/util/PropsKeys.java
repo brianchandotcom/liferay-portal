@@ -2777,6 +2777,9 @@ public interface PropsKeys {
 
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
+	public static final String TUNNEL_SERVLET_HIDE_EXCEPTION_DATA =
+		"tunnel.servlet.hide.exception.data";
+
 	public static final String TUNNELING_SERVLET_ENCRYPTION_ALGORITHM =
 		"tunneling.servlet.encryption.algorithm";
 

@@ -12,29 +12,15 @@
  * details.
  */
 
-import CodeMirror from 'codemirror';
-import React from 'react';
-import './EditorSidebar.scss';
-export declare function EditorSidebar({
-	defaultLanguageId,
-	editorRef,
-	metadatasFields,
-	sidebarElements,
+/// <reference types="react" />
+
+import './EditNotificationTemplate.scss';
+export default function EditNotificationTemplate({
+	editingNotificationTemplateId,
+	editorConfig,
 }: IProps): JSX.Element;
 interface IProps {
-	className?: string;
-	defaultLanguageId: Locale;
-	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	metadatasFields: any[];
-	sidebarElements: ObjectValidationRuleElement[];
-}
-interface ObjectValidationRuleElement {
-	items: ObjectValidationRuleElementItem[];
-	label: string;
-}
-interface ObjectValidationRuleElementItem {
-	content: string;
-	label: string;
-	tooltip: string;
+	editingNotificationTemplateId: number;
+	editorConfig: string;
 }
 export {};

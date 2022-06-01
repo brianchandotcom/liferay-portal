@@ -75,3 +75,14 @@ interface IProps {
 	metadatasFields: any[];
 	sidebarElements: ObjectValidationRuleElement[];
 }
+
+interface ObjectValidationRuleElement {
+	items: ObjectValidationRuleElementItem[];
+	label: string;
+}
+
+interface ObjectValidationRuleElementItem {
+	content: string;
+	label: string;
+	tooltip: string;
+}

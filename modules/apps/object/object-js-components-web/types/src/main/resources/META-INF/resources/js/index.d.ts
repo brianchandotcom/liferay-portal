@@ -25,6 +25,8 @@ export {Input} from './components/Input';
 export {InputLocalized} from './components/InputLocalized';
 export {RichTextLocalized} from './components/RichTextLocalized';
 export {Select} from './components/Select';
+export {invalidateRequired, useForm, FormError} from './hooks/useForm';
+export {onActionDropdownItemClick} from './utils/fdsUtil';
 export {
 	closeSidePanel,
 	openToast,

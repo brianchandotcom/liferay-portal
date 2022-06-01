@@ -1,0 +1,16 @@
+.lfr__notification-template {
+	&-container {
+		background-color: #f1f2f5;
+	}
+
+	&-cards {
+		margin-left: 15rem;
+		margin-right: 15rem;
+	}
+
+	&-management-tollbar {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+	}
+}

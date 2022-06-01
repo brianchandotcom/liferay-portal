@@ -43,20 +43,6 @@ public class FragmentEntryServiceUtil {
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
-			int type, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFragmentEntry(
-			groupId, fragmentCollectionId, fragmentEntryKey, name, css, html,
-			js, cacheable, configuration, icon, previewFileEntryId, type,
-			status, serviceContext);
-	}
-
-	public static FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
 			int type, String typeOptions, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -307,21 +293,6 @@ public class FragmentEntryServiceUtil {
 			fragmentEntryId, previewFileEntryId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, long fragmentCollectionId, String name,
-			String css, String html, String js, boolean cacheable,
-			String configuration, long previewFileEntryId, int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, previewFileEntryId, status);
-	}
-
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId, String name,
 			String css, String html, String js, boolean cacheable,
@@ -352,63 +323,6 @@ public class FragmentEntryServiceUtil {
 		throws PortalException {
 
 		return getService().updateFragmentEntry(fragmentEntryId, name);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, boolean cacheable, String configuration, int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, cacheable, configuration,
-			status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, boolean cacheable, String configuration,
-			long previewFileEntryId, int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, cacheable, configuration,
-			previewFileEntryId, status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, String configuration, int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, configuration, status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, String configuration, long previewFileEntryId,
-			int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, configuration,
-			previewFileEntryId, status);
 	}
 
 	public static FragmentEntryService getService() {

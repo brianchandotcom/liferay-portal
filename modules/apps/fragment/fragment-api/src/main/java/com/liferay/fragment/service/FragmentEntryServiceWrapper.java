@@ -42,21 +42,6 @@ public class FragmentEntryServiceWrapper
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
-			int type, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.addFragmentEntry(
-			groupId, fragmentCollectionId, fragmentEntryKey, name, css, html,
-			js, cacheable, configuration, icon, previewFileEntryId, type,
-			status, serviceContext);
-	}
-
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
 			int type, String typeOptions, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -350,22 +335,6 @@ public class FragmentEntryServiceWrapper
 			fragmentEntryId, previewFileEntryId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, long fragmentCollectionId, String name,
-			String css, String html, String js, boolean cacheable,
-			String configuration, long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, previewFileEntryId, status);
-	}
-
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId, String name,
@@ -398,67 +367,6 @@ public class FragmentEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, boolean cacheable, String configuration, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, cacheable, configuration,
-			status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, boolean cacheable, String configuration,
-			long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, cacheable, configuration,
-			previewFileEntryId, status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, String configuration, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, configuration, status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, String configuration, long previewFileEntryId,
-			int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, configuration,
-			previewFileEntryId, status);
 	}
 
 	@Override

@@ -1357,7 +1357,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS",
-				value1 = "${key_processStatus}");
+				value1 = "${key_processStatus}(Track Workflow)");
 
 			AssertTextEquals(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATED_BY",
@@ -1400,7 +1400,7 @@ definition {
 		else if ("${processStatus}" == "Completed") {
 			AssertTextEquals(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS",
-				value1 = "Completed");
+				value1 = "Completed(Track Workflow)");
 
 			if (!(IsTextEqual.isPartialText(locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE", value1 = "${key_currentDate}"))) {
 				var key_currentDateDay = ${key_currentDateDay} + 1;

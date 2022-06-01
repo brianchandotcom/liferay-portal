@@ -126,6 +126,16 @@ public class DDMFormInstanceServiceUtil {
 	}
 
 	public static List<DDMFormInstance> search(
+		long companyId, long groupId, String keywords, boolean published,
+		int start, int end,
+		OrderByComparator<DDMFormInstance> orderByComparator) {
+
+		return getService().search(
+			companyId, groupId, keywords, published, start, end,
+			orderByComparator);
+	}
+
+	public static List<DDMFormInstance> search(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, OrderByComparator<DDMFormInstance> orderByComparator) {
 
@@ -156,6 +166,13 @@ public class DDMFormInstanceServiceUtil {
 		long companyId, long groupId, String keywords) {
 
 		return getService().searchCount(companyId, groupId, keywords);
+	}
+
+	public static int searchCount(
+		long companyId, long groupId, String keywords, boolean published) {
+
+		return getService().searchCount(
+			companyId, groupId, keywords, published);
 	}
 
 	public static int searchCount(

@@ -159,9 +159,10 @@ public class PoshiRunnerExecutor {
 	}
 
 	public boolean isOcularFunction(Element functionCommandElement) {
-		for (Element executeElement :
-				functionCommandElement.elements("execute")) {
+		List<Element> executeElements = functionCommandElement.elements(
+			"execute");
 
+		for (Element executeElement : executeElements) {
 			String seleniumAttributeValue = executeElement.attributeValue(
 				"selenium");
 

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -452,10 +453,9 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
-		for (int i = 0; i < assetEntries.size(); i++) {
-			AssetEntry assetEntry = assetEntries.get(i);
-
-			Assert.assertEquals(assetEntry.getEntryId(), assetEntryIds[i]);
+		for (AssetEntry assetEntry : assetEntries) {
+			Assert.assertTrue(
+				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
 		}
 	}
 
@@ -581,10 +581,9 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
 
-		for (int i = 0; i < assetEntries.size(); i++) {
-			AssetEntry assetEntry = assetEntries.get(i);
-
-			Assert.assertEquals(assetEntry.getEntryId(), assetEntryIds[i]);
+		for (AssetEntry assetEntry : assetEntries) {
+			Assert.assertTrue(
+				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
 		}
 	}
 
@@ -651,10 +650,9 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
 
-		for (int i = 0; i < assetEntries.size(); i++) {
-			AssetEntry assetEntry = assetEntries.get(i);
-
-			Assert.assertEquals(assetEntry.getEntryId(), assetEntryIds[i]);
+		for (AssetEntry assetEntry : assetEntries) {
+			Assert.assertTrue(
+				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
 		}
 	}
 

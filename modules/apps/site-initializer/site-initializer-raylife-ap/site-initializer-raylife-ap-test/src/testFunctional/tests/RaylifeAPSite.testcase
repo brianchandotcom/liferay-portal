@@ -28,8 +28,9 @@ definition {
 	@description = "Verify if Raylife AP can be created"
 	@priority = "5"
 	test CanRaylifeAPCreated {
-		
-        // TODO LPS-155172 - Verify if Raylife AP can be created
+
+		// TODO LPS-155172 - Verify if Raylife AP can be created
+
 	}
 
 }

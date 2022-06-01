@@ -6,22 +6,30 @@ definition {
 	property testray.main.component.name = "Staging";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Setup: Setup portal instance and login to portal") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Setup: Add a group with the name Site Name") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+		task ("Setup: Add a public layout to the group") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+		}
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "true",
-			branchingPublic = "true",
-			groupName = "Site Name");
+		task ("Setup: Activate local live staging and open staging Site") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Site Name");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -35,20 +43,26 @@ definition {
 		}
 	}
 
+	@description = "Verify if is possible add an event that repeats daily."
 	@priority = "4"
 	test AddEventRepeatDaily {
-		Staging.addRepeatEvent(
-			frequency = "Daily",
-			scheduleTitleName = "Event Daily Name",
-			siteName = "Site Name",
-			startOnTomorrow = "true");
+		task ("When: I add a daily repeating event") {
+			Staging.addRepeatEvent(
+				frequency = "Daily",
+				scheduleTitleName = "Event Daily Name",
+				siteName = "Site Name",
+				startOnTomorrow = "true");
+		}
 
-		Staging.viewRepeatingEventDetails(
-			endDate = "No End Date",
-			scheduleTitleName = "Event Daily Name",
-			siteName = "site-name-staging");
+		task ("Then: It is possible to see that this event will be repeated every day") {
+			Staging.viewRepeatingEventDetails(
+				endDate = "No End Date",
+				scheduleTitleName = "Event Daily Name",
+				siteName = "site-name-staging");
+		}
 	}
 
+	@description = "Verify is possible add a page variation."
 	@priority = "5"
 	test AddPageVariation {
 		property portal.acceptance = "true";
@@ -56,150 +70,186 @@ definition {
 		property test.name.skip.portal.instance = "PGStagingWithVersioning#AddPageVariation";
 		property testray.component.names = "Training";
 
-		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
+		task ("Given: I add the page variation") {
+			Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+			Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
+			Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		task ("When: I go to pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Staging Test Page");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Staging Test Page");
+		}
 
-		PagesAdmin.addLocalizedFriendlyURL(
-			friendlyURLLocalizedList = "de-DE",
-			localizedFriendlyURLList = "/german",
-			localizedNameList = "German Staging Test Page");
+		task ("And when: I add a friendly localized and URL") {
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyURLLocalizedList = "de-DE",
+				localizedFriendlyURLList = "/german",
+				localizedNameList = "German Staging Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		}
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Staging Test Page");
+		task ("Then: Is possible see that configuration on created page") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Staging Test Page");
 
-		PagesAdmin.viewFriendlyURL(
-			localizedFriendlyURL = "de-DE",
-			pageName = "german");
+			PagesAdmin.viewFriendlyURL(
+				localizedFriendlyURL = "de-DE",
+				pageName = "german");
+		}
 	}
 
+	@description = "Verify is possible add page with versioning enabled."
 	@priority = "5"
 	test AddPageWithPageVersioningEnabled {
 		property portal.acceptance = "true";
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		task ("Given: I have a page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPage(pageName = "Staging Page Versioning");
+			PagesAdmin.addPage(pageName = "Staging Page Versioning");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Page Versioning",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Page Versioning",
+				siteName = "Site Name");
 
-		Portlet.addPG(portletName = "IFrame");
+			Portlet.addPG(portletName = "IFrame");
+		}
 
-		Staging.markAsReadyForPublication();
+		task ("when: publish it for live") {
+			Staging.markAsReadyForPublication();
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+			Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive();
+			Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Page Versioning",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Page Versioning",
+				siteName = "Site Name");
+		}
 
-		Portlet.viewSpecificPG(portletName = "IFrame");
+		task ("Then: Its possible to see that page with versioning enabled") {
+			Portlet.viewSpecificPG(portletName = "IFrame");
+		}
 	}
 
+	@description = "Verify is possible add site pages variation."
 	@priority = "5"
 	test AddSitePagesVariation {
 		property portal.acceptance = "true";
 
-		Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+		task ("Give: I add a site page variation") {
+			Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+		}
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+		task ("When: I go to Publish To Live screen") {
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+		}
 
-		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+		task ("Then: I can see the site page variation there") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+		}
 	}
 
-	@description = "This is a use case for LPS-123156"
+	@description = "This is a use case for LPS-123156. Verify is possible see the variation info on Staging."
 	@priority = "4"
 	test AssertStagingVariationInfo {
-		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
+		task ("Given: I have Site Page Variation") {
+			Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
 
-		MouseOver(
-			key_tooltipInfo = "Page variations allow you to work in parallel in different versions of the same page inside this pages variation. When publishing to live, the version marked as ready to publish is the one that is processed.",
-			locator1 = "Staging#STAGING_TOOLTIP");
+			MouseOver(
+				key_tooltipInfo = "Page variations allow you to work in parallel in different versions of the same page inside this pages variation. When publishing to live, the version marked as ready to publish is the one that is processed.",
+				locator1 = "Staging#STAGING_TOOLTIP");
 
-		AssertVisible(
-			key_content = "Page variations allow you to work in parallel in different versions of the same page inside this pages variation. When publishing to live, the version marked as ready to publish is the one that is processed.",
-			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			AssertVisible(
+				key_content = "Page variations allow you to work in parallel in different versions of the same page inside this pages variation. When publishing to live, the version marked as ready to publish is the one that is processed.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
-		Staging.addSitePagesVariationPG(
-			copySitePagesVariationName = "All Site Pages Variations",
-			sitePagesVariationName = "Site Pages Variation Name");
+			Staging.addSitePagesVariationPG(
+				copySitePagesVariationName = "All Site Pages Variations",
+				sitePagesVariationName = "Site Pages Variation Name");
+		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+		task ("And given: I have a child page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addChildPage(
-			childPageName = "Child Page",
-			parentPageName = "Staging Test Page");
+			PagesAdmin.addChildPage(
+				childPageName = "Child Page",
+				parentPageName = "Staging Test Page");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+			Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
+			Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
 
-		Staging.markAsReadyForPublication();
+			Staging.markAsReadyForPublication();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Child Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Child Page",
+				siteName = "Site Name");
 
-		Staging.addPageVariationPG(pageVariationName = "Child Page Variation Name");
+			Staging.addPageVariationPG(pageVariationName = "Child Page Variation Name");
+		}
 
-		Staging.gotoPublishToLive();
+		task ("When: I go to Publish To Live screen") {
+			Staging.gotoPublishToLive();
+		}
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
-			value1 = "Switch to Advanced Publish Process");
+		task ("Then: I can assert that the information appears there") {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
+				value1 = "Switch to Advanced Publish Process");
 
-		MouseOver(
-			key_tooltipInfo = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.",
-			locator1 = "Staging#STAGING_TOOLTIP");
+			MouseOver(
+				key_tooltipInfo = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.",
+				locator1 = "Staging#STAGING_TOOLTIP");
 
-		AssertVisible(
-			key_content = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.",
-			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			AssertVisible(
+				key_content = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
-		Staging.viewVariationTooltipMessage(
-			pageName = "Staging Test Page",
-			title = "This is the page variation that is marked as ready for publish process.");
+			Staging.viewVariationTooltipMessage(
+				pageName = "Staging Test Page",
+				title = "This is the page variation that is marked as ready for publish process.");
 
-		Staging.viewVariationTooltipMessage(
-			pageName = "Child Page",
-			title = "There is not a version of this page marked as ready for publish process.");
+			Staging.viewVariationTooltipMessage(
+				pageName = "Child Page",
+				title = "There is not a version of this page marked as ready for publish process.");
+		}
 	}
 
-	@description = "This is a use case for LPS-123156"
+	@description = "This is a use case for LPS-123156. Verify is possible see the variation info on publish screen."
 	@priority = "4"
 	test AssertVariationInfoInPublishScreen {
-		Staging.addSitePagesVariationPG(
-			copySitePagesVariationName = "All Site Pages Variations",
-			sitePagesVariationName = "Site Pages Variation Name");
+		task ("Given: I add a Site Page Variation") {
+			Staging.addSitePagesVariationPG(
+				copySitePagesVariationName = "All Site Pages Variations",
+				sitePagesVariationName = "Site Pages Variation Name");
 
-		Staging.markAsReadyForPublication();
+			Staging.markAsReadyForPublication();
+		}
 
-		Staging.gotoPublishToLive();
+		task ("When: I go to Publish To Live screen") {
+			Staging.gotoPublishToLive();
+		}
 
-		SelectFrame(
-			key_title = "Publish Site Pages Variation Name to Live.",
-			locator1 = "StagingPublishToLive#MODAL_TITLE");
+		task ("Then: I can assert that the information appears there") {
+			SelectFrame(
+				key_title = "Publish Site Pages Variation Name to Live.",
+				locator1 = "StagingPublishToLive#MODAL_TITLE");
 
-		AssertTextEquals(
-			locator1 = "StagingPublishToLive#MODAL_TITLE",
-			value1 = "Publish Site Pages Variation Name to Live.");
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#MODAL_TITLE",
+				value1 = "Publish Site Pages Variation Name to Live.");
+		}
 	}
 
 }

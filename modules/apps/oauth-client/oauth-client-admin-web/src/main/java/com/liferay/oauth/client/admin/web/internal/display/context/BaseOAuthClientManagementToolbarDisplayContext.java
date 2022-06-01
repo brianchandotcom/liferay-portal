@@ -100,6 +100,9 @@ public abstract class BaseOAuthClientManagementToolbarDisplayContext {
 			portletURL.setParameter("delta", String.valueOf(delta));
 		}
 
+		portletURL.setParameter(
+			"navigation",
+			ParamUtil.getString(liferayPortletRequest, "navigation"));
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 

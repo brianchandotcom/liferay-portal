@@ -56,8 +56,10 @@
 
 		<!-- Other fields -->
 
+		<column db-name="accountERObjectFieldId" name="accountEntryRestrictionObjectFieldId" type="long" />
 		<column name="descriptionObjectFieldId" type="long" />
 		<column name="titleObjectFieldId" type="long" />
+		<column name="accountEntryRestriction" type="boolean" />
 		<column name="active" type="boolean" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />

@@ -190,7 +190,7 @@ describe('Analytics', () => {
 		}, FLUSH_INTERVAL * 2);
 	});
 
-	it('not replace the user id whenever the set identity hash is changed', async () => {
+	it('replace the user id whenever the set identity hash is changed', async () => {
 		fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
 		fetchMock.mock(/identity$/, () => Promise.resolve(200));
 
@@ -204,6 +204,27 @@ describe('Analytics', () => {
 		await Analytics.setIdentity({
 			email: 'brian@liferay.com',
 			name: 'Brian',
+		});
+
+		const secondUserId = getItem(STORAGE_KEY_USER_ID);
+
+		expect(firstUserId).not.toEqual(secondUserId);
+	});
+
+	it('does not replace the user id whenever the set identity hash is the same', async () => {
+		fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
+		fetchMock.mock(/identity$/, () => Promise.resolve(200));
+
+		await Analytics.setIdentity({
+			email: 'john@liferay.com',
+			name: 'John',
+		});
+
+		const firstUserId = getItem(STORAGE_KEY_USER_ID);
+
+		await Analytics.setIdentity({
+			email: 'john@liferay.com',
+			name: 'John',
 		});
 
 		const secondUserId = getItem(STORAGE_KEY_USER_ID);

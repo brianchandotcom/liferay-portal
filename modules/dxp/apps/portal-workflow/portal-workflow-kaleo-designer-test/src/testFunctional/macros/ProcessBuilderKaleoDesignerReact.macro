@@ -161,10 +161,12 @@ definition {
 			locator2 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL",
 			nodeLabel = "${nodeLabel}");
 
-		DragAndDrop.dragAndDrop(
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
-			nodeLabel = "${nodeLabel}",
-			value1 = "${nodePosition}");
+		if (isSet(nodePosition)) {
+			DragAndDrop.dragAndDrop(
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
+				nodeLabel = "${nodeLabel}",
+				value1 = "${nodePosition}");
+		}
 	}
 
 	macro editConnector {
@@ -764,12 +766,26 @@ definition {
 	}
 
 	macro viewNodeInfo {
+		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
+
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
 
 		if (isSet(labelValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeLabel",
 				key_infoValue = "${labelValue}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
+		}
+
+		if (isSet(defaultIdValue)) {
+			AssertElementPresent(
+				key_infoOption = "nodeId",
+				key_infoValue = "${nodeIdValue}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
+
+			AssertElementNotPresent(
+				key_infoOption = "nodeId",
+				key_infoValue = "",
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 

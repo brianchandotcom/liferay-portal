@@ -197,6 +197,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_ID_GETTER</td>
+	<td>//input[@id='nodeId']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_INPUT</td>
 	<td>//label[contains(., '${key_inputOption}')]/..//input</td>
 	<td></td>

@@ -80,8 +80,6 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(NotificationQueueEntryResourceImpl.class);
-
 			add(NotificationTemplateResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

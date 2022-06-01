@@ -15,7 +15,6 @@
 package com.liferay.notification.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
-import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -46,50 +45,12 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setNotificationQueueEntryResourceComponentServiceObjects(
-		ComponentServiceObjects<NotificationQueueEntryResource>
-			notificationQueueEntryResourceComponentServiceObjects) {
-
-		_notificationQueueEntryResourceComponentServiceObjects =
-			notificationQueueEntryResourceComponentServiceObjects;
-	}
-
 	public static void setNotificationTemplateResourceComponentServiceObjects(
 		ComponentServiceObjects<NotificationTemplateResource>
 			notificationTemplateResourceComponentServiceObjects) {
 
 		_notificationTemplateResourceComponentServiceObjects =
 			notificationTemplateResourceComponentServiceObjects;
-	}
-
-	@GraphQLField
-	public boolean deleteNotificationQueueEntry(
-			@GraphQLName("notificationQueueEntryId") Long
-				notificationQueueEntryId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_notificationQueueEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationQueueEntryResource ->
-				notificationQueueEntryResource.deleteNotificationQueueEntry(
-					notificationQueueEntryId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteNotificationQueueEntryBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_notificationQueueEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationQueueEntryResource ->
-				notificationQueueEntryResource.
-					deleteNotificationQueueEntryBatch(callbackURL, object));
 	}
 
 	@GraphQLField
@@ -232,26 +193,6 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			NotificationQueueEntryResource notificationQueueEntryResource)
-		throws Exception {
-
-		notificationQueueEntryResource.setContextAcceptLanguage(
-			_acceptLanguage);
-		notificationQueueEntryResource.setContextCompany(_company);
-		notificationQueueEntryResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		notificationQueueEntryResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		notificationQueueEntryResource.setContextUriInfo(_uriInfo);
-		notificationQueueEntryResource.setContextUser(_user);
-		notificationQueueEntryResource.setGroupLocalService(_groupLocalService);
-		notificationQueueEntryResource.setRoleLocalService(_roleLocalService);
-
-		notificationQueueEntryResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
-	}
-
-	private void _populateResourceContext(
 			NotificationTemplateResource notificationTemplateResource)
 		throws Exception {
 
@@ -270,8 +211,6 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
-	private static ComponentServiceObjects<NotificationQueueEntryResource>
-		_notificationQueueEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NotificationTemplateResource>
 		_notificationTemplateResourceComponentServiceObjects;
 

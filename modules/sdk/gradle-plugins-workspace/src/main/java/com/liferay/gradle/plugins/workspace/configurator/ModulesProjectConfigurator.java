@@ -131,8 +131,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
-			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
-			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
+
+			if (FileUtil.exists(project, "rest-config.yaml")) {
+				GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
+			}
+
+			if (FileUtil.exists(project, "service.xml")) {
+				GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
+			}
+
 			GradleUtil.applyPlugin(project, SoyPlugin.class);
 			GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
 			GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);

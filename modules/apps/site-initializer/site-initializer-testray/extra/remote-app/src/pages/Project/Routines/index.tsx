@@ -17,7 +17,7 @@ import {useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import {getRoutines} from '../../../graphql/queries';
+import {getCaseTypes, getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {getTimeFromNow} from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -36,6 +36,29 @@ const Routines = () => {
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					filterFields: [
+						{
+							label: 'Priority',
+							name: 'priority',
+							options: ['1', '2', '3', '4', '5'],
+							type: 'checkbox',
+						},
+						{
+							gqlQuery: getCaseTypes,
+							label: 'Case Type',
+							name: 'caseType',
+							transformData(item) {
+								return item?.c.caseTypes?.items || [];
+							},
+							type: 'multiselect',
+						},
+						{
+							label: 'Team',
+							name: 'team',
+							options: [{label: 'Staging', value: 'staging'}],
+							type: 'select',
+						},
+					],
 				}}
 				query={getRoutines}
 				tableProps={{

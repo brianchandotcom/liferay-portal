@@ -57,7 +57,36 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 			}}
 			managementToolbarProps={{
 				addButton: () => navigate(`create`, {state: {back: pathname}}),
-				visible: true,
+				filterFields: [
+					{
+						label: 'Priority',
+						name: 'priority',
+						options: ['1', '2', '3', '4', '5'],
+						type: 'checkbox',
+					},
+					{
+						label: 'Case Type',
+						name: 'caseType',
+						options: [{label: 'Staging', value: 'staging'}],
+						type: 'select',
+					},
+					{
+						label: 'Case Name',
+						name: 'caseName',
+						type: 'text',
+					},
+					{
+						label: 'Team',
+						name: 'team',
+						options: [{label: 'Solutions', value: 'solutions'}],
+						type: 'select',
+					},
+					{
+						label: 'Component',
+						name: 'component',
+						type: 'text',
+					},
+				],
 			}}
 			query={getCases}
 			tableProps={{

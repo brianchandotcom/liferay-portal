@@ -2,15 +2,14 @@
 	"dependencies": {
 		"@types/codemirror": "^5.60.5",
 		"codemirror": "^5.59.0",
-		"frontend-js-components-web": "*",
 		"text-mask-core": "^5.1.2"
 	},
-	"name": "@liferay/object-web",
+	"name": "@liferay/notification-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.77"
+	"version": "1.0.2"
 }

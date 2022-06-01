@@ -177,7 +177,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="moveCategory" var="moveCategoryURL">
+<portlet:actionURL name="/asset_categories_admin/move_asset_category" var="moveCategoryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:actionURL>

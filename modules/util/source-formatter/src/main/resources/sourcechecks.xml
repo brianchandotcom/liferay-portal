@@ -1267,9 +1267,17 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `imported-files.properties` file." />
 		</check>
+		<check name="PropertiesLanguageKeysCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there is no HTML markup in language keys." />
+		</check>
 		<check name="PropertiesLanguageKeysOrderCheck">
 			<category name="Styling" />
 			<description name="Sort language keys in `Language.properties` file." />
+		</check>
+		<check name="PropertiesLanguageStylingCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="PropertiesLiferayPluginPackageFileCheck">
 			<category name="Bug Prevention" />
@@ -1327,10 +1335,6 @@
 		<check name="PropertiesBuildIncludeDirsCheck">
 			<category name="Bug Prevention" />
 			<description name="Verifies property value of `build.include.dirs` in `build.properties`." />
-		</check>
-		<check name="PropertiesLanguageKeysCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks that there is no HTML markup in language keys." />
 		</check>
 		<check name="PropertiesReleaseBuildCheck">
 			<category name="Bug Prevention" />

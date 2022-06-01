@@ -1371,9 +1371,16 @@ public class PortalImpl implements Portal {
 				pos = completeURL.indexOf(urlSeparator);
 
 				if (pos != -1) {
-					includeParametersURL = true;
+					if (StringUtil.contains(
+							layout.getFriendlyURL(), urlSeparator)) {
 
-					break;
+						pos = -1;
+					}
+					else {
+						includeParametersURL = true;
+
+						break;
+					}
 				}
 			}
 

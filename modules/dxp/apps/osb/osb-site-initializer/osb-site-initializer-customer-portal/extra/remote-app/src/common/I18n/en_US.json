@@ -319,5 +319,8 @@
 	"your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.",
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
-	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details."
+	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"thank-you-for-submitting-this-request-your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Thank you for submitting this request! Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.",
+	"we-ll-need-a-few-details-to-finish-building-your-dxp-environment-s": "We’ll need a few details to finish building your DXP environment(s).",
+	"thank-you-for-submitting-this-request-your-dxp-cloud-project-will-be-provisioned-in-2-3-business-days-at-that-time-dxp-cloud-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-dxp-cloud-environments-and-tools-included-in-your-subscription": "Thank you for submitting this request! Your DXP Cloud project will be provisioned in 2-3 business days. At that time, DXP Cloud Administrators will receive several onboarding emails, giving them access to all the DXP Cloud environments and tools included in your subscription."
 }

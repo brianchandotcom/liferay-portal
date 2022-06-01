@@ -9,26 +9,29 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import Layout from '../../../../common/containers/setup-forms/Layout';
 import {PRODUCT_TYPES} from '../../../customer-portal/utils/constants/productTypes';
 
 const successTexts = {
 	[PRODUCT_TYPES.analyticsCloud]: {
-		helper:
-			'We’ll need a few details to finish building your Analytics Cloud workspace(s).',
-		paragraph: `Thank you for submitting this request! Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.`,
-		title: 'Set up Analytics Cloud',
+		helper: i18n.translate(
+			'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace-s'
+		),
+		paragraph: i18n.translate(
+			'thank-you-for-submitting-this-request-your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready'
+		),
+		title: i18n.translate('set-up-analytics-cloud'),
 	},
 	[PRODUCT_TYPES.dxpCloud]: {
-		helper:
-			'We’ll need a few details to finish building your DXP environment(s).',
-		paragraph: `Thank you for submitting this request! Your DXP Cloud project
-			will be provisioned in 2-3 business days. At that time, DXP
-			Cloud Administrators will receive several onboarding emails,
-			giving them access to all the DXP Cloud environments and tools
-			included in your subscription.`,
-		title: 'Set up DXP Cloud',
+		helper: i18n.translate(
+			'we-ll-need-a-few-details-to-finish-building-your-dxp-environment-s'
+		),
+		paragraph: i18n.translate(
+			'thank-you-for-submitting-this-request-your-dxp-cloud-project-will-be-provisioned-in-2-3-business-days-at-that-time-dxp-cloud-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-dxp-cloud-environments-and-tools-included-in-your-subscription'
+		),
+		title: i18n.translate('set-up-dxp-cloud'),
 	},
 };
 
@@ -38,7 +41,7 @@ const SuccessCloud = ({handlePage, productType}) => {
 			footerProps={{
 				middleButton: (
 					<Button displayType="primary" onClick={handlePage}>
-						Done
+						{i18n.translate('done')}
 					</Button>
 				),
 			}}

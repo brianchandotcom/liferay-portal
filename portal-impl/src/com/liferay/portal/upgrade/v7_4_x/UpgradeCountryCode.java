@@ -32,11 +32,11 @@ public class UpgradeCountryCode extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
+			"update Country set idd_ = '242', name = 'congo' where a2 = 'CG'");
+		runSQL(
 			"update Country set idd_ = '243', name = " +
 				"'democratic-republic-of-congo' where a2 = 'CD'");
-		runSQL(
-			"update Country set idd_ = '242', name = 'republic-of-congo' " +
-				"where a2 = 'CG'");
+		runSQL("update Country set name = 'republic-of-congo' where a2 = 'CG'");
 
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(

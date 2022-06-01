@@ -92,6 +92,10 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			editableValuesJSONObject.getJSONObject(
 				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
+		if (editableProcessorJSONObject == null) {
+			return editableValuesJSONObject;
+		}
+
 		Iterator<String> editableKeysIterator =
 			editableProcessorJSONObject.keys();
 

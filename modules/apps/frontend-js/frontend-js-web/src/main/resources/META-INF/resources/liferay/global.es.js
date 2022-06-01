@@ -17,6 +17,7 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import unescape from 'lodash.unescape';
 
+import Cookie from './Cookie';
 import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
 import {
@@ -343,5 +344,7 @@ Liferay.Util.toggleRadio = toggleRadio;
 Liferay.Util.toggleSelectBox = toggleSelectBox;
 Liferay.Util.unescape = unescape;
 Liferay.Util.unescapeHTML = unescapeHTML;
+
+Liferay.Util.Cookie = Cookie;
 
 export {portlet};

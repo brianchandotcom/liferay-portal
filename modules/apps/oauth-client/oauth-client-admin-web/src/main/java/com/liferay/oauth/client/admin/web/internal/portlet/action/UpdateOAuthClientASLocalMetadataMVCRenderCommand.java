@@ -52,8 +52,6 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 		String localWellKnownURI = ParamUtil.getString(
 			renderRequest, "localWellKnownURI");
 
-		String metadataJSON = _METADATA_TEMPLATE;
-
 		if (Validator.isNotNull(localWellKnownURI)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -64,10 +62,9 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 						getOAuthClientASLocalMetadata(
 							themeDisplay.getCompanyId(), localWellKnownURI);
 
-				metadataJSON = oAuthClientASLocalMetadata.getMetadataJSON();
-
 				renderRequest.setAttribute(
-					"localWellKnownURI", localWellKnownURI);
+					OAuthClientASLocalMetadata.class.getName(),
+					oAuthClientASLocalMetadata);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -76,14 +73,8 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 			}
 		}
 
-		renderRequest.setAttribute("metadataJSON", metadataJSON);
-
 		return "/admin/update_oauth_client_as_local_metadata.jsp";
 	}
-
-	private static final String _METADATA_TEMPLATE =
-		"{\"issuer\":\"\",\"authorization_endpoint\":\"\"," +
-			"\"token_endpoint\":\"\",\"userinfo_endpoint\":\"\"}";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateOAuthClientASLocalMetadataMVCRenderCommand.class);

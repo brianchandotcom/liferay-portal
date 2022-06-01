@@ -19,24 +19,13 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String localWellKnownURI = (String)SessionErrors.get(renderRequest, "localWellKnownURI");
-
-if (Validator.isNull(localWellKnownURI)) {
-	localWellKnownURI = ParamUtil.getString(request, "localWellKnownURI");
-}
-
-String metadataJSON = (String)SessionErrors.get(renderRequest, "metadataJSON");
-
-if (Validator.isNull(metadataJSON)) {
-	metadataJSON = (String)request.getAttribute("metadataJSON");
-}
+OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client_as_local_metadata" var="updateOAuthClientASLocalMetadataURL">
-	<portlet:param name="backURL" value='<%= redirect %>' />
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_as_local_metadata" />
 	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
@@ -44,16 +33,18 @@ portletDisplay.setURLBack(redirect);
 <aui:form action="<%= updateOAuthClientASLocalMetadataURL %>" id="oauth-client-as-fm" method="post" name="oauth-client-as-fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
+	<aui:model-context bean="<%= oAuthClientASLocalMetadata %>" model="<%= OAuthClientASLocalMetadata.class %>" />
+
 	<clay:container-fluid
 		cssClass="container-view"
 	>
 		<div class="sheet">
 			<aui:fieldset label="oauth-client-as-local-metadata">
-				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="oAuthClientASLocalWellKnowURI" readonly="true" value="<%= localWellKnownURI %>" />
+				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" />
 
-				<aui:input helpMessage="oauth-client-as-local-well-known-uri-suffix-help" label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" value="openid-configuration" />
+				<aui:input helpMessage="oauth-client-as-local-well-known-uri-suffix-help" label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />
 
-				<aui:input helpMessage="oauth-client-as-local-metadata-json-help" label="oauth-client-as-local-metadata-json" name="metadataJSON" style="min-height: 600px;" type="textarea" />
+				<aui:input helpMessage="oauth-client-as-local-metadata-json-help" label="oauth-client-as-local-metadata-json" name="metadataJSON" style="min-height: 600px;" type="textarea" value='{"issuer":"","authorization_endpoint":"","token_endpoint":"","userinfo_endpoint":""}' />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
@@ -92,8 +83,10 @@ portletDisplay.setURLBack(redirect);
 	}
 
 	function <portlet:namespace />init() {
-		document.getElementById(
+		var metadataJSON = document.getElementById(
 			'<portlet:namespace />metadataJSON'
-		).value = JSON.stringify(JSON.parse('<%= metadataJSON %>'), null, 4);
+		);
+
+		metadataJSON.value = JSON.stringify(JSON.parse(metadataJSON.value), null, 4);
 	}
 </aui:script>

@@ -82,30 +82,20 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 						metadataJSON, "openid-configuration");
 			}
 
-			actionResponse.setRenderParameter(
-				"localWellKnownURI",
-				oAuthClientASLocalMetadata.getLocalWellKnownURI());
+			return true;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.error(portalException);
+				_log.debug(portalException);
 			}
 
 			Class<?> peClass = portalException.getClass();
 
 			SessionErrors.add(
-				actionRequest, "localWellKnownURI", localWellKnownURI);
-
-			SessionErrors.add(actionRequest, "metadataJSON", metadataJSON);
-
-			SessionErrors.add(
 				actionRequest, peClass.getName(), portalException);
+
+			return false;
 		}
-
-		actionResponse.setRenderParameter(
-			"redirect", ParamUtil.getString(actionRequest, "backURL"));
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

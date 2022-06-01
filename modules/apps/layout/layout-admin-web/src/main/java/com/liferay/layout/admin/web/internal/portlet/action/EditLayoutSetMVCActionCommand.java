@@ -124,13 +124,17 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		long faviconClientExtensionEntryId = ParamUtil.getLong(
 			actionRequest, "faviconClientExtensionEntryId");
-		String faviconClientExtensionEntryType = ParamUtil.getString(
-			actionRequest, "faviconClientExtensionEntryType");
 
-		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			themeDisplay.getUserId(), _portal.getClassNameId(LayoutSet.class),
-			layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
-			faviconClientExtensionEntryType);
+		if (faviconClientExtensionEntryId > 0) {
+			String faviconClientExtensionEntryType = ParamUtil.getString(
+				actionRequest, "faviconClientExtensionEntryType");
+
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(),
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
+				faviconClientExtensionEntryType);
+		}
 	}
 
 	private void _updateLogo(

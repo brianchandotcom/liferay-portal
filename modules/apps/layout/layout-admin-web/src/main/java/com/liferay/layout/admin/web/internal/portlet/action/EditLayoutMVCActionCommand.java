@@ -133,6 +133,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			String faviconClientExtensionEntryType = ParamUtil.getString(
 				uploadPortletRequest, "faviconClientExtensionEntryType");
 
+			long themeCSSExtensionEntryId = ParamUtil.getLong(
+				actionRequest, "themeCSSExtensionEntryId");
+			String themeCSSExtensionEntryType = ParamUtil.getString(
+				actionRequest, "themeCSSExtensionEntryType");
+
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
@@ -167,10 +172,20 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
 				faviconFileEntryId, masterLayoutPlid, serviceContext);
 
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), faviconClientExtensionEntryId,
-				faviconClientExtensionEntryType);
+			if (faviconClientExtensionEntryId > 0) {
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					themeDisplay.getUserId(),
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					faviconClientExtensionEntryId,
+					faviconClientExtensionEntryType);
+			}
+
+			if (themeCSSExtensionEntryId > 0) {
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					themeDisplay.getUserId(),
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					themeCSSExtensionEntryId, themeCSSExtensionEntryType);
+			}
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(

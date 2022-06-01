@@ -19,29 +19,7 @@
 	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_THEME_JS) %>"
 	id='<%= liferayPortletResponse.getNamespace() + "_fields_themeJS" %>'
 >
-	<div id="<portlet:namespace />_themeJSURLs_field">
-
-		<%
-		for (String themeJSURLs : editClientExtensionEntryDisplayContext.getThemeJSURLs()) {
-		%>
-
-			<div class="lfr-form-row">
-				<aui:input ignoreRequestValue="<%= true %>" label="url" name="themeJSURLs" type="text" value="<%= themeJSURLs %>">
-					<aui:validator name="urlAllowRelative" />
-				</aui:input>
-			</div>
-
-		<%
-		}
-		%>
-
-	</div>
+	<aui:input ignoreRequestValue="<%= true %>" label="url" name="themeJSURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getThemeJSURL() %>">
+		<aui:validator name="urlAllowRelative" />
+	</aui:input>
 </liferay-frontend:fieldset>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />_themeJSURLs_field',
-		minimumRows: 1,
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>

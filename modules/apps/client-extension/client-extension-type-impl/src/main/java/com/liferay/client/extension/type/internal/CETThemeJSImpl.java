@@ -17,9 +17,7 @@ package com.liferay.client.extension.type.internal;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CETThemeJS;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Properties;
@@ -43,10 +41,7 @@ public class CETThemeJSImpl extends BaseCETImpl implements CETThemeJS {
 			UnicodePropertiesBuilder.create(
 				false
 			).put(
-				"urls",
-				StringUtil.merge(
-					ParamUtil.getStringValues(portletRequest, "themeJSURLs"),
-					StringPool.NEW_LINE)
+				"url", ParamUtil.getString(portletRequest, "themeJSURL")
 			).buildString());
 	}
 
@@ -70,8 +65,8 @@ public class CETThemeJSImpl extends BaseCETImpl implements CETThemeJS {
 	}
 
 	@Override
-	public String getURLs() {
-		return getString("urls");
+	public String getURL() {
+		return getString("url");
 	}
 
 }

@@ -22,6 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CETThemeJS extends CET {
 
-	public String getURLs();
+	public String getURL();
 
 }

@@ -277,21 +277,11 @@ public class EditClientExtensionEntryDisplayContext {
 		return cetThemeFavicon.getURL();
 	}
 
-	public String[] getThemeJSURLs() {
+	public String getThemeJSURL() {
 		CETThemeJS cetThemeJS = _getCETThemeJS();
 
-		String urlsString = cetThemeJS.getURLs();
-
-		String[] themeJSURLs = urlsString.split(StringPool.NEW_LINE);
-
-		themeJSURLs = ParamUtil.getStringValues(
-			_portletRequest, "themeJSURLs", themeJSURLs);
-
-		if (themeJSURLs.length == 0) {
-			themeJSURLs = new String[1];
-		}
-
-		return themeJSURLs;
+		return ParamUtil.getString(
+			_portletRequest, "themeJSURL", cetThemeJS.getURL());
 	}
 
 	public String getTitle() {

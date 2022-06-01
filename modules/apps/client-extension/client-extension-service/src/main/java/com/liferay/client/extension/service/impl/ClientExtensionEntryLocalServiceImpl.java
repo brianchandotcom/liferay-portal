@@ -508,7 +508,7 @@ public class ClientExtensionEntryLocalServiceImpl
 				clientExtensionEntry);
 
 			workflowContext = Collections.singletonMap(
-				WorkflowConstants.CONTEXT_URL, cetThemeJS.getURLs());
+				WorkflowConstants.CONTEXT_URL, cetThemeJS.getURL());
 		}
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(

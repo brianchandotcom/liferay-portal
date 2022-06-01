@@ -763,36 +763,6 @@
 				'input[type=checkbox]'
 			);
 		},
-
-		toggleSelectBox(selectBoxId, value, toggleBoxId) {
-			var selectBox = document.getElementById(selectBoxId);
-			var toggleBox = document.getElementById(toggleBoxId);
-
-			if (selectBox && toggleBox) {
-				var dynamicValue = typeof value === 'function';
-
-				var toggle = function () {
-					var currentValue = selectBox.value;
-
-					var visible = value === currentValue;
-
-					if (dynamicValue) {
-						visible = value(currentValue, value);
-					}
-
-					if (visible) {
-						toggleBox.classList.remove('hide');
-					}
-					else {
-						toggleBox.classList.add('hide');
-					}
-				};
-
-				toggle();
-
-				selectBox.addEventListener('change', toggle);
-			}
-		},
 	};
 
 	Liferay.provide(

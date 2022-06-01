@@ -452,6 +452,153 @@ definition {
 		}
 	}
 
+	@description = "Verify the order date formats shown in the Placed Orders list and details pages are localized."
+	@priority = "3"
+	test LocalDateFormat {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property osgi.module.configuration.file.names = "com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration.config";
+		property osgi.module.configurations = "showCommerceOrderCreateTime=&quot;false&quot;";
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a Language Selector widget is added to the Catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/catalog");
+
+			Portlet.addPGCmd(portletName = "Language Selector");
+		}
+
+		task ("And given the buyer has placed an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("And given the buyer changes the language to Hungarian") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "hu-HU",
+				textIcon = "magyar-Magyarország");
+		}
+
+		task ("When the buyer views the order from the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the order date is shown in yyyy.MM.dd. format") {
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy.MM.dd.", "UTC");
+
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("When the buyer views the order from the placed orders details page") {
+			Button.click(button = "Megtekintés");
+		}
+
+		task ("Then the order date is shown in yyyy.MM.dd. format") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("Given the buyer changes the language to German") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "de-DE",
+				textIcon = "deutsch-Deutschland");
+		}
+
+		task ("When the buyer views the order from the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the order date is shown in dd.MM.yyyy format") {
+			var currentDate = DateUtil.getFormattedCurrentDate("dd.MM.yyyy", "UTC");
+
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("When the buyer views the order from the placed orders details page") {
+			Button.click(button = "Aufruf");
+		}
+
+		task ("Then the order date is shown in dd.MM.yyyy format") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("Given the buyer changes the language to English") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "en_US",
+				textIcon = "english-United States");
+		}
+
+		task ("When the buyer views the order from the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the order date is shown in MMM d, yyyy format") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
+
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("When the buyer views the order from the placed orders details page") {
+			Button.click(button = "View");
+		}
+
+		task ("Then the order date is shown in MMM d, yyyy format") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+	}
+
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
 	@priority = "3"
 	test ReorderFromPlacedOrdersDetailsPage {

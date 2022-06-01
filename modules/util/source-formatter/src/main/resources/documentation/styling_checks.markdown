@@ -126,6 +126,7 @@ PropertiesDefinitionKeysCheck | .eslintignore, .prettierignore or .properties | 
 PropertiesDependenciesFileCheck | .eslintignore, .prettierignore or .properties | Sorts the properties in `dependencies.properties` file. |
 PropertiesEmptyLinesCheck | .eslintignore, .prettierignore or .properties | Finds missing and unnecessary empty lines. |
 PropertiesLanguageKeysOrderCheck | .eslintignore, .prettierignore or .properties | Sort language keys in `Language.properties` file. |
+PropertiesLanguageStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
 PropertiesLongLinesCheck | .eslintignore, .prettierignore or .properties | Finds lines that are longer than the specified maximum line length. |
 PropertiesMultiLineValuesOrderCheck | .eslintignore, .prettierignore or .properties | Verifies that property with multiple values is not on a single line. |
 PropertiesSQLStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |

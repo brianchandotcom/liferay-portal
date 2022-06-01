@@ -12,6 +12,7 @@ PropertiesEnvironmentVariablesCheck | [Documentation](documentation_checks.markd
 PropertiesImportedFilesContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `imported-files.properties` file. |
 [PropertiesLanguageKeysCheck](check/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there is no HTML markup in language keys. |
 PropertiesLanguageKeysOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sort language keys in `Language.properties` file. |
+PropertiesLanguageStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
 PropertiesLiferayPluginPackageFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `liferay-plugin-package.properties` file. |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the version in `liferay-plugin-package.properties` file. |
 PropertiesLongLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds lines that are longer than the specified maximum line length. |

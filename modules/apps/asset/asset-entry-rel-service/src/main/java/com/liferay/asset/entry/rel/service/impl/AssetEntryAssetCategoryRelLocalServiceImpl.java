@@ -22,6 +22,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -236,11 +238,16 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 			Object assetObject = assetRenderer.getAssetObject();
 
-			if (assetObject == null) {
-				return;
+			if (assetObject instanceof BaseModel) {
+				indexer.reindex(assetObject);
 			}
+			else if (assetObject instanceof ClassedModel) {
+				ClassedModel classedModel = (ClassedModel)assetObject;
 
-			indexer.reindex(assetObject);
+				indexer.reindex(
+					assetEntry.getClassName(),
+					(Long)classedModel.getPrimaryKeyObj());
+			}
 		}
 		catch (SearchException searchException) {
 			_log.error("Unable to reindex asset entry", searchException);

@@ -113,9 +113,8 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-10257 | Test Summary: Assert total amount of views in all cards"
-	@ignore = "true"
-	@priority = "4"
+	@description = "Bug: LRAC-10257 | Automation ID: LRAC-10257 | Test Summary: Assert total amount of views in all cards"
+	@priority = "5"
 	test AssertTotalAmountOfViewsInAllCards {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -142,13 +141,15 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
+			TestUtils.hardRefresh();
+
 			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Asset views for 24 hours") {
@@ -163,20 +164,12 @@ definition {
 			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 		}
 
-		task ("Get views value") {
-			var current = ACSettings.getCurrentNumber(metricName = "Views");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
 		task ("Assert views by location") {
-			var country = ACUtils.getIPCountry();
+			var current = ACSettings.getCurrentNumber(metricName = "Views");
 
 			ACCards.viewGeomapTableText(
 				cardTitle = "Sessions by Location",
-				leftText = "${country}",
+				leftText = "Local Network",
 				rightText = "${current} 100%");
 		}
 

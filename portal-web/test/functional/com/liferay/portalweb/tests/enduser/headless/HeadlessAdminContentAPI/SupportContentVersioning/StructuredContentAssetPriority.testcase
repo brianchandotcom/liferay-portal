@@ -37,7 +37,7 @@ definition {
 	test StructuredContentDraftContainsModifiedPriorityValue {
 		property portal.acceptance = "true";
 
-		task ("Given in Headless Admin Content I create a structuredContent draft with with a priority field set") {
+		task ("Given in Headless Admin Content I create a structuredContent draft with a priority field set") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(

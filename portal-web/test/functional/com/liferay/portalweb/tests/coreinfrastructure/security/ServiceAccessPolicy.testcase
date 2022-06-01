@@ -1,8 +1,8 @@
 @component-name = "portal-security"
 definition {
 
-	property portal.release = "quarantine";
-	property portal.upstream = "quarantine";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Security";
 
 	setUp {
@@ -28,7 +28,7 @@ definition {
 	@priority = "5"
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ServiceAccessPolicy#ServiceAccessPolicySmoke";
 
 		task ("Assert access denied for viewing liferay email") {

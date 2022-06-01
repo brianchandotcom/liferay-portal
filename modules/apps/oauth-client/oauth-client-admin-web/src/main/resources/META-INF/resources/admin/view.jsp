@@ -21,8 +21,6 @@ String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-renderResponse.setTitle("OAuth Client Administration");
-
 portletDisplay.setURLBack(redirect);
 %>
 

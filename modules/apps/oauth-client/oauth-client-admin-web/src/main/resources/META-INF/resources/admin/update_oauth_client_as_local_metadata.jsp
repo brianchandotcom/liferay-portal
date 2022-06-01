@@ -23,6 +23,8 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(request, "new-oauth-client-as-local-metadata") : LanguageUtil.get(request, "edit-oauth-client-as-local-metadata"));
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client_as_local_metadata" var="updateOAuthClientASLocalMetadataURL">
@@ -39,7 +41,7 @@ portletDisplay.setURLBack(redirect);
 		cssClass="container-view"
 	>
 		<div class="sheet">
-			<aui:fieldset label="oauth-client-as-local-metadata">
+			<aui:fieldset>
 				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" />
 
 				<aui:input helpMessage="oauth-client-as-local-well-known-uri-suffix-help" label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />

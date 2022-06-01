@@ -35,10 +35,16 @@ public interface BatchEngineTaskCompanyConfiguration {
 	@Meta.AD(deflt = ",", name = "csv-file-column-delimiter", required = false)
 	public String csvFileColumnDelimiter();
 
-	@Meta.AD(deflt = "100", name = "export-batch-size", required = false)
+	@Meta.AD(
+		deflt = "100", description = "export-batch-size-description",
+		name = "export-batch-size", required = false
+	)
 	public int exportBatchSize();
 
-	@Meta.AD(deflt = "100", name = "import-batch-size", required = false)
+	@Meta.AD(
+		deflt = "100", description = "import-batch-size-description",
+		name = "import-batch-size", required = false
+	)
 	public int importBatchSize();
 
 }

@@ -12,22 +12,22 @@
  * details.
  */
 
-export {Input} from './core/components/Input';
-export {FieldBase} from './core/components/FieldBase';
-export {Card} from './core/components/Card/Card';
-export {InputLocalized} from './core/components/InputLocalized';
-export {CustomSelect} from './core/components/CustomSelect';
-export {FormCustomSelect, CustomItem} from './core/components/FormCustomSelect';
-export {AutoComplete} from './core/components/AutoComplete';
-export {CheckboxItem} from './core/components/CheckBoxItem';
-export {Select} from './core/components/Select';
-export {RichTextLocalized} from './core/components/RichTextLocalized/RichTextLocalized';
-export {Collapsible} from './core/components/Collapsible';
-export {Element} from './core/components/Element';
-export {EditorSidebar} from './core/components/EditorSideBar';
+export {AutoComplete} from './components/AutoComplete';
+export {Card} from './components/Card';
+export {CheckboxItem} from './components/CheckBoxItem';
+export {Collapsible} from './components/Collapsible';
+export {CustomSelect} from './components/CustomSelect';
+export {EditorSidebar} from './components/EditorSideBar';
+export {Element} from './components/Element';
+export {FieldBase} from './components/FieldBase';
+export {CustomItem, FormCustomSelect} from './components/FormCustomSelect';
+export {Input} from './components/Input';
+export {InputLocalized} from './components/InputLocalized';
+export {RichTextLocalized} from './components/RichTextLocalized';
+export {Select} from './components/Select';
 export {
-	SidePanelContent,
-	SidePanelForm,
 	closeSidePanel,
 	openToast,
-} from './core/components/SidePanelContent';
+	SidePanelContent,
+	SidePanelForm,
+} from './components/SidePanelContent';

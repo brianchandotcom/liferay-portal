@@ -23,7 +23,7 @@ import ClayLayout from '@clayui/layout';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FieldBase} from '../FieldBase';
+import {FieldBase} from './FieldBase';
 
 import './RichTextLocalized.scss';
 

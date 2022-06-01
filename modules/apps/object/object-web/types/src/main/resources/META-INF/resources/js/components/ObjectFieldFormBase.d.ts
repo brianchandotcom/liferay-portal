@@ -12,8 +12,8 @@
  * details.
  */
 
+import {FormError} from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, ReactNode} from 'react';
-import {FormError} from '../hooks/useForm';
 import './ObjectFieldFormBase.scss';
 export default function ObjectFieldFormBase({
 	children,

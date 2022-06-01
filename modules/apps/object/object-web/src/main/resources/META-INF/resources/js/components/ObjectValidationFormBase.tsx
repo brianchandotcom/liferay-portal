@@ -12,7 +12,12 @@
  * details.
  */
 
-import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
+import {
+	FormError,
+	invalidateRequired,
+	useForm,
+} from '@liferay/object-js-components-web';
+
 import {defaultLanguageId} from '../utils/locale';
 
 const REQUIRED_MSG = Liferay.Language.get('required');

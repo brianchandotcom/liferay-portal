@@ -12,8 +12,8 @@
  * details.
  */
 
+import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
-import {FormError} from '../../../hooks/useForm';
 export default function BasicInfo({
 	errors,
 	handleChange,

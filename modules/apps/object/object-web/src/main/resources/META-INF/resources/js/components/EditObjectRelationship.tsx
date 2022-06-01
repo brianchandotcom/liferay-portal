@@ -20,12 +20,13 @@ import {
 	InputLocalized,
 	SidePanelForm,
 	closeSidePanel,
+	invalidateRequired,
 	openToast,
+	useForm,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import useForm, {invalidateRequired} from '../hooks/useForm';
 import {
 	availableLocales,
 	defaultLanguageId,

@@ -20,11 +20,11 @@ import {
 	FormCustomSelect,
 	Input,
 	Select,
+	useForm,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import useForm from '../hooks/useForm';
 import {defaultLanguageId} from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {toCamelCase} from '../utils/string';

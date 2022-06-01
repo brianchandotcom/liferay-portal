@@ -16,11 +16,14 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {Input, InputLocalized} from '@liferay/object-js-components-web';
+import {
+	Input,
+	InputLocalized,
+	useForm,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import useForm from '../hooks/useForm';
 import {
 	availableLocales,
 	defaultLanguageId,

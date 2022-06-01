@@ -16,14 +16,16 @@ import 'codemirror/mode/groovy/groovy';
 import ClayTabs from '@clayui/tabs';
 import {
 	CustomItem,
+	FormError,
 	SidePanelForm,
 	closeSidePanel,
+	invalidateRequired,
 	openToast,
+	useForm,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import useForm, {FormError, invalidateRequired} from '../../hooks/useForm';
 import ActionBuilder from './tabs/ActionBuilder';
 import BasicInfo from './tabs/BasicInfo';
 

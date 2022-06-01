@@ -18,7 +18,7 @@ export function invalidateRequired(text: string | void) {
 	return !text?.trim();
 }
 
-export default function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
+export function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
 	onSubmit,
 	validate,

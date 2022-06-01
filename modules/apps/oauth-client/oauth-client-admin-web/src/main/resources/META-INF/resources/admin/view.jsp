@@ -18,10 +18,6 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-portletDisplay.setURLBack(redirect);
 %>
 
 <clay:navigation-bar
@@ -36,8 +32,6 @@ portletDisplay.setURLBack(redirect);
 							renderResponse
 						).setMVCRenderCommandName(
 							"/oauth_client_admin/view_o_auth_clients"
-						).setRedirect(
-							redirect
 						).setNavigation(
 							"oauth-clients"
 						).buildPortletURL();
@@ -55,8 +49,6 @@ portletDisplay.setURLBack(redirect);
 							renderResponse
 						).setMVCRenderCommandName(
 							"/oauth_client_admin/view_o_auth_client_as_local_metadata"
-						).setRedirect(
-							redirect
 						).setNavigation(
 							"oauth-client-as-local-metadata"
 						).buildPortletURL();

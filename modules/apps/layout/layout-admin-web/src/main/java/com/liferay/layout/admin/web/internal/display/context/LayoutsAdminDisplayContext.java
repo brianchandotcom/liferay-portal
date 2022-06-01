@@ -998,10 +998,6 @@ public class LayoutsAdminDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getSe() {
-		return _liferayPortletResponse.getNamespace() + "selectImage";
-	}
-
 	public String getSelectFaviconEventName() {
 		return _liferayPortletResponse.getNamespace() + "selectImage";
 	}

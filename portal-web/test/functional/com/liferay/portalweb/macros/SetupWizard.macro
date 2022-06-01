@@ -223,7 +223,7 @@ definition {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MariaDB");
 		}
 		else if ("${databaseType}" == "MySQL") {
-			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQLDialect for MySQL");
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQL57Dialect for MySQL");
 		}
 		else if ("${databaseType}" == "Oracle") {
 			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle");

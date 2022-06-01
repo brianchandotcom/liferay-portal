@@ -32,6 +32,7 @@ import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
 export default function QuestionRow({
+	context,
 	currentSection,
 	items,
 	question,
@@ -132,7 +133,9 @@ export default function QuestionRow({
 						'stretched-link-layer',
 						'text-dark',
 						{
-							'question-seen': question.seen,
+							'question-seen':
+								question.seen ||
+								context.questionsVisited.includes(question.id),
 						}
 					)}
 				>

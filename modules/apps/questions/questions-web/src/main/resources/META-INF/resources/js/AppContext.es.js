@@ -28,6 +28,7 @@ const AppContextProvider = ({children, ...context}) => {
 	const {data: {messageBoardSections} = {}} = useQuery(getSectionsQuery, {
 		variables: {siteKey: context.siteKey},
 	});
+	const [questionsVisited, setQuestionsVisited] = useState([]);
 
 	useEffect(() => {
 		client
@@ -49,7 +50,9 @@ const AppContextProvider = ({children, ...context}) => {
 			value={{
 				...context,
 				canCreateThread,
+				questionsVisited,
 				sections: messageBoardSections?.items || [],
+				setQuestionsVisited,
 			}}
 		>
 			{children}

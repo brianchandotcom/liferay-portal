@@ -16,16 +16,20 @@ import CodeMirror from 'codemirror';
 import React from 'react';
 import './EditorSidebar.scss';
 export declare function EditorSidebar({
-	defaultLanguageId,
 	editorRef,
-	metadataFields,
-	sidebarElements,
+	elements,
 }: IProps): JSX.Element;
 interface IProps {
-	className?: string;
-	defaultLanguageId: Locale;
 	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	metadataFields: any[];
-	sidebarElements: ObjectValidationRuleElement[];
+	elements: EditorSideBarCategory[];
+}
+export interface EditorSideBarCategory {
+	items: EditorSideBarElement[];
+	label: string;
+}
+export interface EditorSideBarElement {
+	content: string;
+	label: string;
+	tooltip: string;
 }
 export {};

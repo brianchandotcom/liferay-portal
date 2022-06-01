@@ -14,14 +14,3 @@
 
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
-
-interface ObjectValidationRuleElement {
-	items: ObjectValidationRuleElementItem[];
-	label: string;
-}
-
-interface ObjectValidationRuleElementItem {
-	content: string;
-	label: string;
-	tooltip: string;
-}

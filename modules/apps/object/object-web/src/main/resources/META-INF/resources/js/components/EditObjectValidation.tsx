@@ -14,6 +14,7 @@
 
 import ClayTabs from '@clayui/tabs';
 import {
+	EditorSideBarCategory,
 	SidePanelForm,
 	closeSidePanel,
 	openToast,
@@ -136,6 +137,6 @@ export default function EditObjectValidation({
 
 interface IProps {
 	objectValidationRule: ObjectValidation;
-	objectValidationRuleElements: ObjectValidationRuleElement[];
+	objectValidationRuleElements: EditorSideBarCategory[];
 	readOnly: boolean;
 }

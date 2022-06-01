@@ -16,12 +16,14 @@ import 'codemirror/mode/groovy/groovy';
 import {ClayToggle} from '@clayui/form';
 import {
 	Card,
+	EditorSideBarCategory,
 	Input,
 	InputLocalized,
 	Select,
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
+import useMetadata from '../../hooks/useMetadata';
 import {defaultLanguageId} from '../../utils/locale';
 import CodeEditor from '../CodeEditor/index';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
@@ -96,6 +98,9 @@ function Conditions({
 			symbol: string;
 		}
 	);
+
+	const sidebarElements = useMetadata(objectValidationRuleElements);
+
 	const engine = values.engine;
 	const ddmTooltip = {
 		content: Liferay.Language.get(
@@ -127,12 +132,12 @@ function Conditions({
 				viewMode="no-padding"
 			>
 				<CodeEditor
-					elements={objectValidationRuleElements}
 					error={errors.script}
 					mode={engine}
 					onChange={(script) => setValues({script})}
 					placeholder={placeholder}
 					readOnly={disabled}
+					sidebarElements={sidebarElements}
 					value={values.script ?? ''}
 				/>
 			</Card>
@@ -191,7 +196,7 @@ interface IBasicInfo extends ITabs {
 }
 
 interface IConditions extends ITabs {
-	objectValidationRuleElements: ObjectValidationRuleElement[];
+	objectValidationRuleElements: EditorSideBarCategory[];
 }
 
 export {BasicInfo, Conditions};

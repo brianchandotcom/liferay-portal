@@ -12,20 +12,22 @@
  * details.
  */
 
-import {EditorSidebar, FieldBase} from '@liferay/object-js-components-web';
+import {
+	EditorSideBarCategory,
+	EditorSidebar,
+	FieldBase,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import {defaultLanguageId} from '../../utils/locale';
-import {METADATA} from '../ObjectView/context';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
 
 import './index.scss';
 
 export default function CodeEditor({
 	className,
-	elements,
 	error,
+	sidebarElements,
 	...options
 }: IProps) {
 	const editorRef = useRef<CodeMirror.Editor>();
@@ -43,12 +45,10 @@ export default function CodeEditor({
 				/>
 			</FieldBase>
 
-			{elements && (
+			{sidebarElements && (
 				<EditorSidebar
-					defaultLanguageId={defaultLanguageId}
 					editorRef={editorRef}
-					metadataFields={METADATA}
-					sidebarElements={elements}
+					elements={sidebarElements}
 				/>
 			)}
 		</div>
@@ -56,6 +56,6 @@ export default function CodeEditor({
 }
 
 interface IProps extends ICodeMirrorEditor {
-	elements?: ObjectValidationRuleElement[];
 	error?: string;
+	sidebarElements?: EditorSideBarCategory[];
 }

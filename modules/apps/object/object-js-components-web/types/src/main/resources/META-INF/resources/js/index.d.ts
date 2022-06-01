@@ -17,7 +17,7 @@ export {Card} from './components/Card';
 export {CheckboxItem} from './components/CheckBoxItem';
 export {Collapsible} from './components/Collapsible';
 export {CustomSelect} from './components/CustomSelect';
-export {EditorSidebar} from './components/EditorSideBar';
+export * from './components/EditorSideBar';
 export {Element} from './components/Element';
 export {FieldBase} from './components/FieldBase';
 export {CustomItem, FormCustomSelect} from './components/FormCustomSelect';

@@ -13,39 +13,16 @@
  */
 
 import CodeMirror from 'codemirror';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {Collapsible} from './Collapsible';
 import {Element} from './Element';
 
 import './EditorSidebar.scss';
 
-export function EditorSidebar({
-	defaultLanguageId,
-	editorRef,
-	metadataFields,
-	sidebarElements,
-}: IProps) {
-	const onItemClick = (item: ObjectValidationRuleElementItem) =>
+export function EditorSidebar({editorRef, elements}: IProps) {
+	const handleClick = (item: EditorSideBarElement) =>
 		editorRef.current?.replaceSelection(item.content);
-
-	const metadata = metadataFields.map((metadata) => ({
-		content: metadata.name,
-		label: metadata.label[defaultLanguageId],
-		tooltip: '',
-	}));
-
-	const objectFields = {...sidebarElements[0]};
-
-	objectFields.items = useMemo(
-		() => objectFields.items.concat(metadata),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
-
-	const elements = sidebarElements.filter((_, index) => index !== 0);
-
-	elements.unshift(objectFields);
 
 	return (
 		<div className="lfr-objects__code-editor-sidebar">
@@ -58,7 +35,7 @@ export function EditorSidebar({
 							<Element
 								key={item.label}
 								label={item.label}
-								onClick={() => onItemClick(item)}
+								onClick={() => handleClick(item)}
 								tooltip={item.tooltip}
 							/>
 						))}
@@ -69,9 +46,17 @@ export function EditorSidebar({
 	);
 }
 interface IProps {
-	className?: string;
-	defaultLanguageId: Locale;
 	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	metadataFields: any[];
-	sidebarElements: ObjectValidationRuleElement[];
+	elements: EditorSideBarCategory[];
+}
+
+export interface EditorSideBarCategory {
+	items: EditorSideBarElement[];
+	label: string;
+}
+
+export interface EditorSideBarElement {
+	content: string;
+	label: string;
+	tooltip: string;
 }

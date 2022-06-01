@@ -132,9 +132,12 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 					_assetCategoryLocalService.fetchCategory(
 						cpAttachmentFileEntry.getClassPK());
 
-				AssetCategoryPermission.check(
-					PermissionThreadLocal.getPermissionChecker(), assetCategory,
-					ActionKeys.VIEW);
+				if (!AssetCategoryPermission.contains(
+						PermissionThreadLocal.getPermissionChecker(),
+						assetCategory, ActionKeys.VIEW)) {
+
+					return getDefaultURL(cpAttachmentFileEntry.getGroupId());
+				}
 			}
 			else if (className.equals(CPDefinition.class.getName())) {
 				if (commerceAccountId ==
@@ -144,14 +147,24 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 						_cpDefinitionLocalService.getCPDefinition(
 							cpAttachmentFileEntry.getClassPK());
 
-					_commerceCatalogModelResourcePermission.check(
-						PermissionThreadLocal.getPermissionChecker(),
-						cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
+					if (!_commerceCatalogModelResourcePermission.contains(
+							PermissionThreadLocal.getPermissionChecker(),
+							cpDefinition.getCommerceCatalog(),
+							ActionKeys.VIEW)) {
+
+						return getDefaultURL(
+							cpAttachmentFileEntry.getGroupId());
+					}
 				}
 				else {
-					_commerceProductViewPermission.check(
-						PermissionThreadLocal.getPermissionChecker(),
-						commerceAccountId, cpAttachmentFileEntry.getClassPK());
+					if (!_commerceProductViewPermission.contains(
+							PermissionThreadLocal.getPermissionChecker(),
+							commerceAccountId,
+							cpAttachmentFileEntry.getClassPK())) {
+
+						return getDefaultURL(
+							cpAttachmentFileEntry.getGroupId());
+					}
 				}
 			}
 		}

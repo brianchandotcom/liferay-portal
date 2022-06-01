@@ -1110,7 +1110,10 @@ AUI.add(
 										</div>
 								</div>`;
 
-							openToastSuccessProps.onClick = ({event}) => {
+							openToastSuccessProps.onClick = ({
+								event,
+								onClose: closeToast,
+							}) => {
 								if (
 									event.target.classList.contains(
 										reloadButtonClassName
@@ -1119,6 +1122,7 @@ AUI.add(
 									Liferay.Portlet.refresh(
 										`#p_p_id${instance._documentLibraryNamespace}`
 									);
+									closeToast();
 								}
 							};
 						}

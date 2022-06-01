@@ -613,8 +613,9 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			long objectDefinitionId, long descriptionObjectFieldId,
-			long titleObjectFieldId, boolean active,
+			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
+			long descriptionObjectFieldId, long titleObjectFieldId,
+			boolean accountEntryRestricted, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
 			Map<Locale, String> pluralLabelMap, String scope)
@@ -629,9 +630,10 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return _updateObjectDefinition(
-			objectDefinition, descriptionObjectFieldId, titleObjectFieldId,
-			active, null, labelMap, name, panelAppOrder, panelCategoryKey,
-			portlet, null, null, pluralLabelMap, scope);
+			objectDefinition, accountEntryRestrictedObjectFieldId,
+			descriptionObjectFieldId, titleObjectFieldId,
+			accountEntryRestricted, active, null, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, null, null, pluralLabelMap, scope);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -953,8 +955,10 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _updateObjectDefinition(
-			ObjectDefinition objectDefinition, long descriptionObjectFieldId,
-			long titleObjectFieldId, boolean active, String dbTableName,
+			ObjectDefinition objectDefinition,
+			long accountEntryRestrictedObjectFieldId,
+			long descriptionObjectFieldId, long titleObjectFieldId,
+			boolean accountEntryRestricted, boolean active, String dbTableName,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -969,8 +973,11 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			accountEntryRestrictedObjectFieldId);
 		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
+		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPanelAppOrder(panelAppOrder);

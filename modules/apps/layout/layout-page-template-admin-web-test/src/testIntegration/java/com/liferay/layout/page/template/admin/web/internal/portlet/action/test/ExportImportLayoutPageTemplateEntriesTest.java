@@ -438,9 +438,17 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				"com.liferay.fragment.entry.processor.background.image." +
 					"BackgroundImageFragmentEntryProcessor");
 
-		Assert.assertEquals(
-			expectedBackgroundImageFragmentEntryProcessorJSONObject.toString(),
-			actualBackgroundImageFragmentEntryProcessorJSONObject.toString());
+		if (expectedBackgroundImageFragmentEntryProcessorJSONObject == null) {
+			Assert.assertNull(
+				actualBackgroundImageFragmentEntryProcessorJSONObject);
+		}
+		else {
+			Assert.assertEquals(
+				expectedBackgroundImageFragmentEntryProcessorJSONObject.
+					toString(),
+				actualBackgroundImageFragmentEntryProcessorJSONObject.
+					toString());
+		}
 
 		JSONObject expectedEditableFragmentEntryProcessorJSONObject =
 			expectedEditableValuesJSONObject.getJSONObject(
@@ -451,29 +459,34 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor");
 
-		JSONObject expectedElementTextJSONObject =
-			expectedEditableFragmentEntryProcessorJSONObject.getJSONObject(
-				"element-text");
-		JSONObject actualElementTextJSONObject =
-			actualEditableFragmentEntryProcessorJSONObject.getJSONObject(
-				"element-text");
+		if (expectedEditableFragmentEntryProcessorJSONObject == null) {
+			Assert.assertNull(actualEditableFragmentEntryProcessorJSONObject);
+		}
+		else {
+			JSONObject expectedElementTextJSONObject =
+				expectedEditableFragmentEntryProcessorJSONObject.getJSONObject(
+					"element-text");
+			JSONObject actualElementTextJSONObject =
+				actualEditableFragmentEntryProcessorJSONObject.getJSONObject(
+					"element-text");
 
-		Assert.assertEquals(
-			expectedElementTextJSONObject.getString("en_US"),
-			actualElementTextJSONObject.getString("en_US"));
+			Assert.assertEquals(
+				expectedElementTextJSONObject.getString("en_US"),
+				actualElementTextJSONObject.getString("en_US"));
 
-		Assert.assertEquals(
-			expectedElementTextJSONObject.getString("es_ES"),
-			actualElementTextJSONObject.getString("es_ES"));
+			Assert.assertEquals(
+				expectedElementTextJSONObject.getString("es_ES"),
+				actualElementTextJSONObject.getString("es_ES"));
 
-		JSONObject expectedElementTextConfigJSONObject =
-			expectedElementTextJSONObject.getJSONObject("config");
-		JSONObject actualElementTextConfigJSONObject =
-			actualElementTextJSONObject.getJSONObject("config");
+			JSONObject expectedElementTextConfigJSONObject =
+				expectedElementTextJSONObject.getJSONObject("config");
+			JSONObject actualElementTextConfigJSONObject =
+				actualElementTextJSONObject.getJSONObject("config");
 
-		Assert.assertEquals(
-			expectedElementTextConfigJSONObject.toString(),
-			actualElementTextConfigJSONObject.toString());
+			Assert.assertEquals(
+				expectedElementTextConfigJSONObject.toString(),
+				actualElementTextConfigJSONObject.toString());
+		}
 
 		JSONObject expectedFreeMarkerFragmentEntryProcessorJSONObject =
 			expectedEditableValuesJSONObject.getJSONObject(
@@ -484,9 +497,14 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				"com.liferay.fragment.entry.processor.freemarker." +
 					"FreeMarkerFragmentEntryProcessor");
 
-		Assert.assertEquals(
-			expectedFreeMarkerFragmentEntryProcessorJSONObject.toString(),
-			actualFreeMarkerFragmentEntryProcessorJSONObject.toString());
+		if (expectedFreeMarkerFragmentEntryProcessorJSONObject == null) {
+			Assert.assertNull(actualFreeMarkerFragmentEntryProcessorJSONObject);
+		}
+		else {
+			Assert.assertEquals(
+				expectedFreeMarkerFragmentEntryProcessorJSONObject.toString(),
+				actualFreeMarkerFragmentEntryProcessorJSONObject.toString());
+		}
 
 		Assert.assertEquals(
 			expectedFragmentEntryLink.getPosition(),

@@ -85,6 +85,10 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLocalServiceImpl
 	extends FragmentEntryLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFragmentEntry(long, long, long, String, String, String, String, String, boolean, String, String, long, int, String, int, ServiceContext)} (long, long, long, String, String, String, String, String, boolean, String, String, long, int, String, int, ServiceContext)} ()}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
@@ -245,8 +249,7 @@ public class FragmentEntryLocalServiceImpl
 				draftFragmentEntry.getCss(), draftFragmentEntry.getHtml(),
 				draftFragmentEntry.getJs(), draftFragmentEntry.isCacheable(),
 				draftFragmentEntry.getConfiguration(),
-				draftFragmentEntry.getIcon(), 0,
-				draftFragmentEntry.getType(),
+				draftFragmentEntry.getIcon(), 0, draftFragmentEntry.getType(),
 				draftFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 

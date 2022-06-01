@@ -579,8 +579,8 @@ public class FragmentEntryProcessorEditableTest {
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
 			_readFileToString(htmlFile), null, false, null, null, 0,
-			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			FragmentConstants.TYPE_SECTION, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private FileEntry _addImageFileEntry() throws Exception {

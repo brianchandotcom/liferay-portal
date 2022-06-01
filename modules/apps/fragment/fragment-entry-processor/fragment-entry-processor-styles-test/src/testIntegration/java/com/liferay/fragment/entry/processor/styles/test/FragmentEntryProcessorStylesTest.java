@@ -148,7 +148,7 @@ public class FragmentEntryProcessorStylesTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			"fragment-entry", "Fragment Entry", null,
 			_read("invalid_styles_fragment_entry.html"), null, false, null,
-			null, 0, FragmentConstants.TYPE_SECTION,
+			null, 0, FragmentConstants.TYPE_SECTION, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
@@ -160,7 +160,7 @@ public class FragmentEntryProcessorStylesTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				"fragment-entry", "Fragment Entry", null,
 				_read("valid_styles_fragment_entry.html"), null, false, null,
-				null, 0, FragmentConstants.TYPE_SECTION,
+				null, 0, FragmentConstants.TYPE_SECTION, null,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(

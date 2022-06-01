@@ -178,7 +178,8 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			previewFileEntryId, fragmentEntry.getType(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	private long _getPreviewFileEntryId(

@@ -273,7 +273,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					fragmentCollection.getGroupId(), fragmentCollectionId,
 					fragmentEntryKey, name, css, html, js, cacheable,
-					configuration, icon, 0, type, status,
+					configuration, icon, 0, null, type, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {

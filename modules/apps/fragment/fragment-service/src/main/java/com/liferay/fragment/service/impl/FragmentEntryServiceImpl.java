@@ -45,6 +45,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFragmentEntry(long, long, String, String, String, String, String, boolean, String, String, long, int,String,  int, ServiceContext)} (long, long, String, String, String, String, boolean, String, String, long, int, String, int, ServiceContext)} ()}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
@@ -60,7 +64,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
 			css, html, js, cacheable, configuration, icon, previewFileEntryId,
-			type, status, serviceContext);
+			type, null, status, serviceContext);
 	}
 
 	@Override

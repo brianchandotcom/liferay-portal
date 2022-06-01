@@ -19,6 +19,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -146,7 +147,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 					"fragment-entry", "Fragment Entry", null,
 					_readFileToString(
 						"fragment_entry_with_invalid_freemarker_variable.html"),
-					null, false, null, null, 0, 0,
+					null, false, null, null, 0,
+					FragmentConstants.TYPE_COMPONENT, null,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
@@ -561,7 +563,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_readFileToString(htmlFile), null, false, configuration, null, 0, 0,
+			_readFileToString(htmlFile), null, false, configuration, null, 0,
+			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

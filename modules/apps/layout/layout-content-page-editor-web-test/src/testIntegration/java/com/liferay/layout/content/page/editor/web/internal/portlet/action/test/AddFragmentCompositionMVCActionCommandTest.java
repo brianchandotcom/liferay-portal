@@ -241,7 +241,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				"example-fragment-entry-key", RandomTestUtil.randomString(),
 				StringPool.BLANK, html, StringPool.BLANK, false,
 				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				null, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

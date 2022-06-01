@@ -1,0 +1,223 @@
+[
+	{
+		"name": "customElement",
+		"properties": [
+			{
+				"name": "name",
+				"type": "string",
+				"default": "Sample Custom Element"
+			},
+			{
+				"name": "type",
+				"type": "string",
+				"default": "customElement"
+			},
+			{
+				"name": "version",
+				"type": "string",
+				"default": "1"
+			},
+			{
+				"name": "description",
+				"type": "string",
+				"default": "This is a sample custom element"
+			},
+			{
+				"name": "sourceCodeUrl",
+				"type": "string",
+				"default": "https://www.liferay.com"
+			},
+			{
+				"name": "cssURLs",
+				"type": "list",
+				"default": [
+					"custom-element.css"
+				]
+			},
+			{
+				"name": "friendlyURLMapping",
+				"type": "string",
+				"default": "/abc/friendly"
+			},
+			{
+				"name": "htmlElementName",
+				"type": "string",
+				"default": "custom-element"
+			},
+			{
+				"name": "portletCategoryName",
+				"type": "string",
+				"default": "sample"
+			},
+			{
+				"name": "urls",
+				"type": "list",
+				"default": [
+					
+				]
+			},
+			{
+				"name": "instanceable",
+				"type": "boolean",
+				"default": "false"
+			},
+			{
+				"name": "useESM",
+				"type": "boolean",
+				"default": "false"
+			}
+		]
+	},
+	{
+		"name": "iFrame",
+		"properties": [
+			{
+				"name": "name",
+				"type": "string",
+				"default": "Sample IFrame"
+			},
+			{
+				"name": "type",
+				"type": "string",
+				"default": "iFrame"
+			},
+			{
+				"name": "version",
+				"type": "string",
+				"default": "1"
+			},
+			{
+				"name": "description",
+				"type": "string",
+				"default": "This is a sample IFrame"
+			},
+			{
+				"name": "sourceCodeUrl",
+				"type": "string",
+				"default": "https://www.liferay.com"
+			},
+			{
+				"name": "friendlyURLMapping",
+				"type": "string",
+				"default": "/abc/friendly"
+			},
+			{
+				"name": "portletCategoryName",
+				"type": "string",
+				"default": "sample"
+			},
+			{
+				"name": "url",
+				"type": "string",
+				"default": "https://mycompany.com/iframe.html"
+			},
+			{
+				"name": "instanceable",
+				"type": "boolean",
+				"default": "false"
+			}
+		]
+	},
+	{
+		"name": "themeCSS",
+		"properties": [
+			{
+				"name": "name",
+				"type": "string",
+				"default": "Sample ThemeCSS"
+			},
+			{
+				"name": "type",
+				"type": "string",
+				"default": "themeCss"
+			},
+			{
+				"name": "version",
+				"type": "string",
+				"default": "1"
+			},
+			{
+				"name": "description",
+				"type": "string",
+				"default": "This is a sample ThemeCSS"
+			},
+			{
+				"name": "sourceCodeUrl",
+				"type": "string",
+				"default": "https://www.liferay.com"
+			},
+			{
+				"name": "clayUrl",
+				"type": "string",
+				"default": "clay.css"
+			},
+			{
+				"name": "mainUrl",
+				"type": "string",
+				"default": "main.css"
+			}
+		]
+	},
+	{
+		"name": "themeFavicon",
+		"properties": [
+			{
+				"name": "name",
+				"type": "string",
+				"default": "Sample ThemeFavicon"
+			},
+			{
+				"name": "type",
+				"type": "string",
+				"default": "themeFavicon"
+			},
+			{
+				"name": "version",
+				"type": "string",
+				"default": "1"
+			},
+			{
+				"name": "description",
+				"type": "string",
+				"default": "This is a sample ThemeFavicon"
+			},
+			{
+				"name": "url",
+				"type": "string",
+				"default": "favicon.ico"
+			}
+		]
+	},
+	{
+		"name": "themeJS",
+		"properties": [
+			{
+				"name": "name",
+				"type": "string",
+				"default": "Sample ThemeJS"
+			},
+			{
+				"name": "type",
+				"type": "string",
+				"default": "themeJS"
+			},
+			{
+				"name": "version",
+				"type": "string",
+				"default": "1"
+			},
+			{
+				"name": "description",
+				"type": "string",
+				"default": "This is a sample ThemeJS"
+			},
+			{
+				"name": "urls",
+				"type": "list",
+				"default": [
+					"theme.js"
+				]
+			}
+		]
+	}
+]

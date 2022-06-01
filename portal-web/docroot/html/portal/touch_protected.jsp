@@ -34,7 +34,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		<meta content="0" http-equiv="Expires" />
 		<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
 
-		<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" rel="stylesheet" type="text/css" />
+		<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(themeDisplay.getClayCSSURL()) %>" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body onLoad="javascript:location.replace('<%= redirect %>')">

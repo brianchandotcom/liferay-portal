@@ -69,14 +69,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 		).put(
 			"contentsCss",
 			JSONUtil.putAll(
-				HtmlUtil.escape(
-					PortalUtil.getStaticResourceURL(
-						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/clay.css")),
-				HtmlUtil.escape(
-					PortalUtil.getStaticResourceURL(
-						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/main.css")),
+				HtmlUtil.escape(themeDisplay.getClayCSSURL()),
+				HtmlUtil.escape(themeDisplay.getMainCSSURL()),
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),

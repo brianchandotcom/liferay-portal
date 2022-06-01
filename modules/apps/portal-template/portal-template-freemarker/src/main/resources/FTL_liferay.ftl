@@ -20,9 +20,9 @@ LPS-30525.
 
 <#if themeDisplay??>
 	<#assign
-		css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css"))
+		css_main_file = htmlUtil.escape(themeDisplay.getMainCSSURL())
 		is_signed_in = themeDisplay.isSignedIn()
-		js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js"))
+		js_main_file = htmlUtil.escape(themeDisplay.getMainJSURL())
 	/>
 
 	<#if !is_setup_complete>

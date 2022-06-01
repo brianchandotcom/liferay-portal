@@ -61,6 +61,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
@@ -78,8 +79,10 @@ page import="com.liferay.roles.admin.role.type.contributor.provider.RoleTypeCont
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashSet" %><%@
 page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 

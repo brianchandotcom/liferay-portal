@@ -22,12 +22,21 @@ RoleTypeContributorProvider roleTypeContributorProvider = (RoleTypeContributorPr
 PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest, roleTypeContributorProvider);
 
 Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
+
+List<Resource> resources = new ArrayList<>();
+
+if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+	resources = portletConfigurationPermissionsDisplayContext.getResources();
+}
+
 SearchContainer<Role> roleSearchContainer = portletConfigurationPermissionsDisplayContext.getRoleSearchContainer();
 
 if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(portletConfigurationPermissionsDisplayContext.getSelResourceDescription()), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
+
+String resourceName = resource.getName();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
@@ -96,7 +105,14 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 					List<String> currentGroupTemplateActions = new ArrayList<String>();
 					List<String> currentCompanyActions = new ArrayList<String>();
 
-					ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					Map<String, List<String>> resourceActionsMap = new HashMap<>();
+
+					if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+						resourceActionsMap = ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					}
+					else {
+						ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+					}
 
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
@@ -132,10 +148,10 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 							String type = portletConfigurationPermissionsDisplayContext.getSelResourceDescription();
 
 							if (Validator.isNull(type)) {
-								type = ResourceActionsUtil.getModelResource(locale, resource.getName());
+								type = ResourceActionsUtil.getModelResource(locale, resourceName);
 							}
 
-							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), _getActionLabel(request, resource.getName(), action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
+							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), _getActionLabel(request, resourceName, action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
@@ -143,7 +159,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-column-text-center"
-							name="<%= _getActionLabel(request, resource.getName(), action) %>"
+							name="<%= _getActionLabel(request, resourceName, action) %>"
 						>
 							<c:if test="<%= disabled && checked %>">
 								<input name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />

@@ -275,18 +275,16 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			try {
 				OIDCProviderMetadata.parse(metadataJSONObject);
 			}
-			catch (ParseException parseException) {
-				throw new OAuthClientASLocalMetadataJSONException(
-					parseException);
+			catch (Exception exception) {
+				throw new OAuthClientASLocalMetadataJSONException(exception);
 			}
 		}
 		else {
 			try {
 				AuthorizationServerMetadata.parse(metadataJSONObject);
 			}
-			catch (ParseException parseException) {
-				throw new OAuthClientASLocalMetadataJSONException(
-					parseException);
+			catch (Exception exception) {
+				throw new OAuthClientASLocalMetadataJSONException(exception);
 			}
 		}
 	}

@@ -135,6 +135,20 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
 				faviconClientExtensionEntryType);
 		}
+
+		long themeCSSExtensionEntryId = ParamUtil.getLong(
+			actionRequest, "themeCSSExtensionEntryId");
+
+		if (themeCSSExtensionEntryId > 0) {
+			String themeCSSExtensionEntryType = ParamUtil.getString(
+				actionRequest, "themeCSSExtensionEntryType");
+
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(),
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(), themeCSSExtensionEntryId,
+				themeCSSExtensionEntryType);
+		}
 	}
 
 	private void _updateLogo(

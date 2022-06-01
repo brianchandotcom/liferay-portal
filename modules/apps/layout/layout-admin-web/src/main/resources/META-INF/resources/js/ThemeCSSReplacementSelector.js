@@ -14,26 +14,45 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function ThemeCSSReplacementSelector({
 	portletNamespace,
+	selectThemeCSSClientExtensionEventName,
+	selectThemeCSSClientExtensionURL,
 	themeCSSExtensionName,
 }) {
 	const [extensionName, setExtensionName] = useState(themeCSSExtensionName);
-	const [extensionId, setExtensionId] = useState(themeCSSExtensionName);
+	const [extensionEntryId, setExtensionEntryId] = useState('');
+	const [extensionEntryType, setExtensionEntryType] = useState('');
 
 	const onClick = () => {
-		setExtensionName('test');
-		setExtensionName('1234');
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				const item = JSON.parse(selectedItem.value);
+
+				setExtensionEntryId(item.clientExtensionEntryId);
+				setExtensionEntryType(item.type);
+				setExtensionName(item.name);
+			},
+			selectEventName: selectThemeCSSClientExtensionEventName,
+			title: Liferay.Language.get('select-theme-css-extension'),
+			url: selectThemeCSSClientExtensionURL,
+		});
 	};
 
 	return (
 		<>
 			<ClayInput
-				name="themeCSSReplacementExtensionId"
+				name={`${portletNamespace}themeCSSExtensionEntryId`}
 				type="hidden"
-				value={extensionId}
+				value={extensionEntryId}
+			/>
+			<ClayInput
+				name={`${portletNamespace}themeCSSExtensionEntryType`}
+				type="hidden"
+				value={extensionEntryType}
 			/>
 			<ClayForm.Group>
 				<label
@@ -71,7 +90,8 @@ export default function ThemeCSSReplacementSelector({
 									displayType="secondary"
 									onClick={() => {
 										setExtensionName('');
-										setExtensionId('');
+										setExtensionEntryId('');
+										setExtensionEntryType('');
 									}}
 									small
 									symbol="trash"

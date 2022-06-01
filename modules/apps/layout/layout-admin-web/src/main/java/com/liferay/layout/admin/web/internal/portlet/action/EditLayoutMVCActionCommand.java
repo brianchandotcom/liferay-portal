@@ -209,11 +209,24 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					styleBookEntryId, faviconFileEntryId,
 					draftLayout.getMasterLayoutPlid(), serviceContext);
 
-				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					themeDisplay.getUserId(),
-					_portal.getClassNameId(Layout.class), draftLayout.getPlid(),
-					faviconClientExtensionEntryId,
-					faviconClientExtensionEntryType);
+				if (faviconClientExtensionEntryId > 0) {
+					_clientExtensionEntryRelLocalService.
+						addClientExtensionEntryRel(
+							themeDisplay.getUserId(),
+							_portal.getClassNameId(Layout.class),
+							draftLayout.getPlid(),
+							faviconClientExtensionEntryId,
+							faviconClientExtensionEntryType);
+				}
+
+				if (themeCSSExtensionEntryId > 0) {
+					_clientExtensionEntryRelLocalService.
+						addClientExtensionEntryRel(
+							themeDisplay.getUserId(),
+							_portal.getClassNameId(Layout.class),
+							layout.getPlid(), themeCSSExtensionEntryId,
+							themeCSSExtensionEntryType);
+				}
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);

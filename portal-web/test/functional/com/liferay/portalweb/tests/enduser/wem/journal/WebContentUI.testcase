@@ -231,6 +231,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151948. The 'Filter by Status' is available to the 'Versions' tab."
+	@priority = "4"
+	test ViewFilterByStatusAvailableToVersionsTab {
+		task ("Add a web named 'test' and save it as draft") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "test",
+				workflowAction = "DRAFT");
+		}
+
+		task ("Search for the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.searchCP(webContentTitle = "test");
+		}
+
+		task ("Verify that when 'Versions' tab is selected, Filter and Order has the option to 'Filter by Status'") {
+			Navigator.gotoNavTab(navTab = "Versions (1)");
+
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.viewVisible(menuItem = "Filter by Status");
+		}
+	}
+
 	@description = "This is a test for LPS-131307. View the order of web content actions."
 	@priority = "5"
 	test ViewOrderOfWebContentActions {

@@ -18,6 +18,74 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify the order time isn't shown in the order date when the Show Order Creation Time toggle is unchecked in the Placed Orders widget."
+	@priority = "3"
+	test AssertDateIsDisplayedAsOrderDate {
+		property portal.acceptance = "false";
+
+		task ("Given the Show Order Creation Time toggle is unchecked in the Placed Orders widget") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Placed Orders",
+				portletOption = "Configuration");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Order Create Time",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given a placed order") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the user views the order from the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the order date is shown without the time") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = "${currentDate}");
+		}
+
+		task ("When the user views the order from the placed orders details page") {
+			Button.click(button = "View");
+		}
+
+		task ("Then the order date is shown without the time") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = "${currentDate}");
+		}
+	}
+
 	@description = "Verify the Order Date Display configuration section is displayed in the Placed Orders widget."
 	@priority = "3"
 	test AssertOrderDateDisplayIsPresent {

@@ -205,7 +205,11 @@ definition {
 
 		var output = JSONCurlUtil.post("${curl}");
 
-		if (contains("${output}", "\"agreedToTermsOfUse\":true") && contains("${output}", "\"companyId\":\"${companyId}\"")) {
+		var result1 =  JSONUtil.getWithJSONPath("${output}","$.agreedToTermsOfUse");
+
+		var result2 =  JSONUtil.getWithJSONPath("${output}","$.companyId");
+
+		if (("${result1}" == "true") && ("${result2}" == "${companyId}")) {
 			echo("Get current user successful.");
 		}
 		else {

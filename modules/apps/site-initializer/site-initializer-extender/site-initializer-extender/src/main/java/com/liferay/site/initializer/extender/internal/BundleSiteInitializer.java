@@ -687,6 +687,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					addOrUpdateClientExtensionEntry(
 						jsonObject.getString("externalReferenceCode"),
 						serviceContext.getUserId(), StringPool.BLANK,
+						StringPool.BLANK,
 						SiteInitializerUtil.toMap(
 							jsonObject.getString("name_i18n")),
 						sb.toString(), StringPool.BLANK,

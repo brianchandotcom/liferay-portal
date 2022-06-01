@@ -153,6 +153,13 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		return _localRepository.fetchFileEntry(folderId, title);
+	}
+
+	@Override
 	public FileEntry fetchFileEntryByExternalReferenceCode(
 		String externalReferenceCode) {
 

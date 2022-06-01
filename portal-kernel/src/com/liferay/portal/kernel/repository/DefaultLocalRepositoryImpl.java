@@ -152,6 +152,13 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		return _repository.fetchFileEntry(folderId, title);
+	}
+
+	@Override
 	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
 		return _repository.getCapability(capabilityClass);
 	}

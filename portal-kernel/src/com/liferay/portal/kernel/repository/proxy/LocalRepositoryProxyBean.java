@@ -168,6 +168,14 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		return newFileEntryProxyBean(
+			_localRepository.fetchFileEntry(folderId, title));
+	}
+
+	@Override
 	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
 		return _localRepository.getCapability(capabilityClass);
 	}

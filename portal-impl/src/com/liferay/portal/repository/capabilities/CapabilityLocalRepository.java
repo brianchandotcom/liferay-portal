@@ -251,6 +251,13 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		return getRepository().fetchFileEntry(folderId, title);
+	}
+
+	@Override
 	public FileEntry fetchFileEntryByExternalReferenceCode(
 		String externalReferenceCode) {
 

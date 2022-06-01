@@ -347,6 +347,13 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		return getRepository().fetchFileEntry(folderId, title);
+	}
+
+	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, int status, int start, int end,
 			OrderByComparator<FileEntry> orderByComparator)

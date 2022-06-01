@@ -177,6 +177,15 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
+	public FileEntry fetchFileEntry(long folderId, String title)
+		throws PortalException {
+
+		checkDocumentRepository();
+
+		return documentRepository.fetchFileEntry(folderId, title);
+	}
+
+	@Override
 	public <C extends Capability> C getCapability(Class<C> capabilityClass) {
 		checkDocumentRepository();
 

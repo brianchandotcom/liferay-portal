@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -122,6 +124,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, LayoutSet layoutSet,
 			ThemeDisplay themeDisplay)
 		throws Exception {
+
+		_groupPermission.check(
+			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
+			ActionKeys.MANAGE_LAYOUTS);
 
 		long faviconClientExtensionEntryId = ParamUtil.getLong(
 			actionRequest, "faviconClientExtensionEntryId");
@@ -259,6 +265,9 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private GroupService _groupService;

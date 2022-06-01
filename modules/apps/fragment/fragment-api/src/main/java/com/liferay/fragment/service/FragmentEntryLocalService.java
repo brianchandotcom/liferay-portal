@@ -98,6 +98,14 @@ public interface FragmentEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, boolean cacheable, String configuration, String icon,
+			long previewFileEntryId, int type, String typeOptions, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public FragmentEntry checkout(
@@ -447,6 +455,10 @@ public interface FragmentEntryLocalService
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
 			String name, String css, String html, String js, boolean cacheable,
@@ -461,10 +473,25 @@ public interface FragmentEntryLocalService
 		throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, long fragmentCollectionId,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			String typeOptions, int status)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
+	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, String configuration, int status)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, String configuration,

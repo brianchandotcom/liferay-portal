@@ -560,9 +560,8 @@ public class FragmentEntryVersionPersistenceTest {
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "cacheable", true, "icon",
 			true, "previewFileEntryId", true, "readOnly", true, "type", true,
-			"typeOptions", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test

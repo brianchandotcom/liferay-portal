@@ -102,9 +102,9 @@ public class FragmentEntryVersionTable
 			"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryVersionTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<FragmentEntryVersionTable, String> typeOptions =
+	public final Column<FragmentEntryVersionTable, Clob> typeOptions =
 		createColumn(
-			"typeOptions", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"typeOptions", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryVersionTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

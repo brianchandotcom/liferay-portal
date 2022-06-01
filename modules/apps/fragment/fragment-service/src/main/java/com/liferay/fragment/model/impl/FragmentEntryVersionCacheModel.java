@@ -323,7 +323,7 @@ public class FragmentEntryVersionCacheModel
 		readOnly = objectInput.readBoolean();
 
 		type = objectInput.readInt();
-		typeOptions = objectInput.readUTF();
+		typeOptions = (String)objectInput.readObject();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -428,10 +428,10 @@ public class FragmentEntryVersionCacheModel
 		objectOutput.writeInt(type);
 
 		if (typeOptions == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeOptions);
+			objectOutput.writeObject(typeOptions);
 		}
 
 		objectOutput.writeLong(lastPublishDate);

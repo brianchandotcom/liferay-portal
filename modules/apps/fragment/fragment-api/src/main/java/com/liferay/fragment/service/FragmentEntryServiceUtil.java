@@ -53,6 +53,20 @@ public class FragmentEntryServiceUtil {
 			status, serviceContext);
 	}
 
+	public static FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			int type, String typeOptions, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFragmentEntry(
+			groupId, fragmentCollectionId, fragmentEntryKey, name, css, html,
+			js, cacheable, configuration, icon, previewFileEntryId, type,
+			typeOptions, status, serviceContext);
+	}
+
 	public static FragmentEntry copyFragmentEntry(
 			long groupId, long fragmentEntryId, long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -293,6 +307,10 @@ public class FragmentEntryServiceUtil {
 			fragmentEntryId, previewFileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId, String name,
 			String css, String html, String js, boolean cacheable,
@@ -317,12 +335,29 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, long fragmentCollectionId, String name,
+			String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			String typeOptions, int status)
+		throws PortalException {
+
+		return getService().updateFragmentEntry(
+			fragmentEntryId, fragmentCollectionId, name, css, html, js,
+			cacheable, configuration, icon, previewFileEntryId, typeOptions,
+			status);
+	}
+
+	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name)
 		throws PortalException {
 
 		return getService().updateFragmentEntry(fragmentEntryId, name);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js, boolean cacheable, String configuration, int status)
@@ -333,6 +368,10 @@ public class FragmentEntryServiceUtil {
 			status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js, boolean cacheable, String configuration,
@@ -344,6 +383,10 @@ public class FragmentEntryServiceUtil {
 			previewFileEntryId, status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js, String configuration, int status)
@@ -353,6 +396,10 @@ public class FragmentEntryServiceUtil {
 			fragmentEntryId, name, css, html, js, configuration, status);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateFragmentEntry(long, long, String, String, String, String, boolean, String, String, long, int)} ()}
+	 */
+	@Deprecated
 	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js, String configuration, long previewFileEntryId,

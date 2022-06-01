@@ -264,8 +264,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(stagedLayoutSet);
 
 		_importFaviconFileEntry(
-			portletDataContext, importedStagedLayoutSet, stagedLayoutSet,
-			stagedLayoutSetElement);
+			portletDataContext, stagedLayoutSet, stagedLayoutSetElement);
 
 		// Page priorities
 
@@ -670,7 +669,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	private void _importFaviconFileEntry(
 			PortletDataContext portletDataContext,
-			StagedLayoutSet importedStagedLayoutSet,
 			StagedLayoutSet stagedLayoutSet, Element stagedLayoutSetElement)
 		throws Exception {
 
@@ -711,9 +709,13 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 		}
 
-		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
+		LayoutSet existingLayoutSet = _layoutSetLocalService.getLayoutSet(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
 
-		importedLayoutSet.setFaviconFileEntryId(faviconFileEntryId);
+		existingLayoutSet.setFaviconFileEntryId(faviconFileEntryId);
+
+		_layoutSetLocalService.updateLayoutSet(existingLayoutSet);
 	}
 
 	private void _importLogo(PortletDataContext portletDataContext) {

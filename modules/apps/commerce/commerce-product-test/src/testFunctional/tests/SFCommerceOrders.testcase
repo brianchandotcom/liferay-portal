@@ -18,6 +18,34 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify the Order Date Display configuration section is displayed in the Placed Orders widget."
+	@priority = "3"
+	test AssertOrderDateDisplayIsPresent {
+		property portal.acceptance = "false";
+
+		task ("When the user goes to the Placed Orders Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("And goes to the configuration segment of the Placed Orders widget") {
+			Portlet.gotoPortletOptions(
+				portletName = "Placed Orders",
+				portletOption = "Configuration");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the Order Date Display section is present with a checkbox named Show Order Creation Time") {
+			AssertElementPresent(
+				key_panel = "Order Date Display",
+				locator1 = "CommerceEntry#CONFIGURATION_PANEL_EXPANDED");
+
+			AssertElementPresent(
+				key_toggleSwitchLabel = "Show Order Create Time",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
 	@priority = "3"
 	test CreateNewOrderFromPendingOrdersPage {

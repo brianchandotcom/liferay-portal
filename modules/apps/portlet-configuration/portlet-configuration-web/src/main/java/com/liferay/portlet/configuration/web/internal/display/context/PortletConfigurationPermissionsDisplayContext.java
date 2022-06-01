@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -249,7 +250,17 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setParameter(
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
-			"resourcePrimKey", getResourcePrimKey()
+			"resourcePrimKey",
+			() -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-87806"))) {
+
+					return StringUtil.merge(
+						getResourcePrimKeys(), StringPool.COMMA);
+				}
+
+				return getResourcePrimKey();
+			}
 		).setParameter(
 			"returnToFullPageURL", _getReturnToFullPageURL()
 		).setParameter(
@@ -311,18 +322,59 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public String getResourcePrimKey() throws ResourcePrimKeyException {
-		if (_resourcePrimKey != null) {
-			return _resourcePrimKey;
+		String[] resourcePrimKeys = getResourcePrimKeys();
+
+		return resourcePrimKeys[0];
+	}
+
+	public String[] getResourcePrimKeys() throws ResourcePrimKeyException {
+		if (_resourcePrimKeys != null) {
+			return _resourcePrimKeys;
 		}
 
-		_resourcePrimKey = ParamUtil.getString(
+		_resourcePrimKeys = ParamUtil.getStringValues(
 			_httpServletRequest, "resourcePrimKey");
 
-		if (Validator.isNull(_resourcePrimKey)) {
+		if (ArrayUtil.isEmpty(_resourcePrimKeys)) {
 			throw new ResourcePrimKeyException();
 		}
 
-		return _resourcePrimKey;
+		return _resourcePrimKeys;
+	}
+
+	public List<Resource> getResources() throws PortalException {
+		if (ListUtil.isNotEmpty(_resources)) {
+			return _resources;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String[] resourcePrimKeys = getResourcePrimKeys();
+
+		for (String resourcePrimKey : resourcePrimKeys) {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					themeDisplay.getCompanyId(), getSelResource(),
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
+
+			if (count == 0) {
+				boolean portletActions = Validator.isNull(getModelResource());
+
+				ResourceLocalServiceUtil.addResources(
+					themeDisplay.getCompanyId(), getGroupId(), 0,
+					getSelResource(), resourcePrimKey, portletActions, true,
+					true);
+			}
+
+			_resources.add(
+				ResourceLocalServiceUtil.getResource(
+					themeDisplay.getCompanyId(), getSelResource(),
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey));
+		}
+
+		return _resources;
 	}
 
 	public SearchContainer<Role> getRoleSearchContainer() throws Exception {
@@ -642,7 +694,17 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setParameter(
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
-			"resourcePrimKey", getResourcePrimKey()
+			"resourcePrimKey",
+			() -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-87806"))) {
+
+					return StringUtil.merge(
+						getResourcePrimKeys(), StringPool.COMMA);
+				}
+
+				return getResourcePrimKey();
+			}
 		).setParameter(
 			"returnToFullPageURL", _getReturnToFullPageURL()
 		).setParameter(
@@ -734,7 +796,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private Resource _resource;
 	private Long _resourceGroupId;
-	private String _resourcePrimKey;
+	private String[] _resourcePrimKeys;
+	private final List<Resource> _resources = new ArrayList<>();
 	private String _returnToFullPageURL;
 	private SearchContainer<Role> _roleSearchContainer;
 	private final RoleTypeContributorProvider _roleTypeContributorProvider;

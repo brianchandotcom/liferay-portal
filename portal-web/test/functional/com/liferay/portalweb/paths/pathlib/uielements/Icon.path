@@ -241,11 +241,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FLAG_ID</td>
-	<td>//*[name()='svg']//*[contains(@href,'${key_flagID}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button[*[name()='svg'][contains(@class,'lexicon-icon-info')]]</td>
 	<td></td>

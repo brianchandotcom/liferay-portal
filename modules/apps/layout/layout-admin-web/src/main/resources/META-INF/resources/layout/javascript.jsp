@@ -42,8 +42,8 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
 	<clay:sheet-section>
 		<react:component
-			module="js/layout/look_and_feel/JSExtensionsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getJSExtensionsConfigurationProps() %>"
+			module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps() %>"
 		/>
 	</clay:sheet-section>
 </c:if>

@@ -18,29 +18,29 @@ import ClayTable from '@clayui/table';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-export default function JSExtensionsConfiguration({
-	jsExtensionSelectorURL,
-	jsExtensions: initialJSExtensions,
+export default function GlobalJSCETsConfiguration({
+	globalJSCETSelectorURL,
+	globalJSCETs: initialGlobalJSCETs,
 	portletNamespace,
-	selectJSClientExtensionsEventName,
+	selectGlobalJSCETsEventName,
 }) {
-	const [jsExtensions, setJSExtensions] = useState(initialJSExtensions);
+	const [globalJSCETs, setGlobalJSCETs] = useState(initialGlobalJSCETs);
 
-	const deleteJSExtension = (deletedJSExtension) => {
-		setJSExtensions((previousJSExtensions) =>
-			previousJSExtensions.filter(
-				(jsExtension) =>
-					jsExtension.clientExtensionEntryId !==
-					deletedJSExtension.clientExtensionEntryId
+	const deleteGlobalJSCET = (deletedGlobalJSCET) => {
+		setGlobalJSCETs((previousGlobalJSCETs) =>
+			previousGlobalJSCETs.filter(
+				(globalJSCET) =>
+					globalJSCET.globalJSCETExternalReferenceCode !==
+					deletedGlobalJSCET.globalJSCETExternalReferenceCode
 			)
 		);
 	};
 
-	const getDropDownItems = (jsExtension) => {
+	const getDropDownItems = (globalJSCET) => {
 		return [
 			{
 				label: Liferay.Language.get('delete'),
-				onClick: () => deleteJSExtension(jsExtension),
+				onClick: () => deleteGlobalJSCET(globalJSCET),
 				symbolLeft: 'trash',
 			},
 		];
@@ -58,35 +58,38 @@ export default function JSExtensionsConfiguration({
 					JSON.parse(selectedItem)
 				);
 
-				setJSExtensions((previousJSExtensions) => {
-					const nextJSExtensions = [
-						...previousJSExtensions,
+				setGlobalJSCETs((previousGlobalJSCETs) => {
+					const nextGlobalJSCETs = [
+						...previousGlobalJSCETs,
 						...items,
 					];
 
-					return nextJSExtensions.filter(
-						(jsExtension, index) =>
-							nextJSExtensions.findIndex(
-								({clientExtensionEntryId}) =>
-									jsExtension.clientExtensionEntryId ===
-									clientExtensionEntryId
+					return nextGlobalJSCETs.filter(
+						(globalJSCET, index) =>
+							nextGlobalJSCETs.findIndex(
+								({globalJSCETExternalReferenceCode}) =>
+									globalJSCET.globalJSCETExternalReferenceCode ===
+									globalJSCETExternalReferenceCode
 							) === index
 					);
 				});
 			},
-			selectEventName: selectJSClientExtensionsEventName,
+			selectEventName: selectGlobalJSCETsEventName,
 			title: Liferay.Language.get('select-javascript-extensions'),
-			url: jsExtensionSelectorURL,
+			url: globalJSCETSelectorURL,
 		});
 	};
 
 	return (
 		<>
 			<input
-				name={`${portletNamespace}jsExtensions`}
+				name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
 				type="hidden"
-				value={jsExtensions
-					.map((jsExtension) => jsExtension.clientExtensionEntryId)
+				value={globalJSCETs
+					.map(
+						(globalJSCET) =>
+							globalJSCET.globalJSCETExternalReferenceCode
+					)
 					.join(',')}
 			/>
 
@@ -104,7 +107,7 @@ export default function JSExtensionsConfiguration({
 				{Liferay.Language.get('add-javascript-extensions')}
 			</ClayButton>
 
-			{jsExtensions.length ? (
+			{globalJSCETs.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -121,17 +124,19 @@ export default function JSExtensionsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{jsExtensions.map((jsExtension) => (
+						{globalJSCETs.map((globalJSCET) => (
 							<ClayTable.Row
-								key={jsExtension.clientExtensionEntryId}
+								key={
+									globalJSCET.globalJSCETExternalReferenceCode
+								}
 							>
 								<ClayTable.Cell expanded headingTitle>
-									{jsExtension.name}
+									{globalJSCET.name}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell>
 									<ClayDropDownWithItems
-										items={getDropDownItems(jsExtension)}
+										items={getDropDownItems(globalJSCET)}
 										trigger={
 											<ClayButtonWithIcon
 												displayType="unstyled"

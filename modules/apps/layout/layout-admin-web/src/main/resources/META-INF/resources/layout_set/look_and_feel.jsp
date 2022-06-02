@@ -38,8 +38,8 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 	<clay:sheet-section>
 		<react:component
-			module="js/layout/look_and_feel/CSSExtensionsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getCSSExtensionsConfigurationProps() %>"
+			module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps() %>"
 		/>
 	</clay:sheet-section>
 </c:if>

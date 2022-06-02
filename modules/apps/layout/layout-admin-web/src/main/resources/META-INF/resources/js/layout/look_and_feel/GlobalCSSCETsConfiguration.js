@@ -18,29 +18,29 @@ import ClayTable from '@clayui/table';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-export default function CSSExtensionsConfiguration({
-	cssExtensionSelectorURL,
-	cssExtensions: initialCSSExtensions,
+export default function GlobalCSSCETsConfiguration({
+	globalCSSCETSelectorURL,
+	globalCSSCETs: initialGlobalCSSCETs,
 	portletNamespace,
-	selectCSSClientExtensionsEventName,
+	selectGlobalCSSCETsEventName,
 }) {
-	const [cssExtensions, setCSSExtensions] = useState(initialCSSExtensions);
+	const [globalCSSCETs, setGlobalCSSCETs] = useState(initialGlobalCSSCETs);
 
-	const deleteCSSExtension = (deletedCSSExtension) => {
-		setCSSExtensions((previousCSSExtensions) =>
-			previousCSSExtensions.filter(
-				(cssExtension) =>
-					cssExtension.clientExtensionEntryId !==
-					deletedCSSExtension.clientExtensionEntryId
+	const deleteGlobalCSSCET = (deletedGlobalCSSCET) => {
+		setGlobalCSSCETs((previousGlobalCSSCETs) =>
+			previousGlobalCSSCETs.filter(
+				(globalCSSCET) =>
+					globalCSSCET.globalCSSCETExternalReferenceCode !==
+					deletedGlobalCSSCET.globalCSSCETExternalReferenceCode
 			)
 		);
 	};
 
-	const getDropDownItems = (cssExtension) => {
+	const getDropDownItems = (globalCSSCET) => {
 		return [
 			{
 				label: Liferay.Language.get('delete'),
-				onClick: () => deleteCSSExtension(cssExtension),
+				onClick: () => deleteGlobalCSSCET(globalCSSCET),
 				symbolLeft: 'trash',
 			},
 		];
@@ -58,35 +58,38 @@ export default function CSSExtensionsConfiguration({
 					JSON.parse(selectedItem)
 				);
 
-				setCSSExtensions((previousCSSExtensions) => {
-					const nextCSSExtensions = [
-						...previousCSSExtensions,
+				setGlobalCSSCETs((previousGlobalCSSCETs) => {
+					const nextGlobalCSSCETs = [
+						...previousGlobalCSSCETs,
 						...items,
 					];
 
-					return nextCSSExtensions.filter(
-						(cssExtension, index) =>
-							nextCSSExtensions.findIndex(
-								({clientExtensionEntryId}) =>
-									cssExtension.clientExtensionEntryId ===
-									clientExtensionEntryId
+					return nextGlobalCSSCETs.filter(
+						(globalCSSCET, index) =>
+							nextGlobalCSSCETs.findIndex(
+								({globalCSSCETExternalReferenceCode}) =>
+									globalCSSCET.globalCSSCETExternalReferenceCode ===
+									globalCSSCETExternalReferenceCode
 							) === index
 					);
 				});
 			},
-			selectEventName: selectCSSClientExtensionsEventName,
+			selectEventName: selectGlobalCSSCETsEventName,
 			title: Liferay.Language.get('select-css-extensions'),
-			url: cssExtensionSelectorURL,
+			url: globalCSSCETSelectorURL,
 		});
 	};
 
 	return (
 		<>
 			<input
-				name={`${portletNamespace}cssExtensions`}
+				name={`${portletNamespace}globalCSSCETExternalReferenceCodes`}
 				type="hidden"
-				value={cssExtensions
-					.map((cssExtension) => cssExtension.clientExtensionEntryId)
+				value={globalCSSCETs
+					.map(
+						(globalCSSCET) =>
+							globalCSSCET.globalCSSCETExternalReferenceCode
+					)
 					.join(',')}
 			/>
 
@@ -104,7 +107,7 @@ export default function CSSExtensionsConfiguration({
 				{Liferay.Language.get('add-css-extensions')}
 			</ClayButton>
 
-			{cssExtensions.length ? (
+			{globalCSSCETs.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -121,17 +124,19 @@ export default function CSSExtensionsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{cssExtensions.map((cssExtension) => (
+						{globalCSSCETs.map((globalCSSCET) => (
 							<ClayTable.Row
-								key={cssExtension.clientExtensionEntryId}
+								key={
+									globalCSSCET.globalCSSCETExternalReferenceCode
+								}
 							>
 								<ClayTable.Cell expanded headingTitle>
-									{cssExtension.name}
+									{globalCSSCET.name}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell>
 									<ClayDropDownWithItems
-										items={getDropDownItems(cssExtension)}
+										items={getDropDownItems(globalCSSCET)}
 										trigger={
 											<ClayButtonWithIcon
 												displayType="unstyled"

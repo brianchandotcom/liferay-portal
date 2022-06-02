@@ -83,28 +83,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getCSSExtensionsConfigurationProps() {
-		return HashMapBuilder.<String, Object>put(
-			"cssExtensions", JSONFactoryUtil.createJSONArray()
-		).put(
-			"cssExtensionSelectorURL",
-			() -> {
-				PortletURL cetItemSelectorURL =
-					_layoutsAdminDisplayContext.getCETItemSelectorURL(
-						"selectCSSClientExtensions",
-						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-
-				return PortletURLBuilder.create(
-					cetItemSelectorURL
-				).setParameter(
-					"multipleSelection", true
-				).buildString();
-			}
-		).put(
-			"selectCSSClientExtensionsEventName", "selectCSSClientExtensions"
-		).build();
-	}
-
 	public String getFaviconFileEntryTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -172,15 +150,37 @@ public class LayoutLookAndFeelDisplayContext {
 		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
 	}
 
-	public Map<String, Object> getJSExtensionsConfigurationProps() {
+	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"jsExtensions", JSONFactoryUtil.createJSONArray()
+			"globalCSSCETs", JSONFactoryUtil.createJSONArray()
 		).put(
-			"jsExtensionSelectorURL",
+			"globalCSSCETSelectorURL",
 			() -> {
 				PortletURL cetItemSelectorURL =
 					_layoutsAdminDisplayContext.getCETItemSelectorURL(
-						"selectJSClientExtensions",
+						"selectGlobalCSSCETs",
+						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+				return PortletURLBuilder.create(
+					cetItemSelectorURL
+				).setParameter(
+					"multipleSelection", true
+				).buildString();
+			}
+		).put(
+			"selectGlobalCSSCETsEventName", "selectGlobalCSSCETs"
+		).build();
+	}
+
+	public Map<String, Object> getGlobalJSCETsConfigurationProps() {
+		return HashMapBuilder.<String, Object>put(
+			"globalJSCETs", JSONFactoryUtil.createJSONArray()
+		).put(
+			"globalJSCETSelectorURL",
+			() -> {
+				PortletURL cetItemSelectorURL =
+					_layoutsAdminDisplayContext.getCETItemSelectorURL(
+						"selectGlobalJSCETs",
 						ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 				return PortletURLBuilder.create(
@@ -190,7 +190,7 @@ public class LayoutLookAndFeelDisplayContext {
 				).buildString();
 			}
 		).put(
-			"selectJSClientExtensionsEventName", "selectJSClientExtensions"
+			"selectGlobalJSCETsEventName", "selectGlobalJSCETs"
 		).build();
 	}
 

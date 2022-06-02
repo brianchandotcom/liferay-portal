@@ -284,7 +284,9 @@ export default withRouter(
 					}keywords/any(x:x eq '${keywords}')`;
 				}
 				else if (creatorId) {
-					filter += ` and creator/id eq ${creatorId}`;
+					const operand = filter ? 'and' : '';
+
+					filter += `${operand} creator/id eq ${creatorId}`;
 				}
 
 				sort = sort || 'dateCreated:desc';

@@ -27,7 +27,7 @@ long[] categoryIds = ParamUtil.getLongValues(request, "categoryIds");
 renderResponse.setTitle(LanguageUtil.format(request, "assign-display-page-template-for-x-categories", categoryIds.length));
 %>
 
-<portlet:actionURL name="setCategoryDisplayPageTemplate" var="setCategoryDisplayPageTemplateURL">
+<portlet:actionURL name="/asset_categories_admin/set_asset_category_display_page_template" var="setCategoryDisplayPageTemplateURL">
 	<portlet:param name="categoryIds" value="<%= StringUtil.merge(categoryIds) %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>

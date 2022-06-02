@@ -2832,14 +2832,14 @@ definition {
 			validateFileNameRestriction = "true");
 	}
 
-	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is desployed"
+	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed"
 	@priority = "4"
 	test VerifyTreeImageIsAvailable {
 		task ("Go to Documents and Media Settings") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
-		task ("Verify tree image and it selection is available") {
+		task ("Verify tree image is available and selectable") {
 			AssertElementPresent(
 				key_dmDocumentTitle = "tree.png",
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");

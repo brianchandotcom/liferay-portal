@@ -177,20 +177,19 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			friendlyURLEdit = "custom-url");
 
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.addManualSelection(
-			assetListTitle = "Depot Manual Asset List",
-			depotName = "Test Depot Name");
+		JSONAssetlist.addManualAssetListEntryWithItemType(
+			groupName = "Test Depot Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			site = "false",
+			title = "Depot Manual Asset List");
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
 			assetListName = "Depot Manual Asset List",
 			assetName = "DM Document Title",
-			assetType = "Basic Document",
-			itemSubtype = "Basic Document",
-			itemType = "Document");
+			assetType = "Basic Document");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

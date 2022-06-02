@@ -9,7 +9,9 @@ definition {
 			collectionName = "${collectionName}",
 			fragmentName = "${fragmentName}");
 
-		Button.clickPublish();
+		if ("${publish}" != "false") {
+			Button.clickPublish();
+		}
 	}
 
 	macro clickPencil {

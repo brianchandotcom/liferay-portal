@@ -151,6 +151,11 @@ public class CETManagerImpl implements CETManager {
 	}
 
 	@Override
+	public CET getCET(long companyId, String primaryKey) {
+		return _getCET(companyId, primaryKey);
+	}
+
+	@Override
 	public List<CET> getCETs(
 		long companyId, String keywords, String type, Pagination pagination,
 		Sort sort) {
@@ -186,6 +191,20 @@ public class CETManagerImpl implements CETManager {
 		Map<String, CET> cetsMap = _getCETsMap(cet.getCompanyId());
 
 		cetsMap.put(cet.getPrimaryKey(), cet);
+	}
+
+	private CET _getCET(long companyId, String primaryKey) {
+		Map<String, CET> cetsMap = _getCETsMap(companyId);
+
+		for (Map.Entry<String, CET> entry : cetsMap.entrySet()) {
+			CET cet = entry.getValue();
+
+			if (Objects.equals(primaryKey, cet.getPrimaryKey())) {
+				return cet;
+			}
+		}
+
+		return null;
 	}
 
 	private List<CET> _getCETs(long companyId, String keywords, String type) {

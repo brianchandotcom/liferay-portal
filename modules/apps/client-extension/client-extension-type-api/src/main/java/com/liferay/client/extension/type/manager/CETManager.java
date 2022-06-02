@@ -41,6 +41,8 @@ public interface CETManager {
 
 	public void deleteCET(ClientExtensionEntry clientExtensionEntry);
 
+	public CET getCET(long companyId, String primaryKey);
+
 	public List<CET> getCETs(
 		long companyId, String keywords, String type, Pagination pagination,
 		Sort sort);

@@ -22,6 +22,7 @@ export default function CSSExtensionConfiguration({
 	cssExtensionSelectorURL,
 	cssExtensions: initialCSSExtensions,
 	portletNamespace,
+	selectCSSClientExtensionsEventName,
 }) {
 	const [cssExtensions, setCSSExtensions] = useState(initialCSSExtensions);
 
@@ -47,11 +48,16 @@ export default function CSSExtensionConfiguration({
 
 	const handleClick = () => {
 		openSelectionModal({
+			multiple: true,
 			onSelect(selectedItems) {
+				const items = selectedItems.value.map((selectedItem) =>
+					JSON.parse(selectedItem)
+				);
+
 				setCSSExtensions((previousCSSExtensions) => {
 					const nextCSSExtensions = [
 						...previousCSSExtensions,
-						...selectedItems,
+						...items,
 					];
 
 					return nextCSSExtensions.filter(
@@ -64,7 +70,7 @@ export default function CSSExtensionConfiguration({
 					);
 				});
 			},
-			selectEventName: `${portletNamespace}selectCSSExtensions`,
+			selectEventName: selectCSSClientExtensionsEventName,
 			title: Liferay.Language.get('select-css-extensions'),
 			url: cssExtensionSelectorURL,
 		});

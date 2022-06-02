@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.client.extension" short-no-such-exception-enabled="false">
 	<namespace>ClientExtension</namespace>
-	<entity external-reference-code="true" local-service="true" name="ClientExtensionEntry" remote-service="true" trash-enabled="false" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="ClientExtensionEntry" remote-service="true" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -40,7 +40,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="ClientExtensionEntryRel" remote-service="false" trash-enabled="false" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="ClientExtensionEntryRel" remote-service="false" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 

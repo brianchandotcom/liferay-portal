@@ -2313,9 +2313,17 @@ definition {
 		}
 
 		if (isSet(imageFileName)) {
-			ItemSelector.selectDMImage(
-				imageFileName = "${imageFileName}",
-				navTab = "Documents and Media");
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					depotName = "${depotName}",
+					imageFileName = "${imageFileName}",
+					navTab = "Documents and Media");
+			}
+			else {
+				ItemSelector.selectDMImage(
+					imageFileName = "${imageFileName}",
+					navTab = "Documents and Media");
+			}
 		}
 		else if (isSet(imageSourceURL)) {
 			ItemSelector.addImageFromURL(

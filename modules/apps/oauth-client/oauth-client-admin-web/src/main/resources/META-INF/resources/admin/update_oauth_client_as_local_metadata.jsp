@@ -89,6 +89,10 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 			'<portlet:namespace />metadataJSON'
 		);
 
-		metadataJSON.value = JSON.stringify(JSON.parse(metadataJSON.value), null, 4);
+		metadataJSON.value = JSON.stringify(
+			JSON.parse(metadataJSON.value),
+			null,
+			4
+		);
 	}
 </aui:script>

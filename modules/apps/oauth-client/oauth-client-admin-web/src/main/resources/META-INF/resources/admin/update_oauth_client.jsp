@@ -96,9 +96,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 	}
 
 	function <portlet:namespace />init() {
-		var infoJSON = document.getElementById(
-			'<portlet:namespace />infoJSON'
-		);
+		var infoJSON = document.getElementById('<portlet:namespace />infoJSON');
 
 		infoJSON.value = JSON.stringify(JSON.parse(infoJSON.value), null, 4);
 
@@ -106,6 +104,10 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />parametersJSON'
 		);
 
-		parametersJSON.value = JSON.stringify(JSON.parse(parametersJSON.value), null, 4);
+		parametersJSON.value = JSON.stringify(
+			JSON.parse(parametersJSON.value),
+			null,
+			4
+		);
 	}
 </aui:script>

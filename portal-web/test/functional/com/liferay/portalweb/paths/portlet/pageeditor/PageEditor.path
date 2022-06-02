@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_CELL</td>
-	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] | //div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
+	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] |//div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_DEPRIORITIZE_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Deprioritize Experience')]]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//li[contains(.,'${key_experienceName}')]//button[@*[contains(.,'Deprioritize Experience')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -369,8 +369,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPERIENCE_DROPDOWN</td>
+	<td>EXPERIENCE_MENU</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience__dropdown-menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_MENU_BUTTON</td>
+	<td>//*[@class='page-editor__toolbar-experience']//button[contains(@id,'pageEditorToolbar_experience')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -385,7 +390,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_PRIORITIZE_BUTTON</td>
-	<td>xpath=(//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Prioritize Experience')]])[${key_index}]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//li[contains(.,'${key_experienceName}')]//button[@*[contains(.,'Prioritize Experience')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -394,7 +399,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPERIENCE_SEGMENT_NAMES</td>
+	<td>EXPERIENCE_VALUES</td>
 	<td>//span[contains(@class,'text-truncate-inline')]//span[text()='${key_experienceName}']/parent::span/following-sibling::span[text()='${key_segmentName}']</td>
 	<td></td>
 </tr>

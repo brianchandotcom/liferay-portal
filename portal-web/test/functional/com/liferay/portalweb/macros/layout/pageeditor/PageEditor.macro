@@ -541,11 +541,7 @@ definition {
 		var key_experienceName = "${experienceName}";
 		var key_segmentName = "${segmentName}";
 
-		AssertTextEquals(
-			locator1 = "PageEditor#EXPERIENCE_LABEL",
-			value1 = "Experience");
-
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+		PageEditor.openExperienceMenu();
 
 		Click(
 			key_text = "New Experience",
@@ -561,14 +557,13 @@ definition {
 
 		Click(locator1 = "Button#SAVE");
 
-		if ("${experienceName}" != "") {
-			AssertClick(
-				locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
-				value1 = "${experienceName}");
-
-			AssertElementPresent(
-				key_experienceName = "${experienceName}",
-				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+		if (isSet(failureText)) {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "${failureText}");
+		}
+		else {
+			Alert.viewSuccessMessage();
 		}
 	}
 
@@ -1379,6 +1374,18 @@ definition {
 		}
 	}
 
+	macro deleteAllExperiences {
+		PageEditor.openExperienceMenu();
+
+		while (IsElementPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON")) {
+			ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+			AssertConfirm(value1 = "Do you want to delete this experience? Its content will be deleted.");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteComment {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 
@@ -1397,7 +1404,7 @@ definition {
 	macro deleteExperience {
 		var key_experienceName = "${newExperience}";
 
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+		PageEditor.openExperienceMenu();
 
 		ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
 
@@ -1405,29 +1412,25 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+		PageEditor.openExperienceMenu();
 
 		AssertElementNotPresent(
 			key_experienceName = "${newExperience}",
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+	}
 
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+	macro deleteExperienceCancel {
+		PageEditor.openExperienceMenu();
+
+		ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
+
+		Confirm.dismissAlert();
 	}
 
 	macro deprioritizeExperience {
 		var key_experienceName = "${experienceName}";
 
-		if (IsElementPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
-		}
-
-		AssertTextEquals(
-			locator1 = "PageEditor#EXPERIENCE_LABEL",
-			value1 = "Experience");
-
-		AssertClick(
-			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
-			value1 = "${experienceName}");
+		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEPRIORITIZE_BUTTON");
 	}
@@ -1447,15 +1450,7 @@ definition {
 	}
 
 	macro duplicateExperience {
-		var key_experienceName = "${experienceName}";
-
-		AssertTextEquals(
-			locator1 = "PageEditor#EXPERIENCE_LABEL",
-			value1 = "Experience");
-
-		AssertClick(
-			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
-			value1 = "${experienceName}");
+		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DUPLICATE_BUTTON");
 
@@ -2164,37 +2159,23 @@ definition {
 	}
 
 	macro editExperience {
-		var key_experienceName = "${newExperience}";
-
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
 
-		Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
+		if (isSet(new_experienceName)) {
+			Type(
+				locator1 = "PageEditor#EXPERIENCE_NAME",
+				value1 = "${new_experienceName}");
+		}
 
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test 2");
-
-		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-		Segmentation.fillProperty(propertyField = "liferay2");
-
-		Button.clickSave();
-
-		Type(
-			locator1 = "PageEditor#EXPERIENCE_NAME",
-			value1 = "${key_experienceName}");
+		if (isSet(new_segmentName)) {
+			Select(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "${new_segmentName}");
+		}
 
 		Click(locator1 = "Button#SAVE");
-
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
-
-		AssertElementPresent(
-			key_experienceName = "${newExperience}",
-			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
-
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
 	macro editFormContainer {
@@ -3443,7 +3424,9 @@ definition {
 	}
 
 	macro openExperienceMenu {
-		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_MENU")) {
+			Click(locator1 = "PageEditor#EXPERIENCE_MENU_BUTTON");
+		}
 	}
 
 	macro openNewExperienceEditor {
@@ -3459,19 +3442,9 @@ definition {
 	}
 
 	macro prioritizeExperience {
-		if (!(isSet(key_index))) {
-			var key_index = "1";
-		}
-
 		var key_experienceName = "${experienceName}";
 
-		AssertTextEquals(
-			locator1 = "PageEditor#EXPERIENCE_LABEL",
-			value1 = "Experience");
-
-		AssertClick(
-			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
-			value1 = "${experienceName}");
+		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 	}
@@ -4104,11 +4077,17 @@ definition {
 	}
 
 	macro viewExperienceActive {
-		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
-		}
+		PageEditor.openExperienceMenu();
 
 		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
+	}
+
+	macro viewExperienceNotActive {
+		PageEditor.openExperienceMenu();
+
+		AssertElementNotPresent(
 			key_experienceName = "${experienceName}",
 			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
 	}
@@ -4116,9 +4095,7 @@ definition {
 	macro viewExperiencesNameOrder {
 		var index = "0";
 
-		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DROPDOWN")) {
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
-		}
+		PageEditor.openExperienceMenu();
 
 		for (var experienceName : list "${experienceName}") {
 			var index = ${index} + 1;
@@ -4128,6 +4105,17 @@ definition {
 				key_index = "${index}",
 				locator1 = "PageEditor#EXPERIENCE_ORDER_NAMES");
 		}
+	}
+
+	macro viewExperienceValues {
+		PageEditor.openExperienceMenu();
+
+		AssertVisible(
+			key_experienceName = "${experienceName}",
+			key_segmentName = "${segmentName}",
+			locator1 = "PageEditor#EXPERIENCE_VALUES");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 	}
 
 	macro viewFragment {

@@ -14,7 +14,10 @@
 
 package com.liferay.client.extension.service;
 
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link ClientExtensionEntryRelLocalService}.
@@ -50,20 +53,17 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the client extension entry rel that was added
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		addClientExtensionEntryRel(
-			com.liferay.client.extension.model.ClientExtensionEntryRel
-				clientExtensionEntryRel) {
+	public ClientExtensionEntryRel addClientExtensionEntryRel(
+		ClientExtensionEntryRel clientExtensionEntryRel) {
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			clientExtensionEntryRel);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-			addClientExtensionEntryRel(
-				long userId, long classNameId, long classPK,
-				String cetExternalReferenceCode, String type)
+	public ClientExtensionEntryRel addClientExtensionEntryRel(
+			long userId, long classNameId, long classPK,
+			String cetExternalReferenceCode, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
@@ -77,8 +77,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the new client extension entry rel
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		createClientExtensionEntryRel(long clientExtensionEntryRelId) {
+	public ClientExtensionEntryRel createClientExtensionEntryRel(
+		long clientExtensionEntryRelId) {
 
 		return _clientExtensionEntryRelLocalService.
 			createClientExtensionEntryRel(clientExtensionEntryRelId);
@@ -107,10 +107,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the client extension entry rel that was removed
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		deleteClientExtensionEntryRel(
-			com.liferay.client.extension.model.ClientExtensionEntryRel
-				clientExtensionEntryRel) {
+	public ClientExtensionEntryRel deleteClientExtensionEntryRel(
+		ClientExtensionEntryRel clientExtensionEntryRel) {
 
 		return _clientExtensionEntryRelLocalService.
 			deleteClientExtensionEntryRel(clientExtensionEntryRel);
@@ -128,8 +126,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @throws PortalException if a client extension entry rel with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-			deleteClientExtensionEntryRel(long clientExtensionEntryRelId)
+	public ClientExtensionEntryRel deleteClientExtensionEntryRel(
+			long clientExtensionEntryRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.
@@ -259,17 +257,16 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		fetchClientExtensionEntryRel(long clientExtensionEntryRelId) {
+	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
+		long clientExtensionEntryRelId) {
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRel(clientExtensionEntryRelId);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		fetchClientExtensionEntryRel(
-			long classNameId, long classPK, String type) {
+	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
+		long classNameId, long classPK, String type) {
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRel(classNameId, classPK, type);
@@ -283,7 +280,7 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
+	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -297,9 +294,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		fetchClientExtensionEntryRelByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public ClientExtensionEntryRel fetchClientExtensionEntryRelByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRelByReferenceCode(
@@ -314,7 +310,7 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
+	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByUuidAndCompanyId(
 			String uuid, long companyId) {
 
@@ -337,8 +333,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @throws PortalException if a client extension entry rel with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-			getClientExtensionEntryRel(long clientExtensionEntryRelId)
+	public ClientExtensionEntryRel getClientExtensionEntryRel(
+			long clientExtensionEntryRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRel(
@@ -354,7 +350,7 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @throws PortalException if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
+	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
 				long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -373,9 +369,8 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @throws PortalException if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-			getClientExtensionEntryRelByUuidAndCompanyId(
-				String uuid, long companyId)
+	public ClientExtensionEntryRel getClientExtensionEntryRelByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.
@@ -394,29 +389,24 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the range of client extension entry rels
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntryRel>
-			getClientExtensionEntryRels(int start, int end) {
+	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		int start, int end) {
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 			start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntryRel>
-			getClientExtensionEntryRels(long classNameId, long classPK) {
+	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK) {
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 			classNameId, classPK);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntryRel>
-			getClientExtensionEntryRels(
-				long classNameId, long classPK, String type, int start,
-				int end) {
+	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type, int start, int end) {
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 			classNameId, classPK, type, start, end);
@@ -492,13 +482,31 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	 * @return the client extension entry rel that was updated
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntryRel
-		updateClientExtensionEntryRel(
-			com.liferay.client.extension.model.ClientExtensionEntryRel
-				clientExtensionEntryRel) {
+	public ClientExtensionEntryRel updateClientExtensionEntryRel(
+		ClientExtensionEntryRel clientExtensionEntryRel) {
 
 		return _clientExtensionEntryRelLocalService.
 			updateClientExtensionEntryRel(clientExtensionEntryRel);
+	}
+
+	@Override
+	public CTPersistence<ClientExtensionEntryRel> getCTPersistence() {
+		return _clientExtensionEntryRelLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<ClientExtensionEntryRel> getModelClass() {
+		return _clientExtensionEntryRelLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<ClientExtensionEntryRel>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _clientExtensionEntryRelLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

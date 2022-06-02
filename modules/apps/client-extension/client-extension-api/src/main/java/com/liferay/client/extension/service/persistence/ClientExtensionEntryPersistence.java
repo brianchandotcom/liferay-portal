@@ -17,6 +17,7 @@ package com.liferay.client.extension.service.persistence;
 import com.liferay.client.extension.exception.NoSuchClientExtensionEntryException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ClientExtensionEntryPersistence
-	extends BasePersistence<ClientExtensionEntry> {
+	extends BasePersistence<ClientExtensionEntry>,
+			CTPersistence<ClientExtensionEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

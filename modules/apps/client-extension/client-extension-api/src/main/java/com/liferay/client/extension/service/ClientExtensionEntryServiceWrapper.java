@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.service;
 
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,12 +39,10 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			addClientExtensionEntry(
-				String externalReferenceCode, String description,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String properties, String sourceCodeURL, String type,
-				String typeSettings)
+	public ClientExtensionEntry addClientExtensionEntry(
+			String externalReferenceCode, String description,
+			java.util.Map<java.util.Locale, String> nameMap, String properties,
+			String sourceCodeURL, String type, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.addClientExtensionEntry(
@@ -52,8 +51,8 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			deleteClientExtensionEntry(long clientExtensionEntryId)
+	public ClientExtensionEntry deleteClientExtensionEntry(
+			long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.deleteClientExtensionEntry(
@@ -61,7 +60,7 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
+	public ClientExtensionEntry
 			deleteClientExtensionEntryByExternalReferenceCode(
 				long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -72,7 +71,7 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
+	public ClientExtensionEntry
 			fetchClientExtensionEntryByExternalReferenceCode(
 				long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -83,8 +82,8 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntry(long clientExtensionEntryId)
+	public ClientExtensionEntry getClientExtensionEntry(
+			long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.getClientExtensionEntry(
@@ -102,11 +101,10 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			updateClientExtensionEntry(
-				long clientExtensionEntryId, String description,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String properties, String sourceCodeURL, String typeSettings)
+	public ClientExtensionEntry updateClientExtensionEntry(
+			long clientExtensionEntryId, String description,
+			java.util.Map<java.util.Locale, String> nameMap, String properties,
+			String sourceCodeURL, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryService.updateClientExtensionEntry(

@@ -131,6 +131,8 @@ public class ClientExtensionEntryRelPersistenceTest {
 
 		newClientExtensionEntryRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newClientExtensionEntryRel.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newClientExtensionEntryRel.setUuid(RandomTestUtil.randomString());
 
 		newClientExtensionEntryRel.setExternalReferenceCode(
@@ -165,6 +167,9 @@ public class ClientExtensionEntryRelPersistenceTest {
 		Assert.assertEquals(
 			existingClientExtensionEntryRel.getMvccVersion(),
 			newClientExtensionEntryRel.getMvccVersion());
+		Assert.assertEquals(
+			existingClientExtensionEntryRel.getCtCollectionId(),
+			newClientExtensionEntryRel.getCtCollectionId());
 		Assert.assertEquals(
 			existingClientExtensionEntryRel.getUuid(),
 			newClientExtensionEntryRel.getUuid());
@@ -281,11 +286,12 @@ public class ClientExtensionEntryRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"ClientExtensionEntryRel", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "clientExtensionEntryRelId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"cetExternalReferenceCode", true, "type", true);
+			"ClientExtensionEntryRel", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "externalReferenceCode", true,
+			"clientExtensionEntryRelId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "cetExternalReferenceCode",
+			true, "type", true);
 	}
 
 	@Test
@@ -602,6 +608,8 @@ public class ClientExtensionEntryRelPersistenceTest {
 			pk);
 
 		clientExtensionEntryRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		clientExtensionEntryRel.setCtCollectionId(RandomTestUtil.nextLong());
 
 		clientExtensionEntryRel.setUuid(RandomTestUtil.randomString());
 

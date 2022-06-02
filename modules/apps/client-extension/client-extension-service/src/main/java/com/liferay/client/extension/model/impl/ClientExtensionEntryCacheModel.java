@@ -78,10 +78,12 @@ public class ClientExtensionEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -129,6 +131,7 @@ public class ClientExtensionEntryCacheModel
 			new ClientExtensionEntryImpl();
 
 		clientExtensionEntryImpl.setMvccVersion(mvccVersion);
+		clientExtensionEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			clientExtensionEntryImpl.setUuid("");
@@ -240,6 +243,8 @@ public class ClientExtensionEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -268,6 +273,8 @@ public class ClientExtensionEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -356,6 +363,7 @@ public class ClientExtensionEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long clientExtensionEntryId;

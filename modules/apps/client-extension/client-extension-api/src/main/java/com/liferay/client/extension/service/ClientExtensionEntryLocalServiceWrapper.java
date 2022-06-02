@@ -14,7 +14,10 @@
 
 package com.liferay.client.extension.service;
 
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link ClientExtensionEntryLocalService}.
@@ -48,22 +51,18 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the client extension entry that was added
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		addClientExtensionEntry(
-			com.liferay.client.extension.model.ClientExtensionEntry
-				clientExtensionEntry) {
+	public ClientExtensionEntry addClientExtensionEntry(
+		ClientExtensionEntry clientExtensionEntry) {
 
 		return _clientExtensionEntryLocalService.addClientExtensionEntry(
 			clientExtensionEntry);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			addClientExtensionEntry(
-				String externalReferenceCode, long userId, String description,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String properties, String sourceCodeURL, String type,
-				String typeSettings)
+	public ClientExtensionEntry addClientExtensionEntry(
+			String externalReferenceCode, long userId, String description,
+			java.util.Map<java.util.Locale, String> nameMap, String properties,
+			String sourceCodeURL, String type, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.addClientExtensionEntry(
@@ -72,12 +71,10 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			addOrUpdateClientExtensionEntry(
-				String externalReferenceCode, long userId, String description,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String properties, String sourceCodeURL, String type,
-				String typeSettings)
+	public ClientExtensionEntry addOrUpdateClientExtensionEntry(
+			String externalReferenceCode, long userId, String description,
+			java.util.Map<java.util.Locale, String> nameMap, String properties,
+			String sourceCodeURL, String type, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.
@@ -93,8 +90,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the new client extension entry
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		createClientExtensionEntry(long clientExtensionEntryId) {
+	public ClientExtensionEntry createClientExtensionEntry(
+		long clientExtensionEntryId) {
 
 		return _clientExtensionEntryLocalService.createClientExtensionEntry(
 			clientExtensionEntryId);
@@ -124,10 +121,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			deleteClientExtensionEntry(
-				com.liferay.client.extension.model.ClientExtensionEntry
-					clientExtensionEntry)
+	public ClientExtensionEntry deleteClientExtensionEntry(
+			ClientExtensionEntry clientExtensionEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.deleteClientExtensionEntry(
@@ -146,8 +141,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException if a client extension entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			deleteClientExtensionEntry(long clientExtensionEntryId)
+	public ClientExtensionEntry deleteClientExtensionEntry(
+			long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.deleteClientExtensionEntry(
@@ -168,8 +163,7 @@ public class ClientExtensionEntryLocalServiceWrapper
 
 	@Override
 	public void deployClientExtensionEntry(
-			com.liferay.client.extension.model.ClientExtensionEntry
-				clientExtensionEntry)
+			ClientExtensionEntry clientExtensionEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_clientExtensionEntryLocalService.deployClientExtensionEntry(
@@ -281,8 +275,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		fetchClientExtensionEntry(long clientExtensionEntryId) {
+	public ClientExtensionEntry fetchClientExtensionEntry(
+		long clientExtensionEntryId) {
 
 		return _clientExtensionEntryLocalService.fetchClientExtensionEntry(
 			clientExtensionEntryId);
@@ -296,7 +290,7 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
+	public ClientExtensionEntry
 		fetchClientExtensionEntryByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -310,9 +304,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		fetchClientExtensionEntryByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public ClientExtensionEntry fetchClientExtensionEntryByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return _clientExtensionEntryLocalService.
 			fetchClientExtensionEntryByReferenceCode(
@@ -327,9 +320,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		fetchClientExtensionEntryByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public ClientExtensionEntry fetchClientExtensionEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _clientExtensionEntryLocalService.
 			fetchClientExtensionEntryByUuidAndCompanyId(uuid, companyId);
@@ -354,28 +346,24 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the range of client extension entries
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry>
-			getClientExtensionEntries(int start, int end) {
+	public java.util.List<ClientExtensionEntry> getClientExtensionEntries(
+		int start, int end) {
 
 		return _clientExtensionEntryLocalService.getClientExtensionEntries(
 			start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry>
-			getClientExtensionEntries(long companyId, int start, int end) {
+	public java.util.List<ClientExtensionEntry> getClientExtensionEntries(
+		long companyId, int start, int end) {
 
 		return _clientExtensionEntryLocalService.getClientExtensionEntries(
 			companyId, start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry>
-			getClientExtensionEntries(
-				long companyId, String type, int start, int end) {
+	public java.util.List<ClientExtensionEntry> getClientExtensionEntries(
+		long companyId, String type, int start, int end) {
 
 		return _clientExtensionEntryLocalService.getClientExtensionEntries(
 			companyId, type, start, end);
@@ -412,8 +400,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException if a client extension entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntry(long clientExtensionEntryId)
+	public ClientExtensionEntry getClientExtensionEntry(
+			long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.getClientExtensionEntry(
@@ -429,9 +417,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException if a matching client extension entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.
@@ -448,9 +435,8 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException if a matching client extension entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntryByUuidAndCompanyId(
-				String uuid, long companyId)
+	public ClientExtensionEntry getClientExtensionEntryByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.
@@ -498,11 +484,10 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry> search(
-				long companyId, String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<ClientExtensionEntry> search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.search(
 			companyId, keywords, start, end, sort);
@@ -518,8 +503,7 @@ public class ClientExtensionEntryLocalServiceWrapper
 
 	@Override
 	public void undeployClientExtensionEntry(
-		com.liferay.client.extension.model.ClientExtensionEntry
-			clientExtensionEntry) {
+		ClientExtensionEntry clientExtensionEntry) {
 
 		_clientExtensionEntryLocalService.undeployClientExtensionEntry(
 			clientExtensionEntry);
@@ -536,21 +520,18 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @return the client extension entry that was updated
 	 */
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		updateClientExtensionEntry(
-			com.liferay.client.extension.model.ClientExtensionEntry
-				clientExtensionEntry) {
+	public ClientExtensionEntry updateClientExtensionEntry(
+		ClientExtensionEntry clientExtensionEntry) {
 
 		return _clientExtensionEntryLocalService.updateClientExtensionEntry(
 			clientExtensionEntry);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			updateClientExtensionEntry(
-				long userId, long clientExtensionEntryId, String description,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String properties, String sourceCodeURL, String typeSettings)
+	public ClientExtensionEntry updateClientExtensionEntry(
+			long userId, long clientExtensionEntryId, String description,
+			java.util.Map<java.util.Locale, String> nameMap, String properties,
+			String sourceCodeURL, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.updateClientExtensionEntry(
@@ -559,12 +540,32 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry updateStatus(
+	public ClientExtensionEntry updateStatus(
 			long userId, long clientExtensionEntryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.updateStatus(
 			userId, clientExtensionEntryId, status);
+	}
+
+	@Override
+	public CTPersistence<ClientExtensionEntry> getCTPersistence() {
+		return _clientExtensionEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<ClientExtensionEntry> getModelClass() {
+		return _clientExtensionEntryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<ClientExtensionEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _clientExtensionEntryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

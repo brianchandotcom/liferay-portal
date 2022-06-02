@@ -82,8 +82,8 @@ public class ClientExtensionEntryModelImpl
 	public static final String TABLE_NAME = "ClientExtensionEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"clientExtensionEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -99,6 +99,7 @@ public class ClientExtensionEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientExtensionEntryId", Types.BIGINT);
@@ -120,7 +121,7 @@ public class ClientExtensionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,name STRING null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,name STRING null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (clientExtensionEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ClientExtensionEntry";
@@ -288,6 +289,12 @@ public class ClientExtensionEntryModelImpl
 			"mvccVersion",
 			(BiConsumer<ClientExtensionEntry, Long>)
 				ClientExtensionEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", ClientExtensionEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<ClientExtensionEntry, Long>)
+				ClientExtensionEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", ClientExtensionEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -413,6 +420,21 @@ public class ClientExtensionEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1132,6 +1154,7 @@ public class ClientExtensionEntryModelImpl
 			new ClientExtensionEntryImpl();
 
 		clientExtensionEntryImpl.setMvccVersion(getMvccVersion());
+		clientExtensionEntryImpl.setCtCollectionId(getCtCollectionId());
 		clientExtensionEntryImpl.setUuid(getUuid());
 		clientExtensionEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1165,6 +1188,8 @@ public class ClientExtensionEntryModelImpl
 
 		clientExtensionEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		clientExtensionEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		clientExtensionEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		clientExtensionEntryImpl.setExternalReferenceCode(
@@ -1281,6 +1306,8 @@ public class ClientExtensionEntryModelImpl
 			new ClientExtensionEntryCacheModel();
 
 		clientExtensionEntryCacheModel.mvccVersion = getMvccVersion();
+
+		clientExtensionEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		clientExtensionEntryCacheModel.uuid = getUuid();
 
@@ -1501,6 +1528,7 @@ public class ClientExtensionEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _clientExtensionEntryId;
@@ -1552,6 +1580,7 @@ public class ClientExtensionEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
@@ -1598,41 +1627,43 @@ public class ClientExtensionEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("clientExtensionEntryId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("clientExtensionEntryId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("description", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("properties", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("sourceCodeURL", 4096L);
+		columnBitmasks.put("properties", 4096L);
 
-		columnBitmasks.put("type_", 8192L);
+		columnBitmasks.put("sourceCodeURL", 8192L);
 
-		columnBitmasks.put("typeSettings", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
-		columnBitmasks.put("status", 32768L);
+		columnBitmasks.put("typeSettings", 32768L);
 
-		columnBitmasks.put("statusByUserId", 65536L);
+		columnBitmasks.put("status", 65536L);
 
-		columnBitmasks.put("statusByUserName", 131072L);
+		columnBitmasks.put("statusByUserId", 131072L);
 
-		columnBitmasks.put("statusDate", 262144L);
+		columnBitmasks.put("statusByUserName", 262144L);
+
+		columnBitmasks.put("statusDate", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

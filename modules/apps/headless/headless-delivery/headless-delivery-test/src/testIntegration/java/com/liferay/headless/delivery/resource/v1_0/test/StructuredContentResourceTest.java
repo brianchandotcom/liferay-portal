@@ -143,6 +143,7 @@ public class StructuredContentResourceTest
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
+		_insertDepotDDMStructure = false;
 	}
 
 	@Override
@@ -460,6 +461,15 @@ public class StructuredContentResourceTest
 		assertValid(postStructuredContent2);
 	}
 
+	@Override
+	@Test
+	public void testPutAssetLibraryStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		_insertDepotDDMStructure = true;
+		super.testPutAssetLibraryStructuredContentByExternalReferenceCode();
+	}
+
 	public static class ExtensionContextResolver
 		implements ContextResolver<ExtensionContext> {
 
@@ -541,9 +551,36 @@ public class StructuredContentResourceTest
 					}
 				}
 			});
-		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+		structuredContent.setContentStructureId(
+			_insertDepotDDMStructure ? _depotDDMStructure.getStructureId() :
+				_ddmStructure.getStructureId());
 
 		return structuredContent;
+	}
+
+	@Override
+	protected Long
+			testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected StructuredContent
+			testGetAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		return testPostAssetLibraryStructuredContent_addStructuredContent(
+			randomStructuredContent());
+	}
+
+	@Override
+	protected Long
+			testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -592,6 +629,25 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
+			testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		_insertDepotDDMStructure = true;
+
+		return testPostAssetLibraryStructuredContent_addStructuredContent(
+			randomStructuredContent());
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected StructuredContent
 			testGraphQLStructuredContent_addStructuredContent()
 		throws Exception {
 
@@ -610,6 +666,23 @@ public class StructuredContentResourceTest
 
 		return super.testPostAssetLibraryStructuredContent_addStructuredContent(
 			structuredContent);
+	}
+
+	@Override
+	protected StructuredContent
+			testPutAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		return testPostAssetLibraryStructuredContent_addStructuredContent(
+			randomStructuredContent());
+	}
+
+	@Override
+	protected Long
+			testPutAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	@Override
@@ -1023,6 +1096,7 @@ public class StructuredContentResourceTest
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _depotDDMStructure;
 	private DLFileEntry _dlFileEntry;
+	private boolean _insertDepotDDMStructure;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;

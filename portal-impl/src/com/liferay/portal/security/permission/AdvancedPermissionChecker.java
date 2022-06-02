@@ -438,6 +438,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return roleIds;
 		}
 
+		if (_contributedRoleIds != null) {
+			_contributedRoleIds.remove(groupId);
+		}
+
 		Group group = null;
 
 		long parentGroupId = 0;

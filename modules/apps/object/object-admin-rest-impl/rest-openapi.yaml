@@ -39,6 +39,11 @@ components:
             type: object
         ObjectDefinition:
             properties:
+                accountEntryRestricted:
+                    type: boolean
+                accountEntryRestrictedObjectFieldId:
+                    format: int64
+                    type: integer
                 actions:
                     additionalProperties:
                         additionalProperties:

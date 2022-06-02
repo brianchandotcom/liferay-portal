@@ -143,14 +143,14 @@ definition {
 		task ("Add three custom asset reports") {
 			var n = "1";
 
-			for (var metric : list "Asset Views (sum),Asset Interaction Time (sum),Asset Downloads (sum)") {
+			for (var metricName : list "Asset Views (sum),Asset Interaction Time (average),Asset Downloads (sum)") {
 				ACNavigation.goToAssets();
 
 				ACNavigation.switchTab(tabName = "Custom");
 
 				ACAssets.addCustomAssetReport(
 					assetName = "Custom Asset Analytics Cloud",
-					metric = "Asset Views (sum)",
+					metric = "${metricName}",
 					reportName = "Test Custom Asset Report ${n}");
 
 				var n = ${n} + 1;
@@ -244,14 +244,14 @@ definition {
 		task ("Add three custom asset reports") {
 			var n = "1";
 
-			for (var metric : list "Asset Views (sum),Asset Interaction Time (sum),Asset Downloads (sum)") {
+			for (var metricName : list "Asset Views (sum),Asset Interaction Time (average),Asset Downloads (sum)") {
 				ACNavigation.goToAssets();
 
 				ACNavigation.switchTab(tabName = "Custom");
 
 				ACAssets.addCustomAssetReport(
 					assetName = "Custom Asset Analytics Cloud",
-					metric = "Asset Views (sum)",
+					metric = "${metricName}",
 					reportName = "Test Custom Asset Report ${n}");
 
 				var n = ${n} + 1;
@@ -305,14 +305,14 @@ definition {
 		task ("Add three custom asset reports") {
 			var n = "1";
 
-			for (var metric : list "Asset Views (sum),Asset Interaction Time (sum),Asset Downloads (sum)") {
+			for (var metricName : list "Asset Views (sum),Asset Interaction Time (average),Asset Downloads (sum)") {
 				ACNavigation.goToAssets();
 
 				ACNavigation.switchTab(tabName = "Custom");
 
 				ACAssets.addCustomAssetReport(
 					assetName = "Custom Asset Analytics Cloud",
-					metric = "Asset Views (sum)",
+					metric = "${metricName}",
 					reportName = "Test Custom Asset Report ${n}");
 
 				var n = ${n} + 1;

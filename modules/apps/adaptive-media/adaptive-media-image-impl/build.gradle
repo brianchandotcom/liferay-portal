@@ -1,6 +1,6 @@
 dependencies {
-	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "6.0.6"
-	compileInclude group: "com.drewnoakes", name: "metadata-extractor", version: "2.13.0"
+	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
+	compileInclude group: "com.drewnoakes", name: "metadata-extractor", version: "2.18.0"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

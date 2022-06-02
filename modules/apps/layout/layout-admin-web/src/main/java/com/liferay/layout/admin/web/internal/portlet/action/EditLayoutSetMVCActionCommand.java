@@ -144,23 +144,27 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 
-		String[] cssExtensions = ParamUtil.getStringValues(
-			actionRequest, "cssExtensions");
+		String[] globalCSSCETExternalReferenceCodes = ParamUtil.getStringValues(
+			actionRequest, "globalCSSCETExternalReferenceCodes");
 
-		for (String cssExtension : cssExtensions) {
+		for (String globalCSSCETExternalReferenceCode :
+				globalCSSCETExternalReferenceCodes) {
+
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
-				layoutSet.getLayoutSetId(), cssExtension,
+				layoutSet.getLayoutSetId(), globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		}
 
-		String[] jsExtensions = ParamUtil.getStringValues(
-			actionRequest, "jsExtensions");
+		String[] globalJSCETExternalReferenceCodes = ParamUtil.getStringValues(
+			actionRequest, "globalJSCETExternalReferenceCodes");
 
-		for (String jsExtension : jsExtensions) {
+		for (String globalJSCETExternalReferenceCode :
+				globalJSCETExternalReferenceCodes) {
+
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
-				layoutSet.getLayoutSetId(), jsExtension,
+				layoutSet.getLayoutSetId(), globalJSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 		}
 

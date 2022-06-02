@@ -88,7 +88,7 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 				String name = dtoEntityField.getName();
 
-				if (name.startsWith("x-")) {
+				if (name.equals("actions") || name.startsWith("x-")) {
 					return false;
 				}
 

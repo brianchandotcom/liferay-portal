@@ -154,6 +154,8 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setParameters(RandomTestUtil.randomString());
 
+		newObjectAction.setStatus(RandomTestUtil.nextInt());
+
 		_objectActions.add(_persistence.update(newObjectAction));
 
 		ObjectAction existingObjectAction = _persistence.findByPrimaryKey(
@@ -202,6 +204,8 @@ public class ObjectActionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectAction.getParameters(),
 			newObjectAction.getParameters());
+		Assert.assertEquals(
+			existingObjectAction.getStatus(), newObjectAction.getStatus());
 	}
 
 	@Test
@@ -270,7 +274,8 @@ public class ObjectActionPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "active", true, "description", true, "name", true,
-			"objectActionExecutorKey", true, "objectActionTriggerKey", true);
+			"objectActionExecutorKey", true, "objectActionTriggerKey", true,
+			"status", true);
 	}
 
 	@Test
@@ -520,6 +525,8 @@ public class ObjectActionPersistenceTest {
 		objectAction.setObjectActionTriggerKey(RandomTestUtil.randomString());
 
 		objectAction.setParameters(RandomTestUtil.randomString());
+
+		objectAction.setStatus(RandomTestUtil.nextInt());
 
 		_objectActions.add(_persistence.update(objectAction));
 

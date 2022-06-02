@@ -329,6 +329,20 @@ public interface ObjectActionModel
 	 */
 	public void setParameters(String parameters);
 
+	/**
+	 * Returns the status of this object action.
+	 *
+	 * @return the status of this object action
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this object action.
+	 *
+	 * @param status the status of this object action
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public ObjectAction cloneWithOriginalValues();
 

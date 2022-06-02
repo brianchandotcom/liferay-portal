@@ -77,7 +77,7 @@ public class ObjectActionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class ObjectActionCacheModel
 		sb.append(objectActionTriggerKey);
 		sb.append(", parameters=");
 		sb.append(parameters);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -200,6 +202,8 @@ public class ObjectActionCacheModel
 			objectActionImpl.setParameters(parameters);
 		}
 
+		objectActionImpl.setStatus(status);
+
 		objectActionImpl.resetOriginalValues();
 
 		return objectActionImpl;
@@ -230,6 +234,8 @@ public class ObjectActionCacheModel
 		objectActionExecutorKey = objectInput.readUTF();
 		objectActionTriggerKey = objectInput.readUTF();
 		parameters = (String)objectInput.readObject();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -304,6 +310,8 @@ public class ObjectActionCacheModel
 		else {
 			objectOutput.writeObject(parameters);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -322,5 +330,6 @@ public class ObjectActionCacheModel
 	public String objectActionExecutorKey;
 	public String objectActionTriggerKey;
 	public String parameters;
+	public int status;
 
 }

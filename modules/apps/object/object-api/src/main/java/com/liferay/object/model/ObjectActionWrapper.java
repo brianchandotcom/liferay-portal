@@ -59,6 +59,7 @@ public class ObjectActionWrapper
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
 		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
 		attributes.put("parameters", getParameters());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -162,6 +163,12 @@ public class ObjectActionWrapper
 
 		if (parameters != null) {
 			setParameters(parameters);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -315,6 +322,16 @@ public class ObjectActionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the status of this object action.
+	 *
+	 * @return the status of this object action
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -510,6 +527,16 @@ public class ObjectActionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the status of this object action.
+	 *
+	 * @param status the status of this object action
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

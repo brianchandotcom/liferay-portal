@@ -72,6 +72,8 @@ public class ObjectActionTable extends BaseTable<ObjectActionTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, Clob> parameters = createColumn(
 		"parameters", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ObjectActionTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ObjectActionTable() {
 		super("ObjectAction", ObjectActionTable::new);

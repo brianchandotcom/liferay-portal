@@ -88,13 +88,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -753,16 +751,51 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
-			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Text",
-				ObjectEntryTable.INSTANCE.status.getName(),
-				ObjectEntryTable.INSTANCE.getTableName(), "Integer", false,
-				false, null,
-				LocalizedMapUtil.getLocalizedMap(
-					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
-				"status", false);
-		}
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Date",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(), "Date", false, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
+			"createDate", false);
+
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Date",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(), "Date", false, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "modified-date")),
+			"modifiedDate", false);
+
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Integer",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(), "Integer", false, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "id")),
+			"id", false);
+
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Text",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(), "String", false, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "author")),
+			"creator", false);
+
+		_objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinition.getObjectDefinitionId(), "Text",
+			ObjectEntryTable.INSTANCE.status.getName(),
+			ObjectEntryTable.INSTANCE.getTableName(), "Integer", false, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(
+				LanguageUtil.get(LocaleUtil.getDefault(), "status")),
+			"status", false);
+
 
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {

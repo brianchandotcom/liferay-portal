@@ -90,6 +90,35 @@ public class ObjectFieldLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testAddCustomObjectField() throws Exception {
+
+		// Reserved name
+
+		String[] reservedNames = {
+			"actions", "companyId", "createDate", "creator", "dateCreated",
+			"dateModified", "externalReferenceCode", "groupId", "id",
+			"lastPublishDate", "modifiedDate", "statusByUserId",
+			"statusByUserName", "statusDate", "userId", "userName"
+		};
+
+		for (String reservedName : reservedNames) {
+			try {
+				_testAddCustomObjectField(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", reservedName,
+						_getObjectFieldSettings("Text")));
+
+				Assert.fail();
+			}
+			catch (ObjectFieldNameException objectFieldNameException) {
+				Assert.assertEquals(
+					"Reserved name " + reservedName,
+					objectFieldNameException.getMessage());
+			}
+		}
+	}
+
+	@Test
 	public void testAddSystemObjectField() throws Exception {
 
 		// Blob type is not indexable
@@ -910,6 +939,32 @@ public class ObjectFieldLocalServiceTest {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			return dbInspector.hasColumn(tableName, columnName);
+		}
+	}
+
+	private void _testAddCustomObjectField(ObjectField... objectFields)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			objectDefinition =
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					TestPropsValues.getUserId(),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"A" + RandomTestUtil.randomString(), null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+					Arrays.asList(objectFields));
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
 		}
 	}
 

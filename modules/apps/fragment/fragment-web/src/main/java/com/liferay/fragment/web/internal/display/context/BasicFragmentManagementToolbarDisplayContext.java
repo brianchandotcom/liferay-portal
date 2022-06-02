@@ -133,6 +133,16 @@ public class BasicFragmentManagementToolbarDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
+			"addFragmentEntryURL",
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/add_fragment_entry"
+			).setParameter(
+				"fragmentCollectionId",
+				fragmentDisplayContext.getFragmentCollectionId()
+			).buildString()
+		).put(
 			"copyFragmentEntryURL",
 			() -> PortletURLBuilder.createActionURL(
 				liferayPortletResponse

@@ -65,6 +65,10 @@
 						input.disabled = disableOnChecked
 							? !toggle.checked
 							: toggle.checked;
+
+						if (!input.disabled) {
+							input.classList.remove('disabled');
+						}
 					}
 				}
 			);

@@ -56,7 +56,7 @@ export function FilterScreen() {
 				onEditing={setEditingFilter}
 				onEditingObjectFieldName={setEditingObjectFieldName}
 				onVisibleEditModal={setVisibleModal}
-				onVisibleModal={setVisibleModal}
+				openModal={() => setVisibleModal(true)}
 				secondColumnHeader={Liferay.Language.get('type')}
 				thirdColumnHeader={Liferay.Language.get('value')}
 				title={Liferay.Language.get('filters')}

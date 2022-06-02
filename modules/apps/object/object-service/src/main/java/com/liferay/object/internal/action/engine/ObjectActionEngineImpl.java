@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.constants.ObjectActionStatusConstants;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -137,9 +138,22 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				_objectActionExecutorRegistry.getObjectActionExecutor(
 					objectAction.getObjectActionExecutorKey());
 
-			objectActionExecutor.execute(
-				companyId, objectAction.getParametersUnicodeProperties(),
-				payloadJSONObject, userId);
+			try {
+				objectActionExecutor.execute(
+					companyId, objectAction.getParametersUnicodeProperties(),
+					payloadJSONObject, userId);
+
+				_objectActionLocalService.updateStatus(
+					objectAction.getObjectActionId(),
+					ObjectActionStatusConstants.SUCCESS);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				_objectActionLocalService.updateStatus(
+					objectAction.getObjectActionId(),
+					ObjectActionStatusConstants.FAILED);
+			}
 		}
 	}
 

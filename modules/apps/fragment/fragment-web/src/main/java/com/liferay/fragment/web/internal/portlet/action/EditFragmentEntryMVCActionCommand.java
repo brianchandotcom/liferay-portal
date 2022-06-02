@@ -19,7 +19,6 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -106,15 +104,11 @@ public class EditFragmentEntryMVCActionCommand
 		draftFragmentEntry.setStatus(status);
 
 		if (draftFragmentEntry.getType() == FragmentConstants.TYPE_INPUT) {
-			String fieldTypes = ParamUtil.getString(
+			String[] fieldTypes = ParamUtil.getStringValues(
 				actionRequest, "fieldTypes");
 
-			JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
-			if (Validator.isNotNull(fieldTypes)) {
-				fieldTypesJSONArray = JSONFactoryUtil.createJSONArray(
-					fieldTypes.split(StringPool.COMMA));
-			}
+			JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray(
+				fieldTypes);
 
 			JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
 				draftFragmentEntry.getTypeOptions());

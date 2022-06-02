@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -72,15 +71,11 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String typeOptions = null;
 
 		if (type == FragmentConstants.TYPE_INPUT) {
-			String fieldTypes = ParamUtil.getString(
+			String[] fieldTypes = ParamUtil.getStringValues(
 				actionRequest, "fieldTypes");
 
-			JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
-			if (Validator.isNotNull(fieldTypes)) {
-				fieldTypesJSONArray = JSONFactoryUtil.createJSONArray(
-					fieldTypes.split(StringPool.COMMA));
-			}
+			JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray(
+				fieldTypes);
 
 			typeOptions = JSONUtil.put(
 				"fieldTypes", fieldTypesJSONArray

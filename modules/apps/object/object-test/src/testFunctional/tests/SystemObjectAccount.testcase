@@ -99,13 +99,87 @@ definition {
 
 	}
 
-	@description = "LPS-151765 - Verify if Prevent deletion type of Relationship One to Many can’t delete that is related to another one"
-	@ignore = "Test Stub"
+	@description = "LPS-151765 - Verify if the relationship one to many, with prevent deletion type, not be able to delete an entry related to another one"
 	@priority = "4"
 	test CannotDeleteRelationshipWhenDeletionTypeIsPrevent {
+		Accounts.openAccountsAdmin();
 
-		// TODO LPS-153532 CannotDeleteRelationshipWhenDeletionTypeIsPrevent pending implementation
+		Accounts.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test 153532");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153532",
+			objectName = "CustomObject153532",
+			pluralLabelName = "Custom Objects 153532");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153532");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject153532",
+			objectName_2 = "AccountEntry",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout 153532",
+			objectName = "CustomObject153532");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153532");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Layout 153532");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153532");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153532",
+			value = "Entry A");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Test Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
+
+		ObjectPortlet.deleteEntry(entry = "Entry A");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
 	@description = "LPS-151765 - Verify if is not possible to edit default fields on System Object Account"

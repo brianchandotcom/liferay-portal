@@ -42,7 +42,7 @@ String previewURL = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fi
 	<c:when test="<%= Objects.equals(fileVersion.getMimeType(), ContentTypes.IMAGE_SVG_XML) %>">
 		<div class="preview-file">
 			<div class="preview-file-container preview-file-max-height">
-				<img alt="<%= fileVersion.getDescription() %>" class="preview-file-image-vectorial" src="<%= previewURL %>" />
+				<img alt="<%= HtmlUtil.escape(fileVersion.getDescription()) %>" class="preview-file-image-vectorial" src="<%= previewURL %>" />
 			</div>
 		</div>
 	</c:when>

@@ -99,4 +99,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154077. The pages designer can identify in a fragment when they are at edit or view mode."
+	@priority = "3"
+	test AddFragmentWithLayoutModeToContentPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Content Pages,Fragments";
+
+		task ("Given a page designer has a fragment with layoutMode freemarker variable") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="fragment-name">
+	${layoutMode}
+</div>
+			''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var fragmentEntryId = JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("When the page designer adds a new fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the page designer could see edit mode shown on fragment") {
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "edit",
+				fragmentName = "Fragment Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("When the page designer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer could see view mode shown on fragment") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "fragment-name",
+				text = "view");
+		}
+	}
+
 }

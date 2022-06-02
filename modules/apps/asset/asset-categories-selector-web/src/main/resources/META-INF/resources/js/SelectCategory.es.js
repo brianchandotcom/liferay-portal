@@ -126,7 +126,7 @@ function SelectCategory({
 						<ClayLinkContext.Provider value={handleClearSelected}>
 							<div>
 								<ClayLink
-									className="text-3 text-weight-semi-bold tree-filter-clear-selected"
+									className="select-category-clear-selected text-3 text-weight-semi-bold"
 									displayType="secondary"
 									href="#"
 								>

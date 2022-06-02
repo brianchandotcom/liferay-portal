@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -47,6 +48,8 @@ import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.Map;
 import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -117,10 +120,27 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public Map<String, Object> getCSSExtensionConfigurationProps() {
+		String selectCSSClientExtensionsEventName = "selectCSSClientExtensions";
+
 		return HashMapBuilder.<String, Object>put(
 			"cssExtensions", JSONFactoryUtil.createJSONArray()
 		).put(
-			"cssExtensionSelectorURL", StringPool.BLANK
+			"cssExtensionSelectorURL",
+			() -> {
+				PortletURL cetItemSelectorURL =
+					_layoutsAdminDisplayContext.getCETItemSelectorURL(
+						selectCSSClientExtensionsEventName,
+						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+				return PortletURLBuilder.create(
+					cetItemSelectorURL
+				).setParameter(
+					"multipleSelection", true
+				).buildString();
+			}
+		).put(
+			"selectCSSClientExtensionsEventName",
+			selectCSSClientExtensionsEventName
 		).build();
 	}
 

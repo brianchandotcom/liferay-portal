@@ -302,6 +302,21 @@ public class LayoutsAdminDisplayContext {
 		return _backURL;
 	}
 
+	public PortletURL getCETItemSelectorURL(
+		String selectEventName, String type) {
+
+		CETItemSelectorCriterion cetItemSelectorCriterion =
+			new CETItemSelectorCriterion();
+
+		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new CETItemSelectorReturnType());
+		cetItemSelectorCriterion.setType(type);
+
+		return _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			selectEventName, cetItemSelectorCriterion);
+	}
+
 	public String getConfigurationTitle(Layout layout, Locale locale) {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
@@ -1221,21 +1236,11 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"selectThemeCSSClientExtensionURL",
 			() -> {
-				CETItemSelectorCriterion cetItemSelectorCriterion =
-					new CETItemSelectorCriterion();
-
-				cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new CETItemSelectorReturnType());
-				cetItemSelectorCriterion.setType(
+				PortletURL cetItemSelectorURL = getCETItemSelectorURL(
+					selectThemeCSSClientExtensionEventName,
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
-				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-					RequestBackedPortletURLFactoryUtil.create(
-						httpServletRequest),
-					selectThemeCSSClientExtensionEventName,
-					cetItemSelectorCriterion);
-
-				return itemSelectorURL.toString();
+				return cetItemSelectorURL.toString();
 			}
 		).build();
 	}

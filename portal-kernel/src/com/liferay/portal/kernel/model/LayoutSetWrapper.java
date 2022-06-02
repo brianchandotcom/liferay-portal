@@ -241,11 +241,6 @@ public class LayoutSetWrapper
 		return model.getCtCollectionId();
 	}
 
-	@Override
-	public String getFavicon() {
-		return model.getFavicon();
-	}
-
 	/**
 	 * Returns the favicon file entry ID of this layout set.
 	 *
@@ -254,6 +249,11 @@ public class LayoutSetWrapper
 	@Override
 	public long getFaviconFileEntryId() {
 		return model.getFaviconFileEntryId();
+	}
+
+	@Override
+	public String getFaviconURL() {
+		return model.getFaviconURL();
 	}
 
 	/**

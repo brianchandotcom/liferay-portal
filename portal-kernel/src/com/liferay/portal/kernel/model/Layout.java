@@ -171,7 +171,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public java.util.List<Portlet> getEmbeddedPortlets(long groupId);
 
-	public String getFavicon();
+	public String getFaviconURL();
 
 	/**
 	 * Returns the layout's friendly URL for the given locale.

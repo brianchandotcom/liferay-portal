@@ -62,7 +62,7 @@ public class ClientExtensionsServicePreAction extends Action {
 			return;
 		}
 
-		themeDisplay.setFavicon(_getFaviconURL(layout));
+		themeDisplay.setFaviconURL(_getFaviconURL(layout));
 
 		CETThemeCSS cetThemeCSS = _getCETThemeCSS(layout);
 
@@ -163,7 +163,7 @@ public class ClientExtensionsServicePreAction extends Action {
 			return faviconURL;
 		}
 
-		faviconURL = layout.getFavicon();
+		faviconURL = layout.getFaviconURL();
 
 		if (Validator.isNotNull(faviconURL)) {
 			return faviconURL;
@@ -181,7 +181,7 @@ public class ClientExtensionsServicePreAction extends Action {
 				return faviconURL;
 			}
 
-			faviconURL = masterLayout.getFavicon();
+			faviconURL = masterLayout.getFaviconURL();
 
 			if (Validator.isNotNull(faviconURL)) {
 				return faviconURL;
@@ -198,7 +198,7 @@ public class ClientExtensionsServicePreAction extends Action {
 			return faviconURL;
 		}
 
-		faviconURL = layoutSet.getFavicon();
+		faviconURL = layoutSet.getFaviconURL();
 
 		if (Validator.isNotNull(faviconURL)) {
 			return faviconURL;

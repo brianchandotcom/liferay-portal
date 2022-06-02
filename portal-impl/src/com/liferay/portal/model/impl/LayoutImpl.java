@@ -534,20 +534,20 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public String getFavicon() {
-		if (_favicon != null) {
-			return _favicon;
+	public String getFaviconURL() {
+		if (_faviconURL != null) {
+			return _faviconURL;
 		}
 
-		String favicon = _getFavicon(getFaviconFileEntryId());
+		String faviconURL = _getFaviconURL(getFaviconFileEntryId());
 
-		if (favicon != null) {
-			_favicon = favicon;
+		if (faviconURL != null) {
+			_faviconURL = faviconURL;
 
-			return _favicon;
+			return _faviconURL;
 		}
 
-		return _favicon;
+		return _faviconURL;
 	}
 
 	/**
@@ -1447,7 +1447,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
-	private String _getFavicon(long faviconFileEntryId) {
+	private String _getFaviconURL(long faviconFileEntryId) {
 		try {
 			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 				faviconFileEntryId);
@@ -1677,7 +1677,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_initFriendlyURLKeywords();
 	}
 
-	private String _favicon;
+	private String _faviconURL;
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private Layout _masterLayout;

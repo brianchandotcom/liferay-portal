@@ -489,7 +489,7 @@ public class LayoutsAdminDisplayContext {
 	public String getFaviconImage() {
 		LayoutSet layoutSet = getSelLayoutSet();
 
-		String faviconImage = layoutSet.getFavicon();
+		String faviconImage = layoutSet.getFaviconURL();
 
 		if (faviconImage != null) {
 			return faviconImage;

@@ -111,9 +111,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	@Override
-	public String getFavicon() {
-		if (_favicon != null) {
-			return _favicon;
+	public String getFaviconURL() {
+		if (_faviconURL != null) {
+			return _faviconURL;
 		}
 
 		if (getFaviconFileEntryId() == 0) {
@@ -135,7 +135,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			return null;
 		}
 
-		_favicon = HtmlUtil.escape(
+		_faviconURL = HtmlUtil.escape(
 			StringBundler.concat(
 				PortalUtil.getPathContext(), "/documents/",
 				fileEntry.getRepositoryId(), StringPool.SLASH,
@@ -143,7 +143,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				URLCodec.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())),
 				StringPool.SLASH, URLCodec.encodeURL(fileEntry.getUuid())));
 
-		return _favicon;
+		return _faviconURL;
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@CacheField(propagateToInterface = true)
 	private String _companyFallbackVirtualHostname;
 
-	private String _favicon;
+	private String _faviconURL;
 	private UnicodeProperties _settingsUnicodeProperties;
 
 	@CacheField(propagateToInterface = true)

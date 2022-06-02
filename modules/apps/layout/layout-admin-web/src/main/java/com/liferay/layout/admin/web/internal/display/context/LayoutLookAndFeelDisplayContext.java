@@ -216,7 +216,7 @@ public class LayoutLookAndFeelDisplayContext {
 	public String getFaviconImage() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		String faviconImage = selLayout.getFavicon();
+		String faviconImage = selLayout.getFaviconURL();
 
 		if (faviconImage != null) {
 			return faviconImage;

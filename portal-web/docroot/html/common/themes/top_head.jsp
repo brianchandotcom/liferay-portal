@@ -20,7 +20,7 @@
 
 <liferay-util:dynamic-include key="/html/common/themes/top_head.jsp#pre" />
 
-<link href="<%= themeDisplay.getFavicon() %>" rel="icon" />
+<link href="<%= themeDisplay.getFaviconURL() %>" rel="icon" />
 
 <%-- Portal CSS --%>
 

@@ -20,16 +20,12 @@ import 'codemirror/lib/codemirror.css';
 import CodeMirror from 'codemirror';
 import React from 'react';
 import './CodeMirrorEditor.scss';
-export declare function CodeMirrorEditor({
-	className,
-	editorRef,
-	fixed,
-	onChange,
-	...options
-}: ICodeMirrorEditor): JSX.Element;
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<
+	ICodeMirrorEditor & React.RefAttributes<CodeMirror.Editor>
+>>;
+export default _default;
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
-	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;
 	fixed?: boolean;
 	onChange: (value?: string) => void;
 }

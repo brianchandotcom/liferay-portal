@@ -27,56 +27,67 @@ import React, {useEffect, useRef} from 'react';
 
 import './CodeMirrorEditor.scss';
 
-export function CodeMirrorEditor({
-	className,
-	editorRef,
-	fixed,
-	onChange,
-	...options
-}: ICodeMirrorEditor) {
-	const editorWrapperRef = useRef<HTMLDivElement>(null);
-	const codeMirrorRef = useRef<CodeMirror.Editor>();
+const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
+	({className, fixed, onChange, ...options}, ref) => {
+		const editorWrapperRef = useRef<HTMLDivElement>(null);
+		const codeMirrorRef = useRef<CodeMirror.Editor>();
 
-	useEffect(() => {
-		const editor = CodeMirror(editorWrapperRef.current as HTMLDivElement, {
-			autoRefresh: true,
-			foldGutter: true,
-			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-			inputStyle: 'contenteditable',
-			lineNumbers: true,
-			...options,
-		});
+		useEffect(() => {
+			const editor = CodeMirror(
+				editorWrapperRef.current as HTMLDivElement,
+				{
+					autoRefresh: true,
+					foldGutter: true,
+					gutters: [
+						'CodeMirror-linenumbers',
+						'CodeMirror-foldgutter',
+					],
+					inputStyle: 'contenteditable',
+					lineNumbers: true,
+					...options,
+				}
+			);
 
-		codeMirrorRef.current = editor;
+			codeMirrorRef.current = editor;
 
-		if (editorRef) {
-			editorRef.current = editor;
-		}
+			if (!ref) {
+				return;
+			}
+			else if (ref instanceof Function) {
+				ref(editor);
+			}
+			else {
+				(ref as React.MutableRefObject<
+					CodeMirror.Editor
+				>).current = editor;
+			}
 
-		const handleChange = (editor: CodeMirror.Editor) =>
-			onChange(editor.getValue());
+			const handleChange = (editor: CodeMirror.Editor) =>
+				onChange(editor.getValue());
 
-		editor.on('change', handleChange);
+			editor.on('change', handleChange);
 
-		return () => editor.off('change', handleChange);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+			return () => editor.off('change', handleChange);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
 
-	return (
-		<div
-			className={classNames(
-				'form-control lfr-objects__editor',
-				{'lfr-objects__editor--fixed': fixed},
-				className
-			)}
-			ref={editorWrapperRef}
-		/>
-	);
-}
+		return (
+			<div
+				className={classNames(
+					'form-control lfr-objects__editor',
+					{'lfr-objects__editor--fixed': fixed},
+					className
+				)}
+				ref={editorWrapperRef}
+			/>
+		);
+	}
+);
+
+export default React.memo(CodeMirrorEditor);
 
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
-	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;
 	fixed?: boolean;
 	onChange: (value?: string) => void;
 }

@@ -13,44 +13,62 @@
  */
 
 import classNames from 'classnames';
+import CodeMirror from 'codemirror';
 import React, {useRef} from 'react';
 
 import {FieldBase} from '../FieldBase';
-import {CodeMirrorEditor, ICodeMirrorEditor} from './CodeMirrorEditor';
+import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
 import {SideBarCategory, Sidebar} from './SideBar';
 
 import './index.scss';
 
-export {CodeMirrorEditor} from './CodeMirrorEditor';
+export {default as CodeMirrorEditor} from './CodeMirrorEditor';
 export {SideBarCategory} from './SideBar';
 
-export function CodeEditor({
-	className,
-	error,
-	sidebarElements,
-	...options
-}: IProps) {
-	const editorRef = useRef<CodeMirror.Editor>();
+const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
+	({className, error, sidebarElements, ...options}, ref) => {
+		const editorRef = useRef<CodeMirror.Editor>(
+			null
+		) as React.MutableRefObject<CodeMirror.Editor>;
 
-	return (
-		<div className={classNames('lfr-objects__code-editor', className)}>
-			<FieldBase
-				className="lfr-objects__code-editor-source"
-				errorMessage={error}
-			>
-				<CodeMirrorEditor
-					editorRef={editorRef}
-					lineWrapping={true}
-					{...options}
-				/>
-			</FieldBase>
+		const handleDomNodeChange = (editor: CodeMirror.Editor) => {
+			editorRef.current = editor;
 
-			{sidebarElements && (
-				<Sidebar editorRef={editorRef} elements={sidebarElements} />
-			)}
-		</div>
-	);
-}
+			if (!ref) {
+				return;
+			}
+			else if (ref instanceof Function) {
+				ref(editor);
+			}
+			else {
+				(ref as React.MutableRefObject<
+					CodeMirror.Editor
+				>).current = editor;
+			}
+		};
+
+		return (
+			<div className={classNames('lfr-objects__code-editor', className)}>
+				<FieldBase
+					className="lfr-objects__code-editor-source"
+					errorMessage={error}
+				>
+					<CodeMirrorEditor
+						lineWrapping={true}
+						ref={handleDomNodeChange}
+						{...options}
+					/>
+				</FieldBase>
+
+				{sidebarElements && (
+					<Sidebar editorRef={editorRef} elements={sidebarElements} />
+				)}
+			</div>
+		);
+	}
+);
+
+export default CodeEditor;
 
 interface IProps extends ICodeMirrorEditor {
 	error?: string;

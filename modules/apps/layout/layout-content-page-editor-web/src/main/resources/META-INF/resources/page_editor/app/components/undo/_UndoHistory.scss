@@ -10,13 +10,12 @@ html#{$cadmin-selector} {
 			}
 
 			.dropdown-item {
+				padding-right: 2.25rem;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 
 				span {
-					color: $secondary-l1;
 					font-size: 0.75rem;
-					margin-left: 1em;
 				}
 			}
 

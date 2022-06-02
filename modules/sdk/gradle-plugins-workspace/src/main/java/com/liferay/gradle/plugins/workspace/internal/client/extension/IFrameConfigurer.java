@@ -40,13 +40,13 @@ import org.gradle.jvm.tasks.Jar;
 /**
  * @author Gregory Amerson
  */
-public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
+public class IFrameConfigurer extends BaseClientExtensionConfigurer {
 
-	public static final String BUILD_FAVICON_TASK_NAME = "buildFavicon";
+	public static final String BUILD_IFRAME_TASK_NAME = "buildIFrame";
 
 	@Override
 	public void apply(Project project, ClientExtension clientExtension) {
-		Copy faviconTask = _addTaskBuildFavicon(project, clientExtension);
+		Copy iframeTask = _addTaskBuildIFrame(project, clientExtension);
 
 		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
 			project, JavaPlugin.JAR_TASK_NAME, Jar.class);
@@ -56,7 +56,7 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 
 				@Override
 				public void execute(Jar jar) {
-					jar.dependsOn(faviconTask);
+					jar.dependsOn(iframeTask);
 				}
 
 			});
@@ -70,7 +70,7 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 						BndUtil.getBundleExtension(project.getExtensions());
 
 					try {
-						_themeFaviconBundleInstructions(
+						_iframeBundleInstructions(
 							project, bundleExtension, clientExtension);
 					}
 					catch (Exception exception) {
@@ -84,14 +84,14 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 	}
 
 	@SuppressWarnings("serial")
-	private Copy _addTaskBuildFavicon(
+	private Copy _addTaskBuildIFrame(
 		Project project, ClientExtension clientExtension) {
 
 		Copy copy = GradleUtil.addTask(
-			project, BUILD_FAVICON_TASK_NAME + clientExtension.id.toUpperCase(),
+			project, BUILD_IFRAME_TASK_NAME + clientExtension.id.toUpperCase(),
 			Copy.class);
 
-		copy.setDescription("Assembles favicon.");
+		copy.setDescription("Assembles iframe.");
 		copy.setGroup(BasePlugin.BUILD_GROUP);
 		copy.into(
 			new Callable<String>() {
@@ -109,7 +109,9 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 					CopySpec fromSrc = copySpec.from(project.file("src"));
 
 					fromSrc.setIncludeEmptyDirs(false);
-					fromSrc.include("*.ico");
+					fromSrc.include("*.css");
+					fromSrc.include("*.html");
+					fromSrc.include("*.js");
 				}
 
 			});
@@ -141,7 +143,7 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 		return copy;
 	}
 
-	private void _themeFaviconBundleInstructions(
+	private void _iframeBundleInstructions(
 			Project project, BundleExtension bundleExtension,
 			ClientExtension clientExtension)
 		throws Exception {
@@ -160,8 +162,8 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 		bundleExtension.instruction(key, value);
 
 		bundleExtension.instruction(
-			"-includeresource." + clientExtension.id,
-			"META-INF/resources/=build/;filter:=*.ico;recursive:=false");
+			"-includeresource.js." + clientExtension.id,
+			"META-INF/resources/=build/;recursive:=false");
 
 		File lcpJsonFile = project.file("LCP.json");
 

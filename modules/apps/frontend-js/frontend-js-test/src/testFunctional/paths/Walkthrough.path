@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Walkthrough</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Walkthrough</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>HOTSPOT</td>
+	<td>//*[@class='lfr-walkthrough-hotspot']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POPOVER</td>
+	<td>//*[contains(@class,'popover') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

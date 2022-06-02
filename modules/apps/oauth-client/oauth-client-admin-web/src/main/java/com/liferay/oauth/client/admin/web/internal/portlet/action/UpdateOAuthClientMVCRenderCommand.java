@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -49,20 +48,16 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String authServerWellKnownURI = ParamUtil.getString(
 			renderRequest, "authServerWellKnownURI");
 
 		String clientId = ParamUtil.getString(renderRequest, "clientId");
 
-		String infoJSON = _INFO_TEMPLATE;
-
-		String parametersJSON = _PARAMETERS_TEMPLATE;
-
 		if (Validator.isNotNull(authServerWellKnownURI) &&
 			Validator.isNotNull(clientId)) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			try {
 				OAuthClientEntry oAuthClientEntry =
@@ -70,17 +65,8 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 						themeDisplay.getCompanyId(), authServerWellKnownURI,
 						clientId);
 
-				infoJSON = oAuthClientEntry.getInfoJSON();
-
-				parametersJSON = oAuthClientEntry.getParametersJSON();
-
 				renderRequest.setAttribute(
-					"authServerWellKnownURI",
-					oAuthClientEntry.getAuthServerWellKnownURI());
-
-				renderRequest.setAttribute(
-					"oAuthClientEntryId",
-					oAuthClientEntry.getOAuthClientEntryId());
+					OAuthClientEntry.class.getName(), oAuthClientEntry);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -89,25 +75,8 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		renderRequest.setAttribute("infoJSON", infoJSON);
-
-		renderRequest.setAttribute("parametersJSON", parametersJSON);
-
 		return "/admin/update_oauth_client.jsp";
 	}
-
-	private static final String _INFO_TEMPLATE = StringBundler.concat(
-		"{\"client_id\":\"\",\"client_secret\":\"\",",
-		"\"token_endpoint_auth_method\":\"client_secret_basic\",",
-		"\"redirect_uris\":[\"\",\"\"],\"client_name\":\"example_client\",",
-		"\"grant_types\":[\"authorization_code\"],",
-		"\"scope\":\"openid email profile\",\"subject_type\":\"public\",",
-		"\"id_token_signed_response_alg\":\"RS256\"}");
-
-	private static final String _PARAMETERS_TEMPLATE = StringBundler.concat(
-		"{\"authorization_request_parameters\":{\"resource\":[\"resource1\",\"",
-		"resource2\"]},\"token_request_parameters\":{\"audience\":\"audience1",
-		"\",\"resource\":[\"resource1\",\"resource2\"]}}");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateOAuthClientMVCRenderCommand.class);

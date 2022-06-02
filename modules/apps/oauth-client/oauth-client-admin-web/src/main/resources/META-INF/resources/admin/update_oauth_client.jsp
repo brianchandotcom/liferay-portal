@@ -19,36 +19,13 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String authServerWellKnownURI = (String)SessionErrors.get(renderRequest, "authServerWellKnownURI");
-
-if (Validator.isNull(authServerWellKnownURI)) {
-	authServerWellKnownURI = (String)request.getAttribute("authServerWellKnownURI");
-}
-
-String infoJSON = (String)SessionErrors.get(renderRequest, "infoJSON");
-
-if (Validator.isNull(infoJSON)) {
-	infoJSON = (String)request.getAttribute("infoJSON");
-}
-
-Long oAuthClientEntryId = (Long)SessionErrors.get(renderRequest, "oAuthClientEntryId");
-
-if (oAuthClientEntryId == null) {
-	oAuthClientEntryId = (Long)request.getAttribute("oAuthClientEntryId");
-}
-
-String parametersJSON = (String)SessionErrors.get(renderRequest, "parametersJSON");
-
-if (Validator.isNull(parametersJSON)) {
-	parametersJSON = (String)request.getAttribute("parametersJSON");
-}
+OAuthClientEntry oAuthClientEntry = (OAuthClientEntry)request.getAttribute(OAuthClientEntry.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client" var="updateOAuthClientEntryURL">
-	<portlet:param name="backURL" value='<%= redirect %>' />
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client" />
 	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
@@ -56,18 +33,20 @@ portletDisplay.setURLBack(redirect);
 <aui:form action="<%= updateOAuthClientEntryURL %>" id="oauth-client-fm" method="post" name="oauth-client-fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
+	<aui:model-context bean="<%= oAuthClientEntry %>" model="<%= OAuthClientEntry.class %>" />
+
 	<clay:container-fluid
 		cssClass="container-view"
 	>
 		<div class="sheet">
 			<aui:fieldset label="oauth-client">
-				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" value="<%= authServerWellKnownURI %>" />
+				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
-				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" />
+				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" value='{"client_id":"","client_secret":"","token_endpoint_auth_method":"client_secret_basic","redirect_uris":["",""],"client_name":"example_client","grant_types":["authorization_code"],"scope":"openid email profile","subject_type":"public","id_token_signed_response_alg":"RS256"}' />
 
-				<aui:input name="oAuthClientEntryId" type="hidden" value="<%= oAuthClientEntryId %>" />
+				<aui:input name="oAuthClientEntryId" type="hidden" />
 
-				<aui:input helpMessage="oauth-client-parameters-json-help" label="oauth-client-parameters-json" name="parametersJSON" style="min-height: 200px;" type="textarea" />
+				<aui:input helpMessage="oauth-client-parameters-json-help" label="oauth-client-parameters-json" name="parametersJSON" style="min-height: 200px;" type="textarea" value='{"authorization_request_parameters":{"resource":["resource1","resource2"]},"token_request_parameters":{"audience":"audience1","resource":["resource1","resource2"]}}' />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
@@ -115,12 +94,16 @@ portletDisplay.setURLBack(redirect);
 	}
 
 	function <portlet:namespace />init() {
-		document.getElementById(
+		var infoJSON = document.getElementById(
 			'<portlet:namespace />infoJSON'
-		).value = JSON.stringify(JSON.parse('<%= infoJSON %>'), null, 4);
+		);
 
-		document.getElementById(
+		infoJSON.value = JSON.stringify(JSON.parse(infoJSON.value), null, 4);
+
+		var parametersJSON = document.getElementById(
 			'<portlet:namespace />parametersJSON'
-		).value = JSON.stringify(JSON.parse('<%= parametersJSON %>'), null, 4);
+		);
+
+		parametersJSON.value = JSON.stringify(JSON.parse(parametersJSON.value), null, 4);
 	}
 </aui:script>

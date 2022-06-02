@@ -15,7 +15,6 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
-import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -63,26 +62,18 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 			actionRequest, "parametersJSON");
 
 		try {
-			OAuthClientEntry oAuthClientEntry = null;
-
 			if (oAuthClientEntryId > 0) {
-				oAuthClientEntry =
-					_oAuthClientEntryService.updateOAuthClientEntry(
-						oAuthClientEntryId, authServerWellKnownURI, infoJSON,
-						parametersJSON);
+				_oAuthClientEntryService.updateOAuthClientEntry(
+					oAuthClientEntryId, authServerWellKnownURI, infoJSON,
+					parametersJSON);
 			}
 			else {
-				oAuthClientEntry = _oAuthClientEntryService.addOAuthClientEntry(
+				_oAuthClientEntryService.addOAuthClientEntry(
 					themeDisplay.getUserId(), authServerWellKnownURI, infoJSON,
 					parametersJSON);
 			}
 
-			actionResponse.setRenderParameter(
-				"authServerWellKnownURI",
-				oAuthClientEntry.getAuthServerWellKnownURI());
-
-			actionResponse.setRenderParameter(
-				"clientId", oAuthClientEntry.getClientId());
+			return true;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -92,24 +83,10 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 			Class<?> exceptionClass = portalException.getClass();
 
 			SessionErrors.add(
-				actionRequest, "authServerWellKnownURI",
-				authServerWellKnownURI);
-
-			SessionErrors.add(actionRequest, "infoJSON", infoJSON);
-
-			SessionErrors.add(
-				actionRequest, "oAuthClientEntryId", oAuthClientEntryId);
-
-			SessionErrors.add(actionRequest, "parametersJSON", parametersJSON);
-
-			SessionErrors.add(
 				actionRequest, exceptionClass.getName(), portalException);
+
+			return false;
 		}
-
-		actionResponse.setRenderParameter(
-			"redirect", ParamUtil.getString(actionRequest, "backURL"));
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -82,8 +82,6 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 			comboRequestAbsolutePortalURLBuilder.setTimestamp(_lastModified);
 
 			for (String fileName : _FILE_NAMES) {
-				sb.append("&");
-
 				comboRequestAbsolutePortalURLBuilder.addFile(
 					absolutePortalURLBuilder.forBundleScript(
 						_bundleContext.getBundle(), fileName

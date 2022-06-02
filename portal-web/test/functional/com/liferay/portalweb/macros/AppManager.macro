@@ -30,10 +30,6 @@ definition {
 		}
 
 		Click(locator1 = "AppManager#SEARCH_BUTTON");
-
-		AssertElementPresent(
-			key_filterBy = "${filterBy}",
-			locator1 = "AppManager#APP_FILTER_SELECTED_OPTION");
 	}
 
 	macro loginMarketplaceStore {

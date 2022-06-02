@@ -1710,6 +1710,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 																put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
+															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+																put("${javaMethodParameter.parameterName}", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
 															<#else>
 																put("${javaMethodParameter.parameterName}",
 																	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
@@ -1742,7 +1744,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}NotFound() throws Exception {
 				<#if javaMethodSignature.javaMethodParameters?size != 0 && properties?keys?seq_contains("id")>
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if !stringUtil.equals(javaMethodParameter.parameterName, "siteId") && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, "siteId") && !stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId") && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterType} irrelevant${javaMethodParameter.parameterName?cap_first} =
 							<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Boolean")>
 								RandomTestUtil.randomBoolean();
@@ -1772,6 +1774,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 														put("siteKey", <@getQuotedString unquotedString="irrelevantGroup.getGroupId()" />);
+													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+														put("${javaMethodParameter.parameterName}", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
 													<#else>
 														put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
 													</#if>

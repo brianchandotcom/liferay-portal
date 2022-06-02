@@ -79,19 +79,27 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
+		List<BackgroundTask> newBackgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				backgroundTask.getGroupId(),
+				LayoutSetPrototypeImportBackgroundTaskExecutor.class.getName(),
+				BackgroundTaskConstants.STATUS_NEW);
+
 		List<BackgroundTask> queuedBackgroundTasks =
 			BackgroundTaskManagerUtil.getBackgroundTasks(
 				backgroundTask.getGroupId(),
 				LayoutSetPrototypeImportBackgroundTaskExecutor.class.getName(),
 				BackgroundTaskConstants.STATUS_QUEUED);
 
-		if (!queuedBackgroundTasks.isEmpty()) {
+		if (!newBackgroundTasks.isEmpty() || !queuedBackgroundTasks.isEmpty()) {
 			if (_log.isDebugEnabled()) {
-				StringBundler sb = new StringBundler(5);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("Cancelling background task ");
 				sb.append(backgroundTask.getBackgroundTaskId());
 				sb.append(", found ");
+				sb.append(newBackgroundTasks.size());
+				sb.append(" new and ");
 				sb.append(queuedBackgroundTasks.size());
 				sb.append(" queued tasks");
 

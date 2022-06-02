@@ -164,6 +164,19 @@ public class ObjectActionLocalServiceImpl
 		return objectActionPersistence.update(objectAction);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectAction updateStatus(long objectActionId, int status)
+		throws PortalException {
+
+		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
+			objectActionId);
+
+		objectAction.setStatus(status);
+
+		return objectActionPersistence.update(objectAction);
+	}
+
 	private void _validate(
 			String conditionExpression, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey)

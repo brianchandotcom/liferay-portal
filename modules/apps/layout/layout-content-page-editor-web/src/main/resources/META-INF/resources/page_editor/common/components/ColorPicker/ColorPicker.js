@@ -230,8 +230,10 @@ export function ColorPicker({
 
 	const onKeydownAutocompleteInput = (event) => {
 		if (event.key === 'Tab') {
-			setActiveAutocomplete(false);
-			onBlurAutocompleteInput(event);
+			if (activeAutocomplete) {
+				onBlurAutocompleteInput(event);
+				setActiveAutocomplete(false);
+			}
 
 			if (!event.shiftKey) {
 				event.preventDefault();

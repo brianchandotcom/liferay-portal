@@ -19,6 +19,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -129,6 +130,9 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS);
 
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId());
+
 		String faviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "faviconCETExternalReferenceCode");
 
@@ -138,6 +142,26 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), faviconCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		}
+
+		String[] cssExtensions = ParamUtil.getStringValues(
+			actionRequest, "cssExtensions");
+
+		for (String cssExtension : cssExtensions) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				layoutSet.getLayoutSetId(), cssExtension,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+		}
+
+		String[] jsExtensions = ParamUtil.getStringValues(
+			actionRequest, "jsExtensions");
+
+		for (String jsExtension : jsExtensions) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				layoutSet.getLayoutSetId(), jsExtension,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 		}
 
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(

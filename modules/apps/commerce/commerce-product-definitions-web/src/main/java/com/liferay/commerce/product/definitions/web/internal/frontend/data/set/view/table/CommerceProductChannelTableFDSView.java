@@ -42,7 +42,7 @@ public class CommerceProductChannelTableFDSView extends BaseTableFDSView {
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			__fdsTableSchemaBuilderFactory.create();
+			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
 			"name", "name"
@@ -50,6 +50,6 @@ public class CommerceProductChannelTableFDSView extends BaseTableFDSView {
 	}
 
 	@Reference
-	private FDSTableSchemaBuilderFactory __fdsTableSchemaBuilderFactory;
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 }

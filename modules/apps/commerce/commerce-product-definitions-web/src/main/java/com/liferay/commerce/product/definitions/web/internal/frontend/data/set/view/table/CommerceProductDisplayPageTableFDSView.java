@@ -109,7 +109,7 @@ public class CommerceProductDisplayPageTableFDSView
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			__fdsTableSchemaBuilderFactory.create();
+			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
 			"productName", "product-name",
@@ -263,7 +263,7 @@ public class CommerceProductDisplayPageTableFDSView
 	private CPDisplayLayoutService _cpDisplayLayoutService;
 
 	@Reference
-	private FDSTableSchemaBuilderFactory __fdsTableSchemaBuilderFactory;
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 	@Reference
 	private Portal _portal;

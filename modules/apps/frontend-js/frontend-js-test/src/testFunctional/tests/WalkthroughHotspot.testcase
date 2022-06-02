@@ -1,0 +1,62 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-js-components-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Walkthrough";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given walkthrough component sample portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page",
+				widgetName = "JS Components Sample");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page",
+				layoutTemplate = "1 Column");
+
+			Navigator.gotoPage(pageName = "JS Components Sample Page");
+
+			Navigator.gotoNavTab(navTab = "Walkable");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page");
+		}
+	}
+
+	@description = "LPS-154636. Assert walkthrough component renders a hotspot element as initial state."
+	@priority = "5"
+	test WillRenderAsInitialState {
+		task ("Then Hotspot element is present") {
+			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("And then popover element is not present") {
+			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
+		}
+	}
+
+}

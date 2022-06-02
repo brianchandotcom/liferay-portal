@@ -32,8 +32,18 @@
 <!--APP_STORE-->
 
 <tr>
+	<td>APP_CATEGORY</td>
+	<td>//div[contains(@class,'marketplace-entry-tile')]//li[contains(.,'${key_appCategory}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APP_FILTER_LABEL</td>
 	<td>//span[contains(@class,'aui-field-select')]/span[contains(@class,'aui-field-content')]/label[contains(.,'${key_filterName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_FILTER_RESULT_LABEL</td>
+	<td>//div[contains(@class,'search-filter-labels')]//div[contains(.,'${key_appVersion}')]</td>
 	<td></td>
 </tr>
 <tr>

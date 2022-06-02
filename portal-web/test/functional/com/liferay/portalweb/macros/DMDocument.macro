@@ -1571,9 +1571,11 @@ definition {
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${dmDocumentTitle}");
+		if (!(isSet(skipNavigation))) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${dmDocumentTitle}");
+		}
 
 		DMDocument.editCmd(
 			dmDocumentDescriptionEdit = "${dmDocumentDescriptionEdit}",

@@ -1,0 +1,33 @@
+@import 'atlas-variables';
+
+.add-fragment-modal {
+	.modal-dialog {
+		max-width: 700px;
+	}
+}
+
+.fragment-type-card {
+	cursor: pointer;
+	flex-basis: 0;
+	flex-grow: 1;
+
+	.card {
+		height: 100%;
+	}
+
+	&:first-child {
+		margin-right: 12px;
+	}
+
+	&:last-child {
+		margin-left: 12px;
+	}
+
+	&-basic .card-item-first {
+		background-color: $teal;
+	}
+
+	&-form .card-item-first {
+		background-color: $orange;
+	}
+}

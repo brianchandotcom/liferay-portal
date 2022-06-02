@@ -212,10 +212,45 @@ definition {
 				exportFileFormat = "JSON");
 		}
 
-		task ("Then only those fields should be imported") {
+		task ("Then only those fields should be exported") {
 			ImportExport.assertFileContent(
 				comparisonFileName = "json_channel_import.txt",
 				fileName = "export.json");
+		}
+	}
+
+	@description = "Verify users can exclude fields from being exported in JSONL format"
+	@priority = "3"
+	test CanExcludeJSONLFieldsFromExport {
+		property portal.acceptance = "true";
+
+		task ("Given several channels") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 1",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 2",
+				channelType = "site",
+				currencyCode = "CAD",
+				externalReferenceCode = "102");
+		}
+
+		task ("When the user selects specific channel fields for export and exports the channels in JSONL format") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				exportFields = "name,type,currencyCode",
+				exportFileFormat = "JSONL");
+		}
+
+		task ("Then only those fields should be exported") {
+			ImportExport.assertFileContent(
+				comparisonFileName = "jsonl_channel_import.jsonl",
+				fileName = "export.jsonl");
 		}
 	}
 

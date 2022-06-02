@@ -67,6 +67,7 @@ public class ClientExtensionProjectConfigurator
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
 
+		_clientExtensionConfigurers.put("customElement", new IFrameConfigurer());
 		_clientExtensionConfigurers.put("iframe", new IFrameConfigurer());
 		_clientExtensionConfigurers.put("themeCSS", new ThemeCSSConfigurer());
 		_clientExtensionConfigurers.put(

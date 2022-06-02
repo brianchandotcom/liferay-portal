@@ -17,8 +17,9 @@ package com.liferay.gradle.plugins.workspace.internal.client.extension;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.io.StringWriter;
 
@@ -35,6 +36,11 @@ public class ClientExtension {
 
 	@JsonAnySetter
 	public void ignored(String name, Object value) {
+		if (value instanceof List) {
+			List<?> listValue = (List<?>)value;
+			value = com.liferay.petra.string.StringUtil.merge(listValue, StringPool.NEW_LINE);
+		}
+
 		_typeSettings.add(StringBundler.concat(name, "=", value));
 	}
 

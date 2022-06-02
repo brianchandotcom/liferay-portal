@@ -114,7 +114,7 @@ export default function UndoHistory() {
 			</ClayDropDown>
 
 			{loading && (
-				<ReactPortal>
+				<ReactPortal className="cadmin">
 					<Overlay />
 				</ReactPortal>
 			)}

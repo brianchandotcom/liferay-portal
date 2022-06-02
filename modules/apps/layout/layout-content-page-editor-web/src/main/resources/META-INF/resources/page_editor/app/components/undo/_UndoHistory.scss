@@ -27,17 +27,17 @@ html#{$cadmin-selector} {
 				top: 0;
 				width: 100vw;
 				z-index: $undoHistoryOverlayZIndex;
-
-				body.has-control-menu & {
-					height: calc(100vh - #{$controlMenuHeight});
-					top: $controlMenuHeight;
-
-					@include media-breakpoint-up(xl) {
-						height: calc(100vh - #{$desktopControlMenuHeight});
-						top: $desktopControlMenuHeight;
-					}
-				}
 			}
+		}
+	}
+
+	body.has-control-menu .cadmin .page-editor__undo-history__overlay {
+		height: calc(100vh - #{$controlMenuHeight});
+		top: $controlMenuHeight;
+
+		@include media-breakpoint-up(sm) {
+			height: calc(100vh - #{$desktopControlMenuHeight});
+			top: $desktopControlMenuHeight;
 		}
 	}
 }

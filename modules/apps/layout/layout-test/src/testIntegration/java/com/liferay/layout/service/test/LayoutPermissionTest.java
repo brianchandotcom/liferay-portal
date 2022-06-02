@@ -66,21 +66,8 @@ public class LayoutPermissionTest {
 	public void testContainsWithUpdateLayoutContentPermissions()
 		throws Exception {
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		RoleTestUtil.addResourcePermission(
-			role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_group.getCompanyId()),
+		PermissionChecker permissionChecker = _getPermissionChecker(
 			ActionKeys.UPDATE_LAYOUT_CONTENT);
-
-		User user = UserTestUtil.addUser();
-
-		_roleLocalService.clearUserRoles(user.getUserId());
-
-		_roleLocalService.addUserRole(user.getUserId(), role);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -109,20 +96,8 @@ public class LayoutPermissionTest {
 
 	@Test
 	public void testContainsWithUpdatePermissions() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		RoleTestUtil.addResourcePermission(
-			role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_group.getCompanyId()), ActionKeys.UPDATE);
-
-		User user = UserTestUtil.addUser();
-
-		_roleLocalService.clearUserRoles(user.getUserId());
-
-		_roleLocalService.addUserRole(user.getUserId(), role);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			ActionKeys.UPDATE);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -147,6 +122,24 @@ public class LayoutPermissionTest {
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
 		}
+	}
+
+	private PermissionChecker _getPermissionChecker(String actionId)
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), actionId);
+
+		User user = UserTestUtil.addUser();
+
+		_roleLocalService.clearUserRoles(user.getUserId());
+
+		_roleLocalService.addUserRole(user.getUserId(), role);
+
+		return PermissionCheckerFactoryUtil.create(user);
 	}
 
 	@DeleteAfterTestRun

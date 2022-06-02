@@ -238,6 +238,28 @@ public class LayoutLookAndFeelDisplayContext {
 		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
 	}
 
+	public Map<String, Object> getJSExtensionsConfigurationProps() {
+		return HashMapBuilder.<String, Object>put(
+			"jsExtensions", JSONFactoryUtil.createJSONArray()
+		).put(
+			"jsExtensionSelectorURL",
+			() -> {
+				PortletURL cetItemSelectorURL =
+					_layoutsAdminDisplayContext.getCETItemSelectorURL(
+						"selectJSClientExtensions",
+						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+				return PortletURLBuilder.create(
+					cetItemSelectorURL
+				).setParameter(
+					"multipleSelection", true
+				).buildString();
+			}
+		).put(
+			"selectJSClientExtensionsEventName", "selectJSClientExtensions"
+		).build();
+	}
+
 	public String getMasterLayoutName() {
 		if (_masterLayoutName != null) {
 			return _masterLayoutName;

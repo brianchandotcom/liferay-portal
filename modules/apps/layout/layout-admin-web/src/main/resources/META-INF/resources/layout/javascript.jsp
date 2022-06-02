@@ -34,3 +34,16 @@ if (selLayout != null) {
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="paste-javascript-code-that-is-executed-at-the-bottom-of-the-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettings.getProperty("javascript") %>' wrap="soft" />
+
+<%
+LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
+%>
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
+	<clay:sheet-section>
+		<react:component
+			module="js/layout/look_and_feel/JSExtensionsConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getJSExtensionsConfigurationProps() %>"
+		/>
+	</clay:sheet-section>
+</c:if>

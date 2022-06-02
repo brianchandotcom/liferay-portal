@@ -71,6 +71,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.portlet.RenderResponse;
 
@@ -269,6 +270,21 @@ public class JournalEditArticleDisplayContext {
 			ddmStructure, fields);
 
 		return _ddmFormValues;
+	}
+
+	public DDMFormValues getDDMFormValuesFromRequest(DDMStructure ddmStructure)
+		throws PortalException {
+
+		if (_ddmFormValues != null) {
+			return _ddmFormValues;
+		}
+
+		if (_ddmFormValuesEdited()) {
+			return _getDDMFormValuesFactory().create(
+				_httpServletRequest, ddmStructure.getDDMForm());
+		}
+
+		return getDDMFormValues(ddmStructure);
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -698,7 +714,7 @@ public class JournalEditArticleDisplayContext {
 				DDMFormValuesToMapConverter.class.getName());
 
 		return ddmFormValuesToMapConverter.convert(
-			getDDMFormValues(ddmStructure), ddmStructure);
+			getDDMFormValuesFromRequest(ddmStructure), ddmStructure);
 	}
 
 	public double getVersion() {
@@ -800,6 +816,21 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return _showSelectFolder;
+	}
+
+	private boolean _ddmFormValuesEdited() {
+		Map<String, String[]> parameterMap =
+			_httpServletRequest.getParameterMap();
+
+		for (Map.Entry<String, ?> entry : parameterMap.entrySet()) {
+			if (Pattern.matches(_EDITED_VALUES_REGEX, entry.getKey()) &&
+				GetterUtil.getBoolean(((String[])entry.getValue())[0])) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String[] _getAvailableLanguageIds() {
@@ -945,6 +976,8 @@ public class JournalEditArticleDisplayContext {
 			renderResponse.setTitle(_getTitle());
 		}
 	}
+
+	private static final String _EDITED_VALUES_REGEX = "^ddm\\$\\$.*_edited$";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditArticleDisplayContext.class);

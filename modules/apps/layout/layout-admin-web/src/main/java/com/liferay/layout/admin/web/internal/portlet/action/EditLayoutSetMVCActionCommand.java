@@ -144,23 +144,23 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 
-		String[] cssExtensions = ParamUtil.getStringValues(
-			actionRequest, "cssExtensions");
+		String[] globalCSSCETPrimaryKeys = ParamUtil.getStringValues(
+			actionRequest, "globalCSSCETPrimaryKeys");
 
-		for (String cssExtension : cssExtensions) {
+		for (String globalCSSCETPrimaryKey : globalCSSCETPrimaryKeys) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
-				layoutSet.getLayoutSetId(), cssExtension,
+				layoutSet.getLayoutSetId(), globalCSSCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		}
 
-		String[] jsExtensions = ParamUtil.getStringValues(
-			actionRequest, "jsExtensions");
+		String[] globalJSCETPrimaryKeys = ParamUtil.getStringValues(
+			actionRequest, "globalJSCETPrimaryKeys");
 
-		for (String jsExtension : jsExtensions) {
+		for (String globalJSCETPrimaryKey : globalJSCETPrimaryKeys) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
-				layoutSet.getLayoutSetId(), jsExtension,
+				layoutSet.getLayoutSetId(), globalJSCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 		}
 

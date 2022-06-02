@@ -121,7 +121,7 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getCSSExtensionsConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"cssExtensions", JSONFactoryUtil.createJSONArray()
+			"globalCSSCETPrimaryKeys", JSONFactoryUtil.createJSONArray()
 		).put(
 			"cssExtensionSelectorURL",
 			() -> {

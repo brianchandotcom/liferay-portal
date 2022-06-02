@@ -357,12 +357,12 @@
 </tr>
 <tr>
 	<td>DUPLICATE</td>
-	<td>//button[contains(@class, 'ddm-form-field-repeatable-add-button p-0 btn btn-sm btn-primary')]</td>
+	<td>//button[contains(@class, 'repeatable-add-button')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DUPLICATE_SPECIFIC</td>
-	<td>//button[contains(@class, 'ddm-form-field-repeatable-add-button p-0 btn btn-sm btn-primary') and contains(@aria-label, '${key_label}')]</td>
+	<td>//button[contains(@class, 'repeatable-add-button') and contains(@aria-label, '${key_label}')]</td>
 	<td></td>
 </tr>
 <tr>

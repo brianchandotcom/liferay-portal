@@ -17,6 +17,14 @@
 
 	&__toolbar {
 		color: $secondary;
+
+		.navbar {
+			height: 56px;
+
+			.nav-link {
+				height: 100%;
+			}
+		}
 	}
 
 	@at-root {

@@ -190,7 +190,8 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				);
 
 				if (
-					emailAddressInput.value != '<%= selUser.getEmailAddress() %>' ||
+					emailAddressInput.value !=
+						'<%= HtmlUtil.escapeJS(selUser.getEmailAddress()) %>' ||
 					screenNameInput.value != '<%= selUser.getScreenName() %>'
 				) {
 					Liferay.Util.openModal({

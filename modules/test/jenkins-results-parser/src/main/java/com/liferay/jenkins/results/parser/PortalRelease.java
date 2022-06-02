@@ -243,8 +243,86 @@ public class PortalRelease {
 		return _getRemoteURL(_osgiURLString);
 	}
 
+	public URL getPluginsWarLocalURL() {
+		return _getLocalURL(_pluginsWarURLString);
+	}
+
+	public URL getPluginsWarURL() {
+		return _getRemoteURL(_pluginsWarURLString);
+	}
+
+	public String getPortalUpstreamBranchName() {
+		try {
+			String portalUpstreamBranchName =
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					"portal.branch.name", getPortalVersionPropertyOption());
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					portalUpstreamBranchName)) {
+
+				return portalUpstreamBranchName;
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		Matcher matcher = _portalVersionPattern.matcher(_portalVersion);
+
+		if (!matcher.find()) {
+			return "master";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		String majorVersion = matcher.group("majorVersion");
+
+		if (majorVersion.equals("6")) {
+			sb.append("ee-");
+		}
+
+		sb.append(majorVersion);
+		sb.append(".");
+		sb.append(matcher.group("minorVersion"));
+		sb.append(".x");
+
+		return sb.toString();
+	}
+
 	public String getPortalVersion() {
 		return _portalVersion;
+	}
+
+	public String getPortalVersionPropertyOption() {
+		Matcher matcher = _portalVersionPattern.matcher(_portalVersion);
+
+		if (!matcher.find()) {
+			return _portalVersion;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(matcher.group("majorVersion"));
+		sb.append(".");
+		sb.append(matcher.group("minorVersion"));
+		sb.append(".");
+		sb.append(matcher.group("fixVersion"));
+
+		String updateVersion = matcher.group("updateVersion");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
+			sb.append(".");
+
+			String updatePrefix = matcher.group("updatePrefix");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(updatePrefix)) {
+				sb.append(updatePrefix);
+			}
+
+			sb.append(updateVersion);
+		}
+
+		return sb.toString();
 	}
 
 	public URL getPortalWarLocalURL() {
@@ -427,7 +505,117 @@ public class PortalRelease {
 		return getBundlesBaseLocalURL() + "/" + matcher.group("fileName");
 	}
 
+	private String _getURLStringFromBuildProperties(String basePropertyName) {
+		try {
+			String urlString = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(), basePropertyName,
+				getPortalVersionPropertyOption());
+
+			String portalBuildProfile = "portal";
+
+			Matcher matcher = _portalVersionPattern.matcher(_portalVersion);
+
+			if (matcher.find()) {
+				String fixVersion = matcher.group("fixVersion");
+
+				if (fixVersion.length() >= 2) {
+					portalBuildProfile = "dxp";
+				}
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(urlString)) {
+				urlString = JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					basePropertyName, getPortalUpstreamBranchName(),
+					portalBuildProfile);
+			}
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(urlString)) {
+				return urlString;
+			}
+
+			return null;
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
 	private void _initializeURLs() {
+		String dependenciesURLString = _getURLStringFromBuildProperties(
+			"portal.dependencies.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(dependenciesURLString)) {
+			_dependenciesURLString = dependenciesURLString;
+		}
+
+		String glassFishURLString = _getURLStringFromBuildProperties(
+			"portal.bundle.glassfish");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(glassFishURLString)) {
+			_glassFishURLString = glassFishURLString;
+		}
+
+		String jbossURLString = _getURLStringFromBuildProperties(
+			"portal.bundle.jboss");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jbossURLString)) {
+			_jbossURLString = jbossURLString;
+		}
+
+		String osgiURLString = _getURLStringFromBuildProperties(
+			"portal.osgi.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(osgiURLString)) {
+			_osgiURLString = osgiURLString;
+		}
+
+		String pluginsWarURLString = _getURLStringFromBuildProperties(
+			"plugins.war.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginsWarURLString)) {
+			_pluginsWarURLString = pluginsWarURLString;
+		}
+
+		String portalWarURLString = _getURLStringFromBuildProperties(
+			"portal.war.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalWarURLString)) {
+			_portalWarURLString = portalWarURLString;
+		}
+
+		String sqlURLString = _getURLStringFromBuildProperties(
+			"portal.sql.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(sqlURLString)) {
+			_sqlURLString = sqlURLString;
+		}
+
+		String tomcatURLString = _getURLStringFromBuildProperties(
+			"portal.bundle.tomcat");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(tomcatURLString)) {
+			_tomcatURLString = tomcatURLString;
+		}
+
+		String toolsURLString = _getURLStringFromBuildProperties(
+			"portal.tools.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(toolsURLString)) {
+			_toolsURLString = toolsURLString;
+		}
+
+		String wildFlyURLString = _getURLStringFromBuildProperties(
+			"portal.bundle.wildfly");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(wildFlyURLString)) {
+			_wildFlyURLString = wildFlyURLString;
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_tomcatURLString)) {
+			return;
+		}
+
 		String bundlesBaseURLContent = null;
 
 		try {
@@ -491,6 +679,9 @@ public class PortalRelease {
 	private static final Pattern _osgiFileNamePattern = Pattern.compile(
 		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-osgi-[^\\\"]+\\.zip)" +
 			"\\\"");
+	private static final Pattern _portalVersionPattern = Pattern.compile(
+		"(?<majorVersion>\\d)\\.(?<minorVersion>\\d)\\.(?<fixVersion>\\d+)" +
+			"([-\\.](?<updatePrefix>u)?(?<updateVersion>\\d+))?.*");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
 		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
 	private static final Pattern _sqlFileNamePattern = Pattern.compile(
@@ -511,6 +702,7 @@ public class PortalRelease {
 	private String _glassFishURLString;
 	private String _jbossURLString;
 	private String _osgiURLString;
+	private String _pluginsWarURLString;
 	private final String _portalVersion;
 	private String _portalWarURLString;
 	private String _sqlURLString;

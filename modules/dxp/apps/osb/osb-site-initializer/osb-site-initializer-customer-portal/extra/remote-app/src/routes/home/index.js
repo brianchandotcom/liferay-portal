@@ -11,27 +11,16 @@
 
 import classNames from 'classnames';
 
-import {useEffect, useState} from 'react';
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
+import useHasManyProjects from './hooks/useHasManyProjects';
 import useKoroneikiAccounts from './hooks/useKoroneikiAccounts';
-
-const THRESHOLD_COUNT = 4;
 
 const Home = () => {
 	const {data, fetchMore, fetching, loading, search} = useKoroneikiAccounts();
-	const [maxTotalCount, setMaxTotalCount] = useState(0);
-
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
-	const hasManyProjects = maxTotalCount > THRESHOLD_COUNT;
 
-	useEffect(() => {
-		const totalCount = koroneikiAccounts?.totalCount;
-
-		if (totalCount > maxTotalCount) {
-			setMaxTotalCount(totalCount);
-		}
-	}, [maxTotalCount, koroneikiAccounts?.totalCount]);
+	const hasManyProjects = useHasManyProjects(koroneikiAccounts);
 
 	return (
 		<div

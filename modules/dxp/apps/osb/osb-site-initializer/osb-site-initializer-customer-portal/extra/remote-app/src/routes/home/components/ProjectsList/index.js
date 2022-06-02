@@ -66,9 +66,9 @@ const ProjectList = ({
 					{koroneikiAccounts?.items.length <
 						koroneikiAccounts?.totalCount &&
 						!fetching && (
-							<p className="mx-auto" ref={setTrackedRefCurrent}>
+							<div className="mx-auto" ref={setTrackedRefCurrent}>
 								<ClayLoadingIndicator small />
-							</p>
+							</div>
 						)}
 				</>
 			) : (

@@ -104,6 +104,9 @@ function openTabPanel(event, i) {
 		if (dropdownIsOpen) {
 			handleDropdown(event, currentTarget);
 		}
+		else {
+			handleDropdownButtonName(currentTarget);
+		}
 
 		currentTarget.focus();
 

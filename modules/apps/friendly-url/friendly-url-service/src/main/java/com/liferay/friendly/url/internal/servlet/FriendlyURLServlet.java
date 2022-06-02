@@ -14,6 +14,8 @@
 
 package com.liferay.friendly.url.internal.servlet;
 
+import com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration;
+import com.liferay.friendly.url.internal.configuration.admin.service.FriendlyURLRedirectionManagedServiceFactory;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -223,7 +225,9 @@ public class FriendlyURLServlet extends HttpServlet {
 						redirectURL += StringPool.QUESTION + queryString;
 					}
 
-					return new Redirect(redirectURL, true, false);
+					return new Redirect(
+						redirectURL, true,
+						_isPermanentRedirect(group.getCompanyId()));
 				}
 			}
 
@@ -317,7 +321,8 @@ public class FriendlyURLServlet extends HttpServlet {
 					boolean forcePermanentRedirect = true;
 
 					if (Validator.isNull(i18nLanguageId)) {
-						forcePermanentRedirect = false;
+						forcePermanentRedirect = _isPermanentRedirect(
+							group.getCompanyId());
 					}
 
 					return new Redirect(redirect, true, forcePermanentRedirect);
@@ -381,7 +386,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		long userId = portal.getUserId(httpServletRequest);
 
-		if ((userId > 0) && _isImpersonated(httpServletRequest, userId)) {
+		boolean impersonated = _isImpersonated(httpServletRequest, userId);
+
+		if ((userId > 0) && impersonated) {
 			try {
 				Company company = portal.getCompany(httpServletRequest);
 
@@ -410,7 +417,9 @@ public class FriendlyURLServlet extends HttpServlet {
 					params, !actualURL.contains(StringPool.QUESTION)));
 		}
 
-		return new Redirect(actualURL, false, false);
+		return new Redirect(
+			actualURL, false,
+			!impersonated && _isPermanentRedirect(group.getCompanyId()));
 	}
 
 	@Override
@@ -639,6 +648,10 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected FriendlyURLNormalizer friendlyURLNormalizer;
 
 	@Reference
+	protected FriendlyURLRedirectionManagedServiceFactory
+		friendlyURLRedirectionManagedServiceFactory;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -808,6 +821,22 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return true;
+	}
+
+	private boolean _isPermanentRedirect(long companyId) {
+		FriendlyURLRedirectionConfiguration
+			friendlyURLRedirectionConfiguration =
+				friendlyURLRedirectionManagedServiceFactory.
+					getCompanyFriendlyURLConfiguration(companyId);
+
+		if (Objects.equals(
+				friendlyURLRedirectionConfiguration.redirectionType(),
+				"permanent")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _normalizeFriendlyURL(String friendlyURL) {

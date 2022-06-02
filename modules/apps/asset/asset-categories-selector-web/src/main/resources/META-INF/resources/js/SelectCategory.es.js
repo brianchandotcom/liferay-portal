@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink, {ClayLinkContext} from '@clayui/link';
 import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -42,7 +43,21 @@ function SelectCategory({
 	});
 
 	const [filterQuery, setFilterQuery] = useState('');
-	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+	const [selectedItems, setSelectedItems] = useState(
+		new Set(selectedCategoryIds)
+	);
+
+	const handleClearSelected = ({children, href, ...otherProps}) => (
+		<a
+			{...otherProps}
+			href={href}
+			onClick={() => {
+				setSelectedItems(new Set([]));
+			}}
+		>
+			{children}
+		</a>
+	);
 
 	return (
 		<div className="select-category">
@@ -93,7 +108,7 @@ function SelectCategory({
 				</ClayLayout.ContainerFluid>
 			</form>
 
-			{showSelectedCounter && !!selectedItemsCount && (
+			{showSelectedCounter && selectedItems.size > 0 && (
 				<ClayLayout.Container
 					className="mb-3 px-4 select-category-count-feedback"
 					containerElement="section"
@@ -101,12 +116,24 @@ function SelectCategory({
 				>
 					<div className="align-items-center container-fluid d-flex justify-content-between p-0">
 						<p className="m-0 text-2">
-							{selectedItemsCount + ' '}
+							{selectedItems.size + ' '}
 
-							{selectedItemsCount > 1
+							{selectedItems.size > 1
 								? Liferay.Language.get('items-selected')
 								: Liferay.Language.get('item-selected')}
 						</p>
+
+						<ClayLinkContext.Provider value={handleClearSelected}>
+							<div>
+								<ClayLink
+									className="text-3 text-weight-semi-bold tree-filter-clear-selected"
+									displayType="secondary"
+									href="#"
+								>
+									{Liferay.Language.get('clear-all')}
+								</ClayLink>
+							</div>
+						</ClayLinkContext.Provider>
 					</div>
 				</ClayLayout.Container>
 			)}
@@ -126,9 +153,9 @@ function SelectCategory({
 								multiSelection={multiSelection}
 								onItems={setItems}
 								onSelectionChange={(selectedNodes) => {
-									setSelectedItemsCount(selectedNodes.size);
+									setSelectedItems(selectedNodes);
 								}}
-								selectedCategoryIds={selectedCategoryIds}
+								selectedCategoryIds={selectedItems}
 							/>
 						) : (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">

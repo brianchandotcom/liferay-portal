@@ -74,6 +74,10 @@ export function SelectTree({
 	}, [items]);
 
 	useEffect(() => {
+		setSelectionChange(new Set(selectedCategoryIds));
+	}, [selectedCategoryIds]);
+
+	useEffect(() => {
 		const selectedItems = {};
 
 		selectedKeys.forEach((key) => {

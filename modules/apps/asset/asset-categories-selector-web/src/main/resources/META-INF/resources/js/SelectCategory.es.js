@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -54,7 +55,9 @@ function SelectCategory({
 			)}
 
 			<form
-				className="select-category-filter"
+				className={classNames('select-category-filter', {
+					'select-category-filter--with-count-feedback': showSelectedCounter,
+				})}
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
@@ -90,25 +93,25 @@ function SelectCategory({
 				</ClayLayout.ContainerFluid>
 			</form>
 
+			{showSelectedCounter && !!selectedItemsCount && (
+				<ClayLayout.Container
+					className="mb-3 px-4 select-category-count-feedback"
+					containerElement="section"
+					fluid
+				>
+					<div className="align-items-center container-fluid d-flex justify-content-between p-0">
+						<p className="m-0 text-2">
+							{selectedItemsCount + ' '}
+
+							{selectedItemsCount > 1
+								? Liferay.Language.get('items-selected')
+								: Liferay.Language.get('item-selected')}
+						</p>
+					</div>
+				</ClayLayout.Container>
+			)}
+
 			<form name={`${namespace}selectCategoryFm`}>
-				{showSelectedCounter && !!selectedItemsCount && (
-					<ClayLayout.Container
-						className="px-4 tree-filter-count-feedback"
-						containerElement="section"
-						fluid
-					>
-						<div className="align-items-center container-fluid d-flex justify-content-between p-0">
-							<p className="m-0 text-2">
-								{selectedItemsCount + ' '}
-
-								{selectedItemsCount > 1
-									? Liferay.Language.get('items-selected')
-									: Liferay.Language.get('item-selected')}
-							</p>
-						</div>
-					</ClayLayout.Container>
-				)}
-
 				<ClayLayout.ContainerFluid containerElement="fieldset">
 					<div
 						className="category-tree"

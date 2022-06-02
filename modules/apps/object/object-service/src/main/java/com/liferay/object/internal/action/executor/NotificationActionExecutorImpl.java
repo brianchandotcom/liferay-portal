@@ -19,12 +19,13 @@ import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.util.NotificationHelper;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.internal.action.util.ObjectActionDataConverterUtil;
+import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,14 +53,17 @@ public class NotificationActionExecutorImpl implements ObjectActionExecutor {
 
 		_notificationHelper.sendNotification(
 			userId, notificationTemplate, objectDefinition.getClassName(),
-			ObjectActionDataConverterUtil.convertPayloadJSONObject(
-				payloadJSONObject));
+			ObjectActionVariablesUtil.toVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject));
 	}
 
 	@Override
 	public String getKey() {
 		return ObjectActionExecutorConstants.KEY_NOTIFICATION;
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private NotificationHelper _notificationHelper;

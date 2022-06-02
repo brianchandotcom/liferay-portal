@@ -15,7 +15,6 @@
 package com.liferay.object.internal.notification.term.contributor;
 
 import com.liferay.notification.term.contributor.DefinitionTermContributor;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;

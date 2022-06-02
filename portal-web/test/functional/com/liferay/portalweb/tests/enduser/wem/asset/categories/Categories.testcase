@@ -510,6 +510,10 @@ definition {
 
 			PortletEntry.inputTitle(title = "${modifiedText}");
 
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${modifiedText}");
+
 			PortletEntry.save();
 		}
 

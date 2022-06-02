@@ -23,7 +23,7 @@
 				"default": "This is a sample custom element"
 			},
 			{
-				"name": "sourceCodeUrl",
+				"name": "sourceCodeURL",
 				"type": "string",
 				"default": "https://www.liferay.com"
 			},
@@ -92,7 +92,7 @@
 				"default": "This is a sample IFrame"
 			},
 			{
-				"name": "sourceCodeUrl",
+				"name": "sourceCodeURL",
 				"type": "string",
 				"default": "https://www.liferay.com"
 			},
@@ -142,7 +142,7 @@
 				"default": "This is a sample ThemeCSS"
 			},
 			{
-				"name": "sourceCodeUrl",
+				"name": "sourceCodeURL",
 				"type": "string",
 				"default": "https://www.liferay.com"
 			},
@@ -182,7 +182,7 @@
 				"default": "This is a sample ThemeFavicon"
 			},
 			{
-				"name": "sourceCodeUrl",
+				"name": "sourceCodeURL",
 				"type": "string",
 				"default": "https://www.liferay.com"
 			},
@@ -217,7 +217,7 @@
 				"default": "This is a sample ThemeJS"
 			},
 			{
-				"name": "sourceCodeUrl",
+				"name": "sourceCodeURL",
 				"type": "string",
 				"default": "https://www.liferay.com"
 			},

@@ -12,4 +12,4 @@
  * details.
  */
 
-// Placeholder definition file
+export {FieldFeedback} from './core/components/FieldFeedback';

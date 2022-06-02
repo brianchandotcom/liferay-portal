@@ -13,13 +13,5 @@
  */
 
 declare module 'data-engine-js-components-web' {
-	function FieldFeedback({
-		errorMessage,
-		helpMessage,
-		warningMessage,
-	}: {
-		errorMessage?: string;
-		helpMessage?: string;
-		warningMessage?: string;
-	}): JSX.Element;
+	export * from 'data-engine-js-components-web/src/main/resources/META-INF/resources/js/index';
 }

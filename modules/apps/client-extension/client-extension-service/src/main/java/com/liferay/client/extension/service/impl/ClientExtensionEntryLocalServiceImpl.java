@@ -262,20 +262,23 @@ public class ClientExtensionEntryLocalServiceImpl
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
-		List<ClientExtensionEntry> clientExtensionEntries =
-			clientExtensionEntryLocalService.getClientExtensionEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_companyLocalService.forEachCompany(
+			company -> {
+				List<ClientExtensionEntry> clientExtensionEntries =
+					clientExtensionEntryLocalService.getClientExtensionEntries(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (ClientExtensionEntry clientExtensionEntry :
-				clientExtensionEntries) {
+				for (ClientExtensionEntry clientExtensionEntry :
+						clientExtensionEntries) {
 
-			try {
-				deployClientExtensionEntry(clientExtensionEntry);
-			}
-			catch (PortalException portalException) {
-				ReflectionUtil.throwException(portalException);
-			}
-		}
+					try {
+						deployClientExtensionEntry(clientExtensionEntry);
+					}
+					catch (PortalException portalException) {
+						ReflectionUtil.throwException(portalException);
+					}
+				}
+			});
 	}
 
 	@Clusterable

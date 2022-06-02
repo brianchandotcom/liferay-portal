@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -77,8 +76,8 @@ public class ChangeMasterLayoutMVCActionCommand
 
 		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
 
-		LayoutPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutBasicUpdatePermission(
+			themeDisplay.getPermissionChecker(), layout);
 
 		Layout updatedLayout = _layoutLocalService.updateMasterLayoutPlid(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),

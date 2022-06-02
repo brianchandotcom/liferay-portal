@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -64,8 +63,8 @@ public class ChangeStyleBookEntryMVCActionCommand
 
 		Layout layout = themeDisplay.getLayout();
 
-		LayoutPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutBasicUpdatePermission(
+			themeDisplay.getPermissionChecker(), layout);
 
 		long styleBookEntryId = ParamUtil.getLong(
 			actionRequest, "styleBookEntryId");

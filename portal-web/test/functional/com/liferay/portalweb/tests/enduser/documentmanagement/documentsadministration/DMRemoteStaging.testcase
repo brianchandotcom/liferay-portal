@@ -303,13 +303,62 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154406."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154406. This ensures that a Media Gallery widget containing an image with a custom friendlyURL can be published on a site."
 	@priority = "4"
 	test CanViewImageInMGAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "RemoteStagingDM#CanViewImageInMGAfterPublish";
 
-		// TODO LPS-154406
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test YouTube Video",
+			friendlyURLEdit = "custom-url");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Media Gallery");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Document_1",
+			staging = "true");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Document_1",
+			staging = "true");
 	}
 
 	@description = "This test covers LPS-154434."

@@ -130,20 +130,44 @@ function AssetTagsSelector({
 
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
+			getSelectedItemsOnly: false,
 			multiple: true,
 			onSelect: (dialogSelectedItems) => {
 				if (!dialogSelectedItems?.length) {
 					return;
 				}
 
-				const newValues = dialogSelectedItems.map((item) => {
-					return {
-						label: item.value,
-						value: item.value,
-					};
-				});
+				let [newValues, removedValues] = dialogSelectedItems.reduce(
+					([checked, unchecked], item) => {
+						if (item.checked) {
+							return [
+								[
+									...checked,
+									{
+										label: item.value,
+										value: item.value,
+									},
+								],
+								unchecked,
+							];
+						}
+						else {
+							return [
+								checked,
+								[
+									...unchecked,
+									{
+										label: item.value,
+										value: item.value,
+									},
+								],
+							];
+						}
+					},
+					[[], []]
+				);
 
-				const addedItems = newValues.filter(
+				newValues = newValues.filter(
 					(newValue) =>
 						!selectedItems.find(
 							(selectedItem) =>
@@ -151,20 +175,24 @@ function AssetTagsSelector({
 						)
 				);
 
-				const removedItems = selectedItems.filter(
-					(selectedItem) =>
-						!newValues.find(
-							(newValue) => newValue.label === selectedItem.label
-						)
+				removedValues = selectedItems.filter((selectedItem) =>
+					removedValues.find(
+						(removedValue) =>
+							removedValue.label === selectedItem.label
+					)
 				);
 
-				onSelectedItemsChange(newValues);
+				const allSelectedItems = selectedItems
+					.concat(newValues)
+					.filter((item) => !removedValues.includes(item));
 
-				addedItems.forEach((item) =>
+				onSelectedItemsChange(allSelectedItems);
+
+				newValues.forEach((item) =>
 					callGlobalCallback(addCallback, item)
 				);
 
-				removedItems.forEach((item) =>
+				removedValues.forEach((item) =>
 					callGlobalCallback(removeCallback, item)
 				);
 			},

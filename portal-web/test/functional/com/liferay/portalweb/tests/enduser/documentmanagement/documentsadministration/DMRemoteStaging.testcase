@@ -145,11 +145,12 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154404. An image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."
+	@description = "This test covers LPS-154404. It ensures that an image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."
 	@priority = "4"
 	test CanViewImageInManualCollectionViaAPAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInManualCollectionViaAPAfterPublish";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

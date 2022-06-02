@@ -63,11 +63,11 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	public com.liferay.client.extension.model.ClientExtensionEntryRel
 			addClientExtensionEntryRel(
 				long userId, long classNameId, long classPK,
-				long clientExtensionEntryId, String type)
+				String cetPrimaryKey, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			userId, classNameId, classPK, clientExtensionEntryId, type);
+			userId, classNameId, classPK, cetPrimaryKey, type);
 	}
 
 	/**

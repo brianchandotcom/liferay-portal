@@ -43,7 +43,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="clientExtensionEntryId" type="long" />
+		<field name="cetPrimaryKey" type="String" />
 		<field name="type" type="String" />
 	</model>
 </model-hints>

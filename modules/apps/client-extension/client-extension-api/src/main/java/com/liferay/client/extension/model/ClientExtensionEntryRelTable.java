@@ -66,10 +66,9 @@ public class ClientExtensionEntryRelTable
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryRelTable, Long> classPK =
 		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryRelTable, Long>
-		clientExtensionEntryId = createColumn(
-			"clientExtensionEntryId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryRelTable, String> cetPrimaryKey =
+		createColumn(
+			"cetPrimaryKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryRelTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

@@ -264,18 +264,19 @@ public interface ClientExtensionEntryRelModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the client extension entry ID of this client extension entry rel.
+	 * Returns the cet primary key of this client extension entry rel.
 	 *
-	 * @return the client extension entry ID of this client extension entry rel
+	 * @return the cet primary key of this client extension entry rel
 	 */
-	public long getClientExtensionEntryId();
+	@AutoEscape
+	public String getCetPrimaryKey();
 
 	/**
-	 * Sets the client extension entry ID of this client extension entry rel.
+	 * Sets the cet primary key of this client extension entry rel.
 	 *
-	 * @param clientExtensionEntryId the client extension entry ID of this client extension entry rel
+	 * @param cetPrimaryKey the cet primary key of this client extension entry rel
 	 */
-	public void setClientExtensionEntryId(long clientExtensionEntryId);
+	public void setCetPrimaryKey(String cetPrimaryKey);
 
 	/**
 	 * Returns the type of this client extension entry rel.

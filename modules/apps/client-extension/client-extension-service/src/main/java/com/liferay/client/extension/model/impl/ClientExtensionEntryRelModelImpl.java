@@ -79,7 +79,7 @@ public class ClientExtensionEntryRelModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"clientExtensionEntryId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"cetPrimaryKey", Types.VARCHAR},
 		{"type_", Types.VARCHAR}
 	};
 
@@ -98,12 +98,12 @@ public class ClientExtensionEntryRelModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("clientExtensionEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("cetPrimaryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ClientExtensionEntryRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,clientExtensionEntryId LONG,type_ VARCHAR(75) null)";
+		"create table ClientExtensionEntryRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,cetPrimaryKey VARCHAR(75) null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ClientExtensionEntryRel";
@@ -347,12 +347,11 @@ public class ClientExtensionEntryRelModelImpl
 			(BiConsumer<ClientExtensionEntryRel, Long>)
 				ClientExtensionEntryRel::setClassPK);
 		attributeGetterFunctions.put(
-			"clientExtensionEntryId",
-			ClientExtensionEntryRel::getClientExtensionEntryId);
+			"cetPrimaryKey", ClientExtensionEntryRel::getCetPrimaryKey);
 		attributeSetterBiConsumers.put(
-			"clientExtensionEntryId",
-			(BiConsumer<ClientExtensionEntryRel, Long>)
-				ClientExtensionEntryRel::setClientExtensionEntryId);
+			"cetPrimaryKey",
+			(BiConsumer<ClientExtensionEntryRel, String>)
+				ClientExtensionEntryRel::setCetPrimaryKey);
 		attributeGetterFunctions.put("type", ClientExtensionEntryRel::getType);
 		attributeSetterBiConsumers.put(
 			"type",
@@ -624,17 +623,22 @@ public class ClientExtensionEntryRelModelImpl
 	}
 
 	@Override
-	public long getClientExtensionEntryId() {
-		return _clientExtensionEntryId;
+	public String getCetPrimaryKey() {
+		if (_cetPrimaryKey == null) {
+			return "";
+		}
+		else {
+			return _cetPrimaryKey;
+		}
 	}
 
 	@Override
-	public void setClientExtensionEntryId(long clientExtensionEntryId) {
+	public void setCetPrimaryKey(String cetPrimaryKey) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_clientExtensionEntryId = clientExtensionEntryId;
+		_cetPrimaryKey = cetPrimaryKey;
 	}
 
 	@Override
@@ -767,8 +771,7 @@ public class ClientExtensionEntryRelModelImpl
 		clientExtensionEntryRelImpl.setModifiedDate(getModifiedDate());
 		clientExtensionEntryRelImpl.setClassNameId(getClassNameId());
 		clientExtensionEntryRelImpl.setClassPK(getClassPK());
-		clientExtensionEntryRelImpl.setClientExtensionEntryId(
-			getClientExtensionEntryId());
+		clientExtensionEntryRelImpl.setCetPrimaryKey(getCetPrimaryKey());
 		clientExtensionEntryRelImpl.setType(getType());
 
 		clientExtensionEntryRelImpl.resetOriginalValues();
@@ -803,8 +806,8 @@ public class ClientExtensionEntryRelModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		clientExtensionEntryRelImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		clientExtensionEntryRelImpl.setClientExtensionEntryId(
-			this.<Long>getColumnOriginalValue("clientExtensionEntryId"));
+		clientExtensionEntryRelImpl.setCetPrimaryKey(
+			this.<String>getColumnOriginalValue("cetPrimaryKey"));
 		clientExtensionEntryRelImpl.setType(
 			this.<String>getColumnOriginalValue("type_"));
 
@@ -946,8 +949,13 @@ public class ClientExtensionEntryRelModelImpl
 
 		clientExtensionEntryRelCacheModel.classPK = getClassPK();
 
-		clientExtensionEntryRelCacheModel.clientExtensionEntryId =
-			getClientExtensionEntryId();
+		clientExtensionEntryRelCacheModel.cetPrimaryKey = getCetPrimaryKey();
+
+		String cetPrimaryKey = clientExtensionEntryRelCacheModel.cetPrimaryKey;
+
+		if ((cetPrimaryKey != null) && (cetPrimaryKey.length() == 0)) {
+			clientExtensionEntryRelCacheModel.cetPrimaryKey = null;
+		}
 
 		clientExtensionEntryRelCacheModel.type = getType();
 
@@ -1064,7 +1072,7 @@ public class ClientExtensionEntryRelModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _clientExtensionEntryId;
+	private String _cetPrimaryKey;
 	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1109,8 +1117,7 @@ public class ClientExtensionEntryRelModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put(
-			"clientExtensionEntryId", _clientExtensionEntryId);
+		_columnOriginalValues.put("cetPrimaryKey", _cetPrimaryKey);
 		_columnOriginalValues.put("type_", _type);
 	}
 
@@ -1158,7 +1165,7 @@ public class ClientExtensionEntryRelModelImpl
 
 		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("clientExtensionEntryId", 2048L);
+		columnBitmasks.put("cetPrimaryKey", 2048L);
 
 		columnBitmasks.put("type_", 4096L);
 

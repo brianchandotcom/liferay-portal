@@ -22,6 +22,30 @@ import uuidv4 from 'uuid/v4';
 
 import '../../css/file_size_mimetypes.scss';
 
+const VALID_INPUT_KEYS = new Set([
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'ArrowUp',
+	'ArrowRight',
+	'ArrowDown',
+	'ArrowLeft',
+	'Backspace',
+	'Up',
+	'Right',
+	'Down',
+	'Left',
+	'Enter',
+	'Tab',
+]);
+
 const FileSizeField = ({
 	handleAddClick,
 	handleRemoveClick,
@@ -70,6 +94,11 @@ const FileSizeField = ({
 				id="size"
 				min="0"
 				name={`${portletNamespace}size_${index}`}
+				onKeyDown={(event) => {
+					if (!VALID_INPUT_KEYS.has(event.key)) {
+						event.preventDefault();
+					}
+				}}
 				type="number"
 			/>
 

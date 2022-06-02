@@ -463,6 +463,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				);
 			}
 		).setParameter(
+			"showSelectedCounter", true
+		).setParameter(
 			"singleSelect", false
 		).setParameter(
 			"vocabularyIds",

@@ -92,7 +92,7 @@ public class LayoutLookAndFeelDisplayContext {
 				PortletURL cetItemSelectorURL =
 					_layoutsAdminDisplayContext.getCETItemSelectorURL(
 						"selectCSSClientExtensions",
-						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 
 				return PortletURLBuilder.create(
 					cetItemSelectorURL
@@ -181,7 +181,7 @@ public class LayoutLookAndFeelDisplayContext {
 				PortletURL cetItemSelectorURL =
 					_layoutsAdminDisplayContext.getCETItemSelectorURL(
 						"selectJSClientExtensions",
-						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 				return PortletURLBuilder.create(
 					cetItemSelectorURL

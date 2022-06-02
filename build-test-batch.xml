@@ -4535,7 +4535,7 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-weblogic-mysql56-jdk8">
+	<target name="functional-bundle-weblogic122-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="weblogic"
 			database.type="mysql"
@@ -4554,7 +4554,7 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-weblogic-mysql57-jdk8">
+	<target name="functional-bundle-weblogic122-mysql57-jdk8">
 		<run-functional-test
 			app.server.type="weblogic"
 			database.type="mysql"
@@ -4855,7 +4855,7 @@ log.sanitizer.enabled=false</echo>
 		<antcall target="functional-bundle-tomcat-postgresql134-jdk8" />
 	</target>
 
-	<target name="functional-smoke-bundle-weblogic-mysql57-jdk8">
+	<target name="functional-smoke-bundle-weblogic122-mysql57-jdk8">
 		<run-functional-test
 			app.server.type="weblogic"
 			database.type="mysql"

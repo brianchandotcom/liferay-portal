@@ -24,7 +24,6 @@ public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterColumnType("CommercePricingClass", "title", "TEXT");
-
 		alterColumnType("CommercePricingClass", "description", "TEXT");
 	}
 

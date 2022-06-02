@@ -28,9 +28,7 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"AccountEntry", "externalReferenceCode", "VARCHAR(75)");
-
 		alterTableAddColumn("AccountEntry", "taxIdNumber", "VARCHAR(75)");
-
 		alterTableAddColumn("AccountEntry", "type_", "VARCHAR(75)");
 
 		String defaultType = StringUtil.quote(

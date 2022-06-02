@@ -25,7 +25,6 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"AccountEntry", "defaultDeliveryCTermEntryId", "LONG");
-
 		alterTableAddColumn(
 			"AccountEntry", "defaultPaymentCTermEntryId", "LONG");
 	}

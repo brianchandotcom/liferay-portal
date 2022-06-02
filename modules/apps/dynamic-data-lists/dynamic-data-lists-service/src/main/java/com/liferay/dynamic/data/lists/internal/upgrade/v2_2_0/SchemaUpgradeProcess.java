@@ -24,7 +24,6 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("DDLRecord", "className", "VARCHAR(300) null");
-
 		alterTableAddColumn("DDLRecord", "classPK", "LONG");
 	}
 

@@ -110,7 +110,6 @@ public class KBTemplateUpgradeProcess extends UpgradeProcess {
 		updateColumn(oldTableName, "cacheable", "BOOLEAN", "TRUE");
 
 		alterTableDropColumn(oldTableName, "templateId");
-
 		alterTableDropColumn(oldTableName, "description");
 	}
 

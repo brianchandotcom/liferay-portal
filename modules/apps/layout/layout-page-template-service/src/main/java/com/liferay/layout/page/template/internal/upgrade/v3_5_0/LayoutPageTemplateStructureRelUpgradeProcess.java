@@ -26,7 +26,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"LayoutPageTemplateStructureRel", "lastPublishDate", "DATE");
-
 		alterTableAddColumn(
 			"LayoutPageTemplateStructureRel", "status", "INTEGER");
 
@@ -34,11 +33,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 		alterTableAddColumn(
 			"LayoutPageTemplateStructureRel", "statusByUserId", "LONG");
-
 		alterTableAddColumn(
 			"LayoutPageTemplateStructureRel", "statusByUserName",
 			"VARCHAR(75)");
-
 		alterTableAddColumn(
 			"LayoutPageTemplateStructureRel", "statusDate", "DATE");
 	}

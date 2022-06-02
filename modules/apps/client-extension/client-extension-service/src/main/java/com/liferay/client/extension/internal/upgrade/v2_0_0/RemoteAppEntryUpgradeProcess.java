@@ -26,10 +26,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("RemoteAppEntry", "customElementCSSURLs", "TEXT");
-
 		alterTableAddColumn(
 			"RemoteAppEntry", "customElementHTMLElementName", "VARCHAR(255)");
-
 		alterTableAddColumn("RemoteAppEntry", "customElementURLs", "TEXT");
 
 		alterColumnName(
@@ -47,14 +45,12 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 				"'category.remote-apps'");
 
 		alterTableAddColumn("RemoteAppEntry", "properties", "TEXT");
-
 		alterTableAddColumn("RemoteAppEntry", "type_", "VARCHAR(75)");
 
 		runSQL(
 			StringBundler.concat(
 				"update RemoteAppEntry set type_ = '",
 				ClientExtensionEntryConstants.TYPE_IFRAME, "'"));
-
 	}
 
 }

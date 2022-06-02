@@ -66,7 +66,6 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeSchema() throws Exception {
 		alterTableAddColumn("DDMStructureLayout", "classNameId", "LONG");
-
 		alterTableAddColumn(
 			"DDMStructureLayout", "structureLayoutKey", "VARCHAR(75) null");
 	}

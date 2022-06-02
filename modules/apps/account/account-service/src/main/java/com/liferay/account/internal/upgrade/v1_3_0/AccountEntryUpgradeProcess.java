@@ -24,12 +24,9 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("AccountEntry", "defaultBillingAddressId", "LONG");
-
 		alterTableAddColumn("AccountEntry", "defaultShippingAddressId", "LONG");
-
 		alterTableAddColumn(
 			"AccountEntry", "emailAddress", "VARCHAR(254) null");
-
 		alterTableAddColumn(
 			"AccountEntry", "taxExemptionCode", "VARCHAR(75) null");
 	}

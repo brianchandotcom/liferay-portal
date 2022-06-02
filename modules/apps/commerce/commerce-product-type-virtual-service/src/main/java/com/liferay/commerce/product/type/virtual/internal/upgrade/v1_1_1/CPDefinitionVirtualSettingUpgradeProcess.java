@@ -25,7 +25,6 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterColumnType(
 			"CPDefinitionVirtualSetting", "sampleUrl", "VARCHAR(255) null");
-
 		alterColumnType(
 			"CPDefinitionVirtualSetting", "url", "VARCHAR(255) null");
 	}

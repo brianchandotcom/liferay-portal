@@ -24,7 +24,6 @@ public class AssetCategoryPropertyUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterColumnType("AssetCategoryProperty", "key_", "VARCHAR(255) null");
-
 		alterColumnType("AssetCategoryProperty", "value", "VARCHAR(255) null");
 	}
 

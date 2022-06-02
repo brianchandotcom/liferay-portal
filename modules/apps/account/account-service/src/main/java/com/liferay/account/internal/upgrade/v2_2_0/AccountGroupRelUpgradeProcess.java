@@ -38,11 +38,8 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("AccountGroupRel", "userId", "LONG");
-
 		alterTableAddColumn("AccountGroupRel", "userName", "VARCHAR(75) null");
-
 		alterTableAddColumn("AccountGroupRel", "createDate", "DATE null");
-
 		alterTableAddColumn("AccountGroupRel", "modifiedDate", "DATE null");
 
 		_companyLocalService.forEachCompany(

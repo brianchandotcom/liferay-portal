@@ -25,9 +25,7 @@ public class JournalFeedUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterColumnType(
 			"JournalFeed", "DDMRendererTemplateKey", "VARCHAR(75) null");
-
 		alterColumnType("JournalFeed", "DDMStructureKey", "VARCHAR(75) null");
-
 		alterColumnType("JournalFeed", "DDMTemplateKey", "VARCHAR(75) null");
 	}
 

@@ -40,7 +40,6 @@ public class ModuleUpgradeProcess extends UpgradeProcess {
 	protected void updateModules() throws Exception {
 		alterTableAddColumn(
 			"Marketplace_Module", "bundleSymbolicName", "VARCHAR(500)");
-
 		alterTableAddColumn(
 			"Marketplace_Module", "bundleVersion", "VARCHAR(75)");
 

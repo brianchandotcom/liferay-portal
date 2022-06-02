@@ -119,7 +119,7 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getCSSExtensionConfigurationProps() {
+	public Map<String, Object> getCSSExtensionsConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
 			"cssExtensions", JSONFactoryUtil.createJSONArray()
 		).put(
@@ -137,8 +137,7 @@ public class LayoutLookAndFeelDisplayContext {
 				).buildString();
 			}
 		).put(
-			"selectCSSClientExtensionsEventName",
-			"selectCSSClientExtensions"
+			"selectCSSClientExtensionsEventName", "selectCSSClientExtensions"
 		).build();
 	}
 

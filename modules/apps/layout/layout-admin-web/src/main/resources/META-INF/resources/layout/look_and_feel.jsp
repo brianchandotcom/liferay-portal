@@ -200,8 +200,8 @@ else {
 	<clay:sheet-section>
 		<div>
 			<react:component
-				module="js/layout/look_and_feel/CSSExtensionConfiguration"
-				props="<%= layoutLookAndFeelDisplayContext.getCSSExtensionConfigurationProps() %>"
+				module="js/layout/look_and_feel/CSSExtensionsConfiguration"
+				props="<%= layoutLookAndFeelDisplayContext.getCSSExtensionsConfigurationProps() %>"
 			/>
 		</div>
 	</clay:sheet-section>

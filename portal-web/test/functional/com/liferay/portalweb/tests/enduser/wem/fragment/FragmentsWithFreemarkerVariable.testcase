@@ -157,4 +157,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154077. The display page template designer can identify in a fragment when they are at edit or view mode."
+	@priority = "3"
+	test AddFragmentWithLayoutModeToDisplayPageTemplate {
+		property portal.acceptance = "true";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a display page template designer has a fragment with layoutMode freemarker variable") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="fragment-name">
+	${layoutMode}
+</div>
+			''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var fragmentEntryId = JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("When the display page template designer adds a new fragment to a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the display page template designer could see edit mode shown on fragment") {
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "edit",
+				fragmentName = "Fragment Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Given the display page template designer has a web content associated with display page template") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the display page template designer navigates to the associated display page template") {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		}
+
+		task ("Then the display page template designer could see view mode shown on fragment") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "fragment-name",
+				text = "view");
+		}
+	}
+
 }

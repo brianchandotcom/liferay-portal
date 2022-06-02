@@ -51,6 +51,10 @@ public class ObjectActionsTableFDSView extends BaseTableFDSView {
 			"active", "active",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
+		).add(
+			"status", "last-execution",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"objectActionStatusDataRenderer")
 		).build();
 	}
 

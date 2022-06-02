@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>CURRENT_MONTH_BY_MINI_CALENDAR</td>
-	<td>//div[contains(@class,'calendar-portlet-mini-calendar')]//..//h1[contains(text(),'')]</td>
+	<td>//div[contains(@class,'yui3-calendar-header-label')]</td>
 	<td></td>
 </tr>
 <tr>

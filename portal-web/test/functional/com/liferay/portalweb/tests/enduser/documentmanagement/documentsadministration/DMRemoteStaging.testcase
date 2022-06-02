@@ -127,13 +127,68 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154405."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154405. An image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterPublish";
 
-		// TODO LPS-154405
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "DM Document Title",
+			friendlyURLEdit = "custom-url");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Site Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			title = "Dynamic Collection");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title");
 	}
 
 	@description = "This test covers LPS-154430."

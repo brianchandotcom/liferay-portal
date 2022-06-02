@@ -19,6 +19,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -129,25 +130,48 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS);
 
-		long faviconClientExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "faviconClientExtensionEntryId");
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId());
 
-		if (faviconClientExtensionEntryId > 0) {
+		String faviconCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "faviconCETPrimaryKey");
+
+		if (Validator.isNotNull(faviconCETPrimaryKey)) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
+				layoutSet.getLayoutSetId(), faviconCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 
-		long themeCSSExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "themeCSSExtensionEntryId");
+		String[] globalCSSCETPrimaryKeys = ParamUtil.getStringValues(
+			actionRequest, "globalCSSCETPrimaryKeys");
 
-		if (themeCSSExtensionEntryId > 0) {
+		for (String globalCSSCETPrimaryKey : globalCSSCETPrimaryKeys) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				layoutSet.getLayoutSetId(), globalCSSCETPrimaryKey,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+		}
+
+		String[] globalJSCETPrimaryKeys = ParamUtil.getStringValues(
+			actionRequest, "globalJSCETPrimaryKeys");
+
+		for (String globalJSCETPrimaryKey : globalJSCETPrimaryKeys) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				layoutSet.getLayoutSetId(), globalJSCETPrimaryKey,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+		}
+
+		String themeCSSCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "themeCSSCETPrimaryKey");
+
+		if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), themeCSSExtensionEntryId,
+				layoutSet.getLayoutSetId(), themeCSSCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 	}

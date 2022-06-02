@@ -57,7 +57,7 @@ public class ClientExtensionEntryRelWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("clientExtensionEntryId", getClientExtensionEntryId());
+		attributes.put("cetPrimaryKey", getCetPrimaryKey());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -133,11 +133,10 @@ public class ClientExtensionEntryRelWrapper
 			setClassPK(classPK);
 		}
 
-		Long clientExtensionEntryId = (Long)attributes.get(
-			"clientExtensionEntryId");
+		String cetPrimaryKey = (String)attributes.get("cetPrimaryKey");
 
-		if (clientExtensionEntryId != null) {
-			setClientExtensionEntryId(clientExtensionEntryId);
+		if (cetPrimaryKey != null) {
+			setCetPrimaryKey(cetPrimaryKey);
 		}
 
 		String type = (String)attributes.get("type");
@@ -150,6 +149,16 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public ClientExtensionEntryRel cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the cet primary key of this client extension entry rel.
+	 *
+	 * @return the cet primary key of this client extension entry rel
+	 */
+	@Override
+	public String getCetPrimaryKey() {
+		return model.getCetPrimaryKey();
 	}
 
 	/**
@@ -180,16 +189,6 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
-	}
-
-	/**
-	 * Returns the client extension entry ID of this client extension entry rel.
-	 *
-	 * @return the client extension entry ID of this client extension entry rel
-	 */
-	@Override
-	public long getClientExtensionEntryId() {
-		return model.getClientExtensionEntryId();
 	}
 
 	/**
@@ -347,6 +346,16 @@ public class ClientExtensionEntryRelWrapper
 		model.persist();
 	}
 
+	/**
+	 * Sets the cet primary key of this client extension entry rel.
+	 *
+	 * @param cetPrimaryKey the cet primary key of this client extension entry rel
+	 */
+	@Override
+	public void setCetPrimaryKey(String cetPrimaryKey) {
+		model.setCetPrimaryKey(cetPrimaryKey);
+	}
+
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
@@ -370,16 +379,6 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
-	}
-
-	/**
-	 * Sets the client extension entry ID of this client extension entry rel.
-	 *
-	 * @param clientExtensionEntryId the client extension entry ID of this client extension entry rel
-	 */
-	@Override
-	public void setClientExtensionEntryId(long clientExtensionEntryId) {
-		model.setClientExtensionEntryId(clientExtensionEntryId);
 	}
 
 	/**

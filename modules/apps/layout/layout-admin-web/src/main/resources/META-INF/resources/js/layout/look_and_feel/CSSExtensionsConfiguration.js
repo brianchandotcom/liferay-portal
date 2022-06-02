@@ -20,11 +20,11 @@ import React, {useState} from 'react';
 
 export default function CSSExtensionsConfiguration({
 	cssExtensionSelectorURL,
-	cssExtensions: initialCSSExtensions,
+	globalCSSCETs: initialCSSExtensions,
 	portletNamespace,
 	selectCSSClientExtensionsEventName,
 }) {
-	const [cssExtensions, setCSSExtensions] = useState(initialCSSExtensions);
+	const [globalCSSCETs, setGlobalCSSCETs] = useState(initialGlobalCSSCETs);
 
 	const deleteCSSExtension = (deletedCSSExtension) => {
 		setCSSExtensions((previousCSSExtensions) =>
@@ -58,18 +58,17 @@ export default function CSSExtensionsConfiguration({
 					JSON.parse(selectedItem)
 				);
 
-				setCSSExtensions((previousCSSExtensions) => {
-					const nextCSSExtensions = [
-						...previousCSSExtensions,
+				setCSSExtensions((previousGlobalCSSCET) => {
+					const nextGlobalCSSCET = [
+						...previousGlobalCSSCET,
 						...items,
 					];
 
-					return nextCSSExtensions.filter(
-						(cssExtension, index) =>
-							nextCSSExtensions.findIndex(
-								({clientExtensionEntryId}) =>
-									cssExtension.clientExtensionEntryId ===
-									clientExtensionEntryId
+					return nextGlobalCSSCET.filter(
+						(globalCSSCET, index) =>
+							nextGlobalCSSCET.findIndex(
+								({cetPrimaryKey}) =>
+									globalCSSCET.cetPrimaryKey === cetPrimaryKey
 							) === index
 					);
 				});
@@ -83,10 +82,10 @@ export default function CSSExtensionsConfiguration({
 	return (
 		<>
 			<input
-				name={`${portletNamespace}cssExtensions`}
+				name={`${portletNamespace}globalCSSCETPrimaryKeys`}
 				type="hidden"
-				value={cssExtensions
-					.map((cssExtension) => cssExtension.clientExtensionEntryId)
+				value={globalCSSCETs
+					.map((globalCSSCET) => globalCSSCET.cetPrimaryKey)
 					.join(',')}
 			/>
 
@@ -104,7 +103,7 @@ export default function CSSExtensionsConfiguration({
 				{Liferay.Language.get('add-css-extensions')}
 			</ClayButton>
 
-			{cssExtensions.length ? (
+			{globalCSSCETPrimaryKeys.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -121,7 +120,7 @@ export default function CSSExtensionsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{cssExtensions.map((cssExtension) => (
+						{globalCSSCETPrimaryKeys.map((cssExtension) => (
 							<ClayTable.Row
 								key={cssExtension.clientExtensionEntryId}
 							>

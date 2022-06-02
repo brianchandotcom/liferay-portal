@@ -1,0 +1,127 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Enable local live") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a fragment collection to staging site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name (Staging)",
+				name = "Collection Name",
+				site = "false");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-154077. The pages designer can identify in a fragment when they are at edit or view mode in staging site."
+	@priority = "3"
+	test AddFragmentWithLayoutModeToContentPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Content Pages,Fragments";
+
+		task ("Given a page designer has a fragment with layoutMode freemarker variable") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="fragment-name">
+	${layoutMode}
+</div>
+			''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var fragmentEntryId = JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name (Staging)",
+				html = "${htmlSnippet}",
+				name = "Fragment Name",
+				site = "false");
+		}
+
+		task ("When the page designer adds a new fragment to a content page in staging site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the page designer could see edit mode shown on fragment") {
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "edit",
+				fragmentName = "Fragment Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("When the page designer navigates to the content page at view mode in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Then the page designer could see view mode shown on fragment") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "fragment-name",
+				text = "view");
+		}
+
+		task ("When the page designer navigates to the content page at view mode in live site after publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer could see view mode shown on fragment") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "fragment-name",
+				text = "view");
+		}
+	}
+
+}

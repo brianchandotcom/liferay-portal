@@ -119,7 +119,7 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getCSSExtensionConfigurationProps() {
+	public Map<String, Object> getCSSExtensionsConfigurationProps() {
 		String selectCSSClientExtensionsEventName = "selectCSSClientExtensions";
 
 		return HashMapBuilder.<String, Object>put(

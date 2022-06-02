@@ -18,7 +18,7 @@ import ClayTable from '@clayui/table';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-export default function CSSExtensionConfiguration({
+export default function CSSExtensionsConfiguration({
 	cssExtensionSelectorURL,
 	cssExtensions: initialCSSExtensions,
 	portletNamespace,

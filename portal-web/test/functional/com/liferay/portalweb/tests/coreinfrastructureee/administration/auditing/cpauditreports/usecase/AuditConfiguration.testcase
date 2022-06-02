@@ -26,6 +26,40 @@ definition {
 		}
 	}
 
+	@description = "This test Audit log can be enabled in log file or console with CSV or JSON format through System Settings or OSGI config file."
+	@priority = "4"
+	test CanEnableLogAndConsoleAudit {
+		property log.context.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "columns=[&quot;eventType&quot;,&quot;userId&quot;,&quot;userName&quot;]:enabled=B&quot;true&quot;${line.separator}logMessageFormat=&quot;CSV&quot;${line.separator}outputToConsole=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableLogAndConsoleAudit";
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Audit",
+			configurationName = "Logging Message Audit Message Processor",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "Enabled");
+
+		Audit.verifyConfigurationElementIsConfigured(
+			element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+			portlet = "Logging Message Audit",
+			text = "CSV");
+
+		FormFields.viewCheckboxChecked(fieldName = "Output to Console");
+
+		SignOut.signOut();
+
+		AuditLog.viewLogFileContent(logString = '''"LOGOUT","${userId}","Test Test"''');
+	}
+
 	@description = "This test Audit can be enabled or disabled through System Settings and OSGI config file."
 	@priority = "4"
 	test CanEnableOrDisableAudit {

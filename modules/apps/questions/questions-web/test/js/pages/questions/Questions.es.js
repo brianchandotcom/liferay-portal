@@ -174,7 +174,11 @@ describe('Questions', () => {
 			);
 
 		const {container, findByText} = renderComponent({
-			contextValue: {sections: [], siteKey: '20020'},
+			contextValue: {
+				questionsVisited: [],
+				sections: [],
+				siteKey: '20020',
+			},
 			fetch,
 			route,
 			ui: <Route component={Questions} path={path} />,
@@ -213,7 +217,11 @@ describe('Questions', () => {
 			);
 
 		const {findByText} = renderComponent({
-			contextValue: {sections: [], siteKey: '20020'},
+			contextValue: {
+				questionsVisited: [],
+				sections: [],
+				siteKey: '20020',
+			},
 			route,
 			ui: <Route component={Questions} path={path} />,
 		});

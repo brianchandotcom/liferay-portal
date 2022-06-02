@@ -201,6 +201,16 @@ public class ObjectActionSerDes {
 			sb.append(_toJSON(objectAction.getParameters()));
 		}
 
+		if (objectAction.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(String.valueOf(objectAction.getStatus()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -311,6 +321,13 @@ public class ObjectActionSerDes {
 			map.put("parameters", String.valueOf(objectAction.getParameters()));
 		}
 
+		if (objectAction.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(objectAction.getStatus()));
+		}
+
 		return map;
 	}
 
@@ -401,6 +418,12 @@ public class ObjectActionSerDes {
 					objectAction.setParameters(
 						(Map)ObjectActionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					objectAction.setStatus(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

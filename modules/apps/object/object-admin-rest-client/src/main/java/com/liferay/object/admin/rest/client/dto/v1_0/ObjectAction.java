@@ -267,6 +267,27 @@ public class ObjectAction implements Cloneable, Serializable {
 
 	protected Map<String, ?> parameters;
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Status status;
+
 	@Override
 	public ObjectAction clone() throws CloneNotSupportedException {
 		return (ObjectAction)super.clone();

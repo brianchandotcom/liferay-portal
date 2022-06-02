@@ -698,6 +698,14 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (objectAction.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -908,6 +916,16 @@ public abstract class BaseObjectActionResourceTestCase {
 				if (!equals(
 						(Map)objectAction1.getParameters(),
 						(Map)objectAction2.getParameters())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectAction1.getStatus(), objectAction2.getStatus())) {
 
 					return false;
 				}
@@ -1135,6 +1153,11 @@ public abstract class BaseObjectActionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("parameters")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

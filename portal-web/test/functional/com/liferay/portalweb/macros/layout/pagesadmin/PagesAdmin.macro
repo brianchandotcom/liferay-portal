@@ -596,6 +596,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
+		Panel.expandPanel(panel = "Look and Feel");
+
 		Theme.changeCurrentTheme(themeName = "${themeName}");
 
 		PortletEntry.save();

@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinition
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -171,6 +172,15 @@ public class ObjectDefinitionResourceImpl
 			throw new ObjectDefinitionStorageTypeException();
 		}
 
+		if ((Validator.isNotNull(
+				objectDefinition.getAccountEntryRestricted()) ||
+			 Validator.isNotNull(
+				 objectDefinition.getAccountEntryRestrictedObjectFieldId())) &&
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+
+			throw new ObjectDefinitionAccountEntryRestrictedException();
+		}
+
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.getObjectDefinition(
@@ -185,8 +195,13 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId, 0,
-				GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
+				objectDefinitionId,
+				GetterUtil.get(
+					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+					0),
+				0, GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
+				GetterUtil.getBoolean(
+					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
@@ -253,6 +268,17 @@ public class ObjectDefinitionResourceImpl
 							objectDefinition.getObjectDefinitionId());
 					}
 				).build();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-153768"))) {
+
+					accountEntryRestricted =
+						objectDefinition.isAccountEntryRestricted();
+					accountEntryRestrictedObjectFieldId =
+						objectDefinition.
+							getAccountEntryRestrictedObjectFieldId();
+				}
+
 				active = objectDefinition.isActive();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();

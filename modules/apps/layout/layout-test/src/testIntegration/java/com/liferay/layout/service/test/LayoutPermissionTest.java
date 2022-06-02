@@ -63,6 +63,38 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
+	public void testContainsWithUpdateLayoutBasicPermissions()
+		throws Exception {
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			ActionKeys.UPDATE_LAYOUT_BASIC);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertTrue(
+			_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_BASIC));
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
+
+			Assert.assertTrue(
+				_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, layout));
+		}
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, layout));
+		}
+	}
+
+	@Test
 	public void testContainsWithUpdateLayoutContentPermissions()
 		throws Exception {
 

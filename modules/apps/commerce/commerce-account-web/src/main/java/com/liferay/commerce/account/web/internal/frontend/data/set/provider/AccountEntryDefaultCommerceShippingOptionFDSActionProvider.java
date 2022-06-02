@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.account.web.internal.frontend.taglib.clay.data.set;
+package com.liferay.commerce.account.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.web.internal.frontend.constants.CommerceAccountDataSetConstants;
+import com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames;
 import com.liferay.commerce.account.web.internal.model.ShippingOption;
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -46,15 +46,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceAccountDataSetConstants.COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
-	service = ClayDataSetActionProvider.class
+	property = "fds.data.provider.key=" + CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
+	service = FDSActionProvider.class
 )
-public class AccountEntryDefaultCommerceShippingOptionDataSetActionProvider
-	implements ClayDataSetActionProvider {
+public class AccountEntryDefaultCommerceShippingOptionFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
 		ShippingOption shippingOption = (ShippingOption)model;

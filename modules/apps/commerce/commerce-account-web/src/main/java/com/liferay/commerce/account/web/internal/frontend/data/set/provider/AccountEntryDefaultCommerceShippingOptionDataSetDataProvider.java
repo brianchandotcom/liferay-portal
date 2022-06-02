@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.account.web.internal.frontend.taglib.clay.data.set.provider;
+package com.liferay.commerce.account.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.account.web.internal.frontend.constants.CommerceAccountDataSetConstants;
+import com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames;
 import com.liferay.commerce.account.web.internal.model.ShippingOption;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
@@ -23,9 +23,9 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
-import com.liferay.frontend.taglib.clay.data.Filter;
-import com.liferay.frontend.taglib.clay.data.Pagination;
-import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.data.set.provider.FDSDataProvider;
+import com.liferay.frontend.data.set.provider.search.FDSKeywords;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -47,16 +47,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceAccountDataSetConstants.COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
-	service = ClayDataSetDataProvider.class
+	property = "fds.data.provider.key=" + CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
+	service = FDSDataProvider.class
 )
 public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
-	implements ClayDataSetDataProvider<ShippingOption> {
+	implements FDSDataProvider<ShippingOption> {
 
 	@Override
 	public List<ShippingOption> getItems(
-			HttpServletRequest httpServletRequest, Filter filter,
-			Pagination pagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
 		long accountEntryId = ParamUtil.getLong(
@@ -66,8 +66,9 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 
 		return TransformUtil.transform(
 			_commerceChannelService.search(
-				companyId, filter.getKeywords(), pagination.getStartPosition(),
-				pagination.getEndPosition(), sort),
+				companyId, fdsKeywords.getKeywords(),
+				fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), sort),
 			commerceChannel -> {
 				String active = StringPool.BLANK;
 				String commerceShippingMethodName = _language.get(
@@ -124,11 +125,12 @@ public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, Filter filter)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return _commerceChannelService.searchCommerceChannelsCount(
-			_portal.getCompanyId(httpServletRequest), filter.getKeywords());
+			_portal.getCompanyId(httpServletRequest),
+			fdsKeywords.getKeywords());
 	}
 
 	@Reference

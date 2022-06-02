@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.account.web.internal.frontend.constants;
+package com.liferay.commerce.account.web.internal.constants;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marko Cikos
  */
-public class CommerceAccountDataSetConstants {
+public class CommerceAccountPortletKeys {
 
-	public static final String
-		COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS =
-			"account-entry-default-shipping-options";
+	public static final String COMMERCE_ACCOUNT =
+		"com_liferay_commerce_account_web_internal_portlet_" +
+			"CommerceAccountPortlet";
 
 }

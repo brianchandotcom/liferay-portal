@@ -36,6 +36,54 @@ public class ObjectDefinition implements Cloneable, Serializable {
 		return ObjectDefinitionSerDes.toDTO(json);
 	}
 
+	public Boolean getAccountEntryRestricted() {
+		return accountEntryRestricted;
+	}
+
+	public void setAccountEntryRestricted(Boolean accountEntryRestricted) {
+		this.accountEntryRestricted = accountEntryRestricted;
+	}
+
+	public void setAccountEntryRestricted(
+		UnsafeSupplier<Boolean, Exception>
+			accountEntryRestrictedUnsafeSupplier) {
+
+		try {
+			accountEntryRestricted = accountEntryRestrictedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean accountEntryRestricted;
+
+	public Long getAccountEntryRestrictedObjectFieldId() {
+		return accountEntryRestrictedObjectFieldId;
+	}
+
+	public void setAccountEntryRestrictedObjectFieldId(
+		Long accountEntryRestrictedObjectFieldId) {
+
+		this.accountEntryRestrictedObjectFieldId =
+			accountEntryRestrictedObjectFieldId;
+	}
+
+	public void setAccountEntryRestrictedObjectFieldId(
+		UnsafeSupplier<Long, Exception>
+			accountEntryRestrictedObjectFieldIdUnsafeSupplier) {
+
+		try {
+			accountEntryRestrictedObjectFieldId =
+				accountEntryRestrictedObjectFieldIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long accountEntryRestrictedObjectFieldId;
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

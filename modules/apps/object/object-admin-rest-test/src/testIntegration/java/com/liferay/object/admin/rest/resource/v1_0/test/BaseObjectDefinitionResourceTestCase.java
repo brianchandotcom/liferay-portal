@@ -937,6 +937,29 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"accountEntryRestricted", additionalAssertFieldName)) {
+
+				if (objectDefinition.getAccountEntryRestricted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"accountEntryRestrictedObjectFieldId",
+					additionalAssertFieldName)) {
+
+				if (objectDefinition.getAccountEntryRestrictedObjectFieldId() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (objectDefinition.getActions() == null) {
 					valid = false;
@@ -1179,6 +1202,35 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"accountEntryRestricted", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getAccountEntryRestricted(),
+						objectDefinition2.getAccountEntryRestricted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"accountEntryRestrictedObjectFieldId",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.
+							getAccountEntryRestrictedObjectFieldId(),
+						objectDefinition2.
+							getAccountEntryRestrictedObjectFieldId())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
@@ -1512,6 +1564,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("accountEntryRestricted")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("accountEntryRestrictedObjectFieldId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1734,6 +1796,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	protected ObjectDefinition randomObjectDefinition() throws Exception {
 		return new ObjectDefinition() {
 			{
+				accountEntryRestricted = RandomTestUtil.randomBoolean();
+				accountEntryRestrictedObjectFieldId =
+					RandomTestUtil.randomLong();
 				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

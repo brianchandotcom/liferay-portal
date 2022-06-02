@@ -67,6 +67,27 @@ public class ObjectDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (objectDefinition.getAccountEntryRestricted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryRestricted\": ");
+
+			sb.append(objectDefinition.getAccountEntryRestricted());
+		}
+
+		if (objectDefinition.getAccountEntryRestrictedObjectFieldId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryRestrictedObjectFieldId\": ");
+
+			sb.append(
+				objectDefinition.getAccountEntryRestrictedObjectFieldId());
+		}
+
 		if (objectDefinition.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -396,6 +417,25 @@ public class ObjectDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (objectDefinition.getAccountEntryRestricted() == null) {
+			map.put("accountEntryRestricted", null);
+		}
+		else {
+			map.put(
+				"accountEntryRestricted",
+				String.valueOf(objectDefinition.getAccountEntryRestricted()));
+		}
+
+		if (objectDefinition.getAccountEntryRestrictedObjectFieldId() == null) {
+			map.put("accountEntryRestrictedObjectFieldId", null);
+		}
+		else {
+			map.put(
+				"accountEntryRestrictedObjectFieldId",
+				String.valueOf(
+					objectDefinition.getAccountEntryRestrictedObjectFieldId()));
+		}
+
 		if (objectDefinition.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -590,7 +630,22 @@ public class ObjectDefinitionSerDes {
 			ObjectDefinition objectDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountEntryRestricted")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setAccountEntryRestricted(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"accountEntryRestrictedObjectFieldId")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setAccountEntryRestrictedObjectFieldId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setActions(
 						(Map)ObjectDefinitionSerDes.toMap(

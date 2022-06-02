@@ -172,7 +172,7 @@ public class ObjectActionResourceImpl
 					ActionKeys.UPDATE, "putObjectAction", permissionName,
 					objectAction.getObjectDefinitionId())
 			).build(),
-			objectAction);
+			contextAcceptLanguage.getPreferredLocale(), objectAction);
 	}
 
 	private UnicodeProperties _toParametersUnicodeProperties(

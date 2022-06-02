@@ -91,13 +91,65 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154407."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154407. This ensures that a Media Gallery widget containing an external video with a custom friendlyURL can be published on a site."
 	@priority = "4"
 	test CanViewExternalVideoInMGAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "RemoteStagingDM#CanViewExternalVideoInMGAfterPublish";
 
-		// TODO LPS-154407
+		DMNavigator.openToAddEntry(
+			documentTypeName = "External Video Shortcut",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
+		VideoShortcut.addCP(
+			skipNavigation = "true",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test YouTube Video",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test YouTube Video",
+			friendlyURLEdit = "custom-url");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Media Gallery");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "hqdefault.jpg",
+			staging = "true");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "hqdefault.jpg",
+			staging = "true");
 	}
 
 	@description = "This test covers LPS-154408."

@@ -50,6 +50,10 @@ export default function CSSExtensionsConfiguration({
 		openSelectionModal({
 			multiple: true,
 			onSelect(selectedItems) {
+				if (!selectedItems.value) {
+					return;
+				}
+
 				const items = selectedItems.value.map((selectedItem) =>
 					JSON.parse(selectedItem)
 				);

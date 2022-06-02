@@ -11,7 +11,6 @@ definition {
 
 		User.firstLoginPG();
 
-		RaylifeAP.createRaylifeAPSite();
 	}
 
 	tearDown {
@@ -28,29 +27,32 @@ definition {
 	}
 
 	@description = "Verify if Raylife AP can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRaylifeAPCreated {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
 
-		// TODO LPS-154296 - Verify if Raylife AP can be created
+		LexiconEntry.gotoAdd();
 
-	}
+		LexiconCard.clickCard(card = "Raylife AP");
 
-	@description = "Verify if when Raylife AP is created, the Raylife Applications will be created for it as well"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test RaylifeApplicationsForRaylifeAPIsCreated {
+		SelectFrame(
+			key_title = "Add Site",
+			locator1 = "IFrame#MODAL_ANY");
 
-		// TODO LPS-154296 - Verify if when Raylife AP is created, the Raylife Applications will be created for it as well
+		PortletEntry.inputName(name = "Raylife AP");
 
-	}
+		Click(locator1 = "Button#ADD");
 
-	@description = "Verify if when Raylife AP is created, the Raylife Policies will be created for it as well"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test RaylifePoliciesForRaylifeAPIsCreated {
+		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
 
-		// TODO LPS-154296 - Verify if when Raylife AP is created, the Raylife Policies will be created for it as well
+		while (IsElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION")) {
+			Pause(locator1 = "1500");
+		}
+
+		Alert.viewSuccessMessage();
 
 	}
 

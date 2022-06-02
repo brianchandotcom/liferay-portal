@@ -627,6 +627,7 @@
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionTriggerKey</exception>
+		<exception>ObjectDefinitionAccountEntryRestricted</exception>
 		<exception>ObjectDefinitionActive</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionName</exception>

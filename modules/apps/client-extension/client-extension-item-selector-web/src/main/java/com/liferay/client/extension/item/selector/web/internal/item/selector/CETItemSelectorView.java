@@ -16,7 +16,7 @@ package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
 import com.liferay.client.extension.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
-import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -73,7 +73,7 @@ public class CETItemSelectorView
 			servletRequest, servletResponse, itemSelectorCriterion, portletURL,
 			itemSelectedEventName, true,
 			new CETItemSelectorViewDescriptor(
-				_cetFactory, itemSelectorCriterion,
+				_cetManager, itemSelectorCriterion,
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
@@ -82,7 +82,7 @@ public class CETItemSelectorView
 			new CETItemSelectorReturnType());
 
 	@Reference
-	private CETFactory _cetFactory;
+	private CETManager _cetManager;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<CETItemSelectorCriterion>

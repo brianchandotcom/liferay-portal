@@ -15,9 +15,8 @@
 package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CETThemeFavicon;
-import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,13 +31,8 @@ import java.util.Objects;
 public class CETItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
-	public CETItemDescriptor(
-		CETFactory cetFactory, ClientExtensionEntry clientExtensionEntry,
-		String type) {
-
-		_cetFactory = cetFactory;
-		_clientExtensionEntry = clientExtensionEntry;
-		_type = type;
+	public CETItemDescriptor(CET cet) {
+		_cet = cet;
 	}
 
 	@Override
@@ -53,28 +47,25 @@ public class CETItemDescriptor
 
 	@Override
 	public Date getModifiedDate() {
-		return _clientExtensionEntry.getModifiedDate();
+		return null;
 	}
 
 	@Override
 	public String getPayload() {
 		return JSONUtil.put(
-			"clientExtensionEntryId",
-			String.valueOf(_clientExtensionEntry.getClientExtensionEntryId())
+			"clientExtensionEntryId", String.valueOf(_cet.getPrimaryKey())
 		).put(
-			"name",
-			_clientExtensionEntry.getName(LocaleUtil.getMostRelevantLocale())
+			"name", _cet.getName(LocaleUtil.getMostRelevantLocale())
 		).put(
-			"type", _type
+			"type", _cet.getType()
 		).put(
 			"url",
 			() -> {
 				if (Objects.equals(
-						_type,
+						_cet.getType(),
 						ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
 
-					CETThemeFavicon cetThemeFavicon =
-						_cetFactory.cetThemeFavicon(_clientExtensionEntry);
+					CETThemeFavicon cetThemeFavicon = (CETThemeFavicon)_cet;
 
 					return cetThemeFavicon.getURL();
 				}
@@ -86,22 +77,22 @@ public class CETItemDescriptor
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return _clientExtensionEntry.getType();
+		return _cet.getType();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _clientExtensionEntry.getName(locale);
+		return _cet.getName(locale);
 	}
 
 	@Override
 	public long getUserId() {
-		return _clientExtensionEntry.getUserId();
+		return 0;
 	}
 
 	@Override
 	public String getUserName() {
-		return _clientExtensionEntry.getUserName();
+		return null;
 	}
 
 	@Override
@@ -109,8 +100,6 @@ public class CETItemDescriptor
 		return true;
 	}
 
-	private final CETFactory _cetFactory;
-	private final ClientExtensionEntry _clientExtensionEntry;
-	private final String _type;
+	private final CET _cet;
 
 }

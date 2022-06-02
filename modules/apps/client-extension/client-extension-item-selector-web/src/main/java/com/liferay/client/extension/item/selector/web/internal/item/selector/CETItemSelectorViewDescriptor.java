@@ -16,15 +16,17 @@ package com.liferay.client.extension.item.selector.web.internal.item.selector;
 
 import com.liferay.client.extension.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.item.selector.criterion.CETItemSelectorCriterion;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
-import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -35,14 +37,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author Víctor Galán
  */
 public class CETItemSelectorViewDescriptor
-	implements ItemSelectorViewDescriptor<ClientExtensionEntry> {
+	implements ItemSelectorViewDescriptor<CET> {
 
 	public CETItemSelectorViewDescriptor(
-		CETFactory cetFactory,
+		CETManager cetManager,
 		CETItemSelectorCriterion cetItemSelectorCriterion,
 		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
-		_cetFactory = cetFactory;
+		_cetManager = cetManager;
 		_cetItemSelectorCriterion = cetItemSelectorCriterion;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
@@ -54,12 +56,8 @@ public class CETItemSelectorViewDescriptor
 	}
 
 	@Override
-	public ItemDescriptor getItemDescriptor(
-		ClientExtensionEntry clientExtensionEntry) {
-
-		return new CETItemDescriptor(
-			_cetFactory, clientExtensionEntry,
-			_cetItemSelectorCriterion.getType());
+	public ItemDescriptor getItemDescriptor(CET cet) {
+		return new CETItemDescriptor(cet);
 	}
 
 	@Override
@@ -68,26 +66,21 @@ public class CETItemSelectorViewDescriptor
 	}
 
 	@Override
-	public SearchContainer<ClientExtensionEntry> getSearchContainer() {
+	public SearchContainer<CET> getSearchContainer() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<ClientExtensionEntry> searchContainer =
-			new SearchContainer<>(
-				(PortletRequest)_httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST),
-				_portletURL, null, "there-are-no-items-to-display");
+		SearchContainer<CET> searchContainer = new SearchContainer<>(
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST),
+			_portletURL, null, "there-are-no-items-to-display");
 
 		searchContainer.setResultsAndTotal(
-			() ->
-				ClientExtensionEntryLocalServiceUtil.getClientExtensionEntries(
-					themeDisplay.getCompanyId(),
-					_cetItemSelectorCriterion.getType(),
-					searchContainer.getStart(), searchContainer.getEnd()),
-			ClientExtensionEntryLocalServiceUtil.getClientExtensionEntriesCount(
-				themeDisplay.getCompanyId(),
-				_cetItemSelectorCriterion.getType()));
+			_cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				_cetItemSelectorCriterion.getType(),
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null));
 
 		return searchContainer;
 	}
@@ -100,8 +93,8 @@ public class CETItemSelectorViewDescriptor
 	private static final ItemSelectorReturnType
 		_supportedItemSelectorReturnType = new CETItemSelectorReturnType();
 
-	private final CETFactory _cetFactory;
 	private final CETItemSelectorCriterion _cetItemSelectorCriterion;
+	private final CETManager _cetManager;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 

@@ -12,24 +12,20 @@
  * details.
  */
 
-import CodeMirror from 'codemirror';
-import React from 'react';
-import './EditorSidebar.scss';
-export declare function EditorSidebar({
-	editorRef,
-	elements,
+/// <reference types="react" />
+
+import {ICodeMirrorEditor} from './CodeMirrorEditor';
+import {SideBarCategory} from './SideBar';
+import './index.scss';
+export {CodeMirrorEditor} from './CodeMirrorEditor';
+export {SideBarCategory} from './SideBar';
+export declare function CodeEditor({
+	className,
+	error,
+	sidebarElements,
+	...options
 }: IProps): JSX.Element;
-interface IProps {
-	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	elements: EditorSideBarCategory[];
+interface IProps extends ICodeMirrorEditor {
+	error?: string;
+	sidebarElements?: SideBarCategory[];
 }
-export interface EditorSideBarCategory {
-	items: EditorSideBarElement[];
-	label: string;
-}
-export interface EditorSideBarElement {
-	content: string;
-	label: string;
-	tooltip: string;
-}
-export {};

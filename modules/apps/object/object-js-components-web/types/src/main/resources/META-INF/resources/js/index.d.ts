@@ -15,10 +15,8 @@
 export {AutoComplete} from './components/AutoComplete';
 export {Card} from './components/Card';
 export {CheckboxItem} from './components/CheckBoxItem';
-export {Collapsible} from './components/Collapsible';
+export * from './components/CodeEditor/index';
 export {CustomSelect} from './components/CustomSelect';
-export * from './components/EditorSideBar';
-export {Element} from './components/Element';
 export {FieldBase} from './components/FieldBase';
 export {CustomItem, FormCustomSelect} from './components/FormCustomSelect';
 export {Input} from './components/Input';

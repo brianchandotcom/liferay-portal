@@ -18,10 +18,10 @@ import React from 'react';
 import {Collapsible} from './Collapsible';
 import {Element} from './Element';
 
-import './EditorSidebar.scss';
+import './Sidebar.scss';
 
-export function EditorSidebar({editorRef, elements}: IProps) {
-	const handleClick = (item: EditorSideBarElement) =>
+export function Sidebar({editorRef, elements}: IProps) {
+	const handleClick = (item: SideBarElement) =>
 		editorRef.current?.replaceSelection(item.content);
 
 	return (
@@ -47,15 +47,15 @@ export function EditorSidebar({editorRef, elements}: IProps) {
 }
 interface IProps {
 	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
-	elements: EditorSideBarCategory[];
+	elements: SideBarCategory[];
 }
 
-export interface EditorSideBarCategory {
-	items: EditorSideBarElement[];
+export interface SideBarCategory {
+	items: SideBarElement[];
 	label: string;
 }
 
-export interface EditorSideBarElement {
+interface SideBarElement {
 	content: string;
 	label: string;
 	tooltip: string;

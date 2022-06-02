@@ -12,19 +12,21 @@
  * details.
  */
 
-/// <reference types="react" />
-
-import {EditorSideBarCategory} from '@liferay/object-js-components-web';
-import {ICodeMirrorEditor} from './CodeMirrorEditor';
-import './index.scss';
-export default function CodeEditor({
-	className,
-	error,
-	sidebarElements,
-	...options
-}: IProps): JSX.Element;
-interface IProps extends ICodeMirrorEditor {
-	error?: string;
-	sidebarElements?: EditorSideBarCategory[];
+import CodeMirror from 'codemirror';
+import React from 'react';
+import './Sidebar.scss';
+export declare function Sidebar({editorRef, elements}: IProps): JSX.Element;
+interface IProps {
+	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
+	elements: SideBarCategory[];
+}
+export interface SideBarCategory {
+	items: SideBarElement[];
+	label: string;
+}
+interface SideBarElement {
+	content: string;
+	label: string;
+	tooltip: string;
 }
 export {};

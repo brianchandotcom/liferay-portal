@@ -13,20 +13,67 @@
  */
 
 import 'codemirror/addon/display/autorefresh';
+
 import 'codemirror/addon/fold/foldgutter';
+
 import 'codemirror/addon/fold/foldgutter.css';
+
 import 'codemirror/addon/display/placeholder';
+
 import 'codemirror/lib/codemirror.css';
+import classNames from 'classnames';
 import CodeMirror from 'codemirror';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+
 import './CodeMirrorEditor.scss';
-export default function CodeMirrorEditor({
+
+export function CodeMirrorEditor({
 	className,
 	editorRef,
 	fixed,
 	onChange,
 	...options
-}: ICodeMirrorEditor): JSX.Element;
+}: ICodeMirrorEditor) {
+	const editorWrapperRef = useRef<HTMLDivElement>(null);
+	const codeMirrorRef = useRef<CodeMirror.Editor>();
+
+	useEffect(() => {
+		const editor = CodeMirror(editorWrapperRef.current as HTMLDivElement, {
+			autoRefresh: true,
+			foldGutter: true,
+			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+			inputStyle: 'contenteditable',
+			lineNumbers: true,
+			...options,
+		});
+
+		codeMirrorRef.current = editor;
+
+		if (editorRef) {
+			editorRef.current = editor;
+		}
+
+		const handleChange = (editor: CodeMirror.Editor) =>
+			onChange(editor.getValue());
+
+		editor.on('change', handleChange);
+
+		return () => editor.off('change', handleChange);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<div
+			className={classNames(
+				'form-control lfr-objects__editor',
+				{'lfr-objects__editor--fixed': fixed},
+				className
+			)}
+			ref={editorWrapperRef}
+		/>
+	);
+}
+
 export interface ICodeMirrorEditor extends CodeMirror.EditorConfiguration {
 	className?: string;
 	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;

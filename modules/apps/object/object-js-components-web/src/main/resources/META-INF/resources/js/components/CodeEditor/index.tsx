@@ -12,19 +12,19 @@
  * details.
  */
 
-import {
-	EditorSideBarCategory,
-	EditorSidebar,
-	FieldBase,
-} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
+import {FieldBase} from '../FieldBase';
+import {CodeMirrorEditor, ICodeMirrorEditor} from './CodeMirrorEditor';
+import {SideBarCategory, Sidebar} from './SideBar';
 
 import './index.scss';
 
-export default function CodeEditor({
+export {CodeMirrorEditor} from './CodeMirrorEditor';
+export {SideBarCategory} from './SideBar';
+
+export function CodeEditor({
 	className,
 	error,
 	sidebarElements,
@@ -46,10 +46,7 @@ export default function CodeEditor({
 			</FieldBase>
 
 			{sidebarElements && (
-				<EditorSidebar
-					editorRef={editorRef}
-					elements={sidebarElements}
-				/>
+				<Sidebar editorRef={editorRef} elements={sidebarElements} />
 			)}
 		</div>
 	);
@@ -57,5 +54,5 @@ export default function CodeEditor({
 
 interface IProps extends ICodeMirrorEditor {
 	error?: string;
-	sidebarElements?: EditorSideBarCategory[];
+	sidebarElements?: SideBarCategory[];
 }

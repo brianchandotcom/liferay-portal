@@ -16,16 +16,16 @@ import 'codemirror/mode/groovy/groovy';
 import {ClayToggle} from '@clayui/form';
 import {
 	Card,
-	EditorSideBarCategory,
+	CodeEditor,
 	Input,
 	InputLocalized,
 	Select,
+	SideBarCategory,
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
 import useMetadata from '../../hooks/useMetadata';
 import {defaultLanguageId} from '../../utils/locale';
-import CodeEditor from '../CodeEditor/index';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
 
 function BasicInfo({
@@ -196,7 +196,7 @@ interface IBasicInfo extends ITabs {
 }
 
 interface IConditions extends ITabs {
-	objectValidationRuleElements: EditorSideBarCategory[];
+	objectValidationRuleElements: SideBarCategory[];
 }
 
 export {BasicInfo, Conditions};

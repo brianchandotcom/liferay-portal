@@ -15,6 +15,7 @@
 import ClayForm, {ClayToggle} from '@clayui/form';
 import {
 	Card,
+	CodeMirrorEditor,
 	CustomItem,
 	FormCustomSelect,
 	Input,
@@ -23,7 +24,6 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {FormError} from '../../../hooks/useForm';
-import CodeMirrorEditor from '../../CodeEditor/CodeMirrorEditor';
 
 import './ActionBuilder.scss';
 

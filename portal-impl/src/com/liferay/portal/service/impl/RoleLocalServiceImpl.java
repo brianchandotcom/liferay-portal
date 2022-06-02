@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
-import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleNameException;
@@ -1912,25 +1911,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Role role = companyRolesMap.get(name);
 
-		try {
-			if (role == null) {
-				role = rolePersistence.findByC_N(companyId, name);
-			}
-
-			if (!descriptionMap.equals(role.getDescriptionMap())) {
-				role.setDescriptionMap(descriptionMap);
-
-				roleLocalService.updateRole(role);
-			}
+		if (role == null) {
+			role = rolePersistence.fetchByC_N(companyId, name);
 		}
-		catch (NoSuchRoleException noSuchRoleException) {
 
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchRoleException);
-			}
-
+		if (role == null) {
 			User user = _userLocalService.getDefaultUser(companyId);
 
 			PermissionThreadLocal.setAddResource(false);
@@ -1953,6 +1938,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			else if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);
 			}
+		}
+		else if (!descriptionMap.equals(role.getDescriptionMap())) {
+			role.setDescriptionMap(descriptionMap);
+
+			roleLocalService.updateRole(role);
 		}
 	}
 

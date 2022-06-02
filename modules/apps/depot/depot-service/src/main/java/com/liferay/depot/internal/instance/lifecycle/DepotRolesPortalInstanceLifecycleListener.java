@@ -17,11 +17,8 @@ package com.liferay.depot.internal.instance.lifecycle;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -113,22 +110,9 @@ public class DepotRolesPortalInstanceLifecycleListener
 			long companyId, String name, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
-		try {
-			Role role = _roleLocalService.getRole(companyId, name);
+		Role role = _roleLocalService.fetchRole(companyId, name);
 
-			if (!Objects.equals(descriptionMap, role.getDescriptionMap())) {
-				role.setDescriptionMap(descriptionMap);
-
-				return _roleLocalService.updateRole(role);
-			}
-
-			return role;
-		}
-		catch (NoSuchRoleException noSuchRoleException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchRoleException);
-			}
-
+		if (role == null) {
 			boolean addResource = PermissionThreadLocal.isAddResource();
 
 			try {
@@ -144,6 +128,14 @@ public class DepotRolesPortalInstanceLifecycleListener
 				PermissionThreadLocal.setAddResource(addResource);
 			}
 		}
+
+		if (!Objects.equals(descriptionMap, role.getDescriptionMap())) {
+			role.setDescriptionMap(descriptionMap);
+
+			return _roleLocalService.updateRole(role);
+		}
+
+		return role;
 	}
 
 	private static final String[] _DEPOT_ROLE_NAMES = {
@@ -153,9 +145,6 @@ public class DepotRolesPortalInstanceLifecycleListener
 		DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 		DepotRolesConstants.ASSET_LIBRARY_OWNER
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DepotRolesPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private Language _language;

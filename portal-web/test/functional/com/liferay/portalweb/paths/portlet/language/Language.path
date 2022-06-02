@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FLAG_AND_LANGUAGE</td>
-	<td>//*[name()='svg']//*[contains(@href,'${key_flagID}')]//..//..//following-sibling::span[contains(text(),'${key_languageID}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LONG_TEXT_LINK</td>
 	<td>//a[contains(@class,'long-text') and contains(.,'${key_language}')]</td>
 	<td></td>

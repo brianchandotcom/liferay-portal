@@ -69,7 +69,7 @@
 		]
 	},
 	{
-		"name": "iFrame",
+		"name": "iframe",
 		"properties": [
 			{
 				"name": "name",
@@ -79,7 +79,7 @@
 			{
 				"name": "type",
 				"type": "string",
-				"default": "iFrame"
+				"default": "iframe"
 			},
 			{
 				"name": "version",
@@ -109,7 +109,7 @@
 			{
 				"name": "url",
 				"type": "string",
-				"default": "https://mycompany.com/iframe.html"
+				"default": "https://example.com"
 			},
 			{
 				"name": "instanceable",

@@ -491,12 +491,58 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in DM widget can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageViaDMWidgetAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154382 CanViewImageViaDMAfterMovingToFolder pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.setRootFolder(
+			depotName = "Test Depot Name",
+			selectRootFolder = "true");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Document_1",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.setRootFolder(dmRootFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_1");
 	}
 
 	@description = "This ensures that a depot image in an image fragment can be rendered correctly on a connect site after moving it to a folder."

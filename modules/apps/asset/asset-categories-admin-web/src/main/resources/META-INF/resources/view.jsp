@@ -262,7 +262,7 @@
 						<c:if test="<%= Validator.isNotNull(description) %>">
 							<div class="mb-2">
 								<span class="mr-1"><liferay-ui:message key="description" />:</span>
-								<span class="text-secondary"><%= description %></span>
+								<span class="text-break text-secondary"><%= description %></span>
 							</div>
 						</c:if>
 					</div>

@@ -76,16 +76,6 @@ OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplay
 				property="authServerWellKnownURI"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="user-id"
-				property="userId"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="company-id"
-				property="companyId"
-			/>
-
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				path="/admin/oauth_client_actions.jsp"

@@ -182,13 +182,9 @@ public class PoshiRunner {
 
 			SummaryLogger.startRunning();
 
-			String namespace =
-				PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
-					_testNamespacedClassCommandName);
-
 			Properties properties =
 				PoshiContext.getNamespacedClassCommandNameProperties(
-					namespace + "." + _testNamespacedClassCommandName);
+					_testNamespacedClassCommandName);
 
 			if (GetterUtil.getBoolean(
 					properties.getProperty("disable-webdriver"))) {

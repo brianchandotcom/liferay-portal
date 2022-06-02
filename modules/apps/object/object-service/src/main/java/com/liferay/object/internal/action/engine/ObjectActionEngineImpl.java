@@ -16,7 +16,6 @@ package com.liferay.object.internal.action.engine;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
@@ -64,28 +63,22 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	}
 
 	private boolean _evaluateConditionExpression(
-		String conditionExpression, Map<String, Object> variables) {
+			String conditionExpression, Map<String, Object> variables)
+		throws Exception {
 
 		if (Validator.isNull(conditionExpression)) {
 			return true;
 		}
 
-		try {
-			DDMExpression<Boolean> ddmExpression =
-				_ddmExpressionFactory.createExpression(
-					CreateExpressionRequest.Builder.newBuilder(
-						conditionExpression
-					).build());
+		DDMExpression<Boolean> ddmExpression =
+			_ddmExpressionFactory.createExpression(
+				CreateExpressionRequest.Builder.newBuilder(
+					conditionExpression
+				).build());
 
-			ddmExpression.setVariables(variables);
+		ddmExpression.setVariables(variables);
 
-			return ddmExpression.evaluate();
-		}
-		catch (DDMExpressionException ddmExpressionException) {
-			_log.error(ddmExpressionException);
-
-			return false;
-		}
+		return ddmExpression.evaluate();
 	}
 
 	private void _executeObjectActions(
@@ -128,17 +121,17 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				objectActionTriggerKey);
 
 		for (ObjectAction objectAction : objectActions) {
-			if (!_evaluateConditionExpression(
-					objectAction.getConditionExpression(), variables)) {
-
-				continue;
-			}
-
-			ObjectActionExecutor objectActionExecutor =
-				_objectActionExecutorRegistry.getObjectActionExecutor(
-					objectAction.getObjectActionExecutorKey());
-
 			try {
+				if (!_evaluateConditionExpression(
+						objectAction.getConditionExpression(), variables)) {
+
+					continue;
+				}
+
+				ObjectActionExecutor objectActionExecutor =
+					_objectActionExecutorRegistry.getObjectActionExecutor(
+						objectAction.getObjectActionExecutorKey());
+
 				objectActionExecutor.execute(
 					companyId, objectAction.getParametersUnicodeProperties(),
 					payloadJSONObject, userId);

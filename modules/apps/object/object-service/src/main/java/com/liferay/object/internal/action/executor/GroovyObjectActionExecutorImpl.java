@@ -21,10 +21,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.runtime.scripting.executor.GroovyScriptingExecutor;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.HashSet;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,10 +48,14 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		_groovyScriptingExecutor.execute(
+		Map<String, Object> results = _groovyScriptingExecutor.execute(
 			ObjectActionVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));
+
+		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+			throw new ScriptingException();
+		}
 	}
 
 	@Override

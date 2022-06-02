@@ -69,14 +69,12 @@ public class AddObjectEntryObjectActionExecutorImpl
 		}
 
 		ObjectDefinition targetObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
 				GetterUtil.getLong(
 					parametersUnicodeProperties.get("objectDefinitionId")));
 
-		if ((targetObjectDefinition == null) ||
-			targetObjectDefinition.isSystem()) {
-
-			return;
+		if (targetObjectDefinition.isSystem()) {
+			throw new UnsupportedOperationException();
 		}
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);

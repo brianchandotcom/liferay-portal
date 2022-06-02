@@ -359,6 +359,44 @@ public class GroupFinderImpl
 	}
 
 	@Override
+	public Group fetchByC_GK(long companyId, String groupKey)
+		throws NoSuchGroupException {
+
+		groupKey = StringUtil.lowerCase(groupKey);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_GK);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity("Group_", GroupImpl.class);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+			queryPos.add(groupKey);
+
+			List<Group> groups = sqlQuery.list();
+
+			if (groups.isEmpty()) {
+				return null;
+			}
+
+			return groups.get(0);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
 	public List<Long> findByActiveGroupIds(long userId) {
 		Session session = null;
 
@@ -663,41 +701,16 @@ public class GroupFinderImpl
 	public Group findByC_GK(long companyId, String groupKey)
 		throws NoSuchGroupException {
 
-		groupKey = StringUtil.lowerCase(groupKey);
+		Group group = fetchByC_GK(companyId, groupKey);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_GK);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("Group_", GroupImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-			queryPos.add(groupKey);
-
-			List<Group> groups = sqlQuery.list();
-
-			if (!groups.isEmpty()) {
-				return groups.get(0);
-			}
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
+		if (group == null) {
+			throw new NoSuchGroupException(
+				StringBundler.concat(
+					"No Group exists with the key {companyId=", companyId,
+					", groupKey=", groupKey, "}"));
 		}
 
-		throw new NoSuchGroupException(
-			StringBundler.concat(
-				"No Group exists with the key {companyId=", companyId,
-				", groupKey=", groupKey, "}"));
+		return group;
 	}
 
 	@Override

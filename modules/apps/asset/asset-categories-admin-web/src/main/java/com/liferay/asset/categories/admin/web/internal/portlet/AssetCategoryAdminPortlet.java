@@ -32,7 +32,6 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
@@ -40,17 +39,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Date;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -87,31 +81,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AssetCategoryAdminPortlet extends MVCPortlet {
-
-	public void setCategoryDisplayPageTemplate(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] categoryIds = ParamUtil.getLongValues(
-			actionRequest, "categoryIds");
-
-		for (long categoryId : categoryIds) {
-			AssetCategory category = _assetCategoryLocalService.getCategory(
-				categoryId);
-
-			_assetDisplayPageEntryFormProcessor.process(
-				AssetCategory.class.getName(), category.getCategoryId(),
-				actionRequest);
-
-			category.setModifiedDate(new Date());
-
-			_assetCategoryLocalService.updateAssetCategory(category);
-		}
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
 
 	@Activate
 	@Modified

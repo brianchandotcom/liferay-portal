@@ -45,6 +45,7 @@ definition {
 			-d icon= \
 			-d previewFileEntryId=0 \
 			-d type=${type} \
+			-d typeOptions= \
 			-d status=${status}
 		''';
 

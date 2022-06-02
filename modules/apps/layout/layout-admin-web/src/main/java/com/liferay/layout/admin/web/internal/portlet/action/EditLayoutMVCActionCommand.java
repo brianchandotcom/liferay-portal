@@ -163,27 +163,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
 				faviconFileEntryId, masterLayoutPlid, serviceContext);
 
-			String faviconCETPrimaryKey = ParamUtil.getString(
-				uploadPortletRequest, "faviconCETPrimaryKey");
-
-			if (Validator.isNotNull(faviconCETPrimaryKey)) {
-				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					themeDisplay.getUserId(),
-					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					faviconCETPrimaryKey,
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-			}
-
-			String themeCSSCETPrimaryKey = ParamUtil.getString(
-				actionRequest, "themeCSSCETPrimaryKey");
-
-			if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
-				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					themeDisplay.getUserId(),
-					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					themeCSSCETPrimaryKey,
-					ClientExtensionEntryConstants.TYPE_THEME_CSS);
-			}
+			_updateClientExtensions(
+				actionRequest, layout, themeDisplay.getUserId());
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
@@ -207,23 +188,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					styleBookEntryId, faviconFileEntryId,
 					draftLayout.getMasterLayoutPlid(), serviceContext);
 
-				if (Validator.isNotNull(faviconCETPrimaryKey)) {
-					_clientExtensionEntryRelLocalService.
-						addClientExtensionEntryRel(
-							themeDisplay.getUserId(),
-							_portal.getClassNameId(Layout.class),
-							draftLayout.getPlid(), faviconCETPrimaryKey,
-							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-				}
-
-				if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
-					_clientExtensionEntryRelLocalService.
-						addClientExtensionEntryRel(
-							themeDisplay.getUserId(),
-							_portal.getClassNameId(Layout.class),
-							layout.getPlid(), themeCSSCETPrimaryKey,
-							ClientExtensionEntryConstants.TYPE_THEME_CSS);
-				}
+				_updateClientExtensions(
+					actionRequest, layout, themeDisplay.getUserId());
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);
@@ -312,6 +278,34 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			throw modelListenerException;
+		}
+	}
+
+	private void _updateClientExtensions(
+			ActionRequest actionRequest, Layout layout, long userId)
+		throws PortalException {
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		String faviconCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "faviconCETPrimaryKey");
+
+		if (Validator.isNotNull(faviconCETPrimaryKey)) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
+				faviconCETPrimaryKey,
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		}
+
+		String themeCSSCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "themeCSSCETPrimaryKey");
+
+		if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
+				themeCSSCETPrimaryKey,
+				ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 	}
 

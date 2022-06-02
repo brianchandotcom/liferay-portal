@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String authServerWellKnownURI = (String)SessionErrors.get(renderRequest, "authServerWellKnownURI");
 
 if (Validator.isNull(authServerWellKnownURI)) {
@@ -42,15 +44,18 @@ if (Validator.isNull(parametersJSON)) {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
+portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client" var="updateOAuthClientEntryURL">
-	<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
+	<portlet:param name="backURL" value='<%= redirect %>' />
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client" />
+	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateOAuthClientEntryURL %>" id="oauth-client-fm" method="post" name="oauth-client-fm" onSubmit="event.preventDefault();">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
 	<clay:container-fluid
 		cssClass="container-view"
 	>
@@ -66,7 +71,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
-					<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
+					<aui:button href="<%= HtmlUtil.escape(redirect) %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</div>

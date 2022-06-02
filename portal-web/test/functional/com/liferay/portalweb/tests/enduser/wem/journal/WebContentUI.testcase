@@ -231,24 +231,24 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-151948. The 'Filter by Status' is available to the 'Versions' tab."
+	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
 	@priority = "4"
 	test ViewFilterByStatusAvailableToVersionsTab {
-		task ("Add a web named 'test' and save it as draft") {
+		task ("Given a site designer has a draft web content") {
 			JSONWebcontent.addWebContent(
-				content = "WC Content",
+				content = "Web Content Content",
 				groupName = "Test Site Name",
-				title = "test",
+				title = "Web Content Title",
 				workflowAction = "DRAFT");
 		}
 
-		task ("Search for the web content") {
+		task ("When the site designer search the web content in Web Content admin") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContent.searchCP(webContentTitle = "test");
+			WebContent.searchCP(webContentTitle = "Web Content Title");
 		}
 
-		task ("Verify that when 'Versions' tab is selected, Filter and Order has the option to 'Filter by Status'") {
+		task ("Then the site designer could filter search results by status in Versions panel") {
 			Navigator.gotoNavTab(navTab = "Versions (1)");
 
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");

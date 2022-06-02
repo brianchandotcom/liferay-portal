@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>SMALL_CALENDAR_DATE</td>
-	<td>//h1[contains(@class,'yui3-calendar-header-label')]</td>
+	<td>//div[contains(@class,'yui3-calendar-header-label')]</td>
 	<td></td>
 </tr>
 <tr>

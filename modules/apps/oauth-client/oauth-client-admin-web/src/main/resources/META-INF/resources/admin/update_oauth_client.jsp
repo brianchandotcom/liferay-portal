@@ -23,6 +23,8 @@ OAuthClientEntry oAuthClientEntry = (OAuthClientEntry)request.getAttribute(OAuth
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "new-oauth-client") : LanguageUtil.get(request, "edit-oauth-client"));
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_o_auth_client" var="updateOAuthClientEntryURL">
@@ -39,7 +41,7 @@ portletDisplay.setURLBack(redirect);
 		cssClass="container-view"
 	>
 		<div class="sheet">
-			<aui:fieldset label="oauth-client">
+			<aui:fieldset>
 				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
 				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" value='{"client_id":"","client_secret":"","token_endpoint_auth_method":"client_secret_basic","redirect_uris":["",""],"client_name":"example_client","grant_types":["authorization_code"],"scope":"openid email profile","subject_type":"public","id_token_signed_response_alg":"RS256"}' />

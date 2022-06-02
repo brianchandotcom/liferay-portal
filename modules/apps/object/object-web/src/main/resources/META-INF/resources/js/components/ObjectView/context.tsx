@@ -172,14 +172,18 @@ const viewReducer = (state: TState, action: TAction) => {
 			};
 		}
 		case TYPES.ADD_OBJECT_VIEW_COLUMN: {
-			const {checkedItems, filteredItems} = action.payload;
+			const {selectedObjectFields} = action.payload;
 
 			const {objectView} = state;
 
-			const newObjectViewColumns = checkedItems.map(
-				(viewColumn: TObjectViewColumn, index: number) => {
+			const newObjectViewColumns = selectedObjectFields.map(
+				(item: ObjectField, index: number) => {
 					return {
-						...viewColumn,
+						...item,
+						defaultSort: false,
+						fieldLabel: item.label[defaultLanguageId],
+						label: item.label,
+						objectFieldName: item.name,
 						priority: index,
 					};
 				}
@@ -192,7 +196,6 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			return {
 				...state,
-				objectFields: filteredItems,
 				objectView: newObjectView,
 			};
 		}

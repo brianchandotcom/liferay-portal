@@ -1,16 +1,11 @@
+@import 'atlas-variables';
+
 .lfr-object__object-view-modal-add-columns {
 	&-list {
 		height: 300px;
 		margin: 0 20px 20px;
 		overflow: hidden;
 		overflow-y: scroll;
-
-		.reference-mark {
-			color: #b95000;
-			font-size: 6px;
-			margin-top: 2px;
-			padding-left: 4px;
-		}
 
 		.custom-control-label {
 			font-weight: 600;
@@ -22,6 +17,13 @@
 			border: 0;
 			padding-left: 16px;
 		}
+	}
+
+	&-reference-mark {
+		color: $warning;
+		font-size: 6px;
+		margin-top: 2px;
+		padding-left: 4px;
 	}
 
 	&-selection-title {

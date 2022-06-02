@@ -31,7 +31,7 @@ interface IProps {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal: (boolean: boolean) => void;
-	onVisibleModal: (boolean: boolean) => void;
+	openModal: () => void;
 	secondColumnHeader: string;
 	thirdColumnHeader?: string;
 	title: string;
@@ -47,7 +47,7 @@ export declare function BuilderScreen({
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
-	onVisibleModal,
+	openModal,
 	secondColumnHeader,
 	thirdColumnHeader,
 	title,

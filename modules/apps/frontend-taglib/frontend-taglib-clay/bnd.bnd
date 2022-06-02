@@ -1,19 +1,7 @@
 Bundle-Name: Liferay Frontend Taglib Clay
 Bundle-SymbolicName: com.liferay.frontend.taglib.clay
-Bundle-Version: 9.3.2
+Bundle-Version: 10.0.0
 Export-Package:\
-	com.liferay.frontend.taglib.clay.data,\
-	com.liferay.frontend.taglib.clay.data.set,\
-	com.liferay.frontend.taglib.clay.data.set.constants,\
-	com.liferay.frontend.taglib.clay.data.set.filter,\
-	com.liferay.frontend.taglib.clay.data.set.model,\
-	com.liferay.frontend.taglib.clay.data.set.provider,\
-	com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util,\
-	com.liferay.frontend.taglib.clay.data.set.view.cards,\
-	com.liferay.frontend.taglib.clay.data.set.view.list,\
-	com.liferay.frontend.taglib.clay.data.set.view.table,\
-	com.liferay.frontend.taglib.clay.data.set.view.table.selectable,\
-	com.liferay.frontend.taglib.clay.data.set.view.timeline,\
 	com.liferay.frontend.taglib.clay.servlet.taglib,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.contributor,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.display.context,\
@@ -29,7 +17,6 @@ Liferay-JS-Submodules-Bridge:\
 	clay-checkbox,\
 	clay-collapse,\
 	clay-component,\
-	clay-data-set-display,\
 	clay-dropdown,\
 	clay-icon,\
 	clay-label,\

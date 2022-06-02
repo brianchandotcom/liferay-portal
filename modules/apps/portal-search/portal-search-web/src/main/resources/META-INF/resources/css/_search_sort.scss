@@ -22,5 +22,16 @@
 				font-size: 14px;
 			}
 		}
+
+		.undomanager-content {
+			height: 3.5rem;
+		}
+
+		.view-switcher {
+			align-items: center;
+			display: flex;
+			flex-direction: row-reverse;
+			margin-bottom: 8px;
+		}
 	}
 }

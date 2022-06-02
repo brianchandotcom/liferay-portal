@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
@@ -27,18 +25,14 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferencesImpl" %><%@
-page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %><%@
-page import="com.liferay.portal.util.PropsUtil" %>
+page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
 <portlet:defineObjects />
 
@@ -83,7 +77,6 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 
 			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
-				id='<%= liferayPortletResponse.getNamespace() + "fieldsId" %>'
 				label="advanced-configuration"
 			>
 				<p class="sheet-text">
@@ -95,53 +88,22 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 					/>
 				</p>
 
-				<c:choose>
-					<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-134052")) %>'>
-						<div>
-							<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+				<div>
+					<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
-							<react:component
-								module="js/components/SortConfigurationOptions"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"fieldsInputName", PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS)
-									).put(
-										"fieldsJSONArray", fieldsJSONArray
-									).put(
-										"namespace", liferayPortletResponse.getNamespace()
-									).build()
-								%>'
-							/>
-						</div>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						int[] fieldsIndexes = new int[fieldsJSONArray.length()];
-
-						for (int i = 0; i < fieldsJSONArray.length(); i++) {
-							fieldsIndexes[i] = i;
-
-							JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
-						%>
-
-							<div class="field-form-row lfr-form-row lfr-form-row-inline">
-								<div class="row-fields">
-									<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' value='<%= jsonObject.getString("label") %>' />
-
-									<aui:input cssClass="sort-field-input" label="field" name='<%= "field_" + i %>' value='<%= jsonObject.getString("field") %>' />
-								</div>
-							</div>
-
-						<%
-						}
-						%>
-
-						<aui:input cssClass="fields-input" name="<%= PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="hidden" value="<%= sortPortletPreferences.getFieldsString() %>" />
-
-						<aui:input name="fieldsIndexes" type="hidden" value="<%= StringUtil.merge(fieldsIndexes) %>" />
-					</c:otherwise>
-				</c:choose>
+					<react:component
+						module="js/components/SortConfigurationOptions"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"fieldsInputName", PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS)
+							).put(
+								"fieldsJSONArray", fieldsJSONArray
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).build()
+						%>'
+					/>
+				</div>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
@@ -152,17 +114,3 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<c:if test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-134052")) %>'>
-	<aui:script use="liferay-auto-fields">
-		var autoFields = new Liferay.AutoFields({
-			contentBox: 'fieldset#<portlet:namespace />fieldsId',
-			fieldIndexes: '<portlet:namespace />fieldsIndexes',
-			namespace: '<portlet:namespace />',
-		}).render();
-	</aui:script>
-
-	<aui:script use="liferay-search-sort-configuration">
-		new Liferay.Search.SortConfiguration(A.one(document.<portlet:namespace />fm));
-	</aui:script>
-</c:if>

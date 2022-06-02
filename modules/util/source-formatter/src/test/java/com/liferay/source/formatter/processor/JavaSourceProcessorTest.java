@@ -541,6 +541,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortMethodCalls() throws Exception {
+		test("SortMethodCalls.testjava");
+	}
+
+	@Test
 	public void testSortMethodsWithAnnotatedParameters() throws Exception {
 		test("SortMethodsWithAnnotatedParameters.testjava");
 	}

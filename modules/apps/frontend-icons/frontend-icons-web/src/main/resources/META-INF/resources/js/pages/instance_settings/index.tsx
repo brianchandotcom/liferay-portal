@@ -235,7 +235,7 @@ export default function InstanceIconConfiguration({
 														role="presentation"
 													>
 														<use
-															xlinkHref={`/o/icons/${iconPackName}.svg?${referenceTime}#${icon.name}`}
+															xlinkHref={`/o/icons/pack/${iconPackName}.svg?${referenceTime}#${icon.name}`}
 														></use>
 													</svg>
 

@@ -28,13 +28,9 @@ public class AppUpgradeProcess extends UpgradeProcess {
 
 	protected void updateModules() throws Exception {
 		alterTableAddColumn("Marketplace_App", "title", "VARCHAR(75)");
-
 		alterTableAddColumn("Marketplace_App", "description", "STRING");
-
 		alterTableAddColumn("Marketplace_App", "category", "VARCHAR(75)");
-
 		alterTableAddColumn("Marketplace_App", "iconURL", "STRING");
-
 		alterTableAddColumn("Marketplace_App", "version", "VARCHAR(75)");
 	}
 

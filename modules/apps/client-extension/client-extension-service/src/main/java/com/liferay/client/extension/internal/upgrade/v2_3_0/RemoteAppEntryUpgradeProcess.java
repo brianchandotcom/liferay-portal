@@ -24,9 +24,7 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("RemoteAppEntry", "description", "TEXT null");
-
 		alterTableAddColumn("RemoteAppEntry", "sourceCodeURL", "STRING null");
-
 		alterTableAddColumn("RemoteAppEntry", "status", "INTEGER");
 
 		runSQL("update RemoteAppEntry set status = 0 where status is null");

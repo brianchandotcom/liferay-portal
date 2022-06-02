@@ -26,7 +26,6 @@ public class CommercePaymentMethodUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrder", "transactionId", "VARCHAR(75)");
-
 		addColumn("CommerceOrder", "commercePaymentMethodKey", "VARCHAR(75)");
 
 		String template = StringUtil.read(

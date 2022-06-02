@@ -25,7 +25,6 @@ public class BatchEngineImportTaskUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"BatchEngineImportTask", "processedItemsCount", "INTEGER");
-
 		alterTableAddColumn(
 			"BatchEngineImportTask", "totalItemsCount", "INTEGER");
 	}

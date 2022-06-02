@@ -35,7 +35,6 @@ public class StyleBookEntryVersionUpgradeProcess extends UpgradeProcess {
 	private void _upgradeSchema() throws Exception {
 		alterTableAddColumn(
 			"StyleBookEntryVersion", "modifiedDate", "DATE null");
-
 		alterTableAddColumn(
 			"StyleBookEntryVersion", "uuid_", "VARCHAR(75) null");
 

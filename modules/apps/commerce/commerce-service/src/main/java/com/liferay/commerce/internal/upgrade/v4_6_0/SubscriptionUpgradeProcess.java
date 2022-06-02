@@ -27,30 +27,22 @@ public class SubscriptionUpgradeProcess
 		addColumn(
 			"CommerceSubscriptionEntry", "deliverySubscriptionLength",
 			"INTEGER");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliverySubscriptionType",
 			"VARCHAR(75)");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliverySubTypeSettings", "TEXT");
-
 		addColumn("CommerceSubscriptionEntry", "deliveryCurrentCycle", "LONG");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliveryMaxSubscriptionCycles",
 			"LONG");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliverySubscriptionStatus",
 			"INTEGER");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliveryLastIterationDate", "DATE");
-
 		addColumn(
 			"CommerceSubscriptionEntry", "deliveryNextIterationDate", "DATE");
-
 		addColumn("CommerceSubscriptionEntry", "deliveryStartDate", "DATE");
 	}
 

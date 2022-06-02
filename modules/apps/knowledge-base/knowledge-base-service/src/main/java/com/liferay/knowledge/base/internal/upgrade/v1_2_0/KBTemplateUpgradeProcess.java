@@ -24,7 +24,6 @@ public class KBTemplateUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableDropColumn("KBTemplate", "engineType");
-
 		alterTableDropColumn("KBTemplate", "cacheable");
 	}
 

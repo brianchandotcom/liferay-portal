@@ -25,10 +25,8 @@ public class DEDataDefinitionFieldLinkUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"DEDataDefinitionFieldLink", "createDate", "DATE null");
-
 		alterTableAddColumn(
 			"DEDataDefinitionFieldLink", "modifiedDate", "DATE null");
-
 		alterTableAddColumn(
 			"DEDataDefinitionFieldLink", "lastPublishDate", "DATE null");
 	}

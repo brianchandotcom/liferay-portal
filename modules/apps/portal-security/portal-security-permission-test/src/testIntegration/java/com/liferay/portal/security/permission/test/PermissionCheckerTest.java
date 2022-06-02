@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -265,6 +266,35 @@ public class PermissionCheckerTest {
 		Assert.assertArrayEquals(
 			new long[] {guestRole.getRoleId()},
 			permissionChecker.getGuestUserRoleIds());
+	}
+
+	@Test
+	public void testGetRoleIds() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
+
+		permissionChecker.getRoleIds(
+			_user.getUserId(), GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				permissionChecker.getRoleIds(
+					_user.getUserId(), GroupConstants.DEFAULT_LIVE_GROUP_ID),
+				_role.getRoleId()));
+
+		_userLocalService.deleteRoleUser(_role.getRoleId(), _user);
+
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				permissionChecker.getRoleIds(
+					_user.getUserId(), GroupConstants.DEFAULT_LIVE_GROUP_ID),
+				_role.getRoleId()));
 	}
 
 	@Test

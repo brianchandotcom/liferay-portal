@@ -127,7 +127,7 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154405. An image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."
+	@description = "This test covers LPS-154405. It ensures that an image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";

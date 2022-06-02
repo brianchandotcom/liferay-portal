@@ -16,7 +16,9 @@ package com.liferay.portal.events;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -70,8 +72,13 @@ public class StartupAction extends SimpleAction {
 		// Check Tomcat's lib/ext directory
 
 		if (ServerDetector.isTomcat()) {
-			File libExtDir = new File(
-				PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR, "ext");
+			String appServerDir = StringUtil.replace(
+				System.getProperty("catalina.base"), CharPool.BACK_SLASH,
+				CharPool.FORWARD_SLASH);
+
+			String globalSharedDir = appServerDir + "/lib/";
+
+			File libExtDir = new File(globalSharedDir, "ext");
 
 			if (libExtDir.exists()) {
 				File[] extJarFiles = libExtDir.listFiles();
@@ -81,7 +88,7 @@ public class StartupAction extends SimpleAction {
 						StringBundler.concat(
 							"Files ", Arrays.toString(extJarFiles), " in ",
 							libExtDir, " are no longer read. Move them to ",
-							PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR, " or ",
+							globalSharedDir, " or ",
 							PropsValues.
 								LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
 							"."));

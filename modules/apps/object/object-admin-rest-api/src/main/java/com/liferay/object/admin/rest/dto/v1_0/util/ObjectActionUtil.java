@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectActionStatusConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.HashMap;
@@ -57,17 +58,22 @@ public class ObjectActionUtil {
 				parameters = toParameters(
 					serviceBuilderObjectAction.
 						getParametersUnicodeProperties());
-				status = new Status() {
-					{
-						code = serviceBuilderObjectAction.getStatus();
-						label = ObjectActionStatusConstants.getStatusLabel(
-							serviceBuilderObjectAction.getStatus());
-						label_i18n = LanguageUtil.get(
-							locale,
-							ObjectActionStatusConstants.getStatusLabel(
-								serviceBuilderObjectAction.getStatus()));
-					}
-				};
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-152180"))) {
+
+					status = new Status() {
+						{
+							code = serviceBuilderObjectAction.getStatus();
+							label = ObjectActionStatusConstants.getStatusLabel(
+								serviceBuilderObjectAction.getStatus());
+							label_i18n = LanguageUtil.get(
+								locale,
+								ObjectActionStatusConstants.getStatusLabel(
+									serviceBuilderObjectAction.getStatus()));
+						}
+					};
+				}
 			}
 		};
 

@@ -110,13 +110,13 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
+		_dockerAccessToken = GradleUtil.getProperty(
+			settings, "liferay.workspace.docker.access.token");
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
 		_dockerLocalRegistryUrl = GradleUtil.getProperty(
 			settings, "liferay.workspace.docker.local.registry.url");
-		_dockerAccessToken = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.access.token");
 		_dockerPullPolicy = GradleUtil.getProperty(
 			settings, "liferay.workspace.docker.pull.policy",
 			_DOCKER_PULL_POLICY);
@@ -687,7 +687,7 @@ public class WorkspaceExtension {
 	private static final File _DOCKER_DIR = new File(
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
-	private static final boolean _DOCKER_PULL_POLICY = false;
+	private static final boolean _DOCKER_PULL_POLICY = true;
 
 	private static final String _NODE_PACKAGE_MANAGER = "yarn";
 

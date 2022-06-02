@@ -21,7 +21,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -174,8 +183,12 @@ public class BasicFragmentManagementToolbarDisplayContext
 					toString();
 			}
 		).put(
+			"fieldTypes", _getFieldTypesJSONArray()
+		).put(
 			"fragmentCollectionId",
 			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
+		).put(
+			"fragmentTypes", _getFragmentTypesJSONArray(themeDisplay)
 		).put(
 			"moveFragmentCompositionsAndFragmentEntriesURL",
 			() -> PortletURLBuilder.createActionURL(
@@ -241,5 +254,65 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 		return false;
 	}
+
+	private JSONArray _getFieldTypesJSONArray() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			jsonArray.put(
+				JSONUtil.put(
+					"key", infoFieldType.getName()
+				).put(
+					"label", infoFieldType.getLabel(themeDisplay.getLocale())
+				));
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _getFragmentTypesJSONArray(ThemeDisplay themeDisplay) {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"description",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"build-fragments-using-html-css-and-javascript")
+			).put(
+				"key", FragmentConstants.TYPE_COMPONENT
+			).put(
+				"name", "basic"
+			).put(
+				"symbol", "code"
+			).put(
+				"title",
+				LanguageUtil.get(themeDisplay.getLocale(), "basic-fragment")
+			),
+			JSONUtil.put(
+				"description",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"build-input-fragments-for-forms-using-html-css-and-" +
+						"javascript")
+			).put(
+				"key", FragmentConstants.TYPE_INPUT
+			).put(
+				"name", "form"
+			).put(
+				"symbol", "forms"
+			).put(
+				"title",
+				LanguageUtil.get(themeDisplay.getLocale(), "form-fragment")
+			));
+	}
+
+	private static final InfoFieldType[] _INFO_FIELD_TYPES = {
+		BooleanInfoFieldType.INSTANCE, DateInfoFieldType.INSTANCE,
+		NumberInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
+	};
 
 }

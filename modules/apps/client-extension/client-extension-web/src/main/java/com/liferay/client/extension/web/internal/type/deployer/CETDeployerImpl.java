@@ -117,8 +117,11 @@ public class CETDeployerImpl implements CETDeployer {
 	}
 
 	private String _getPortletId(CET cet) {
+		String primaryKey = cet.getPrimaryKey();
+
 		return "com_liferay_client_extension_web_internal_portlet_" +
-			"ClientExtensionEntryPortlet_" + cet.getPrimaryKey();
+			"ClientExtensionEntryPortlet_" +
+			   primaryKey.replaceAll("[^a-zA-Z0-9_]", StringPool.UNDERLINE);
 	}
 
 	private ServiceRegistration<ConfigurationAction>

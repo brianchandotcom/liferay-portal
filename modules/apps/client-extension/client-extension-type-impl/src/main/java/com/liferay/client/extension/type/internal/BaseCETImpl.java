@@ -77,6 +77,7 @@ public abstract class BaseCETImpl implements CET {
 		_description = description;
 		_name = name;
 		_primaryKey = primaryKey;
+		_properties = properties;
 		_sourceCodeURL = sourceCodeURL;
 
 		_readOnly = true;
@@ -113,7 +114,7 @@ public abstract class BaseCETImpl implements CET {
 
 	@Override
 	public Properties getProperties() {
-		return new Properties(_properties);
+		return (Properties) _properties.clone();
 	}
 
 	@Override

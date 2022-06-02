@@ -95,7 +95,7 @@ definition {
 		Button.clickAdd();
 
 		FormFields.editTextMultiline(
-			fieldName = "osgi.jaxrs.name",
+			fieldName = "osgiJaxrsName",
 			fieldValue = "${osgiJaxrsName}");
 
 		if ("${symbolicName}" == "false") {
@@ -103,11 +103,11 @@ definition {
 		}
 
 		FormFields.editTextMultiline(
-			fieldName = "excluded.scopes",
+			fieldName = "excludedScopes",
 			fieldValue = "${excludedScopesName}");
 
 		FormFields.editTextMultiline(
-			fieldName = "service.properties",
+			fieldName = "serviceProperties",
 			fieldValue = "${serviceProperties}");
 
 		FormFields.editTextMultiline(

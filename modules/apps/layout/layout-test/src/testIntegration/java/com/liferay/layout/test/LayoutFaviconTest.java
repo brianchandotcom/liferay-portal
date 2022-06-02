@@ -17,6 +17,11 @@ package com.liferay.layout.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +43,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -138,6 +144,33 @@ public class LayoutFaviconTest {
 			expectedBytes, _getBytes(_layout.getFavicon()));
 	}
 
+	@Test
+	public void testGetFaviconFromMasterLayout() throws Exception {
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				"Test Master Page",
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Layout masterLayout = _layoutLocalService.fetchLayout(
+			masterLayoutPageTemplateEntry.getPlid());
+
+		byte[] expectedBytes = _getExpectedBytes();
+
+		FileEntry fileEntry = _addFileEntry(expectedBytes);
+
+		masterLayout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+
+		_layoutLocalService.updateLayout(masterLayout);
+
+		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+
+		Assert.assertArrayEquals(
+			expectedBytes, _getBytes(_layout.getFavicon()));
+	}
+
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -200,6 +233,17 @@ public class LayoutFaviconTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

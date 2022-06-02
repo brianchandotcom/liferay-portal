@@ -866,6 +866,7 @@
 	<td>//h4[contains(.,'Payment Method')]//..//div//span[contains(@class,'payment-name') and contains(.,'${paymentMethod}')]</td>
 	<td></td>
 </tr>
+
 <!--CHANNELS-->
 
 <tr>

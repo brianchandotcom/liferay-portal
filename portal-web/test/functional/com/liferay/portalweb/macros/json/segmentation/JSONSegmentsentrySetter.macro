@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "Sets the criteria when the criteria type is User"
 	macro setCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
@@ -25,6 +26,20 @@ definition {
 		else if ("${operator}" == "not contains") {
 			var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (contains(${field}, %27${text}%27))))","typeValue":"model"}},"filterStrings":{"model":"((not (contains(${field}, %27${text}%27))))"}}''';
 		}
+		else if (("${operator}" == "greater than") || ("${operator}" == "greater than or equals") || ("${operator}" == "less than") || ("${operator}" == "less than or equals")) {
+			if ("${operator}" == "greater than") {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} gt ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} gt ${date})"}}''';
+			}
+			else if ("${operator}" == "greater than or equals") {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} ge ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} ge ${date})"}}''';
+			}
+			else if ("${operator}" == "less than") {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} lt ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} lt ${date})"}}''';
+			}
+			else if ("${operator}" == "less than or equals") {
+				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} le ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} le ${date})"}}''';
+			}
+		}
 
 		return "${criteria}";
 	}
@@ -46,11 +61,26 @@ definition {
 		if ("${fieldName}" == "Browser") {
 			var field = "browser";
 		}
+		else if ("${fieldName}" == "Cookies") {
+			var field = "cookies";
+		}
 		else if ("${fieldName}" == "Date Modified") {
 			var field = "dateModified";
 		}
 		else if ("${fieldName}" == "Date of Birth") {
 			var field = "birthDate";
+		}
+		else if ("${fieldName}" == "Device Brand") {
+			var field = "deviceBrand";
+		}
+		else if ("${fieldName}" == "Device Model") {
+			var field = "deviceModel";
+		}
+		else if ("${fieldName}" == "Device Screen Resolution Height") {
+			var field = "deviceScreenResolutionHeight";
+		}
+		else if ("${fieldName}" == "Device Screen Resolution Width") {
+			var field = "deviceScreenResolutionWidth";
 		}
 		else if ("${fieldName}" == "Email Address") {
 			var field = "emailAddress";
@@ -58,20 +88,41 @@ definition {
 		else if ("${fieldName}" == "First Name") {
 			var field = "firstName";
 		}
+		else if ("${fieldName}" == "Hostname") {
+			var field = "hostname";
+		}
 		else if ("${fieldName}" == "Job Title") {
 			var field = "jobTitle";
+		}
+		else if ("${fieldName}" == "Language") {
+			var field = "languageId";
 		}
 		else if ("${fieldName}" == "Last Name") {
 			var field = "lastName";
 		}
+		else if ("${fieldName}" == "Last Sign In Date") {
+			var field = "lastSignInDateTime";
+		}
+		else if ("${fieldName}" == "Local Date") {
+			var field = "localDate";
+		}
 		else if ("${fieldName}" == "Name") {
 			var field = "userName";
+		}
+		else if ("${fieldName}" == "Referrer URL") {
+			var field = "referrerURL";
 		}
 		else if ("${fieldName}" == "Regular Role") {
 			var field = "roleIds";
 		}
+		else if ("${fieldName}" == "Request Parameters") {
+			var field = "requestParameters";
+		}
 		else if ("${fieldName}" == "Screen Name") {
 			var field = "screenName";
+		}
+		else if ("${fieldName}" == "Signed In") {
+			var field = "signedIn";
 		}
 		else if ("${fieldName}" == "Site") {
 			var field = "groupIds";
@@ -85,11 +136,20 @@ definition {
 		else if ("${fieldName}" == "Team") {
 			var field = "teamIds";
 		}
+		else if ("${fieldName}" == "URL") {
+			var field = "url";
+		}
 		else if ("${fieldName}" == "User") {
 			var field = "userId";
 		}
+		else if ("${fieldName}" == "User Agent") {
+			var field = "userAgent";
+		}
 		else if ("${fieldName}" == "User Group") {
 			var field = "userGroupIds";
+		}
+		else if ("${fieldName}" == "User Name") {
+			var field = "userName";
 		}
 
 		return "${field}";
@@ -101,6 +161,28 @@ definition {
 		var nameMap = '''{"en_US":"${name}"}''';
 
 		return "${nameMap}";
+	}
+
+	macro setSelectedOptionId {
+		Variables.assertDefined(parameterList = "${fieldName},${selectedOption}");
+
+		if ("${fieldName}" == "roleIds") {
+			var text = JSONRoleSetter.setRoleId(name = "${selectedOption}");
+		}
+		else if ("${fieldName}" == "groupIds") {
+			var text = JSONGroupSetter.setGroupId(groupName = "${selectedOption}");
+		}
+		else if ("${fieldName}" == "userGroupRoleIds") {
+			var text = JSONRoleSetter.setRoleId(name = "${selectedOption}");
+		}
+		else if ("${fieldName}" == "userId") {
+			var text = JSONUserSetter.setUserId(userEmailAddress = "${selectedOption}");
+		}
+		else if ("${fieldName}" == "userGroupIds") {
+			var text = JSONUserGroupSetter.setUserGroupId(userGroupName = "${selectedOption}");
+		}
+
+		return "${text}";
 	}
 
 	macro setServiceContext {
@@ -125,6 +207,72 @@ definition {
 		}
 
 		return "${serviceContext}";
+	}
+
+	@summary = "Sets the criteria when the criteria type is Session"
+	macro setSessionCriteria {
+		Variables.assertDefined(parameterList = "${field},${operator}");
+
+		if ("${operator}" == "equals") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"context"}},"filterStrings":{"context":"(${field} eq %27${text}%27)"}}''';
+			}
+			else if (isSet(key)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field}%5C/any(c:c eq %27${key}=${value}%27))","typeValue":"context"}},"filterStrings":{"context":"(${field}%5C/any(c:c eq %27${key}=${value}%27))"}}''';
+			}
+			else if (isSet(value)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} eq ${value})","typeValue":"context"}},"filterStrings":{"context":"(${field} eq ${value})"}}''';
+			}
+			else if (isSet(date)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} eq ${date})"}}''';
+			}
+		}
+		else if ("${operator}" == "not equals") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"context"}},"filterStrings":{"context":"((not (${field} eq %27${text}%27)))"}}''';
+			}
+			else if (isSet(key)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field}%5C/any(c:c eq %27${key}=${value}%27))))","typeValue":"context"}},"filterStrings":{"context":"((not (${field}%5C/any(c:c eq %27${key}=${value}%27))))"}}''';
+			}
+			else if (isSet(value)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field} eq ${value})))","typeValue":"context"}},"filterStrings":{"context":"((not (${field} eq ${value})))"}}''';
+			}
+			else if (isSet(date)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"context"}},"filterStrings":{"context":"((not (${field} eq ${date})))"}}''';
+			}
+		}
+		else if ("${operator}" == "contains") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"context"}},"filterStrings":{"context":"(contains(${field}, %27${text}%27))"}}''';
+			}
+			else if (isSet(key)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field}%5C/any(c:contains(c,%27${key}=${value}%27)))","typeValue":"context"}},"filterStrings":{"context":"(${field}%5C/any(c:contains(c,%27${key}=${value}%27)))"}}''';
+			}
+		}
+		else if ("${operator}" == "not contains") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (contains(${field}, %27${text}%27))))","typeValue":"context"}},"filterStrings":{"context":"((not (contains(${field}, %27${text}%27))))"}}''';
+			}
+			else if (isSet(key)) {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field}%5C/any(c:contains(c,%27${key}=${value}%27)))))","typeValue":"context"}},"filterStrings":{"context":"((not (${field}%5C/any(c:contains(c,%27${key}=${value}%27)))))"}}''';
+			}
+		}
+		else if (("${operator}" == "greater than") || ("${operator}" == "greater than or equals") || ("${operator}" == "less than") || ("${operator}" == "less than or equals")) {
+			if ("${operator}" == "greater than") {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} gt ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} gt ${date})"}}''';
+			}
+			else if ("${operator}" == "greater than or equals") {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} ge ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} ge ${date})"}}''';
+			}
+			else if ("${operator}" == "less than") {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} lt ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} lt ${date})"}}''';
+			}
+			else if ("${operator}" == "less than or equals") {
+				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} le ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} le ${date})"}}''';
+			}
+		}
+
+		return "${criteria}";
 	}
 
 }

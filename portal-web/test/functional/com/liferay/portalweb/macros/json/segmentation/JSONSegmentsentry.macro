@@ -1,17 +1,35 @@
 definition {
 
-	@summary = "Add a segment with a specific criteria"
+	@summary = "Add a segment with a user or session specific criteria"
 	macro addSegment {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 
 		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = "${description}");
 		var field = JSONSegmentsentrySetter.setField(fieldName = "${fieldName}");
 
-		var criteria = JSONSegmentsentrySetter.setCriteria(
-			date = "${date}",
-			field = "${field}",
-			operator = "${operator}",
-			text = "${text}");
+		if (isSet(selectedOption)) {
+			var text = JSONSegmentsentrySetter.setSelectedOptionId(
+				fieldName = "${field}",
+				selectedOption = "${selectedOption}");
+		}
+
+		if ("${conditionType}" == "Session") {
+			var criteria = JSONSegmentsentrySetter.setSessionCriteria(
+				date = "${date}",
+				field = "${field}",
+				key = "${key}",
+				operator = "${operator}",
+				text = "${text}",
+				value = "${value}");
+		}
+		else if (!(isSet(conditionType)) || ("${conditionType}" == "User")) {
+			var criteria = JSONSegmentsentrySetter.setCriteria(
+				date = "${date}",
+				field = "${field}",
+				operator = "${operator}",
+				text = "${text}");
+		}
+
 		var nameMap = JSONSegmentsentrySetter.setNameMap(name = "${segmentName}");
 		var serviceContext = JSONSegmentsentrySetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",

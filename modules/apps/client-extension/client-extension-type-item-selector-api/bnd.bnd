@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Client Extension Type Item Selector API
+Bundle-SymbolicName: com.liferay.client.extension.type.item.selector.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.client.extension.type.item.selector,\
+	com.liferay.client.extension.type.item.selector.criterion

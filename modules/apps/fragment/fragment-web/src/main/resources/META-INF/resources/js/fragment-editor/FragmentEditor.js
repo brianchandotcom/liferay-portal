@@ -392,7 +392,7 @@ const FragmentEditor = ({
 				</ClayTabs.TabPane>
 
 				<ClayTabs.TabPane aria-labelledby="configuration">
-					<div className="fragment-editor">
+					<div className="fragment-editor fragment-editor__configuration">
 						<div className="sheet sheet-lg">
 							{showFieldTypes && (
 								<FieldTypeSelector
@@ -419,6 +419,7 @@ const FragmentEditor = ({
 										mode="json"
 										onChange={setConfiguration}
 										readOnly={readOnly}
+										showHeader={false}
 									/>
 								</div>
 							</ClayForm.Group>

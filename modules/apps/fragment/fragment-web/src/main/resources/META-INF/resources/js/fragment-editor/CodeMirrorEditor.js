@@ -241,6 +241,7 @@ const CodeMirrorEditor = ({
 	codeHeaderHelpText,
 	content = '',
 	readOnly,
+	showHeader = true,
 }) => {
 	const editorRef = useRef();
 	const ref = useRef();
@@ -340,13 +341,15 @@ const CodeMirrorEditor = ({
 
 	return (
 		<>
-			<nav className="source-editor-toolbar tbar">
-				<ul className="tbar-nav">
-					<li className="source-editor-toolbar__syntax tbar-item tbar-item-expand text-center">
-						{MODES[mode].name}
-					</li>
-				</ul>
-			</nav>
+			{showHeader && (
+				<nav className="source-editor-toolbar tbar">
+					<ul className="tbar-nav">
+						<li className="source-editor-toolbar__syntax tbar-item tbar-item-expand text-center">
+							{MODES[mode].name}
+						</li>
+					</ul>
+				</nav>
+			)}
 
 			{(codeHeaderHelpText || codeHeaderText) && (
 				<FixedText

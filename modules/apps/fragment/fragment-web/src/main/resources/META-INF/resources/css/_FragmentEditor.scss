@@ -7,6 +7,14 @@
 	border-top: solid $editorBorderWidth $editorBorderColor;
 	box-sizing: border-box;
 
+	&__configuration .CodeMirror-scroll {
+		border: 1px solid $gray-200;
+		border-radius: 3px;
+		margin: 0 0 50px;
+		max-width: 100%;
+		min-height: 344px;
+	}
+
 	&__toolbar {
 		color: $secondary;
 	}

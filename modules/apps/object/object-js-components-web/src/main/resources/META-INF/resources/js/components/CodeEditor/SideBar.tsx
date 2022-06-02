@@ -46,7 +46,7 @@ export function Sidebar({editorRef, elements}: IProps) {
 	);
 }
 interface IProps {
-	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
+	editorRef: React.RefObject<CodeMirror.Editor>;
 	elements: SideBarCategory[];
 }
 

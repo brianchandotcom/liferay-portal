@@ -17,6 +17,7 @@ import {
 	Card,
 	CodeMirrorEditor,
 	CustomItem,
+	ExpressionBuilder,
 	FormCustomSelect,
 	Input,
 } from '@liferay/object-js-components-web';
@@ -91,6 +92,10 @@ export default function ActionBuilder({
 		}
 	}, [values]);
 
+	const handleSave = (conditionExpression?: string) => {
+		setValues({conditionExpression});
+	};
+
 	return (
 		<>
 			<Card title={Liferay.Language.get('trigger')}>
@@ -132,15 +137,27 @@ export default function ActionBuilder({
 					</ClayForm.Group>
 
 					{values.conditionExpression !== undefined && (
-						<Input
+						<ExpressionBuilder
+							error={errors.conditionExpression}
 							feedbackMessage={Liferay.Language.get(
 								'use-expressions-to-create-a-condition'
 							)}
 							label={Liferay.Language.get('expression-builder')}
 							name="conditionExpression"
-							onChange={({target: {value}}) =>
+							onChange={({target: {value}}: any) =>
 								setValues({conditionExpression: value})
 							}
+							onOpenModal={() => {
+								const parentWindow = Liferay.Util.getOpener();
+
+								parentWindow.Liferay.fire(
+									'openExpressionBuilderModal',
+									{
+										onSave: handleSave,
+										source: values.conditionExpression,
+									}
+								);
+							}}
 							placeholder={Liferay.Language.get(
 								'create-an-expression'
 							)}

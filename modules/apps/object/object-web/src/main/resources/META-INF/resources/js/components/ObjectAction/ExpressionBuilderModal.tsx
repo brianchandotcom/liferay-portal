@@ -12,21 +12,20 @@
  * details.
  */
 
-import CodeMirror from 'codemirror';
+import {
+	ExpressionBuilderModal as Modal,
+	SideBarCategory,
+} from '@liferay/object-js-components-web';
 import React from 'react';
-import './Sidebar.scss';
-export declare function Sidebar({editorRef, elements}: IProps): JSX.Element;
+
+import useMetadata from '../../hooks/useMetadata';
+
+export default function ExpressionBuilderModal({sidebarElements}: IProps) {
+	const elements = useMetadata(sidebarElements);
+
+	return <Modal sidebarElements={elements} />;
+}
+
 interface IProps {
-	editorRef: React.RefObject<CodeMirror.Editor>;
-	elements: SideBarCategory[];
+	sidebarElements: SideBarCategory[];
 }
-export interface SideBarCategory {
-	items: SideBarElement[];
-	label: string;
-}
-interface SideBarElement {
-	content: string;
-	label: string;
-	tooltip: string;
-}
-export {};

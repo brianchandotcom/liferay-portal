@@ -37,3 +37,14 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 	id="<%= ObjectDefinitionsFDSNames.OBJECT_ACTIONS %>"
 	style="fluid"
 />
+
+<div>
+	<react:component
+		module="js/components/ObjectAction/ExpressionBuilderModal"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"sidebarElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()
+			).build()
+		%>'
+	/>
+</div>

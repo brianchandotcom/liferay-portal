@@ -144,6 +144,13 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 			errors.url = REQUIRED_MSG;
 		}
 
+		if (
+			typeof values.conditionExpression === 'string' &&
+			invalidateRequired(values.conditionExpression)
+		) {
+			errors.conditionExpression = REQUIRED_MSG;
+		}
+
 		if (Object.keys(errors).length) {
 			openToast({
 				message: Liferay.Language.get('an-error-occurred'),

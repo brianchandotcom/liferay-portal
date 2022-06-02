@@ -54,7 +54,7 @@ export default function SiteIconPackConfiguration({
 						.filter((icon) =>
 							icon.name
 								.toLowerCase()
-								.includes(searchQuery.toLocaleLowerCase())
+								.includes(searchQuery.toLowerCase())
 						),
 				},
 			};

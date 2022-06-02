@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
+import com.liferay.frontend.icons.web.internal.util.FrontendIconsPackUtil;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -90,6 +91,10 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");
+
+		if (!FrontendIconsPackUtil.isValidName(name)) {
+			return;
+		}
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(

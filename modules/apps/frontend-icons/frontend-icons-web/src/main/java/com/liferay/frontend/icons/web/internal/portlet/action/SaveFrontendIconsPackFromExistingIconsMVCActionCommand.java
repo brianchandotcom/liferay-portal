@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
+import com.liferay.frontend.icons.web.internal.util.FrontendIconsPackUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -79,10 +80,14 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			return;
 		}
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		if (!FrontendIconsPackUtil.isValidName(name)) {
+			return;
+		}
+
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
 			_getFrontendIconsResourcePacks(companyId);
-
-		String name = ParamUtil.getString(actionRequest, "name");
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePacks.get(name);

@@ -4939,20 +4939,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupKeyException();
 		}
 
-		try {
-			Group group = groupFinder.findByC_GK(companyId, groupKey);
+		Group group = groupFinder.fetchByC_GK(companyId, groupKey);
 
-			if ((groupId <= 0) || (group.getGroupId() != groupId)) {
-				throw new DuplicateGroupException("{groupId=" + groupId + "}");
-			}
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
+		if ((group != null) &&
+			((groupId <= 0) || (group.getGroupId() != groupId))) {
 
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
+			throw new DuplicateGroupException("{groupId=" + groupId + "}");
 		}
 
 		if (site || (type == GroupConstants.TYPE_DEPOT)) {

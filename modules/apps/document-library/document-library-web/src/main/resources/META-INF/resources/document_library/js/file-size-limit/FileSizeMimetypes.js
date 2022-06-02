@@ -68,6 +68,7 @@ const FileSizeField = ({
 			<ClayInput
 				defaultValue={size}
 				id="size"
+				min="0"
 				name={`${portletNamespace}size_${index}`}
 				type="number"
 			/>

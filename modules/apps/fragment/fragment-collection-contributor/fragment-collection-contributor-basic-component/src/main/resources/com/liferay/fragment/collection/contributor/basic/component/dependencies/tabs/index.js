@@ -15,6 +15,32 @@ const tabPanelItems = [].slice.call(
 	)
 );
 
+const persistedTab = (function () {
+	if (!configuration.persistSelectedTab) {
+		let persistedId;
+
+		return {
+			getId() {
+				return persistedId;
+			},
+
+			setId(nextId) {
+				persistedId = nextId;
+			},
+		};
+	}
+
+	return {
+		getId() {
+			return Number(sessionStorage.getItem(persistedTabKey));
+		},
+
+		setId(id) {
+			sessionStorage.setItem(persistedTabKey, id);
+		},
+	};
+})();
+
 function activeTab(item) {
 	tabItems.forEach(function (tabItem) {
 		tabItem.setAttribute('aria-selected', false);
@@ -83,70 +109,26 @@ function openTabPanel(event, i) {
 
 		activeTab(currentTarget, i);
 		activeTabPanel(tabPanelItems[i]);
-
-		this.tabIndex = i;
-
-		if (configuration.persistSelectedTab) {
-			sessionStorage.setItem(persistedTabKey, i);
-		}
+		persistedTab.setId(i);
 	}
 }
 
 function main() {
-	const initialState = !this.tabIndex || this.tabIndex >= tabItems.length;
-	let tabItemSelected = tabItems[0];
+	const tabItemId = tabItems[persistedTab.getId()] ? persistedTab.getId() : 0;
 
-	if (initialState) {
-		tabItems.forEach(function (item, i) {
-			if (!i) {
-				activeTab(item);
-			}
-
-			item.addEventListener('click', function (event) {
-				openTabPanel(event, i);
-			});
+	tabItems.forEach(function (item, index) {
+		item.addEventListener('click', function (event) {
+			openTabPanel(event, index);
 		});
-
-		tabPanelItems.forEach(function (item, i) {
-			if (!i) {
-				activeTabPanel(item);
-			}
-		});
-	}
-	else {
-		tabItemSelected = tabItems[this.tabIndex];
-
-		tabItems.forEach(function (item, i) {
-			activeTab(tabItems[this.tabIndex]);
-			item.addEventListener('click', function (event) {
-				openTabPanel(event, i);
-			});
-		});
-
-		tabPanelItems.forEach(function () {
-			activeTabPanel(tabPanelItems[this.tabIndex]);
-		});
-	}
+	});
 
 	dropdownButton.addEventListener('click', function (event) {
 		handleDropdown(event);
 	});
 
-	handleDropdownButtonName(tabItemSelected);
-
-	if (configuration.persistSelectedTab) {
-		const persistedTabIndex = Number(
-			sessionStorage.getItem(persistedTabKey)
-		);
-
-		if (
-			!isNaN(persistedTabIndex) &&
-			persistedTabIndex < configuration.numberOfTabs
-		) {
-			activeTab(tabItems[persistedTabIndex]);
-			activeTabPanel(tabPanelItems[persistedTabIndex]);
-		}
-	}
+	activeTab(tabItems[tabItemId]);
+	activeTabPanel(tabPanelItems[tabItemId]);
+	handleDropdownButtonName(tabItems[tabItemId]);
 }
 
 main();

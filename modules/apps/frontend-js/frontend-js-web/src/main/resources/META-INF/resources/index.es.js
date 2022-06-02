@@ -108,6 +108,7 @@ export {default as isTablet} from './liferay/util/is_tablet';
 export {default as getSelectedOptionValues} from './liferay/util/get_selected_option_values';
 export {default as navigate} from './liferay/util/navigate.es';
 export {default as normalizeFriendlyURL} from './liferay/util/normalize_friendly_url';
+export {default as openWindow} from './liferay/util/open_window';
 export {default as removeEntitySelection} from './liferay/util/remove_entity_selection';
 export {default as showCapsLock} from './liferay/util/show_caps_lock';
 export {default as runScriptsInElement} from './liferay/util/run_scripts_in_element.es';

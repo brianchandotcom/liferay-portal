@@ -667,6 +667,8 @@ export function openToast({
 	variant?: string;
 }): void;
 
+export function openWindow(config: object, callback?: Function): void;
+
 export function fetch(resource: string | Request, init?: Object): Promise<any>;
 
 export function getCheckedCheckboxes(

@@ -81,6 +81,7 @@ import navigate from './util/navigate.es';
 import normalizeFriendlyURL from './util/normalize_friendly_url';
 import ns from './util/ns.es';
 import objectToURLSearchParams from './util/object_to_url_search_params.es';
+import openWindow from './util/open_window';
 import createActionURL from './util/portlet_url/create_action_url.es';
 import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
@@ -325,6 +326,7 @@ Liferay.Util.openToast = (...args) => {
 	);
 };
 
+Liferay.Util.openWindow = openWindow;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
 Liferay.Util.showCapsLock = showCapsLock;

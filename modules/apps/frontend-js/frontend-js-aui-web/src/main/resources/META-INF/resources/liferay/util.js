@@ -550,16 +550,6 @@
 			Liferay.Util.openWindow(config);
 		},
 
-		openWindow(config, callback) {
-			config.openingWindow = window;
-
-			var top = Util.getTop();
-
-			var topUtil = top.Liferay.Util;
-
-			topUtil._openWindowProvider(config, callback);
-		},
-
 		/**
 		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 		 */

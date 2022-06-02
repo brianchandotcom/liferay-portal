@@ -453,6 +453,8 @@ declare module Liferay {
 			variant?: string;
 		}): void;
 
+		export function openWindow(config: object, callback?: Function): void;
+
 		/**
 		 * Submits the form, with optional setting of form elements.
 		 */

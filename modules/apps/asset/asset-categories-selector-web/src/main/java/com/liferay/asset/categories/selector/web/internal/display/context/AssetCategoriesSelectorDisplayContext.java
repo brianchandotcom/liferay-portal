@@ -143,6 +143,8 @@ public class AssetCategoriesSelectorDisplayContext {
 			"nodes", getCategoriesJSONArray()
 		).put(
 			"selectedCategoryIds", getSelectedCategoryIds()
+		).put(
+			"showSelectedCounter", showSelectedCounter()
 		).build();
 	}
 
@@ -279,6 +281,17 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _singleSelect;
 	}
 
+	public boolean showSelectedCounter() {
+		if (_showSelectedCounter != null) {
+			return _showSelectedCounter;
+		}
+
+		_showSelectedCounter = ParamUtil.getBoolean(
+			_httpServletRequest, "showSelectedCounter");
+
+		return _showSelectedCounter;
+	}
+
 	private JSONArray _getCategoriesJSONArray(
 			long vocabularyId, long categoryId)
 		throws Exception {
@@ -377,6 +390,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private List<String> _selectedCategoryIds;
+	private Boolean _showSelectedCounter;
 	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 

@@ -30,6 +30,7 @@ function SelectCategory({
 	namespace,
 	nodes,
 	selectedCategoryIds,
+	showSelectedCounter,
 }) {
 	const [items, setItems] = useState(() => {
 		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
@@ -40,6 +41,7 @@ function SelectCategory({
 	});
 
 	const [filterQuery, setFilterQuery] = useState('');
+	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	return (
 		<div className="select-category">
@@ -89,6 +91,24 @@ function SelectCategory({
 			</form>
 
 			<form name={`${namespace}selectCategoryFm`}>
+				{showSelectedCounter && !!selectedItemsCount && (
+					<ClayLayout.Container
+						className="px-4 tree-filter-count-feedback"
+						containerElement="section"
+						fluid
+					>
+						<div className="align-items-center container-fluid d-flex justify-content-between p-0">
+							<p className="m-0 text-2">
+								{selectedItemsCount + ' '}
+
+								{selectedItemsCount > 1
+									? Liferay.Language.get('items-selected')
+									: Liferay.Language.get('item-selected')}
+							</p>
+						</div>
+					</ClayLayout.Container>
+				)}
+
 				<ClayLayout.ContainerFluid containerElement="fieldset">
 					<div
 						className="category-tree"
@@ -102,6 +122,9 @@ function SelectCategory({
 								items={items}
 								multiSelection={multiSelection}
 								onItems={setItems}
+								onSelectionChange={(selectedNodes) => {
+									setSelectedItemsCount(selectedNodes.size);
+								}}
 								selectedCategoryIds={selectedCategoryIds}
 							/>
 						) : (
@@ -122,9 +145,14 @@ function SelectCategory({
 	);
 }
 
+SelectCategory.defaultProps = {
+	showSelectedCounter: false,
+};
+
 SelectCategory.propTypes = {
 	addCategoryURL: PropTypes.string,
 	moveCategory: PropTypes.bool,
+	showSelectedCounter: PropTypes.bool,
 };
 
 export default SelectCategory;

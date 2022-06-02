@@ -44,7 +44,7 @@ interface IProps {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal: (boolean: boolean) => void;
-	onVisibleModal: (boolean: boolean) => void;
+	openModal: () => void;
 	secondColumnHeader: string;
 	thirdColumnHeader?: string;
 	title: string;
@@ -61,7 +61,7 @@ export function BuilderScreen({
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
-	onVisibleModal,
+	openModal,
 	secondColumnHeader,
 	thirdColumnHeader,
 	title,
@@ -94,7 +94,7 @@ export function BuilderScreen({
 					<ManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className="nav-btn nav-btn-monospaced"
-							onClick={() => onVisibleModal(true)}
+							onClick={openModal}
 							symbol="plus"
 						/>
 					</ManagementToolbar.Item>
@@ -203,10 +203,7 @@ export function BuilderScreen({
 						description={emptyState.description}
 						title={emptyState.title}
 					>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onVisibleModal(true)}
-						>
+						<ClayButton displayType="secondary" onClick={openModal}>
 							{emptyState.buttonText}
 						</ClayButton>
 					</ClayEmptyState>

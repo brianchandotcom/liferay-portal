@@ -12,10 +12,14 @@
  * details.
  */
 
-import React from 'react';
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	observer: any;
-	onClose: () => void;
+/// <reference types="react" />
+
+import './ModalAddColumns.scss';
+declare function ModalAddColumns<T extends ModalItem>(): JSX.Element | null;
+export default ModalAddColumns;
+interface ModalItem {
+	checked?: boolean;
+	id?: unknown;
+	label: LocalizedValue<string>;
+	required?: boolean;
 }
-declare const ModalAddColumnsObjectCustomView: React.FC<IProps>;
-export default ModalAddColumnsObjectCustomView;

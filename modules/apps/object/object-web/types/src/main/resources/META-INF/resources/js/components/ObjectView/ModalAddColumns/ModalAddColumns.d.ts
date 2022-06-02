@@ -12,36 +12,30 @@
  * details.
  */
 
-import React, {useContext} from 'react';
-
-import ViewContext from '../context';
-import ModalAddColumns from './ModalAddColumns';
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	observer: any;
-	onClose: () => void;
-}
-
-const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
+import React from 'react';
+import './ModalAddColumns.scss';
+declare function ModalAddColumns<T extends ModalItem>({
+	disableRequired,
+	getName,
+	items,
 	observer,
 	onClose,
-}) => {
-	const [
-		{
-			objectFields,
-			objectView: {objectViewColumns},
-		},
-		dispatch,
-	] = useContext(ViewContext);
-
-	return (
-		<ModalAddColumns
-			handleSubmit={dispatch}
-			objectFields={objectFields}
-			objectViewColumns={objectViewColumns}
-			observer={observer}
-			onClose={onClose}
-		/>
-	);
-};
-
-export default ModalAddColumnsObjectCustomView;
+	onSave,
+	selected,
+}: IProps<T>): JSX.Element;
+export default ModalAddColumns;
+interface ModalItem {
+	id?: unknown;
+	label: LocalizedValue<string>;
+	required?: boolean;
+}
+interface IProps<T extends ModalItem>
+	extends React.HTMLAttributes<HTMLElement> {
+	disableRequired?: boolean;
+	getName: (label: T) => string;
+	items: T[];
+	observer: any;
+	onClose: () => void;
+	onSave: (selected: T[]) => void;
+	selected?: T[];
+}

@@ -106,12 +106,64 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewImageViaVideoFragmentAfterMovingToFolder {
+	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154383 CanViewImageViaVideoFragmentAfterMovingToFolder pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Content Page Name",
+			type = "content");
 
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Liferay Digital Experience Platform",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Guest");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "External Video");
+
+		PageEditor.gotoConfiguration(fragmentName = "External Video");
+
+		Click(
+			key_fieldLabel = "Video",
+			key_text = "plus",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		ItemSelector.addVideoFromDM(
+			depotName = "Test Depot Name",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Liferay Digital Experience Platform");
+
+		PageEditor.clickPublish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Liferay Digital Experience Platform",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Guest");
+
+		YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 	}
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."

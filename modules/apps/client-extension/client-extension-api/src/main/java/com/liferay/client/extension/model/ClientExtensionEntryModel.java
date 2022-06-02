@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -43,8 +44,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ClientExtensionEntryModel
-	extends BaseModel<ClientExtensionEntry>, ContainerModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel, WorkflowedModel {
+	extends BaseModel<ClientExtensionEntry>, ContainerModel,
+			CTModel<ClientExtensionEntry>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,7 @@ public interface ClientExtensionEntryModel
 	 *
 	 * @return the primary key of this client extension entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -64,6 +67,7 @@ public interface ClientExtensionEntryModel
 	 *
 	 * @param primaryKey the primary key of this client extension entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -81,6 +85,22 @@ public interface ClientExtensionEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this client extension entry.
+	 *
+	 * @return the ct collection ID of this client extension entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this client extension entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this client extension entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this client extension entry.

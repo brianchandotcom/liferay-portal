@@ -1,8 +1,9 @@
 create table ClientExtensionEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	clientExtensionEntryId LONG not null primary key,
+	clientExtensionEntryId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -17,14 +18,16 @@ create table ClientExtensionEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (clientExtensionEntryId, ctCollectionId)
 );
 
 create table ClientExtensionEntryRel (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
-	clientExtensionEntryRelId LONG not null primary key,
+	clientExtensionEntryRelId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -33,5 +36,6 @@ create table ClientExtensionEntryRel (
 	classNameId LONG,
 	classPK LONG,
 	cetExternalReferenceCode VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	primary key (clientExtensionEntryRelId, ctCollectionId)
 );

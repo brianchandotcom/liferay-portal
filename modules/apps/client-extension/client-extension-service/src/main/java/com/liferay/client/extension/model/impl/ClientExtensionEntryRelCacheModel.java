@@ -78,10 +78,12 @@ public class ClientExtensionEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -117,6 +119,7 @@ public class ClientExtensionEntryRelCacheModel
 			new ClientExtensionEntryRelImpl();
 
 		clientExtensionEntryRelImpl.setMvccVersion(mvccVersion);
+		clientExtensionEntryRelImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			clientExtensionEntryRelImpl.setUuid("");
@@ -185,6 +188,8 @@ public class ClientExtensionEntryRelCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -207,6 +212,8 @@ public class ClientExtensionEntryRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -258,6 +265,7 @@ public class ClientExtensionEntryRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long clientExtensionEntryRelId;

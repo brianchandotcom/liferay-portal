@@ -129,6 +129,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		newClientExtensionEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newClientExtensionEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newClientExtensionEntry.setUuid(RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setExternalReferenceCode(
@@ -175,6 +177,9 @@ public class ClientExtensionEntryPersistenceTest {
 		Assert.assertEquals(
 			existingClientExtensionEntry.getMvccVersion(),
 			newClientExtensionEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingClientExtensionEntry.getCtCollectionId(),
+			newClientExtensionEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getUuid(),
 			newClientExtensionEntry.getUuid());
@@ -305,12 +310,13 @@ public class ClientExtensionEntryPersistenceTest {
 
 	protected OrderByComparator<ClientExtensionEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ClientExtensionEntry", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "clientExtensionEntryId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "sourceCodeURL", true,
-			"type", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"ClientExtensionEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "externalReferenceCode", true,
+			"clientExtensionEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "sourceCodeURL", true, "type", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -624,6 +630,8 @@ public class ClientExtensionEntryPersistenceTest {
 		ClientExtensionEntry clientExtensionEntry = _persistence.create(pk);
 
 		clientExtensionEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		clientExtensionEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		clientExtensionEntry.setUuid(RandomTestUtil.randomString());
 

@@ -2,11 +2,13 @@ const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 const persistedTabKey = 'tabsFragment_' + fragmentNamespace + '_persistedTabId';
+
 const tabItems = [].slice.call(
 	fragmentElement.querySelectorAll(
 		'[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'
 	)
 );
+
 const tabPanelItems = [].slice.call(
 	fragmentElement.querySelectorAll(
 		'[data-fragment-namespace="' + fragmentNamespace + '"].tab-panel-item'
@@ -18,6 +20,7 @@ function activeTab(item) {
 		tabItem.setAttribute('aria-selected', false);
 		tabItem.classList.remove('active');
 	});
+
 	item.setAttribute('aria-selected', true);
 	item.classList.add('active');
 }
@@ -28,6 +31,7 @@ function activeTabPanel(item) {
 			tabPanelItem.classList.add('d-none');
 		}
 	});
+
 	item.classList.remove('d-none');
 }
 
@@ -36,6 +40,7 @@ function handleDropdown(event, item) {
 	dropdown.classList.toggle('show');
 
 	const ariaExpanded = dropdownButton.getAttribute('aria-expanded');
+
 	dropdownButton.setAttribute(
 		'aria-expanded',
 		ariaExpanded === 'false' ? true : false
@@ -60,9 +65,11 @@ function handleDropdownButtonName(item) {
 function openTabPanel(event, i) {
 	const currentTarget = event.currentTarget;
 	const target = event.target;
+
 	const isEditable =
 		target.hasAttribute('data-lfr-editable-id') ||
 		target.hasAttribute('contenteditable');
+
 	const dropdownIsOpen = JSON.parse(
 		dropdownButton.getAttribute('aria-expanded')
 	);
@@ -94,10 +101,12 @@ function main() {
 			if (!i) {
 				activeTab(item);
 			}
+
 			item.addEventListener('click', function (event) {
 				openTabPanel(event, i);
 			});
 		});
+
 		tabPanelItems.forEach(function (item, i) {
 			if (!i) {
 				activeTabPanel(item);
@@ -106,12 +115,14 @@ function main() {
 	}
 	else {
 		tabItemSelected = tabItems[this.tabIndex];
+
 		tabItems.forEach(function (item, i) {
 			activeTab(tabItems[this.tabIndex]);
 			item.addEventListener('click', function (event) {
 				openTabPanel(event, i);
 			});
 		});
+
 		tabPanelItems.forEach(function () {
 			activeTabPanel(tabPanelItems[this.tabIndex]);
 		});
@@ -120,6 +131,7 @@ function main() {
 	dropdownButton.addEventListener('click', function (event) {
 		handleDropdown(event);
 	});
+
 	handleDropdownButtonName(tabItemSelected);
 
 	if (configuration.persistSelectedTab) {

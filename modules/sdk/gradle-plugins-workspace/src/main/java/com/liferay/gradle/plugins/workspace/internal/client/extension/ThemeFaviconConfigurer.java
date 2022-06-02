@@ -46,6 +46,8 @@ public class ThemeFaviconConfigurer extends BaseClientExtensionConfigurer {
 
 	@Override
 	public void apply(Project project, ClientExtension clientExtension) {
+		super.apply(project, clientExtension);
+
 		Copy faviconTask = _addTaskBuildFavicon(project, clientExtension);
 
 		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(

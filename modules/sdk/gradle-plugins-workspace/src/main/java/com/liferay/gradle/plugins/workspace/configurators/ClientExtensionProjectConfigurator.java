@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.IFrameConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeFaviconConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -66,6 +67,7 @@ public class ClientExtensionProjectConfigurator
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
 
+		_clientExtensionConfigurers.put("iframe", new IFrameConfigurer());
 		_clientExtensionConfigurers.put("themeCSS", new ThemeCSSConfigurer());
 		_clientExtensionConfigurers.put(
 			"themeFavicon", new ThemeFaviconConfigurer());
@@ -192,7 +194,9 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
 			project, JavaPlugin.JAR_TASK_NAME, Jar.class);
 
-		addTaskDockerDeploy(project, jarTaskProvider, workspaceExtension);
+		addTaskDockerDeploy(
+			project, jarTaskProvider,
+			new File(workspaceExtension.getDockerDir(), "extensions"));
 	}
 
 	private void _configureConfigurationDefault(Project project) {

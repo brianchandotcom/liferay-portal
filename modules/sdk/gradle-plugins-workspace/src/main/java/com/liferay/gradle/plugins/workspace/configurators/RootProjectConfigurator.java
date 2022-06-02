@@ -41,6 +41,7 @@ import com.liferay.gradle.plugins.workspace.tasks.VerifyProductTask;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
+import com.liferay.petra.string.StringBundler;
 
 import de.undercouch.gradle.tasks.download.Download;
 import de.undercouch.gradle.tasks.download.Verify;
@@ -504,10 +505,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		File dockerDir = workspaceExtension.getDockerDir();
 
 		File deployDir = new File(dockerDir, "deploy");
+		File extensionsDir = new File(dockerDir, "extensions");
 		File workDir = new File(dockerDir, "work");
 
 		String deployPath = deployDir.getAbsolutePath();
 		String dockerPath = dockerDir.getAbsolutePath();
+		String extensionsPath = extensionsDir.getAbsolutePath();
 		String workPath = workDir.getAbsolutePath();
 
 		if (OSDetector.isWindows()) {
@@ -516,11 +519,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			if (prefix.contains(":")) {
 				deployPath = '/' + deployPath.replace(":", "");
 				dockerPath = '/' + dockerPath.replace(":", "");
+				extensionsPath = '/' + extensionsPath.replace(":", "");
 				workPath = '/' + workPath.replace(":", "");
 			}
 
 			deployPath = deployPath.replace('\\', '/');
 			dockerPath = dockerPath.replace('\\', '/');
+			extensionsPath = extensionsPath.replace('\\', '/');
 			workPath = workPath.replace('\\', '/');
 		}
 
@@ -530,6 +535,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		MapProperty<String, String> binds = hostConfig.getBinds();
 
 		binds.put(deployPath, "/mnt/liferay/deploy");
+		binds.put(extensionsPath, "/opt/liferay/osgi/extensions");
 		binds.put(workPath, "/opt/liferay/work");
 
 		dockerCreateContainer.setDescription(
@@ -557,6 +563,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerCreateContainer.withEnvVar(
 			_getEnvVarOverride("module.framework.properties.osgi.console"),
 			"0.0.0.0:11311");
+
+		dockerCreateContainer.withEnvVar(
+			_getEnvVarOverride("module.framework.auto.deploy.dirs"),
+			StringBundler.concat(
+				"${liferay.home}/osgi/configs,",
+				"${liferay.home}/osgi/extensions,",
+				"${liferay.home}/osgi/marketplace,",
+				"${liferay.home}/osgi/modules,${liferay.home}/osgi/portal,",
+				"${liferay.home}/osgi/war"));
+
 		dockerCreateContainer.withEnvVar(
 			"LIFERAY_WORKSPACE_ENVIRONMENT",
 			workspaceExtension.getEnvironment());
@@ -623,6 +639,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 						_createTouchFile(new File(destinationDir, "configs"));
 						_createTouchFile(new File(destinationDir, "deploy"));
+						_createTouchFile(
+							new File(destinationDir, "extensions"));
 						_createTouchFile(new File(destinationDir, "patching"));
 						_createTouchFile(new File(destinationDir, "scripts"));
 						_createTouchFile(new File(destinationDir, "work"));

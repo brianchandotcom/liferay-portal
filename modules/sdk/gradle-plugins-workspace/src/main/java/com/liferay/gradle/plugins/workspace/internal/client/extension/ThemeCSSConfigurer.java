@@ -62,6 +62,8 @@ public class ThemeCSSConfigurer extends BaseClientExtensionConfigurer {
 
 	@Override
 	public void apply(Project project, ClientExtension clientExtension) {
+		super.apply(project, clientExtension);
+
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
 

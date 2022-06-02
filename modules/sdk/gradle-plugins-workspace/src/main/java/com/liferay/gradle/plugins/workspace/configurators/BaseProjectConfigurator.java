@@ -95,8 +95,7 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 	}
 
 	protected Copy addTaskDockerDeploy(
-		Project project, Object sourcePath,
-		WorkspaceExtension workspaceExtension) {
+		Project project, Object sourcePath, File dockerDeployDir) {
 
 		if (GradleUtil.hasTask(
 				project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME)) {
@@ -114,21 +113,19 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 		copy.from(sourcePath);
 
-		final File dockerDir = workspaceExtension.getDockerDir();
-
 		copy.into(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return new File(dockerDir, "deploy");
+					return dockerDeployDir;
 				}
 
 			});
 
 		copy.setDescription(
 			"Assembles the project and deploys it to the Liferay Docker " +
-				"container.");
+				"container osgi/extensions path.");
 
 		copy.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
@@ -144,6 +141,17 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		buildDockerImageTask.dependsOn(deployTask);
 
 		return copy;
+	}
+
+	protected Copy addTaskDockerDeploy(
+		Project project, Object sourcePath,
+		WorkspaceExtension workspaceExtension) {
+
+		File dockerDir = workspaceExtension.getDockerDir();
+
+		File dockerDeployDir = new File(dockerDir, "deploy");
+
+		return addTaskDockerDeploy(project, sourcePath, dockerDeployDir);
 	}
 
 	protected void configureLiferay(

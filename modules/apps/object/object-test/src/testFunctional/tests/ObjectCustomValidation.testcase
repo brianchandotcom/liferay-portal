@@ -76,12 +76,69 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateWhenPassesForAllValidations {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153558",
+			objectName = "CustomObject153558",
+			pluralLabelName = "Custom Objects 153558");
 
-		// TODO LPS-153558 CanUpdateWhenPassesForAllValidations pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153558");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153558");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153558");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153558",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+		ObjectAdmin.editEntryName(newEntryValue = "Decline Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Decline Entry");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+		ObjectAdmin.editEntryName(newEntryValue = "Update Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
+
+		ObjectPortlet.viewEntry(entry = "Update Entry");
 	}
 
 	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"

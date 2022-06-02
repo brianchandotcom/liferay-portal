@@ -575,57 +575,54 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private LocalGitBranch _createRemoteGitRefLocalGitBranch() {
-		String senderBranchSHA = getSenderBranchSHA();
+		String senderBranchHeadSHA = _getSenderBranchHeadSHA();
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		if (gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-			return gitWorkingDirectory.createLocalGitBranch(
-				getBranchName(), true, senderBranchSHA);
-		}
+		if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+			List<GitRemote> gitHubDevGitRemotes =
+				GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
 
-		List<GitRemote> gitHubDevGitRemotes =
-			GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
+			for (int i = 0; i < 3; i++) {
+				if (gitHubDevGitRemotes.isEmpty()) {
+					break;
+				}
 
-		for (int i = 0; i < 3; i++) {
-			if (gitHubDevGitRemotes.isEmpty()) {
+				GitRemote randomGitRemote =
+					JenkinsResultsParserUtil.getRandomListItem(
+						gitHubDevGitRemotes);
+
+				gitHubDevGitRemotes.remove(randomGitRemote);
+
+				RemoteGitBranch remoteGitBranch =
+					gitWorkingDirectory.getRemoteGitBranch(
+						getGitHubDevBranchName(), randomGitRemote);
+
+				if (remoteGitBranch == null) {
+					continue;
+				}
+
+				try {
+					gitWorkingDirectory.fetch(remoteGitBranch);
+				}
+				catch (Exception exception) {
+					continue;
+				}
+
+				if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+					continue;
+				}
+
 				break;
 			}
 
-			GitRemote randomGitRemote =
-				JenkinsResultsParserUtil.getRandomListItem(gitHubDevGitRemotes);
-
-			gitHubDevGitRemotes.remove(randomGitRemote);
-
-			RemoteGitBranch remoteGitBranch =
-				gitWorkingDirectory.getRemoteGitBranch(
-					getGitHubDevBranchName(), randomGitRemote);
-
-			if (remoteGitBranch == null) {
-				continue;
+			if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+				gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 			}
-
-			try {
-				gitWorkingDirectory.fetch(remoteGitBranch);
-			}
-			catch (Exception exception) {
-				continue;
-			}
-
-			if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-				continue;
-			}
-
-			return gitWorkingDirectory.createLocalGitBranch(
-				getBranchName(), true, senderBranchSHA);
-		}
-
-		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
-			gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 		}
 
 		return gitWorkingDirectory.createLocalGitBranch(
-			getBranchName(), true, senderBranchSHA);
+			getBranchName(), true, getSenderBranchSHA());
 	}
 
 	private String _getBaseBranchHeadSHA() {

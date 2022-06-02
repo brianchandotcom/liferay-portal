@@ -130,6 +130,14 @@ public class DBUpgrader {
 				upgrade();
 			}
 
+			StoreFactory storeFactory = StoreFactory.getInstance();
+
+			if (storeFactory.getStore(PropsValues.DL_STORE_IMPL) == null) {
+				throw new UpgradeException(
+					"Store \"" + PropsValues.DL_STORE_IMPL +
+						"\" is not available");
+			}
+
 			_registerModuleServiceLifecycle("portlets.initialized");
 
 			System.out.println(
@@ -166,13 +174,6 @@ public class DBUpgrader {
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
 		_upgradeModules(applicationContext);
-
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		if (storeFactory.getStore(PropsValues.DL_STORE_IMPL) == null) {
-			throw new UpgradeException(
-				"Store \"" + PropsValues.DL_STORE_IMPL + "\" is not available");
-		}
 
 		if (applicationContext == null) {
 			DependencyManagerSyncUtil.sync();

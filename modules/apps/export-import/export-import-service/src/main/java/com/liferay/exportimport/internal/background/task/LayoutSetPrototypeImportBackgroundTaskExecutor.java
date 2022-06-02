@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -77,6 +78,29 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
+
+		List<BackgroundTask> queuedBackgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				backgroundTask.getGroupId(),
+				LayoutSetPrototypeImportBackgroundTaskExecutor.class.getName(),
+				BackgroundTaskConstants.STATUS_QUEUED);
+
+		if (!queuedBackgroundTasks.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Cancelling background task ");
+				sb.append(backgroundTask.getBackgroundTaskId());
+				sb.append(", found ");
+				sb.append(queuedBackgroundTasks.size());
+				sb.append(" queued tasks");
+
+				_log.debug(sb.toString());
+			}
+
+			return new BackgroundTaskResult(
+				BackgroundTaskConstants.STATUS_CANCELLED);
+		}
 
 		ExportImportConfiguration exportImportConfiguration =
 			getExportImportConfiguration(backgroundTask);

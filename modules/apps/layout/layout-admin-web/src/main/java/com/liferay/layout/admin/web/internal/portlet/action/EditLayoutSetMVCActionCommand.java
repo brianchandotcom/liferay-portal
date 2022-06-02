@@ -129,25 +129,25 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS);
 
-		long faviconClientExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "faviconClientExtensionEntryId");
+		String faviconCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "faviconCETPrimaryKey");
 
-		if (faviconClientExtensionEntryId > 0) {
+		if (Validator.isNotNull(faviconCETPrimaryKey)) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), faviconClientExtensionEntryId,
+				layoutSet.getLayoutSetId(), faviconCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 
-		long themeCSSExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "themeCSSExtensionEntryId");
+		String themeCSSCETPrimaryKey = ParamUtil.getString(
+			actionRequest, "themeCSSCETPrimaryKey");
 
-		if (themeCSSExtensionEntryId > 0) {
+		if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				themeDisplay.getUserId(),
 				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), themeCSSExtensionEntryId,
+				layoutSet.getLayoutSetId(), themeCSSCETPrimaryKey,
 				ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 	}

@@ -163,25 +163,25 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
 				faviconFileEntryId, masterLayoutPlid, serviceContext);
 
-			long faviconClientExtensionEntryId = ParamUtil.getLong(
-				uploadPortletRequest, "faviconClientExtensionEntryId");
+			String faviconCETPrimaryKey = ParamUtil.getString(
+				uploadPortletRequest, "faviconCETPrimaryKey");
 
-			if (faviconClientExtensionEntryId > 0) {
+			if (Validator.isNotNull(faviconCETPrimaryKey)) {
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					themeDisplay.getUserId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					faviconClientExtensionEntryId,
+					faviconCETPrimaryKey,
 					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 			}
 
-			long themeCSSExtensionEntryId = ParamUtil.getLong(
-				actionRequest, "themeCSSExtensionEntryId");
+			String themeCSSCETPrimaryKey = ParamUtil.getString(
+				actionRequest, "themeCSSCETPrimaryKey");
 
-			if (themeCSSExtensionEntryId > 0) {
+			if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					themeDisplay.getUserId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					themeCSSExtensionEntryId,
+					themeCSSCETPrimaryKey,
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 			}
 
@@ -207,22 +207,21 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					styleBookEntryId, faviconFileEntryId,
 					draftLayout.getMasterLayoutPlid(), serviceContext);
 
-				if (faviconClientExtensionEntryId > 0) {
+				if (Validator.isNotNull(faviconCETPrimaryKey)) {
 					_clientExtensionEntryRelLocalService.
 						addClientExtensionEntryRel(
 							themeDisplay.getUserId(),
 							_portal.getClassNameId(Layout.class),
-							draftLayout.getPlid(),
-							faviconClientExtensionEntryId,
+							draftLayout.getPlid(), faviconCETPrimaryKey,
 							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 				}
 
-				if (themeCSSExtensionEntryId > 0) {
+				if (Validator.isNotNull(themeCSSCETPrimaryKey)) {
 					_clientExtensionEntryRelLocalService.
 						addClientExtensionEntryRel(
 							themeDisplay.getUserId(),
 							_portal.getClassNameId(Layout.class),
-							layout.getPlid(), themeCSSExtensionEntryId,
+							layout.getPlid(), themeCSSCETPrimaryKey,
 							ClientExtensionEntryConstants.TYPE_THEME_CSS);
 				}
 			}

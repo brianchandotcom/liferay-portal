@@ -1,0 +1,102 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-134599. The fragmentElementId variable will have the same value with the id of wrapping div in a fragment on page."
+	@priority = "5"
+	test AddFragmentWithFragmentElementIdToContentPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Content Pages,Fragments";
+
+		task ("Add a fragment with fragmentElementId and fragmentEntryLinkNamespace freemarker variables") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="gf-1">
+	<h1>${fragmentElementId}</h1>
+	<h1>${fragmentEntryLinkNamespace}</h1>
+</div>
+			''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			var fragmentEntryId = JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("Add a new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Get the fragmentEntryLinkNamespace") {
+			var fragmentEntryLinkNamespace = selenium.getText("xpath=(//div[@class='gf-1']/h1)[2]");
+
+			TestUtils.assertNotEquals(
+				actual = "${fragmentEntryLinkNamespace}",
+				expected = "");
+		}
+
+		task ("View the id of wrapping div equals fragment-fragmentEntryId-fragmentEntryLinkNamespace equals the fragmentElementId") {
+			AssertAttributeValue(
+				attribute1 = "id",
+				locator1 = "//div[@class='gf-1']/parent::div",
+				value1 = "fragment-${fragmentEntryId}-${fragmentEntryLinkNamespace}");
+
+			var fragmentElementId = selenium.getText("xpath=(//div[@class='gf-1']/h1)[1]");
+
+			TestUtils.assertEquals(
+				actual = "${fragmentElementId}",
+				expected = "fragment-${fragmentEntryId}-${fragmentEntryLinkNamespace}");
+		}
+	}
+
+}

@@ -153,6 +153,8 @@ definition {
 		}
 
 		task ("Asset views for 24 hours") {
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "");
+
 			ACNavigation.goToSites();
 
 			ACNavigation.switchTab(tabName = "Pages");

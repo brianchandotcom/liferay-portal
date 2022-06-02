@@ -1,0 +1,130 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-5898=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "Verify users can mark and unmark a commerce product display page template as the Default page so that the template can become the default page for the Product Details page."
+	@priority = "4"
+	test CanMarkAndUnmarkCommerceProductDPTAsDefault {
+		task ("Given a new Commerce Product type display page template is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And given a heading fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Basic Components",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Heading",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And given the Heading text is set as Commerce Product Display Page Template") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Commerce Product Display Page Template");
+		}
+
+		task ("And given the page is published") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the page is marked as Default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Commerce Product Display Page Template set is shown with the heading fragment") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Commerce Product Display Page Template");
+		}
+
+		task ("Given the template page is unmarked as Default") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "Minium");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Unmark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			AssertConfirm(value1 = "Some assets might be set to use the default display page. Are you sure you want to unmark this?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Minium product detail page is shown") {
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
+		}
+	}
+
+}

@@ -372,6 +372,12 @@ public class ObjectActionLocalServiceUtil {
 		return getService().updateObjectAction(objectAction);
 	}
 
+	public static ObjectAction updateStatus(long objectActionId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(objectActionId, status);
+	}
+
 	public static ObjectActionLocalService getService() {
 		return _service;
 	}

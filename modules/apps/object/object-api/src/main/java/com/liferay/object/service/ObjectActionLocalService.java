@@ -326,4 +326,8 @@ public interface ObjectActionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectAction updateObjectAction(ObjectAction objectAction);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectAction updateStatus(long objectActionId, int status)
+		throws PortalException;
+
 }

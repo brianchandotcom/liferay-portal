@@ -425,6 +425,14 @@ public class ObjectActionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectAction updateStatus(
+			long objectActionId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionLocalService.updateStatus(objectActionId, status);
+	}
+
+	@Override
 	public ObjectActionLocalService getWrappedService() {
 		return _objectActionLocalService;
 	}

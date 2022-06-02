@@ -190,7 +190,7 @@ public class PoshiRunner {
 				PoshiContext.getNamespacedClassCommandNameProperties(
 					namespace + "." + _testNamespacedClassCommandName);
 
-			if (GetterUtil.getBoolean(
+			if (!GetterUtil.getBoolean(
 					properties.getProperty("disable-webdriver"))) {
 
 				SeleniumUtil.startSelenium();

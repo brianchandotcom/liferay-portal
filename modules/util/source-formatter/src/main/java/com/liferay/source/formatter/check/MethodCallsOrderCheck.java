@@ -39,6 +39,24 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return _sortMethodCalls(content);
 	}
 
+	private String _getMethodCall(String content, int start) {
+		int end = start;
+
+		while (true) {
+			end = content.indexOf(");\n", end + 1);
+
+			if (end == -1) {
+				return null;
+			}
+
+			String methodCall = content.substring(start, end + 3);
+
+			if (getLevel(methodCall) == 0) {
+				return methodCall;
+			}
+		}
+	}
+
 	private String _getSortedCodeBlock(String codeBlock, String methodCall) {
 		String previousParameterName = null;
 		String previousParameters = null;
@@ -374,8 +392,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			Matcher matcher = pattern.matcher(content);
 
 			while (matcher.find()) {
-				String methodCall1 = JavaSourceUtil.getMethodCall(
-					content, matcher.start(1));
+				String methodCall1 = _getMethodCall(content, matcher.start(1));
 
 				if (methodCall1 == null) {
 					continue;
@@ -389,7 +406,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String methodCall2 = JavaSourceUtil.getMethodCall(content, x);
+				String methodCall2 = _getMethodCall(content, x);
 
 				if ((methodCall2 != null) &&
 					(methodCallComparator.compare(methodCall1, methodCall2) >

@@ -181,22 +181,6 @@ public class PortalRelease {
 		return _getRemoteURL(_bundlesBaseURL.toString());
 	}
 
-	public URL getPortalDependenciesZipLocalURL() {
-		return _getLocalURL(_portalDependenciesZipURLString);
-	}
-
-	public URL getPortalDependenciesZipURL() {
-		return _getRemoteURL(_portalDependenciesZipURLString);
-	}
-
-	public URL getPortalBundleGlassFishLocalURL() {
-		return _getLocalURL(_portalBundleGlassFishURLString);
-	}
-
-	public URL getPortalBundleGlassFishURL() {
-		return _getRemoteURL(_portalBundleGlassFishURLString);
-	}
-
 	public String getHTMLReport() {
 		StringBuilder sb = new StringBuilder();
 
@@ -229,12 +213,52 @@ public class PortalRelease {
 		return sb.toString();
 	}
 
+	public URL getPluginsWarZipLocalURL() {
+		return _getLocalURL(_pluginsWarZipURLString);
+	}
+
+	public URL getPluginsWarZipURL() {
+		return _getRemoteURL(_pluginsWarZipURLString);
+	}
+
+	public URL getPortalBundleGlassFishLocalURL() {
+		return _getLocalURL(_portalBundleGlassFishURLString);
+	}
+
+	public URL getPortalBundleGlassFishURL() {
+		return _getRemoteURL(_portalBundleGlassFishURLString);
+	}
+
 	public URL getPortalBundleJBossLocalURL() {
 		return _getLocalURL(_portalBundleJBossURLString);
 	}
 
 	public URL getPortalBundleJBossURL() {
 		return _getRemoteURL(_portalBundleJBossURLString);
+	}
+
+	public URL getPortalBundleTomcatLocalURL() {
+		return _getLocalURL(_portalBundleTomcatURLString);
+	}
+
+	public URL getPortalBundleTomcatURL() {
+		return _getRemoteURL(_portalBundleTomcatURLString);
+	}
+
+	public URL getPortalBundleWildFlyLocalURL() {
+		return _getLocalURL(_portalBundleWildFlyURLString);
+	}
+
+	public URL getPortalBundleWildFlyURL() {
+		return _getRemoteURL(_portalBundleWildFlyURLString);
+	}
+
+	public URL getPortalDependenciesZipLocalURL() {
+		return _getLocalURL(_portalDependenciesZipURLString);
+	}
+
+	public URL getPortalDependenciesZipURL() {
+		return _getRemoteURL(_portalDependenciesZipURLString);
 	}
 
 	public URL getPortalOSGiZipLocalURL() {
@@ -245,12 +269,20 @@ public class PortalRelease {
 		return _getRemoteURL(_portalOSGiZipURLString);
 	}
 
-	public URL getPluginsWarZipLocalURL() {
-		return _getLocalURL(_pluginsWarZipURLString);
+	public URL getPortalSQLZipLocalURL() {
+		return _getLocalURL(_portalSQLZipURLString);
 	}
 
-	public URL getPluginsWarZipURL() {
-		return _getRemoteURL(_pluginsWarZipURLString);
+	public URL getPortalSQLZipURL() {
+		return _getRemoteURL(_portalSQLZipURLString);
+	}
+
+	public URL getPortalToolsZipLocalURL() {
+		return _getLocalURL(_portalToolsZipURLString);
+	}
+
+	public URL getPortalToolsZipURL() {
+		return _getRemoteURL(_portalToolsZipURLString);
 	}
 
 	public String getPortalUpstreamBranchName() {
@@ -335,47 +367,15 @@ public class PortalRelease {
 		return _getRemoteURL(_portalWarURLString);
 	}
 
-	public URL getPortalSQLZipLocalURL() {
-		return _getLocalURL(_portalSQLZipURLString);
-	}
-
-	public URL getPortalSQLZipURL() {
-		return _getRemoteURL(_portalSQLZipURLString);
-	}
-
-	public URL getPortalBundleTomcatLocalURL() {
-		return _getLocalURL(_portalBundleTomcatURLString);
-	}
-
-	public URL getPortalBundleTomcatURL() {
-		return _getRemoteURL(_portalBundleTomcatURLString);
-	}
-
-	public URL getPortalToolsZipLocalURL() {
-		return _getLocalURL(_portalToolsZipURLString);
-	}
-
-	public URL getPortalToolsZipURL() {
-		return _getRemoteURL(_portalToolsZipURLString);
-	}
-
-	public URL getPortalBundleWildFlyLocalURL() {
-		return _getLocalURL(_portalBundleWildFlyURLString);
-	}
-
-	public URL getPortalBundleWildFlyURL() {
-		return _getRemoteURL(_portalBundleWildFlyURLString);
-	}
-
-	public void setPortalDependenciesZipURL(URL portalDependenciesZipURL) {
-		if (portalDependenciesZipURL == null) {
-			_portalDependenciesZipURLString = null;
+	public void setPluginsWarZipURL(URL pluginsWarZipURL) {
+		if (pluginsWarZipURL == null) {
+			_pluginsWarZipURLString = null;
 
 			return;
 		}
 
-		_portalDependenciesZipURLString = JenkinsResultsParserUtil.getLocalURL(
-			portalDependenciesZipURL.toString());
+		_pluginsWarZipURLString = JenkinsResultsParserUtil.getLocalURL(
+			pluginsWarZipURL.toString());
 	}
 
 	public void setPortalBundleGlassFishURL(URL portalBundleGlassFishURL) {
@@ -400,6 +400,39 @@ public class PortalRelease {
 			portalBundleJBossURL.toString());
 	}
 
+	public void setPortalBundleTomcatURL(URL portalBundleTomcatURL) {
+		if (portalBundleTomcatURL == null) {
+			_portalBundleTomcatURLString = null;
+
+			return;
+		}
+
+		_portalBundleTomcatURLString = JenkinsResultsParserUtil.getLocalURL(
+			portalBundleTomcatURL.toString());
+	}
+
+	public void setPortalBundleWildFlyURL(URL portalBundleWildFlyURL) {
+		if (portalBundleWildFlyURL == null) {
+			_portalBundleWildFlyURLString = null;
+
+			return;
+		}
+
+		_portalBundleWildFlyURLString = JenkinsResultsParserUtil.getLocalURL(
+			portalBundleWildFlyURL.toString());
+	}
+
+	public void setPortalDependenciesZipURL(URL portalDependenciesZipURL) {
+		if (portalDependenciesZipURL == null) {
+			_portalDependenciesZipURLString = null;
+
+			return;
+		}
+
+		_portalDependenciesZipURLString = JenkinsResultsParserUtil.getLocalURL(
+			portalDependenciesZipURL.toString());
+	}
+
 	public void setPortalOSGiZipURL(URL portalOSGiZipURL) {
 		if (portalOSGiZipURL == null) {
 			_portalOSGiZipURLString = null;
@@ -409,17 +442,6 @@ public class PortalRelease {
 
 		_portalOSGiZipURLString = JenkinsResultsParserUtil.getLocalURL(
 			portalOSGiZipURL.toString());
-	}
-
-	public void setPortalWarURL(URL portalWarURL) {
-		if (portalWarURL == null) {
-			_portalWarURLString = null;
-
-			return;
-		}
-
-		_portalWarURLString = JenkinsResultsParserUtil.getLocalURL(
-			portalWarURL.toString());
 	}
 
 	public void setPortalSQLZipURL(URL portalSQLZipURL) {
@@ -433,17 +455,6 @@ public class PortalRelease {
 			portalSQLZipURL.toString());
 	}
 
-	public void setPortalBundleTomcatURL(URL portalBundleTomcatURL) {
-		if (portalBundleTomcatURL == null) {
-			_portalBundleTomcatURLString = null;
-
-			return;
-		}
-
-		_portalBundleTomcatURLString = JenkinsResultsParserUtil.getLocalURL(
-			portalBundleTomcatURL.toString());
-	}
-
 	public void setPortalToolsZipURL(URL portalToolsZipURL) {
 		if (portalToolsZipURL == null) {
 			_portalToolsZipURLString = null;
@@ -455,15 +466,15 @@ public class PortalRelease {
 			portalToolsZipURL.toString());
 	}
 
-	public void setPortalBundleWildFlyURL(URL portalBundleWildFlyURL) {
-		if (portalBundleWildFlyURL == null) {
-			_portalBundleWildFlyURLString = null;
+	public void setPortalWarURL(URL portalWarURL) {
+		if (portalWarURL == null) {
+			_portalWarURLString = null;
 
 			return;
 		}
 
-		_portalBundleWildFlyURLString = JenkinsResultsParserUtil.getLocalURL(
-			portalBundleWildFlyURL.toString());
+		_portalWarURLString = JenkinsResultsParserUtil.getLocalURL(
+			portalWarURL.toString());
 	}
 
 	private URL _getLocalURL(String urlString) {
@@ -545,13 +556,11 @@ public class PortalRelease {
 	}
 
 	private void _initializeURLs() {
-		String portalDependenciesZipURLString =
-			_getURLStringFromBuildProperties("portal.dependencies.zip.url");
+		String pluginsWarZipURLString = _getURLStringFromBuildProperties(
+			"plugins.war.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalDependenciesZipURLString)) {
-
-			_portalDependenciesZipURLString = portalDependenciesZipURLString;
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginsWarZipURLString)) {
+			_pluginsWarZipURLString = pluginsWarZipURLString;
 		}
 
 		String portalBundleGlassFishURLString =
@@ -572,34 +581,6 @@ public class PortalRelease {
 			_portalBundleJBossURLString = portalBundleJBossURLString;
 		}
 
-		String portalOSGiZipURLString = _getURLStringFromBuildProperties(
-			"portal.osgi.zip.url");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalOSGiZipURLString)) {
-			_portalOSGiZipURLString = portalOSGiZipURLString;
-		}
-
-		String pluginsWarZipURLString = _getURLStringFromBuildProperties(
-			"plugins.war.zip.url");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginsWarZipURLString)) {
-			_pluginsWarZipURLString = pluginsWarZipURLString;
-		}
-
-		String portalWarURLString = _getURLStringFromBuildProperties(
-			"portal.war.url");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalWarURLString)) {
-			_portalWarURLString = portalWarURLString;
-		}
-
-		String portalSQLZipURLString = _getURLStringFromBuildProperties(
-			"portal.sql.zip.url");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalSQLZipURLString)) {
-			_portalSQLZipURLString = portalSQLZipURLString;
-		}
-
 		String portalBundleTomcatURLString = _getURLStringFromBuildProperties(
 			"portal.bundle.tomcat");
 
@@ -609,13 +590,6 @@ public class PortalRelease {
 			_portalBundleTomcatURLString = portalBundleTomcatURLString;
 		}
 
-		String portalToolsZipURLString = _getURLStringFromBuildProperties(
-			"portal.tools.zip.url");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalToolsZipURLString)) {
-			_portalToolsZipURLString = portalToolsZipURLString;
-		}
-
 		String portalBundleWildFlyURLString = _getURLStringFromBuildProperties(
 			"portal.bundle.wildfly");
 
@@ -623,6 +597,43 @@ public class PortalRelease {
 				portalBundleWildFlyURLString)) {
 
 			_portalBundleWildFlyURLString = portalBundleWildFlyURLString;
+		}
+
+		String portalDependenciesZipURLString =
+			_getURLStringFromBuildProperties("portal.dependencies.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				portalDependenciesZipURLString)) {
+
+			_portalDependenciesZipURLString = portalDependenciesZipURLString;
+		}
+
+		String portalOSGiZipURLString = _getURLStringFromBuildProperties(
+			"portal.osgi.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalOSGiZipURLString)) {
+			_portalOSGiZipURLString = portalOSGiZipURLString;
+		}
+
+		String portalSQLZipURLString = _getURLStringFromBuildProperties(
+			"portal.sql.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalSQLZipURLString)) {
+			_portalSQLZipURLString = portalSQLZipURLString;
+		}
+
+		String portalToolsZipURLString = _getURLStringFromBuildProperties(
+			"portal.tools.zip.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalToolsZipURLString)) {
+			_portalToolsZipURLString = portalToolsZipURLString;
+		}
+
+		String portalWarURLString = _getURLStringFromBuildProperties(
+			"portal.war.url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalWarURLString)) {
+			_portalWarURLString = portalWarURLString;
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(
@@ -645,24 +656,24 @@ public class PortalRelease {
 			return;
 		}
 
-		_portalDependenciesZipURLString = _getURLString(
-			bundlesBaseURLContent, _portalDependenciesZipFileNamePattern);
 		_portalBundleGlassFishURLString = _getURLString(
 			bundlesBaseURLContent, _portalBundleGlassFishFileNamePattern);
 		_portalBundleJBossURLString = _getURLString(
 			bundlesBaseURLContent, _portalBundleJBossFileNamePattern);
-		_portalOSGiZipURLString = _getURLString(
-			bundlesBaseURLContent, _portalOSGiZipFileNamePattern);
-		_portalWarURLString = _getURLString(
-			bundlesBaseURLContent, _portalWarFileNamePattern);
-		_portalSQLZipURLString = _getURLString(
-			bundlesBaseURLContent, _portalSQLZipFileNamePattern);
 		_portalBundleTomcatURLString = _getURLString(
 			bundlesBaseURLContent, _portalBundleTomcatFileNamePattern);
-		_portalToolsZipURLString = _getURLString(
-			bundlesBaseURLContent, _portalToolsZipFileNamePattern);
 		_portalBundleWildFlyURLString = _getURLString(
 			bundlesBaseURLContent, _portalBundleWildFlyFileNamePattern);
+		_portalDependenciesZipURLString = _getURLString(
+			bundlesBaseURLContent, _portalDependenciesZipFileNamePattern);
+		_portalOSGiZipURLString = _getURLString(
+			bundlesBaseURLContent, _portalOSGiZipFileNamePattern);
+		_portalSQLZipURLString = _getURLString(
+			bundlesBaseURLContent, _portalSQLZipFileNamePattern);
+		_portalToolsZipURLString = _getURLString(
+			bundlesBaseURLContent, _portalToolsZipFileNamePattern);
+		_portalWarURLString = _getURLString(
+			bundlesBaseURLContent, _portalWarFileNamePattern);
 	}
 
 	private static final String[] _BASE_URL_STRINGS = {
@@ -682,10 +693,6 @@ public class PortalRelease {
 	private static final Pattern _bundleURLPattern = Pattern.compile(
 		"(?<bundlesBaseURL>https?://.+)/(?<bundleFileName>[^\\/]+" +
 			"\\.(7z|tar.gz|zip))");
-	private static final Pattern _portalDependenciesZipFileNamePattern =
-		Pattern.compile(
-			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-dependencies-" +
-				"[^\\\"]+\\.zip)\\\"");
 	private static final Pattern _portalBundleGlassFishFileNamePattern =
 		Pattern.compile(
 			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-glassfish-[^\\\"]+" +
@@ -694,42 +701,46 @@ public class PortalRelease {
 		Pattern.compile(
 			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-jboss-[^\\\"]+" +
 				"\\.(7z|tar.gz|zip))\\\"");
+	private static final Pattern _portalBundleTomcatFileNamePattern =
+		Pattern.compile(
+			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tomcat-[^\\\"]+" +
+				"\\.(7z|tar.gz|zip))\\\"");
+	private static final Pattern _portalBundleWildFlyFileNamePattern =
+		Pattern.compile(
+			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
+				"\\.(7z|tar.gz|zip))\\\"");
+	private static final Pattern _portalDependenciesZipFileNamePattern =
+		Pattern.compile(
+			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-dependencies-" +
+				"[^\\\"]+\\.zip)\\\"");
 	private static final Pattern _portalOSGiZipFileNamePattern =
 		Pattern.compile(
 			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-osgi-[^\\\"]+" +
+				"\\.zip)\\\"");
+	private static final Pattern _portalSQLZipFileNamePattern = Pattern.compile(
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-sql-[^\\\"]+" +
+			"\\.zip)\\\"");
+	private static final Pattern _portalToolsZipFileNamePattern =
+		Pattern.compile(
+			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tools-[^\\\"]+" +
 				"\\.zip)\\\"");
 	private static final Pattern _portalVersionPattern = Pattern.compile(
 		"(?<majorVersion>\\d)\\.(?<minorVersion>\\d)\\.(?<fixVersion>\\d+)" +
 			"([-\\.](?<updatePrefix>u)?(?<updateVersion>\\d+))?.*");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
 		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
-	private static final Pattern _portalSQLZipFileNamePattern = Pattern.compile(
-		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-sql-[^\\\"]+" +
-			"\\.zip)\\\"");
-	private static final Pattern _portalBundleTomcatFileNamePattern =
-		Pattern.compile(
-			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tomcat-[^\\\"]+" +
-				"\\.(7z|tar.gz|zip))\\\"");
-	private static final Pattern _portalToolsZipFileNamePattern =
-		Pattern.compile(
-			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tools-[^\\\"]+" +
-				"\\.zip)\\\"");
-	private static final Pattern _portalBundleWildFlyFileNamePattern =
-		Pattern.compile(
-			"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
-				"\\.(7z|tar.gz|zip))\\\"");
 
 	private final URL _bundlesBaseURL;
-	private String _portalDependenciesZipURLString;
+	private String _pluginsWarZipURLString;
 	private String _portalBundleGlassFishURLString;
 	private String _portalBundleJBossURLString;
+	private String _portalBundleTomcatURLString;
+	private String _portalBundleWildFlyURLString;
+	private String _portalDependenciesZipURLString;
 	private String _portalOSGiZipURLString;
-	private String _pluginsWarZipURLString;
+	private String _portalSQLZipURLString;
+	private String _portalToolsZipURLString;
 	private final String _portalVersion;
 	private String _portalWarURLString;
-	private String _portalSQLZipURLString;
-	private String _portalBundleTomcatURLString;
-	private String _portalToolsZipURLString;
-	private String _portalBundleWildFlyURLString;
 
 }

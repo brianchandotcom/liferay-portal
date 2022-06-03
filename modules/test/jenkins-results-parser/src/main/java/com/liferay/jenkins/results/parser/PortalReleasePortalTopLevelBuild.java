@@ -113,13 +113,6 @@ public class PortalReleasePortalTopLevelBuild
 					new URL(portalOSGiZipURLString));
 			}
 
-			String portalWarURLString = getParameterValue(
-				"TEST_PORTAL_RELEASE_WAR_URL");
-
-			if (_isURL(portalWarURLString)) {
-				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
-			}
-
 			String portalSQLZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_SQL_URL");
 
@@ -134,6 +127,13 @@ public class PortalReleasePortalTopLevelBuild
 			if (_isURL(portalToolsZipURLString)) {
 				_portalRelease.setPortalToolsZipURL(
 					new URL(portalToolsZipURLString));
+			}
+
+			String portalWarURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_WAR_URL");
+
+			if (_isURL(portalWarURLString)) {
+				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
 			}
 		}
 		catch (MalformedURLException malformedURLException) {

@@ -22,6 +22,7 @@ import CompareRunsComponents from './pages/CompareRuns/Components';
 import CompareRunsDetails from './pages/CompareRuns/Details';
 import CompareRunsTeams from './pages/CompareRuns/Teams';
 import Users from './pages/Manage/User';
+import ChangeUserPassword from './pages/Manage/User/ChangeUserPassword';
 import UserManagement from './pages/Manage/User/User';
 import UserForm from './pages/Manage/User/UserForm';
 import UserOutlet from './pages/Manage/User/UserOutlet';
@@ -204,11 +205,20 @@ const TestrayRoute = () => (
 							<Route element={<UserForm />} path="update" />
 						</Route>
 
-						<Route element={<UserManagement />} path="user/me" />
+						<Route element={<OutletBridge />} path="user/me">
+							<Route element={<UserManagement />} index />
+
+							<Route
+								element={<ChangeUserPassword />}
+								path="password"
+							/>
+						</Route>
 					</Route>
 
 					<Route element={<TestflowOutlet />} path="testflow">
 						<Route element={<Testflow />} index />
+
+						<Route element={<TestflowForm />} path="newtask" />
 
 						<Route element={<TestflowArchived />} path="archived" />
 

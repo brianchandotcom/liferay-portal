@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useContext, useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {Avatar} from '../../../components/Avatar';
 import Form from '../../../components/Form';
@@ -59,6 +60,7 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 			[name]: value,
 		});
 	};
+	const navigate = useNavigate();
 
 	return (
 		<ClayLayout.Container>
@@ -147,7 +149,10 @@ const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 
 						<ClayLayout.Col size={3} sm={12} xl={3}>
 							<ClayForm.Group className="form-group-sm">
-								<ClayButton className="bg-neutral-2 borderless neutral text-neutral-7">
+								<ClayButton
+									className="bg-neutral-2 borderless neutral text-neutral-7"
+									onClick={() => navigate('password')}
+								>
 									{i18n.translate('change-password')}
 								</ClayButton>
 							</ClayForm.Group>

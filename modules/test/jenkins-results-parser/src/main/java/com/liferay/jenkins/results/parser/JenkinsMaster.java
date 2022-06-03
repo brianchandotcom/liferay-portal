@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Random;
 import java.util.TreeMap;
@@ -297,6 +298,196 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		return _blacklisted;
+	}
+
+	public boolean isBuildInProgress(
+		String jobName, Map<String, String> buildParameters) {
+
+		try {
+			JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					getURL(), "/job/", jobName, "/api/json?",
+					"tree=builds[actions[parameters[name,value]],result,url]"));
+
+			JSONArray buildsJSONArray = jobJSONObject.optJSONArray("builds");
+
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				JSONObject buildJSONObject = buildsJSONArray.optJSONObject(i);
+
+				if ((buildJSONObject == JSONObject.NULL) ||
+					!JenkinsResultsParserUtil.isNullOrEmpty(
+						buildJSONObject.optString("result"))) {
+
+					continue;
+				}
+
+				JSONArray actionsJSONArray = buildJSONObject.optJSONArray(
+					"actions");
+
+				if (actionsJSONArray == JSONObject.NULL) {
+					continue;
+				}
+
+				for (int j = 0; j < actionsJSONArray.length(); j++) {
+					JSONObject actionJSONObject =
+						actionsJSONArray.optJSONObject(j);
+
+					if ((actionJSONObject == JSONObject.NULL) ||
+						!Objects.equals(
+							actionJSONObject.optString("_class"),
+							"hudson.model.ParametersAction")) {
+
+						continue;
+					}
+
+					JSONArray parametersJSONArray =
+						actionJSONObject.optJSONArray("parameters");
+
+					if (parametersJSONArray == JSONObject.NULL) {
+						continue;
+					}
+
+					Map<String, String> parameters = new HashMap<>();
+
+					for (int k = 0; k < parametersJSONArray.length(); k++) {
+						JSONObject parameterJSONObject =
+							parametersJSONArray.optJSONObject(k);
+
+						if (parameterJSONObject == JSONObject.NULL) {
+							continue;
+						}
+
+						parameters.put(
+							parameterJSONObject.getString("name"),
+							parameterJSONObject.getString("value"));
+					}
+
+					boolean matchingBuildParameters = true;
+
+					for (Map.Entry<String, String> buildParameter :
+							buildParameters.entrySet()) {
+
+						String parameterValue = parameters.get(
+							buildParameter.getKey());
+
+						if (!Objects.equals(
+								buildParameter.getValue(), parameterValue)) {
+
+							matchingBuildParameters = false;
+
+							break;
+						}
+					}
+
+					if (matchingBuildParameters) {
+						return true;
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return false;
+	}
+
+	public boolean isBuildQueued(
+		String jobName, Map<String, String> buildParameters) {
+
+		try {
+			JSONObject queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					getURL(), "/queue/api/json?",
+					"tree=items[actions[parameters[name,value]],task[url]]"));
+
+			JSONArray itemsJSONArray = queueJSONObject.optJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				JSONObject itemJSONObject = itemsJSONArray.optJSONObject(i);
+
+				if (itemJSONObject == JSONObject.NULL) {
+					continue;
+				}
+
+				JSONObject taskJSONObject = itemJSONObject.optJSONObject(
+					"task");
+
+				String taskURL = taskJSONObject.optString("url", "");
+
+				if (!taskURL.contains("/" + jobName + "/")) {
+					continue;
+				}
+
+				JSONArray actionsJSONArray = itemJSONObject.optJSONArray(
+					"actions");
+
+				if (actionsJSONArray == JSONObject.NULL) {
+					continue;
+				}
+
+				for (int j = 0; j < actionsJSONArray.length(); j++) {
+					JSONObject actionJSONObject =
+						actionsJSONArray.optJSONObject(j);
+
+					if ((actionJSONObject == JSONObject.NULL) ||
+						!Objects.equals(
+							actionJSONObject.optString("_class"),
+							"hudson.model.ParametersAction")) {
+
+						continue;
+					}
+
+					JSONArray parametersJSONArray =
+						actionJSONObject.optJSONArray("parameters");
+
+					if (parametersJSONArray == JSONObject.NULL) {
+						continue;
+					}
+
+					Map<String, String> parameters = new HashMap<>();
+
+					for (int k = 0; k < parametersJSONArray.length(); k++) {
+						JSONObject parameterJSONObject =
+							parametersJSONArray.optJSONObject(k);
+
+						if (parameterJSONObject == JSONObject.NULL) {
+							continue;
+						}
+
+						parameters.put(
+							parameterJSONObject.getString("name"),
+							parameterJSONObject.getString("value"));
+					}
+
+					boolean matchingBuildParameters = true;
+
+					for (Map.Entry<String, String> buildParameter :
+							buildParameters.entrySet()) {
+
+						String parameterValue = parameters.get(
+							buildParameter.getKey());
+
+						if (!Objects.equals(
+								buildParameter.getValue(), parameterValue)) {
+
+							matchingBuildParameters = false;
+
+							break;
+						}
+					}
+
+					if (matchingBuildParameters) {
+						return true;
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return false;
 	}
 
 	@Override

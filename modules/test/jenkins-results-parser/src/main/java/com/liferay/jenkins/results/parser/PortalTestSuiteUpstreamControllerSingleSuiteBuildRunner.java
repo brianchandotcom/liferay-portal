@@ -239,31 +239,54 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 				continue;
 			}
 
-			long timestamp = previousBuildJSONObject.optLong("timestamp", 0);
+			String controllerBuildURL = previousBuildJSONObject.getString(
+				"url");
 
-			if (timestamp == 0) {
+			Matcher buildURLMatcher = _buildURLPattern.matcher(
+				controllerBuildURL);
+
+			if (!buildURLMatcher.find()) {
 				continue;
 			}
 
-			long inProgressBuildDuration =
-				JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
+			Matcher jobURLMatcher = _jobURLPattern.matcher(description);
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"In progress build started ",
-					JenkinsResultsParserUtil.toDurationString(
-						inProgressBuildDuration),
-					" ago"));
-
-			if (inProgressBuildDuration < _getControllerBuildTimeout()) {
-				return false;
+			if (!jobURLMatcher.find()) {
+				continue;
 			}
 
-			Matcher matcher = _buildURLPattern.matcher(
-				previousBuildJSONObject.getString("url"));
+			Map<String, String> parameters = new HashMap<>();
 
-			if (!matcher.find()) {
-				return false;
+			parameters.put("CONTROLLER_BUILD_URL", controllerBuildURL);
+
+			JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+				jobURLMatcher.group("masterHostname"));
+
+			String jobName = jobURLMatcher.group("jobName");
+
+			if (jenkinsMaster.isBuildQueued(jobName, parameters) ||
+				jenkinsMaster.isBuildInProgress(jobName, parameters)) {
+
+				long timestamp = previousBuildJSONObject.optLong(
+					"timestamp", 0);
+
+				if (timestamp == 0) {
+					continue;
+				}
+
+				long inProgressBuildDuration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - timestamp;
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"In progress build started ",
+						JenkinsResultsParserUtil.toDurationString(
+							inProgressBuildDuration),
+						" ago"));
+
+				if (inProgressBuildDuration < _getControllerBuildTimeout()) {
+					return false;
+				}
 			}
 
 			description = description.replace("IN PROGRESS", "EXPIRE");
@@ -271,7 +294,8 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 			JenkinsResultsParserUtil.updateBuildDescription(
 				description, previousBuildJSONObject.getInt("number"),
-				matcher.group("jobName"), matcher.group("masterHostname"));
+				buildURLMatcher.group("jobName"),
+				buildURLMatcher.group("masterHostname"));
 
 			return true;
 		}
@@ -354,6 +378,12 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 			String description = previousBuildJSONObject.optString(
 				"description", "");
 
+			if (description.contains("EXPIRE") ||
+				description.contains("SKIPPED")) {
+
+				continue;
+			}
+
 			if (description.contains(portalBranchSHA)) {
 				return true;
 			}
@@ -388,14 +418,13 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 				continue;
 			}
 
-			Matcher buildURLMatcher = _buildDescriptionPattern.matcher(
-				description);
+			Matcher buildURLMatcher = _buildURLPattern.matcher(description);
 
 			if (!buildURLMatcher.find()) {
 				continue;
 			}
 
-			String buildURL = buildURLMatcher.group("buildURL");
+			String buildURL = buildURLMatcher.group();
 
 			try {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -464,11 +493,12 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	private static final Integer _CONTROLLER_BUILD_TIMEOUT_DEFAULT =
 		1000 * 60 * 60 * 24;
 
-	private static final Pattern _buildDescriptionPattern = Pattern.compile(
-		"<a href=\"(?<buildURL>[^\"]+)\">Build URL</a>");
 	private static final Pattern _buildURLPattern = Pattern.compile(
-		"https://(?<masterHostname>test-\\d+-\\d+)\\.?.*/job/" +
+		"https://(?<masterHostname>test-\\d+-\\d+)\\.liferay\\.com/job/" +
 			"(?<jobName>[^/]+)/(?<buildNumber>\\d+)/?");
+	private static final Pattern _jobURLPattern = Pattern.compile(
+		"https://(?<masterHostname>test-\\d+-\\d+)\\.liferay\\.com/job/" +
+			"(?<jobName>[^/\"]+)/?");
 	private static final Pattern _portalBranchSHAPattern = Pattern.compile(
 		"<strong>Git ID:</strong> <a href=\"https://github.com/[^/]+/[^/]+/" +
 			"commit/(?<branchSHA>[0-9a-f]{40})\">[0-9a-f]{7}</a>");

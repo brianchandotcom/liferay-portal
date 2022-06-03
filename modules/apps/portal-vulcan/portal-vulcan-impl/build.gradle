@@ -18,7 +18,7 @@ dependencies {
 	compileInclude group: "com.graphql-java", name: "graphql-java", version: "12.0"
 	compileInclude group: "com.graphql-java", name: "java-dataloader", version: "2.1.1"
 	compileInclude group: "com.graphql-java-kickstart", name: "graphql-java-servlet", version: "7.5.0"
-	compileInclude group: "commons-codec", name: "commons-codec", version: "1.10"
+	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "io.github.graphql-java", name: "graphql-java-annotations", version: "7.0.1"
 	compileInclude group: "io.swagger.core.v3", name: "swagger-core", version: "2.0.6"
 	compileInclude group: "io.swagger.core.v3", name: "swagger-integration", version: "2.0.6"

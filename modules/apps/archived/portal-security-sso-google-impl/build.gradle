@@ -10,7 +10,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	compileOnly group: "commons-codec", name: "commons-codec", version: "1.13"
+	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileOnly group: "commons-logging", name: "commons-logging", version: "1.2"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"

@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "commons-codec", name: "commons-codec", version: "1.7"
+	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "oauth.signpost", name: "signpost-commonshttp4", version: "1.2.1.2"
 	compileInclude group: "oauth.signpost", name: "signpost-core", version: "1.2.1.2"
 	compileInclude group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"

@@ -5508,7 +5508,7 @@ definition {
 			rowEntry = "${name}");
 
 		AssertTextEquals(
-			key_configurationValue = "filterMappingUrlPatterns",
+			key_configurationValue = "filterMappingUrlPattern",
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
 			value1 = "${urlPattern}");
 
@@ -6717,7 +6717,7 @@ definition {
 			rowEntry = "${filter}");
 
 		AssertTextEquals(
-			key_configurationValue = "filterMappingUrlPatterns",
+			key_configurationValue = "filterMappingUrlPattern",
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
 			value1 = "${urlPattern}");
 	}

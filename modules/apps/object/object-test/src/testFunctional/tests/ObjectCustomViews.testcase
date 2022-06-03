@@ -734,11 +734,11 @@ definition {
 				sortOption = "Ascending");
 		}
 
-		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Author",
 			position = "1");
 
-		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Creation Date",
 			position = "2");
 
@@ -749,11 +749,11 @@ definition {
 			locator2 = "ObjectCustomViews#CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT",
 			value1 = "");
 
-		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Creation Date",
 			position = "1");
 
-		ObjectCustomViews.viewOrdersOfTheColumnsOnDefaultSort(
+		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Author",
 			position = "2");
 	}

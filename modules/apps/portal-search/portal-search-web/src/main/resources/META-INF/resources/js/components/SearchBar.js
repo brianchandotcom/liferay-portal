@@ -61,10 +61,12 @@ export default function SearchBar({
 	const {resource} = useResource({
 		fetchOptions: {
 			body: suggestionsContributorConfiguration,
+			credentials: 'include',
 			headers: new Headers({
 				'Accept': 'application/json',
 				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 				'Content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
 			}),
 			method: 'POST',
 		},

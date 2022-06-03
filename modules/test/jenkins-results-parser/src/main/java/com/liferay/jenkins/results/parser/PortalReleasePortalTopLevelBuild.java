@@ -100,7 +100,9 @@ public class PortalReleasePortalTopLevelBuild
 			String portalDependenciesZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_DEPENDENCIES_URL");
 
-			if (_isURL(portalDependenciesZipURLString)) {
+			if (JenkinsResultsParserUtil.isURL(
+					portalDependenciesZipURLString)) {
+
 				_portalRelease.setPortalDependenciesZipURL(
 					new URL(portalDependenciesZipURLString));
 			}
@@ -108,7 +110,7 @@ public class PortalReleasePortalTopLevelBuild
 			String portalOSGiZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_OSGI_URL");
 
-			if (_isURL(portalOSGiZipURLString)) {
+			if (JenkinsResultsParserUtil.isURL(portalOSGiZipURLString)) {
 				_portalRelease.setPortalOSGiZipURL(
 					new URL(portalOSGiZipURLString));
 			}
@@ -116,7 +118,7 @@ public class PortalReleasePortalTopLevelBuild
 			String portalSQLZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_SQL_URL");
 
-			if (_isURL(portalSQLZipURLString)) {
+			if (JenkinsResultsParserUtil.isURL(portalSQLZipURLString)) {
 				_portalRelease.setPortalSQLZipURL(
 					new URL(portalSQLZipURLString));
 			}
@@ -124,7 +126,7 @@ public class PortalReleasePortalTopLevelBuild
 			String portalToolsZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_TOOLS_URL");
 
-			if (_isURL(portalToolsZipURLString)) {
+			if (JenkinsResultsParserUtil.isURL(portalToolsZipURLString)) {
 				_portalRelease.setPortalToolsZipURL(
 					new URL(portalToolsZipURLString));
 			}
@@ -132,7 +134,7 @@ public class PortalReleasePortalTopLevelBuild
 			String portalWarURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_WAR_URL");
 
-			if (_isURL(portalWarURLString)) {
+			if (JenkinsResultsParserUtil.isURL(portalWarURLString)) {
 				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
 			}
 		}
@@ -215,16 +217,6 @@ public class PortalReleasePortalTopLevelBuild
 		sb.append(portalBranchName);
 
 		return sb.toString();
-	}
-
-	private boolean _isURL(String urlString) {
-		if (JenkinsResultsParserUtil.isNullOrEmpty(urlString) ||
-			!urlString.matches("https?://.+")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

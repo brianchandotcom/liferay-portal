@@ -3425,6 +3425,14 @@ public class JenkinsResultsParserUtil {
 		return matcher.matches();
 	}
 
+	public static boolean isURL(String urlString) {
+		if (isNullOrEmpty(urlString) || !urlString.matches("https?://.+")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean isWindows() {
 		return SystemUtils.IS_OS_WINDOWS;
 	}

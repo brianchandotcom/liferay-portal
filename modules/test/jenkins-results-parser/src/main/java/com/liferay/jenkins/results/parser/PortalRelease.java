@@ -559,80 +559,70 @@ public class PortalRelease {
 		String pluginsWarZipURLString = _getURLStringFromBuildProperties(
 			"plugins.war.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginsWarZipURLString)) {
+		if (JenkinsResultsParserUtil.isURL(pluginsWarZipURLString)) {
 			_pluginsWarZipURLString = pluginsWarZipURLString;
 		}
 
 		String portalBundleGlassFishURLString =
 			_getURLStringFromBuildProperties("portal.bundle.glassfish");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalBundleGlassFishURLString)) {
-
+		if (JenkinsResultsParserUtil.isURL(portalBundleGlassFishURLString)) {
 			_portalBundleGlassFishURLString = portalBundleGlassFishURLString;
 		}
 
 		String portalBundleJBossURLString = _getURLStringFromBuildProperties(
 			"portal.bundle.jboss");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalBundleJBossURLString)) {
-
+		if (JenkinsResultsParserUtil.isURL(portalBundleJBossURLString)) {
 			_portalBundleJBossURLString = portalBundleJBossURLString;
 		}
 
 		String portalBundleTomcatURLString = _getURLStringFromBuildProperties(
 			"portal.bundle.tomcat");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalBundleTomcatURLString)) {
-
+		if (JenkinsResultsParserUtil.isURL(portalBundleTomcatURLString)) {
 			_portalBundleTomcatURLString = portalBundleTomcatURLString;
 		}
 
 		String portalBundleWildFlyURLString = _getURLStringFromBuildProperties(
 			"portal.bundle.wildfly");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalBundleWildFlyURLString)) {
-
+		if (JenkinsResultsParserUtil.isURL(portalBundleWildFlyURLString)) {
 			_portalBundleWildFlyURLString = portalBundleWildFlyURLString;
 		}
 
 		String portalDependenciesZipURLString =
 			_getURLStringFromBuildProperties("portal.dependencies.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				portalDependenciesZipURLString)) {
-
+		if (JenkinsResultsParserUtil.isURL(portalDependenciesZipURLString)) {
 			_portalDependenciesZipURLString = portalDependenciesZipURLString;
 		}
 
 		String portalOSGiZipURLString = _getURLStringFromBuildProperties(
 			"portal.osgi.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalOSGiZipURLString)) {
+		if (JenkinsResultsParserUtil.isURL(portalOSGiZipURLString)) {
 			_portalOSGiZipURLString = portalOSGiZipURLString;
 		}
 
 		String portalSQLZipURLString = _getURLStringFromBuildProperties(
 			"portal.sql.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalSQLZipURLString)) {
+		if (JenkinsResultsParserUtil.isURL(portalSQLZipURLString)) {
 			_portalSQLZipURLString = portalSQLZipURLString;
 		}
 
 		String portalToolsZipURLString = _getURLStringFromBuildProperties(
 			"portal.tools.zip.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalToolsZipURLString)) {
+		if (JenkinsResultsParserUtil.isURL(portalToolsZipURLString)) {
 			_portalToolsZipURLString = portalToolsZipURLString;
 		}
 
 		String portalWarURLString = _getURLStringFromBuildProperties(
 			"portal.war.url");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalWarURLString)) {
+		if (JenkinsResultsParserUtil.isURL(portalWarURLString)) {
 			_portalWarURLString = portalWarURLString;
 		}
 

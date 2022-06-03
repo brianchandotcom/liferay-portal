@@ -9,18 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 
 export default function useSearchTerm(onSearch) {
 	const [lastSearchTerm, setLastSearchTerm] = useState('');
 
-	return useCallback(
-		(searchTerm) => {
-			if (searchTerm !== lastSearchTerm) {
-				onSearch(searchTerm);
-				setLastSearchTerm(searchTerm);
-			}
-		},
-		[lastSearchTerm, onSearch]
-	);
+	return (searchTerm) => {
+		if (searchTerm !== lastSearchTerm) {
+			onSearch(searchTerm);
+			setLastSearchTerm(searchTerm);
+		}
+	};
 }

@@ -10,7 +10,7 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
-import {useCallback, useMemo} from 'react';
+import {useMemo} from 'react';
 import {Liferay} from '../../../common/services/liferay';
 import {useGetKoroneikiAccounts} from '../../../common/services/liferay/graphql/koroneiki-accounts';
 import {useGetUserAccount} from '../../../common/services/liferay/graphql/user-accounts';
@@ -45,20 +45,17 @@ export default function useKoroneikiAccounts() {
 		networkStatus === NetworkStatus.loading ||
 		networkStatus === NetworkStatus.setVariables;
 
-	const getFilterKoroneikiAccountsBySearch = useCallback(
-		(searchTerm) => {
-			if (searchTerm) {
-				const searchByName = `contains(name, '${searchTerm}')`;
+	const getFilterKoroneikiAccountsBySearch = (searchTerm) => {
+		if (searchTerm) {
+			const searchByName = `contains(name, '${searchTerm}')`;
 
-				return filterKoroneikiAccounts
-					? `${filterKoroneikiAccounts} and ${searchByName}`
-					: searchByName;
-			}
+			return filterKoroneikiAccounts
+				? `${filterKoroneikiAccounts} and ${searchByName}`
+				: searchByName;
+		}
 
-			return filterKoroneikiAccounts;
-		},
-		[filterKoroneikiAccounts]
-	);
+		return filterKoroneikiAccounts;
+	};
 
 	const search = useSearchTerm((searchTerm) =>
 		refetch({

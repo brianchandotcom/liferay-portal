@@ -62,8 +62,19 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		RootCauseAnalysisToolBuild rootCauseAnalysisToolBuild =
 			(RootCauseAnalysisToolBuild)getTopLevelBuild();
 
-		rootCauseAnalysisToolBuild.setDownstreamBuildDataList(
+		List<BuildData> downstreamBuildDataList = new ArrayList<>(
 			portalTopLevelBuildData.getDownstreamBuildDataList());
+
+		List<PortalBuildData> downstreamPortalBuildDataList = new ArrayList<>();
+
+		for (BuildData buildData : downstreamBuildDataList) {
+			if (buildData instanceof PortalBuildData) {
+				downstreamPortalBuildDataList.add((PortalBuildData)buildData);
+			}
+		}
+
+		rootCauseAnalysisToolBuild.setDownstreamPortalBuildDataList(
+			downstreamPortalBuildDataList);
 		rootCauseAnalysisToolBuild.setWorkspaceGitRepository(
 			workspace.getPrimaryWorkspaceGitRepository());
 
@@ -635,6 +646,23 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		}
 	}
 
+	private void _validateBuildParameterRetestCherryPickSHA() {
+		String cherryPickSHAs = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
+
+		if ((cherryPickSHAs == null) || cherryPickSHAs.isEmpty()) {
+			return;
+		}
+
+		int retestCount = _getRetestCount();
+
+		if (retestCount != 1) {
+			failBuildRunner(
+				JenkinsResultsParserUtil.combine(
+					"Cherry-picked SHAs may not be used when retesting."));
+		}
+	}
+
 	private void _validateBuildParameterRetestCount() {
 		String retestCount = getBuildParameter(
 			_NAME_BUILD_PARAMETER_RETEST_COUNT);
@@ -663,23 +691,6 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 					_NAME_BUILD_PARAMETER_RETEST_COUNT,
 					" must be between 0 and ", String.valueOf(maxRetestCount),
 					"."));
-		}
-	}
-
-	private void _validateBuildParameterRetestCherryPickSHA() {
-		String cherryPickSHAs = getBuildParameter(
-			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
-
-		if ((cherryPickSHAs == null) || cherryPickSHAs.isEmpty()) {
-			return;
-		}
-
-		int retestCount = _getRetestCount();
-
-		if (retestCount != 1) {
-			failBuildRunner(
-				JenkinsResultsParserUtil.combine(
-					"Cherry-picked SHAs may not be used when retesting."));
 		}
 	}
 

@@ -54,9 +54,9 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 				"Please set the workspace Git repository");
 		}
 
-		if (_downstreamBuildDataList == null) {
+		if (_downstreamPortalBuildDataList == null) {
 			throw new IllegalStateException(
-				"Please set the downstream build data list");
+				"Please set the downstream portal build data list");
 		}
 
 		return Dom4JUtil.getNewElement(
@@ -64,10 +64,10 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 			getJenkinsReportBodyElement());
 	}
 
-	public void setDownstreamBuildDataList(
-		List<BuildData> downstreamBuildDataList) {
+	public void setDownstreamPortalBuildDataList(
+		List<PortalBuildData> downstreamPortalBuildDataList) {
 
-		_downstreamBuildDataList = downstreamBuildDataList;
+		_downstreamPortalBuildDataList = downstreamPortalBuildDataList;
 	}
 
 	public void setWorkspaceGitRepository(
@@ -223,30 +223,28 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 	}
 
 	protected List<GitCommitGroup> getCommitGroups() {
-		List<BuildData> buildDataList = Lists.newArrayList(
-			_downstreamBuildDataList);
+		List<PortalBuildData> portalBuildDataList = Lists.newArrayList(
+			_downstreamPortalBuildDataList);
 
 		List<GitCommitGroup> gitCommitGroups = new ArrayList<>(
-			_downstreamBuildDataList.size());
+			_downstreamPortalBuildDataList.size());
 
 		GitCommitGroup gitCommitGroup = null;
 
 		List<LocalGitCommit> historicalLocalGitCommits =
 			_workspaceGitRepository.getHistoricalLocalGitCommits();
 
-		PortalBuildData portalBuildData = null;
+		if (portalBuildDataList.size() > 1) {
+			PortalBuildData firstPortalBuildData = portalBuildDataList.get(0);
+			PortalBuildData secondPortalBuildData = portalBuildDataList.get(1);
 
-		if (buildDataList.size() > 1) {
-			PortalBuildData firstBuild = (PortalBuildData)buildDataList.get(0);
-			PortalBuildData secondBuild = (PortalBuildData)buildDataList.get(1);
+			String firstPortalBuildDataPortalBranchSHA =
+				firstPortalBuildData.getPortalBranchSHA();
+			String secondPortalBuildDataPortalBranchSHA =
+				secondPortalBuildData.getPortalBranchSHA();
 
-			String firstBuildPortalBranchSHAPortalSHA =
-				firstBuild.getPortalBranchSHA();
-			String secondBuildPortalBranchSHAPortalSHA =
-				secondBuild.getPortalBranchSHA();
-
-			if (firstBuildPortalBranchSHAPortalSHA.equals(
-					secondBuildPortalBranchSHAPortalSHA)) {
+			if (firstPortalBuildDataPortalBranchSHA.equals(
+					secondPortalBuildDataPortalBranchSHA)) {
 
 				LocalGitCommit retestLocalGitCommit = null;
 
@@ -255,16 +253,14 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 					String sha = localGitCommit.getSHA();
 
-					if (sha.equals(firstBuildPortalBranchSHAPortalSHA)) {
+					if (sha.equals(firstPortalBuildDataPortalBranchSHA)) {
 						retestLocalGitCommit = localGitCommit;
 
 						break;
 					}
 				}
 
-				for (BuildData buildData : buildDataList) {
-					portalBuildData = (PortalBuildData)buildData;
-
+				for (PortalBuildData portalBuildData : portalBuildDataList) {
 					if (portalBuildData != null) {
 						gitCommitGroup = new GitCommitGroup(portalBuildData);
 
@@ -290,23 +286,18 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 			String sha = localGitCommit.getSHA();
 
-			for (BuildData buildData : buildDataList) {
-				if (buildData instanceof PortalBuildData) {
-					PortalBuildData currentPortalBuildData =
-						(PortalBuildData)buildData;
+			PortalBuildData portalBuildData = null;
 
-					if (sha.equals(
-							currentPortalBuildData.getPortalBranchSHA())) {
+			for (PortalBuildData currentPortalBuildData : portalBuildDataList) {
+				if (sha.equals(currentPortalBuildData.getPortalBranchSHA())) {
+					portalBuildData = currentPortalBuildData;
 
-						portalBuildData = currentPortalBuildData;
-
-						break;
-					}
+					break;
 				}
 			}
 
 			if (portalBuildData != null) {
-				buildDataList.remove(portalBuildData);
+				portalBuildDataList.remove(portalBuildData);
 
 				gitCommitGroup = new GitCommitGroup(portalBuildData);
 
@@ -628,7 +619,7 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 	private static final String _URL_JQUERY =
 		"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js";
 
-	private List<BuildData> _downstreamBuildDataList;
+	private List<PortalBuildData> _downstreamPortalBuildDataList;
 	private WorkspaceGitRepository _workspaceGitRepository;
 
 }

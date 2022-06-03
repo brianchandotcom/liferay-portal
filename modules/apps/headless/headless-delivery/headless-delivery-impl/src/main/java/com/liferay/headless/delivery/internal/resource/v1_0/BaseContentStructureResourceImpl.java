@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -56,6 +57,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -622,6 +624,14 @@ public abstract class BaseContentStructureResourceImpl
 			java.util.Collection<ContentStructure> contentStructures,
 			Map<String, Serializable> parameters)
 		throws Exception {
+	}
+
+	public Set<String> getAvailableCreateStrategies() {
+		return SetUtil.fromArray();
+	}
+
+	public Set<String> getAvailableUpdateStrategies() {
+		return SetUtil.fromArray();
 	}
 
 	@Override

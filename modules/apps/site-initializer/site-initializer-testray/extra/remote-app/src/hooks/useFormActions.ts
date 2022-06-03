@@ -27,7 +27,9 @@ type OnSubmitOptions = {
 };
 
 export type FormOptions = {
-	onChange: (state: any) => (event: any) => void;
+	onChange: (
+		state: any
+	) => (event: React.FormEvent<HTMLInputElement>) => void;
 	onClose: () => void;
 	onError: (error?: any) => void;
 	onSave: (param?: any) => void;

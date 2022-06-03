@@ -15,6 +15,8 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import i18n from '../i18n';
+
 const yupSchema = {
 	build: yup.object({
 		description: yup.string(),
@@ -54,7 +56,6 @@ const yupSchema = {
 		componentId: yup.string().required(),
 		description: yup.string().required(),
 		descriptionType: yup.string().required(),
-		key: yup.string().required(),
 		linkTitle: yup.string().required(),
 		linkURL: yup.string().required(),
 		summary: yup.string().required(),
@@ -76,12 +77,23 @@ const yupSchema = {
 		givenName: yup.string().required(),
 		password: yup
 			.string()
-			.required('No password provided.')
-			.min(8, 'Password is too short - should be 8 chars minimum.')
-			.matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+			.required(i18n.translate('no-password-provided'))
+			.min(
+				8,
+				i18n.translate(
+					'password-is-too-short-should-be-8-chars-minimum'
+				)
+			)
+			.matches(
+				/[a-zA-Z]/,
+				i18n.translate('password-can-only-contain-latin-letters')
+			),
 		repassword: yup
 			.string()
-			.oneOf([yup.ref('password'), null], 'Passwords must match'),
+			.oneOf(
+				[yup.ref('password'), null],
+				i18n.translate('passwords-must-match')
+			),
 	}),
 };
 

@@ -36,6 +36,7 @@ const Input: React.FC<InputProps> = ({
 	type,
 	value,
 	required = false,
+	onBlur,
 	...otherProps
 }) => (
 	<BaseWrapper
@@ -51,7 +52,7 @@ const Input: React.FC<InputProps> = ({
 			type={type}
 			value={value}
 			{...otherProps}
-			{...register(name, {required})}
+			{...register(name, {onBlur, required})}
 		/>
 	</BaseWrapper>
 );

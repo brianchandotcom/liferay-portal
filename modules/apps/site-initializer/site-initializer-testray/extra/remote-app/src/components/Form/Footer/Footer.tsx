@@ -35,7 +35,7 @@ const Footer: React.FC<FooterProps> = ({
 		</ClayButton>
 
 		<ClayButton displayType="secondary" onClick={() => onClose()}>
-			{isModal ? i18n.translate('close') : i18n.translate('cancel')}
+			{i18n.translate(isModal ? 'close' : 'cancel')}
 		</ClayButton>
 	</ClayButton.Group>
 );

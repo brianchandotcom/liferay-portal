@@ -290,19 +290,6 @@ public class EditFragmentEntryDisplayContext {
 			return jsonArray;
 		}
 
-		JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
-		try {
-			JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntry.getTypeOptions());
-
-			fieldTypesJSONArray = typeOptionsJSONObject.getJSONArray(
-				"fieldTypes");
-		}
-		catch (JSONException jsonException) {
-			_log.error(jsonException);
-		}
-
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
 			jsonArray.put(
 				JSONUtil.put(

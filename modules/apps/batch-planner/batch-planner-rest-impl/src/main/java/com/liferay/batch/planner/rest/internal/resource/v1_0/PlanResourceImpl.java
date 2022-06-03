@@ -199,9 +199,17 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		while (iterator.hasNext()) {
 			Map.Entry<String, Field> entry = iterator.next();
 
-			headerSB.append(entry.getKey());
-
 			Field field = entry.getValue();
+
+			String fieldName = entry.getKey();
+
+			if (fieldName.endsWith("_i18n")) {
+				fieldName = StringBundler.concat(
+					fieldName, StringPool.UNDERLINE,
+					contextAcceptLanguage.getPreferredLanguageId());
+			}
+
+			headerSB.append(fieldName);
 
 			lineSB.append(field.getType());
 

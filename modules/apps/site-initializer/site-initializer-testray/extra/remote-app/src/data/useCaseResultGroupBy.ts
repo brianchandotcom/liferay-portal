@@ -61,16 +61,22 @@ const useCaseResultGroupBy = (buildId: number) => {
 		[statuses]
 	);
 
-	const donutColumns = [
-		[Statuses.PASSED, getStatusValue(TEST_STATUS.Passed)],
-		[Statuses.FAILED, getStatusValue(TEST_STATUS.Failed)],
-		[Statuses.BLOCKED, getStatusValue(TEST_STATUS.Blocked)],
-		[Statuses.TEST_FIX, getStatusValue(TEST_STATUS['Test Fix'])],
-		[
-			Statuses.INCOMPLETE,
+	const status = {
+		blocked: getStatusValue(TEST_STATUS.Blocked),
+		failed: getStatusValue(TEST_STATUS.Failed),
+		incomplete:
 			getStatusValue(TEST_STATUS.Untested) +
-				getStatusValue(TEST_STATUS['In Progress']),
-		],
+			getStatusValue(TEST_STATUS['In Progress']),
+		passed: getStatusValue(TEST_STATUS.Passed),
+		test_fix: getStatusValue(TEST_STATUS['Test Fix']),
+	};
+
+	const donutColumns = [
+		[Statuses.PASSED, status.passed],
+		[Statuses.FAILED, status.failed],
+		[Statuses.BLOCKED, status.blocked],
+		[Statuses.TEST_FIX, status.test_fix],
+		[Statuses.INCOMPLETE, status.incomplete],
 	];
 
 	return {
@@ -85,6 +91,7 @@ const useCaseResultGroupBy = (buildId: number) => {
 				),
 		},
 		ready: !loading && statuses.size,
+		status,
 		statuses: Object.values(Statuses),
 	};
 };

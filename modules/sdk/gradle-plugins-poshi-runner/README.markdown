@@ -10,7 +10,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.40"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.41"
 	}
 
 	repositories {
@@ -71,7 +71,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.40"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.41"
 	}
 
 	repositories {

@@ -30,15 +30,6 @@ public class FrontendIconsUtil {
 		return PortalUtil.getPathContext() + _ICONS_BASE_PATH;
 	}
 
-	private static String _getSpritemap(long siteId) {
-		return StringBundler.concat(
-			getBasePath(), "/site/", String.valueOf(siteId), ".svg");
-	}
-
-	private static String _getSpritemap(String name) {
-		return StringBundler.concat(getBasePath(), "/pack/", name, ".svg");
-	}
-
 	public static String getSpritemap(ThemeDisplay themeDisplay) {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-145112"))) {
 			return themeDisplay.getPathThemeImages() + "/clay/icons.svg";
@@ -59,6 +50,15 @@ public class FrontendIconsUtil {
 
 	public static String getSystemSpritemap() {
 		return _getSpritemap(_SYSTEM_ICON_PACK_NAME);
+	}
+
+	private static String _getSpritemap(long siteId) {
+		return StringBundler.concat(
+			getBasePath(), "/site/", String.valueOf(siteId), ".svg");
+	}
+
+	private static String _getSpritemap(String name) {
+		return StringBundler.concat(getBasePath(), "/pack/", name, ".svg");
 	}
 
 	private static final String _ICONS_BASE_PATH = "/o/icons";

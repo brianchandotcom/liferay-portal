@@ -282,13 +282,13 @@ public class DataLayoutResourceImpl
 
 		ddmFormTemplateContext.put("editable", false);
 
-				ThemeDisplay themeDisplay =
+		ThemeDisplay themeDisplay =
 			(ThemeDisplay)contextHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		ddmFormTemplateContext.put(
-			"spritemap",
-			FrontendIconsUtil.getSpritemap(themeDisplay));
+			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
+
 		ddmFormTemplateContext.remove("fieldTypes");
 
 		return Response.ok(

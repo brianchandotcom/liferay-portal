@@ -50,12 +50,20 @@ public class ObjectDefinitionTermContributor
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
+			String dbTableName1 = objectField.getDBTableName();
+
+			String dbTableName2 = dbTableName1.replaceAll("[0-9]", "");
+
+			String dbTableName3 = StringUtil.removeSubstring(dbTableName2, "_");
+
+			String dbTableName4 = dbTableName3.substring(1);
+
+			String termName = StringUtil.toUpperCase(
+				dbTableName4 + "_" +
+					StringUtil.replace(objectField.getName(), ' ', '_'));
+
 			_objectFieldIds.put(
-				StringBundler.concat(
-					"[%",
-					StringUtil.toUpperCase(
-						StringUtil.replace(objectField.getName(), ' ', '_')),
-					"%]"),
+				StringBundler.concat("[%", termName, "%]"),
 				objectField.getObjectFieldId());
 		}
 	}

@@ -61,6 +61,34 @@ definition {
 		}
 	}
 
+	macro assertQuickLinksPanelInfo {
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
+	macro assertQuickLinksPanelIsHidden {
+		AssertElementPresent(locator1 = "CP2NavigationMenu#QUICK_LINKS_COLLAPSED");
+	}
+
+	macro assertSlaCard {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			type = "${type}");
+	}
+
+	macro assertSlaCardNotAppears {
+		AssertElementNotPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			typeCard = "${typeCard}");
+	}
+
+	macro cannotAppearsQuickLinksPanelInfo {
+		AssertElementNotPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
 	macro changeUserRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -106,34 +134,6 @@ definition {
 
 	macro clickOnSubmitButton {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
-	}
-
-	macro assertQuickLinksPanelInfo {
-		AssertElementPresent(
-			locator1 = "CP2NavigationMenu#QUICK_LINKS",
-			title = "${title}");
-	}
-
-	macro cannotAppearsQuickLinksPanelInfo {
-		AssertElementNotPresent(
-			locator1 = "CP2NavigationMenu#QUICK_LINKS",
-			title = "${title}");
-	}
-
-	macro assertQuickLinksPanelIsHidden {
-		AssertElementPresent(locator1 = "CP2NavigationMenu#QUICK_LINKS_COLLAPSED");
-	}
-
-	macro assertSlaCardNotAppears {
-		AssertElementNotPresent(
-			locator1 = "CustomerPortalSite#SLA_CARD",
-			typeCard = "${typeCard}");
-	}
-
-	macro assertSlaCard {
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#SLA_CARD",
-			type = "${type}");
 	}
 
 	macro createCPSite {
@@ -286,6 +286,15 @@ definition {
 			value1 = "${userPassword}");
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
+	}
+
+	macro notViewProduct {
+		for (var product : list "${productTab}") {
+			AssertElementNotPresent(
+				key_product = "${productTab}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+				value = "${product}");
+		}
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -541,15 +550,6 @@ definition {
 	macro viewSubscriptionManagementTab {
 		for (var product : list "${productTab}") {
 			AssertElementPresent(
-				key_product = "${productTab}",
-				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
-				value = "${product}");
-		}
-	}
-
-	macro notViewProduct {
-		for (var product : list "${productTab}") {
-			AssertElementNotPresent(
 				key_product = "${productTab}",
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
 				value = "${product}");

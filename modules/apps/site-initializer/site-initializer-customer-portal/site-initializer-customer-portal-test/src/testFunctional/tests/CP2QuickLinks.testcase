@@ -28,215 +28,214 @@ definition {
 		}
 	}
 
-    @description = "LPS-144741 - Verify if the Quick Links panel is visible on the Overview page"
-    @priority = "5"
-    test IsQuickLinksOnOverviewPage {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144906 - Verify if when Hide button is clicked by user, the Quick Links panel collapses"
+	@priority = "3"
+	test HideButtonClickedPanelCollapses {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
-    }
+		CP2NavigationMenu.clickOnHideButton();
 
-    @description = "LPS-144742 - Verify if the Quick Links panel is visible on the Product Activation pages"
-    @priority = "5"
-    test IsQuickLinksOnProductActivation {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		CustomerPortal.assertQuickLinksPanelIsHidden();
+	}
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-        CP2NavigationMenu.goToProductActivation();
-
-        CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
-
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
-    }
-
-    @description = "LPS-144906 - Verify if when Hide button is clicked by user, the Quick Links panel collapses"
-    @priority = "3"
-    test HideButtonClickedPanelCollapses {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144933 - Verify if 'Activate Analytics Cloud' doesn't appear in Quick Links panel when Analytics Cloud is 'Active'"
+	@ignore = "true"
+	@priority = "4"
+	test IfACActiveNoActivateAC {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
+	}
 
-        CP2NavigationMenu.clickOnHideButton();
+	@description = "LPS-144932 - Verify if 'Activate Analytics Cloud' appears in Quick Links panel when Analytics Cloud is 'Not Active"
+	@ignore = "true"
+	@priority = "5"
+	test IfACNotActiveShowActivateAC {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-        CustomerPortal.assertQuickLinksPanelIsHidden();
-    }
+		CustomerPortal.enterOnProject(
+			status = "Expired",
+			title = "Test Account 03");
 
-    @description = "LPS-144907 - Verify if when user clicks on Show, the Quick Links panel expands"
-    @priority = "3"
-    test ShowButtonClickedPanelExpands {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		CP2NavigationMenu.goToProductActivation();
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 
-        CP2NavigationMenu.clickOnHideButton();
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Activate Analytics Cloud");
+	}
 
-        CP2NavigationMenu.clickOnShowButton();
-
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
-    }
-
-    @description = "LPS-144912 - Verify if 'Environment Details' appears in Quick Links panel when DXP is 'Active'"
-    @priority = "5"
-    test IfDXPActiveShowsEnvironmentDetails {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144912 - Verify if 'Environment Details' appears in Quick Links panel when DXP is 'Active'"
+	@priority = "5"
+	test IfDXPActiveShowsEnvironmentDetails {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
-        CP2NavigationMenu.goToProductActivation();
+		CP2NavigationMenu.goToProductActivation();
 
-        CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
-    }
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
+	}
 
-    @description = "LPS-144914 - Verify if when Partnership is Active, 'Environment Details' doesn't appear. Note: DXP, Portal and Commerce cannot be active otherwise, Environment Details will appear"
-    @ignore = "true"
-    @priority = "4"
-    test IfPartnershipActiveNoEnvironmentDetails {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-    }
-
-    @description = "LPS-144924 - Verify if when DXP Cloud is present 'Environment Details' doesn't show up unless Commerce is 'Active' too"
-    @priority = "4"
-    test IfDXPCloudAndCommerceActiveShowsEnvironmentDetails {
-        SetWindowSize(value1 = "1920,1080");
-
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 06");
-
-        CustomerPortal.viewSubscriptionManagementTab(productTab = "DXP Cloud,Commerce");
-
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
-    }
-
-    @description = "LPS-144925 - Verify if 'Large File Attachments' appears in Quick Links panel when there is no Limited SLA or Partnership 'Active'"
-    @priority = 5""
-    test IfPartnershipNorLimitedSLAShowsLargeFile {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-        CustomerPortal.assertSlaCardNotAppears(typeCard = "Limited");
-
-        CustomerPortal.notViewProduct(productTab = "Partnership");
-
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Large File Attachments");
-    }
-
-    @description = "LPS-144926 - Verify if when Limited SLA is 'Active', 'Large File Attachments' doesn't show up"
-    @priority = "4"
-    test IfLimitedSLAActiveNoLargeFile {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 06");
-
-        CustomerPortal.assertSlaCard(type = "Limited");
-
-        CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Large File Attachments");
-    }
-
-    @description = "LPS-144928 - Verify if 'Source Code Access' appears in Quick Links panel when DXP is 'Active'"
-    @priority = "5"
-    test IfDXPActiveShowsSourceCode {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144928 - Verify if 'Source Code Access' appears in Quick Links panel when DXP is 'Active'"
+	@priority = "5"
+	test IfDXPActiveShowsSourceCode {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
-        CP2NavigationMenu.goToProductActivation();
+		CP2NavigationMenu.goToProductActivation();
 
-        CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Source Code Access");
-    }
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Source Code Access");
+	}
 
-    @description = "LPS-144929 - Verify if when DXP Cloud is not active, 'Source Code Access' doesn't show up. DXP cannot be active otherwise, Source Code Access will appear"
-    @priority = "4"
-    test IfDXPCloudNotActiveNoSourceCode {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(
-            title = "Test Account 03",
-            status = "Expired");
-
-        CustomerPortal.notViewProduct(productTab = "DXP,DXP Cloud");
-
-        CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Source Code Access");
-    }
-
-    @description = "LPS-144930 - Verify if 'Latest Fix Packs' appears in Quick Links panel when DXP Cloud is 'Active'"
-    @priority = "5"
-    test IfDXPCloudActiveShowLatestFix {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144930 - Verify if 'Latest Fix Packs' appears in Quick Links panel when DXP Cloud is 'Active'"
+	@priority = "5"
+	test IfDXPCloudActiveShowLatestFix {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 06");
 
-        CP2NavigationMenu.goToProductActivation();
+		CP2NavigationMenu.goToProductActivation();
 
-        CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
 
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Fix Packs");
-    }
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Fix Packs");
+	}
 
-    @description = "LPS-144931 - Verify if 'Latest Fix Packs' does not appear when DXP is not active. DXP Cloud cannot be active otherwise, Latest Fix Packs will appear"
-    @ignore = "true"
-    @priority = "4"
-    test IfDXPNotActiveNoLatestFix {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144924 - Verify if when DXP Cloud is present 'Environment Details' doesn't show up unless Commerce is 'Active' too"
+	@priority = "4"
+	test IfDXPCloudAndCommerceActiveShowsEnvironmentDetails {
+		SetWindowSize(value1 = "1920,1080");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-    }
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-    @description = "LPS-144932 - Verify if 'Activate Analytics Cloud' appears in Quick Links panel when Analytics Cloud is 'Not Active"
-    @ignore = "true"
-    @priority = "5"
-    test IfACNotActiveShowActivateAC {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		CustomerPortal.enterOnProject(title = "Test Account 06");
+
+		CustomerPortal.viewSubscriptionManagementTab(productTab = "DXP Cloud,Commerce");
+
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Environment Details");
+	}
+
+	@description = "LPS-144929 - Verify if when DXP Cloud is not active, 'Source Code Access' doesn't show up. DXP cannot be active otherwise, Source Code Access will appear"
+	@priority = "4"
+	test IfDXPCloudNotActiveNoSourceCode {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(
-            title = "Test Account 03",
-            status = "Expired");
+			status = "Expired",
+			title = "Test Account 03");
 
-        CP2NavigationMenu.goToProductActivation();
+		CustomerPortal.notViewProduct(productTab = "DXP,DXP Cloud");
 
-        CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+		CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Source Code Access");
+	}
 
-        CustomerPortal.assertQuickLinksPanelInfo(title = "Activate Analytics Cloud");
-    }
-
-    @description = "LPS-144933 - Verify if 'Activate Analytics Cloud' doesn't appear in Quick Links panel when Analytics Cloud is 'Active'"
-    @ignore = "true"
-    @priority = "4"
-    test IfACActiveNoActivateAC {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144931 - Verify if 'Latest Fix Packs' does not appear when DXP is not active. DXP Cloud cannot be active otherwise, Latest Fix Packs will appear"
+	@ignore = "true"
+	@priority = "4"
+	test IfDXPNotActiveNoLatestFix {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
-    }
+	}
 
-    @description = "LPS-144934 - Verify if 'Activate Analytics Cloud' don't show up if Portal is active and if DXP or DXP Cloud aren't 'Active'"
-    @ignore = "true"
-    @priority = "4"
-    test IfPortalActiveButNoDXPNoActivateAC {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144926 - Verify if when Limited SLA is 'Active', 'Large File Attachments' doesn't show up"
+	@priority = "4"
+	test IfLimitedSLAActiveNoLargeFile {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 06");
+
+		CustomerPortal.assertSlaCard(type = "Limited");
+
+		CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Large File Attachments");
+	}
+
+	@description = "LPS-144914 - Verify if when Partnership is Active, 'Environment Details' doesn't appear. Note: DXP, Portal and Commerce cannot be active otherwise, Environment Details will appear"
+	@ignore = "true"
+	@priority = "4"
+	test IfPartnershipActiveNoEnvironmentDetails {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
-    }
+	}
 
-    @description = "LPS-154791 - Verify that the Quick Links Panel does not appear in Team Members"
-    @priority = "3"
-    test QuickLinksDoesNotAppearInTeamMembers {
-        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+	@description = "LPS-144925 - Verify if 'Large File Attachments' appears in Quick Links panel when there is no Limited SLA or Partnership 'Active'"
+	test IfPartnershipNorLimitedSLAShowsLargeFile {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
-        CP2NavigationMenu.goToTeamMembers();
+		CustomerPortal.assertSlaCardNotAppears(typeCard = "Limited");
 
-        CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Quick Links");
-    }
+		CustomerPortal.notViewProduct(productTab = "Partnership");
+
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Large File Attachments");
+	}
+
+	@description = "LPS-144934 - Verify if 'Activate Analytics Cloud' don't show up if Portal is active and if DXP or DXP Cloud aren't 'Active'"
+	@ignore = "true"
+	@priority = "4"
+	test IfPortalActiveButNoDXPNoActivateAC {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+	}
+
+	@description = "LPS-144741 - Verify if the Quick Links panel is visible on the Overview page"
+	@priority = "5"
+	test IsQuickLinksOnOverviewPage {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
+	}
+
+	@description = "LPS-144742 - Verify if the Quick Links panel is visible on the Product Activation pages"
+	@priority = "5"
+	test IsQuickLinksOnProductActivation {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
+	}
+
+	@description = "LPS-154791 - Verify that the Quick Links Panel does not appear in Team Members"
+	@priority = "3"
+	test QuickLinksDoesNotAppearInTeamMembers {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Quick Links");
+	}
+
+	@description = "LPS-144907 - Verify if when user clicks on Show, the Quick Links panel expands"
+	@priority = "3"
+	test ShowButtonClickedPanelExpands {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CP2NavigationMenu.clickOnHideButton();
+
+		CP2NavigationMenu.clickOnShowButton();
+
+		CustomerPortal.assertQuickLinksPanelInfo(title = "Quick Links");
+	}
 
 }

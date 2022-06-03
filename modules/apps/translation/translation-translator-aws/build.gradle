@@ -1,4 +1,12 @@
+configurations {
+	compileIncludePlatform {
+		exclude group: "commons-codec"
+	}
+}
+
 dependencies {
+	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
+
 	compileIncludePlatform group: "software.amazon.awssdk", name: "translate"
 	compileIncludePlatform platform("software.amazon.awssdk:bom:2.17.112")
 

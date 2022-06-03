@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -45,6 +46,14 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 	public void delete(
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception;
+
+	public default Set<String> getAvailableCreateStrategies() {
+		return null;
+	}
+
+	public default Set<String> getAvailableUpdateStrategies() {
+		return null;
+	}
 
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -51,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -448,6 +450,22 @@ public abstract class Base${schemaName}ResourceImpl
 					delete${schemaName}(${schemaVarName}.get${schemaName}Id());
 				}
 			</#if>
+		}
+
+		public Set<String> getAvailableCreateStrategies() {
+			return SetUtil.fromArray(
+				<#if createStrategies?has_content>
+					"${createStrategies?join("\",\"")}"
+				</#if>
+			);
+		}
+
+		public Set<String> getAvailableUpdateStrategies() {
+			return SetUtil.fromArray(
+				<#if updateStrategies?has_content>
+					"${updateStrategies?join("\",\"")}"
+				</#if>
+			);
 		}
 
 		@Override

@@ -155,7 +155,7 @@ function DirectImagePanel({item}) {
 	const editableValues =
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
-	const editableValue = editableValues[processorKey][editableId];
+	const editableValue = editableValues[processorKey]?.[editableId];
 	const editableConfig = editableValue.config || {};
 
 	const editableContent = selectEditableValueContent(
@@ -327,7 +327,7 @@ function ImagePanelSizeSelector({item}) {
 	const editableValues =
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
-	const editableValue = editableValues[processorKey][editableId];
+	const editableValue = editableValues[processorKey]?.[editableId];
 	const editableConfig = editableValue.config || {};
 
 	const getEditableElement = useCallback(() => {

@@ -135,7 +135,7 @@ export default function PageContent({
 					const editableValue =
 						fragmentEntryLink.editableValues[
 							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-						];
+						] || {};
 
 					const editable = editableValue[editableId.join('-')];
 

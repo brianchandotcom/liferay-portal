@@ -285,7 +285,7 @@ function fragmentIsMapped(item, fragmentEntryLinks) {
 		return fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
 			? Boolean(
 					editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]
-						.inputFieldId
+						?.inputFieldId
 			  )
 			: false;
 	}
@@ -382,7 +382,7 @@ function visit(
 				const editable =
 					fragmentEntryLink.editableValues[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					][editableId];
+					]?.[editableId];
 
 				const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
 				const type =

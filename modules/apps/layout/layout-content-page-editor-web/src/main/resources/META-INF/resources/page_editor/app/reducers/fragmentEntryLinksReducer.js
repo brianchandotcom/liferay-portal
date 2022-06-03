@@ -310,7 +310,7 @@ export default function fragmentEntryLinksReducer(
 		}
 
 		case UPDATE_PREVIEW_IMAGE: {
-			const getUpdatedEditableValues = (editableValues) =>
+			const getUpdatedEditableValues = (editableValues = {}) =>
 				Object.entries(editableValues).map(([key, value]) => [
 					key,
 					Object.fromEntries(

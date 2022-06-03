@@ -87,6 +87,34 @@ $dark-d2: var(--color-neutral-6);
 $dark-l1: var(--color-neutral-8);
 $dark-l2: var(--color-neutral-9);
 
+// Headings h1-h6
+
+$headings-line-height: var(--headings-line-height);
+
+$h1: (
+	font-weight: var(--h1-font-weight),
+);
+
+$h2: (
+	font-weight: var(--h2-font-weight),
+);
+
+$h3: (
+	font-weight: var(--h3-font-weight),
+);
+
+$h4: (
+	font-weight: var(--h4-font-weight),
+);
+
+$h5: (
+	font-weight: var(--h5-font-weight),
+);
+
+$h6: (
+	font-weight: var(--h6-font-weight),
+);
+
 // Link
 
 $link-color: var(--link-color);

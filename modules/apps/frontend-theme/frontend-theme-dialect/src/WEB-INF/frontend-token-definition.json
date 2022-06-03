@@ -1751,6 +1751,18 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "h1-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h1-font-weight"
+								}
+							],
+							"name": "h1FontWeight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "2rem",
 							"label": "h2-font-size",
 							"mappings": [
@@ -1760,6 +1772,18 @@
 								}
 							],
 							"name": "h2FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--h1-font-weight)",
+							"label": "h2-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h2-font-weight"
+								}
+							],
+							"name": "h2FontWeight",
 							"type": "String"
 						},
 						{
@@ -1775,6 +1799,18 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "var(--h1-font-weight)",
+							"label": "h3-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h3-font-weight"
+								}
+							],
+							"name": "h3FontWeight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "1.5rem",
 							"label": "h4-font-size",
 							"mappings": [
@@ -1784,6 +1820,18 @@
 								}
 							],
 							"name": "h4FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--h1-font-weight)",
+							"label": "h4-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h4-font-weight"
+								}
+							],
+							"name": "h4FontWeight",
 							"type": "String"
 						},
 						{
@@ -1799,6 +1847,18 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "var(--h1-font-weight)",
+							"label": "h5-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h5-font-weight"
+								}
+							],
+							"name": "h5FontWeight",
+							"type": "String"
+						},
+						{
 							"defaultValue": "0.875rem",
 							"label": "h6-font-size",
 							"mappings": [
@@ -1808,6 +1868,30 @@
 								}
 							],
 							"name": "h6FontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--h1-font-weight)",
+							"label": "h6-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "h6-font-weight"
+								}
+							],
+							"name": "h6FontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.2",
+							"label": "headings-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "headings-line-height"
+								}
+							],
+							"name": "headingsLineHeight",
 							"type": "String"
 						}
 					],

@@ -188,6 +188,8 @@ definition {
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
+		Click(locator1 = "ObjectAction#TAB_GENERIC");
+
 		Button.clickSave();
 
 		ObjectAdmin.assertRequiredErrorPresent();

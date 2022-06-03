@@ -1,0 +1,68 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+
+        CommerceConfiguration.commerceSetUp(minium = "true");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
+
+        ApplicationsMenu.gotoSite(site = "Minium");
+
+        JSONLayout.addPublicLayout(
+            groupName = "Minium",
+            layoutName = "Test Public Content Page",
+            type = "content");
+
+        ContentPagesNavigator.openEditContentPage(
+            pageName = "Test Public Content Page",
+            siteName = "Minium");
+
+        PageEditor.addWidget(portletName = "Organization Management");
+
+        Button.clickPublish();
+
+        JSONOrganization.addOrganization(
+            organizationName = "Organization 1",
+            organizationSite = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+    @description = "COMMERCE-9399. Verify if organization is shown within the widget"
+	@priority = "3"
+	test CanViewOrganizationWidget {
+        task ("When the widget page is reached") {
+            Navigator.openSitePage(
+                pageName = "Test Public Content Page",
+                siteName = "Minium");
+        }
+
+        task ("Then the organization is shown within the widget") {
+            AssertElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+        }
+    }
+
+}

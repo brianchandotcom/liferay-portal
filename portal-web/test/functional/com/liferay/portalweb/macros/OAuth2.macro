@@ -879,7 +879,7 @@ definition {
 
 	macro viewAuthorizationRequestResourceName {
 		AssertElementPresent(
-			key_resourceName = "resourceName",
+			key_resourceName = "${resourceName}",
 			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
 	}
 

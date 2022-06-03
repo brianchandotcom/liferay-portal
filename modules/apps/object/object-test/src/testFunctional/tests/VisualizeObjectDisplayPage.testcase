@@ -53,15 +53,15 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject314");
 
-		ObjectAdmin.addObjectBoleanFieldEntryViaUI(
+		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
 			objectName = "CustomObject314",
 			value = "true");
 
-		ObjectAdmin.addObjectBoleanFieldEntryViaUI(
+		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
 			objectName = "CustomObject314",
 			value = "false");
 
-		ObjectAdmin.addObjectBoleanFieldEntryViaUI(
+		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
 			objectName = "CustomObject314",
 			value = "false");
 

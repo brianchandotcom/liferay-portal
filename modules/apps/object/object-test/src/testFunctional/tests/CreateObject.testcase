@@ -4324,7 +4324,7 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.addObjectBoleanFieldEntryViaUI(
+		ObjectAdmin.addObjectBooleanFieldEntryViaUI(
 			objectName = "CustomObject112",
 			value = "true");
 

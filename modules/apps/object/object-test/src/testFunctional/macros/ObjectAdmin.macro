@@ -59,7 +59,7 @@ definition {
 			whenAction = "${whenAction}");
 	}
 
-	macro addObjectBoleanFieldEntryViaUI {
+	macro addObjectBooleanFieldEntryViaUI {
 		ObjectAdmin.goToCustomObject(objectName = "${objectName}");
 
 		LexiconEntry.gotoAdd();

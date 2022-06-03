@@ -204,13 +204,15 @@ definition {
 
 			Button.clickSave();
 
-			Click(locator1 = "Icon#TIMES");
+			SelectFrame(locator1 = "Message#ERROR");
+
+			Alert.viewErrorMessage(errorMessage = "An error occurred.");
+
+			Refresh();
 
 			AssertElementNotPresent(
 				key_tableEntry = "Text Update",
 				locator1 = "LexiconTable#TABLE_ENTRY");
-
-			Refresh();
 		}
 	}
 

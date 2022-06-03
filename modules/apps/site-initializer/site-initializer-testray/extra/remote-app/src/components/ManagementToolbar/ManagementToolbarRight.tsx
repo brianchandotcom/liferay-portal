@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {Dispatch, useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 import i18n from '../../i18n';
 import {RendererFields} from '../Form/Renderer';
@@ -47,33 +47,27 @@ export type IItem = {
 
 type ManagementToolbarRightProps = {
 	addButton?: () => void;
+	buttons?: ReactNode;
 	columns: IItem[];
 	disabled: boolean;
+	display?: {
+		columns?: boolean;
+	};
 	filterFields?: RendererFields[];
-	setShowMobile: Dispatch<boolean>;
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	addButton,
+	buttons,
+	display = {columns: true},
 	columns,
 	disabled,
 	filterFields,
-	setShowMobile,
 }) => {
 	const [pinned, setPinned] = useState(false);
 
 	return (
 		<ClayManagementToolbar.ItemList>
-			<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
-				<ClayButton
-					className="nav-link nav-link-monospaced"
-					displayType="unstyled"
-					onClick={() => setShowMobile(true)}
-				>
-					<ClayIcon symbol="search" />
-				</ClayButton>
-			</ClayManagementToolbar.Item>
-
 			{filterFields?.length && (
 				<>
 					<ClayManagementToolbar.Item>
@@ -90,32 +84,36 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				</>
 			)}
 
-			<ClayDropDownWithItems
-				items={columns}
-				trigger={
-					<ClayButton
-						className="nav-link"
-						disabled={disabled}
-						displayType="unstyled"
-					>
-						<span className="navbar-breakpoint-down-d-none">
-							<span
-								className="navbar-text-truncate"
-								title={i18n.translate('columns')}
-							>
-								<ClayIcon
-									className="inline-item inline-item-after"
-									symbol="columns"
-								/>
+			{display.columns && (
+				<ClayDropDownWithItems
+					items={columns}
+					trigger={
+						<ClayButton
+							className="nav-link"
+							disabled={disabled}
+							displayType="unstyled"
+						>
+							<span className="navbar-breakpoint-down-d-none">
+								<span
+									className="navbar-text-truncate"
+									title={i18n.translate('columns')}
+								>
+									<ClayIcon
+										className="inline-item inline-item-after"
+										symbol="columns"
+									/>
+								</span>
 							</span>
-						</span>
 
-						<span className="navbar-breakpoint-d-none">
-							<ClayIcon symbol="columns" />
-						</span>
-					</ClayButton>
-				}
-			/>
+							<span className="navbar-breakpoint-d-none">
+								<ClayIcon symbol="columns" />
+							</span>
+						</ClayButton>
+					}
+				/>
+			)}
+
+			{buttons}
 
 			{addButton && (
 				<ClayManagementToolbar.Item

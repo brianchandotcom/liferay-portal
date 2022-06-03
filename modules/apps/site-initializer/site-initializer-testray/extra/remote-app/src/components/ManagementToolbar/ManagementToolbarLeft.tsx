@@ -12,41 +12,18 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
-import ClayManagementToolbar from '@clayui/management-toolbar';
-import {useState} from 'react';
-
 type ManagementToolbarLeftProps = {
-	disabled: boolean;
-	onSelectAllRows: () => void;
-	rowSelectable?: boolean;
+	title?: string;
 };
 
 const ManagementToolbarLeft: React.FC<ManagementToolbarLeftProps> = ({
-	disabled,
-	onSelectAllRows,
-	rowSelectable,
+	title,
 }) => {
-	const [checked, setChecked] = useState(false);
-
-	if (!rowSelectable) {
-		return null;
+	if (title) {
+		return <h5 className="ml-2">{title}</h5>;
 	}
 
-	return (
-		<ClayManagementToolbar.ItemList>
-			<ClayManagementToolbar.Item>
-				<ClayCheckbox
-					checked={checked}
-					disabled={disabled}
-					onChange={() => {
-						onSelectAllRows();
-						setChecked(!checked);
-					}}
-				/>
-			</ClayManagementToolbar.Item>
-		</ClayManagementToolbar.ItemList>
-	);
+	return <div />;
 };
 
 export default ManagementToolbarLeft;

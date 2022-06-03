@@ -36,6 +36,7 @@ export type TableProps<T = any> = {
 	columns: Column[];
 	items: T[];
 	navigateTo?: (item: T) => string;
+	onSelectAllRows: () => void;
 	onSelectRow?: (row: any) => void;
 	rowSelectable?: boolean;
 	selectedRows?: number[];
@@ -47,9 +48,11 @@ const Table: React.FC<TableProps> = ({
 	items,
 	navigateTo,
 	onSelectRow,
+	onSelectAllRows,
 	selectedRows = [],
 	rowSelectable = false,
 }) => {
+	const [checked, setChecked] = useState(false);
 	const [activeRow, setActiveRow] = useState<number | undefined>();
 	const displayActionColumn = !!actions?.length;
 
@@ -71,7 +74,17 @@ const Table: React.FC<TableProps> = ({
 		<ClayTable borderless className="testray-table" hover>
 			<Head className="testray-table">
 				<Row>
-					{rowSelectable && <Cell />}
+					{rowSelectable && (
+						<Cell>
+							<ClayCheckbox
+								checked={checked}
+								onChange={() => {
+									onSelectAllRows();
+									setChecked(!checked);
+								}}
+							/>
+						</Cell>
+					)}
 
 					{columns.map((column, index) => (
 						<Cell headingTitle key={index}>

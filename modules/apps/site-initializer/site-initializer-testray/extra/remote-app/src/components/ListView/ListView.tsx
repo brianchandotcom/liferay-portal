@@ -45,14 +45,14 @@ export type ListViewProps<T = any> = {
 		visible?: boolean;
 	} & Omit<
 		ManagementToolbarProps,
-		'tableProps' | 'totalItems' | 'onSelectAllRows'
+		'tableProps' | 'totalItems' | 'onSelectAllRows' | 'rowSelectable'
 	>;
 	onContextChange?: (context: ListViewContextState) => void;
 	pagination?: {
 		displayTop?: boolean;
 	};
 	query: TypedDocumentNode;
-	tableProps: Omit<TableProps, 'items'>;
+	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
 	variables?: any;
 };
@@ -157,8 +157,6 @@ const ListView: React.FC<ListViewProps> = ({
 			{managementToolbarVisible && (
 				<ManagementToolbar
 					{...managementToolbarProps}
-					onSelectAllRows={onSelectAllRows}
-					rowSelectable={tableProps.rowSelectable}
 					tableProps={tableProps}
 					totalItems={items.length}
 				/>
@@ -176,6 +174,7 @@ const ListView: React.FC<ListViewProps> = ({
 						{...tableProps}
 						columns={columns}
 						items={items}
+						onSelectAllRows={onSelectAllRows}
 						onSelectRow={onSelectRow}
 						selectedRows={selectedRows}
 					/>

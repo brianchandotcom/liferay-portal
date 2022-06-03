@@ -223,6 +223,8 @@ public class GetPagePreviewMVCResourceCommandTest {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 		httpServletRequest.setMethod(HttpMethods.GET);
 
+		_themeDisplay.setRequest(httpServletRequest);
+
 		_serviceContext.setRequest(httpServletRequest);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =

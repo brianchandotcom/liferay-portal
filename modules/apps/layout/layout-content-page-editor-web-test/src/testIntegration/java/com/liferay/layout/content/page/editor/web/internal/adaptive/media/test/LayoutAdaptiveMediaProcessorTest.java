@@ -133,6 +133,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 		httpServletRequest.setMethod(HttpMethods.GET);
 
+		_themeDisplay.setRequest(httpServletRequest);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -197,6 +199,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 			WebKeys.CTX, httpServletRequest.getServletContext());
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 		httpServletRequest.setMethod(HttpMethods.GET);
+
+		_themeDisplay.setRequest(httpServletRequest);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

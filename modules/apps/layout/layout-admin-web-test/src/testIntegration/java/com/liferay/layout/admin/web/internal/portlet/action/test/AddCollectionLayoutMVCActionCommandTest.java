@@ -154,6 +154,8 @@ public class AddCollectionLayoutMVCActionCommandTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		themeDisplay.setRequest(mockHttpServletRequest);
+
 		return mockHttpServletRequest;
 	}
 

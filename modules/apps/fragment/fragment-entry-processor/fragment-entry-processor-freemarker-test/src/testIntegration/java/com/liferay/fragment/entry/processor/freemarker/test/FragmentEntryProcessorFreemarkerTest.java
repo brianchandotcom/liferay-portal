@@ -75,6 +75,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hamcrest.CoreMatchers;
 
 import org.jsoup.Jsoup;
@@ -575,7 +577,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
 	}
@@ -601,7 +603,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return processedHTML;
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
+	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
@@ -615,6 +619,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				_company.getCompanyId(), layoutSet.getThemeId()),
 			null);
 
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

@@ -188,9 +188,11 @@ public abstract class BaseSXPElementResourceTestCase {
 		SXPElement sxpElement = randomSXPElement();
 
 		sxpElement.setDescription(regex);
+		sxpElement.setExternalReferenceCode(regex);
 		sxpElement.setSchemaVersion(regex);
 		sxpElement.setTitle(regex);
 		sxpElement.setUserName(regex);
+		sxpElement.setVersion(regex);
 
 		String json = SXPElementSerDes.toJSON(sxpElement);
 
@@ -199,9 +201,11 @@ public abstract class BaseSXPElementResourceTestCase {
 		sxpElement = SXPElementSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, sxpElement.getDescription());
+		Assert.assertEquals(regex, sxpElement.getExternalReferenceCode());
 		Assert.assertEquals(regex, sxpElement.getSchemaVersion());
 		Assert.assertEquals(regex, sxpElement.getTitle());
 		Assert.assertEquals(regex, sxpElement.getUserName());
+		Assert.assertEquals(regex, sxpElement.getVersion());
 	}
 
 	@Test
@@ -829,6 +833,16 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (sxpElement.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("hidden", additionalAssertFieldName)) {
 				if (sxpElement.getHidden() == null) {
 					valid = false;
@@ -887,6 +901,14 @@ public abstract class BaseSXPElementResourceTestCase {
 
 			if (Objects.equals("userName", additionalAssertFieldName)) {
 				if (sxpElement.getUserName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (sxpElement.getVersion() == null) {
 					valid = false;
 				}
 
@@ -1041,6 +1063,19 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpElement1.getExternalReferenceCode(),
+						sxpElement2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("hidden", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getHidden(), sxpElement2.getHidden())) {
@@ -1127,6 +1162,16 @@ public abstract class BaseSXPElementResourceTestCase {
 			if (Objects.equals("userName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpElement1.getUserName(), sxpElement2.getUserName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getVersion(), sxpElement2.getVersion())) {
 
 					return false;
 				}
@@ -1285,6 +1330,14 @@ public abstract class BaseSXPElementResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpElement.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("hidden")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1367,6 +1420,14 @@ public abstract class BaseSXPElementResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("version")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpElement.getVersion()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1414,6 +1475,8 @@ public abstract class BaseSXPElementResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				hidden = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
@@ -1424,6 +1487,7 @@ public abstract class BaseSXPElementResourceTestCase {
 				type = RandomTestUtil.randomInt();
 				userName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				version = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

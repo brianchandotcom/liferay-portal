@@ -118,6 +118,20 @@ public class SXPElementSerDes {
 			sb.append(String.valueOf(sxpElement.getElementDefinition()));
 		}
 
+		if (sxpElement.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpElement.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (sxpElement.getHidden() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,6 +239,20 @@ public class SXPElementSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpElement.getVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpElement.getVersion()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -285,6 +313,15 @@ public class SXPElementSerDes {
 			map.put(
 				"elementDefinition",
 				String.valueOf(sxpElement.getElementDefinition()));
+		}
+
+		if (sxpElement.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(sxpElement.getExternalReferenceCode()));
 		}
 
 		if (sxpElement.getHidden() == null) {
@@ -353,6 +390,13 @@ public class SXPElementSerDes {
 			map.put("userName", String.valueOf(sxpElement.getUserName()));
 		}
 
+		if (sxpElement.getVersion() == null) {
+			map.put("version", null);
+		}
+		else {
+			map.put("version", String.valueOf(sxpElement.getVersion()));
+		}
+
 		return map;
 	}
 
@@ -406,6 +450,14 @@ public class SXPElementSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpElement.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "hidden")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setHidden((Boolean)jsonParserFieldValue);
@@ -454,6 +506,11 @@ public class SXPElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "userName")) {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setUserName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "version")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setVersion((String)jsonParserFieldValue);
 				}
 			}
 		}

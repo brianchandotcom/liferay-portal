@@ -188,9 +188,11 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint = randomSXPBlueprint();
 
 		sxpBlueprint.setDescription(regex);
+		sxpBlueprint.setExternalReferenceCode(regex);
 		sxpBlueprint.setSchemaVersion(regex);
 		sxpBlueprint.setTitle(regex);
 		sxpBlueprint.setUserName(regex);
+		sxpBlueprint.setVersion(regex);
 
 		String json = SXPBlueprintSerDes.toJSON(sxpBlueprint);
 
@@ -199,9 +201,11 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		sxpBlueprint = SXPBlueprintSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, sxpBlueprint.getDescription());
+		Assert.assertEquals(regex, sxpBlueprint.getExternalReferenceCode());
 		Assert.assertEquals(regex, sxpBlueprint.getSchemaVersion());
 		Assert.assertEquals(regex, sxpBlueprint.getTitle());
 		Assert.assertEquals(regex, sxpBlueprint.getUserName());
+		Assert.assertEquals(regex, sxpBlueprint.getVersion());
 	}
 
 	@Test
@@ -856,6 +860,16 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (sxpBlueprint.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
 				if (sxpBlueprint.getModifiedDate() == null) {
 					valid = false;
@@ -890,6 +904,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 			if (Objects.equals("userName", additionalAssertFieldName)) {
 				if (sxpBlueprint.getUserName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (sxpBlueprint.getVersion() == null) {
 					valid = false;
 				}
 
@@ -1055,6 +1077,19 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getExternalReferenceCode(),
+						sxpBlueprint2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getId(), sxpBlueprint2.getId())) {
@@ -1112,6 +1147,17 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				if (!Objects.deepEquals(
 						sxpBlueprint1.getUserName(),
 						sxpBlueprint2.getUserName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getVersion(),
+						sxpBlueprint2.getVersion())) {
 
 					return false;
 				}
@@ -1276,6 +1322,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpBlueprint.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1343,6 +1397,14 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("version")) {
+			sb.append("'");
+			sb.append(String.valueOf(sxpBlueprint.getVersion()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1390,6 +1452,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				schemaVersion = StringUtil.toLowerCase(
@@ -1397,6 +1461,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				userName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				version = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

@@ -12,9 +12,9 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import React, {useState} from 'react';
 
+import Form from '../../../../components/Form';
 import Modal from '../../../../components/Modal';
 import {FormModalOptions} from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
@@ -34,20 +34,7 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 
 	return (
 		<Modal
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={() => onSave(state)}
-					>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
+			last={<Form.Footer isModal onClose={onClose} onSubmit={onSave} />}
 			observer={observer}
 			size="full-screen"
 			title={i18n.translate(type)}

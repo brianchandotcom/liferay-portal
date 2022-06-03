@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
@@ -62,18 +61,10 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 	return (
 		<Modal
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={handleSubmit(_onSubmit)}
-					>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
 			}
 			observer={observer}
 			size="lg"

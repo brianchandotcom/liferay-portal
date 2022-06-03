@@ -52,7 +52,10 @@ const SuiteForm = () => {
 	const {setTabs} = useHeader({shouldUpdate: false});
 	const {projectId} = useParams();
 	const [cases, setCases] = useState([]);
-	const context: {testraySuite?: TestraySuite} = useOutletContext();
+	const context: {
+		testrayProject?: any;
+		testraySuite?: TestraySuite;
+	} = useOutletContext();
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -180,23 +183,7 @@ const SuiteForm = () => {
 				/>
 			)}
 
-			<div>
-				<ClayButton.Group spaced>
-					<ClayButton
-						displayType="secondary"
-						onClick={() => onClose()}
-					>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={handleSubmit(_onSubmit)}
-					>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
-			</div>
+			<Form.Footer onClose={onClose} onSubmit={handleSubmit(_onSubmit)} />
 		</Container>
 	);
 };

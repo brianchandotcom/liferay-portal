@@ -13,9 +13,9 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import React, {useCallback, useState} from 'react';
 
+import Form from '../../../components/Form';
 import DualListBox, {
 	BoxItem,
 	Boxes,
@@ -166,18 +166,11 @@ const SuiteCasesModal: React.FC<SuiteCasesModalProps> = ({
 	return (
 		<Modal
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={() => onSave(state)}
-					>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
+				<Form.Footer
+					isModal
+					onClose={onClose}
+					onSubmit={() => onSave(state)}
+				/>
 			}
 			observer={observer}
 			size="full-screen"

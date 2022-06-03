@@ -130,15 +130,12 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 	return (
 		<Modal
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('analyse')}
-					</ClayButton>
-				</ClayButton.Group>
+				<Form.Footer
+					isModal
+					onClose={onClose}
+					onSubmit={onSubmit}
+					primaryButtonTitle="analyse"
+				/>
 			}
 			observer={observer}
 			size="lg"

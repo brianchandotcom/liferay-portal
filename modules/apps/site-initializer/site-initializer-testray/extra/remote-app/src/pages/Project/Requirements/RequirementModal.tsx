@@ -13,7 +13,6 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
@@ -213,15 +212,7 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 	return (
 		<Modal
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton displayType="primary" onClick={_onSubmit}>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
+				<Form.Footer isModal onClose={onClose} onSubmit={_onSubmit} />
 			}
 			observer={observer}
 			size="full-screen"

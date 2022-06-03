@@ -168,17 +168,7 @@ const RoutineBuildModal: React.FC<RoutineBuildModalProps> = ({
 
 	return (
 		<Modal
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
+			last={<Form.Footer isModal onClose={onClose} onSubmit={onSubmit} />}
 			observer={observer}
 			size="lg"
 			title={i18n.translate('new-build')}

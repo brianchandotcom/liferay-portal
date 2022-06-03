@@ -13,7 +13,6 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useForm} from 'react-hook-form';
@@ -136,7 +135,7 @@ const UserForm = () => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<hr />
+				<Form.Divider />
 
 				<ClayLayout.Row justify="start">
 					<ClayLayout.Col size={12} sm={12} xl={3}>
@@ -165,7 +164,7 @@ const UserForm = () => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<hr />
+				<Form.Divider />
 
 				<ClayLayout.Row justify="start">
 					<ClayLayout.Col size={12} sm={12} xl={3}>
@@ -190,25 +189,12 @@ const UserForm = () => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<hr />
+				<Form.Divider />
 
-				<div>
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onClose()}
-						>
-							{i18n.translate('close')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="primary"
-							onClick={handleSubmit(_onSubmit)}
-						>
-							{i18n.translate('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</div>
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
 			</ClayForm>
 		</Container>
 	);

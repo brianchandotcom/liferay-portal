@@ -13,9 +13,8 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import {useEffect} from 'react';
+import {FocusEvent, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 
@@ -34,18 +33,15 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 
-const requirementFormDefault = {
-	componentId: 0,
-	description: '',
-	descriptionType: '',
-	id: undefined,
-	key: '',
-	linkTitle: '',
-	linkURL: '',
-	summary: '',
+type RequirementsFormType = {
+	componentId: number;
+	description: string;
+	descriptionType: string;
+	id: number;
+	linkTitle: string;
+	linkURL: string;
+	summary: string;
 };
-
-type RequirementsFormType = typeof requirementFormDefault;
 
 const descriptionTypes = [
 	{
@@ -60,7 +56,7 @@ const descriptionTypes = [
 
 const RequirementsForm: React.FC = () => {
 	const {
-		form: {onClose, onSubmit},
+		form: {onClose, onSubmitAndSave},
 	} = useFormActions();
 	const {projectId} = useParams();
 
@@ -72,6 +68,7 @@ const RequirementsForm: React.FC = () => {
 		formState: {errors},
 		handleSubmit,
 		register,
+		setValue,
 		watch,
 	} = useForm<RequirementsFormType>({
 		defaultValues: context?.requirement
@@ -79,7 +76,7 @@ const RequirementsForm: React.FC = () => {
 					...context?.requirement,
 					componentId: context?.requirement?.component?.id,
 			  } as any)
-			: requirementFormDefault,
+			: {},
 		resolver: yupResolver(yupSchema.requirement),
 	});
 
@@ -87,10 +84,11 @@ const RequirementsForm: React.FC = () => {
 		CTypePagination<'components', TestrayComponent>
 	>(getComponents);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const testrayComponents = testrayComponentsData?.c?.components.items || [];
 
 	const _onSubmit = (form: RequirementsFormType) => {
-		onSubmit(
+		onSubmitAndSave(
 			{...form, projectId},
 			{
 				createMutation: CreateRequirement,
@@ -108,6 +106,21 @@ const RequirementsForm: React.FC = () => {
 		required: true,
 	};
 
+	const onBlurLinkTitle = ({
+		target: {value},
+	}: FocusEvent<HTMLInputElement>) => {
+		const linkTitleSplit = value.split('/');
+		const linkTitle = linkTitleSplit[linkTitleSplit.length - 1];
+
+		setValue('linkTitle', linkTitle);
+	};
+
+	useEffect(() => {
+		if (testrayComponents.length) {
+			setValue('componentId', testrayComponents[0].id);
+		}
+	}, [testrayComponents, setValue]);
+
 	useEffect(() => {
 		if (!context.requirement) {
 			setTimeout(() => {
@@ -117,83 +130,72 @@ const RequirementsForm: React.FC = () => {
 	}, [context.requirement, setTabs]);
 
 	return (
-		<Container className="container" title="">
-			<ClayForm>
-				<Form.BaseRow title={i18n.translate('requirements')}>
-					<ClayForm.Group className="form-group-sm">
-						<Form.Input
-							{...inputProps}
-							label={i18n.translate('key')}
-							name="key"
-						/>
+		<Container className="container">
+			<ClayForm className="container pt-2">
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('summary')}
+					name="summary"
+				/>
 
-						<Form.Input
-							{...inputProps}
-							label={i18n.translate('summary')}
-							name="summary"
-						/>
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('link-url')}
+					name="linkURL"
+					onBlur={onBlurLinkTitle}
+				/>
 
-						<Form.Input
-							{...inputProps}
-							label={i18n.translate('link-url')}
-							name="linkURL"
-						/>
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('link-title')}
+					name="linkTitle"
+				/>
 
-						<Form.Input
-							{...inputProps}
-							label={i18n.translate('link-title')}
-							name="linkTitle"
-						/>
+				<Form.Select
+					{...inputProps}
+					defaultOption={false}
+					label="main-component"
+					name="componentId"
+					options={testrayComponents.map(
+						({id: value, name: label}) => ({
+							label,
+							value,
+						})
+					)}
+					value={componentId}
+				/>
 
-						<Form.Select
-							{...inputProps}
-							label="main-component"
-							name="componentId"
-							options={testrayComponents.map(
-								({id: value, name: label}) => ({
-									label,
-									value,
-								})
-							)}
-							value={componentId}
-						/>
-					</ClayForm.Group>
-				</Form.BaseRow>
+				<Form.Divider />
 
-				<Form.BaseRow title={i18n.translate('description')}>
+				<Form.BaseRow
+					separator={false}
+					title={i18n.translate('description')}
+				>
 					<Form.Select
 						{...inputProps}
+						className="col-2 ml-auto"
+						defaultOption={false}
 						name="descriptionType"
 						options={descriptionTypes}
+						required={false}
 					/>
-
-					<Form.Input
-						{...inputProps}
-						name="description"
-						required
-						type="textarea"
-					/>
-
-					<MarkdownPreview markdown={descriptionType} />
 				</Form.BaseRow>
 
-				<div>
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onClose()}
-						>
-							{i18n.translate('close')}
-						</ClayButton>
+				<Form.Input
+					{...inputProps}
+					name="description"
+					required
+					type="textarea"
+				/>
 
-						<ClayButton
-							displayType="primary"
-							onClick={handleSubmit(_onSubmit)}
-						>
-							{i18n.translate('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</div>
+				<MarkdownPreview markdown={descriptionType} />
+
+				<Form.Divider />
+
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
 			</ClayForm>
 		</Container>
 	);

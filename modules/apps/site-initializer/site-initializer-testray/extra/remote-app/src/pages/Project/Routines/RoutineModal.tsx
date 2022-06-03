@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 
@@ -63,18 +62,11 @@ const RoutineModal: React.FC<FormModalComponent & {projectId: number}> = ({
 	return (
 		<Modal
 			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={handleSubmit(_onSubmit)}
-					>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
+				<Form.Footer
+					isModal
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
 			}
 			observer={observer}
 			size="lg"

@@ -13,7 +13,6 @@
  */
 
 import {useMutation, useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useEffect, useState} from 'react';
@@ -206,17 +205,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
 
 	return (
 		<Modal
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('save')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
+			last={<Form.Footer isModal onClose={onClose} onSubmit={onSubmit} />}
 			observer={observer}
 			size="full-screen"
 			title={i18n.translate(

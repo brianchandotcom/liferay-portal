@@ -27,7 +27,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Igor Beslic
@@ -37,12 +36,12 @@ public class EditBatchPlannerPlanDisplayContext {
 
 	public EditBatchPlannerPlanDisplayContext(
 			List<BatchPlannerPlan> batchPlannerPlans,
-			Set<String> internalClassNames,
+			Map<String, String> internalClassNameCategories,
 			BatchPlannerPlan selectedBatchPlannerPlan)
 		throws PortalException {
 
 		_internalClassNameSelectOptions = _getInternalClassNameSelectOptions(
-			internalClassNames);
+			internalClassNameCategories);
 
 		if (selectedBatchPlannerPlan == null) {
 			_selectedBatchPlannerMappings = new HashMap<>();
@@ -117,25 +116,30 @@ public class EditBatchPlannerPlanDisplayContext {
 	}
 
 	private List<SelectOption> _getInternalClassNameSelectOptions(
-		Set<String> internalClassNames) {
+		Map<String, String> internalClassNameCategories) {
 
 		List<SelectOption> internalClassNameSelectOptions = new ArrayList<>();
 
 		internalClassNameSelectOptions.add(
 			new SelectOption(StringPool.BLANK, StringPool.BLANK));
 
-		for (String internalClassName : internalClassNames) {
+		for (Map.Entry<String, String> entry :
+				internalClassNameCategories.entrySet()) {
+
+			String internalClassName = entry.getKey();
+
 			String[] internalClassNameParts = StringUtil.split(
 				internalClassName, StringPool.PERIOD);
 
 			internalClassNameSelectOptions.add(
 				new SelectOption(
 					String.format(
-						"%s (%s)",
+						"%s (%s - %s)",
 						internalClassNameParts
 							[internalClassNameParts.length - 1],
 						internalClassNameParts
-							[internalClassNameParts.length - 2]),
+							[internalClassNameParts.length - 2],
+						entry.getValue()),
 					internalClassName));
 		}
 

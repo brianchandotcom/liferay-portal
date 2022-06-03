@@ -18,22 +18,30 @@ import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.web.internal.display.context.EditBatchPlannerPlanDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 
-import java.util.Set;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,6 +75,39 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
+	private Map<String, String> _getInternalClassNameCategories() {
+		Map<String, String> internalClassNameCategories = new HashMap<>();
+
+		for (String entityClassName :
+				_vulcanBatchEngineTaskItemDelegateRegistry.
+					getEntityClassNames()) {
+
+			VulcanBatchEngineTaskItemDelegate
+				vulcanBatchEngineTaskItemDelegate =
+					_vulcanBatchEngineTaskItemDelegateRegistry.
+						getVulcanBatchEngineTaskItemDelegate(entityClassName);
+
+			internalClassNameCategories.put(
+				entityClassName,
+				_getInternalClassNameCategory(
+					FrameworkUtil.getBundle(
+						vulcanBatchEngineTaskItemDelegate.getClass())));
+		}
+
+		return internalClassNameCategories;
+	}
+
+	private String _getInternalClassNameCategory(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String bundleName = GetterUtil.getString(
+			headers.get(Constants.BUNDLE_NAME));
+
+		return bundleName.substring(
+			0, bundleName.lastIndexOf(StringPool.SPACE));
+	}
+
 	private boolean _isExport(String value) {
 		if (value.equals("export")) {
 			return true;
@@ -76,8 +117,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _render(RenderRequest renderRequest) throws PortalException {
-		Set<String> entityClassNames =
-			_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames();
+		Map<String, String> internalClassNameCategories =
+			_getInternalClassNameCategories();
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");
@@ -90,7 +131,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 						_batchPlannerPlanService.getBatchPlannerPlans(
 							_portal.getCompanyId(renderRequest), true, true,
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-						entityClassNames, null));
+						internalClassNameCategories, null));
 
 				return "/export/edit_batch_planner_plan.jsp";
 			}
@@ -101,7 +142,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), false, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					entityClassNames, null));
+					internalClassNameCategories, null));
 
 			return "/import/edit_batch_planner_plan.jsp";
 		}
@@ -116,7 +157,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), true, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					entityClassNames, batchPlannerPlan));
+					internalClassNameCategories, batchPlannerPlan));
 
 			return "/export/edit_batch_planner_plan.jsp";
 		}
@@ -127,7 +168,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				_batchPlannerPlanService.getBatchPlannerPlans(
 					_portal.getCompanyId(renderRequest), false, true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				entityClassNames, batchPlannerPlan));
+				internalClassNameCategories, batchPlannerPlan));
 
 		return "/import/edit_batch_planner_plan.jsp";
 	}

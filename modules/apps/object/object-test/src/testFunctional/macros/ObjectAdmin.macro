@@ -806,7 +806,9 @@ definition {
 			}
 		}
 
-		Click(locator1 = "ObjectAction#TAB_ACTION_BUILDER");
+		Click(
+			key_tabName = "Action Builder",
+			locator1 = "ObjectAction#TAB_GENERIC");
 
 		if (isSet(whenAction)) {
 			Click(locator1 = "ObjectAction#SELECT_TRIGGER");

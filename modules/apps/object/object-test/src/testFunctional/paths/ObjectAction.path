@@ -18,13 +18,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>TAB_ACTION_BUILDER</td>
-		<td>//button[contains(.,'Action Builder')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>TAB_BASIC_INFO</td>
-		<td>//button[contains(.,'Basic Info')]</td>
+		<td>TAB_GENERIC</td>
+		<td>//button[contains(.,'${key_tabName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

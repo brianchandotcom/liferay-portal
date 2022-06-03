@@ -241,7 +241,7 @@
 	},
 	"colorActionPrimaryActive": {
 		"cssVariableMapping": "color-action-primary-active",
-		"value": "#295CCC"
+		"value": "#3C249E"
 	},
 	"colorActionPrimaryActiveLighten": {
 		"cssVariableMapping": "color-action-primary-active-lighten",
@@ -257,7 +257,7 @@
 	},
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
-		"value": "#295CCC"
+		"value": "#4429b3"
 	},
 	"colorActionPrimaryHoverLighten": {
 		"cssVariableMapping": "color-action-primary-hover-lighten",
@@ -309,15 +309,15 @@
 	},
 	"colorBrandPrimary": {
 		"cssVariableMapping": "color-brand-primary",
-		"value": "#4D85FF"
+		"value": "#373ECC"
 	},
 	"colorBrandPrimaryDarken1": {
 		"cssVariableMapping": "color-brand-primary-darken-1",
-		"value": "#145FFF"
+		"value": "#2F35BE"
 	},
 	"colorBrandPrimaryDarken2": {
 		"cssVariableMapping": "color-brand-primary-darken-2",
-		"value": "#0045DB"
+		"value": "#272DB0"
 	},
 	"colorBrandPrimaryDarken3": {
 		"cssVariableMapping": "color-brand-primary-darken-3",
@@ -325,83 +325,83 @@
 	},
 	"colorBrandPrimaryDarken4": {
 		"cssVariableMapping": "color-brand-primary-darken-4",
-		"value": "#002470"
+		"value": "#161C95"
 	},
 	"colorBrandPrimaryDarken5": {
 		"cssVariableMapping": "color-brand-primary-darken-5",
-		"value": "#001238"
+		"value": "#373ECC"
 	},
 	"colorBrandPrimaryLighten1": {
 		"cssVariableMapping": "color-brand-primary-lighten-1",
-		"value": "#6B9AFF"
+		"value": "#565DD5"
 	},
 	"colorBrandPrimaryLighten2": {
 		"cssVariableMapping": "color-brand-primary-lighten-2",
-		"value": "#8AAFFF"
+		"value": "#767BDD"
 	},
 	"colorBrandPrimaryLighten3": {
 		"cssVariableMapping": "color-brand-primary-lighten-3",
-		"value": "#A8C4FF"
+		"value": "#959AE6"
 	},
 	"colorBrandPrimaryLighten4": {
 		"cssVariableMapping": "color-brand-primary-lighten-4",
-		"value": "#C2D4FF"
+		"value": "#B4B9EE"
 	},
 	"colorBrandPrimaryLighten5": {
 		"cssVariableMapping": "color-brand-primary-lighten-5",
-		"value": "#E0EBFF"
+		"value": "#D4D7F7"
 	},
 	"colorBrandPrimaryLighten6": {
 		"cssVariableMapping": "color-brand-primary-lighten-6",
-		"value": "#F0F5FF"
+		"value": "#F3F6FF"
 	},
 	"colorBrandSecondary": {
 		"cssVariableMapping": "color-brand-secondary",
-		"value": "#F4870B"
+		"value": "#ACBCC7"
 	},
 	"colorBrandSecondaryDarken1": {
 		"cssVariableMapping": "color-brand-secondary-darken-1",
-		"value": "#CE7209"
+		"value": "#93A3AF"
 	},
 	"colorBrandSecondaryDarken2": {
 		"cssVariableMapping": "color-brand-secondary-darken-2",
-		"value": "#A25907"
+		"value": "#93A3AF"
 	},
 	"colorBrandSecondaryDarken3": {
 		"cssVariableMapping": "color-brand-secondary-darken-3",
-		"value": "#7A4405"
+		"value": "#60727E"
 	},
 	"colorBrandSecondaryDarken4": {
 		"cssVariableMapping": "color-brand-secondary-darken-4",
-		"value": "#532E04"
+		"value": "#475A66"
 	},
 	"colorBrandSecondaryDarken5": {
 		"cssVariableMapping": "color-brand-secondary-darken-5",
-		"value": "#271502"
+		"value": "#2E414E"
 	},
 	"colorBrandSecondaryLighten1": {
 		"cssVariableMapping": "color-brand-secondary-lighten-1",
-		"value": "#F69A31"
+		"value": "#BAC7D0"
 	},
 	"colorBrandSecondaryLighten2": {
 		"cssVariableMapping": "color-brand-secondary-lighten-2",
-		"value": "#F8B05D"
+		"value": "#C8D2DA"
 	},
 	"colorBrandSecondaryLighten3": {
 		"cssVariableMapping": "color-brand-secondary-lighten-3",
-		"value": "#FAC385"
+		"value": "#D6DEE3"
 	},
 	"colorBrandSecondaryLighten4": {
 		"cssVariableMapping": "color-brand-secondary-lighten-4",
-		"value": "#FBD6AC"
+		"value": "#E3E9EC"
 	},
 	"colorBrandSecondaryLighten5": {
 		"cssVariableMapping": "color-brand-secondary-lighten-5",
-		"value": "#FDECD8"
+		"value": "#F1F4F6"
 	},
 	"colorBrandSecondaryLighten6": {
 		"cssVariableMapping": "color-brand-secondary-lighten-6",
-		"value": "#FFF8F0"
+		"value": "#FFFFFF"
 	},
 	"colorChart1": {
 		"cssVariableMapping": "color-chart-1",

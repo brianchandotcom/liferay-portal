@@ -104,7 +104,8 @@ const useFormActions = (): Form => {
 				variables,
 				...options,
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 
 			throw error;

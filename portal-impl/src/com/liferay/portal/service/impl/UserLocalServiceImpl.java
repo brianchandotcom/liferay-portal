@@ -264,6 +264,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String password2 = password1;
 
+		boolean passwordReset = _isPasswordReset(companyId);
+
+		if (Validator.isNull(password1)) {
+			autoPassword = true;
+			passwordReset = true;
+		}
+
 		boolean autoScreenName = false;
 
 		screenName = getLogin(screenName);
@@ -318,13 +325,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
+		if (autoPassword) {
+			defaultAdminUser.setReminderQueryAnswer(
+				WorkflowConstants.LABEL_PENDING);
+
+			defaultAdminUser = userPersistence.update(defaultAdminUser);
+		}
+
 		updateEmailAddressVerified(defaultAdminUser.getUserId(), true);
 
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(
-			defaultAdminUser.getUserId(), _isPasswordReset(companyId));
+		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
 
 		return defaultAdminUser;
 	}

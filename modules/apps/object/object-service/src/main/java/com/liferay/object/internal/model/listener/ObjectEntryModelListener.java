@@ -38,6 +38,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -184,7 +185,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		);
 	}
 
-	private Object _toDTO(ObjectEntry objectEntry, User user)
+	private Map<String, Object> _toDTO(ObjectEntry objectEntry, User user)
 		throws PortalException {
 
 		DTOConverter<ObjectEntry, ?> dtoConverter =
@@ -207,10 +208,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				user.getLocale(), null, user);
 
 		try {
-			return _jsonFactory.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				_jsonFactory.looseSerializeDeep(
 					dtoConverter.toDTO(
 						defaultDTOConverterContext, objectEntry)));
+
+			return jsonObject.toMap();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

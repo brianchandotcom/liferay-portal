@@ -68,23 +68,11 @@ public class ItemClassIndexUtil {
 			return false;
 		}
 
-		ClassLoader classLoader = _getClassLoader(valueClass);
-
-		String className = valueClass.getName();
-
-		try {
-			Class<?> arrayedClass = classLoader.loadClass(
-				className.substring(2, className.length() - 1));
-
-			if (isSingleColumnAdoptableValue(arrayedClass)) {
-				return true;
-			}
-
-			return false;
+		if (isSingleColumnAdoptableValue(valueClass.getComponentType())) {
+			return true;
 		}
-		catch (ClassNotFoundException classNotFoundException) {
-			return false;
-		}
+
+		return false;
 	}
 
 	public static boolean isSingleColumnAdoptableValue(Class<?> valueClass) {
@@ -95,16 +83,6 @@ public class ItemClassIndexUtil {
 		}
 
 		return true;
-	}
-
-	private static ClassLoader _getClassLoader(Class<?> clazz) {
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		if (classLoader != null) {
-			return classLoader;
-		}
-
-		return ItemClassIndexUtil.class.getClassLoader();
 	}
 
 	private static final Map<Class<?>, Map<String, Field>> _fieldsMap =

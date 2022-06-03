@@ -145,6 +145,20 @@ public class SXPBlueprintSerDes {
 			sb.append("]");
 		}
 
+		if (sxpBlueprint.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpBlueprint.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (sxpBlueprint.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -222,6 +236,20 @@ public class SXPBlueprintSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpBlueprint.getVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpBlueprint.getVersion()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -295,6 +323,15 @@ public class SXPBlueprintSerDes {
 				String.valueOf(sxpBlueprint.getElementInstances()));
 		}
 
+		if (sxpBlueprint.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(sxpBlueprint.getExternalReferenceCode()));
+		}
+
 		if (sxpBlueprint.getId() == null) {
 			map.put("id", null);
 		}
@@ -339,6 +376,13 @@ public class SXPBlueprintSerDes {
 		}
 		else {
 			map.put("userName", String.valueOf(sxpBlueprint.getUserName()));
+		}
+
+		if (sxpBlueprint.getVersion() == null) {
+			map.put("version", null);
+		}
+		else {
+			map.put("version", String.valueOf(sxpBlueprint.getVersion()));
 		}
 
 		return map;
@@ -407,6 +451,14 @@ public class SXPBlueprintSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setId(
@@ -439,6 +491,11 @@ public class SXPBlueprintSerDes {
 			else if (Objects.equals(jsonParserFieldName, "userName")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setUserName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "version")) {
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setVersion((String)jsonParserFieldValue);
 				}
 			}
 		}

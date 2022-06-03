@@ -35,7 +35,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 	const MANAGE_DROPDOWN = useSidebarActions();
 
 	return (
-		<div className="testray-sidebar-footer">
+		<div className="cursor-pointer testray-sidebar-footer">
 			<div className="divider divider-full" />
 
 			<div className="d-flex justify-content-end">
@@ -86,7 +86,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				]}
 				position={Align.RightBottom}
 				trigger={
-					<div className="testray-avatar-dropdown">
+					<div className="testray-avatar-dropdown testray-sidebar-item">
 						<Avatar
 							displayName
 							expanded={expanded}

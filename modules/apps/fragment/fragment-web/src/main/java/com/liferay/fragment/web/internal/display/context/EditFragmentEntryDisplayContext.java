@@ -367,6 +367,49 @@ public class EditFragmentEntryDisplayContext {
 		return _htmlContent;
 	}
 
+	private JSONArray _getInitialFieldTypesJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry == null) ||
+			(fragmentEntry.getType() != FragmentConstants.TYPE_INPUT)) {
+
+			return jsonArray;
+		}
+
+		JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		try {
+			JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntry.getTypeOptions());
+
+			fieldTypesJSONArray = typeOptionsJSONObject.getJSONArray(
+				"fieldTypes");
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		if ((fieldTypesJSONArray == null) ||
+			(fieldTypesJSONArray.length() <= 0)) {
+
+			return jsonArray;
+		}
+
+		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			if (!JSONUtil.hasValue(
+					fieldTypesJSONArray, infoFieldType.getName())) {
+
+				continue;
+			}
+
+			jsonArray.put(infoFieldType.getName());
+		}
+
+		return jsonArray;
+	}
+
 	private String _getJsContent() {
 		if (Validator.isNotNull(_jsContent)) {
 			return _jsContent;
@@ -479,7 +522,7 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"initialCSS", _getCssContent()
 		).put(
-			"initialFieldTypes", _getFieldTypesJSONArray()
+			"initialFieldTypes", _getInitialFieldTypesJSONArray()
 		).put(
 			"initialHTML", _getHtmlContent()
 		).put(

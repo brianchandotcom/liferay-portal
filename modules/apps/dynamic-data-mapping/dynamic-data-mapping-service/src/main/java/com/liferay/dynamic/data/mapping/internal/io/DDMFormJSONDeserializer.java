@@ -128,6 +128,10 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 	}
 
 	protected static Set<Locale> getAvailableLocales(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
 		Set<Locale> availableLocales = new HashSet<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {

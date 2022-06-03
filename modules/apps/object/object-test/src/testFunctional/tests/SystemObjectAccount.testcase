@@ -90,18 +90,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
-	@ignore = "Test Stub"
+	@description = "LPS-151765 - Verify it's not possible to delete an entry if the relationship is one to many with prevent deletion type"
 	@priority = "4"
-	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
-
-		// TODO LPS-153533 CannotDeleteRelationshipWhenDeletionTypeIsDisassociate pending implementation
-
-	}
-
-	@description = "LPS-151765 - Verify if the relationship one to many, with prevent deletion type, not be able to delete an entry related to another one"
-	@priority = "4"
-	test CannotDeleteRelationshipWhenDeletionTypeIsPrevent {
+	test CannotDeleteEntryWhenDeletionTypeIsPrevent {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(
@@ -180,6 +171,15 @@ definition {
 		ObjectPortlet.deleteEntry(entry = "Entry A");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
+	}
+
+	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
+
+		// TODO LPS-153533 CannotDeleteRelationshipWhenDeletionTypeIsDisassociate pending implementation
+
 	}
 
 	@description = "LPS-151765 - Verify if is not possible to edit default fields on System Object Account"

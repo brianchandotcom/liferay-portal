@@ -173,11 +173,10 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			String line = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("((") && line.endsWith("))")) {
-					line = line.substring(1, line.length() - 1);
-				}
+				line = line.replaceFirst("^\\( *(\\(.+\\)) *\\)$", "$1");
 
 				sb.append(_fixIndentation(line, level));
+
 				sb.append("\n");
 
 				level += getLevel(line, "(", ")");

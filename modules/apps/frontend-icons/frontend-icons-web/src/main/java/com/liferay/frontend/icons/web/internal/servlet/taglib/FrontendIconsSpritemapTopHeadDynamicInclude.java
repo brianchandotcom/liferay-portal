@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -63,10 +65,18 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 				"Liferay.Icons.spritemap = '",
 				FrontendIconsUtil.getSpritemap(themeDisplay), "';"));
 
-		sb.append(
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-145112"))) {
+			sb.append(
 			StringBundler.concat(
 				"Liferay.Icons.systemSpritemap = '",
 				FrontendIconsUtil.getSystemSpritemap(), "';"));
+		} else {
+			sb.append(
+				StringBundler.concat(
+					"Liferay.Icons.systemSpritemap = '",
+					FrontendIconsUtil.getSpritemap(themeDisplay), "';"));
+		}
+
 		sb.append("</script>");
 
 		printWriter.println(sb);

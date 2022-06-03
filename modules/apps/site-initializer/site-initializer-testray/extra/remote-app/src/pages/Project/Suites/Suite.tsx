@@ -31,11 +31,8 @@ import {
 } from '../../../graphql/queries/testraySuiteCase';
 import i18n from '../../../i18n';
 import dayjs from '../../../util/date';
-import {SearchBuilder, searchUtil} from '../../../util/search';
-import {
-	State as CaseParameter,
-	initialState as CaseParameterInitialState,
-} from './SuiteCasesModal';
+import useSuiteCaseFilter, {getCaseParameters} from './useSuiteCaseFilter';
+import useSuiteCasesActions from './useSuiteCasesActions';
 
 const transformData = (
 	data:
@@ -67,41 +64,14 @@ const Suite = () => {
 		testraySuite,
 	}: {projectId: number; testraySuite: TestraySuite} = useOutletContext();
 
-	const getCaseParameters = (): CaseParameter => {
-		try {
-			return JSON.parse(testraySuite.caseParameters);
-		}
-		catch (error) {
-			return CaseParameterInitialState;
-		}
-	};
+	const isSmartSuite = !!testraySuite.caseParameters;
 
-	const caseParameters = getCaseParameters();
+	const suiteCaseFilter = useSuiteCaseFilter(testraySuite);
+	const suiteCaseActions = useSuiteCasesActions({isSmartSuite});
+	const caseParameters = getCaseParameters(testraySuite);
 
 	const getCaseParameterKey = (caseParameter: BoxItem[]) =>
 		caseParameter?.map(({label}) => label).join(', ');
-
-	const getCaseValues = (caseParameter: BoxItem[]) =>
-		caseParameter?.map(({value}) => value);
-
-	const getCaseFilters = () => {
-		if (!testraySuite.caseParameters) {
-			return searchUtil.eq('suiteId', testraySuite.id);
-		}
-
-		const searchBuilder = new SearchBuilder()
-			.in('caseTypeId', getCaseValues(caseParameters.testrayCaseTypes))
-			.or()
-			.in('componentId', getCaseValues(caseParameters.testrayComponents))
-			.or()
-			.in(
-				'componentId',
-				getCaseValues(caseParameters.testrayRequirements)
-			)
-			.build();
-
-		return searchBuilder;
-	};
 
 	return (
 		<>
@@ -177,11 +147,13 @@ const Suite = () => {
 
 			<Container className="mt-4">
 				<ListView
+					forceRefetch={suiteCaseActions.formModal.forceRefetch}
 					managementToolbarProps={{visible: false}}
 					query={
 						testraySuite.caseParameters ? getCases : getSuiteCases
 					}
 					tableProps={{
+						actions: suiteCaseActions.actions,
 						columns: [
 							{
 								key: 'priority',
@@ -209,7 +181,7 @@ const Suite = () => {
 					}}
 					transformData={transformData}
 					variables={{
-						filter: getCaseFilters(),
+						filter: suiteCaseFilter,
 					}}
 				/>
 			</Container>

@@ -20,6 +20,8 @@ import {TableProps} from '../../../components/Table';
 import {getCases} from '../../../graphql/queries';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {filters} from '../../../schema/filter';
+import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
@@ -29,7 +31,10 @@ type CaseListViewProps = {
 	formModal?: FormModal;
 	projectId?: number | string;
 	variables?: any;
-} & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
+} & {
+	listViewProps?: Partial<ListViewProps> & {initialContext?: any};
+	tableProps?: Partial<TableProps>;
+};
 
 const CaseListView: React.FC<CaseListViewProps> = ({
 	actions,
@@ -44,49 +49,10 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 	return (
 		<ListView
 			forceRefetch={formModal?.forceRefetch}
-			initialContext={{
-				filters: {
-					columns: {
-						caseType: false,
-						dateCreated: false,
-						dateModified: false,
-						issues: false,
-						team: false,
-					},
-				},
-			}}
 			managementToolbarProps={{
-				addButton: () => navigate(`create`, {state: {back: pathname}}),
-				filterFields: [
-					{
-						label: 'Priority',
-						name: 'priority',
-						options: ['1', '2', '3', '4', '5'],
-						type: 'checkbox',
-					},
-					{
-						label: 'Case Type',
-						name: 'caseType',
-						options: [{label: 'Staging', value: 'staging'}],
-						type: 'select',
-					},
-					{
-						label: 'Case Name',
-						name: 'caseName',
-						type: 'text',
-					},
-					{
-						label: 'Team',
-						name: 'team',
-						options: [{label: 'Solutions', value: 'solutions'}],
-						type: 'select',
-					},
-					{
-						label: 'Component',
-						name: 'component',
-						type: 'text',
-					},
-				],
+				addButton: () => navigate('create', {state: {back: pathname}}),
+				filterFields: filters.case,
+				title: i18n.translate('cases'),
 			}}
 			query={getCases}
 			tableProps={{
@@ -94,10 +60,14 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				columns: [
 					{
 						key: 'dateCreated',
+						render: (dateCreated) =>
+							dayjs(dateCreated).format('lll'),
 						value: i18n.translate('create-date'),
 					},
 					{
 						key: 'dateModified',
+						render: (dateModified) =>
+							dayjs(dateModified).format('lll'),
 						value: i18n.translate('modified-date'),
 					},
 					{
@@ -146,10 +116,23 @@ const Cases = () => {
 
 	return (
 		<>
-			<Container title={i18n.translate('cases')}>
+			<Container>
 				<CaseListView
 					actions={actions}
 					formModal={formModal}
+					listViewProps={{
+						initialContext: {
+							filters: {
+								columns: {
+									caseType: false,
+									dateCreated: false,
+									dateModified: false,
+									issues: false,
+									team: false,
+								},
+							},
+						},
+					}}
 					variables={{
 						filter: searchUtil.eq('projectId', projectId as string),
 					}}

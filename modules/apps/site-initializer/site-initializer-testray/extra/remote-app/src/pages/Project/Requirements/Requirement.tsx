@@ -13,9 +13,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useEffect} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 
+import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import MarkdownPreview from '../../../components/Markdown';
@@ -111,9 +113,21 @@ const Requirement = () => {
 				/>
 			</Container>
 
-			<Container className="mt-3" title={i18n.translate('cases')}>
+			<Container className="mt-3">
 				<ListView
-					managementToolbarProps={{visible: false}}
+					managementToolbarProps={{
+						buttons: (
+							<ClayManagementToolbar.Item>
+								<Button
+									displayType="secondary"
+									symbol="list-ul"
+								>
+									{i18n.translate('link-cases')}
+								</Button>
+							</ClayManagementToolbar.Item>
+						),
+						title: i18n.translate('cases'),
+					}}
 					query={getRequirementCases}
 					tableProps={{
 						columns: [

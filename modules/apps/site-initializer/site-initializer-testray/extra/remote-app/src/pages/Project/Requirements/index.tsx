@@ -13,8 +13,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useNavigate, useParams} from 'react-router-dom';
 
+import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getRequirements} from '../../../graphql/queries';
@@ -30,11 +32,33 @@ const Requirements = () => {
 
 	return (
 		<>
-			<Container title={i18n.translate('requirements')}>
+			<Container>
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
 						addButton: () => navigate('create'),
+						buttons: (
+							<>
+								<ClayManagementToolbar.Item>
+									<Button
+										displayType="secondary"
+										symbol="redo"
+									>
+										{i18n.translate('import-jira-issues')}
+									</Button>
+								</ClayManagementToolbar.Item>
+
+								<ClayManagementToolbar.Item className="ml-2">
+									<Button
+										displayType="secondary"
+										symbol="upload"
+									>
+										{i18n.translate('upload-csv')}
+									</Button>
+								</ClayManagementToolbar.Item>
+							</>
+						),
+						title: i18n.translate('requirements'),
 					}}
 					query={getRequirements}
 					tableProps={{

@@ -32,8 +32,9 @@ const CaseRequirement = () => {
 	}: {projectId: number; testrayCase: TestraySuite} = useOutletContext();
 
 	return (
-		<Container title={i18n.translate('requirements')}>
+		<Container>
 			<ListView
+				managementToolbarProps={{title: i18n.translate('requirements')}}
 				query={getRequirementCases}
 				tableProps={{
 					columns: [

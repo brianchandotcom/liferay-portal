@@ -31,7 +31,7 @@ const Routines = () => {
 	const projectId = Number(_projectId);
 
 	return (
-		<Container title={i18n.translate('routines')}>
+		<Container>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
@@ -59,6 +59,7 @@ const Routines = () => {
 							type: 'select',
 						},
 					],
+					title: i18n.translate('routines'),
 				}}
 				query={getRoutines}
 				tableProps={{

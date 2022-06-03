@@ -24,7 +24,7 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {CreateSuite, UpdateSuite} from '../../../graphql/mutations';
 import {CreateSuiteCaseBatch} from '../../../graphql/mutations/testraySuiteCase';
-import {TestraySuite, getSuites} from '../../../graphql/queries';
+import {TestrayCase, TestraySuite, getSuites} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
@@ -178,6 +178,36 @@ const SuiteForm = () => {
 				<CaseListView
 					listViewProps={{
 						managementToolbarProps: {visible: false},
+						tableProps: {
+							actions: [
+								{
+									action: ({id}: TestrayCase) =>
+										setCases((prevCases) =>
+											prevCases.filter(
+												(prevCase: number) =>
+													prevCase !== id
+											)
+										),
+									name: i18n.translate('delete'),
+								},
+							],
+							columns: [
+								{
+									key: 'priority',
+									value: i18n.translate('priority'),
+								},
+								{
+									key: 'name',
+									size: 'md',
+									value: i18n.translate('name'),
+								},
+								{
+									key: 'description',
+									size: 'lg',
+									value: i18n.translate('description'),
+								},
+							],
+						},
 						variables: {filter: searchUtil.in('id', cases)},
 					}}
 				/>

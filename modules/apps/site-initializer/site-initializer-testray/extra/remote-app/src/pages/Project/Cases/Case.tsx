@@ -77,7 +77,7 @@ const Case = () => {
 				/>
 			</Container>
 
-			<Container className="mt-3" title={i18n.translate('test-history')}>
+			<Container className="mt-3">
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					initialContext={{
@@ -92,6 +92,7 @@ const Case = () => {
 						},
 					}}
 					managementToolbarProps={{
+						title: i18n.translate('test-history'),
 						visible: true,
 					}}
 					query={getCaseResults}

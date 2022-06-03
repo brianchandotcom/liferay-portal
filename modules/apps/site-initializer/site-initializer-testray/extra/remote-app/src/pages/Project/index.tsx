@@ -58,13 +58,15 @@ const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
 
 	return (
 		<>
-			<PageContainer title={i18n.translate('projects')}>
+			<PageContainer>
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
 						addButton: permissions.CREATE
 							? () => formModal.modal.open()
 							: undefined,
+						display: {columns: false},
+						title: i18n.translate('projects'),
 					}}
 					query={getProjects}
 					tableProps={{

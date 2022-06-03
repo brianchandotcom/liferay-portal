@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,6 +97,17 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
+		}
+		catch (Exception exception) {
+			if (exception instanceof ConfigurationModelListenerException) {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.sendRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+			}
+			else {
+				throw exception;
+			}
 		}
 	}
 

@@ -55,6 +55,7 @@ page import="com.liferay.depot.web.internal.display.context.DepotApplicationDisp
 page import="com.liferay.depot.web.internal.util.DepotLanguageUtil" %><%@
 page import="com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
 page import="com.liferay.portal.kernel.exception.LocaleException" %><%@

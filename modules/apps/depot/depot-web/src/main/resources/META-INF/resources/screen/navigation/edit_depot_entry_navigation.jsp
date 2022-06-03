@@ -46,6 +46,8 @@ renderResponse.setTitle(group.getDescriptiveName(locale));
 
 	<clay:sheet>
 		<clay:sheet-header>
+			<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="mime-type-size-limit-error" />
+
 			<h2 class="sheet-title"><%= formLabel %></h2>
 
 			<c:if test="<%= Validator.isNotNull(formDescription) %>">

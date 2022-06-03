@@ -1801,13 +1801,16 @@ public class TestrayImporter {
 		PortalRelease portalRelease = getPortalRelease();
 
 		if (portalRelease != null) {
-			String tomcatURL = String.valueOf(portalRelease.getTomcatURL());
+			String portalBundleTomcatURLString = String.valueOf(
+				portalRelease.getPortalBundleTomcatURL());
 
-			string = string.replace("$(portal.release.tomcat.url)", tomcatURL);
+			string = string.replace(
+				"$(portal.release.tomcat.url)", portalBundleTomcatURLString);
 			string = string.replace(
 				"$(portal.release.version)", portalRelease.getPortalVersion());
 
-			Matcher matcher = _releaseArtifactURLPattern.matcher(tomcatURL);
+			Matcher matcher = _releaseArtifactURLPattern.matcher(
+				portalBundleTomcatURLString);
 
 			if (matcher.find()) {
 				string = string.replace(
@@ -2088,27 +2091,32 @@ public class TestrayImporter {
 		parameters.put(
 			"liferay.portal.bundle", portalRelease.getPortalVersion());
 
-		String tomcatURL = String.valueOf(portalRelease.getTomcatURL());
+		String portalBundleTomcatURLString = String.valueOf(
+			portalRelease.getPortalBundleTomcatURL());
 
-		if (tomcatURL.startsWith("https://release.liferay.com")) {
+		if (portalBundleTomcatURLString.startsWith(
+				"https://release.liferay.com")) {
+
 			try {
-				tomcatURL = tomcatURL.replaceAll(
-					"https://(release\\.liferay\\.com.*)",
-					JenkinsResultsParserUtil.combine(
-						"https://",
-						JenkinsResultsParserUtil.getBuildProperty(
-							"jenkins.admin.user.name"),
-						":",
-						JenkinsResultsParserUtil.getBuildProperty(
-							"jenkins.admin.user.password"),
-						"@$1"));
+				portalBundleTomcatURLString =
+					portalBundleTomcatURLString.replaceAll(
+						"https://(release\\.liferay\\.com.*)",
+						JenkinsResultsParserUtil.combine(
+							"https://",
+							JenkinsResultsParserUtil.getBuildProperty(
+								"jenkins.admin.user.name"),
+							":",
+							JenkinsResultsParserUtil.getBuildProperty(
+								"jenkins.admin.user.password"),
+							"@$1"));
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
 		}
 
-		parameters.put("test.build.bundle.zip.url", tomcatURL);
+		parameters.put(
+			"test.build.bundle.zip.url", portalBundleTomcatURLString);
 
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();

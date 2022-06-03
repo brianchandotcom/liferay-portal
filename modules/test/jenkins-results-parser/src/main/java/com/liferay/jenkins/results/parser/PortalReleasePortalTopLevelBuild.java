@@ -97,19 +97,20 @@ public class PortalReleasePortalTopLevelBuild
 				_portalRelease = new PortalRelease(portalReleaseTomcatURL);
 			}
 
-			String dependenciesURLString = getParameterValue(
+			String portalDependenciesZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_DEPENDENCIES_URL");
 
-			if (_isURL(dependenciesURLString)) {
-				_portalRelease.setDependenciesURL(
-					new URL(dependenciesURLString));
+			if (_isURL(portalDependenciesZipURLString)) {
+				_portalRelease.setPortalDependenciesZipURL(
+					new URL(portalDependenciesZipURLString));
 			}
 
-			String osgiURLString = getParameterValue(
+			String portalOSGiZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_OSGI_URL");
 
-			if (_isURL(osgiURLString)) {
-				_portalRelease.setOSGiURL(new URL(osgiURLString));
+			if (_isURL(portalOSGiZipURLString)) {
+				_portalRelease.setPortalOSGiZipURL(
+					new URL(portalOSGiZipURLString));
 			}
 
 			String portalWarURLString = getParameterValue(
@@ -119,18 +120,20 @@ public class PortalReleasePortalTopLevelBuild
 				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
 			}
 
-			String sqlURLString = getParameterValue(
+			String portalSQLZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_SQL_URL");
 
-			if (_isURL(sqlURLString)) {
-				_portalRelease.setSQLURL(new URL(sqlURLString));
+			if (_isURL(portalSQLZipURLString)) {
+				_portalRelease.setPortalSQLZipURL(
+					new URL(portalSQLZipURLString));
 			}
 
-			String toolsURLString = getParameterValue(
+			String portalToolsZipURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_TOOLS_URL");
 
-			if (_isURL(toolsURLString)) {
-				_portalRelease.setToolsURL(new URL(toolsURLString));
+			if (_isURL(portalToolsZipURLString)) {
+				_portalRelease.setPortalToolsZipURL(
+					new URL(portalToolsZipURLString));
 			}
 		}
 		catch (MalformedURLException malformedURLException) {

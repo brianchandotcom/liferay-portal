@@ -1,21 +1,5 @@
 definition {
 
-	macro addEntryOnRelationshipFieldViaUI {
-		LexiconEntry.gotoAdd();
-
-		WaitForSPARefresh();
-
-		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
-
-		Click(
-			key_picklistOption = "${entryOption}",
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
-
-		Button.clickSave();
-
-		WaitForSPARefresh();
-	}
-
 	macro addLayoutBlockViaUI {
 		Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
 
@@ -176,7 +160,12 @@ definition {
 	macro addObjectPicklistFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
+		if (IsElementPresent(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION")) {
+			Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
+		}
+		else {
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+		}
 
 		Click(
 			key_picklistOption = "${picklistOption}",

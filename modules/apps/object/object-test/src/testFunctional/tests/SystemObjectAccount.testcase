@@ -289,7 +289,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
 
-		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "Accounts Name Description for Test");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Accounts Name Description for Test");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153528");
 
@@ -371,7 +371,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
-		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "Accounts Name for Test");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Accounts Name for Test");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
@@ -424,7 +424,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
 
-		ObjectAdmin.addEntryOnRelationshipFieldViaUI(entryOption = "business");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "business");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153526");
 

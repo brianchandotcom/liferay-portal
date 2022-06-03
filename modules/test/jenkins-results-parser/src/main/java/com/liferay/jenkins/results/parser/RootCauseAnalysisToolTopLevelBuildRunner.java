@@ -67,9 +67,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		List<PortalBuildData> downstreamPortalBuildDataList = new ArrayList<>();
 
-		for (BuildData buildData : downstreamBuildDataList) {
-			if (buildData instanceof PortalBuildData) {
-				downstreamPortalBuildDataList.add((PortalBuildData)buildData);
+		for (BuildData downstreamBuildData : downstreamBuildDataList) {
+			if (downstreamBuildData instanceof PortalBuildData) {
+				downstreamPortalBuildDataList.add(
+					(PortalBuildData)downstreamBuildData);
 			}
 		}
 

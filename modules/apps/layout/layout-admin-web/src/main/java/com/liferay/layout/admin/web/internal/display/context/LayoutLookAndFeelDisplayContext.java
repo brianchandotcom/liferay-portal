@@ -276,7 +276,9 @@ public class LayoutLookAndFeelDisplayContext {
 					fetchLayoutPageTemplateEntryByPlid(
 						selLayout.getMasterLayoutPlid());
 
-			masterLayoutName = layoutPageTemplateEntry.getName();
+			if (layoutPageTemplateEntry != null) {
+				masterLayoutName = layoutPageTemplateEntry.getName();
+			}
 		}
 
 		_masterLayoutName = masterLayoutName;

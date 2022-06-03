@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300%2C400%2C500%2C700%2C900);
-
 @import './variables';
 
 @import './mixins';
@@ -69,6 +67,7 @@
 @import 'components/add_to_wish_list';
 @import 'components/added_input_item';
 @import 'components/autocomplete_input';
+@import 'components/fonts';
 @import 'components/label';
 @import 'components/main_link';
 @import 'components/mini_cart';

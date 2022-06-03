@@ -16,7 +16,13 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
-import {cancelDebounce, debounce, fetch, openToast} from 'frontend-js-web';
+import {
+	cancelDebounce,
+	debounce,
+	fetch,
+	objectToFormData,
+	openToast,
+} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
@@ -144,28 +150,21 @@ const FragmentEditor = ({
 		debounce(() => {
 			setChangesStatus(CHANGES_STATUS.saving);
 
-			const formData = new FormData();
-
-			formData.append(`${namespace}cacheable`, isCacheable);
-			formData.append(`${namespace}configurationContent`, configuration);
-			formData.append(`${namespace}cssContent`, css);
-
-			fieldTypes.forEach((fieldType) =>
-				formData.append(`${namespace}fieldTypes`, fieldType)
-			);
-
-			formData.append(`${namespace}htmlContent`, html);
-			formData.append(
-				`${namespace}fragmentCollectionId`,
-				fragmentCollectionId
-			);
-			formData.append(`${namespace}fragmentEntryId`, fragmentEntryId);
-			formData.append(`${namespace}jsContent`, js);
-			formData.append(`${namespace}name`, name);
-			formData.append(`${namespace}status`, allowedStatus.draft);
+			const data = {
+				cacheable: isCacheable,
+				configurationContent: configuration,
+				cssContent: css,
+				fieldTypes,
+				fragmentCollectionId,
+				fragmentEntryId,
+				htmlContent: html,
+				jsContent: js,
+				name,
+				status: allowedStatus.draft,
+			};
 
 			fetch(urls.edit, {
-				body: formData,
+				body: objectToFormData(Liferay.Util.ns(namespace, data)),
 				method: 'POST',
 			})
 				.then((response) => response.json())

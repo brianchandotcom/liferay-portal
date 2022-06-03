@@ -20,6 +20,7 @@ import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.rest.dto.v1_0.Mapping;
 import com.liferay.batch.planner.rest.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.dto.v1_0.Policy;
+import com.liferay.batch.planner.rest.internal.helper.FieldHelper;
 import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
@@ -28,21 +29,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
-import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.vulcan.yaml.YAMLUtil;
-import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -84,13 +76,10 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 
 	@Override
 	public Response getPlanTemplate(String internalClassName) throws Exception {
-		String simpleClassName = internalClassName.substring(
-			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
-
-		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-			simpleClassName, _getOpenAPIYAML(internalClassName));
-
-		return _getResponse(simpleClassName, dtoEntityFields);
+		return _getResponse(
+			internalClassName.substring(
+				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
+			_fieldHelper.getFields(internalClassName));
 	}
 
 	@Override
@@ -156,52 +145,18 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		return _toPlan(batchPlannerPlan);
 	}
 
-	private OpenAPIYAML _getOpenAPIYAML(String internalClassName)
-		throws Exception {
+	private Response _getResponse(String dtoEntityName, List<Field> fields) {
+		fields = _fieldHelper.filter(fields, Field.AccessType.READ);
 
-		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
-			_vulcanBatchEngineTaskItemDelegateRegistry.
-				getVulcanBatchEngineTaskItemDelegate(internalClassName);
+		Iterator<Field> iterator = fields.iterator();
 
-		Response response = _openAPIResource.getOpenAPI(
-			Collections.singleton(
-				vulcanBatchEngineTaskItemDelegate.getResourceClass()),
-			"yaml");
-
-		if (response.getStatus() != 200) {
-			throw new IllegalArgumentException(
-				"Unable to find Open API specification for " +
-					internalClassName);
-		}
-
-		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
-	}
-
-	private Response _getResponse(
-		String dtoEntityName, Map<String, Field> dtoEntityFields) {
-
-		Map<String, Field> effectiveDTOEntityFields = new HashMap<>();
-
-		dtoEntityFields.forEach(
-			(name, field) -> {
-				if (!name.startsWith("x-")) {
-					effectiveDTOEntityFields.put(name, field);
-				}
-			});
-
-		Set<Map.Entry<String, Field>> set = effectiveDTOEntityFields.entrySet();
-
-		Iterator<Map.Entry<String, Field>> iterator = set.iterator();
-
-		StringBundler headerSB = new StringBundler(dtoEntityFields.size() * 2);
-		StringBundler lineSB = new StringBundler(dtoEntityFields.size() * 2);
+		StringBundler headerSB = new StringBundler(fields.size() * 2);
+		StringBundler lineSB = new StringBundler(fields.size() * 2);
 
 		while (iterator.hasNext()) {
-			Map.Entry<String, Field> entry = iterator.next();
+			Field field = iterator.next();
 
-			Field field = entry.getValue();
-
-			String fieldName = entry.getKey();
+			String fieldName = field.getName();
 
 			if (fieldName.endsWith("_i18n")) {
 				fieldName = StringBundler.concat(
@@ -293,10 +248,6 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 	private BatchPlannerPolicyService _batchPlannerPolicyService;
 
 	@Reference
-	private OpenAPIResource _openAPIResource;
-
-	@Reference
-	private VulcanBatchEngineTaskItemDelegateRegistry
-		_vulcanBatchEngineTaskItemDelegateRegistry;
+	private FieldHelper _fieldHelper;
 
 }

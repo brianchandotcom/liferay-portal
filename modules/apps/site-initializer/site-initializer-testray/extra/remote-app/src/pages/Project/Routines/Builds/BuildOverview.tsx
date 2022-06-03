@@ -21,16 +21,20 @@ import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
 import useCaseResultGroupBy from '../../../../data/useCaseResultGroupBy';
 import useTotalTestCases from '../../../../data/useTotalTestCases';
-import {TestrayBuild} from '../../../../graphql/queries';
+import {TestrayBuild, TestrayTask} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import dayjs from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
 
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
+	testrayTask?: TestrayTask;
 };
 
-const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
+const BuildOverview: React.FC<BuildOverviewProps> = ({
+	testrayBuild,
+	testrayTask,
+}) => {
 	const navigate = useNavigate();
 
 	const ref = useRef<any>();
@@ -40,12 +44,14 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 	return (
 		<>
-			<ClayButton
-				className="mb-4"
-				onClick={() => navigate('/testflow/create')}
-			>
-				{i18n.translate('analyze')}
-			</ClayButton>
+			{!testrayTask && (
+				<ClayButton
+					className="mb-4"
+					onClick={() => navigate('/testflow/create')}
+				>
+					{i18n.translate('analyze')}
+				</ClayButton>
+			)}
 
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable

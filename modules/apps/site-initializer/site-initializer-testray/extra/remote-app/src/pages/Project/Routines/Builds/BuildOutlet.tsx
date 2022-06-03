@@ -129,7 +129,10 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 							<BuildAlertBar testrayTask={testrayTask} />
 						)}
 
-						<BuildOverview testrayBuild={testrayBuild} />
+						<BuildOverview
+							testrayBuild={testrayBuild}
+							testrayTask={testrayTask}
+						/>
 					</>
 				)}
 

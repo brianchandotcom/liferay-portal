@@ -56,6 +56,20 @@ definition {
 			status = "${status}");
 	}
 
+	macro clickOnProductButton {
+		Click(
+			locator1 = "CP2NavigationMenu#PRODUCT",
+			product = "${product}");
+	}
+
+	macro clickOnHideButton {
+		Click(locator1 = "CP2NavigationMenu#HIDE_BUTTON");
+	}
+
+	macro clickOnShowButton {
+		Click(locator1 = "CP2NavigationMenu#SHOW_BUTTON");
+	}
+
 	macro goToCP2 {
 		Refresh();
 
@@ -68,6 +82,10 @@ definition {
 
 	macro goToTeamMembers {
 		Click(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
+	}
+
+	macro goToProductActivation {
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
 	}
 
 	macro openLastIdCreated {

@@ -26,6 +26,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUICK_LINKS</td>
+	<td>//div[contains(@class, 'cp-link-body')]//h5[contains(text(), '${title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_LINKS_COLLAPSED</td>
+	<td>//div[contains(@class, 'cp-link-body quick-links-container rounded position-absolute px-3 py-4')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BUTTON_ADD</td>
 	<td>//button[contains(@class, 'nav-btn')]</td>
 	<td></td>
@@ -68,6 +78,21 @@
 <tr>
 	<td>SELECT_STATUS_OVERVIEW</td>
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT</td>
+	<td>//button[contains(@class, 'btn-borderless') and contains(text(), '${product}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDE_BUTTON</td>
+	<td>//a[contains(@class, 'font-weight-bold') and contains(text(), 'Hide')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_BUTTON</td>
+	<td>//a[contains(@class, 'font-weight-bold')]</td>
 	<td></td>
 </tr>
 </tbody>

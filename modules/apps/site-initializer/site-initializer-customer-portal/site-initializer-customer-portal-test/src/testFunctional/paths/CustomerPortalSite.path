@@ -185,6 +185,11 @@
 	<td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SLA_CARD</td>
+	<td>//div[contains(text(), '${type}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

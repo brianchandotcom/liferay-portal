@@ -108,6 +108,34 @@ definition {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
 	}
 
+	macro assertQuickLinksPanelInfo {
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
+	macro cannotAppearsQuickLinksPanelInfo {
+		AssertElementNotPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
+	macro assertQuickLinksPanelIsHidden {
+		AssertElementPresent(locator1 = "CP2NavigationMenu#QUICK_LINKS_COLLAPSED");
+	}
+
+	macro assertSlaCardNotAppears {
+		AssertElementNotPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			typeCard = "${typeCard}");
+	}
+
+	macro assertSlaCard {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			type = "${type}");
+	}
+
 	macro createCPSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -513,6 +541,15 @@ definition {
 	macro viewSubscriptionManagementTab {
 		for (var product : list "${productTab}") {
 			AssertElementPresent(
+				key_product = "${productTab}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+				value = "${product}");
+		}
+	}
+
+	macro notViewProduct {
+		for (var product : list "${productTab}") {
+			AssertElementNotPresent(
 				key_product = "${productTab}",
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
 				value = "${product}");

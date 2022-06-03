@@ -39,6 +39,10 @@ public class ObjectActionVariablesUtil {
 			JSONObject modelDTOJSONObject = payloadJSONObject.getJSONObject(
 				"modelDTO" + dtoConverter.getContentType());
 
+			if (modelDTOJSONObject == null) {
+				return payloadJSONObject.toMap();
+			}
+
 			modelDTOJSONObject.put(
 				"companyId", payloadJSONObject.get("companyId")
 			).put(

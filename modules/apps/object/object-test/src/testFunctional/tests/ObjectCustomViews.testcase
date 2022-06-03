@@ -24,15 +24,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144472 - Verify it is possible add all column in the Default Sort"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanAddAllcolumnsOnDefaultSort {
-
-		// TODO LPS-152055 CanAddAllcolumnsOnDefaultSort pending implementation
-
-	}
-
 	@description = "LPS-135394 - Verify it is possible to add a column for the View"
 	@priority = "5"
 	test CanAddColumn {

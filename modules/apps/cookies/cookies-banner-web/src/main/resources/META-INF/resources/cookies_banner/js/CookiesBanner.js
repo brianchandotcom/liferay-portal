@@ -37,7 +37,7 @@ export default function ({
 		`${namespace}declineAllButton`
 	);
 	const cookieBanner = document.querySelector('.cookies-banner');
-	const editMode = document.body.classList.contains('has-edit-mode-menu');
+	const editMode = layoutMode === 'edit';
 
 	if (!editMode) {
 		checkCookiesConsent(

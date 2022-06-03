@@ -18,10 +18,7 @@ if (!fragmentNamespace) {
 	return;
 }
 
-if (document.body.classList.contains('has-edit-mode-menu')) {
-
-	// If present then we are in content page editor
-
+if (layoutMode === 'edit') {
 	return;
 }
 

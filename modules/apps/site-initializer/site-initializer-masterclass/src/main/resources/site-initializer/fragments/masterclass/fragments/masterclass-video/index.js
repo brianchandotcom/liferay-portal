@@ -52,7 +52,7 @@ function showVideo() {
 	errorMessage.parentElement.removeChild(errorMessage);
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
 
-	if (!document.body.classList.contains('has-edit-mode-menu')) {
+	if (layoutMode !== 'edit') {
 		videoMask.parentElement.removeChild(videoMask);
 	}
 
@@ -62,7 +62,7 @@ function showVideo() {
 }
 
 function showError() {
-	if (document.body.classList.contains('has-edit-mode-menu')) {
+	if (layoutMode === 'edit') {
 		errorMessage.removeAttribute('hidden');
 		videoContainer.parentElement.removeChild(videoContainer);
 		loadingIndicator.parentElement.removeChild(loadingIndicator);

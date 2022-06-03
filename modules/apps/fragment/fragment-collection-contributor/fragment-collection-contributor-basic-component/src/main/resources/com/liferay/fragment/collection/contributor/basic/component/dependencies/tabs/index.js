@@ -1,6 +1,6 @@
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
-const editMode = document.body.classList.contains('has-edit-mode-menu');
+const editMode = layoutMode === 'edit';
 const persistedTabKey = 'tabsFragment_' + fragmentNamespace + '_persistedTabId';
 
 const tabItems = [].slice.call(

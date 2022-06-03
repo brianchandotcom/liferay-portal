@@ -17,7 +17,7 @@ const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
 const INTERVAL = 5000;
 
-const editMode = document.body.classList.contains('has-edit-mode-menu');
+const editMode = layoutMode === 'edit';
 const indicators = [].slice.call(
 	fragmentElement.querySelectorAll('.carousel-navigation button')
 );

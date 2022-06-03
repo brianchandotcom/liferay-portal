@@ -5,7 +5,7 @@ let resizeIntervalId = null;
 let videoContainer = null;
 let videoMask = null;
 
-const editMode = document.body.classList.contains('has-edit-mode-menu');
+const editMode = layoutMode === 'edit';
 
 const height = configuration.videoHeight
 	? configuration.videoHeight.replace('px', '')
@@ -103,7 +103,7 @@ const resize = debounce(function () {
 }, 300);
 
 function showError() {
-	if (document.body.classList.contains('has-edit-mode-menu')) {
+	if (editMode) {
 		errorMessage.removeAttribute('hidden');
 		loadingIndicator.parentElement.removeChild(loadingIndicator);
 		videoContainer.parentElement.removeChild(videoContainer);
@@ -118,7 +118,7 @@ function showVideo() {
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
 	videoContainer.removeAttribute('aria-hidden');
 
-	if (!document.body.classList.contains('has-edit-mode-menu')) {
+	if (!editMode) {
 		videoMask.parentElement.removeChild(videoMask);
 	}
 

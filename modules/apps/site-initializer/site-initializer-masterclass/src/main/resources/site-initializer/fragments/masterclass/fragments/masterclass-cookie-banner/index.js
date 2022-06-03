@@ -16,7 +16,7 @@
 const button = fragmentElement.querySelector('.cookie-banner-button');
 const cookieBanner = fragmentElement.querySelector('.cookie-banner');
 
-const editMode = document.body.classList.contains('has-edit-mode-menu');
+const editMode = layoutMode === 'edit';
 
 function handleButtonClick() {
 	hideBanner();

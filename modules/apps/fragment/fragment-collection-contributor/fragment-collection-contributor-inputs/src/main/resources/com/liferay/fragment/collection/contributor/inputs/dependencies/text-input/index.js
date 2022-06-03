@@ -1,4 +1,4 @@
-if (document.body.classList.contains('has-edit-mode-menu')) {
+if (layoutMode === 'edit') {
 	const input = document.getElementById(`${fragmentNamespace}-text-input`);
 
 	if (input) {

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
+import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -1233,6 +1235,16 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
 			BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException {
+
+		BigDecimal maxValue = BigDecimal.valueOf(
+			CommercePriceConstants.COMMERCE_MAX_PRICE_VALUE);
+
+		if ((price.compareTo(maxValue) > 0) ||
+			(promoPrice.compareTo(maxValue) > 0) ||
+			(cost.compareTo(maxValue) > 0)) {
+
+			throw new CPInstanceMaxPriceValueException();
+		}
 
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);

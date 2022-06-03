@@ -14,6 +14,7 @@
 
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
+import React from 'react';
 
 type AvatarProps = {
 	className?: string;
@@ -54,7 +55,7 @@ function getRandomColor(name: string) {
 	}
 }
 
-const Avatar: React.FC<AvatarProps> = ({
+const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 	className,
 	displayName = false,
 	expanded,
@@ -90,10 +91,7 @@ const Avatar: React.FC<AvatarProps> = ({
 	</div>
 );
 
-const AvatarGroup: React.FC<AvatarGroupProps> = ({
-	assignedUsers,
-	groupSize,
-}) => {
+Avatar.Group = ({assignedUsers, groupSize}) => {
 	const totalAssignedUsers = assignedUsers.length;
 
 	return (
@@ -116,12 +114,13 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({
 				className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 text-nowrap"
 				title={assignedUsers.map(({name}) => name).toString()}
 			>
+				+
 				{totalAssignedUsers <= groupSize
 					? `${totalAssignedUsers}`
-					: `${totalAssignedUsers - groupSize} +`}
+					: `${totalAssignedUsers - groupSize}`}
 			</div>
 		</div>
 	);
 };
 
-export {Avatar, AvatarGroup};
+export default Avatar;

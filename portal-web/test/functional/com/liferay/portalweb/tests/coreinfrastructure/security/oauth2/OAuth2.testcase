@@ -519,6 +519,10 @@ definition {
 		property osgi.module.configurations = "include.bundle.symbolic.name=&quot;false&quot;${line.separator}osgi.jaxrs.name=&quot;Default&quot;${line.separator}separator=&quot;&quot;${line.separator}service.properties=&quot;&quot;";
 		property test.name.skip.portal.instance = "OAuth2#AuthPromptInRequestScopeShouldNotBeVisible";
 
+		task ("Deploy simple OAuth2 provider app") {
+			FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.sample.jar");
+		}
+
 		task ("Go to OAuth 2 administration") {
 			OAuth2.openOAuth2Admin();
 
@@ -540,8 +544,6 @@ definition {
 			OAuth2.editScopes(
 				applicationName = "Analytics Cloud",
 				checkGlobalScope = "Everything");
-
-			FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.sample.jar");
 		}
 
 		task ("Verify everything.read is checked in sample-app resource panel") {

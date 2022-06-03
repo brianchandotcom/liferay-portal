@@ -68,7 +68,17 @@ export default function AddIconPackModal({
 		},
 	});
 
+	const nameTaken = !existingIconPackName && !!icons[iconPackName];
+
+	const containsWhiteSpace = !!iconPackName.match(/\s/);
+
+	const hasError = nameTaken || containsWhiteSpace;
+
 	const handleUploadSpritemapSubmit = () => {
+		if (hasError) {
+			return;
+		}
+
 		setLoading(true);
 
 		const formData = new FormData();
@@ -79,8 +89,10 @@ export default function AddIconPackModal({
 			return;
 		}
 
+		const name = iconPackName.toUpperCase();
+
 		formData.append(portletNamespace + 'svgFile', files[0]);
-		formData.append(portletNamespace + 'name', iconPackName);
+		formData.append(portletNamespace + 'name', name);
 
 		return fetch(saveFromSpritemapActionURL, {
 			body: formData,
@@ -99,7 +111,7 @@ export default function AddIconPackModal({
 
 				const newIcons = {...icons};
 
-				newIcons[iconPackName] = iconPack;
+				newIcons[name] = iconPack;
 
 				onIconsChange(newIcons);
 				setLoading(false);
@@ -109,6 +121,10 @@ export default function AddIconPackModal({
 	};
 
 	const handleSelectIconsSubmit = () => {
+		if (hasError) {
+			return;
+		}
+
 		setLoading(true);
 
 		const formData = new FormData();
@@ -117,7 +133,10 @@ export default function AddIconPackModal({
 			portletNamespace + 'icons',
 			JSON.stringify(selectedIcons)
 		);
-		formData.append(portletNamespace + 'name', iconPackName);
+
+		const name = iconPackName.toUpperCase();
+
+		formData.append(portletNamespace + 'name', name);
 
 		return fetch(saveFromExistingIconsActionURL, {
 			body: formData,
@@ -136,7 +155,7 @@ export default function AddIconPackModal({
 
 				const newIcons = {...icons};
 
-				newIcons[iconPackName] = iconPack;
+				newIcons[name] = iconPack;
 
 				onIconsChange(newIcons);
 				setLoading(false);
@@ -148,8 +167,6 @@ export default function AddIconPackModal({
 	const handleSubmit = uploadSpritemap
 		? handleUploadSpritemapSubmit
 		: handleSelectIconsSubmit;
-
-	const errorNameTaken = !existingIconPackName && !!icons[iconPackName];
 
 	return visible ? (
 		<ClayModal observer={observer} size="lg">
@@ -163,9 +180,7 @@ export default function AddIconPackModal({
 						event.preventDefault();
 					}}
 				>
-					<ClayForm.Group
-						className={errorNameTaken ? 'has-error' : ''}
-					>
+					<ClayForm.Group className={hasError ? 'has-error' : ''}>
 						<label htmlFor={portletNamespace + 'name'}>
 							{Liferay.Language.get('pack-name')}
 						</label>
@@ -173,9 +188,7 @@ export default function AddIconPackModal({
 						<ClayInput
 							name={portletNamespace + 'name'}
 							onChange={(event) =>
-								setIconPackName(
-									event.target.value.toUpperCase()
-								)
+								setIconPackName(event.target.value)
 							}
 							placeholder={Liferay.Language.get('name')}
 							readOnly={!!existingIconPackName}
@@ -183,15 +196,23 @@ export default function AddIconPackModal({
 							value={iconPackName}
 						/>
 
-						{errorNameTaken && (
+						{hasError && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
-									{`${sub(
-										Liferay.Language.get(
-											'x-is-already-the-name-of-an-icon-pack'
-										),
-										[iconPackName]
-									)}`}
+									{`${
+										nameTaken
+											? Liferay.Util.sub(
+													Liferay.Language.get(
+														'x-is-already-the-name-of-an-icon-pack'
+													),
+													[iconPackName]
+											  )
+											: containsWhiteSpace
+											? Liferay.Language.get(
+													'name-of-icon-pack-cannot-contain-whitespace'
+											  )
+											: ''
+									}`}
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>
 						)}
@@ -225,9 +246,7 @@ export default function AddIconPackModal({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={
-								loading || !iconPackName || errorNameTaken
-							}
+							disabled={loading || !iconPackName || hasError}
 							onClick={() => {
 								handleSubmit();
 							}}

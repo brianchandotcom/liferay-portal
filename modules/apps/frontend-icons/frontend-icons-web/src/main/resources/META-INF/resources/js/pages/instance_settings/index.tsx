@@ -76,7 +76,7 @@ export default function InstanceIconConfiguration({
 						.filter((icon) =>
 							icon.name
 								.toLowerCase()
-								.includes(searchQuery.toLocaleLowerCase())
+								.includes(searchQuery.toLowerCase())
 						),
 				},
 			};

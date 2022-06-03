@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -178,7 +181,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		String configuration, String namespace, String fragmentElementId,
 		String mode, HttpServletRequest httpServletRequest) {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("<div id=\"");
 
@@ -237,6 +240,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append(fragmentElementId);
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(namespace);
+			sb.append("'; var layoutMode = '");
+			sb.append(
+				ParamUtil.getString(
+					_portal.getOriginalServletRequest(httpServletRequest),
+					"p_l_mode", Constants.VIEW));
 			sb.append("';");
 			sb.append(js);
 			sb.append(";}());</script>");
@@ -393,6 +401,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private MultiVMPool _multiVMPool;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

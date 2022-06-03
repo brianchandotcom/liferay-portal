@@ -17,12 +17,24 @@ package com.liferay.batch.engine.internal.writer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CSVUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * @author Shuyang Zhou
@@ -40,8 +52,10 @@ public class ColumnValuesExtractor {
 			Field field = fieldMap.get(fieldName);
 
 			if (field != null) {
+				Class<?> fieldClass = field.getType();
+
 				if (ItemClassIndexUtil.isSingleColumnAdoptableValue(
-						field.getType())) {
+						fieldClass)) {
 
 					unsafeFunctions.add(
 						item -> {
@@ -56,12 +70,61 @@ public class ColumnValuesExtractor {
 				}
 
 				if (ItemClassIndexUtil.isSingleColumnAdoptableArray(
-						field.getType())) {
+						fieldClass)) {
 
-					unsafeFunctions.add(item -> StringPool.BLANK);
+					if (!Objects.equals(
+							fieldClass.getComponentType(), String.class)) {
+
+						unsafeFunctions.add(
+							item -> {
+								if (field.get(item) == null) {
+									return StringPool.BLANK;
+								}
+
+								return CSVUtil.encode(field.get(item));
+							});
+
+						continue;
+					}
+
+					unsafeFunctions.add(
+						item -> {
+							if (field.get(item) == null) {
+								return StringPool.BLANK;
+							}
+
+							ByteArrayOutputStream byteArrayOutputStream =
+								new ByteArrayOutputStream();
+
+							try (CSVPrinter csvPrinter = new CSVPrinter(
+									new OutputStreamWriter(
+										byteArrayOutputStream),
+									CSVFormat.DEFAULT)) {
+
+								csvPrinter.print(
+									StringUtil.merge(
+										(String[])field.get(item),
+										value -> CSVUtil.encode(value),
+										StringPool.COMMA));
+							}
+							catch (IOException ioException) {
+								_log.error(
+									"Unable to export array to column",
+									ioException);
+
+								return StringPool.BLANK;
+							}
+
+							return new String(
+								byteArrayOutputStream.toByteArray());
+						});
 
 					continue;
 				}
+
+				unsafeFunctions.add(item -> StringPool.BLANK);
+
+				continue;
 			}
 
 			int index = fieldName.indexOf(CharPool.UNDERLINE);
@@ -118,6 +181,9 @@ public class ColumnValuesExtractor {
 
 		return values;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ColumnValuesExtractor.class);
 
 	private final List
 		<UnsafeFunction<Object, Object, ReflectiveOperationException>>

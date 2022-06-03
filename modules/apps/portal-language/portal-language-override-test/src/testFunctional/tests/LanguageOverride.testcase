@@ -76,6 +76,52 @@ definition {
 		}
 	}
 
+	@description = "Filtering by 'Selected Language' and choosing a language will only show keys created with translations available in the selected language."
+	@priority = "3"
+	test CanFilterLanguageKeysByLocaleViaLanguageSelector {
+		task ("Given two separate language keys are added") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "BR-Key",
+				translationOverrideList = "pt-BR",
+				translationOverrideValueList = "BR Key");
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "ES-Key",
+				translationOverrideList = "ca-ES",
+				translationOverrideValueList = "ES Key");
+		}
+
+		task ("When the filter is set to 'Selected Language' it will default to 'en-US' language which has no created keys") {
+			ManagementBar.setFilterAndOrder(filterBy = "Selected Language");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found.");
+		}
+
+		task ("Then switching to another language with created keys should only show keys that have translations in that language") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "pt-BR");
+
+			LexiconList.viewListEntryTitle(listEntry = "BR-Key");
+
+			AssertElementNotPresent(
+				key_listEntry = "ES-Key",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+
+			PageEditor.changeLocale(
+				currentLocale = "pt-BR",
+				locale = "ca-ES");
+
+			LexiconList.viewListEntryTitle(listEntry = "ES-Key");
+
+			AssertElementNotPresent(
+				key_listEntry = "BR-Key",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+		}
+	}
+
 	@description = "This test filters to only see Overrides."
 	@priority = "4"
 	test CanFilterOverrides {

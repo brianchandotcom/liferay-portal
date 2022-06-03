@@ -1,5 +1,34 @@
 # Poshi Runner Change Log
 
+## 1.0.356
+
+### Gradle
+
+* [POSHI-344](https://issues.liferay.com/browse/POSHI-344) - Add geckodriver download support into poshi gradle plugin
+
+### Logger
+
+* [POSHI-316](https://issues.liferay.com/browse/POSHI-316) - As a Test Engineer, when the test fails on an ocular assertion, I want to view the baseline and checkpoint screenshots in Testray
+
+### Other
+
+* [LPS-154238](https://issues.liferay.com/browse/LPS-154238) - SF rule: Simply collection type judgment logic
+* [LRQA-75318](https://issues.liferay.com/browse/LRQA-75318) - Fix CentOS name references
+
+### Runner
+
+* [POSHI-350](https://issues.liferay.com/browse/POSHI-350) - For poshi tests that don't use any webdriver methods, don't open the browser
+
+### Utils
+
+* [POSHI-290](https://issues.liferay.com/browse/POSHI-290) - Library to handle system files
+* [POSHI-328](https://issues.liferay.com/browse/POSHI-328) - Add support for terminal commands in POSHI
+* [POSHI-329](https://issues.liferay.com/browse/POSHI-329) - Edit JSON Files in POSHI
+
+### WebDriver
+
+* [POSHI-341](https://issues.liferay.com/browse/POSHI-341) - Optimize Poshi test execution logic
+
 ## 1.0.349
 
 ### Functions

@@ -16,7 +16,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import React, {ReactNode} from 'react';
 
 import i18n from '../../i18n';
-import {Liferay} from '../../services/liferay/liferay';
+import {Liferay} from '../../services/liferay';
 
 const States = {
 	BLANK: '',

@@ -16,7 +16,7 @@
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
-import {AvatarGroup} from '../../components/Avatar';
+import Avatar from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import ProgressBar from '../../components/ProgressBar/';
@@ -38,9 +38,12 @@ const TestFlow = () => {
 	}, [setDropdownIcon]);
 
 	return (
-		<Container title={i18n.translate('tasks')}>
+		<Container>
 			<ListView
-				managementToolbarProps={{addButton: modal.open}}
+				managementToolbarProps={{
+					addButton: modal.open,
+					title: i18n.translate('tasks'),
+				}}
 				query={getTasks}
 				tableProps={{
 					columns: [
@@ -111,7 +114,7 @@ const TestFlow = () => {
 						{
 							key: 'assigned',
 							render: () => (
-								<AvatarGroup
+								<Avatar.Group
 									assignedUsers={routines[0].assigned}
 									groupSize={3}
 								/>

@@ -19,7 +19,7 @@ import {useNavigate} from 'react-router-dom';
 
 import client from '../graphql/apolloClient';
 import i18n from '../i18n';
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay';
 
 type OnSubmitOptions = {
 	createMutation: DocumentNode;
@@ -104,8 +104,7 @@ const useFormActions = (): Form => {
 				variables,
 				...options,
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;

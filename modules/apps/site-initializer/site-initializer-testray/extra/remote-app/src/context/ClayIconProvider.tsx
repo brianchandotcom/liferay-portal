@@ -15,7 +15,7 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ReactNode} from 'react';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay';
 
 const getIconSpriteMap = () => {
 	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();

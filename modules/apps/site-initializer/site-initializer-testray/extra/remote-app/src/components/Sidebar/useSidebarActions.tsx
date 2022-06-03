@@ -23,7 +23,7 @@ import ProjectModal from '../../pages/Project';
 import CaseTypeModal from '../../pages/Standalone/CaseType/CaseTypeModal';
 import FactorCategoryModal from '../../pages/Standalone/FactorCategory/FactorCategoryModal';
 import OptionsModal from '../../pages/Standalone/FactorOptions/FactorOptionsModal';
-import {LIFERAY_URLS} from '../../services/liferay/liferay';
+import {LIFERAY_URLS} from '../../services/liferay';
 
 interface ModalOptions {
 	body: ReactElement;

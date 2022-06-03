@@ -20,8 +20,8 @@ import {useContext} from 'react';
 import {AccountContext} from '../../context/AccountContext';
 import i18n from '../../i18n';
 import ForwardIcon from '../../images/ForwardIcon';
-import {Liferay} from '../../services/liferay/liferay';
-import {Avatar} from '../Avatar';
+import {Liferay} from '../../services/liferay';
+import Avatar from '../Avatar';
 import DropDown from '../DropDown';
 import useSidebarActions from './useSidebarActions';
 

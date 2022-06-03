@@ -16,7 +16,7 @@ import {ApolloClient, InMemoryCache, from} from '@apollo/client';
 import {BatchHttpLink} from '@apollo/client/link/batch-http';
 import {RestLink} from 'apollo-link-rest';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay';
 import {bodySerializers} from './serializers';
 
 const liferayHost =

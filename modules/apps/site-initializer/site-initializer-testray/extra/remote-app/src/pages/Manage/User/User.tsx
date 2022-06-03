@@ -18,14 +18,14 @@ import ClayLayout from '@clayui/layout';
 import {useContext, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {Avatar} from '../../../components/Avatar';
+import Avatar from '../../../components/Avatar';
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {AccountContext} from '../../../context/AccountContext';
 import {UserAccount} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../services/liferay/liferay';
+import {Liferay} from '../../../services/liferay';
 
 type UserManagementProps = {
 	myUserAccount: UserAccount;

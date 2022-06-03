@@ -14,7 +14,7 @@
 
 import {useParams} from 'react-router-dom';
 
-import {Avatar} from '../../../../components/Avatar';
+import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
@@ -24,7 +24,7 @@ import client from '../../../../graphql/apolloClient';
 import {UpdateCaseResult} from '../../../../graphql/mutations';
 import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../services/liferay/liferay';
+import {Liferay} from '../../../../services/liferay';
 import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
 

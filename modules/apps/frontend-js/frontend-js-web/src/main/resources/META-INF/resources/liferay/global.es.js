@@ -17,7 +17,6 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import unescape from 'lodash.unescape';
 
-import Cookie from './Cookie';
 import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
 import {
@@ -42,6 +41,7 @@ import {showTooltip} from './portal/tooltip.es';
 import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
 import statusCode from './status_code';
+import Cookie from './util/Cookie';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';

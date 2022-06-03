@@ -19,12 +19,16 @@ const CONSENT_TYPES = {
 	PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION',
 };
 
-const generateCookie = (name, value, {secure, ...options}) =>
+const generateCookie = (name, value, options = {}) =>
 	`${name}=${value}; ${Object.entries(options)
 		.map(([key, value]) => {
+			if (key === 'secure') {
+				return value ? 'secure' : '';
+			}
+
 			return `${key}=${value}`;
 		})
-		.join('; ')} ${secure ? 'secure' : ''}`;
+		.join('; ')}`.trim();
 
 const Cookie = {
 	_checkConsent(type) {
@@ -50,7 +54,7 @@ const Cookie = {
 	 * @param {string} name
 	 */
 	remove(name) {
-		document.cookie = generateCookie(name, '', 0);
+		document.cookie = generateCookie(name, '', {'max-age': 0});
 	},
 
 	/**

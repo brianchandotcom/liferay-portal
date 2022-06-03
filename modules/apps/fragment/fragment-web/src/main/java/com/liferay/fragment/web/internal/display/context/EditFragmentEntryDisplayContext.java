@@ -283,18 +283,6 @@ public class EditFragmentEntryDisplayContext {
 		InfoFieldType infoFieldType, JSONArray fieldTypesJSONArray) {
 
 		return JSONUtil.put(
-			"checked",
-			() -> {
-				if ((fieldTypesJSONArray == null) ||
-					!JSONUtil.hasValue(
-						fieldTypesJSONArray, infoFieldType.getName())) {
-
-					return false;
-				}
-
-				return true;
-			}
-		).put(
 			"key", infoFieldType.getName()
 		).put(
 			"label", infoFieldType.getLabel(_themeDisplay.getLocale())

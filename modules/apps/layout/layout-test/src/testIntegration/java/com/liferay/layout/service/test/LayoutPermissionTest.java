@@ -96,9 +96,7 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
-	public void testContainsWithUpdateLayoutBasicPermission()
-		throws Exception {
-
+	public void testContainsWithUpdateLayoutBasicPermission() throws Exception {
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			ActionKeys.UPDATE_LAYOUT_BASIC);
 

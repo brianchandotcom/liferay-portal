@@ -279,16 +279,6 @@ public class EditFragmentEntryDisplayContext {
 		return _cssContent;
 	}
 
-	private JSONObject _getFieldTypeJSONObject(
-		InfoFieldType infoFieldType, JSONArray fieldTypesJSONArray) {
-
-		return JSONUtil.put(
-			"key", infoFieldType.getName()
-		).put(
-			"label", infoFieldType.getLabel(_themeDisplay.getLocale())
-		);
-	}
-
 	private JSONArray _getFieldTypesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -315,7 +305,11 @@ public class EditFragmentEntryDisplayContext {
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
 			jsonArray.put(
-				_getFieldTypeJSONObject(infoFieldType, fieldTypesJSONArray));
+				JSONUtil.put(
+					"key", infoFieldType.getName()
+				).put(
+					"label", infoFieldType.getLabel(_themeDisplay.getLocale())
+				));
 		}
 
 		return jsonArray;

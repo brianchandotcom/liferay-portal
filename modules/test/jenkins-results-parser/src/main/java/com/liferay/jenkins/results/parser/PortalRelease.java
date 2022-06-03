@@ -187,11 +187,11 @@ public class PortalRelease {
 		sb.append("<ul>");
 
 		URL[] urls = {
-			getPluginsWarZipURL(), getPortalDependenciesZipURL(),
-			getPortalBundleGlassFishURL(), getPortalBundleJBossURL(),
-			getPortalOSGiZipURL(), getPortalWarURL(), getPortalSQLZipURL(),
-			getPortalBundleTomcatURL(), getPortalToolsZipURL(),
-			getPortalBundleWildFlyURL()
+			getPluginsWarZipURL(), getPortalBundleGlassFishURL(),
+			getPortalBundleJBossURL(), getPortalBundleTomcatURL(),
+			getPortalBundleWildFlyURL(), getPortalDependenciesZipURL(),
+			getPortalOSGiZipURL(), getPortalSQLZipURL(), getPortalToolsZipURL(),
+			getPortalWarURL()
 		};
 
 		for (URL url : urls) {

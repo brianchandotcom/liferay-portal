@@ -17,8 +17,6 @@ import {useControlledState} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../config';
-
 export default function BooleanFrontendToken({
 	frontendToken,
 	onValueSelect,
@@ -29,24 +27,16 @@ export default function BooleanFrontendToken({
 
 	return (
 		<ClayForm.Group small>
-			{config.featureFlagLps142363 ? (
-				<ClayCheckbox
-					checked={nextValue}
-					label={label}
-					onChange={(event) => {
-						const nextValue = event.target.checked;
+			<ClayCheckbox
+				checked={nextValue}
+				label={label}
+				onChange={(event) => {
+					const nextValue = event.target.checked;
 
-						setNextValue(nextValue);
-						onValueSelect(nextValue);
-					}}
-				/>
-			) : (
-				<ClayCheckbox
-					defaultChecked={value || false}
-					label={label}
-					onChange={(event) => onValueSelect(event.target.checked)}
-				/>
-			)}
+					setNextValue(nextValue);
+					onValueSelect(nextValue);
+				}}
+			/>
 		</ClayForm.Group>
 	);
 }

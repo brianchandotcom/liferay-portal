@@ -43,7 +43,6 @@ const StyleBookEditor = () => {
 };
 
 export default function ({
-	featureFlagLps142363,
 	fragmentCollectionPreviewURL = '',
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
@@ -57,7 +56,6 @@ export default function ({
 	themeName,
 } = {}) {
 	initializeConfig({
-		featureFlagLps142363,
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinition,
 		isPrivateLayoutsEnabled,

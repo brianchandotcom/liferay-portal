@@ -57,13 +57,11 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -115,9 +113,6 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"featureFlagLps142363",
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142363"))
-		).put(
 			"fragmentCollectionPreviewURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse

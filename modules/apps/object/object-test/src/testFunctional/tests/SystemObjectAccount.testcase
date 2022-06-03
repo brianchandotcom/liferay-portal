@@ -237,11 +237,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");

@@ -11,6 +11,8 @@ api.version=${openAPIYAML.info.version}
 <#if !stringUtil.equals(schemaName, "openapi") && generateBatch>
 batch.engine.entity.class.name=${javaDataType}
 batch.engine.task.item.delegate=true
+batch.planner.import.enabled=${freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema))?has_content?c}
+batch.planner.export.enabled=${freeMarkerTool.hasReadVulcanBatchImplementation(javaMethodSignatures)?c}
 </#if>
 <#if configYAML.resourceApplicationSelect??>
 osgi.jaxrs.application.select=${configYAML.resourceApplicationSelect}

@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -210,7 +211,7 @@ public class AssetCategoryAdminPortletTest {
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ReflectionTestUtil.invoke(
-			_portlet, "setCategoryDisplayPageTemplate",
+			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			actionRequest, new MockLiferayPortletActionResponse());
 
@@ -253,6 +254,11 @@ public class AssetCategoryAdminPortletTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject(
+		filter = "mvc.command.name=/asset_categories_admin/set_asset_category_display_page_template"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
 	private Portal _portal;

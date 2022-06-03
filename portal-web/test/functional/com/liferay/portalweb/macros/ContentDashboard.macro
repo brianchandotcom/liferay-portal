@@ -33,8 +33,34 @@ definition {
 		Button.clickCancel();
 	}
 
+	macro checkNoFiltersApplied {
+		AssertElementNotPresent(locator1 = "ContentDashboard#FILTER_BAR");
+	}
+
 	macro clearFilters {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
+	}
+
+	macro clearFilterTreeview {
+		Portlet.expandTree();
+
+		for (var optionName : list "${optionsList}") {
+			Click.javaScriptClick(
+				key_optionName = "${optionName}",
+				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
+		}
+
+		ClickNoError(
+			key_text = "Clear All",
+			locator1 = "Link#ANY");
+
+		AssertElementNotPresent(
+			key_text = "Clear All",
+			locator1 = "Link#ANY");
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickCancel();
 	}
 
 	macro clickOnFirstBar {

@@ -195,6 +195,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BAR</td>
+	<td>//nav[contains(@class,'subnav-tbar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_BY_EXTENSION_EMPTY</td>
 	<td>//*[contains(@class, 'sheet-text') and contains(@class, 'text-center') and contains(text(), '${noResultMessage}')]</td>
 	<td></td>

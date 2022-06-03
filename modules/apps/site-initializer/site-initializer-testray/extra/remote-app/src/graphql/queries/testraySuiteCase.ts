@@ -19,6 +19,7 @@ import {TestraySuite} from './testraySuite';
 
 export type TestraySuiteCase = {
 	case: TestrayCase;
+	id: number;
 	suite: TestraySuite;
 };
 
@@ -48,6 +49,7 @@ export const getSuiteCases = gql`
 					steps
 					stepsType
 				}
+				id
 				suite: r_suiteToSuitesCases_c_suite {
 					caseParameters
 					description

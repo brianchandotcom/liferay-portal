@@ -30,9 +30,9 @@ export const CreateSuiteCaseBatch = gql`
 `;
 
 export const DeleteSuiteCase = gql`
-	mutation deleteSuiteCase($id: Long) {
+	mutation deleteSuitesCases($id: Long) {
 		c {
-			deleteSuiteCase(suiteId: $id)
+			deleteSuitesCases(suitesCasesId: $id)
 		}
 	}
 `;

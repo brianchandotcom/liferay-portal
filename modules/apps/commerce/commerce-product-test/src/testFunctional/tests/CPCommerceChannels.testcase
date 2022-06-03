@@ -527,7 +527,7 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
-	@description = "COMMERCE-9380 | Verify users can set and edit delivery term eligibility for shipping options"
+	@description = "Verify users can set and edit delivery term eligibility for shipping options."
 	@priority = "3"
 	test CanSetAndEditDeliveryTermsEligibility {
 		task ("Given an active delivery term") {
@@ -536,7 +536,7 @@ definition {
 				termsType = "Delivery");
 		}
 
-		task ("When the user sets a shipping options eligibility to a specific delivery term") {
+		task ("When the user sets a shipping option's eligibility to a specific delivery term") {
 			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -552,25 +552,21 @@ definition {
 				key_entryName = "delivery-term-1",
 				key_table = "Delivery Terms",
 				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
-
-			Button.clickSave();
-
-			Refresh();
 		}
 
 		task ("When the user changes the delivery method's eligibility to No Delivery Terms") {
+			Refresh();
+
 			CommerceEntry.setEntryEligibility(
 				deliveryTermsEligibility = "No Delivery Terms",
 				shippingMethod = "Flat Rate",
 				shippingOption = "Standard Delivery",
 				unpublish = "true");
-
-			Button.clickSave();
 		}
 
-		task ("Then no delivery terms should be shown in the eligibility tabt") {
+		task ("Then no delivery terms should be shown in the eligibility tab") {
 			AssertElementNotPresent(
-				key_entryName = "delivery-term-1",
+				key_entryName = "",
 				key_table = "Delivery Terms",
 				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
 		}
@@ -2409,7 +2405,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9381 | Verify users can configure shipping option eligibility to specific delivery terms"
+	@description = "Verify users can configure shipping option eligibility to specific delivery terms."
 	@priority = "3"
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
@@ -2487,7 +2483,7 @@ definition {
 
 		task ("The the delivery term should not be applied to the order") {
 			CommerceCheckout.initializersCheckout(
-				deliveryTern = "",
+				deliveryTerm = "",
 				newAddressAddress = "Test Address",
 				newAddressCity = "Test City",
 				newAddressCountry = "United States",

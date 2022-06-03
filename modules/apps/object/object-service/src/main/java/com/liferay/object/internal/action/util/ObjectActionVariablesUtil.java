@@ -16,6 +16,7 @@ package com.liferay.object.internal.action.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -36,23 +37,23 @@ public class ObjectActionVariablesUtil {
 				dtoConverterRegistry.getDTOConverter(
 					objectDefinition.getClassName());
 
-			JSONObject modelDTOJSONObject = payloadJSONObject.getJSONObject(
+			Object object = payloadJSONObject.get(
 				"modelDTO" + dtoConverter.getContentType());
 
-			if (modelDTOJSONObject == null) {
+			if (object == null) {
 				return payloadJSONObject.toMap();
 			}
 
-			modelDTOJSONObject.put(
-				"companyId", payloadJSONObject.get("companyId")
+			return HashMapBuilder.<String, Object>putAll(
+				(Map<String, Object>)object
 			).put(
-				"currentUserId", payloadJSONObject.get("userId")
+				"companyId", payloadJSONObject.getLong("companyId")
+			).put(
+				"currentUserId", payloadJSONObject.getLong("userId")
 			).put(
 				"objectDefinitionId",
-				payloadJSONObject.get("objectDefinitionId")
-			);
-
-			return modelDTOJSONObject.toMap();
+				payloadJSONObject.getLong("objectDefinitionId")
+			).build();
 		}
 
 		Map<String, Object> variables = new HashMap<>(

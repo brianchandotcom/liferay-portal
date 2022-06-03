@@ -174,11 +174,9 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			"classPK", baseModel.getPrimaryKeyObj()
 		).put(
 			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(_jsonFactory.serialize(baseModel))
+			baseModel.getModelAttributes()
 		).put(
-			"modelDTO" + dtoConverterType,
-			_jsonFactory.createJSONObject(
-				_jsonFactory.serialize(_toDTO(baseModel, userId)))
+			"modelDTO" + dtoConverterType, _toDTO(baseModel, userId)
 		).put(
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
@@ -188,8 +186,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 					return null;
 				}
 
-				return _jsonFactory.createJSONObject(
-					_jsonFactory.serialize(originalBaseModel));
+				return originalBaseModel.getModelAttributes();
 			}
 		).put(
 			"originalDTO" + dtoConverterType,
@@ -198,8 +195,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 					return null;
 				}
 
-				return _jsonFactory.createJSONObject(
-					_jsonFactory.serialize(_toDTO(originalBaseModel, userId)));
+				return _toDTO(originalBaseModel, userId);
 			}
 		);
 	}
@@ -219,7 +215,9 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		return (Long)function.apply(baseModel);
 	}
 
-	private String _toDTO(T baseModel, long userId) throws PortalException {
+	private Map<String, Object> _toDTO(T baseModel, long userId)
+		throws PortalException {
+
 		DTOConverter<T, ?> dtoConverter = _getDTOConverter();
 
 		if (dtoConverter == null) {
@@ -228,7 +226,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 					"No DTO converter found for " + _modelClass.getName());
 			}
 
-			return baseModel.toString();
+			return baseModel.getModelAttributes();
 		}
 
 		User user = _userLocalService.fetchUser(userId);
@@ -238,7 +236,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				_log.warn("No user found with user ID " + userId);
 			}
 
-			return baseModel.toString();
+			return baseModel.getModelAttributes();
 		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
@@ -247,8 +245,17 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				user.getLocale(), null, user);
 
 		try {
-			return _jsonFactory.looseSerializeDeep(
-				dtoConverter.toDTO(defaultDTOConverterContext, baseModel));
+			Object object = dtoConverter.toDTO(
+				defaultDTOConverterContext, baseModel);
+
+			if (object == null) {
+				return baseModel.getModelAttributes();
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(object));
+
+			return jsonObject.toMap();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -256,7 +263,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			}
 		}
 
-		return baseModel.toString();
+		return baseModel.getModelAttributes();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

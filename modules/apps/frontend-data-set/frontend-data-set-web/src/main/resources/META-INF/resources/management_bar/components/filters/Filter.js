@@ -15,7 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetContext from '../../../DataSetContext';
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import AutocompleteFilter, {
 	getOdataString as getAutocompleteFilterOdataString,
@@ -72,7 +72,7 @@ const getOdataFilterString = (filter) => {
 };
 
 const Filter = ({moduleURL, type, ...otherProps}) => {
-	const {setFilters} = useContext(DataSetContext);
+	const {setFilters} = useContext(FrontendDataSetContext);
 
 	const [Component, setComponent] = useState(() => {
 		if (!moduleURL) {

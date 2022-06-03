@@ -16,7 +16,7 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../DataSetContext';
+import FrontendDataSetContext from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import {formatActionURL} from '../utils/index';
 import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
@@ -148,7 +148,7 @@ export function handleAction(
 	}
 }
 function Actions({actions, itemData, itemId}) {
-	const context = useContext(DataSetContext);
+	const context = useContext(FrontendDataSetContext);
 	const {inlineEditingSettings, onActionDropdownItemClick} = context;
 
 	const [loading, setLoading] = useState(false);

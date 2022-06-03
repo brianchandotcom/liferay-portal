@@ -18,7 +18,7 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
@@ -27,7 +27,7 @@ import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
 function NavBar({creationMenu, showSearch}) {
-	const {filters} = useContext(DataSetContext);
+	const {filters} = useContext(FrontendDataSetContext);
 	const [{customViewsEnabled, views}] = useContext(ViewsContext);
 	const [showMobile, setShowMobile] = useState(false);
 

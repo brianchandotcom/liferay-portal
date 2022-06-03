@@ -19,7 +19,7 @@ import {postForm} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
 
@@ -46,7 +46,7 @@ function BulkActions({
 	total,
 }) {
 	const {actionParameterName, onBulkActionItemClick} = useContext(
-		DataSetContext
+		FrontendDataSetContext
 	);
 
 	const [
@@ -140,7 +140,7 @@ function BulkActions({
 	);
 
 	return selectedItemsValue.length ? (
-		<DataSetContext.Consumer>
+		<FrontendDataSetContext.Consumer>
 			{({formId, formName, loadData, namespace, sidePanelId}) => (
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
 					<div
@@ -201,7 +201,7 @@ function BulkActions({
 					</div>
 				</nav>
 			)}
-		</DataSetContext.Consumer>
+		</FrontendDataSetContext.Consumer>
 	) : null;
 }
 

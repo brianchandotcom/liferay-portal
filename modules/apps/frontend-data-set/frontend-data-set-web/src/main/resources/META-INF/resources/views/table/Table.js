@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getValueDetailsFromItem} from '../../utils/index';
 import ViewsContext from '../ViewsContext';
@@ -84,7 +84,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 		selectionType,
 		sorting,
 		updateSorting,
-	} = useContext(DataSetContext);
+	} = useContext(FrontendDataSetContext);
 	const [
 		{
 			activeView: {options},

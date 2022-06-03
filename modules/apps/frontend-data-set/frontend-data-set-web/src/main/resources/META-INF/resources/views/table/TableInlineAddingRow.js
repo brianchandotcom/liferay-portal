@@ -17,7 +17,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {getInputRendererById} from '../../utils/dataRenderers';
 import DndTable from './dnd_table/index';
 
@@ -27,7 +27,7 @@ function TableInlineAddingRow({fields, selectable}) {
 		itemsChanges,
 		toggleItemInlineEdit,
 		updateItem,
-	} = useContext(DataSetContext);
+	} = useContext(FrontendDataSetContext);
 	const isMounted = useIsMounted();
 	const [loading, setLoading] = useState(false);
 	const itemHasChanged =

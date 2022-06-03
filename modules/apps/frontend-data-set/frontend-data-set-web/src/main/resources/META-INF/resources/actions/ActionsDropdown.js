@@ -21,7 +21,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../DataSetContext';
+import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
 import {actionsBasePropTypes, isLink} from './Actions';
 
@@ -70,7 +70,7 @@ function ActionsDropdown({
 	onClick,
 	setLoading,
 }) {
-	const context = useContext(DataSetContext);
+	const context = useContext(FrontendDataSetContext);
 	const [menuActive, setMenuActive] = useState(false);
 
 	const inlineEditingAvailable =

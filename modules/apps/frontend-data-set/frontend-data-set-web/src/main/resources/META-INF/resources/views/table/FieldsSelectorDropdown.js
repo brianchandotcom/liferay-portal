@@ -18,14 +18,12 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {AppContext} from '../../AppContext';
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
 import ViewsContext from '../ViewsContext';
 
 const FieldsSelectorDropdown = ({fields}) => {
-	const {id} = useContext(DataSetContext);
-	const {appURL, portletId} = useContext(AppContext);
+	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
 	const [{visibleFieldNames}, dispatch] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);

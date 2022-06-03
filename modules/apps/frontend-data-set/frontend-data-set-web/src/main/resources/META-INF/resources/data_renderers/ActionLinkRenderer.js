@@ -18,7 +18,7 @@ import {navigate, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import DataSetContext from '../DataSetContext';
+import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
 import DefaultContent from './DefaultRenderer';
 
@@ -28,7 +28,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		highlightItems,
 		openModal,
 		openSidePanel,
-	} = useContext(DataSetContext);
+	} = useContext(FrontendDataSetContext);
 
 	if (!actions || !actions.length) {
 		return value ? <DefaultContent value={value} /> : null;

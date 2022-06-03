@@ -17,11 +17,11 @@ import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
 import React, {useContext, useMemo, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Filter from './filters/Filter';
 
 function FiltersDropdown() {
-	const {filters} = useContext(DataSetContext);
+	const {filters} = useContext(FrontendDataSetContext);
 
 	const [active, setActive] = useState(false);
 	const [query, setQuery] = useState('');

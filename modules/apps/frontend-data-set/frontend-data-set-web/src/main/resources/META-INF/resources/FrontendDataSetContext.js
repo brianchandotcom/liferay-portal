@@ -14,8 +14,10 @@
 
 import React from 'react';
 
-const DataSetContext = React.createContext({
+const FrontendDataSetContext = React.createContext({
 	actionParameterName: null,
+	apiURL: null,
+	appURL: null,
 	formId: null,
 	formName: null,
 	id: null,
@@ -24,6 +26,7 @@ const DataSetContext = React.createContext({
 	namespace: null,
 	openModal: () => {},
 	openSidePanel: () => {},
+	portletId: null,
 	selectItems: () => {},
 	selectable: false,
 	selectedItemsValue: [],
@@ -32,4 +35,4 @@ const DataSetContext = React.createContext({
 	updateSorting: () => {},
 });
 
-export default DataSetContext;
+export default FrontendDataSetContext;

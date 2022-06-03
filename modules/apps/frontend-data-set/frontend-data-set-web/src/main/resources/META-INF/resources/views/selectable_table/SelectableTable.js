@@ -19,11 +19,11 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
-	const {namespace} = useContext(DataSetContext);
-	const {selectedItemsKey} = useContext(DataSetContext);
+	const {namespace} = useContext(FrontendDataSetContext);
+	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 	const [items, setItems] = useState(null);
 
 	useEffect(() => {

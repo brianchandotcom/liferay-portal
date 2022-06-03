@@ -16,10 +16,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 function MainSearch({setShowMobile}) {
-	const {searchParam, updateSearchParam} = useContext(DataSetContext);
+	const {searchParam, updateSearchParam} = useContext(FrontendDataSetContext);
 
 	const [inputValue, setInputValue] = useState(searchParam);
 

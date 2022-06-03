@@ -16,11 +16,11 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import FilterResume from './FilterResume';
 
 function ActiveFiltersBar({disabled}) {
-	const {filters, setFilters} = useContext(DataSetContext);
+	const {filters, setFilters} = useContext(FrontendDataSetContext);
 
 	const resetFiltersValue = () => {
 		setFilters((filters) => {

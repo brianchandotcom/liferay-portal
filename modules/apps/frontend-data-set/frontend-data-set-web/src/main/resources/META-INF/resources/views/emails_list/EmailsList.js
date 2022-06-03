@@ -27,14 +27,14 @@ function Email({
 	actionDropdownItems,
 	author,
 	borderBottom,
-	dataSetContext,
 	date,
+	frontendDataSetContext,
 	href,
 	status,
 	subject,
 	summary,
 }) {
-	const {openSidePanel} = useContext(dataSetContext);
+	const {openSidePanel} = useContext(frontendDataSetContext);
 
 	function handleClickOnSubject(event) {
 		event.preventDefault();
@@ -143,8 +143,8 @@ Email.defaultProps = {
 	actionItems: [],
 };
 
-function EmailsList({dataLoading, dataSetContext, items}) {
-	const {style} = useContext(dataSetContext);
+function EmailsList({dataLoading, frontendDataSetContext, items}) {
+	const {style} = useContext(frontendDataSetContext);
 
 	if (dataLoading) {
 		return <ClayLoadingIndicator className="mt-7" />;
@@ -174,7 +174,7 @@ function EmailsList({dataLoading, dataSetContext, items}) {
 					key={i}
 					{...item}
 					borderBottom={i !== items.length - 1}
-					dataSetContext={dataSetContext}
+					frontendDataSetContext={frontendDataSetContext}
 				/>
 			))}
 		</ClayList>
@@ -183,7 +183,7 @@ function EmailsList({dataLoading, dataSetContext, items}) {
 
 EmailsList.propTypes = {
 	dataRenderers: PropTypes.object,
-	dataSetContext: PropTypes.any,
+	frontendDataSetContext: PropTypes.any,
 	items: PropTypes.array,
 };
 

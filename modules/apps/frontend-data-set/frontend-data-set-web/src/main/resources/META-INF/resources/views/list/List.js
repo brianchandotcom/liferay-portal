@@ -27,7 +27,7 @@ import ImageRenderer from '../../data_renderers/ImageRenderer';
 
 function List({
 	dataLoading,
-	dataSetContext,
+	frontendDataSetContext,
 	items,
 	schema: {description, image, sticker, symbol, title},
 }) {
@@ -37,7 +37,7 @@ function List({
 		selectedItemsKey,
 		selectedItemsValue,
 		selectionType,
-	} = useContext(dataSetContext);
+	} = useContext(frontendDataSetContext);
 
 	if (dataLoading) {
 		return <ClayLoadingIndicator className="mt-7" />;

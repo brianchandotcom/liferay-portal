@@ -14,7 +14,7 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import DefaultRenderer from '../../data_renderers/DefaultRenderer';
 import {
 	getDataRendererById,
@@ -35,7 +35,7 @@ function InlineEditInputRenderer({
 	const [InputRenderer, setInputRenderer] = useState(() =>
 		getInputRendererById(type)
 	);
-	const {itemsChanges, updateItem} = useContext(DataSetContext);
+	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
 
 	useEffect(() => {
 		setInputRenderer(() => getInputRendererById(type));
@@ -76,7 +76,7 @@ function TableCell({
 	view,
 }) {
 	const {customDataRenderers, inlineEditingSettings} = useContext(
-		DataSetContext
+		FrontendDataSetContext
 	);
 
 	const [loading, setLoading] = useState(false);

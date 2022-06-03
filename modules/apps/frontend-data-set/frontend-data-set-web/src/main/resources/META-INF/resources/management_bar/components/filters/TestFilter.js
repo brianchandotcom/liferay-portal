@@ -18,14 +18,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../../../DataSetContext';
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
 
 function getOdataString() {
 	return `test ne 4`;
 }
 
 function TestFilter({id, inputText, selectedData}) {
-	const {setFilter} = useContext(DataSetContext);
+	const {setFilter} = useContext(FrontendDataSetContext);
 
 	const [value, setValue] = useState(selectedData);
 

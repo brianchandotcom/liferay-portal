@@ -19,11 +19,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import DataSetContext from '../../DataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Filter from './filters/Filter';
 
 function FilterResume(props) {
-	const {setFilters} = useContext(DataSetContext);
+	const {setFilters} = useContext(FrontendDataSetContext);
 
 	const [open, setOpen] = useState(false);
 

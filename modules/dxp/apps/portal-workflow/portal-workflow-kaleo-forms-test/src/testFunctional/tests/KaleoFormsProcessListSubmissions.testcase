@@ -350,7 +350,7 @@ definition {
 
 	@description = "Verify that user can search by Column Value and view the search result."
 	@priority = "3"
-	test CanSearchBycolumnValue {
+	test CanSearchByColumnValue {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.addNewContacts(

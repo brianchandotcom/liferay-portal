@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Client Extension Service
 Bundle-SymbolicName: com.liferay.client.extension.service
 Bundle-Version: 1.0.8
-Liferay-Require-SchemaVersion: 3.1.0
+Liferay-Require-SchemaVersion: 3.2.0
 Liferay-Service: true
 -dsannotations-options: inherit

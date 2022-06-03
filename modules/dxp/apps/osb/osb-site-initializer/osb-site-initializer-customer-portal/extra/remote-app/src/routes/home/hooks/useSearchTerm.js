@@ -11,20 +11,16 @@
 
 import {useCallback, useState} from 'react';
 
-export default function useSearchTerm(refetch, filter) {
+export default function useSearchTerm(onSearch) {
 	const [lastSearchTerm, setLastSearchTerm] = useState('');
 
 	return useCallback(
 		(searchTerm) => {
 			if (searchTerm !== lastSearchTerm) {
-				refetch({
-					filter: filter(searchTerm),
-					page: 1,
-				});
-
+				onSearch(searchTerm);
 				setLastSearchTerm(searchTerm);
 			}
 		},
-		[filter, lastSearchTerm, refetch]
+		[lastSearchTerm, onSearch]
 	);
 }

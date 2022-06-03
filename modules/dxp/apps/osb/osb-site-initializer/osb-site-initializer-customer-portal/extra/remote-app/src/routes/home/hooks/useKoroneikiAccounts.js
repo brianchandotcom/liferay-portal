@@ -60,9 +60,11 @@ export default function useKoroneikiAccounts() {
 		[filterKoroneikiAccounts]
 	);
 
-	const search = useSearchTerm(
-		(variables) => refetch(variables),
-		(searchTerm) => getFilterKoroneikiAccountsBySearch(searchTerm)
+	const search = useSearchTerm((searchTerm) =>
+		refetch({
+			filter: getFilterKoroneikiAccountsBySearch(searchTerm),
+			page: 1,
+		})
 	);
 
 	return {

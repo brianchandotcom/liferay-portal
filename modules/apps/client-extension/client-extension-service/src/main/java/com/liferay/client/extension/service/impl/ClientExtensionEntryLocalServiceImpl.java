@@ -262,11 +262,11 @@ public class ClientExtensionEntryLocalServiceImpl
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
-		_companyLocalService.forEachCompany(
-			company -> {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				List<ClientExtensionEntry> clientExtensionEntries =
 					clientExtensionEntryLocalService.getClientExtensionEntries(
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				for (ClientExtensionEntry clientExtensionEntry :
 						clientExtensionEntries) {

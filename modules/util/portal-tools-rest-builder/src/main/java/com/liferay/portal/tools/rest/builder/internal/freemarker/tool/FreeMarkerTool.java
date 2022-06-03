@@ -797,6 +797,22 @@ public class FreeMarkerTool {
 		return OpenAPIParserUtil.getVersion(openAPIYAML);
 	}
 
+	public Set<String> getVulcanBatchImplementationCreateStrategies(
+		List<JavaMethodSignature> javaMethodSignatures,
+		Map<String, String> properties) {
+
+		return ResourceOpenAPIParser.
+			getVulcanBatchImplementationCreateStrategies(
+				javaMethodSignatures, properties);
+	}
+
+	public Set<String> getVulcanBatchImplementationUpdateStrategies(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		return ResourceOpenAPIParser.
+			getVulcanBatchImplementationUpdateStrategies(javaMethodSignatures);
+	}
+
 	public boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
@@ -873,6 +889,13 @@ public class FreeMarkerTool {
 		}
 
 		return false;
+	}
+
+	public boolean hasReadVulcanBatchImplementation(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		return ResourceOpenAPIParser.hasReadVulcanBatchImplementation(
+			javaMethodSignatures);
 	}
 
 	public boolean hasRequestBodyMediaType(

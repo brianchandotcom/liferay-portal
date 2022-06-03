@@ -257,6 +257,81 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
+	public static Set<String> getVulcanBatchImplementationCreateStrategies(
+		List<JavaMethodSignature> javaMethodSignatures,
+		Map<String, String> properties) {
+
+		Set<String> propertyNames = properties.keySet();
+		Set<String> strategies = new HashSet<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String methodName = javaMethodSignature.getMethodName();
+			String parentSchemaName = javaMethodSignature.getParentSchemaName();
+			String schemaName = javaMethodSignature.getSchemaName();
+
+			if (parentSchemaName == null) {
+				parentSchemaName = "";
+			}
+
+			if (methodName.equals("post" + parentSchemaName + schemaName)) {
+				strategies.add("INSERT");
+			}
+			else if (methodName.equals(
+						StringBundler.concat(
+							"put", parentSchemaName, schemaName,
+							"ByExternalReferenceCode")) &&
+					 propertyNames.contains("externalReferenceCode")) {
+
+				strategies.add("UPSERT");
+			}
+		}
+
+		return strategies;
+	}
+
+	public static Set<String> getVulcanBatchImplementationUpdateStrategies(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		Set<String> strategies = new HashSet<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String methodName = javaMethodSignature.getMethodName();
+			String schemaName = javaMethodSignature.getSchemaName();
+
+			if (methodName.equals("put" + schemaName)) {
+				strategies.add("UPDATE");
+			}
+			else if (methodName.equals("patch" + schemaName)) {
+				strategies.add("PARTIAL_UPDATE");
+			}
+		}
+
+		return strategies;
+	}
+
+	public static boolean hasReadVulcanBatchImplementation(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String methodName = javaMethodSignature.getMethodName();
+			String parentSchemaName = javaMethodSignature.getParentSchemaName();
+			String schemaName = javaMethodSignature.getSchemaName();
+
+			if (parentSchemaName == null) {
+				parentSchemaName = "";
+			}
+
+			if (methodName.equals(
+					StringBundler.concat(
+						"get", parentSchemaName, schemaName, "sPage"))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean hasResourceBatchJavaMethodSignatures(
 		List<JavaMethodSignature> javaMethodSignatures) {
 

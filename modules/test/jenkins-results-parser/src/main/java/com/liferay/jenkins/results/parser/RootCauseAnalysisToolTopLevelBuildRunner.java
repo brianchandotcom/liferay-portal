@@ -191,8 +191,8 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		_validateBuildParameterPortalBranchSHAs();
 		_validateBuildParameterPortalGitHubURL();
 		_validateBuildParameterPortalUpstreamBranchName();
-		_validateBuildParameterRetestCount();
 		_validateBuildParameterRetestCherryPickSHA();
+		_validateBuildParameterRetestCount();
 	}
 
 	private void _failInvalidPortalRepositoryName(

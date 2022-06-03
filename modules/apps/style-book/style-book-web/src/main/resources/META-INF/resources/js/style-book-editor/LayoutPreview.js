@@ -41,6 +41,8 @@ export default function LayoutPreview() {
 			const root = iframeRef.current.contentDocument.documentElement;
 
 			if (root) {
+				root.removeAttribute('style');
+
 				Object.values(frontendTokensValues).forEach(
 					({cssVariableMapping, value}) => {
 						root.style.setProperty(

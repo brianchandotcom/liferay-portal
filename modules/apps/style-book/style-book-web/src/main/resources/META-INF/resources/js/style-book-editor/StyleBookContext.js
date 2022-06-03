@@ -98,12 +98,10 @@ function internalSaveTokenValues({dispatch, frontendTokensValues, tokens}) {
 				value: DRAFT_STATUS.draftSaved,
 			});
 
-			if (Object.keys(tokens).length !== 0) {
-				dispatch({
-					tokens,
-					type: SET_TOKEN_VALUES,
-				});
-			}
+			dispatch({
+				tokens,
+				type: SET_TOKEN_VALUES,
+			});
 		})
 		.catch((error) => {
 			if (process.env.NODE_ENV === 'development') {

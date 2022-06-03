@@ -14,11 +14,11 @@ import i18n from '../../../../common/I18n';
 import SearchBar from './components/SearchBar';
 
 const SearchHeader = ({count, loading, onSearchSubmit}) => {
-	const [hasTerm, setHasTerm] = useState();
+	const [searchTerm, setSearchTerm] = useState('');
 
 	const getCounter = () => {
 		return `${count} ${
-			hasTerm
+			searchTerm
 				? i18n.pluralize(count, 'result')
 				: i18n.pluralize(count, 'project')
 		}`;
@@ -28,7 +28,7 @@ const SearchHeader = ({count, loading, onSearchSubmit}) => {
 		<div className="align-items-center d-flex justify-content-between mb-4">
 			<SearchBar
 				onSearchSubmit={(term) => {
-					setHasTerm(term);
+					setSearchTerm(term);
 					onSearchSubmit(term);
 				}}
 			/>

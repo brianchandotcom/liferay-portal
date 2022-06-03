@@ -27,6 +27,9 @@ const ProjectList = ({
 	onIntersect,
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
+	const showFetchingIndicator =
+		koroneikiAccounts?.items.length < koroneikiAccounts?.totalCount &&
+		!fetching;
 
 	useEffect(() => {
 		if (isIntersecting) {
@@ -63,13 +66,11 @@ const ProjectList = ({
 			{koroneikiAccounts?.totalCount ? (
 				<>
 					{getProjects()}
-					{koroneikiAccounts?.items.length <
-						koroneikiAccounts?.totalCount &&
-						!fetching && (
-							<div className="mx-auto" ref={setTrackedRefCurrent}>
-								<ClayLoadingIndicator small />
-							</div>
-						)}
+					{showFetchingIndicator && (
+						<div className="mx-auto" ref={setTrackedRefCurrent}>
+							<ClayLoadingIndicator small />
+						</div>
+					)}
 				</>
 			) : (
 				<p className="mx-auto">

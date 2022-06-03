@@ -170,24 +170,35 @@ String resourceName = resource.getName();
 								<input name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
 							</c:if>
 
-							<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
-
-								<%
-								boolean allSelected = portletConfigurationPermissionsDisplayContext.isActionCommonToAllResources(action, resourceActionsMap);
-								boolean someSelected = portletConfigurationPermissionsDisplayContext.isActionActive(action, resourceActionsMap);
-								%>
-
-								<aui:script>
-									var checkbox = document.getElementById(
-										'<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>'
-									);
-									if (<%=resources.size() > 1%> && checkbox && <%=someSelected%>) {
-										checkbox.indeterminate = <%=!allSelected %>;
-									}
-								</aui:script>
-							</c:if>
-
-							<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
+							<c:choose>
+								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
+									<div>
+										<react:component
+											module="js/PermissionsCheckbox"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"checked", checked
+												).put(
+													"disabled", disabled || Validator.isNotNull(preselectedMsg)
+												).put(
+													"indeterminate", indeterminate
+												).put(
+													"indeterminateValue", "indeterminate"
+												).put(
+													"inline", true
+												).put(
+													"name", liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action
+												).put(
+													"title", dataMessage
+												).build()
+											%>'
+										/>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
+								</c:otherwise>
+							</c:choose>
 						</liferay-ui:search-container-column-text>
 
 					<%

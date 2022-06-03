@@ -1319,6 +1319,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="PropertiesTestPropertiesBlockOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts test blocks in `test.properties`." />
+		</check>
 		<check name="PropertiesWhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `.properties` files." />

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "User"
+	},
+	"name": "userToSubTasks",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SubTask$]",
+	"objectDefinitionName2": "SubTask",
+	"type": "oneToMany"
+}

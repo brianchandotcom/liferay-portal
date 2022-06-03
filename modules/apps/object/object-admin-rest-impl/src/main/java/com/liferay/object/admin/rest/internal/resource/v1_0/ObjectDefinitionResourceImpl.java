@@ -197,8 +197,7 @@ public class ObjectDefinitionResourceImpl
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId,
 				GetterUtil.getLong(
-					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
-					0),
+					objectDefinition.getAccountEntryRestrictedObjectFieldId()),
 				0, GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),

@@ -18,10 +18,12 @@ import {TypedDocumentNode} from '@apollo/client';
 import i18n from '../../../i18n';
 import {AutoCompleteProps} from '../AutoComplete';
 
+type RenderedFieldOptions = string[] | {label: string; value: string}[];
+
 export type RendererFields = {
 	label: string;
 	name: string;
-	options?: string[] | {label: string; value: string}[];
+	options?: RenderedFieldOptions;
 	type: 'autocomplete' | 'checkbox' | 'text' | 'select' | 'multiselect';
 } & Partial<AutoCompleteProps>;
 

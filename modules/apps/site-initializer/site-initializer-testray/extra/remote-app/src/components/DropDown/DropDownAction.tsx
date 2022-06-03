@@ -19,6 +19,7 @@ const {Divider, Item} = ClayDropDown;
 type DropDownActionProps<T = any> = {
 	action: {
 		action?: (item: T) => void;
+		disabled?: boolean;
 		name: ((item: T) => string) | string;
 	};
 	item: T;
@@ -26,7 +27,7 @@ type DropDownActionProps<T = any> = {
 };
 
 const DropDownAction: React.FC<DropDownActionProps> = ({
-	action: {action, name},
+	action: {action, disabled, name},
 	item,
 	setActive,
 }) => {
@@ -36,6 +37,7 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 
 	return (
 		<Item
+			disabled={disabled}
 			onClick={(event) => {
 				event.preventDefault();
 

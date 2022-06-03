@@ -114,7 +114,11 @@ const Sidebar = () => {
 							);
 						}
 
-						return <div key={index}>{element}</div>;
+						return (
+							<div className={className} key={index}>
+								{element}
+							</div>
+						);
 					}
 				)}
 			</div>

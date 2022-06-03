@@ -29,9 +29,7 @@ const Container: React.FC<ContainerProps> = ({
 	collapsable = false,
 	title,
 }) => {
-	const ContainerTitle = () => (
-		<div>{title && <h5 className="">{title}</h5>}</div>
-	);
+	const ContainerTitle = () => <div>{title && <h5>{title}</h5>}</div>;
 
 	if (collapsable) {
 		return (
@@ -51,7 +49,7 @@ const Container: React.FC<ContainerProps> = ({
 	return (
 		<div
 			className={classNames(
-				'bg-white border-1 rounded-xs p-4 ',
+				'bg-white border-1 rounded-xs p-4',
 				className
 			)}
 		>

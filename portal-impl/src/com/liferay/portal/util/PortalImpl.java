@@ -5743,9 +5743,9 @@ public class PortalImpl implements Portal {
 
 		String userName = defaultUserName;
 
-		try {
-			User user = UserLocalServiceUtil.getUserById(userId);
+		User user = UserLocalServiceUtil.fetchUserById(userId);
 
+		if (user != null) {
 			if (userAttribute.equals(UserAttributes.USER_NAME_FULL)) {
 				userName = user.getFullName();
 			}
@@ -5773,11 +5773,6 @@ public class PortalImpl implements Portal {
 						WindowState.MAXIMIZED
 					).buildString(),
 					"\">", HtmlUtil.escape(userName), "</a>");
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
 			}
 		}
 

@@ -101,6 +101,9 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			if (exception instanceof ConfigurationModelListenerException) {
 				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.sendRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
 			}
 			else {
 				throw exception;

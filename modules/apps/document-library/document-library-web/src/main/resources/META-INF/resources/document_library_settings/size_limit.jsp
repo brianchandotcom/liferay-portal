@@ -21,10 +21,10 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 %>
 
 <aui:form action="<%= dlSizeLimitConfigurationDisplayContext.getEditDLSizeLimitConfigurationURL() %>" method="post" name="fm">
-	<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="show-error-message" />
-
 	<clay:sheet>
 		<clay:sheet-header>
+			<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="show-error-message" />
+
 			<h2>
 				<liferay-ui:message key="dl-size-limit-configuration-name" />
 			</h2>

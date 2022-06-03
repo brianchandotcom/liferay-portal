@@ -88,7 +88,7 @@ export function getRandomMaximumValue(count: number, max: number) {
 	return [...new Array(count)].map(() => getRandom(max));
 }
 
-const assigned = generateItems<Assigned>(
+export const assigned = generateItems<Assigned>(
 	{
 		name: 'John Doe',
 

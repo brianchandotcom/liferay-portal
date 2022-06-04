@@ -47,11 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/get_available_info_item_form_providers"
+		"mvc.command.name=/layout_content_page_editor/get_available_display_page_info_item_form_providers"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAvailableInfoItemFormProvidersMVCResourceCommand
+public class GetAvailableDisplayPageInfoItemFormProvidersMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override

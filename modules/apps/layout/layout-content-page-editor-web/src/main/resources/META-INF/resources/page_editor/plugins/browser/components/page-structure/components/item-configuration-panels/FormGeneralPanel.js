@@ -123,7 +123,8 @@ function MappingSource({item, onValueSelect}) {
 
 function OtherTypeMapping({item, onValueSelect}) {
 	const itemTypes = useCache({
-		fetcher: () => InfoItemService.getAvailableInfoItemFormProviders(),
+		fetcher: () =>
+			InfoItemService.getAvailableDisplayPageInfoItemFormProviders(),
 		key: [CACHE_KEYS.itemTypes],
 	});
 

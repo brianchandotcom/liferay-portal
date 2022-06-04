@@ -37,8 +37,7 @@ long commerceChannelId = commercePaymentMethodGroupRelsDisplayContext.getCommerc
 		dataProviderKey="<%= CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS %>"
 		formName="fm"
 		id="<%= CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS %>"
-		itemsPerPage="<%= commercePaymentMethodGroupRelsDisplayContext.getCountriesCount() %>"
+		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="countryId"
-		showPagination="<%= false %>"
 	/>
 </aui:form>

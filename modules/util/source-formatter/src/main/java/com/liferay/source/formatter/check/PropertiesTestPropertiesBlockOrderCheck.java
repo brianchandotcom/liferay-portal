@@ -47,8 +47,7 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 
 		String indentWithPounds = indent + pounds;
 
-		NaturalOrderStringComparator comparator =
-			new NaturalOrderStringComparator();
+		CommentComparator comparator = new CommentComparator();
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
@@ -97,6 +96,23 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 			previousBlockComment = blockComment;
 			previousBlockCommentStartPosition = blockCommentStartPosition;
 		}
+	}
+
+	private class CommentComparator extends NaturalOrderStringComparator {
+
+		@Override
+		public int compare(String comment1, String comment2) {
+			if (comment1.equals(" Default")) {
+				return -1;
+			}
+
+			if (comment2.equals(" Default")) {
+				return 1;
+			}
+
+			return super.compare(comment1, comment2);
+		}
+
 	}
 
 }

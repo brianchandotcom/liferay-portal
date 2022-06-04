@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,26 +15,6 @@ import pagePageSizePagination from '../common/utils/pagePageSizePagination';
 export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
 		fields: {
-			accountBriefId: {
-				read(_, {readField, toReference}) {
-					const accountBriefRef = toReference({
-						__typename: 'AccountBrief',
-						externalReferenceCode: readField('accountKey'),
-					});
-
-					if (accountBriefRef) {
-						return readField('id', accountBriefRef);
-					}
-
-					const accountRef = toReference({
-						__typename:
-							'com_liferay_headless_admin_user_dto_v1_0_Account',
-						externalReferenceCode: readField('accountKey'),
-					});
-
-					return readField('id', accountRef);
-				},
-			},
 			status: {
 				read(_, {readField}) {
 					if (readField('slaCurrent')) {

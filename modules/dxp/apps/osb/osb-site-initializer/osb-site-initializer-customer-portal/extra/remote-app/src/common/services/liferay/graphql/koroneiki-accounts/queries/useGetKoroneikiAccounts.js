@@ -24,7 +24,6 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 				pageSize: $pageSize
 			) {
 				items {
-					accountBriefId @client
 					accountKey
 					code
 					dxpVersion

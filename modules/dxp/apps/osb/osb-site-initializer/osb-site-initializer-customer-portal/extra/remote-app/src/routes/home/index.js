@@ -37,7 +37,7 @@ const Home = () => {
 			>
 				{hasManyProjects && (
 					<SearchHeader
-						count={koroneikiAccounts?.items.length}
+						count={koroneikiAccounts?.totalCount}
 						loading={loading}
 						onSearchSubmit={(term) => search(term)}
 					/>

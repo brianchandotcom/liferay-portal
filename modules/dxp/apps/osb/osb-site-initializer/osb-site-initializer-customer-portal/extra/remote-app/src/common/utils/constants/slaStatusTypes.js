@@ -9,10 +9,8 @@
  * distribution rights of the Software.
  */
 
-export * from './apiBaseUrl';
-export * from './roleTypes';
-export * from './routeTypes';
-export * from './storageKeys';
-export * from './pageRouterTypes';
-export * from './slaTypes';
-export * from './slaStatusTypes';
+export const SLA_STATUS_TYPES = {
+	active: 'Active',
+	expired: 'Expired',
+	future: 'Future',
+};

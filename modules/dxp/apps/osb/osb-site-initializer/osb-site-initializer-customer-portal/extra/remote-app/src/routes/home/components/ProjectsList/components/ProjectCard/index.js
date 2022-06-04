@@ -13,17 +13,19 @@ import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo} from 'react';
 import i18n from '../../../../../../common/I18n';
-import {PAGE_ROUTER_TYPES} from '../../../../../../common/utils/constants';
+import {
+	PAGE_ROUTER_TYPES,
+	SLA_STATUS_TYPES,
+} from '../../../../../../common/utils/constants';
 import StatusTag from '../../../../../customer-portal/components/StatusTag';
-import {STATUS_TAG_TYPES} from '../../../../../customer-portal/utils/constants';
 import getDateCustomFormat from '../../../../../customer-portal/utils/getDateCustomFormat';
 import getKebabCase from '../../../../../customer-portal/utils/getKebabCase';
 import redirect from './utils/redirect';
 
 const statusReport = {
-	[STATUS_TAG_TYPES.active]: i18n.translate('ends-on'),
-	[STATUS_TAG_TYPES.future]: i18n.translate('starts-on'),
-	[STATUS_TAG_TYPES.expired]: i18n.translate('ended-on'),
+	[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
+	[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),
+	[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
 };
 
 const ProjectCard = ({compressed, ...koroneikiAccount}) => {

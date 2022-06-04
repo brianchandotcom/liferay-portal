@@ -9,18 +9,22 @@
  * distribution rights of the Software.
  */
 
-import {STATUS_TAG_TYPES} from '../../../../../routes/customer-portal/utils/constants';
+import {SLA_STATUS_TYPES} from '../../../../utils/constants';
 import pagePageSizePagination from '../common/utils/pagePageSizePagination';
 
 export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
 		fields: {
-			accountBrief: {
+			accountBriefId: {
 				read(_, {readField, toReference}) {
 					const accountBriefRef = toReference({
 						__typename: 'AccountBrief',
 						externalReferenceCode: readField('accountKey'),
 					});
+
+					if (accountBriefRef) {
+						return readField('id', accountBriefRef);
+					}
 
 					const accountRef = toReference({
 						__typename:
@@ -28,24 +32,20 @@ export const koroneikiAccountsTypePolicy = {
 						externalReferenceCode: readField('accountKey'),
 					});
 
-					return {
-						id:
-							readField('id', accountBriefRef) ||
-							readField('id', accountRef),
-					};
+					return readField('id', accountRef);
 				},
 			},
 			status: {
 				read(_, {readField}) {
 					if (readField('slaCurrent')) {
-						return STATUS_TAG_TYPES.active;
+						return SLA_STATUS_TYPES.active;
 					}
 
 					if (readField('slaFuture')) {
-						return STATUS_TAG_TYPES.future;
+						return SLA_STATUS_TYPES.future;
 					}
 
-					return STATUS_TAG_TYPES.expired;
+					return SLA_STATUS_TYPES.expired;
 				},
 			},
 		},

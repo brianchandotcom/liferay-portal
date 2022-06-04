@@ -27,18 +27,18 @@ const GET_USER_ACCOUNT = gql`
 				}
 			}
 			externalReferenceCode
+			hasProvisioningRole @client
 			id
+			isLiferayStaff @client
 			name
-			roleBriefs {
-				id
-				name
-			}
 			organizationBriefs {
 				id
 				name
 			}
-			isLiferayStaff @client
-			hasProvisioningRole @client
+			roleBriefs {
+				id
+				name
+			}
 			selectedAccountBrief(accountKey: $accountKey) @client {
 				externalReferenceCode
 				hasAccountAdministratorRole
@@ -57,7 +57,7 @@ const eventUserAccount = Liferay.publish(
 	}
 );
 
-export function useGetUserAccount(userAccountId, options = {skip: false}) {
+export function useGetUserAccount(userAccountId, options) {
 	const hashLocation = useHash();
 
 	const accountKey = useMemo(

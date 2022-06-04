@@ -285,7 +285,7 @@ function FormInputMappingOptions({
 
 	const itemTypes = useCache({
 		fetcher: () =>
-			InfoItemService.getAvailableDisplayPageInfoItemFormProviders(),
+			InfoItemService.getAvailableEditPageInfoItemFormProviders(),
 		key: [CACHE_KEYS.itemTypes],
 	});
 

@@ -13,9 +13,9 @@ import classNames from 'classnames';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
+import getKebabCase from '../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../context';
 import {MENU_TYPES} from '../../utils/constants';
-import getKebabCase from '../../utils/getKebabCase';
 import SideMenuSkeleton from './Skeleton';
 import MenuItem from './components/MenuItem';
 

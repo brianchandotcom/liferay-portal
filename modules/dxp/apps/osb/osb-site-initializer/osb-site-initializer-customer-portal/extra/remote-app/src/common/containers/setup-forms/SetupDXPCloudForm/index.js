@@ -14,8 +14,6 @@ import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 
-import getKebabCase from '../../../../../src/routes/customer-portal/utils/getKebabCase';
-
 import client from '../../../../apolloClient';
 import {
 	addAdminDXPCloud,
@@ -29,6 +27,7 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/co
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
+import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 

@@ -10,11 +10,11 @@
  */
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
+import getKebabCase from '../../../../../common/utils/getKebabCase';
 import DeactivateKeysTable from '../../../containers/DeactivateKeysTable';
 import GenerateNewKey from '../../../containers/GenerateNewKey';
 import Layout from '../../../layouts/BaseLayout';
 import {PRODUCT_TYPES} from '../../../utils/constants';
-import getKebabCase from '../../../utils/getKebabCase';
 import Commerce from '../ActivationKeys/Commerce';
 import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';

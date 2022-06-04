@@ -10,7 +10,7 @@
  */
 
 import i18n from '../../../../../common/I18n';
-import getKebabCase from '../../../utils/getKebabCase';
+import getKebabCase from '../../../../../common/utils/getKebabCase';
 
 export function getEnvironmentType(productName) {
 	const formatProductName = productName?.substr(

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import getDateCustomFormat from '../../routes/customer-portal/utils/getDateCustomFormat';
+import getDateCustomFormat from './getDateCustomFormat';
 
 const dateFormat = {
 	day: '2-digit',

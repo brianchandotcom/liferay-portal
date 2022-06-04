@@ -24,9 +24,9 @@ import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/r
 import {ROLE_TYPES} from '../../../../../common/utils/constants';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import getKebabCase from '../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../context';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
-import getKebabCase from '../../../utils/getKebabCase';
 import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 
 const ActivationKeysInputs = ({

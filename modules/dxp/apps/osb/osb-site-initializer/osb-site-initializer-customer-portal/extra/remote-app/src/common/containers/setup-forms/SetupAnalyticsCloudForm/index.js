@@ -28,11 +28,11 @@ import {
 	maxLength,
 } from '../../../../common/utils/validations.form';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
-import getKebabCase from '../../../../routes/customer-portal/utils/getKebabCase';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
+import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
 import IncidentReportInput from './IncidentReportInput';
 

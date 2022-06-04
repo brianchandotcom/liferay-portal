@@ -10,8 +10,8 @@
  */
 
 import i18n from '../../../../common/I18n';
+import getKebabCase from '../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../context';
-import getKebabCase from '../../utils/getKebabCase';
 import SlaCard from '../SlaCard';
 import ProjectSupportSkeleton from './Skeleton';
 

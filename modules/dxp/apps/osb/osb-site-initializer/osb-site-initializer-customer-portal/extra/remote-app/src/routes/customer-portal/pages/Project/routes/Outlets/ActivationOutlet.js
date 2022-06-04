@@ -19,8 +19,8 @@ import {
 	useResolvedPath,
 } from 'react-router-dom';
 import i18n from '../../../../../../common/I18n';
+import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../../context';
-import getKebabCase from '../../../../utils/getKebabCase';
 
 const ActivationOutlet = () => {
 	const [{subscriptionGroups}] = useCustomerPortal();

@@ -11,7 +11,7 @@
 
 import ClayCard from '@clayui/card';
 import i18n from '../../../../../common/I18n';
-import getDateCustomFormat from '../../../utils/getDateCustomFormat';
+import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 
 const dateFormat = {
 	day: '2-digit',

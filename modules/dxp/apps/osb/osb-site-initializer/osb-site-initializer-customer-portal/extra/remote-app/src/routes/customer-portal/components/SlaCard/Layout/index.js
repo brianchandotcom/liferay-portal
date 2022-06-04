@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import React from 'react';
 import i18n from '../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../common/utils/constants';
-import getKebabCase from '../../../utils/getKebabCase';
+import getKebabCase from '../../../../../common/utils/getKebabCase';
 
 const SlaCardLayout = ({
 	slaDateEnd,

@@ -18,8 +18,8 @@ import {
 	PAGE_ROUTER_TYPES,
 	SLA_STATUS_TYPES,
 } from '../../../../../../common/utils/constants';
-import getDateCustomFormat from '../../../../../customer-portal/utils/getDateCustomFormat';
-import getKebabCase from '../../../../../customer-portal/utils/getKebabCase';
+import getDateCustomFormat from '../../../../../../common/utils/getDateCustomFormat';
+import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import redirect from './utils/redirect';
 
 const statusReport = {

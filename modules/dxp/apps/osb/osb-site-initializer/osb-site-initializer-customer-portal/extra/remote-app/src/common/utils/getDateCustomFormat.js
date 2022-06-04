@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {Liferay} from '../../../common/services/liferay';
+import {Liferay} from '../services/liferay';
 
 export default function getDateCustomFormat(rawDate, format) {
 	const date = new Date(rawDate);

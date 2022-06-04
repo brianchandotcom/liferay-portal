@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Page Template API
 Bundle-SymbolicName: com.liferay.layout.page.template.api
-Bundle-Version: 11.2.5
+Bundle-Version: 11.3.0
 Export-Package:\
 	com.liferay.layout.page.template.constants,\
 	com.liferay.layout.page.template.exception,\

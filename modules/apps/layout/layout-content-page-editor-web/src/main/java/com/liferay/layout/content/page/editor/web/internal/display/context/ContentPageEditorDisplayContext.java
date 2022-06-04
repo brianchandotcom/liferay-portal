@@ -366,6 +366,11 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/get_available_display_page_info_item_form_providers")
 			).put(
+				"getAvailableEditPageInfoItemFormProviders",
+				_getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_available_edit_page_info_item_form_providers")
+			).put(
 				"getAvailableImageConfigurationsURL",
 				_getResourceURL(
 					"/layout_content_page_editor" +

@@ -24,6 +24,14 @@ export default {
 		);
 	},
 
+	getAvailableEditPageInfoItemFormProviders() {
+		return serviceFetch(
+			config.getAvailableEditPageInfoItemFormProviders,
+			{},
+			() => {}
+		);
+	},
+
 	/**
 	 * Get available list item renderers for the list style
 	 * @param {object} options

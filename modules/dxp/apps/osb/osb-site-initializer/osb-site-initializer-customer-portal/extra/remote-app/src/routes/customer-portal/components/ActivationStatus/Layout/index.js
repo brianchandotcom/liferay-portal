@@ -11,8 +11,9 @@
 
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
+import {StatusTag} from '../../../../../common/components';
 import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
-import StatusTag from '../../StatusTag';
+
 const ActivationStatusLayout = ({
 	activationStatus,
 	activationStatusDate,

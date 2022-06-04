@@ -24,9 +24,7 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 				pageSize: $pageSize
 			) {
 				items {
-					accountBrief @client {
-						id
-					}
+					accountBriefId @client
 					accountKey
 					code
 					dxpVersion
@@ -57,9 +55,18 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 	}
 `;
 
-export function useGetKoroneikiAccounts(options) {
+export function useGetKoroneikiAccounts(
+	options = {
+		fetchPolicy: 'cache-first',
+		filter: '',
+		notifyOnNetworkStatusChange: false,
+		page: 1,
+		pageSize: 20,
+		skip: false,
+	}
+) {
 	return useQuery(GET_KORONEIKI_ACCOUNTS, {
-		fetchPolicy: options.fetchPolicy,
+		fetchPolicy: options.fetchPolicy || 'cache-first',
 		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
 		skip: options.skip,
 		variables: {

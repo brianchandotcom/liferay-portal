@@ -57,7 +57,7 @@ const eventUserAccount = Liferay.publish(
 	}
 );
 
-export function useGetUserAccount(userAccountId, options) {
+export function useGetUserAccount(userAccountId, options = {skip: false}) {
 	const hashLocation = useHash();
 
 	const accountKey = useMemo(

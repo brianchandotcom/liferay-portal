@@ -9,21 +9,20 @@
  * distribution rights of the Software.
  */
 
-import ClayLabel from '@clayui/label';
-import classNames from 'classnames';
-import i18n from '../../../../common/I18n';
-import {STATUS_TAG_TYPES} from '../../utils/constants';
+import {STATUS_TAG_TYPES} from '../../../../../routes/customer-portal/utils/constants/statusTag';
+import i18n from '../../../../I18n';
+import {SLA_STATUS_TYPES} from '../../../../utils/constants';
 
-const labelProps = {
-	[STATUS_TAG_TYPES.active]: {
+export const STATUS_DISPLAY = {
+	[SLA_STATUS_TYPES.active]: {
 		displayType: 'success',
 		label: i18n.translate('active'),
 	},
-	[STATUS_TAG_TYPES.expired]: {
+	[SLA_STATUS_TYPES.expired]: {
 		displayType: 'danger',
 		label: i18n.translate('expired'),
 	},
-	[STATUS_TAG_TYPES.future]: {
+	[SLA_STATUS_TYPES.future]: {
 		displayType: 'info',
 		label: i18n.translate('future'),
 	},
@@ -40,22 +39,3 @@ const labelProps = {
 		label: i18n.translate('not-activated'),
 	},
 };
-
-const StatusTag = ({currentStatus}) => {
-	const labelProp = labelProps[currentStatus];
-
-	return (
-		<ClayLabel
-			className={classNames(
-				'px-2 m-0 font-weight-normal text-paragraph-sm',
-				{
-					[`label-tonal-${labelProp.displayType}`]: labelProp.displayType,
-				}
-			)}
-		>
-			{labelProp.label}
-		</ClayLabel>
-	);
-};
-
-export default StatusTag;

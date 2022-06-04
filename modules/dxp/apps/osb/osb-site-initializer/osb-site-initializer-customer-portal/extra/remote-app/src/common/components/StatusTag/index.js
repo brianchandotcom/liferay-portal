@@ -9,20 +9,25 @@
  * distribution rights of the Software.
  */
 
-import {memo} from 'react';
-import {StatusTag} from '../../../../../../../common/components';
-import {STATUS_TAG_TYPES} from '../../../../../utils/constants';
+import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
+import {STATUS_DISPLAY} from './utils/constants/statusDisplays';
 
-const StatusColumnType = memo(({hasLoggedBefore}) => {
+const StatusTag = ({currentStatus}) => {
+	const statusDisplay = STATUS_DISPLAY[currentStatus];
+
 	return (
-		<StatusTag
-			currentStatus={
-				hasLoggedBefore
-					? STATUS_TAG_TYPES.active
-					: STATUS_TAG_TYPES.invited
-			}
-		/>
+		<ClayLabel
+			className={classNames(
+				'px-2 m-0 font-weight-normal text-paragraph-sm',
+				{
+					[`label-tonal-${statusDisplay?.displayType}`]: statusDisplay?.displayType,
+				}
+			)}
+		>
+			{statusDisplay?.label}
+		</ClayLabel>
 	);
-});
+};
 
-export {StatusColumnType};
+export default StatusTag;

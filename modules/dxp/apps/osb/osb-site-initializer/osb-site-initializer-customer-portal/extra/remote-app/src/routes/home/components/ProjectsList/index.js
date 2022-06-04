@@ -15,9 +15,6 @@ import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
 import ProjectCard from './components/ProjectCard';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
-import getCurrentPage from './utils/getCurrentPage';
-
-const DEFAULT_PAGE_SIZE = 20;
 
 const ProjectList = ({
 	fetching,
@@ -27,20 +24,15 @@ const ProjectList = ({
 	onIntersect,
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
-	const showFetchingIndicator =
-		koroneikiAccounts?.items.length < koroneikiAccounts?.totalCount &&
-		!fetching;
+
+	const showFetching =
+		koroneikiAccounts?.page !== koroneikiAccounts?.lastPage && !fetching;
 
 	useEffect(() => {
 		if (isIntersecting) {
-			const currentPage = getCurrentPage(
-				koroneikiAccounts?.items,
-				DEFAULT_PAGE_SIZE
-			);
-
-			onIntersect(currentPage);
+			onIntersect(koroneikiAccounts?.page);
 		}
-	}, [isIntersecting, koroneikiAccounts?.items, onIntersect]);
+	}, [isIntersecting, koroneikiAccounts?.page, onIntersect]);
 
 	const getProjects = () => {
 		return koroneikiAccounts?.items.map((koroneikiAccount, index) => (
@@ -66,7 +58,7 @@ const ProjectList = ({
 			{koroneikiAccounts?.totalCount ? (
 				<>
 					{getProjects()}
-					{showFetchingIndicator && (
+					{showFetching && (
 						<div className="mx-auto" ref={setTrackedRefCurrent}>
 							<ClayLoadingIndicator small />
 						</div>

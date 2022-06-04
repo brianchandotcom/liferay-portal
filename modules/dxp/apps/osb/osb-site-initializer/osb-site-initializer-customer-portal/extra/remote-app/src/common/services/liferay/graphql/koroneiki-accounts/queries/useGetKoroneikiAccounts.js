@@ -14,14 +14,14 @@ import {gql, useLazyQuery, useQuery} from '@apollo/client';
 const GET_KORONEIKI_ACCOUNTS = gql`
 	query getKoroneikiAccounts(
 		$filter: String
-		$pageSize: Int = 20
 		$page: Int = 1
+		$pageSize: Int = 20
 	) {
 		c {
 			koroneikiAccounts(
 				filter: $filter
-				pageSize: $pageSize
 				page: $page
+				pageSize: $pageSize
 			) {
 				items {
 					accountBrief @client {
@@ -48,6 +48,9 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 					slaFutureStartDate
 					status @client
 				}
+				lastPage
+				page
+				pageSize
 				totalCount
 			}
 		}

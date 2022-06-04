@@ -273,26 +273,12 @@ public class WarehouseItemResourceImpl
 					externalReferenceCode);
 		}
 
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
-
-		if (warehouseItem.getExternalReferenceCode() != null) {
-			commerceInventoryWarehouseItem =
-				_commerceInventoryWarehouseItemService.
-					addOrUpdateCommerceInventoryWarehouseItem(
-						warehouseItem.getExternalReferenceCode(),
-						contextUser.getCompanyId(),
-						commerceInventoryWarehouse.
-							getCommerceInventoryWarehouseId(),
-						warehouseItem.getSku(), warehouseItem.getQuantity());
-		}
-		else {
-			commerceInventoryWarehouseItem =
-				_commerceInventoryWarehouseItemService.
-					addOrUpdateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouse.
-							getCommerceInventoryWarehouseId(),
-						warehouseItem.getSku(), warehouseItem.getQuantity());
-		}
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemService.
+				addCommerceInventoryWarehouseItem(
+					commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId(),
+					warehouseItem.getSku(), warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

@@ -13,10 +13,12 @@ import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo} from 'react';
 import i18n from '../../../../../../common/I18n';
+import {PAGE_ROUTER_TYPES} from '../../../../../../common/utils/constants';
 import StatusTag from '../../../../../customer-portal/components/StatusTag';
 import {STATUS_TAG_TYPES} from '../../../../../customer-portal/utils/constants';
 import getDateCustomFormat from '../../../../../customer-portal/utils/getDateCustomFormat';
 import getKebabCase from '../../../../../customer-portal/utils/getKebabCase';
+import redirect from './utils/redirect';
 
 const statusReport = {
 	[STATUS_TAG_TYPES.active]: i18n.translate('ends-on'),
@@ -31,6 +33,9 @@ const ProjectCard = ({compressed, ...koroneikiAccount}) => {
 				'cp-project-card': !compressed,
 				'cp-project-card-sm': compressed,
 			})}
+			onClick={() =>
+				redirect(PAGE_ROUTER_TYPES.project(koroneikiAccount.accountKey))
+			}
 		>
 			<ClayCard.Body
 				className={classNames('d-flex h-100 justify-content-between', {
@@ -78,7 +83,7 @@ const ProjectCard = ({compressed, ...koroneikiAccount}) => {
 						>
 							{statusReport[koroneikiAccount.status]}
 
-							<span className="font-weight-bold text-paragraph">
+							<span className="font-weight-bold ml-1 text-paragraph">
 								{getDateCustomFormat(
 									koroneikiAccount.slaCurrentEndDate,
 									{
@@ -94,7 +99,7 @@ const ProjectCard = ({compressed, ...koroneikiAccount}) => {
 							<div className="text-align-end text-neutral-5 text-paragraph-sm">
 								{i18n.translate('support-region')}
 
-								<span className="font-weight-bold">
+								<span className="font-weight-bold ml-1">
 									{i18n.translate(
 										getKebabCase(koroneikiAccount.region)
 									)}

@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
@@ -46,6 +47,9 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 
 		String indentWithPounds = indent + pounds;
 
+		NaturalOrderStringComparator comparator =
+			new NaturalOrderStringComparator();
+
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
 				"(?<=\\A|\n\n)", indentWithPounds, "\n", indentWithPounds,
@@ -67,7 +71,7 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (previousBlockComment.compareTo(blockComment) > 0) {
+			if (comparator.compare(previousBlockComment, blockComment) > 0) {
 				StringBundler sb = new StringBundler(7);
 
 				sb.append("Incorrect order: Properties block '");

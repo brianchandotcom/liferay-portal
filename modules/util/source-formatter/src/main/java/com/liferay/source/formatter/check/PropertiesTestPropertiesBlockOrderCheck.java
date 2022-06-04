@@ -35,14 +35,14 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkBlocksOrder(
+		_checkPropertiesBlocksOrder(
 			fileName, content, StringPool.BLANK,
 			StringPool.POUND + StringPool.POUND);
 
 		return content;
 	}
 
-	private void _checkBlocksOrder(
+	private void _checkPropertiesBlocksOrder(
 		String fileName, String content, String indent, String pounds) {
 
 		String indentWithPounds = indent + pounds;
@@ -86,7 +86,7 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 			}
 
 			if (pounds.length() == 2) {
-				_checkBlocksOrder(
+				_checkPropertiesBlocksOrder(
 					fileName,
 					content.substring(
 						previousBlockCommentStartPosition,

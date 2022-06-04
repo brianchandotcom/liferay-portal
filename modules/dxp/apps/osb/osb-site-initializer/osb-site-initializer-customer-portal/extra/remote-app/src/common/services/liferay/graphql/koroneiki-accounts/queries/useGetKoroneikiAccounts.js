@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {gql, useLazyQuery, useQuery} from '@apollo/client';
+import {gql, useQuery} from '@apollo/client';
 
 const GET_KORONEIKI_ACCOUNTS = gql`
 	query getKoroneikiAccounts(
@@ -68,8 +68,4 @@ export function useGetKoroneikiAccounts(options) {
 			pageSize: options.pageSize || 20,
 		},
 	});
-}
-
-export function useLazyGetKoroneikiAccounts() {
-	return useLazyQuery(GET_KORONEIKI_ACCOUNTS);
 }

@@ -9,15 +9,16 @@
  * distribution rights of the Software.
  */
 
-import getLiferaySiteName from '../getLiferaySiteName';
-import {API_BASE_URL} from './apiBaseUrl';
+import {Liferay} from '../../services/liferay';
 import {ROUTE_TYPES} from './routeTypes';
-
-const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
 
 export const PAGE_ROUTER_TYPES = {
 	onboarding: (externalReferenceCode) =>
-		`${BASE_API}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
+		`${Liferay.ThemeDisplay.getCanonicalURL()}/${
+			ROUTE_TYPES.onboarding
+		}/#/${externalReferenceCode}`,
 	project: (externalReferenceCode) =>
-		`${BASE_API}/${ROUTE_TYPES.project}/#/${externalReferenceCode}`,
+		`${Liferay.ThemeDisplay.getCanonicalURL()}/${
+			ROUTE_TYPES.project
+		}/#/${externalReferenceCode}`,
 };

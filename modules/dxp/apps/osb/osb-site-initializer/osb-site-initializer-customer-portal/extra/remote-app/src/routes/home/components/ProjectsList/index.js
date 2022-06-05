@@ -25,14 +25,14 @@ const ProjectList = ({
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
 
-	const showFetching =
-		koroneikiAccounts?.page !== koroneikiAccounts?.lastPage && !fetching;
+	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
+	const allowFetching = !isLastPage && !fetching;
 
 	useEffect(() => {
-		if (isIntersecting) {
+		if (isIntersecting && allowFetching) {
 			onIntersect(koroneikiAccounts?.page);
 		}
-	}, [isIntersecting, koroneikiAccounts?.page, onIntersect]);
+	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
 	const getProjects = () => {
 		return koroneikiAccounts?.items.map((koroneikiAccount, index) => (
@@ -58,7 +58,7 @@ const ProjectList = ({
 			{koroneikiAccounts?.totalCount ? (
 				<>
 					{getProjects()}
-					{showFetching && (
+					{allowFetching && (
 						<div className="mx-auto" ref={setTrackedRefCurrent}>
 							<ClayLoadingIndicator small />
 						</div>

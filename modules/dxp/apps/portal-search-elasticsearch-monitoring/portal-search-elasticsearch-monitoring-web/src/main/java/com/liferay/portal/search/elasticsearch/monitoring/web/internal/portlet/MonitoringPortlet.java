@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + MonitoringPortletKeys.MONITORING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.window-state=maximized"
+		"javax.portlet.version=3.0", "javax.portlet.window-state=maximized"
 	},
 	service = Portlet.class
 )

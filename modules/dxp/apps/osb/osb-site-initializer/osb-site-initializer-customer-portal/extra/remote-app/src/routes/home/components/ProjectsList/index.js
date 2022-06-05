@@ -44,6 +44,35 @@ const ProjectList = ({
 		));
 	};
 
+	const showResults = () => {
+		if (!koroneikiAccounts) {
+			return (
+				<p className="mx-auto">
+					{i18n.translate('sorry-there-are-no-results-found')}
+				</p>
+			);
+		}
+
+		if (koroneikiAccounts.totalCount) {
+			return (
+				<>
+					{getProjects()}
+					{allowFetching && (
+						<div className="mx-auto" ref={setTrackedRefCurrent}>
+							<ClayLoadingIndicator small />
+						</div>
+					)}
+				</>
+			);
+		}
+
+		return (
+			<p className="mx-auto">
+				{i18n.translate('no-projects-match-these-criteria')}
+			</p>
+		);
+	};
+
 	if (loading) {
 		return <>Loading</>;
 	}
@@ -55,20 +84,7 @@ const ProjectList = ({
 				'cp-home-projects-sm pt-2': hasManyProjects,
 			})}
 		>
-			{koroneikiAccounts?.totalCount ? (
-				<>
-					{getProjects()}
-					{allowFetching && (
-						<div className="mx-auto" ref={setTrackedRefCurrent}>
-							<ClayLoadingIndicator small />
-						</div>
-					)}
-				</>
-			) : (
-				<p className="mx-auto">
-					{i18n.translate('no-projects-match-these-criteria')}
-				</p>
-			)}
+			{showResults()}
 		</div>
 	);
 };

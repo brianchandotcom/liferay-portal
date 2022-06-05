@@ -66,6 +66,8 @@ export function useGetUserAccount(userAccountId, options = {skip: false}) {
 	);
 
 	return useQuery(GET_USER_ACCOUNT, {
+		fetchPolicy: 'cache-and-network',
+		nextFetchPolicy: 'cache-first',
 		onCompleted: (data) =>
 			eventUserAccount.fire({
 				detail: data?.userAccount,

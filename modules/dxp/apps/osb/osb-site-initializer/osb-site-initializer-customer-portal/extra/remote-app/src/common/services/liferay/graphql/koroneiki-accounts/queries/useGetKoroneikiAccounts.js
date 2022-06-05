@@ -56,7 +56,6 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 
 export function useGetKoroneikiAccounts(
 	options = {
-		fetchPolicy: 'cache-first',
 		filter: '',
 		notifyOnNetworkStatusChange: false,
 		page: 1,
@@ -65,7 +64,8 @@ export function useGetKoroneikiAccounts(
 	}
 ) {
 	return useQuery(GET_KORONEIKI_ACCOUNTS, {
-		fetchPolicy: options.fetchPolicy || 'cache-first',
+		fetchPolicy: 'cache-and-network',
+		nextFetchPolicy: 'cache-first',
 		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
 		skip: options.skip,
 		variables: {

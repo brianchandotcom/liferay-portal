@@ -38,7 +38,6 @@ export default function useKoroneikiAccounts() {
 	);
 
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
-		fetchPolicy: 'cache-and-network',
 		filter: filterKoroneikiAccounts,
 		notifyOnNetworkStatusChange: true,
 		skip: userAccountLoading || !hasProjects,

@@ -46,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/META-INF/resources/mfa_email_otp_verify/",
 		"javax.portlet.name=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY,
 		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.version=3.0",
 		"portlet.add.default.resource.check.whitelist=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY
 	},
 	service = Portlet.class

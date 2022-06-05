@@ -46,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/META-INF/resources/mfa_verify/",
 		"javax.portlet.name=" + MFAPortletKeys.MFA_VERIFY,
 		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.version=3.0",
 		"portlet.add.default.resource.check.whitelist=" + MFAPortletKeys.MFA_VERIFY
 	},
 	service = Portlet.class

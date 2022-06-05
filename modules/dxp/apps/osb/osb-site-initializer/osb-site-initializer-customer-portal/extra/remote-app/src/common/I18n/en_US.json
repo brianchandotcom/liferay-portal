@@ -29,6 +29,7 @@
 	"another-user-already-submitted-the-analytics-cloud-activation-request": "Another user already submitted the Analytics Cloud activation request.",
 	"another-user-already-submitted-the-dxp-cloud-activation-request": "Another user already submitted the DXP Cloud activation request.",
 	"anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas": "Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas.",
+	"an-unexpected-error-occurred": "An unexpected error occurred.",
 	"apply": "Apply",
 	"are-you-sure-you-want-to-remove-this-team-member-from-the-project": "Are you sure you want to remove this team member from the project?",
 	"australia": "Australia",
@@ -323,5 +324,6 @@
 	"your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.",
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
-	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details."
+	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"your-request-completed-successfully": "Your request completed successfully."
 }

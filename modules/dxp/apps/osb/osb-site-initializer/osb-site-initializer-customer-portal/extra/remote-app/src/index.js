@@ -17,6 +17,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ReactDOM from 'react-dom';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
+import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
@@ -31,14 +32,15 @@ const AppRoutes = {
 };
 
 const CustomerPortalApp = ({apis, route, ...properties}) => {
-	const apolloClient = useApollo();
+	const {client, networkStatus} = useApollo();
+	useGlobalNetworkIndicator(networkStatus);
 
-	if (!apolloClient) {
+	if (!client) {
 		return <ClayLoadingIndicator />;
 	}
 
 	return (
-		<ApolloProvider client={apolloClient}>
+		<ApolloProvider client={client}>
 			<AppPropertiesContext.Provider
 				value={{
 					...properties,

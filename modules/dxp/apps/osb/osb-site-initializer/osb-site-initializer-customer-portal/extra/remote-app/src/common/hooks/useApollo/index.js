@@ -13,13 +13,18 @@ import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {BatchHttpLink} from '@apollo/client/link/batch-http';
 import {SessionStorageWrapper, persistCache} from 'apollo3-cache-persist';
 import {useEffect, useState} from 'react';
-import {Liferay} from '../services/liferay';
-import {liferayTypePolicies} from '../services/liferay/graphql/typePolicies';
+import {createNetworkStatusNotifier} from 'react-apollo-network-status';
+import {Liferay} from '../../services/liferay';
+import {liferayTypePolicies} from '../../services/liferay/graphql/typePolicies';
+import {networkIndicator} from './networkIndicator';
 
 const LiferayURI = `${Liferay.ThemeDisplay.getPortalURL()}/o`;
+const {link, useApolloNetworkStatusReducer} = createNetworkStatusNotifier();
+const {initialState, reducer} = networkIndicator;
 
 export default function useApollo() {
 	const [client, setClient] = useState();
+	const networkStatus = useApolloNetworkStatusReducer(reducer, initialState);
 
 	useEffect(() => {
 		const init = async () => {
@@ -43,7 +48,7 @@ export default function useApollo() {
 
 			const apolloClient = new ApolloClient({
 				cache,
-				link: batchLink,
+				link: link.concat(batchLink),
 			});
 
 			setClient(apolloClient);
@@ -52,5 +57,5 @@ export default function useApollo() {
 		init();
 	}, []);
 
-	return client;
+	return {client, networkStatus};
 }

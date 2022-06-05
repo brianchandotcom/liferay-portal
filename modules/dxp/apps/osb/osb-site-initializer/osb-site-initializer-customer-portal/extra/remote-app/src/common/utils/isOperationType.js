@@ -9,8 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '../../../../../../../common/services/liferay';
-
-export default function redirect(to) {
-	Liferay.Util.navigate(to);
+export default function isOperationType(operation, type) {
+	return operation.query.definitions.some(
+		(definition) =>
+			definition.kind === 'OperationDefinition' &&
+			definition.operation === type
+	);
 }

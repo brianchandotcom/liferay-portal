@@ -25,6 +25,10 @@ export const Liferay = window.Liferay || {
 		getSiteGroupId: () => 0,
 		getUserId: () => 0,
 	},
+	Util: {
+		navigate: (path) => window.location.assign(path),
+		openToast: (options) => alert(options),
+	},
 	authToken: '',
 	detach: (type, callback) => window.removeEventListener(type, callback),
 	on: (type, callback) => window.addEventListener(type, callback),

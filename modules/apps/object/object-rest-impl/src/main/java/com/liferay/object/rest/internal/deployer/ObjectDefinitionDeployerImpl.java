@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.deployer;
 
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
@@ -104,6 +105,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectEntryResourceComponentFactory.newInstance(
 						HashMapDictionaryBuilder.<String, Object>put(
 							"api.version", "v1.0"
+						).put(
+							"batch.engine.entity.class.name",
+							ObjectEntry.class.getName() + "#" +
+								objectDefinition.getName()
 						).put(
 							"batch.engine.task.item.delegate", "true"
 						).put(

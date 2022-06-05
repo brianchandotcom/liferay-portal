@@ -285,7 +285,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				if (Validator.isNotNull(i18nLanguageId) &&
 					!LanguageUtil.isAvailableLocale(
-						group.getGroupId(), i18nLanguageId)) {
+						group.getGroupId(), i18nLanguageId) &&
+					(!portal.isGroupControlPanelPath(path) ||
+					 !LanguageUtil.isAvailableLocale(i18nLanguageId))) {
 
 					localeUnavailable = true;
 				}

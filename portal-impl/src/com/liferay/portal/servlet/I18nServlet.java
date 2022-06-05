@@ -190,6 +190,13 @@ public class I18nServlet extends HttpServlet {
 
 				siteDefaultLocale = LanguageUtil.getLocale(
 					siteGroup.getGroupId(), i18nLanguageCode);
+
+				if ((siteDefaultLocale == null) &&
+					PortalUtil.isGroupControlPanelPath(path)) {
+
+					siteDefaultLocale = LanguageUtil.getLocale(
+						i18nLanguageCode);
+				}
 			}
 		}
 

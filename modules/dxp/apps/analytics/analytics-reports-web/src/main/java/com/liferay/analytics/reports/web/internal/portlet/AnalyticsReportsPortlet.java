@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Content Performance",
 		"javax.portlet.name=" + AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
-		"javax.portlet.resource-bundle=content.Language"
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.version=3.0"
 	},
 	service = {AnalyticsReportsPortlet.class, Portlet.class}
 )

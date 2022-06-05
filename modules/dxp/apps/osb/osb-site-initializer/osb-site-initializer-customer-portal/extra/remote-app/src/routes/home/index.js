@@ -10,7 +10,7 @@
  */
 
 import classNames from 'classnames';
-
+import i18n from '../../common/I18n';
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
 import useHasManyProjects from './hooks/useHasManyProjects';
@@ -21,6 +21,14 @@ const Home = () => {
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 
 	const hasManyProjects = useHasManyProjects(koroneikiAccounts);
+
+	if (!loading && !data) {
+		return (
+			<p className="text-center">
+				{i18n.translate('sorry-there-are-no-results-found')}
+			</p>
+		);
+	}
 
 	return (
 		<div

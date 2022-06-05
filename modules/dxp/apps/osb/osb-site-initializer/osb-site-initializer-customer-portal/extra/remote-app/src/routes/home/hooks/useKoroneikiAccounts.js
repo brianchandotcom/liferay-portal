@@ -24,6 +24,8 @@ export default function useKoroneikiAccounts() {
 	} = useGetUserAccount(Liferay.ThemeDisplay.getUserId());
 
 	const userAccount = userAccountData?.userAccount;
+	const hasProjects =
+		userAccount?.accountBriefs.length || userAccount?.isLiferayStaff;
 
 	const filterKoroneikiAccounts = useMemo(
 		() =>
@@ -36,9 +38,10 @@ export default function useKoroneikiAccounts() {
 	);
 
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
+		fetchPolicy: 'cache-and-network',
 		filter: filterKoroneikiAccounts,
 		notifyOnNetworkStatusChange: true,
-		skip: userAccountLoading,
+		skip: userAccountLoading || !hasProjects,
 	});
 
 	const loadingKoroneikiAccounts =

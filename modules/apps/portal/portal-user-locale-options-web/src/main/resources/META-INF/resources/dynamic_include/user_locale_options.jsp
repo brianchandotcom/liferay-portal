@@ -28,7 +28,7 @@ Locale userLocale = user.getLocale();
 			<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale)) %>
 		</div>
 
-		<c:if test="<%= LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), user.getLocale()) %>">
+		<c:if test="<%= LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), user.getLocale()) || (PortalUtil.isGroupControlPanelPath(themeDisplay.getURLCurrent()) && LanguageUtil.isAvailableLocale(userLocale)) %>">
 			<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false" %>'>
 				<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>
 			</aui:a>

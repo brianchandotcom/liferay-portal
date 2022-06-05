@@ -35,7 +35,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
 		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator"
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

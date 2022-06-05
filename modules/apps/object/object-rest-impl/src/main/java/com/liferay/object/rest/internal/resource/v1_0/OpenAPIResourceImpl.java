@@ -14,27 +14,10 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
-import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -52,17 +35,11 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		ObjectDefinition currentObjectDefinition,
-		OpenAPIResource openAPIResource,
-		OpenAPISchemaFilter openAPISchemaFilter,
-		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap,
-		Set<Class<?>> resourceClasses) {
+		long objectDefinitionId,
+		ObjectEntryOpenAPIResource objectEntryOpenAPIResource) {
 
-		_currentObjectDefinition = currentObjectDefinition;
-		_openAPIResource = openAPIResource;
-		_openAPISchemaFilter = openAPISchemaFilter;
-		_relatedObjectDefinitionsMap = relatedObjectDefinitionsMap;
-		_resourceClasses = resourceClasses;
+		_objectDefinitionId = objectDefinitionId;
+		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
 	}
 
 	@GET
@@ -71,164 +48,12 @@ public class OpenAPIResourceImpl {
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
 
-		Response response = _openAPIResource.getOpenAPI(
-			_openAPISchemaFilter, _resourceClasses, type, _uriInfo);
-
-		OpenAPI openAPI = (OpenAPI)response.getEntity();
-
-		Paths paths = openAPI.getPaths();
-
-		for (String key : new ArrayList<>(paths.keySet())) {
-			if (!key.contains("objectRelationshipName")) {
-				continue;
-			}
-
-			for (Map.Entry<ObjectRelationship, ObjectDefinition> entry :
-					_relatedObjectDefinitionsMap.entrySet()) {
-
-				ObjectRelationship objectRelationship = entry.getKey();
-				ObjectDefinition relatedObjectDefinition = entry.getValue();
-
-				paths.addPathItem(
-					StringUtil.replace(
-						key,
-						new String[] {
-							"currentObjectEntry", "{objectRelationshipName}",
-							"relatedObjectEntry"
-						},
-						new String[] {
-							StringUtil.lowerCaseFirstLetter(
-								_currentObjectDefinition.getShortName()),
-							objectRelationship.getName(),
-							StringUtil.lowerCaseFirstLetter(
-								relatedObjectDefinition.getShortName())
-						}),
-					_createPathItem(
-						objectRelationship, paths.get(key),
-						relatedObjectDefinition));
-
-				openAPI.getComponents(
-				).getSchemas(
-				).get(
-					_currentObjectDefinition.getShortName()
-				).getProperties(
-				).put(
-					objectRelationship.getName(),
-					new Schema<Object>() {
-						{
-							setDescription(
-								StringBundler.concat(
-									"Information about the relationship ",
-									objectRelationship.getName(),
-									" can be embedded with \"nestedFields\"."));
-						}
-					}
-				);
-			}
-
-			paths.remove(key);
-		}
-
-		return response;
+		return _objectEntryOpenAPIResource.getOpenAPI(
+			_objectDefinitionId, type, _uriInfo);
 	}
 
-	private Operation _createOperation(
-		String httpMethod, ObjectRelationship objectRelationship,
-		ObjectDefinition relatedObjectDefinition, Operation operation) {
-
-		Map<String, Parameter> parameters = new HashMap<>();
-
-		for (Parameter parameter : operation.getParameters()) {
-			String parameterName = parameter.getName();
-
-			if (Objects.equals(parameterName, "objectRelationshipName")) {
-				continue;
-			}
-
-			if (Objects.equals(parameterName, "currentObjectEntryId")) {
-				parameterName = StringUtil.replace(
-					parameterName, "currentObjectEntry",
-					StringUtil.lowerCaseFirstLetter(
-						_currentObjectDefinition.getShortName()));
-			}
-			else if (Objects.equals(parameterName, "relatedObjectEntryId")) {
-				parameterName = StringUtil.replace(
-					parameterName, "relatedObjectEntry",
-					StringUtil.lowerCaseFirstLetter(
-						relatedObjectDefinition.getShortName()));
-			}
-
-			String finalParameterName = parameterName;
-
-			parameters.put(
-				parameter.getName(),
-				new Parameter() {
-					{
-						name(finalParameterName);
-						in(parameter.getIn());
-						required(parameter.getRequired());
-						schema(parameter.getSchema());
-					}
-				});
-		}
-
-		return new Operation() {
-			{
-				operationId(
-					StringBundler.concat(
-						httpMethod, _currentObjectDefinition.getShortName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName()),
-						relatedObjectDefinition.getShortName()));
-				parameters(new ArrayList<>(parameters.values()));
-				responses(operation.getResponses());
-				tags(operation.getTags());
-			}
-		};
-	}
-
-	private PathItem _createPathItem(
-		ObjectRelationship objectRelationship, PathItem pathItem,
-		ObjectDefinition relatedObjectDefinition) {
-
-		Map<PathItem.HttpMethod, Operation> operations =
-			pathItem.readOperationsMap();
-
-		Operation operation = operations.get(PathItem.HttpMethod.GET);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					get(
-						_createOperation(
-							"get", objectRelationship, relatedObjectDefinition,
-							pathItem.getGet()));
-				}
-			};
-		}
-
-		operation = operations.get(PathItem.HttpMethod.PUT);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					put(
-						_createOperation(
-							"put", objectRelationship, relatedObjectDefinition,
-							pathItem.getPut()));
-				}
-			};
-		}
-
-		return new PathItem();
-	}
-
-	private final ObjectDefinition _currentObjectDefinition;
-	private final OpenAPIResource _openAPIResource;
-	private final OpenAPISchemaFilter _openAPISchemaFilter;
-	private final Map<ObjectRelationship, ObjectDefinition>
-		_relatedObjectDefinitionsMap;
-	private final Set<Class<?>> _resourceClasses;
+	private final long _objectDefinitionId;
+	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Context
 	private UriInfo _uriInfo;

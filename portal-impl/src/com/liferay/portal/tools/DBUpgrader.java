@@ -78,17 +78,8 @@ public class DBUpgrader {
 		if (StartupHelperUtil.isUpgrading()) {
 			try (Connection connection = DataAccess.getConnection()) {
 				if (PortalUpgradeProcess.supportsRetry(connection)) {
-					String msg = StringBundler.concat(
-						"The database contains changes from a previous upgrade ",
-						"attempt that failed, but the upgrades previous to 7.1.0 ",
-						"where executed so the upgrade will be executed. If it ",
-						"fails again, please consider restoring the old database ",
-						"and file system and retry the upgrade. A patch may be ",
-						"required if the upgrade failed due to a bug or an ",
-						"unforeseen data permutation that resulted from a corrupt ",
-						"database.");
-
-					System.out.println(msg);
+					System.out.println(
+						"Previous upgrade attempt failed, trying it again");
 
 					return;
 				}
@@ -224,7 +215,7 @@ public class DBUpgrader {
 
 		StartupHelperUtil.initResourceActions();
 	}
-	
+
 	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)
 		throws Exception {
 

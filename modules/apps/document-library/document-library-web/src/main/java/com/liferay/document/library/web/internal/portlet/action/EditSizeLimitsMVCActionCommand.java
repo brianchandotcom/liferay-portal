@@ -70,33 +70,8 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 				"Invalid scope primary key 0 for " + scope + " scope");
 		}
 
-		long fileMaxSize = ParamUtil.getLong(actionRequest, "fileMaxSize");
-
 		try {
-			if (scope.equals(
-					ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
-
-				_dlSizeLimitConfigurationProvider.updateCompanySizeLimit(
-					scopePK, fileMaxSize,
-					_getMimeTypeSizeLimits(actionRequest));
-			}
-			else if (scope.equals(
-						ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
-
-				_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
-					scopePK, fileMaxSize,
-					_getMimeTypeSizeLimits(actionRequest));
-			}
-			else if (scope.equals(
-						ExtendedObjectClassDefinition.Scope.SYSTEM.
-							getValue())) {
-
-				_dlSizeLimitConfigurationProvider.updateSystemSizeLimit(
-					fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
-			}
-			else {
-				throw new PortalException("Unsupported scope: " + scope);
-			}
+			_updateSizeLimit(actionRequest, scope, scopePK);
 		}
 		catch (ConfigurationModelListenerException
 					configurationModelListenerException) {
@@ -133,6 +108,35 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return mimeTypeSizeLimits;
+	}
+
+	private void _updateSizeLimit(
+			ActionRequest actionRequest, String scope, long scopePK)
+		throws Exception {
+
+		long fileMaxSize = ParamUtil.getLong(actionRequest, "fileMaxSize");
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			_dlSizeLimitConfigurationProvider.updateCompanySizeLimit(
+				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
+				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			_dlSizeLimitConfigurationProvider.updateSystemSizeLimit(
+				fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+		}
+		else {
+			throw new PortalException("Unsupported scope: " + scope);
+		}
 	}
 
 	@Reference

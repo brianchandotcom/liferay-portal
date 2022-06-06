@@ -15,6 +15,7 @@
 package com.liferay.fragment.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
+import com.liferay.fragment.exception.FragmentEntryTypeOptionsException;
 import com.liferay.portal.kernel.json.JSONObject;
 
 /**
@@ -29,5 +30,8 @@ public interface FragmentEntryValidator {
 			String configuration, JSONObject valuesJSONObject)
 		throws FragmentEntryConfigurationException {
 	}
+
+	public void validateTypeOptions(String typeOptions)
+		throws FragmentEntryTypeOptionsException;
 
 }

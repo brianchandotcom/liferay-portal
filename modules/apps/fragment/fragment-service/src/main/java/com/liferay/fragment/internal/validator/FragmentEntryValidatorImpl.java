@@ -15,6 +15,7 @@
 package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
+import com.liferay.fragment.exception.FragmentEntryTypeOptionsException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.validator.JSONValidator;
@@ -57,7 +58,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 
 		try {
-			_jsonValidator.validate(configuration);
+			_configurationJSONValidator.validate(configuration);
 
 			JSONObject configurationJSONObject =
 				JSONFactoryUtil.createJSONObject(configuration);
@@ -137,6 +138,21 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 	}
 
+	public void validateTypeOptions(String typeOptions)
+		throws FragmentEntryTypeOptionsException {
+
+		if (Validator.isNull(typeOptions)) {
+			return;
+		}
+
+		try {
+			_typeOptionsJSONValidator.validate(typeOptions);
+		}
+		catch (JSONValidatorException jsonValidatorException) {
+			throw new FragmentEntryTypeOptionsException(jsonValidatorException);
+		}
+	}
+
 	private boolean _checkValidationRules(
 		String value, JSONObject validationJSONObject) {
 
@@ -192,8 +208,13 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			System.lineSeparator(), message);
 	}
 
-	private static final JSONValidator _jsonValidator = new JSONValidator(
-		FragmentEntryValidatorImpl.class.getResourceAsStream(
-			"dependencies/configuration-json-schema.json"));
+	private static final JSONValidator _configurationJSONValidator =
+		new JSONValidator(
+			FragmentEntryValidatorImpl.class.getResourceAsStream(
+				"dependencies/configuration-json-schema.json"));
+	private static final JSONValidator _typeOptionsJSONValidator =
+		new JSONValidator(
+			FragmentEntryValidatorImpl.class.getResourceAsStream(
+				"dependencies/type-options-json-schema.json"));
 
 }

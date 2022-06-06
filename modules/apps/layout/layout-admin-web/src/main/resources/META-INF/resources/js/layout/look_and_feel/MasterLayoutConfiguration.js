@@ -15,7 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import {createRenderURL, openSelectionModal} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+
+const DEFAULT_MASTER_LAYOUT_PLID = '0';
 
 export default function MasterLayoutConfiguration({
 	changeMasterLayoutURL,
@@ -26,7 +28,7 @@ export default function MasterLayoutConfiguration({
 }) {
 	const [masterLayout, setMasterLayout] = useState({
 		name: initialMasterLayoutName,
-		plid: initialMasterLayoutPlid,
+		plid: initialMasterLayoutPlid || DEFAULT_MASTER_LAYOUT_PLID,
 	});
 
 	const handleChangeMasterButtonClick = () => {
@@ -51,6 +53,25 @@ export default function MasterLayoutConfiguration({
 			url: renderURL.toString(),
 		});
 	};
+
+	useEffect(() => {
+		const themeContainer = document.getElementById(
+			`${portletNamespace}themeContainer`
+		);
+
+		if (!themeContainer) {
+			return;
+		}
+
+		if (masterLayout.plid === DEFAULT_MASTER_LAYOUT_PLID) {
+			themeContainer.classList.remove('hide');
+			themeContainer.removeAttribute('aria-hidden');
+		}
+		else {
+			themeContainer.classList.add('hide');
+			themeContainer.setAttribute('aria-hidden', 'true');
+		}
+	}, [masterLayout.plid, portletNamespace]);
 
 	return (
 		<>

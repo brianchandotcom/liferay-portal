@@ -45,15 +45,16 @@ public class CommerceQualifierEntryServiceImpl
 
 	@Override
 	public CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String targetMetadataKey)
 		throws PortalException {
 
 		_checkPermission(sourceClassName, sourceClassPK, ActionKeys.UPDATE);
 
 		return commerceQualifierEntryLocalService.addCommerceQualifierEntry(
-			getUserId(), sourceClassName, sourceClassPK, targetClassName,
-			targetClassPK);
+			getUserId(), sourceClassName, sourceClassPK, sourceMetadataKey,
+			targetClassName, targetClassPK, targetMetadataKey);
 	}
 
 	@Override
@@ -134,59 +135,57 @@ public class CommerceQualifierEntryServiceImpl
 	@Override
 	public List<CommerceQualifierEntry> getSourceCommerceQualifierEntries(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords,
-			int start, int end)
+			String targetMetadataKey, String keywords, int start, int end)
 		throws PortalException {
 
 		_checkPermission(sourceClassName, sourceClassPK, ActionKeys.VIEW);
 
 		return commerceQualifierEntryLocalService.
 			getSourceCommerceQualifierEntries(
-				companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords, start, end);
+				companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+				keywords, start, end);
 	}
 
 	@Override
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords)
+			String targetMetadataKey, String keywords)
 		throws PortalException {
 
 		_checkPermission(sourceClassName, sourceClassPK, ActionKeys.VIEW);
 
 		return commerceQualifierEntryLocalService.
 			getSourceCommerceQualifierEntriesCount(
-				companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords);
+				companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+				keywords);
 	}
 
 	@Override
 	public List<CommerceQualifierEntry> getTargetCommerceQualifierEntries(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords,
-			int start, int end)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords, int start, int end)
 		throws PortalException {
 
 		_checkPermission(targetClassName, targetClassPK, ActionKeys.VIEW);
 
 		return commerceQualifierEntryLocalService.
 			getTargetCommerceQualifierEntries(
-				companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-				targetClassPK, keywords, start, end);
+				companyId, sourceMetadataKey, targetClassName, targetClassPK,
+				keywords, start, end);
 	}
 
 	@Override
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords)
 		throws PortalException {
 
 		_checkPermission(targetClassName, targetClassPK, ActionKeys.VIEW);
 
 		return commerceQualifierEntryLocalService.
 			getTargetCommerceQualifierEntriesCount(
-				companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-				targetClassPK, keywords);
+				companyId, sourceMetadataKey, targetClassName, targetClassPK,
+				keywords);
 	}
 
 	private void _checkPermission(String className, long classPK, String action)

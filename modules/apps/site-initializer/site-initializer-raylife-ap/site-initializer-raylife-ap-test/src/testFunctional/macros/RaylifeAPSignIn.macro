@@ -1,0 +1,15 @@
+definition {
+
+	macro signInRaylifeAP {
+		Type(
+			locator1 = "RaylifeAP#FIELD_EMAIL",
+			value1 = "test@liferay.com");
+
+		Type(
+			locator1 = "RaylifeAP#FIELD_PASSWORD",
+			value1 = "test");
+
+		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+	}
+
+}

@@ -1,0 +1,108 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+        RaylifeAP.createRaylifeAPSite(siteName = "Raylife AP");
+
+        User.logoutPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		RaylifeAP.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+    @description = "LPS-151790 - Check that the message 'This field is required' appears when the e-mail field is required"
+	@priority = "5"
+	test CanViewMessageFieldEmailRequired {
+
+        Navigator.openSpecificURL(url = "/web/raylife-ap");
+
+        AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+
+        Type(
+			locator1 = "RaylifeAP#FIELD_EMAIL",
+			value1 = "");
+
+		Type(
+			locator1 = "RaylifeAP#FIELD_PASSWORD",
+			value1 = "test");
+
+		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+
+        AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+	}
+
+    @description = "LPS-151791 - Check that the message 'This field is required' appears when the password field is required"
+	@priority = "5"
+	test CanViewMessageFieldPasswordRequired {
+
+        Navigator.openSpecificURL(url = "/web/raylife-ap");
+
+        AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+
+        Type(
+			locator1 = "RaylifeAP#FIELD_EMAIL",
+			value1 = "test@liferay.com");
+
+		Type(
+			locator1 = "RaylifeAP#FIELD_PASSWORD",
+			value1 = "");
+
+		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+
+        AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+	}
+
+    @description = "LPS-151792 - Verify if message 'Please enter a valid email address.' appers when email is not valid"
+	@priority = "5"
+	test CanViewMessageEmailNotValid {
+
+        Navigator.openSpecificURL(url = "/web/raylife-ap");
+
+        AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+
+        Type(
+			locator1 = "RaylifeAP#FIELD_EMAIL",
+			value1 = "test");
+
+		Type(
+			locator1 = "RaylifeAP#FIELD_PASSWORD",
+			value1 = "test");
+
+		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+
+        AssertElementPresent(locator1 = "RaylifeAP#EMAIL_INVALID_MESSAGE");
+	}
+
+    @description = "LPS-151795 - Verify if user can enter a valid email address"
+	@priority = "5"
+	test CanSignIn {
+
+        Navigator.openSpecificURL(url = "/web/raylife-ap");
+
+        AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+
+        RaylifeAPSignIn.signInRaylifeAP();
+
+        AssertElementPresent(locator1 = "RaylifeAP#RAYLIFE_LOGO");
+	}
+
+}

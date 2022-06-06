@@ -624,6 +624,7 @@
 		<exception>DefaultObjectLayout</exception>
 		<exception>DefaultObjectView</exception>
 		<exception>DuplicateObjectRelationship</exception>
+		<exception>ObjectActionConditionExpression</exception>
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionTriggerKey</exception>

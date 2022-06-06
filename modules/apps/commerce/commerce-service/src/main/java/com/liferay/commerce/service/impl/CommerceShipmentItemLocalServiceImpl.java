@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.CommerceShipmentInactiveWarehouseException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -395,6 +397,21 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItemPersistence.findByPrimaryKey(
 				commerceShipmentItemId);
 
+		if (StringUtil.equals(
+				commerceShipmentItem.getExternalReferenceCode(),
+				externalReferenceCode)) {
+
+			return commerceShipmentItem;
+		}
+
+		if (_isDuplicateERC(
+				commerceShipmentItem.getCompanyId(), externalReferenceCode)) {
+
+			throw new DuplicateCommerceShipmentItemException(
+				"There is another shipment item with external reference code " +
+					externalReferenceCode);
+		}
+
 		commerceShipmentItem.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceShipmentItemPersistence.update(commerceShipmentItem);
@@ -464,6 +481,20 @@ public class CommerceShipmentItemLocalServiceImpl
 		return _commerceInventoryWarehouseItemLocalService.
 			fetchCommerceInventoryWarehouseItem(
 				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku);
+	}
+
+	private boolean _isDuplicateERC(
+		long companyId, String externalReferenceCode) {
+
+		CommerceShipmentItem commerceShipmentItem =
+			commerceShipmentItemPersistence.fetchByC_ERC(
+				companyId, externalReferenceCode);
+
+		if (commerceShipmentItem != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _restoreStockQuantity(

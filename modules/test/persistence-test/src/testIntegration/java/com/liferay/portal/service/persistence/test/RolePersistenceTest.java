@@ -328,8 +328,8 @@ public class RolePersistenceTest {
 			"Role_", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
 			"roleId", true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "name", true, "title", true, "type", true,
-			"subtype", true);
+			"classPK", true, "name", true, "title", true, "description", true,
+			"type", true, "subtype", true);
 	}
 
 	@Test

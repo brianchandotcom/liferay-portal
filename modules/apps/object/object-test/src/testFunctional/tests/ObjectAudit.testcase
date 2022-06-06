@@ -131,12 +131,26 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAddValueWhenCreatedCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153569",
+			objectName = "CustomObject153569",
+			pluralLabelName = "Custom Objects 153569");
 
-		// TODO LPS-153569 CanViewAddValueWhenCreatedCustomObject pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
 
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Object 153569",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "ADD",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's when creating a custom object the user can see the User ID, User Name, Resource ID, Resource Name, Resource Action, Client IP, Create Date of the custom object when created, updated or deleted"

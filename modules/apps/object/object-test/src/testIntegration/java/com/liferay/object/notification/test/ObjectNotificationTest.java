@@ -17,6 +17,7 @@ package com.liferay.object.notification.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.util.NotificationHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,7 +51,7 @@ import org.junit.runner.RunWith;
  * @author Gustavo Lima
  */
 @RunWith(Arquillian.class)
-public class NotificationTest {
+public class ObjectNotificationTest {
 
 	@ClassRule
 	@Rule
@@ -68,14 +71,24 @@ public class NotificationTest {
 
 		_userLocalService.updateUser(_user);
 
-		_notificationTemplate = NotificationTestUtil.addNotificationTemplate(
-			_user.getUserId(), "Test", _user.getEmailAddress());
+		_notificationTemplate =
+			_notificationTemplateLocalService.addNotificationTemplate(
+				_user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), _user.getEmailAddress()
+				).build());
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -108,6 +121,9 @@ public class NotificationTest {
 
 	@DeleteAfterTestRun
 	private NotificationTemplate _notificationTemplate;
+
+	@Inject
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

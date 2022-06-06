@@ -583,9 +583,9 @@ definition {
 		}
 
 		task ("Increase number of tabs") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "6");
+			PageEditor.editTabs(
+				numberOfTabs = "6",
+				panel = "General");
 		}
 
 		task ("View nested content in drop zone of each tab") {

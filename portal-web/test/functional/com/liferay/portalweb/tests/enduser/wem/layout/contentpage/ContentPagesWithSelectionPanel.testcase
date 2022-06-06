@@ -1277,9 +1277,9 @@ definition {
 		}
 
 		task ("Change the Number of Tabs to 5") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "5");
+			PageEditor.editTabs(
+				numberOfTabs = "5",
+				panel = "General");
 		}
 
 		task ("Assert elements information is organized in Selection panel") {
@@ -1300,9 +1300,9 @@ definition {
 		}
 
 		task ("Change the Number of Tabs to 3") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "3");
+			PageEditor.editTabs(
+				numberOfTabs = "3",
+				panel = "General");
 		}
 
 		task ("Assert elements information is organized in Selection panel") {

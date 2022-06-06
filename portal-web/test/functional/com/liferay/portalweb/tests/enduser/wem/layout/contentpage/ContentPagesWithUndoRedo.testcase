@@ -517,9 +517,9 @@ definition {
 		}
 
 		task ("Configure the number of Tabs to 2") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "2");
+			PageEditor.editTabs(
+				numberOfTabs = "2",
+				panel = "General");
 
 			AssertVisible(
 				key_navItem = "Tab 2",
@@ -674,9 +674,9 @@ definition {
 
 		task ("Change the number of Tabs 19 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-				PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-				PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.editTabs(
+					numberOfTabs = "${i}",
+					panel = "General");
 			}
 		}
 
@@ -692,9 +692,9 @@ definition {
 
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-				PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-				PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.editTabs(
+					numberOfTabs = "${i}",
+					panel = "General");
 			}
 		}
 
@@ -710,9 +710,9 @@ definition {
 
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-				PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-				PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.editTabs(
+					numberOfTabs = "${i}",
+					panel = "General");
 			}
 		}
 
@@ -728,9 +728,9 @@ definition {
 
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-				PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-				PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.editTabs(
+					numberOfTabs = "${i}",
+					panel = "General");
 			}
 		}
 
@@ -746,9 +746,9 @@ definition {
 
 		task ("Change the number of Tabs 19 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-				PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-				PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.editTabs(
+					numberOfTabs = "${i}",
+					panel = "General");
 			}
 		}
 

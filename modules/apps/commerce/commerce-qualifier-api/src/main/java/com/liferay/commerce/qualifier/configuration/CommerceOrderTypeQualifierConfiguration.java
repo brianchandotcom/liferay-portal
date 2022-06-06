@@ -33,13 +33,13 @@ public interface CommerceOrderTypeQualifierConfiguration
 	extends CommerceQualifierConfiguration {
 
 	@Meta.AD(
-		deflt = "channel", name = "allowed-target-key-groups", required = false
+		deflt = "channel", name = "allowed-target-keys", required = false
 	)
-	public String[] allowedTargetKeyGroupsArray();
+	public String[] allowedTargetKeys();
 
 	@Meta.AD(
-		deflt = "channel", name = "order-by-target-key-groups", required = false
+		deflt = "channel", name = "order-by-target-keys", required = false
 	)
-	public String[] orderByTargetKeyGroupsArray();
+	public String[] orderByTargetKeys();
 
 }

@@ -20,6 +20,7 @@ import com.liferay.commerce.exception.CommerceShipmentExpectedDateException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -590,6 +592,21 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
+		if (StringUtil.equals(
+				commerceShipment.getExternalReferenceCode(),
+				externalReferenceCode)) {
+
+			return commerceShipment;
+		}
+
+		if (_isDuplicateERC(
+				commerceShipment.getCompanyId(), externalReferenceCode)) {
+
+			throw new DuplicateCommerceShipmentException(
+				"There is another commerce shipment with external reference " +
+					"code " + externalReferenceCode);
+		}
+
 		commerceShipment.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -803,6 +820,20 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 		CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED
 	};
+
+	private boolean _isDuplicateERC(
+		long companyId, String externalReferenceCode) {
+
+		CommerceShipment commerceShipment =
+			commerceShipmentPersistence.fetchByC_ERC(
+				companyId, externalReferenceCode);
+
+		if (commerceShipment != null) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@ServiceReference(type = DTOConverterRegistry.class)
 	private DTOConverterRegistry _dtoConverterRegistry;

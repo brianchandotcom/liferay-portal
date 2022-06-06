@@ -16,7 +16,6 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayLink, {ClayLinkContext} from '@clayui/link';
 import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -45,18 +44,6 @@ function SelectCategory({
 	const [filterQuery, setFilterQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState(
 		new Set(selectedCategoryIds)
-	);
-
-	const handleClearSelected = ({children, href, ...otherProps}) => (
-		<a
-			{...otherProps}
-			href={href}
-			onClick={() => {
-				setSelectedItems(new Set([]));
-			}}
-		>
-			{children}
-		</a>
 	);
 
 	return (
@@ -123,17 +110,15 @@ function SelectCategory({
 								: Liferay.Language.get('item-selected')}
 						</p>
 
-						<ClayLinkContext.Provider value={handleClearSelected}>
-							<div>
-								<ClayLink
-									className="select-category-clear-selected text-3 text-weight-semi-bold"
-									displayType="secondary"
-									href="#"
-								>
-									{Liferay.Language.get('clear-all')}
-								</ClayLink>
-							</div>
-						</ClayLinkContext.Provider>
+						<ClayButton
+							className="select-category-clear-selected text-3 text-weight-semi-bold"
+							displayType="link"
+							onClick={() => {
+								setSelectedItems(new Set([]));
+							}}
+						>
+							{Liferay.Language.get('clear-all')}
+						</ClayButton>
 					</div>
 				</ClayLayout.Container>
 			)}

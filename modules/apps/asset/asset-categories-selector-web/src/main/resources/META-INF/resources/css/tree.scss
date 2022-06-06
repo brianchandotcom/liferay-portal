@@ -21,6 +21,7 @@ $spacer: 1rem;
 	min-height: 40px;
 }
 
-.select-category-clear-selected {
+.select-category-clear-selected,
+.select-category-clear-selected:hover {
 	color: $cadmin-gray-900;
 }

@@ -143,4 +143,16 @@ definition {
 		}
 	}
 
+	macro viewAuditEntries {
+		AssertElementPresent(
+			key_clientIP = "${clientIP}",
+			key_createDate = "${createDate}",
+			key_id = "${id}",
+			key_resourceAction = "${resourceAction}",
+			key_resourceID = "${resourceID}",
+			key_resourceName = "${resourceName}",
+			key_userName = "${userName}",
+			locator1 = "AuditReports#REPORTS_TABLE_ENTRIES");
+	}
+
 }

@@ -25,25 +25,4 @@ definition {
 			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 	}
 
-	macro setDefaultAccountPaymentMethod {
-		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "${accountName}");
-
-		Button.click(button = "Set Default Commerce Payment Method");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click.clickAtNotVisible(
-			key_radioOption = "${paymentMethod}",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
-
-		IFrame.selectTopFrame();
-
-		Button.clickSave();
-
-		AssertTextEquals(
-			key_defaultOption = "Default Account Commerce Payment Methods",
-			locator1 = "CommerceEntry#ACCOUNT_ORDER_DEFAULTS_ENTRY",
-			value1 = "${paymentMethod}");
-	}
-
 }

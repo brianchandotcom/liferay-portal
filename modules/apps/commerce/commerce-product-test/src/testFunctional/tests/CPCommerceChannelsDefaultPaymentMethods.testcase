@@ -86,7 +86,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given PayPal is set as the default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "PayPal");
 		}
@@ -169,7 +169,7 @@ definition {
 		}
 
 		task ("And given PayPal is set as the default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "PayPal");
 		}
@@ -261,7 +261,7 @@ definition {
 		}
 
 		task ("And given Money Order is set as the default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "Money Order");
 		}
@@ -352,7 +352,7 @@ definition {
 		}
 
 		task ("And given PayPal is set as the default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "PayPal");
 		}
@@ -459,7 +459,7 @@ definition {
 		}
 
 		task ("And given Money Order is set as the default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "Money Order");
 		}
@@ -518,7 +518,7 @@ definition {
 		}
 
 		task ("And given the offline payment method is set as default payment method for the Commerce Account") {
-			CommercePaymentMethods.setDefaultAccountPaymentMethod(
+			CommerceOrders.setAccountOrderDefaults(
 				accountName = "Commerce Account",
 				paymentMethod = "Test Offline Payment Method");
 		}

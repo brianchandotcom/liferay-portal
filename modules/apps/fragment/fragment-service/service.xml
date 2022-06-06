@@ -327,6 +327,7 @@
 		<exception>FragmentEntryConfiguration</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>
+		<exception>FragmentEntryTypeOptions</exception>
 		<exception>InvalidFile</exception>
 		<exception>InvalidFragmentCompositionKey</exception>
 		<exception>RequiredFragmentEntry</exception>

@@ -228,6 +228,14 @@ public class JournalEditArticleDisplayContext {
 			return _ddmFormValues;
 		}
 
+		if (_ddmFormValuesEdited()) {
+			DDMFormValuesFactory ddmFormValuesFactory =
+				_getDDMFormValuesFactory();
+
+			return ddmFormValuesFactory.create(
+				_httpServletRequest, ddmStructure.getDDMForm());
+		}
+
 		if (_article == null) {
 			DDMFormValuesFactory ddmFormValuesFactory =
 				_getDDMFormValuesFactory();
@@ -270,24 +278,6 @@ public class JournalEditArticleDisplayContext {
 			ddmStructure, fields);
 
 		return _ddmFormValues;
-	}
-
-	public DDMFormValues getDDMFormValuesFromRequest(DDMStructure ddmStructure)
-		throws PortalException {
-
-		if (_ddmFormValues != null) {
-			return _ddmFormValues;
-		}
-
-		if (_ddmFormValuesEdited()) {
-			DDMFormValuesFactory ddmFormValuesFactory =
-				_getDDMFormValuesFactory();
-
-			return ddmFormValuesFactory.create(
-				_httpServletRequest, ddmStructure.getDDMForm());
-		}
-
-		return getDDMFormValues(ddmStructure);
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -717,7 +707,7 @@ public class JournalEditArticleDisplayContext {
 				DDMFormValuesToMapConverter.class.getName());
 
 		return ddmFormValuesToMapConverter.convert(
-			getDDMFormValuesFromRequest(ddmStructure), ddmStructure);
+			getDDMFormValues(ddmStructure), ddmStructure);
 	}
 
 	public double getVersion() {

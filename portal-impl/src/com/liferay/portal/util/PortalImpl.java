@@ -1371,9 +1371,9 @@ public class PortalImpl implements Portal {
 				pos = completeURL.indexOf(urlSeparator);
 
 				if (pos != -1) {
-					if (StringUtil.contains(
-							layout.getFriendlyURL(), urlSeparator)) {
+					String friendlyURL = layout.getFriendlyURL();
 
+					if (friendlyURL.contains(urlSeparator)) {
 						pos = -1;
 					}
 					else {

@@ -517,6 +517,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		user = _userLocalService.getUser(userAccount.getId());
 
 		Assert.assertEquals(portraitId, user.getPortraitId());
+
+		String newPassword = RandomTestUtil.randomString();
+		UserAccount patchUserAccount = testPatchUserAccount_addUserAccount();
+
+		_assertAuthenticationResult(
+			Authenticator.FAILURE, patchUserAccount.getEmailAddress(),
+			newPassword);
+
+		userAccountResource.patchUserAccount(
+			patchUserAccount.getId(),
+			new UserAccount() {
+				{
+					password = newPassword;
+				}
+			});
+
+		_assertAuthenticationResult(
+			Authenticator.SUCCESS, patchUserAccount.getEmailAddress(),
+			newPassword);
 	}
 
 	@Override
@@ -671,12 +690,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertEquals(userAccount, postUserAccount);
 		assertValid(postUserAccount);
 
-		Assert.assertEquals(
-			Authenticator.SUCCESS,
-			_userLocalService.authenticateByEmailAddress(
-				testCompany.getCompanyId(), postUserAccount.getEmailAddress(),
-				password, Collections.emptyMap(), Collections.emptyMap(),
-				new HashMap<>()));
+		_assertAuthenticationResult(
+			Authenticator.SUCCESS, postUserAccount.getEmailAddress(), password);
 
 		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 			TestPropsValues.getUserId(),
@@ -713,6 +728,51 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 
 		_sapEntryLocalService.deleteSAPEntry(sapEntry);
+	}
+
+	@Override
+	@Test
+	public void testPutUserAccount() throws Exception {
+		super.testPutUserAccount();
+
+		String newPassword = RandomTestUtil.randomString();
+		UserAccount putUserAccount = testPutUserAccount_addUserAccount();
+
+		_assertAuthenticationResult(
+			Authenticator.FAILURE, putUserAccount.getEmailAddress(),
+			newPassword);
+
+		putUserAccount.setPassword(newPassword);
+
+		userAccountResource.putUserAccount(
+			putUserAccount.getId(), putUserAccount);
+
+		_assertAuthenticationResult(
+			Authenticator.SUCCESS, putUserAccount.getEmailAddress(),
+			newPassword);
+	}
+
+	@Override
+	@Test
+	public void testPutUserAccountByExternalReferenceCode() throws Exception {
+		super.testPutUserAccountByExternalReferenceCode();
+
+		String newPassword = RandomTestUtil.randomString();
+		UserAccount putUserAccount =
+			testPutUserAccountByExternalReferenceCode_addUserAccount();
+
+		_assertAuthenticationResult(
+			Authenticator.FAILURE, putUserAccount.getEmailAddress(),
+			newPassword);
+
+		putUserAccount.setPassword(newPassword);
+
+		userAccountResource.putUserAccountByExternalReferenceCode(
+			putUserAccount.getExternalReferenceCode(), putUserAccount);
+
+		_assertAuthenticationResult(
+			Authenticator.SUCCESS, putUserAccount.getEmailAddress(),
+			newPassword);
 	}
 
 	@Override
@@ -999,6 +1059,18 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_userLocalService.addGroupUser(siteId, userAccount.getId());
 
 		return userAccount;
+	}
+
+	private void _assertAuthenticationResult(
+			int authenticatorResult, String emailAddress, String password)
+		throws Exception {
+
+		Assert.assertEquals(
+			authenticatorResult,
+			_userLocalService.authenticateByEmailAddress(
+				testCompany.getCompanyId(), emailAddress, password,
+				Collections.emptyMap(), Collections.emptyMap(),
+				new HashMap<>()));
 	}
 
 	private void _assertUserAccountContactInformation(

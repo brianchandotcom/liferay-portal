@@ -20,9 +20,11 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +39,12 @@ public class EditBatchPlannerPlanDisplayContext {
 	public EditBatchPlannerPlanDisplayContext(
 			List<BatchPlannerPlan> batchPlannerPlans,
 			Map<String, String> internalClassNameCategories,
-			BatchPlannerPlan selectedBatchPlannerPlan)
+			BatchPlannerPlan selectedBatchPlannerPlan, List<Group> siteGroups)
 		throws PortalException {
 
 		_internalClassNameSelectOptions = _getInternalClassNameSelectOptions(
 			internalClassNameCategories);
+		_scopeSiteSelectOptions = _getScopeSiteSelectOptions(siteGroups);
 
 		if (selectedBatchPlannerPlan == null) {
 			_selectedBatchPlannerMappings = new HashMap<>();
@@ -89,6 +92,10 @@ public class EditBatchPlannerPlanDisplayContext {
 
 	public List<SelectOption> getInternalClassNameSelectOptions() {
 		return _internalClassNameSelectOptions;
+	}
+
+	public List<SelectOption> getScopeSiteSelectOptions() {
+		return _scopeSiteSelectOptions;
 	}
 
 	public long getSelectedBatchPlannerPlanId() {
@@ -149,6 +156,24 @@ public class EditBatchPlannerPlanDisplayContext {
 		return internalClassNameSelectOptions;
 	}
 
+	private List<SelectOption> _getScopeSiteSelectOptions(
+		List<Group> siteGroups) {
+
+		if (siteGroups.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		for (Group group : siteGroups) {
+			selectOptions.add(
+				new SelectOption(
+					group.getName(), String.valueOf(group.getGroupId())));
+		}
+
+		return selectOptions;
+	}
+
 	private Map<String, String> _getSelectedBatchPlannerMappings(
 		BatchPlannerPlan selectedBatchPlannerPlan) {
 
@@ -190,6 +215,7 @@ public class EditBatchPlannerPlanDisplayContext {
 	}
 
 	private final List<SelectOption> _internalClassNameSelectOptions;
+	private final List<SelectOption> _scopeSiteSelectOptions;
 	private final Map<String, String> _selectedBatchPlannerMappings;
 	private final long _selectedBatchPlannerPlanId;
 	private final String _selectedBatchPlannerPlanName;

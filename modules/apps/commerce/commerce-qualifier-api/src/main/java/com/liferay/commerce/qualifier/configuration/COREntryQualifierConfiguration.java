@@ -34,14 +34,14 @@ public interface COREntryQualifierConfiguration
 
 	@Meta.AD(
 		deflt = "account|account-group,channel,order-type",
-		name = "allowed-target-key-groups", required = false
+		name = "allowed-target-keys", required = false
 	)
-	public String[] allowedTargetKeyGroupsArray();
+	public String[] allowedTargetKeys();
 
 	@Meta.AD(
 		deflt = "account|order-type|channel,account|order-type,account|channel,account,account-group|order-type|channel,account-group|order-type,account-group|channel,account-group,order-type|channel,order-type,channel",
-		name = "order-by-target-key-groups", required = false
+		name = "order-by-target-keys", required = false
 	)
-	public String[] orderByTargetKeyGroupsArray();
+	public String[] orderByTargetKeys();
 
 }

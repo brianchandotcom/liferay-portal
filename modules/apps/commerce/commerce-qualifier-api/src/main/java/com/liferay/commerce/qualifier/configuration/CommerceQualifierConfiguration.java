@@ -19,8 +19,8 @@ package com.liferay.commerce.qualifier.configuration;
  */
 public interface CommerceQualifierConfiguration {
 
-	public String[] allowedTargetKeyGroupsArray();
+	public String[] allowedTargetKeys();
 
-	public String[] orderByTargetKeyGroupsArray();
+	public String[] orderByTargetKeys();
 
 }

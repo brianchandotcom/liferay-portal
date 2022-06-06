@@ -187,7 +187,7 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setConfigurationJSON(configurationJSON);
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
-		sxpBlueprint.setKey(String.valueOf(counterLocalService.increment()));
+		sxpBlueprint.setKey(sxpBlueprint.getKey());
 		sxpBlueprint.setTitleMap(titleMap);
 		sxpBlueprint.setVersion(
 			String.format(

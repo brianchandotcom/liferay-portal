@@ -140,7 +140,7 @@ function TopperContent({
 		[item]
 	);
 
-	const onDragEnd = (parentItemId, position) =>
+	const onDragEnd = (parentItemId, position) => {
 		dispatch(
 			moveItem({
 				itemId: item.itemId,
@@ -149,16 +149,25 @@ function TopperContent({
 				segmentsExperienceId,
 			})
 		);
+	};
 
 	const {
 		handlerRef: itemHandlerRef,
 		isDraggingSource: itemIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd);
+	} = useDragItem({...item, name}, onDragEnd, () => {
+		if (!isActive) {
+			selectItem(item.itemId);
+		}
+	});
 
 	const {
 		handlerRef: topperHandlerRef,
 		isDraggingSource: topperIsDraggingSource,
-	} = useDragItem({...item, name}, onDragEnd);
+	} = useDragItem({...item, name}, onDragEnd, () => {
+		if (!isActive) {
+			selectItem(item.itemId);
+		}
+	});
 
 	const isDraggingSource = itemIsDraggingSource || topperIsDraggingSource;
 

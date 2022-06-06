@@ -425,6 +425,11 @@ public class ContentPageEditorDisplayContext {
 				"getFormFieldsURL",
 				_getResourceURL("/layout_content_page_editor/get_form_fields")
 			).put(
+				"getFragmentEntryInputFieldTypesURL",
+				_getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_fragment_entry_input_field_types")
+			).put(
 				"getIframeContentCssURL",
 				PortalUtil.getStaticResourceURL(
 					httpServletRequest,

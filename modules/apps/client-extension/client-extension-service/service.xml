@@ -79,6 +79,7 @@
 		<exception>ClientExtensionEntryCustomElementURLs</exception>
 		<exception>ClientExtensionEntryFriendlyURLMapping</exception>
 		<exception>ClientExtensionEntryIFrameURL</exception>
+		<exception>ClientExtensionEntryInstanceableChanged</exception>
 		<exception>ClientExtensionEntryType</exception>
 		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
 	</exceptions>

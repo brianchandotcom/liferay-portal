@@ -319,45 +319,45 @@ function FormValues({localizedNames, namespace, selectedItem, useCustomName}) {
 	return (
 		<>
 			<input
-				hidden
 				name={getFieldName(namespace, 'classNameId')}
 				readOnly
+				type="hidden"
 				value={selectedItem.classNameId || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'classPK')}
 				readOnly
+				type="hidden"
 				value={selectedItem.classPK || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'classTypeId')}
 				readOnly
+				type="hidden"
 				value={selectedItem.classTypeId || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'title')}
 				readOnly
+				type="hidden"
 				value={selectedItem.title || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'type')}
 				readOnly
+				type="hidden"
 				value={selectedItem.type || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'localizedNames')}
 				readOnly
+				type="hidden"
 				value={useCustomName ? JSON.stringify(localizedNames) : '{}'}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'useCustomName')}
 				readOnly
+				type="hidden"
 				value={useCustomName}
 			/>
 		</>

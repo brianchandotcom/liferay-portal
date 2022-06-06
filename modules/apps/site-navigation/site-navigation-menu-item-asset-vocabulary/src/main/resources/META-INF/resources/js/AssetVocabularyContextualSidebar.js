@@ -355,51 +355,51 @@ function FormValues({
 	return (
 		<>
 			<input
-				hidden
 				name={getFieldName(namespace, 'classPK')}
 				readOnly
+				type="hidden"
 				value={selectedVocabulary.classPK || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'groupId')}
 				readOnly
+				type="hidden"
 				value={selectedVocabulary.groupId || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'title')}
 				readOnly
+				type="hidden"
 				value={selectedVocabulary.title || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'type')}
 				readOnly
+				type="hidden"
 				value={selectedVocabulary.type || ''}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'localizedNames')}
 				readOnly
+				type="hidden"
 				value={useCustomName ? JSON.stringify(localizedNames) : '{}'}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'showAssetVocabularyLevel')}
 				readOnly
+				type="hidden"
 				value={showAssetVocabularyLevel}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'useCustomName')}
 				readOnly
+				type="hidden"
 				value={useCustomName}
 			/>
 			<input
-				hidden
 				name={getFieldName(namespace, 'uuid')}
 				readOnly
+				type="hidden"
 				value={selectedVocabulary.uuid || ''}
 			/>
 		</>

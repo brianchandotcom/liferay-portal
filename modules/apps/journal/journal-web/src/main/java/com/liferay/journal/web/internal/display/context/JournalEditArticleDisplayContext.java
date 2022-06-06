@@ -803,21 +803,6 @@ public class JournalEditArticleDisplayContext {
 		return _showSelectFolder;
 	}
 
-	private boolean _isDDMFormValuesEdited() {
-		Map<String, String[]> parameterMap =
-			_httpServletRequest.getParameterMap();
-
-		for (Map.Entry<String, ?> entry : parameterMap.entrySet()) {
-			if (Pattern.matches(_EDITED_VALUES_REGEX, entry.getKey()) &&
-				GetterUtil.getBoolean(((String[])entry.getValue())[0])) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String[] _getAvailableLanguageIds() {
 		if (_article == null) {
 			return new String[] {getDefaultArticleLanguageId()};
@@ -880,6 +865,21 @@ public class JournalEditArticleDisplayContext {
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isDDMFormValuesEdited() {
+		Map<String, String[]> parameterMap =
+			_httpServletRequest.getParameterMap();
+
+		for (Map.Entry<String, ?> entry : parameterMap.entrySet()) {
+			if (Pattern.matches(_EDITED_VALUES_REGEX, entry.getKey()) &&
+				GetterUtil.getBoolean(((String[])entry.getValue())[0])) {
+
+				return true;
+			}
 		}
 
 		return false;

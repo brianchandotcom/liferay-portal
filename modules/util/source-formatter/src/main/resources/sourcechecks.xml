@@ -1237,6 +1237,16 @@
 			<description name="Checks that `.lfrbuild*` files are documented in a marker file." />
 		</check>
 	</source-processor>
+	<source-processor name="LibrarySourceProcessor">
+		<check name="PropertiesEmptyLinesCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary empty lines." />
+		</check>
+		<check name="LibraryVersionCheck">
+			<category name="Bug Prevention" />
+			<description name="Check if the library contains known vulnerability." />
+		</check>
+	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownFileExtensionCheck">
 			<category name="Styling" />

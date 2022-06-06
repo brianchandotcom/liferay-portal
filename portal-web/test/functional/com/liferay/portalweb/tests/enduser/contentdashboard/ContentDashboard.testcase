@@ -140,8 +140,6 @@ definition {
 	@description = "LPS-122873 When all the web content is unassigned from a Vocab1's category, the relative ordering of the rest of the categories remain the same"
 	@priority = "3"
 	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -735,8 +733,6 @@ definition {
 	@description = "LPS-122873 When there are some categories created for vocabulary1 (X axis), they will always have the same order during the user session"
 	@priority = "3"
 	test CategoriesWithSameOrderDuringASession {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audiences") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -825,6 +821,8 @@ definition {
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofApprovedWebContent {
+		property portal.acceptance = "true";
+
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -867,6 +865,8 @@ definition {
 	@description = "LPS-132597 When a web content is NOT associated to a Display Page and its status is Approved, a display page icon is NOT displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofApprovedWebContentNotDisplayed {
+		property portal.acceptance = "true";
+
 		task ("Create a Web Content and set a Display Page") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
@@ -891,6 +891,8 @@ definition {
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Pending, a display page icon is NOT displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofPendingWebContent {
+		property portal.acceptance = "true";
+
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -982,6 +984,8 @@ definition {
 	@description = "LPS-151808 Bug: The button Metrics is shown for web content in Pending status"
 	@priority = "4"
 	test CheckMetricsIconofPendingWebContent {
+		property portal.acceptance = "true";
+
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -1035,8 +1039,6 @@ definition {
 	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
 	@priority = "3"
 	test CheckOrderEvenWithSomeUnassignedCategories {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -1133,6 +1135,8 @@ definition {
 	@description = "LPS-133716 When in Content Dashboard, the name of the Site/Asset Library where the contents are stored is shown, regardless where it was created"
 	@priority = "5"
 	test CheckSiteAssertLibraryOfContent {
+		property portal.acceptance = "true";
+
 		task ("Create new Group") {
 			JSONGroup.addGroup(groupName = "Second Test Site Name");
 		}
@@ -1172,8 +1176,6 @@ definition {
 	@description = "LPS-122873 When a new category is created and assigned to a web content, the relative ordering of categories remain the same and the new category gets a new color, positionated in the last position"
 	@priority = "3"
 	test CheckTheOrderWithANewCategory {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -1289,6 +1291,8 @@ definition {
 	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
 	@priority = "4"
 	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT {
+		property portal.acceptance = "true";
+
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1311,6 +1315,8 @@ definition {
 	@description = "When click on the 'Other options' icon of not Approved WC and has a display page associated, View option NOT displayed"
 	@priority = "4"
 	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT {
+		property portal.acceptance = "true";
+
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -1601,7 +1607,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ClickTitleApprovedNoDPT {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
 
 		task ("Add web content Approved") {
@@ -2054,7 +2059,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ClickTitleDraftNoDPT {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
 
 		task ("Add web content Draft") {
@@ -2084,7 +2088,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ClickTitlePendingNoDPT {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitlePendingNoDPT";
 
 		task ("Create a Web Content") {
@@ -2138,7 +2141,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ClickTitleScheduledNoDPT {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
 
 		task ("Create a Web Content") {
@@ -3628,6 +3630,8 @@ definition {
 	Then the extensions selected appear as filter boxes above the Content table in the Content Dashboard, with the format 'Extension: [extension_name]' "
 	@priority = "5"
 	test FilteringExtensionsOnTheDashboard {
+		property portal.acceptance = "true";
+
 		task ("Add a text file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -3870,8 +3874,6 @@ definition {
 	@description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test JustAddingAVocabularyThroughTheFilters {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -4015,6 +4017,8 @@ definition {
 	Then the MIME type 'audio' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeAudio {
+		property portal.acceptance = "true";
+
 		task ("Add an audio file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4041,6 +4045,8 @@ definition {
 	Then the MIME type 'code' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeCode {
+		property portal.acceptance = "true";
+
 		task ("Add a document") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4067,6 +4073,8 @@ definition {
 	Then the MIME type 'compressed' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeCompressed {
+		property portal.acceptance = "true";
+
 		task ("Add a compressed file") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -4095,6 +4103,8 @@ definition {
 	Then the MIME type 'others' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeOthers {
+		property portal.acceptance = "true";
+
 		task ("Add a vectorial file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4121,6 +4131,8 @@ definition {
 	Then the MIME type 'presentation' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypePresentation {
+		property portal.acceptance = "true";
+
 		task ("Add a compressed file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4147,6 +4159,8 @@ definition {
 	Then the MIME type 'spreadSheet' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeSpreadsheet {
+		property portal.acceptance = "true";
+
 		task ("Add a spreadSheet file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4173,6 +4187,8 @@ definition {
 	Then the MIME type 'text' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeText {
+		property portal.acceptance = "true";
+
 		task ("Add a text file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4199,6 +4215,8 @@ definition {
 	Then the MIME type 'vectorial' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeVectorial {
+		property portal.acceptance = "true";
+
 		task ("Add a vectorial file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4225,6 +4243,8 @@ definition {
 	Then the MIME type 'video' appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = "4"
 	test MimeTypeVideo {
+		property portal.acceptance = "true";
+
 		task ("Add a video file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -4337,8 +4357,6 @@ definition {
 	@description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test NumberOfVocabulariesAccordingToTheAuditGraph {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audiences") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
@@ -4421,6 +4439,8 @@ definition {
 	@description = "Validate if the user can order by Modification Date"
 	@priority = "5"
 	test OrderByModificationDate {
+		property portal.acceptance = "true";
+
 		task ("Create 5 Web Contents") {
 			for (var count : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
@@ -4452,6 +4472,8 @@ definition {
 	@description = "Validate if the user can order by title"
 	@priority = "5"
 	test OrderByTitle {
+		property portal.acceptance = "true";
+
 		task ("Create 5 Web Contents") {
 			for (var count : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
@@ -4511,8 +4533,6 @@ definition {
 	@description = "LPS-132254 When a user use the <, > buttons, the page displayed moves forward/backward"
 	@priority = "3"
 	test PaginationMoveAcrossPagesWithButtons {
-		property portal.acceptance = "true";
-
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
@@ -4545,8 +4565,6 @@ definition {
 	@description = "LPS-132254 When a user clicks on a page number, that page is displayed in the Content Dashboard"
 	@priority = "3"
 	test PaginationMoveAcrossPagesWithNumber {
-		property portal.acceptance = "true";
-
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
@@ -4772,6 +4790,8 @@ definition {
 	@description = "LPS-131886 Validade if a Web Content associated with a Display Page Template is shown"
 	@priority = "5"
 	test ShouldExhibitWebContentAssociatedWithDisplayPage {
+		property portal.acceptance = "true";
+
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -4814,6 +4834,8 @@ definition {
 	@description = "LPS-131886 Validade if a Web Content not associated with a Display Page Template is shown"
 	@priority = "5"
 	test ShouldExhibitWebContentNotAssociatedWithDisplayPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Create WC via JSON") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -4838,6 +4860,8 @@ definition {
 	@description = "LPS-133181 When Filter by Author 'All', displays content from all users featured in the user's content dashboard view."
 	@priority = "5"
 	test ShowAllContentCreatorUsers {
+		property portal.acceptance = "true";
+
 		task ("Disable option to strangers to verify email") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -4917,6 +4941,7 @@ definition {
 	@priority = "5"
 	test ShowAllContentsCreatedByUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		task ("Create and configure second user") {
 			JSONUser.addUser(
@@ -4990,6 +5015,7 @@ definition {
 	@priority = "5"
 	test ShowOnlyContentCreatedByUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		task ("Create and configure second user") {
 			JSONUser.addUser(
@@ -5074,7 +5100,6 @@ definition {
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property portal.acceptance = "true";
 
 		task ("Create document via JSON") {
 			task ("Create a new Document") {
@@ -5128,8 +5153,6 @@ definition {
 	@description = "LPS-122873 When the user uncheck any checkbox from the vocab2, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test UncheckACategoryInTheContentPanel {
-		property portal.acceptance = "true";
-
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
 				groupName = "Global",

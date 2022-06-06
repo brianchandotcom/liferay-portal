@@ -656,6 +656,8 @@ definition {
 	@description = "LPS-86283: Validate if, only the content matching the criteria of the assigned segment must be shown in asset publisher	"
 	@priority = "4"
 	test ContentMatchesSegmentCriteria {
+		property portal.acceptance = "true";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -770,6 +772,7 @@ definition {
 	test DefaultVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -809,6 +812,7 @@ definition {
 	test DefaultVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -1237,6 +1241,7 @@ definition {
 	test DynamicCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
@@ -1582,6 +1587,7 @@ definition {
 	test DynamicCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
@@ -1822,6 +1828,8 @@ definition {
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
 	@priority = "4"
 	test FilterCollectionItemsByGlobalCategory {
+		property portal.acceptance = "true";
+
 		task ("Add two web contents with different global category") {
 			var n = "1";
 
@@ -2002,6 +2010,7 @@ definition {
 	test ManualCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2") {
@@ -2282,6 +2291,7 @@ definition {
 	test ManualCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2") {
@@ -2489,6 +2499,7 @@ definition {
 	test NewVariationPriorityForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -2532,6 +2543,7 @@ definition {
 	test NewVariationPriorityForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -2993,6 +3005,8 @@ definition {
 	@description = "LPS-86283: Validate if, when selecting a segment it is possible to filter and order, sorting and search	"
 	@priority = "4"
 	test SearchingSegments {
+		property portal.acceptance = "true";
+
 		task ("Create Segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
@@ -3171,6 +3185,8 @@ definition {
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Dynamic Content Sets, he can apply in some portlet (assert publisher) to use"
 	@priority = "5"
 	test UseDynamicCollectionAtPortlet {
+		property portal.acceptance = "true";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -3262,6 +3278,8 @@ definition {
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Manual Content Sets, he can apply in some portlet (assert publisher) to use"
 	@priority = "5"
 	test UseManualCollectionAtPortlet {
+		property portal.acceptance = "true";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -3377,6 +3395,8 @@ definition {
 	@description = "This is a test for LPS-132626. Able to select all vocabularies when creating a collection."
 	@priority = "4"
 	test ViewAllTwoCategoriesInDynamicCollection {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary with Web Content Article") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -3451,6 +3471,8 @@ definition {
 	@priority = "4"
 	@uitest
 	test ViewAssetListContent {
+		property portal.acceptance = "true";
+
 		task ("Create a web content article") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
@@ -3489,6 +3511,8 @@ definition {
 	@description = "This is a test for LPS-84331. Assert that Asset Lists correctly display where they are used."
 	@priority = "4"
 	test ViewAssetListUsages {
+		property portal.acceptance = "true";
+
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -3529,6 +3553,8 @@ definition {
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
 	@priority = "4"
 	test ViewContentOfAVariant {
+		property portal.acceptance = "true";
+
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -3648,6 +3674,8 @@ definition {
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
+		property portal.acceptance = "true";
+
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

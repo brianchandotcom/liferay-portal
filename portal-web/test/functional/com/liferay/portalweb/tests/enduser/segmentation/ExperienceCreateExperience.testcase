@@ -355,7 +355,7 @@ definition {
 	@description = "LPS-130344: Segment member preview count shows the correct number of users when segments are combined"
 	@priority = "5"
 	test AddNewExperienceBasedOtherSegmentsSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add user via JSONWS") {
 			JSONUser.addUser(
@@ -464,7 +464,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Country criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationCountrySegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -571,6 +571,8 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Date modified criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationDateModifiedSegment {
+		property portal.acceptance = "true";
+
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
 		}
@@ -659,7 +661,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Hierarchy path criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationHierarchyPathSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -751,7 +753,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Name criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationNameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -843,7 +845,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Organization criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationOrganizationSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -935,7 +937,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Parent Organization criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationParentOrganizationSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -1042,6 +1044,8 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Region criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationRegionSegment {
+		property portal.acceptance = "true";
+
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
 		}
@@ -1156,7 +1160,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Tag criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationTagSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(organizationName = "organization Name");
@@ -1261,7 +1265,7 @@ definition {
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Type criteria"
 	@priority = "5"
 	test AddNewExperienceOrganizationTypeSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationTypeSegment";
 
 		task ("Configure organization type") {
@@ -1382,7 +1386,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Browser criteria"
 	@priority = "5"
 	test AddNewExperienceSessionBrowserSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -1469,7 +1473,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Cookies criteria"
 	@priority = "5"
 	test AddNewExperienceSessionCookiesSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an User via JSONWS") {
 			JSONUser.addUser(
@@ -1552,7 +1556,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Device brand criteria"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceBrandSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -1621,7 +1625,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Device model criteria"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceModelSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -1690,7 +1694,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Device screen resolution height criteria"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceScreenResolutionHeightSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -1759,7 +1763,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Device screen resolution width criteria"
 	@priority = "5"
 	test AddNewExperienceSessionDeviceScreenResolutionWidthSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -1828,7 +1832,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Hostname criteria"
 	@priority = "5"
 	test AddNewExperienceSessionHostnameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceSessionHostnameSegment";
 
 		task ("Create a new Portal Instance") {
@@ -1953,7 +1957,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Last sign in date criteria"
 	@priority = "5"
 	test AddNewExperienceSessionLastSignInDateSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			var todayUTCtime = DateUtil.getFormattedCurrentDate("yyyy-MM-dd'T'HH:mm:ss.mmm'Z'");
@@ -2024,7 +2028,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Local date criteria"
 	@priority = "5"
 	test AddNewExperienceSessionLocalDateSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			var todayDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
@@ -2095,7 +2099,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Referrer URL criteria"
 	@priority = "5"
 	test AddNewExperienceSessionReferrerURLSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -2171,7 +2175,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Request Parameters criteria"
 	@priority = "5"
 	test AddNewExperienceSessionRequestParametersSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -2241,7 +2245,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Signed In criteria"
 	@priority = "5"
 	test AddNewExperienceSessionSignedInSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -2319,7 +2323,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > URL criteria"
 	@priority = "5"
 	test AddNewExperienceSessionURLSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -2388,7 +2392,7 @@ definition {
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > User Agent criteria"
 	@priority = "5"
 	test AddNewExperienceSessionUserAgentSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a session segment") {
 			JSONSegmentsentry.addSegment(
@@ -2457,7 +2461,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Date modified criteria"
 	@priority = "5"
 	test AddNewExperienceUserDateModifiedSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Create a segment with date modified criteria") {
 			var todayUTCtime = DateUtil.getFormattedCurrentDate("yyyy-MM-dd'T'HH:mm:ss.mmm'Z'");
@@ -2520,7 +2524,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Date of birth criteria"
 	@priority = "5"
 	test AddNewExperienceUserDateOfBirthSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Create a segment with date modified criteria") {
 			var todayDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
@@ -2583,7 +2587,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Email address criteria"
 	@priority = "5"
 	test AddNewExperienceUserEmailAddressSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -2651,7 +2655,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > First Name criteria"
 	@priority = "5"
 	test AddNewExperienceUserFirstNameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -2719,7 +2723,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Job Title criteria"
 	@priority = "5"
 	test AddNewExperienceUserJobTitleSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -2787,7 +2791,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Last name criteria"
 	@priority = "5"
 	test AddNewExperienceUserLastNameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -2855,7 +2859,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Name criteria"
 	@priority = "5"
 	test AddNewExperienceUserNameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -2915,7 +2919,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Role criteria"
 	@priority = "5"
 	test AddNewExperienceUserRoleSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Assign role to user") {
 			JSONRole.assignRoleToUser(
@@ -2989,7 +2993,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Screen Name criteria"
 	@priority = "5"
 	test AddNewExperienceUserScreenNameSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -3057,7 +3061,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Site and Organization Role criteria"
 	@priority = "5"
 	test AddNewExperienceUserSiteOrganizationRoleSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceUserSiteOrganizationRoleSegment";
 
 		task ("Assign userea1 to Test Site group") {
@@ -3145,7 +3149,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Site criteria"
 	@priority = "5"
 	test AddNewExperienceUserSiteSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Assign user to Test Site Name group") {
 			JSONGroup.assignUserToGroup(
@@ -3219,7 +3223,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Tag criteria"
 	@priority = "5"
 	test AddNewExperienceUserTagSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user with a tag via JSONWS") {
 			JSONUser.addUser(
@@ -3301,7 +3305,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > Team criteria"
 	@priority = "5"
 	test AddNewExperienceUserTeamSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Assign user to Test Site Name group") {
 			JSONGroup.assignUserToGroup(
@@ -3394,7 +3398,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > User Group criteria"
 	@priority = "5"
 	test AddNewExperienceUserUserGroupSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceUserUserGroupSegment";
 
 		task ("Create an user group via JSONWS") {
@@ -3477,7 +3481,7 @@ definition {
 	@description = "LPS-130268: Validate if it's posible to create a experience using a segment based on User > User criteria"
 	@priority = "5"
 	test AddNewExperienceUserUserSegment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add an user segment") {
 			JSONSegmentsentry.addSegment(
@@ -4264,6 +4268,8 @@ definition {
 	@description = "LPS-86285: Validate in the content page if, the user can discard the changes when he is editing the experiences (already published)"
 	@priority = "4"
 	test DiscardingChangesStillInTheEdition {
+		property portal.acceptance = "true";
+
 		task ("Go to Experience Content Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
@@ -4766,6 +4772,8 @@ definition {
 	@description = "LPS-90588: Validate the interaction with once the user is creating the new Segment, when the user saves the segment	"
 	@priority = "5"
 	test ExperienceDropdownAddNewSegmentCancel {
+		property portal.acceptance = "true";
+
 		task ("Go to New Experience Editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
@@ -5094,6 +5102,8 @@ definition {
 	@description = "LPS-113248: When there are more than one experience(not default experience) with fragments mapped to different web contents, each experience will maintain its own mapping, even if the mapping is modified in any experience"
 	@priority = "5"
 	test MapFragmentMultipleExperiences {
+		property portal.acceptance = "true";
+
 		task ("Create two Web Contents") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -5180,6 +5190,8 @@ definition {
 	@description = "LPS-113248: When there is more than one fragment mapped to a web content in a experience(not default experience), each fragment will display the field mapped to it"
 	@priority = "5"
 	test MapMultipleFragmentsBetweenExperiences {
+		property portal.acceptance = "true";
+
 		task ("Create two Web Contents") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content 1",
@@ -5519,6 +5531,8 @@ definition {
 	@description = "LPS-86285: Validate in the content page if, the user can publish the content in the experiences that can be different from others experiences"
 	@priority = "5"
 	test PublishContentInDifferentExperiences {
+		property portal.acceptance = "true";
+
 		task ("Create a Web Content and add it to the page") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -5556,6 +5570,8 @@ definition {
 	@description = "LPS-86285: Validate in the content page if, the user can remove a section in the experiences that can be different from others experiences (already published)"
 	@priority = "5"
 	test RemoveDifferentSections {
+		property portal.acceptance = "true";
+
 		task ("Add an element to page, create an experience and publish it") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
@@ -5598,6 +5614,7 @@ definition {
 	@description = "LPS-132573: Assert no error occurs after switching back to default experience with fragment removed."
 	@priority = "4"
 	test RemoveFragmentAndChangeBackToDefaultExperience {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExperienceCreateExperience#RemoveFragmentAndChangeBackToDefaultExperience";
 
 		task ("Add a Web Content via JSONWS") {
@@ -5694,6 +5711,8 @@ definition {
 	@description = "LPS-86285: Validate in the content page if, the user can remove fragment in the experiences that can be different from others experiences (already published)"
 	@priority = "4"
 	test RemovingFragmentInDifferentExperiences {
+		property portal.acceptance = "true";
+
 		task ("Go to Experience Content Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
@@ -5780,6 +5799,8 @@ definition {
 	Then: the modal does not hides away and the Experience Name input reports an error"
 	@priority = "4"
 	test RequiredExperienceNameField {
+		property portal.acceptance = "true";
+
 		task ("Try to create new experience without name") {
 			ContentPages.gotoPageEditor();
 
@@ -5799,6 +5820,8 @@ definition {
 	@description = "LPS-139951 Bug: Some fragments break the page editor when added to experiences"
 	@priority = "4"
 	test UseBannerFragmentWithExperience {
+		property portal.acceptance = "true";
+
 		task ("Go to Experience Content Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",

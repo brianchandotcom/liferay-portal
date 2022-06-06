@@ -2038,6 +2038,8 @@ definition {
 	@description = "LPS-146550 Bug: Apostrophe in segment property value breaks filter"
 	@priority = "4"
 	test AddSegmentWithApostrophe {
+		property portal.acceptance = "true";
+
 		task ("Create an User with an apostrophe") {
 			JSONUser.addUser(
 				userEmailAddress = "shaquille@liferay.com",
@@ -2206,6 +2208,8 @@ definition {
 	@description = "LPS-152077 Bug: Error updating segment which contains a non-existing segment"
 	@priority = "4"
 	test DeleteUnavailableSegmentCriteria {
+		property portal.acceptance = "true";
+
 		task ("Create a first segment with any criteria") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Email Address",
@@ -2405,6 +2409,7 @@ definition {
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#KeepInfomationOfDeleteVocabularyInSegment";
 
 		task ("Set Session Property Vocabulary") {
@@ -2591,6 +2596,8 @@ definition {
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = "4"
 	test ValidateDefaultSegmentNotDisplayed {
+		property portal.acceptance = "true";
+
 		task ("Assert 'default' segment is not present") {
 			Segmentation.viewEntryNotPresent(segmentName = "Anyone");
 
@@ -2601,6 +2608,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Organization."
 	@priority = "4"
 	test ValidateOrganizationFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Add and get organization ID") {
 			JSONOrganization.addOrganization(
 				organizationName = "Organization Name",
@@ -2637,6 +2646,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Parent Organization."
 	@priority = "4"
 	test ValidateParentOrganizationFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Add organization and parent, and get parent's organization ID") {
 			JSONOrganization.addOrganization(organizationName = "Parent Organization Name");
 
@@ -2804,6 +2815,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Role."
 	@priority = "4"
 	test ValidateRoleFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Get role id") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Administrator");
 		}
@@ -2831,6 +2844,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Site."
 	@priority = "4"
 	test ValidateSiteFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Create a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -2860,6 +2875,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Team."
 	@priority = "4"
 	test ValidateTeamFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Add team") {
 			Site.openSiteTeamsAdmin(siteURLKey = "guest");
 
@@ -2896,6 +2913,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: User."
 	@priority = "4"
 	test ValidateUserFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Get user ID") {
 			var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
 		}
@@ -2923,6 +2942,8 @@ definition {
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: User Group."
 	@priority = "4"
 	test ValidateUserGroupFieldInputInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Create and get user group ID") {
 			JSONUserGroup.addUserGroup(userGroupName = "Test Group Name");
 
@@ -2969,6 +2990,7 @@ definition {
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = "4"
 	test VocabulariesListedInSystemSettingsSegments {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#VocabulariesListedInSystemSettingsSegments";
 
 		task ("Add two vocabularies to global site") {

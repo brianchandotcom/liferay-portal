@@ -63,7 +63,10 @@ public class CETValidatorImpl implements CETValidator {
 		if (Objects.equals(
 				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			new CETCustomElementValidator(
+			CETCustomElementValidator cetCustomElementValidator =
+				new CETCustomElementValidator();
+
+			cetCustomElementValidator.validate(
 				newTypeSettingsUnicodeProperties,
 				oldTypeSettingsUnicodeProperties);
 		}
@@ -76,7 +79,9 @@ public class CETValidatorImpl implements CETValidator {
 		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
 
-			new CETIFrameValidator(
+			CETIFrameValidator cetiFrameValidator = new CETIFrameValidator();
+
+			cetiFrameValidator.validate(
 				newTypeSettingsUnicodeProperties,
 				oldTypeSettingsUnicodeProperties);
 		}

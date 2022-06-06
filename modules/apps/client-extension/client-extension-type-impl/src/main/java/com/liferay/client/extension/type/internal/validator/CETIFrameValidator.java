@@ -27,9 +27,10 @@ import java.util.regex.Pattern;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CETIFrameValidator {
+public class CETIFrameValidator implements CETTypeValidator {
 
-	public CETIFrameValidator(
+	@Override
+	public void validate(
 			UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
@@ -59,7 +60,7 @@ public class CETIFrameValidator {
 				oldTypeSettingsUnicodeProperties);
 
 			if (newCETIFrameImpl.isInstanceable() !=
-					oldCETIFrameImpl.isInstanceable()) {
+				oldCETIFrameImpl.isInstanceable()) {
 
 				// TODO Use a different exception
 

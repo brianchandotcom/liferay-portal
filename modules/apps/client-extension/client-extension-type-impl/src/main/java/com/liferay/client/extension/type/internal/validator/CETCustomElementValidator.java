@@ -33,9 +33,10 @@ import java.util.regex.Pattern;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CETCustomElementValidator {
+public class CETCustomElementValidator implements CETTypeValidator {
 
-	public CETCustomElementValidator(
+	@Override
+	public void validate(
 			UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {

@@ -42,12 +42,12 @@
 </tr>
 <tr>
 	<td>FIELD_REQUIRED_MESSAGE</td>
-	<td>//div[contains(text(),'This field is required.')]</td> 
+	<td>//div[contains(text(),'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_INVALID_MESSAGE</td>
-	<td>//div[contains(text(),'Please enter a valid email address.')]</td> 
+	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
 	<td></td>
 </tr>
 </tbody>

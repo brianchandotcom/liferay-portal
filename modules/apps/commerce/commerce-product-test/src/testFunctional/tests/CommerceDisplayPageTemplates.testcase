@@ -30,6 +30,81 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify a product's availability can be viewed via an availability fragment deployed on a default Commerce Product Display Page Template."
+	@priority = "3"
+	test CanAssertProductAvailabilityUsingAvailabilityFragment {
+		task ("Given a new default Commerce Product type display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And given an availability fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Availability",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And given the fragment contains 'The availability component will be shown here.'") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Availability",
+				messageInfo = "The availability component will be shown here.");
+		}
+
+		task ("And given the page is published") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the page is marked as Default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in and clicks on the U-Joint product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Availability fragment is present with the Available tag") {
+			AssertElementPresent(
+				key_availability = "Available",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+
+		task ("When the buyer clicks on the Power Steering Pump product") {
+			GoBack();
+
+			CommerceNavigator.searchEntry(entryName = "Power Steering Pump");
+
+			Click(
+				key_productName = "power-steering-pump",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Availability fragment is present with the Unavailable tag") {
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+	}
+
 	@description = "Verify an Override Default Product Display Page overrides a Commerce Product Display Page Template marked as default."
 	@priority = "4"
 	test CanDefaultCommerceProductDPTBeOverriddenByOverrideDefaultProductDisplayPageSet {

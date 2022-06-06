@@ -137,7 +137,7 @@ public class LayoutFaviconTest {
 		LayoutSet layoutSet = _layout.getLayoutSet();
 
 		FileEntry layoutSetFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("liferay-classic.ico"));
+			_getExpectedBytes("classic.ico"));
 
 		layoutSet.setFaviconFileEntryId(
 			layoutSetFaviconFileEntry.getFileEntryId());
@@ -170,7 +170,7 @@ public class LayoutFaviconTest {
 			masterLayoutPageTemplateEntry.getPlid());
 
 		FileEntry masterLayoutFaviconFileEntry = _addFileEntry(
-			_getExpectedBytes("liferay-classic.ico"));
+			_getExpectedBytes("classic.ico"));
 
 		masterLayout.setFaviconFileEntryId(
 			masterLayoutFaviconFileEntry.getFileEntryId());

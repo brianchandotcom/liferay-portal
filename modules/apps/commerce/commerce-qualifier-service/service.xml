@@ -22,8 +22,10 @@
 
 		<column name="sourceClassNameId" type="long" />
 		<column name="sourceClassPK" type="long" />
+		<column db-name="sourceCQualifierMetadataKey" name="sourceCommerceQualifierMetadataKey" type="String" />
 		<column name="targetClassNameId" type="long" />
 		<column name="targetClassPK" type="long" />
+		<column db-name="targetCQualifierMetadataKey" name="targetCommerceQualifierMetadataKey" type="String" />
 
 		<!-- Order -->
 

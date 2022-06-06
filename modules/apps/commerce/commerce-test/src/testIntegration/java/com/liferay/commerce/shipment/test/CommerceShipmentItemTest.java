@@ -20,6 +20,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
@@ -276,6 +277,43 @@ public class CommerceShipmentItemTest {
 				cpInstance.getSku());
 
 		Assert.assertEquals(1, actualCPInstanceStockQuantity);
+
+		_resetCommerceShipment();
+	}
+
+	@Test(expected = DuplicateCommerceShipmentItemException.class)
+	public void testUpdateCommerceShipmentItem() throws Exception {
+		frutillaRule.scenario(
+			"It should not be possible to update the ERC field with a value " +
+				"that already exists"
+		).given(
+			"An commerce shipment with an commerce shipment item associated"
+		).when(
+			"I update the ERC field"
+		).then(
+			"An exception shall be raised"
+		);
+
+		CommerceShipmentItem newCommerceShipmentItem =
+			CommerceShipmentTestUtil.addCommerceShipmentItem(
+				_commerceContext,
+				CPTestUtil.addCPInstanceWithRandomSku(_group.getGroupId()),
+				_group.getGroupId(), _user.getUserId(),
+				_commerceOrder.getCommerceOrderId(),
+				_commerceShipment.getCommerceShipmentId(), 2, 1);
+
+		String externalReferenceCode = "externalReferenceCode";
+
+		_commerceShipmentItemLocalService.updateExternalReferenceCode(
+			_commerceShipmentItem.getCommerceShipmentItemId(),
+			externalReferenceCode);
+
+		_commerceShipmentItemLocalService.updateExternalReferenceCode(
+			newCommerceShipmentItem.getCommerceShipmentItemId(),
+			externalReferenceCode);
+
+		_commerceShipmentItemLocalService.deleteCommerceShipmentItem(
+			newCommerceShipmentItem.getCommerceShipmentItemId());
 
 		_resetCommerceShipment();
 	}

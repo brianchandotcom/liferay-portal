@@ -3,5 +3,10 @@
 	"fragmentEntryKey": "text-input",
 	"icon": "custom-field",
 	"name": "text-input",
-	"type": "input"
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"text"
+		]
+	}
 }

@@ -3,5 +3,10 @@
 	"fragmentEntryKey": "date-input",
 	"icon": "calendar",
 	"name": "date",
-	"type": "input"
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"date"
+		]
+	}
 }

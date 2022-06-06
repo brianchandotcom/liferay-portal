@@ -74,12 +74,81 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153559",
+			objectName = "CustomObject153559",
+			pluralLabelName = "Custom Objects 153559");
 
-		// TODO LPS-153559 CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153559");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153559");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153559");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153559",
+			value = "Allowed Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
+
+		ObjectPortlet.viewEntry(entry = "Allowed Entry");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153559");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Allowed Entry')");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "This entry is not possible.");
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"

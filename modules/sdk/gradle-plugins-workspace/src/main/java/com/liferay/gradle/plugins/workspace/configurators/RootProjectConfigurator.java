@@ -366,6 +366,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerRemoveImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
 
 		dockerRemoveImage.setDescription("Removes the Docker image.");
+		dockerRemoveImage.setGroup(DOCKER_GROUP);
 
 		Property<Boolean> forceProperty = dockerRemoveImage.getForce();
 
@@ -535,6 +536,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerCreateContainer.setDescription(
 			"Creates a Docker container from your built image and mounts " +
 				dockerPath + " to /mnt/liferay.");
+		dockerCreateContainer.setGroup(DOCKER_GROUP);
 
 		ListProperty<String> portBindings = hostConfig.getPortBindings();
 
@@ -1090,6 +1092,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			DockerLogsContainer.class);
 
 		dockerLogsContainer.setDescription("Logs the Docker container.");
+		dockerLogsContainer.setGroup(DOCKER_GROUP);
 
 		Property<Boolean> followProperty = dockerLogsContainer.getFollow();
 
@@ -1126,6 +1129,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		property.set(workspaceExtension.getDockerImageLiferay());
 
 		dockerPullImage.setDescription("Pull the Docker image.");
+		dockerPullImage.setGroup(DOCKER_GROUP);
 
 		return dockerPullImage;
 	}
@@ -1138,6 +1142,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			DockerRemoveContainer.class);
 
 		dockerRemoveContainer.setDescription("Removes the Docker container.");
+		dockerRemoveContainer.setGroup(DOCKER_GROUP);
 
 		Property<Boolean> forceProperty = dockerRemoveContainer.getForce();
 
@@ -1333,6 +1338,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerStartContainer.dependsOn(dockerCreateContainer);
 
 		dockerStartContainer.setDescription("Starts the Docker container.");
+		dockerStartContainer.setGroup(DOCKER_GROUP);
 
 		dockerStartContainer.targetContainerId(
 			new Callable<String>() {
@@ -1353,6 +1359,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			DockerStopContainer.class);
 
 		dockerStopContainer.setDescription("Stops the Docker container.");
+		dockerStopContainer.setGroup(DOCKER_GROUP);
 
 		dockerStopContainer.targetContainerId(
 			new Callable<String>() {

@@ -57,11 +57,11 @@ public class FragmentEntryLinkServiceImpl
 			String rendererKey, ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean allowUpdateLayoutRestrictedPermission = GetterUtil.getBoolean(
+		boolean checkLayoutRestrictedUpdatePermission = GetterUtil.getBoolean(
 			PropsUtil.get("feature.flag.LPS-132571"));
 
 		_checkPermission(
-			groupId, plid, false, allowUpdateLayoutRestrictedPermission);
+			groupId, plid, false, checkLayoutRestrictedUpdatePermission);
 
 		return fragmentEntryLinkLocalService.addFragmentEntryLink(
 			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -102,12 +102,12 @@ public class FragmentEntryLinkServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
-		boolean allowUpdateLayoutRestrictedPermission = GetterUtil.getBoolean(
+		boolean checkLayoutRestrictedUpdatePermission = GetterUtil.getBoolean(
 			PropsUtil.get("feature.flag.LPS-132571"));
 
 		_checkPermission(
 			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true,
-			allowUpdateLayoutRestrictedPermission);
+			checkLayoutRestrictedUpdatePermission);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
@@ -115,7 +115,7 @@ public class FragmentEntryLinkServiceImpl
 
 	private void _checkPermission(
 			long groupId, long plid, boolean checkUpdateLayoutContentPermission,
-			boolean checkUpdateLayoutRestrictedPermission)
+			boolean checkLayoutRestrictedUpdatePermission)
 		throws PortalException {
 
 		String className = Layout.class.getName();
@@ -148,7 +148,7 @@ public class FragmentEntryLinkServiceImpl
 
 		if (!Objects.equals(className, Layout.class.getName()) ||
 			(!checkUpdateLayoutContentPermission &&
-			 !checkUpdateLayoutRestrictedPermission)) {
+			 !checkLayoutRestrictedUpdatePermission)) {
 
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), className, classPK, ActionKeys.UPDATE);
@@ -164,7 +164,7 @@ public class FragmentEntryLinkServiceImpl
 			return;
 		}
 
-		if (checkUpdateLayoutRestrictedPermission &&
+		if (checkLayoutRestrictedUpdatePermission &&
 			_layoutPermission.containsLayoutRestrictedUpdatePermission(
 				getPermissionChecker(), classPK)) {
 

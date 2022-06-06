@@ -152,12 +152,87 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153560",
+			objectName = "CustomObject153560",
+			pluralLabelName = "Custom Objects 153560");
 
-		// TODO LPS-153560 CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153560");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153560");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153560");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customField",
+			objectName = "CustomObject153560",
+			value = "Allowed Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
+
+		ObjectPortlet.viewEntry(entry = "Allowed Entry");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153560");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Update Entry')");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
+
+		ObjectPortlet.viewEntryDetails(entry = "Allowed Entry");
+
+		ObjectAdmin.editEntryName(newEntryValue = "Decline Update Entry");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "This entry is not possible.");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
+
+		ObjectPortlet.viewEntry(entry = "Allowed Entry");
 	}
 
 	@description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"

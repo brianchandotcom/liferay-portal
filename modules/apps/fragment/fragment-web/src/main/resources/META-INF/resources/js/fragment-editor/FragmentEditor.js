@@ -437,6 +437,30 @@ function FieldTypeSelector({
 	onRemoveFieldType,
 	readOnly,
 }) {
+	if (readOnly) {
+		return fieldTypes.length ? (
+			<ClayForm.Group>
+				<div className="sheet-section">
+					<p className="sheet-subtitle">
+						{Liferay.Language.get('field-types')}
+					</p>
+
+					{fieldTypes.map((fieldType) => {
+						const label = availableFieldTypes.find(
+							({key}) => key === fieldType
+						).label;
+
+						return (
+							<p className="mb-1" key={fieldType}>
+								{label}
+							</p>
+						);
+					})}
+				</div>
+			</ClayForm.Group>
+		) : null;
+	}
+
 	return (
 		<ClayForm.Group>
 			<div className="sheet-section">
@@ -444,44 +468,27 @@ function FieldTypeSelector({
 					{Liferay.Language.get('field-types')}
 				</p>
 
-				{readOnly ? (
-					<ClayForm.Group>
-						{fieldTypes.map((fieldType) => {
-							const label = availableFieldTypes.find(
-								({key}) => key === fieldType
-							).label;
+				<p>
+					{Liferay.Language.get(
+						'specify-which-field-types-this-fragment-supports'
+					)}
+				</p>
 
-							return (
-								<p className="mb-1" key={fieldType}>
-									{label}
-								</p>
-							);
-						})}
-					</ClayForm.Group>
-				) : (
-					<>
-						<p>
-							{Liferay.Language.get(
-								'specify-which-field-types-this-fragment-supports'
-							)}
-						</p>
-						<div>
-							{availableFieldTypes.map(({key, label}) => (
-								<ClayCheckbox
-									aria-label={label}
-									checked={fieldTypes.includes(key)}
-									key={key}
-									label={label}
-									onChange={(event) =>
-										event.target.checked
-											? onAddFieldType(key)
-											: onRemoveFieldType(key)
-									}
-								/>
-							))}
-						</div>
-					</>
-				)}
+				<div>
+					{availableFieldTypes.map(({key, label}) => (
+						<ClayCheckbox
+							aria-label={label}
+							checked={fieldTypes.includes(key)}
+							key={key}
+							label={label}
+							onChange={(event) =>
+								event.target.checked
+									? onAddFieldType(key)
+									: onRemoveFieldType(key)
+							}
+						/>
+					))}
+				</div>
 			</div>
 		</ClayForm.Group>
 	);

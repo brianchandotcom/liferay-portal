@@ -114,7 +114,7 @@ public class AddContentLayoutMVCActionCommandFaviconTest {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		Assert.assertArrayEquals(
-			_expectedBytes, _getBytes(draftLayout.getFavicon()));
+			_expectedBytes, _getBytes(draftLayout.getFaviconURL()));
 	}
 
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {

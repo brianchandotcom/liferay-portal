@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Luca Pellizzon
+ * @author Gustavo Lima
  */
 @Component(immediate = true, service = DefinitionTermContributorRegistry.class)
 public class DefinitionTermContributorRegistryImpl

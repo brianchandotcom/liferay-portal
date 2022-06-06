@@ -123,17 +123,6 @@ public class NotificationQueueEntryLocalServiceImpl
 		for (NotificationQueueEntry notificationQueueEntry :
 				notificationQueueEntries) {
 
-			InternetAddress from = new InternetAddress(
-				notificationQueueEntry.getFrom(),
-				notificationQueueEntry.getFromName());
-			InternetAddress to = new InternetAddress(
-				notificationQueueEntry.getTo(),
-				notificationQueueEntry.getToName());
-
-			MailMessage mailMessage = new MailMessage(
-				from, to, notificationQueueEntry.getSubject(),
-				notificationQueueEntry.getBody(), true);
-
 			List<InternetAddress> bccInternetAddresses = new ArrayList<>();
 			List<InternetAddress> ccInternetAddresses = new ArrayList<>();
 
@@ -149,6 +138,17 @@ public class NotificationQueueEntryLocalServiceImpl
 			for (String ccAddress : ccAddresses) {
 				ccInternetAddresses.add(new InternetAddress(ccAddress));
 			}
+
+			InternetAddress from = new InternetAddress(
+				notificationQueueEntry.getFrom(),
+				notificationQueueEntry.getFromName());
+			InternetAddress to = new InternetAddress(
+				notificationQueueEntry.getTo(),
+				notificationQueueEntry.getToName());
+
+			MailMessage mailMessage = new MailMessage(
+				from, to, notificationQueueEntry.getSubject(),
+				notificationQueueEntry.getBody(), true);
 
 			mailMessage.setBCC(
 				bccInternetAddresses.toArray(new InternetAddress[0]));

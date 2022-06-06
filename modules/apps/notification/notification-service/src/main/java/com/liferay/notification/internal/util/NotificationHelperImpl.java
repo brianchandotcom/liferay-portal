@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(enabled = true, immediate = true, service = NotificationHelper.class)
+@Component(immediate = true, service = NotificationHelper.class)
 public class NotificationHelperImpl implements NotificationHelper {
 
 	@Override
@@ -72,50 +72,46 @@ public class NotificationHelperImpl implements NotificationHelper {
 
 		User user = _userLocalService.getUser(userId);
 
+		long groupId = user.getGroupId();
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+
+		String body = _formatString(
+			notificationTemplate.getBody(user.getLocale()), _BODYFIELD,
+			user.getLocale(), notificationType, object);
+
+		if (Validator.isNull(body)) {
+			body = _formatString(
+				notificationTemplate.getBody(siteDefaultLocale), _BODYFIELD,
+				siteDefaultLocale, notificationType, object);
+		}
+
 		String fromName = notificationTemplate.getFromName(
 			user.getLanguageId());
-		long groupId = user.getGroupId();
 
 		if (Validator.isNull(fromName)) {
 			fromName = notificationTemplate.getFromName(
 				_portal.getSiteDefaultLocale(groupId));
 		}
 
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
 		String subject = _formatString(
-			notificationType, _SUBJECTFIELD,
-			notificationTemplate.getSubject(user.getLocale()), object,
-			user.getLocale());
+			notificationTemplate.getSubject(user.getLocale()), _SUBJECTFIELD,
+			user.getLocale(), notificationType, object);
 
 		if (Validator.isNull(subject)) {
 			subject = _formatString(
-				notificationType, _SUBJECTFIELD,
-				notificationTemplate.getSubject(siteDefaultLocale), object,
-				siteDefaultLocale);
-		}
-
-		String body = _formatString(
-			notificationType, _BODYFIELD,
-			notificationTemplate.getBody(user.getLocale()), object,
-			user.getLocale());
-
-		if (Validator.isNull(body)) {
-			body = _formatString(
-				notificationType, _BODYFIELD,
-				notificationTemplate.getBody(siteDefaultLocale), object,
-				siteDefaultLocale);
+				notificationTemplate.getSubject(siteDefaultLocale),
+				_SUBJECTFIELD, siteDefaultLocale, notificationType, object);
 		}
 
 		String to = _formatString(
-			notificationType, _TOFIELD,
-			notificationTemplate.getTo(user.getLocale()), object,
-			user.getLocale());
+			notificationTemplate.getTo(user.getLocale()), _TOFIELD,
+			user.getLocale(), notificationType, object);
 
 		if (Validator.isNull(to)) {
 			to = _formatString(
-				notificationType, _TOFIELD,
-				notificationTemplate.getTo(siteDefaultLocale), object,
-				siteDefaultLocale);
+				notificationTemplate.getTo(siteDefaultLocale), _TOFIELD,
+				siteDefaultLocale, notificationType, object);
 		}
 
 		EmailAddressValidator emailAddressValidator =
@@ -169,8 +165,8 @@ public class NotificationHelperImpl implements NotificationHelper {
 	}
 
 	private String _formatString(
-			NotificationType notificationType, int fieldType, String content,
-			Object object, Locale locale)
+			String content, int fieldType, Locale locale,
+			NotificationType notificationType, Object object)
 		throws PortalException {
 
 		if (Validator.isNull(content)) {

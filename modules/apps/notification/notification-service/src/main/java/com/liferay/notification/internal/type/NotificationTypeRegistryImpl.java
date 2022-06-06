@@ -36,10 +36,10 @@ public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 
 	@Override
 	public NotificationType getNotificationType(String key) {
-		ServiceWrapper<NotificationType> emailNotificationTypeServiceWrapper =
+		ServiceWrapper<NotificationType> notificationTypeServiceWrapper =
 			_serviceTrackerMap.getService(key);
 
-		if (emailNotificationTypeServiceWrapper == null) {
+		if (notificationTypeServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No NotificationType registered with key " + key);
 			}
@@ -47,7 +47,7 @@ public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 			return null;
 		}
 
-		return emailNotificationTypeServiceWrapper.getService();
+		return notificationTypeServiceWrapper.getService();
 	}
 
 	@Activate

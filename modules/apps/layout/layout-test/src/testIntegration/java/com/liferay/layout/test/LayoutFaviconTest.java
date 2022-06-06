@@ -21,9 +21,11 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -120,6 +122,22 @@ public class LayoutFaviconTest {
 		Assert.assertNull(layout.getFavicon());
 	}
 
+	@Test
+	public void testGetFaviconFromLayoutSet() throws Exception {
+		LayoutSet layoutSet = _layout.getLayoutSet();
+
+		byte[] expectedBytes = _getExpectedBytes();
+
+		FileEntry fileEntry = _addFileEntry(expectedBytes);
+
+		layoutSet.setFaviconFileEntryId(fileEntry.getFileEntryId());
+
+		_layoutSetLocalService.updateLayoutSet(layoutSet);
+
+		Assert.assertArrayEquals(
+			expectedBytes, _getBytes(_layout.getFavicon()));
+	}
+
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -182,6 +200,9 @@ public class LayoutFaviconTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

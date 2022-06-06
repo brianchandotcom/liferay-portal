@@ -41,11 +41,14 @@ public class CommerceQualifierEntryServiceWrapper
 	public com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				String sourceClassName, long sourceClassPK,
-				String targetClassName, long targetClassPK)
+				String sourceCommerceQualifierMetadataKey,
+				String targetClassName, long targetClassPK,
+				String targetCommerceQualifierMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.addCommerceQualifierEntry(
-			sourceClassName, sourceClassPK, targetClassName, targetClassPK);
+			sourceClassName, sourceClassPK, sourceCommerceQualifierMetadataKey,
+			targetClassName, targetClassPK, targetCommerceQualifierMetadataKey);
 	}
 
 	@Override

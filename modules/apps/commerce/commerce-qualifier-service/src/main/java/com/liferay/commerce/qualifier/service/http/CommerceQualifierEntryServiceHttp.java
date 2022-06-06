@@ -53,7 +53,9 @@ public class CommerceQualifierEntryServiceHttp {
 	public static com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				HttpPrincipal httpPrincipal, String sourceClassName,
-				long sourceClassPK, String targetClassName, long targetClassPK)
+				long sourceClassPK, String sourceCommerceQualifierMetadataKey,
+				String targetClassName, long targetClassPK,
+				String targetCommerceQualifierMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,8 +65,9 @@ public class CommerceQualifierEntryServiceHttp {
 				_addCommerceQualifierEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, sourceClassName, sourceClassPK, targetClassName,
-				targetClassPK);
+				methodKey, sourceClassName, sourceClassPK,
+				sourceCommerceQualifierMetadataKey, targetClassName,
+				targetClassPK, targetCommerceQualifierMetadataKey);
 
 			Object returnObj = null;
 
@@ -492,7 +495,10 @@ public class CommerceQualifierEntryServiceHttp {
 		CommerceQualifierEntryServiceHttp.class);
 
 	private static final Class<?>[] _addCommerceQualifierEntryParameterTypes0 =
-		new Class[] {String.class, long.class, String.class, long.class};
+		new Class[] {
+			String.class, long.class, String.class, String.class, long.class,
+			String.class
+		};
 	private static final Class<?>[]
 		_deleteCommerceQualifierEntryParameterTypes1 = new Class[] {long.class};
 	private static final Class<?>[]

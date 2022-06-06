@@ -8,6 +8,8 @@ create table CommerceQualifierEntry (
 	modifiedDate DATE null,
 	sourceClassNameId LONG,
 	sourceClassPK LONG,
+	sourceCQualifierMetadataKey VARCHAR(75) null,
 	targetClassNameId LONG,
-	targetClassPK LONG
+	targetClassPK LONG,
+	targetCQualifierMetadataKey VARCHAR(75) null
 );

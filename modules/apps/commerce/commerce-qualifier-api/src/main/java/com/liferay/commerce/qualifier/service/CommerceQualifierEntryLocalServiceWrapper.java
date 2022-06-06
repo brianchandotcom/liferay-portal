@@ -62,12 +62,15 @@ public class CommerceQualifierEntryLocalServiceWrapper
 	public com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				long userId, String sourceClassName, long sourceClassPK,
-				String targetClassName, long targetClassPK)
+				String sourceCommerceQualifierMetadataKey,
+				String targetClassName, long targetClassPK,
+				String targetCommerceQualifierMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.addCommerceQualifierEntry(
-			userId, sourceClassName, sourceClassPK, targetClassName,
-			targetClassPK);
+			userId, sourceClassName, sourceClassPK,
+			sourceCommerceQualifierMetadataKey, targetClassName, targetClassPK,
+			targetCommerceQualifierMetadataKey);
 	}
 
 	/**

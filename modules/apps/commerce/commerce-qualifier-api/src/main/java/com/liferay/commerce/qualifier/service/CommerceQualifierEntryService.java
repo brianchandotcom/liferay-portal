@@ -52,8 +52,9 @@ public interface CommerceQualifierEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.qualifier.service.impl.CommerceQualifierEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce qualifier entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceQualifierEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException;
 
 	public CommerceQualifierEntry deleteCommerceQualifierEntry(

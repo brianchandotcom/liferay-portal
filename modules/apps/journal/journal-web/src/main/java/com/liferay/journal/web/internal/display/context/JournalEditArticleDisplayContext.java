@@ -228,7 +228,7 @@ public class JournalEditArticleDisplayContext {
 			return _ddmFormValues;
 		}
 
-		if (_ddmFormValuesEdited() || (_article == null)) {
+		if (_isDDMFormValuesEdited() || (_article == null)) {
 			DDMFormValuesFactory ddmFormValuesFactory =
 				_getDDMFormValuesFactory();
 
@@ -803,7 +803,7 @@ public class JournalEditArticleDisplayContext {
 		return _showSelectFolder;
 	}
 
-	private boolean _ddmFormValuesEdited() {
+	private boolean _isDDMFormValuesEdited() {
 		Map<String, String[]> parameterMap =
 			_httpServletRequest.getParameterMap();
 

@@ -65,6 +65,15 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 									editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()
 								%>"
 							/>
+
+							<clay:select
+								id='<%= liferayPortletResponse.getNamespace() + "siteId" %>'
+								label="scope"
+								name="siteId"
+								options="<%=
+									editBatchPlannerPlanDisplayContext.getScopeSiteSelectOptions()
+								%>"
+							/>
 						</clay:col>
 					</clay:row>
 

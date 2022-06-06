@@ -131,11 +131,13 @@ public class LayoutPermissionImpl
 	}
 
 	@Override
-	public void checkLayoutBasicUpdatePermission(
+	public void checkLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {
 
-		if (!containsLayoutBasicUpdatePermission(permissionChecker, layout)) {
+		if (!containsLayoutRestrictedUpdatePermission(
+				permissionChecker, layout)) {
+
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, Layout.class.getName(), layout.getPlid(),
 				ActionKeys.UPDATE);
@@ -143,11 +145,11 @@ public class LayoutPermissionImpl
 	}
 
 	@Override
-	public void checkLayoutBasicUpdatePermission(
+	public void checkLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, long plid)
 		throws PortalException {
 
-		checkLayoutBasicUpdatePermission(
+		checkLayoutRestrictedUpdatePermission(
 			permissionChecker, LayoutLocalServiceUtil.getLayout(plid));
 	}
 
@@ -228,7 +230,7 @@ public class LayoutPermissionImpl
 	}
 
 	@Override
-	public boolean containsLayoutBasicUpdatePermission(
+	public boolean containsLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {
 
@@ -255,11 +257,11 @@ public class LayoutPermissionImpl
 	}
 
 	@Override
-	public boolean containsLayoutBasicUpdatePermission(
+	public boolean containsLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, long plid)
 		throws PortalException {
 
-		return containsLayoutBasicUpdatePermission(
+		return containsLayoutRestrictedUpdatePermission(
 			permissionChecker, LayoutLocalServiceUtil.getLayout(plid));
 	}
 

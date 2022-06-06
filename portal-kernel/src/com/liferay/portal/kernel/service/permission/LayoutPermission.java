@@ -43,11 +43,11 @@ public interface LayoutPermission {
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException;
 
-	public void checkLayoutBasicUpdatePermission(
+	public void checkLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException;
 
-	public void checkLayoutBasicUpdatePermission(
+	public void checkLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, long plid)
 		throws PortalException;
 
@@ -77,11 +77,11 @@ public interface LayoutPermission {
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException;
 
-	public boolean containsLayoutBasicUpdatePermission(
+	public boolean containsLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException;
 
-	public boolean containsLayoutBasicUpdatePermission(
+	public boolean containsLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, long plid)
 		throws PortalException;
 

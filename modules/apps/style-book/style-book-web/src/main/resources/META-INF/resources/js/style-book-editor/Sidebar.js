@@ -27,6 +27,8 @@ export default function Sidebar() {
 
 	useEffect(() => {
 		if (sidebarRef.current) {
+			sidebarRef.current.removeAttribute('style');
+
 			Object.values(frontendTokensValues).forEach(
 				({cssVariableMapping, value}) => {
 					sidebarRef.current.style.setProperty(

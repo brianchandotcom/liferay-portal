@@ -283,6 +283,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9150 | Test Summary: Information banners should not be stacked after changing a time zone"
 	@priority = "5"
 	test ViewOnlyOneInformationBannerShownAfterChangeTimezone {
+		property analytics.cloud.release = "false";
+		property analytics.cloud.upstream = "false";
+
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
 

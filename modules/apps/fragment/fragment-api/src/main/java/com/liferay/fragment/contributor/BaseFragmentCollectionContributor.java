@@ -401,6 +401,7 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setIcon(jsonObject.getString("icon", "code"));
 		fragmentEntry.setType(type);
+		fragmentEntry.setTypeOptions(jsonObject.getString("typeOptions"));
 		fragmentEntry.setImagePreviewURL(thumbnailURL);
 
 		return fragmentEntry;

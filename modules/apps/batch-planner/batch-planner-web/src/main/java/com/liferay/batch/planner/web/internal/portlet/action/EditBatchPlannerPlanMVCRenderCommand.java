@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -131,7 +132,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 						_batchPlannerPlanService.getBatchPlannerPlans(
 							_portal.getCompanyId(renderRequest), true, true,
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-						internalClassNameCategories, null));
+						internalClassNameCategories, null,
+						_groupService.getUserSitesGroups()));
 
 				return "/export/edit_batch_planner_plan.jsp";
 			}
@@ -142,7 +144,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), false, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					internalClassNameCategories, null));
+					internalClassNameCategories, null,
+					_groupService.getUserSitesGroups()));
 
 			return "/import/edit_batch_planner_plan.jsp";
 		}
@@ -157,7 +160,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), true, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					internalClassNameCategories, batchPlannerPlan));
+					internalClassNameCategories, batchPlannerPlan,
+					_groupService.getUserSitesGroups()));
 
 			return "/export/edit_batch_planner_plan.jsp";
 		}
@@ -168,7 +172,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				_batchPlannerPlanService.getBatchPlannerPlans(
 					_portal.getCompanyId(renderRequest), false, true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				internalClassNameCategories, batchPlannerPlan));
+				internalClassNameCategories, batchPlannerPlan,
+				_groupService.getUserSitesGroups()));
 
 		return "/import/edit_batch_planner_plan.jsp";
 	}
@@ -178,6 +183,9 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private BatchPlannerPlanService _batchPlannerPlanService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private Portal _portal;

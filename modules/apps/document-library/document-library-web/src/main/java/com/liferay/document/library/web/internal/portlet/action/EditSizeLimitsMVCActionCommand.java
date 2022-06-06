@@ -98,16 +98,14 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 				throw new PortalException("Unsupported scope: " + scope);
 			}
 		}
-		catch (Exception exception) {
-			if (exception instanceof ConfigurationModelListenerException) {
-				SessionErrors.add(actionRequest, exception.getClass());
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException) {
 
-				actionResponse.sendRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-			}
-			else {
-				throw exception;
-			}
+			SessionErrors.add(
+				actionRequest, configurationModelListenerException.getClass());
+
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 		}
 	}
 

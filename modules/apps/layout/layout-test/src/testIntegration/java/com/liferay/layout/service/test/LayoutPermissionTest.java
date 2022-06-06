@@ -81,6 +81,10 @@ public class LayoutPermissionTest {
 					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
 
 			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
+
+			Assert.assertFalse(
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
 		}
@@ -88,6 +92,10 @@ public class LayoutPermissionTest {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
 
 			Assert.assertFalse(
 				_layoutPermission.containsLayoutUpdatePermission(
@@ -111,6 +119,10 @@ public class LayoutPermissionTest {
 					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
 
 			Assert.assertTrue(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
+
+			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
 		}
@@ -118,6 +130,10 @@ public class LayoutPermissionTest {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
 
 			Assert.assertFalse(
 				_layoutPermission.containsLayoutUpdatePermission(
@@ -142,6 +158,10 @@ public class LayoutPermissionTest {
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
 
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
+
 			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
@@ -150,6 +170,10 @@ public class LayoutPermissionTest {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
 
 			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(
@@ -175,6 +199,10 @@ public class LayoutPermissionTest {
 					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
 
 			Assert.assertTrue(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
+
+			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
 		}
@@ -182,6 +210,10 @@ public class LayoutPermissionTest {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertFalse(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
 
 			Assert.assertFalse(
 				_layoutPermission.containsLayoutUpdatePermission(
@@ -205,6 +237,10 @@ public class LayoutPermissionTest {
 					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
 
 			Assert.assertTrue(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
+
+			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout));
 		}
@@ -212,6 +248,10 @@ public class LayoutPermissionTest {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
 					"feature.flag.LPS-132571", Boolean.FALSE.toString())) {
+
+			Assert.assertTrue(
+				_layoutPermission.containsLayoutRestrictedUpdatePermission(
+					permissionChecker, layout));
 
 			Assert.assertTrue(
 				_layoutPermission.containsLayoutUpdatePermission(

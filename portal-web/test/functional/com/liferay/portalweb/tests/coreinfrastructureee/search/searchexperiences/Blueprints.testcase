@@ -2881,7 +2881,7 @@ definition {
 			contributorClass = "AssetEntryModelPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		MenuItem.click(menuItem = "Inactive");
 
@@ -2905,7 +2905,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_DISABLED");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		MenuItem.click(menuItem = "Active");
 
@@ -2913,7 +2913,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_DISABLED");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		Click(
 			key_menuItem = "KeywordQueryContributor",
@@ -2931,10 +2931,10 @@ definition {
 			contributorClass = "QueryPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		Click(
-			key_menuItem = "ModelPrefilterContributor",
+			key_menuItem = "ModelPreFilterContributor",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		AssertElementPresent(
@@ -2949,10 +2949,10 @@ definition {
 			contributorClass = "QueryPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		Click(
-			key_menuItem = "QueryPrefilterContributor",
+			key_menuItem = "QueryPreFilterContributor",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		AssertElementPresent(
@@ -2968,7 +2968,7 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
 
 		Click(
-			filter = "QueryPrefilterContributor",
+			filter = "QueryPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_CLEAR_FILTER_BUTTON");
 
 		AssertElementPresent(
@@ -2983,11 +2983,11 @@ definition {
 			contributorClass = "QueryPreFilterContributor",
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		MenuItem.click(menuItem = "Inactive");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Button.click(button = "Filter");
 
 		Click(
 			key_menuItem = "KeywordQueryContributor",

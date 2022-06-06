@@ -16,14 +16,20 @@ package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -31,6 +37,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -61,6 +68,33 @@ public class PortalImplTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetCanonicalURLWithURLSeparatorInFriendlyURL()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), themeDisplay.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false, "/abc/w/def",
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		String canonicalURL = _portal.getCanonicalURL(
+			String.format(
+				"http://liferay.com/web/%s/abc/w/def", _group.getGroupKey()),
+			themeDisplay, layout, false, false);
+
+		String expectedSuffix = String.format(
+			"/web/%s/abc/w/def", StringUtil.toLowerCase(_group.getGroupKey()));
+
+		Assert.assertTrue(
+			canonicalURL + " does not end with suffix " + expectedSuffix,
+			canonicalURL.endsWith(expectedSuffix));
+	}
 
 	@Test
 	public void testGetPortletTitleFromPortletRequestWithDeployedPortletId()
@@ -194,6 +228,15 @@ public class PortalImplTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Language _language;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;

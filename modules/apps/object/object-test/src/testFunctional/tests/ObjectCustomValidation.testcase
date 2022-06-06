@@ -525,12 +525,20 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDefaultViewWhenEmptyValidation {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153547",
+			objectName = "CustomObject153547",
+			pluralLabelName = "Custom Objects 153547");
 
-		// TODO LPS-153547 CanViewDefaultViewWhenEmptyValidation pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153547");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"

@@ -30,6 +30,90 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify a Commerce Product Display Page Template marked as default overrides the Default Product Display Page set for a product."
+	@priority = "4"
+	test CanDefaultCommerceProductDPTOverrideDefaultProductDisplayPageSet {
+		task ("Given a new Commerce Product type display page template marked as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+
+			DisplayPageTemplate.addFragment(
+				collectionName = "Basic Components",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Heading",
+				publish = "false",
+				siteURLKey = "minium");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Commerce Product Display Page Template");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given a Default Product Display Page is set") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Public Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Public Widget Page",
+				widgetName = "Product Details");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page",
+				pageType = "Public");
+
+			CommerceEntry.assertDefaultDisplayPage(
+				pageName = "Test Public Widget Page",
+				pageType = "Public");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the Commerce Product Display Page Template is shown") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Commerce Product Display Page Template");
+		}
+
+		task ("And not the Default Product Display Page") {
+			AssertElementNotPresent(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+				value1 = "${productName}");
+		}
+	}
+
 	@description = "Verify users can mark and unmark a commerce product display page template as the Default page so that the template can become the default page for the Product Details page."
 	@priority = "4"
 	test CanMarkAndUnmarkCommerceProductDPTAsDefault {

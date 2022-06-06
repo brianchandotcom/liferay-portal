@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.taglib.servlet.taglib.test;
+package com.liferay.layout.taglib.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -24,28 +24,26 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -55,14 +53,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
-public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
+public class LayoutStructureCommonStylesCSSServletTest {
 
 	@ClassRule
 	@Rule
@@ -108,17 +105,10 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		Element element = document.getElementById("layout-common-styles");
+		_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(
-			_normalize(element.html()),
+			_normalize(mockHttpServletResponse.getContentAsString()),
 			_normalize(_read("expected_style_container_fixed.css")));
 	}
 
@@ -132,17 +122,10 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		Element element = document.getElementById("layout-common-styles");
+		_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(
-			_normalize(element.html()),
+			_normalize(mockHttpServletResponse.getContentAsString()),
 			_normalize(_read("expected_style.css")));
 	}
 
@@ -156,17 +139,10 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		Element element = document.getElementById("layout-common-styles");
+		_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(
-			_normalize(element.html()),
+			_normalize(mockHttpServletResponse.getContentAsString()),
 			_normalize(_read("expected_style_with_responsive_styles.css")));
 	}
 
@@ -180,21 +156,22 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_dynamicInclude.include(
-			_getHttpServletRequest(), mockHttpServletResponse,
-			RandomTestUtil.randomString());
+		_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
 
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		Element element = document.getElementById("layout-common-styles");
-
-		Assert.assertEquals(_normalize(element.html()), StringPool.BLANK);
+		Assert.assertEquals(
+			_normalize(mockHttpServletResponse.getContentAsString()),
+			StringPool.BLANK);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute("plid", _layout.getPlid());
+		mockHttpServletRequest.setAttribute(
+			"segmentsExperienceId",
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -241,11 +218,6 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject(
-		filter = "component.name=com.liferay.layout.taglib.internal.servlet.taglib.LayoutStructureCommonStylesCSSTopHeadDynamicInclude"
-	)
-	private DynamicInclude _dynamicInclude;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -256,5 +228,30 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		_layoutPageTemplateStructureLocalService;
 
 	private boolean _originalFeatureFlagLps132571;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "osgi.http.whiteboard.servlet.name=com.liferay.layout.taglib.internal.servlet.LayoutStructureCommonStylesCSSServlet"
+	)
+	private Servlet _servlet;
+
+	private class MockHttpServletRequest
+		extends org.springframework.mock.web.MockHttpServletRequest {
+
+		public MockHttpServletRequest() {
+			super(Http.Method.GET.toString(), null);
+		}
+
+		@Override
+		public String getQueryString() {
+			return "plid=" + _layout.getPlid();
+		}
+
+	}
 
 }

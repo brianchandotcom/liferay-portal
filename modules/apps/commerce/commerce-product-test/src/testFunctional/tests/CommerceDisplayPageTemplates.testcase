@@ -117,7 +117,7 @@ definition {
 		}
 	}
 
-	@description = "Verify a Commerce Product Display Page Template marked as default overrides the Default Product Display Page set for a product."
+	@description = "Verify a Commerce Product Display Page Template marked as default overrides the Default Product Display Page."
 	@priority = "4"
 	test CanDefaultCommerceProductDPTOverrideDefaultProductDisplayPageSet {
 		task ("Given a new Commerce Product type display page template marked as default") {

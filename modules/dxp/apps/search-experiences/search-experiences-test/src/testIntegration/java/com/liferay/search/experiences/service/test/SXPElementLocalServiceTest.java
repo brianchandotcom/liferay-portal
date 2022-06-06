@@ -86,8 +86,7 @@ public class SXPElementLocalServiceTest {
 				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals("1.1", _sxpElement.getVersion());
-
-		Assert.assertNotEquals(key, _sxpElement.getKey());
+		Assert.assertEquals(key, _sxpElement.getKey());
 
 		_sxpElement = _sxpElementLocalService.updateSXPElement(
 			_sxpElement.getUserId(), _sxpElement.getSXPElementId(),
@@ -98,8 +97,7 @@ public class SXPElementLocalServiceTest {
 				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals("1.2", _sxpElement.getVersion());
-
-		Assert.assertNotEquals(key, _sxpElement.getKey());
+		Assert.assertEquals(key, _sxpElement.getKey());
 	}
 
 	@DeleteAfterTestRun

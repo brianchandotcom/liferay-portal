@@ -85,8 +85,7 @@ public class SXPBlueprintLocalServiceTest {
 				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals("1.1", _sxpBlueprint.getVersion());
-
-		Assert.assertNotEquals(key, _sxpBlueprint.getKey());
+		Assert.assertEquals(key, _sxpBlueprint.getKey());
 
 		_sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
 			_sxpBlueprint.getUserId(), _sxpBlueprint.getSXPBlueprintId(),
@@ -98,8 +97,7 @@ public class SXPBlueprintLocalServiceTest {
 				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals("1.2", _sxpBlueprint.getVersion());
-
-		Assert.assertNotEquals(key, _sxpBlueprint.getKey());
+		Assert.assertEquals(key, _sxpBlueprint.getKey());
 	}
 
 	@DeleteAfterTestRun

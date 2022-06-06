@@ -3108,6 +3108,30 @@ definition {
 		}
 	}
 
+	macro editTabs {
+		PageEditor.clickConfigurableField(fragmentName = "Tabs");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		if ("${panel}" == "General") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			if ("${persistSelectedTab}" == "false") {
+				Uncheck.uncheckNotVisible(
+					checkboxName = "Persist Selected Tab",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(numberOfTabs)) {
+				PageEditor.configureFragment(numberOfTabs = "${numberOfTabs}");
+			}
+		}
+	}
+
 	macro expandFragmentCollection {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

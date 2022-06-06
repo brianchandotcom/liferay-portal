@@ -619,8 +619,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 				_company.getCompanyId(), layoutSet.getThemeId()),
 			null);
 
-		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

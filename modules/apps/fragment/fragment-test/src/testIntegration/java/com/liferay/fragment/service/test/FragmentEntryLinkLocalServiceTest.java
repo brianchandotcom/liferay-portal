@@ -832,8 +832,8 @@ public class FragmentEntryLinkLocalServiceTest {
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
-		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(

@@ -977,8 +977,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setPortalURL("http://localhost:8080");
-		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group1.getGroupId());
 		themeDisplay.setSiteGroupId(_group1.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

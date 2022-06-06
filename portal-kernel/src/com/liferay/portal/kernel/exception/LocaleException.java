@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.exception;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 
@@ -56,11 +59,47 @@ public class LocaleException extends PortalException {
 		_type = type;
 	}
 
+	public Collection<String> getSourceAvailableLanguageIds() {
+		if (_sourceAvailableLanguageIds != null) {
+			return _sourceAvailableLanguageIds;
+		}
+
+		_sourceAvailableLanguageIds = _languageIdsFromLocales(
+			_sourceAvailableLocales);
+
+		return _sourceAvailableLanguageIds;
+	}
+
 	public Collection<Locale> getSourceAvailableLocales() {
+		if (_sourceAvailableLocales != null) {
+			return _sourceAvailableLocales;
+		}
+
+		_sourceAvailableLocales = _localesFromLanguageIds(
+			_sourceAvailableLanguageIds);
+
 		return _sourceAvailableLocales;
 	}
 
+	public Collection<String> getTargetAvailableLanguageIds() {
+		if (_targetAvailableLanguageIds != null) {
+			return _targetAvailableLanguageIds;
+		}
+
+		_targetAvailableLanguageIds = _languageIdsFromLocales(
+			_targetAvailableLocales);
+
+		return _targetAvailableLanguageIds;
+	}
+
 	public Collection<Locale> getTargetAvailableLocales() {
+		if (_targetAvailableLocales != null) {
+			return _targetAvailableLocales;
+		}
+
+		_targetAvailableLocales = _localesFromLanguageIds(
+			_targetAvailableLanguageIds);
+
 		return _targetAvailableLocales;
 	}
 
@@ -68,19 +107,69 @@ public class LocaleException extends PortalException {
 		return _type;
 	}
 
+	public void setSourceAvailableLanguageIds(
+		Collection<String> sourceAvailableLanguageIds) {
+
+		_sourceAvailableLanguageIds = sourceAvailableLanguageIds;
+		_sourceAvailableLocales = null;
+	}
+
 	public void setSourceAvailableLocales(
 		Collection<Locale> sourceAvailableLocales) {
 
+		_sourceAvailableLanguageIds = null;
 		_sourceAvailableLocales = sourceAvailableLocales;
+	}
+
+	public void setTargetAvailableLanguageIds(
+		Collection<String> targetAvailableLanguageIds) {
+
+		_targetAvailableLanguageIds = targetAvailableLanguageIds;
+		_targetAvailableLocales = null;
 	}
 
 	public void setTargetAvailableLocales(
 		Collection<Locale> targetAvailableLocales) {
 
+		_targetAvailableLanguageIds = null;
 		_targetAvailableLocales = targetAvailableLocales;
 	}
 
+	private Collection<String> _languageIdsFromLocales(
+		Collection<Locale> locales) {
+
+		if (locales == null) {
+			return null;
+		}
+
+		Collection<String> languageIds = new ArrayList<>(locales.size());
+
+		for (Locale locale : locales) {
+			languageIds.add(String.valueOf(locale));
+		}
+
+		return languageIds;
+	}
+
+	private Collection<Locale> _localesFromLanguageIds(
+		Collection<String> languageIds) {
+
+		if (languageIds == null) {
+			return null;
+		}
+
+		Collection<Locale> locales = new ArrayList<>(languageIds.size());
+
+		for (String languageId : languageIds) {
+			locales.add(LocaleUtil.fromLanguageId(languageId, false));
+		}
+
+		return locales;
+	}
+
+	private Collection<String> _sourceAvailableLanguageIds;
 	private Collection<Locale> _sourceAvailableLocales;
+	private Collection<String> _targetAvailableLanguageIds;
 	private Collection<Locale> _targetAvailableLocales;
 	private final int _type;
 

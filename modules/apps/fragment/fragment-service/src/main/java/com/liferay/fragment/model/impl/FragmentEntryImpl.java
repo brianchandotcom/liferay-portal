@@ -23,6 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -188,7 +189,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152938")) &&
 			Validator.isNotNull(typeOptions)) {
 
-			jsonObject.put("typeOptions", typeOptions);
+			jsonObject.put(
+				"typeOptions", JSONFactoryUtil.createJSONObject(typeOptions));
 		}
 
 		zipWriter.addEntry(

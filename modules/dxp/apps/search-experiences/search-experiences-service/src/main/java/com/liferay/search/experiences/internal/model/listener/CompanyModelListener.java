@@ -92,7 +92,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				new ServiceContext() {
 					{
-						setAddGroupPermissions(true);
 						setAddGuestPermissions(true);
 						setCompanyId(company.getCompanyId());
 						setScopeGroupId(company.getGroupId());

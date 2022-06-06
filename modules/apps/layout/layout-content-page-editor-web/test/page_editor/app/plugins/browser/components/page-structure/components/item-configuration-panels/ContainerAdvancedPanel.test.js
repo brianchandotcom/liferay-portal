@@ -48,6 +48,7 @@ function renderComponent(
 					children: [],
 					config: itemConfig,
 					itemId: 'container-id',
+					parentId: 'parent-id',
 					type: LAYOUT_DATA_ITEM_TYPES.container,
 				}}
 			/>

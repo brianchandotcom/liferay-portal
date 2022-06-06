@@ -147,10 +147,12 @@ describe('FragmentWithControls', () => {
 		).toBeVisible();
 	});
 
-	it('set classes for referencing the item', () => {
+	it('set classes for referencing the item', async () => {
 		config.featureFlagLps132571 = true;
 
-		const {baseElement} = renderFragment();
+		await act(async () => {
+			renderFragment();
+		});
 
 		const classes = [
 			FRAGMENT_CLASS_NAME,
@@ -159,21 +161,23 @@ describe('FragmentWithControls', () => {
 		];
 
 		classes.forEach((className) => {
-			const item = baseElement.querySelector(`.${className}`);
+			const item = document.querySelector(`.${className}`);
 
 			expect(item).toBeVisible();
 		});
 	});
 
-	it('does not set unique classNames when it has inner common styles', () => {
+	it('does not set unique classNames when it has inner common styles', async () => {
 		config.featureFlagLps132571 = true;
 
-		const {baseElement} = renderFragment({
-			editableValues: {
-				['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']: {
-					hasCommonStyles: true,
+		await act(async () => {
+			renderFragment({
+				editableValues: {
+					['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']: {
+						hasCommonStyles: true,
+					},
 				},
-			},
+			});
 		});
 
 		const classes = [
@@ -182,7 +186,7 @@ describe('FragmentWithControls', () => {
 		];
 
 		classes.forEach((className) => {
-			const item = baseElement.querySelector(`.${className}`);
+			const item = document.querySelector(`.${className}`);
 
 			expect(item).toBeNull();
 		});

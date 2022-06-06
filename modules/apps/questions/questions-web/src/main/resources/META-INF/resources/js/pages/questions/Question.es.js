@@ -127,8 +127,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -162,10 +161,12 @@ export default withRouter(
 			fetchMessages();
 		}, [fetchMessages]);
 
-		const questionVisited = context.questionsVisited.includes(question.id);
+		const questionVisited = context?.questionsVisited?.includes(
+			question.id
+		);
 
 		useEffect(() => {
-			if (question.id && !questionVisited) {
+			if (question.id && context?.questionsVisited && !questionVisited) {
 				context.setQuestionsVisited([
 					...context.questionsVisited,
 					question.id,
@@ -212,8 +213,7 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			}
-			catch (error) {}
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(

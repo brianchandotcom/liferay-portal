@@ -30,6 +30,8 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.Attachment
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,6 +46,7 @@ import com.liferay.upload.UniqueFileNameProvider;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -351,6 +354,15 @@ public class AttachmentResourceImpl
 		}
 
 		return _addOrUpdateProductImage(cpDefinition, attachmentUrl);
+	}
+
+	@Override
+	public Page<Attachment> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	private Attachment _addOrUpdateAttachment(

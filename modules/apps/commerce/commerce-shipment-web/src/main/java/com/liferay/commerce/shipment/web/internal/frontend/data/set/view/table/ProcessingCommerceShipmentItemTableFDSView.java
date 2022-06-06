@@ -50,6 +50,8 @@ public class ProcessingCommerceShipmentItemTableFDSView
 		).add(
 			"orderId", "order-id"
 		).add(
+			"externalReferenceCode", "erc"
+		).add(
 			"warehouse", "warehouse"
 		).add(
 			"orderedQuantity", "outstanding-quantity"

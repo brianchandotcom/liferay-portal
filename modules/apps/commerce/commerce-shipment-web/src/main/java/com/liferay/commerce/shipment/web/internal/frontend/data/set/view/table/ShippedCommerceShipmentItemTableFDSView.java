@@ -48,6 +48,8 @@ public class ShippedCommerceShipmentItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"orderId", "order-id"
 		).add(
+			"externalReferenceCode", "erc"
+		).add(
 			"warehouse", "warehouse"
 		).add(
 			"shippedQuantity", "shipped"

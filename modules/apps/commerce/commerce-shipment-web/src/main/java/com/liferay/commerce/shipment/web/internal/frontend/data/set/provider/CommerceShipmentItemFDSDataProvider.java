@@ -87,6 +87,7 @@ public class CommerceShipmentItemFDSDataProvider
 
 			shipmentItems.add(
 				new ShipmentItem(
+					commerceShipmentItem.getExternalReferenceCode(),
 					commerceOrderItem.getCommerceOrderId(),
 					commerceOrderItem.getQuantity() -
 						commerceOrderItem.getShippedQuantity(),

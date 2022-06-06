@@ -29,6 +29,10 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 <commerce-ui:panel
 	title='<%= LanguageUtil.get(request, "details") %>'
 >
+	<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">
+		<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
+	</liferay-ui:error>
+
 	<div class="row">
 		<div class="col-4">
 			<label class="control-label" for="entryBasePrice"><%= LanguageUtil.get(request, "base-price") %></label>
@@ -38,7 +42,8 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 
 		<div class="col-4">
 			<aui:input label="<%= priceInputLabel %>" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commercePriceEntry.getPrice()) %>">
-				<aui:validator name="min">0</aui:validator>
+				<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
+				<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 				<aui:validator name="number" />
 			</aui:input>
 		</div>
@@ -71,22 +76,26 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 
 				<div class="d-flex">
 					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="l1" name="discountLevel1" type="text" value="<%= commercePriceEntry.getDiscountLevel1() %>" wrapperCssClass="discount-label-wrapper">
-						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
+						<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
 					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="l2" name="discountLevel2" type="text" value="<%= commercePriceEntry.getDiscountLevel2() %>" wrapperCssClass="discount-label-wrapper">
-						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
+						<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
 					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="l3" name="discountLevel3" type="text" value="<%= commercePriceEntry.getDiscountLevel3() %>" wrapperCssClass="discount-label-wrapper">
-						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
+						<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 
 					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="l4" name="discountLevel4" type="text" value="<%= commercePriceEntry.getDiscountLevel4() %>" wrapperCssClass="discount-label-wrapper">
-						<aui:validator name="min">0</aui:validator>
+						<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
+						<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 				</div>

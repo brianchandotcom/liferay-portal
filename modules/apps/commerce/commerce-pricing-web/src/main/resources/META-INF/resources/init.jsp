@@ -27,10 +27,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
+<%@ page import="com.liferay.commerce.constants.CommercePriceConstants" %><%@
+page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.discount.constants.CommerceDiscountConstants" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException" %><%@
+page import="com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException" %><%@
 page import="com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscount" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscountRule" %><%@
@@ -40,6 +42,7 @@ page import="com.liferay.commerce.discount.target.CommerceDiscountTarget" %><%@
 page import="com.liferay.commerce.price.list.constants.CommercePriceListConstants" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException" %><%@
+page import="com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListParentPriceListGroupIdException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException" %><%@

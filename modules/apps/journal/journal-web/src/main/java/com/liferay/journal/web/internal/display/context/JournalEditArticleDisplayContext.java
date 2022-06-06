@@ -280,7 +280,10 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		if (_ddmFormValuesEdited()) {
-			return _getDDMFormValuesFactory().create(
+			DDMFormValuesFactory ddmFormValuesFactory =
+				_getDDMFormValuesFactory();
+
+			return ddmFormValuesFactory.create(
 				_httpServletRequest, ddmStructure.getDDMForm());
 		}
 

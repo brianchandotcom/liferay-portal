@@ -54,8 +54,10 @@ public class CommerceQualifierEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("sourceClassNameId", getSourceClassNameId());
 		attributes.put("sourceClassPK", getSourceClassPK());
+		attributes.put("sourceMetadataKey", getSourceMetadataKey());
 		attributes.put("targetClassNameId", getTargetClassNameId());
 		attributes.put("targetClassPK", getTargetClassPK());
+		attributes.put("targetMetadataKey", getTargetMetadataKey());
 
 		return attributes;
 	}
@@ -117,6 +119,12 @@ public class CommerceQualifierEntryWrapper
 			setSourceClassPK(sourceClassPK);
 		}
 
+		String sourceMetadataKey = (String)attributes.get("sourceMetadataKey");
+
+		if (sourceMetadataKey != null) {
+			setSourceMetadataKey(sourceMetadataKey);
+		}
+
 		Long targetClassNameId = (Long)attributes.get("targetClassNameId");
 
 		if (targetClassNameId != null) {
@@ -127,6 +135,12 @@ public class CommerceQualifierEntryWrapper
 
 		if (targetClassPK != null) {
 			setTargetClassPK(targetClassPK);
+		}
+
+		String targetMetadataKey = (String)attributes.get("targetMetadataKey");
+
+		if (targetMetadataKey != null) {
+			setTargetMetadataKey(targetMetadataKey);
 		}
 	}
 
@@ -216,6 +230,16 @@ public class CommerceQualifierEntryWrapper
 	}
 
 	/**
+	 * Returns the source metadata key of this commerce qualifier entry.
+	 *
+	 * @return the source metadata key of this commerce qualifier entry
+	 */
+	@Override
+	public String getSourceMetadataKey() {
+		return model.getSourceMetadataKey();
+	}
+
+	/**
 	 * Returns the target class name ID of this commerce qualifier entry.
 	 *
 	 * @return the target class name ID of this commerce qualifier entry
@@ -233,6 +257,16 @@ public class CommerceQualifierEntryWrapper
 	@Override
 	public long getTargetClassPK() {
 		return model.getTargetClassPK();
+	}
+
+	/**
+	 * Returns the target metadata key of this commerce qualifier entry.
+	 *
+	 * @return the target metadata key of this commerce qualifier entry
+	 */
+	@Override
+	public String getTargetMetadataKey() {
+		return model.getTargetMetadataKey();
 	}
 
 	/**
@@ -351,6 +385,16 @@ public class CommerceQualifierEntryWrapper
 	}
 
 	/**
+	 * Sets the source metadata key of this commerce qualifier entry.
+	 *
+	 * @param sourceMetadataKey the source metadata key of this commerce qualifier entry
+	 */
+	@Override
+	public void setSourceMetadataKey(String sourceMetadataKey) {
+		model.setSourceMetadataKey(sourceMetadataKey);
+	}
+
+	/**
 	 * Sets the target class name ID of this commerce qualifier entry.
 	 *
 	 * @param targetClassNameId the target class name ID of this commerce qualifier entry
@@ -368,6 +412,16 @@ public class CommerceQualifierEntryWrapper
 	@Override
 	public void setTargetClassPK(long targetClassPK) {
 		model.setTargetClassPK(targetClassPK);
+	}
+
+	/**
+	 * Sets the target metadata key of this commerce qualifier entry.
+	 *
+	 * @param targetMetadataKey the target metadata key of this commerce qualifier entry
+	 */
+	@Override
+	public void setTargetMetadataKey(String targetMetadataKey) {
+		model.setTargetMetadataKey(targetMetadataKey);
 	}
 
 	/**

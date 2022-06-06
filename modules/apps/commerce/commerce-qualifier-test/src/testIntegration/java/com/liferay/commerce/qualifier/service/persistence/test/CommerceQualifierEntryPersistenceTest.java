@@ -146,10 +146,16 @@ public class CommerceQualifierEntryPersistenceTest {
 
 		newCommerceQualifierEntry.setSourceClassPK(RandomTestUtil.nextLong());
 
+		newCommerceQualifierEntry.setSourceMetadataKey(
+			RandomTestUtil.randomString());
+
 		newCommerceQualifierEntry.setTargetClassNameId(
 			RandomTestUtil.nextLong());
 
 		newCommerceQualifierEntry.setTargetClassPK(RandomTestUtil.nextLong());
+
+		newCommerceQualifierEntry.setTargetMetadataKey(
+			RandomTestUtil.randomString());
 
 		_commerceQualifierEntries.add(
 			_persistence.update(newCommerceQualifierEntry));
@@ -189,11 +195,17 @@ public class CommerceQualifierEntryPersistenceTest {
 			existingCommerceQualifierEntry.getSourceClassPK(),
 			newCommerceQualifierEntry.getSourceClassPK());
 		Assert.assertEquals(
+			existingCommerceQualifierEntry.getSourceMetadataKey(),
+			newCommerceQualifierEntry.getSourceMetadataKey());
+		Assert.assertEquals(
 			existingCommerceQualifierEntry.getTargetClassNameId(),
 			newCommerceQualifierEntry.getTargetClassNameId());
 		Assert.assertEquals(
 			existingCommerceQualifierEntry.getTargetClassPK(),
 			newCommerceQualifierEntry.getTargetClassPK());
+		Assert.assertEquals(
+			existingCommerceQualifierEntry.getTargetMetadataKey(),
+			newCommerceQualifierEntry.getTargetMetadataKey());
 	}
 
 	@Test
@@ -271,7 +283,8 @@ public class CommerceQualifierEntryPersistenceTest {
 			"commerceQualifierEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"sourceClassNameId", true, "sourceClassPK", true,
-			"targetClassNameId", true, "targetClassPK", true);
+			"sourceMetadataKey", true, "targetClassNameId", true,
+			"targetClassPK", true, "targetMetadataKey", true);
 	}
 
 	@Test
@@ -612,9 +625,15 @@ public class CommerceQualifierEntryPersistenceTest {
 
 		commerceQualifierEntry.setSourceClassPK(RandomTestUtil.nextLong());
 
+		commerceQualifierEntry.setSourceMetadataKey(
+			RandomTestUtil.randomString());
+
 		commerceQualifierEntry.setTargetClassNameId(RandomTestUtil.nextLong());
 
 		commerceQualifierEntry.setTargetClassPK(RandomTestUtil.nextLong());
+
+		commerceQualifierEntry.setTargetMetadataKey(
+			RandomTestUtil.randomString());
 
 		_commerceQualifierEntries.add(
 			_persistence.update(commerceQualifierEntry));

@@ -63,12 +63,13 @@ public class CommerceQualifierEntryLocalServiceUtil {
 
 	public static CommerceQualifierEntry addCommerceQualifierEntry(
 			long userId, String sourceClassName, long sourceClassPK,
-			String targetClassName, long targetClassPK)
+			String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String targetMetadataKey)
 		throws PortalException {
 
 		return getService().addCommerceQualifierEntry(
-			userId, sourceClassName, sourceClassPK, targetClassName,
-			targetClassPK);
+			userId, sourceClassName, sourceClassPK, sourceMetadataKey,
+			targetClassName, targetClassPK, targetMetadataKey);
 	}
 
 	/**
@@ -330,58 +331,56 @@ public class CommerceQualifierEntryLocalServiceUtil {
 	}
 
 	public static <E> List<E> getSourceCommerceQualifierEntries(
-		long companyId, Class<E> sourceClass,
-		String sourceCommerceQualifierMetadataKey,
+		long companyId, Class<E> sourceClass, String sourceMetadataKey,
 		com.liferay.commerce.qualifier.search.context.
 			CommerceQualifierSearchContext commerceQualifierSearchContext) {
 
 		return getService().getSourceCommerceQualifierEntries(
-			companyId, sourceClass, sourceCommerceQualifierMetadataKey,
+			companyId, sourceClass, sourceMetadataKey,
 			commerceQualifierSearchContext);
 	}
 
 	public static List<CommerceQualifierEntry>
 			getSourceCommerceQualifierEntries(
 				long companyId, String sourceClassName, long sourceClassPK,
-				String targetCommerceQualifierMetadataKey, String keywords,
-				int start, int end)
+				String targetMetadataKey, String keywords, int start, int end)
 		throws PortalException {
 
 		return getService().getSourceCommerceQualifierEntries(
-			companyId, sourceClassName, sourceClassPK,
-			targetCommerceQualifierMetadataKey, keywords, start, end);
+			companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+			keywords, start, end);
 	}
 
 	public static int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords)
+			String targetMetadataKey, String keywords)
 		throws PortalException {
 
 		return getService().getSourceCommerceQualifierEntriesCount(
-			companyId, sourceClassName, sourceClassPK,
-			targetCommerceQualifierMetadataKey, keywords);
+			companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+			keywords);
 	}
 
 	public static List<CommerceQualifierEntry>
 			getTargetCommerceQualifierEntries(
-				long companyId, String sourceCommerceQualifierMetadataKey,
+				long companyId, String sourceMetadataKey,
 				String targetClassName, long targetClassPK, String keywords,
 				int start, int end)
 		throws PortalException {
 
 		return getService().getTargetCommerceQualifierEntries(
-			companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-			targetClassPK, keywords, start, end);
+			companyId, sourceMetadataKey, targetClassName, targetClassPK,
+			keywords, start, end);
 	}
 
 	public static int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords)
 		throws PortalException {
 
 		return getService().getTargetCommerceQualifierEntriesCount(
-			companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-			targetClassPK, keywords);
+			companyId, sourceMetadataKey, targetClassName, targetClassPK,
+			keywords);
 	}
 
 	/**

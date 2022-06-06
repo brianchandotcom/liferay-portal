@@ -53,7 +53,9 @@ public class CommerceQualifierEntryServiceHttp {
 	public static com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				HttpPrincipal httpPrincipal, String sourceClassName,
-				long sourceClassPK, String targetClassName, long targetClassPK)
+				long sourceClassPK, String sourceMetadataKey,
+				String targetClassName, long targetClassPK,
+				String targetMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,8 +65,8 @@ public class CommerceQualifierEntryServiceHttp {
 				_addCommerceQualifierEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, sourceClassName, sourceClassPK, targetClassName,
-				targetClassPK);
+				methodKey, sourceClassName, sourceClassPK, sourceMetadataKey,
+				targetClassName, targetClassPK, targetMetadataKey);
 
 			Object returnObj = null;
 
@@ -307,8 +309,8 @@ public class CommerceQualifierEntryServiceHttp {
 				getSourceCommerceQualifierEntries(
 					HttpPrincipal httpPrincipal, long companyId,
 					String sourceClassName, long sourceClassPK,
-					String targetCommerceQualifierMetadataKey, String keywords,
-					int start, int end)
+					String targetMetadataKey, String keywords, int start,
+					int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -319,7 +321,7 @@ public class CommerceQualifierEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords, start, end);
+				targetMetadataKey, keywords, start, end);
 
 			Object returnObj = null;
 
@@ -353,8 +355,7 @@ public class CommerceQualifierEntryServiceHttp {
 
 	public static int getSourceCommerceQualifierEntriesCount(
 			HttpPrincipal httpPrincipal, long companyId, String sourceClassName,
-			long sourceClassPK, String targetCommerceQualifierMetadataKey,
-			String keywords)
+			long sourceClassPK, String targetMetadataKey, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -365,7 +366,7 @@ public class CommerceQualifierEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords);
+				targetMetadataKey, keywords);
 
 			Object returnObj = null;
 
@@ -399,9 +400,8 @@ public class CommerceQualifierEntryServiceHttp {
 		<com.liferay.commerce.qualifier.model.CommerceQualifierEntry>
 				getTargetCommerceQualifierEntries(
 					HttpPrincipal httpPrincipal, long companyId,
-					String sourceCommerceQualifierMetadataKey,
-					String targetClassName, long targetClassPK, String keywords,
-					int start, int end)
+					String sourceMetadataKey, String targetClassName,
+					long targetClassPK, String keywords, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -411,8 +411,8 @@ public class CommerceQualifierEntryServiceHttp {
 				_getTargetCommerceQualifierEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sourceCommerceQualifierMetadataKey,
-				targetClassName, targetClassPK, keywords, start, end);
+				methodKey, companyId, sourceMetadataKey, targetClassName,
+				targetClassPK, keywords, start, end);
 
 			Object returnObj = null;
 
@@ -446,7 +446,7 @@ public class CommerceQualifierEntryServiceHttp {
 
 	public static int getTargetCommerceQualifierEntriesCount(
 			HttpPrincipal httpPrincipal, long companyId,
-			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			String sourceMetadataKey, String targetClassName,
 			long targetClassPK, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -457,8 +457,8 @@ public class CommerceQualifierEntryServiceHttp {
 				_getTargetCommerceQualifierEntriesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sourceCommerceQualifierMetadataKey,
-				targetClassName, targetClassPK, keywords);
+				methodKey, companyId, sourceMetadataKey, targetClassName,
+				targetClassPK, keywords);
 
 			Object returnObj = null;
 
@@ -492,7 +492,10 @@ public class CommerceQualifierEntryServiceHttp {
 		CommerceQualifierEntryServiceHttp.class);
 
 	private static final Class<?>[] _addCommerceQualifierEntryParameterTypes0 =
-		new Class[] {String.class, long.class, String.class, long.class};
+		new Class[] {
+			String.class, long.class, String.class, String.class, long.class,
+			String.class
+		};
 	private static final Class<?>[]
 		_deleteCommerceQualifierEntryParameterTypes1 = new Class[] {long.class};
 	private static final Class<?>[]

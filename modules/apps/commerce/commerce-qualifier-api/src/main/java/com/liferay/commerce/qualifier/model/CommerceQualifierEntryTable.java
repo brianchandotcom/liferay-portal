@@ -61,12 +61,20 @@ public class CommerceQualifierEntryTable
 	public final Column<CommerceQualifierEntryTable, Long> sourceClassPK =
 		createColumn(
 			"sourceClassPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceQualifierEntryTable, String> sourceMetadataKey =
+		createColumn(
+			"sourceMetadataKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceQualifierEntryTable, Long> targetClassNameId =
 		createColumn(
 			"targetClassNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceQualifierEntryTable, Long> targetClassPK =
 		createColumn(
 			"targetClassPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceQualifierEntryTable, String> targetMetadataKey =
+		createColumn(
+			"targetMetadataKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CommerceQualifierEntryTable() {
 		super("CommerceQualifierEntry", CommerceQualifierEntryTable::new);

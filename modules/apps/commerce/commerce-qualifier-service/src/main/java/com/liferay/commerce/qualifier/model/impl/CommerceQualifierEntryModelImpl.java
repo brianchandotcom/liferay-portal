@@ -78,7 +78,9 @@ public class CommerceQualifierEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"sourceClassNameId", Types.BIGINT}, {"sourceClassPK", Types.BIGINT},
-		{"targetClassNameId", Types.BIGINT}, {"targetClassPK", Types.BIGINT}
+		{"sourceMetadataKey", Types.VARCHAR},
+		{"targetClassNameId", Types.BIGINT}, {"targetClassPK", Types.BIGINT},
+		{"targetMetadataKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,12 +96,14 @@ public class CommerceQualifierEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("sourceClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sourceClassPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("sourceMetadataKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("targetClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("targetClassPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("targetMetadataKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceQualifierEntry (mvccVersion LONG default 0 not null,commerceQualifierEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sourceClassNameId LONG,sourceClassPK LONG,targetClassNameId LONG,targetClassPK LONG)";
+		"create table CommerceQualifierEntry (mvccVersion LONG default 0 not null,commerceQualifierEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sourceClassNameId LONG,sourceClassPK LONG,sourceMetadataKey VARCHAR(75) null,targetClassNameId LONG,targetClassPK LONG,targetMetadataKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceQualifierEntry";
@@ -318,6 +322,12 @@ public class CommerceQualifierEntryModelImpl
 			(BiConsumer<CommerceQualifierEntry, Long>)
 				CommerceQualifierEntry::setSourceClassPK);
 		attributeGetterFunctions.put(
+			"sourceMetadataKey", CommerceQualifierEntry::getSourceMetadataKey);
+		attributeSetterBiConsumers.put(
+			"sourceMetadataKey",
+			(BiConsumer<CommerceQualifierEntry, String>)
+				CommerceQualifierEntry::setSourceMetadataKey);
+		attributeGetterFunctions.put(
 			"targetClassNameId", CommerceQualifierEntry::getTargetClassNameId);
 		attributeSetterBiConsumers.put(
 			"targetClassNameId",
@@ -329,6 +339,12 @@ public class CommerceQualifierEntryModelImpl
 			"targetClassPK",
 			(BiConsumer<CommerceQualifierEntry, Long>)
 				CommerceQualifierEntry::setTargetClassPK);
+		attributeGetterFunctions.put(
+			"targetMetadataKey", CommerceQualifierEntry::getTargetMetadataKey);
+		attributeSetterBiConsumers.put(
+			"targetMetadataKey",
+			(BiConsumer<CommerceQualifierEntry, String>)
+				CommerceQualifierEntry::setTargetMetadataKey);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -520,6 +536,26 @@ public class CommerceQualifierEntryModelImpl
 
 	@JSON
 	@Override
+	public String getSourceMetadataKey() {
+		if (_sourceMetadataKey == null) {
+			return "";
+		}
+		else {
+			return _sourceMetadataKey;
+		}
+	}
+
+	@Override
+	public void setSourceMetadataKey(String sourceMetadataKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_sourceMetadataKey = sourceMetadataKey;
+	}
+
+	@JSON
+	@Override
 	public long getTargetClassNameId() {
 		return _targetClassNameId;
 	}
@@ -566,6 +602,26 @@ public class CommerceQualifierEntryModelImpl
 	public long getOriginalTargetClassPK() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("targetClassPK"));
+	}
+
+	@JSON
+	@Override
+	public String getTargetMetadataKey() {
+		if (_targetMetadataKey == null) {
+			return "";
+		}
+		else {
+			return _targetMetadataKey;
+		}
+	}
+
+	@Override
+	public void setTargetMetadataKey(String targetMetadataKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_targetMetadataKey = targetMetadataKey;
 	}
 
 	public long getColumnBitmask() {
@@ -636,8 +692,10 @@ public class CommerceQualifierEntryModelImpl
 		commerceQualifierEntryImpl.setModifiedDate(getModifiedDate());
 		commerceQualifierEntryImpl.setSourceClassNameId(getSourceClassNameId());
 		commerceQualifierEntryImpl.setSourceClassPK(getSourceClassPK());
+		commerceQualifierEntryImpl.setSourceMetadataKey(getSourceMetadataKey());
 		commerceQualifierEntryImpl.setTargetClassNameId(getTargetClassNameId());
 		commerceQualifierEntryImpl.setTargetClassPK(getTargetClassPK());
+		commerceQualifierEntryImpl.setTargetMetadataKey(getTargetMetadataKey());
 
 		commerceQualifierEntryImpl.resetOriginalValues();
 
@@ -667,10 +725,14 @@ public class CommerceQualifierEntryModelImpl
 			this.<Long>getColumnOriginalValue("sourceClassNameId"));
 		commerceQualifierEntryImpl.setSourceClassPK(
 			this.<Long>getColumnOriginalValue("sourceClassPK"));
+		commerceQualifierEntryImpl.setSourceMetadataKey(
+			this.<String>getColumnOriginalValue("sourceMetadataKey"));
 		commerceQualifierEntryImpl.setTargetClassNameId(
 			this.<Long>getColumnOriginalValue("targetClassNameId"));
 		commerceQualifierEntryImpl.setTargetClassPK(
 			this.<Long>getColumnOriginalValue("targetClassPK"));
+		commerceQualifierEntryImpl.setTargetMetadataKey(
+			this.<String>getColumnOriginalValue("targetMetadataKey"));
 
 		return commerceQualifierEntryImpl;
 	}
@@ -792,10 +854,30 @@ public class CommerceQualifierEntryModelImpl
 
 		commerceQualifierEntryCacheModel.sourceClassPK = getSourceClassPK();
 
+		commerceQualifierEntryCacheModel.sourceMetadataKey =
+			getSourceMetadataKey();
+
+		String sourceMetadataKey =
+			commerceQualifierEntryCacheModel.sourceMetadataKey;
+
+		if ((sourceMetadataKey != null) && (sourceMetadataKey.length() == 0)) {
+			commerceQualifierEntryCacheModel.sourceMetadataKey = null;
+		}
+
 		commerceQualifierEntryCacheModel.targetClassNameId =
 			getTargetClassNameId();
 
 		commerceQualifierEntryCacheModel.targetClassPK = getTargetClassPK();
+
+		commerceQualifierEntryCacheModel.targetMetadataKey =
+			getTargetMetadataKey();
+
+		String targetMetadataKey =
+			commerceQualifierEntryCacheModel.targetMetadataKey;
+
+		if ((targetMetadataKey != null) && (targetMetadataKey.length() == 0)) {
+			commerceQualifierEntryCacheModel.targetMetadataKey = null;
+		}
 
 		return commerceQualifierEntryCacheModel;
 	}
@@ -901,8 +983,10 @@ public class CommerceQualifierEntryModelImpl
 	private boolean _setModifiedDate;
 	private long _sourceClassNameId;
 	private long _sourceClassPK;
+	private String _sourceMetadataKey;
 	private long _targetClassNameId;
 	private long _targetClassPK;
+	private String _targetMetadataKey;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CommerceQualifierEntry, Object> function =
@@ -941,8 +1025,10 @@ public class CommerceQualifierEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("sourceClassNameId", _sourceClassNameId);
 		_columnOriginalValues.put("sourceClassPK", _sourceClassPK);
+		_columnOriginalValues.put("sourceMetadataKey", _sourceMetadataKey);
 		_columnOriginalValues.put("targetClassNameId", _targetClassNameId);
 		_columnOriginalValues.put("targetClassPK", _targetClassPK);
+		_columnOriginalValues.put("targetMetadataKey", _targetMetadataKey);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -974,9 +1060,13 @@ public class CommerceQualifierEntryModelImpl
 
 		columnBitmasks.put("sourceClassPK", 256L);
 
-		columnBitmasks.put("targetClassNameId", 512L);
+		columnBitmasks.put("sourceMetadataKey", 512L);
 
-		columnBitmasks.put("targetClassPK", 1024L);
+		columnBitmasks.put("targetClassNameId", 1024L);
+
+		columnBitmasks.put("targetClassPK", 2048L);
+
+		columnBitmasks.put("targetMetadataKey", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

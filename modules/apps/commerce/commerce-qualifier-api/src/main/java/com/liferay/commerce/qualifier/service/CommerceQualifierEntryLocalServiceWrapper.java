@@ -62,12 +62,13 @@ public class CommerceQualifierEntryLocalServiceWrapper
 	public com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				long userId, String sourceClassName, long sourceClassPK,
-				String targetClassName, long targetClassPK)
+				String sourceMetadataKey, String targetClassName,
+				long targetClassPK, String targetMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.addCommerceQualifierEntry(
-			userId, sourceClassName, sourceClassPK, targetClassName,
-			targetClassPK);
+			userId, sourceClassName, sourceClassPK, sourceMetadataKey,
+			targetClassName, targetClassPK, targetMetadataKey);
 	}
 
 	/**
@@ -378,14 +379,13 @@ public class CommerceQualifierEntryLocalServiceWrapper
 
 	@Override
 	public <E> java.util.List<E> getSourceCommerceQualifierEntries(
-		long companyId, Class<E> sourceClass,
-		String sourceCommerceQualifierMetadataKey,
+		long companyId, Class<E> sourceClass, String sourceMetadataKey,
 		com.liferay.commerce.qualifier.search.context.
 			CommerceQualifierSearchContext commerceQualifierSearchContext) {
 
 		return _commerceQualifierEntryLocalService.
 			getSourceCommerceQualifierEntries(
-				companyId, sourceClass, sourceCommerceQualifierMetadataKey,
+				companyId, sourceClass, sourceMetadataKey,
 				commerceQualifierSearchContext);
 	}
 
@@ -394,53 +394,53 @@ public class CommerceQualifierEntryLocalServiceWrapper
 		<com.liferay.commerce.qualifier.model.CommerceQualifierEntry>
 				getSourceCommerceQualifierEntries(
 					long companyId, String sourceClassName, long sourceClassPK,
-					String targetCommerceQualifierMetadataKey, String keywords,
-					int start, int end)
+					String targetMetadataKey, String keywords, int start,
+					int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.
 			getSourceCommerceQualifierEntries(
-				companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords, start, end);
+				companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+				keywords, start, end);
 	}
 
 	@Override
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords)
+			String targetMetadataKey, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.
 			getSourceCommerceQualifierEntriesCount(
-				companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords);
+				companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+				keywords);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.commerce.qualifier.model.CommerceQualifierEntry>
 				getTargetCommerceQualifierEntries(
-					long companyId, String sourceCommerceQualifierMetadataKey,
+					long companyId, String sourceMetadataKey,
 					String targetClassName, long targetClassPK, String keywords,
 					int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.
 			getTargetCommerceQualifierEntries(
-				companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-				targetClassPK, keywords, start, end);
+				companyId, sourceMetadataKey, targetClassName, targetClassPK,
+				keywords, start, end);
 	}
 
 	@Override
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryLocalService.
 			getTargetCommerceQualifierEntriesCount(
-				companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-				targetClassPK, keywords);
+				companyId, sourceMetadataKey, targetClassName, targetClassPK,
+				keywords);
 	}
 
 	/**

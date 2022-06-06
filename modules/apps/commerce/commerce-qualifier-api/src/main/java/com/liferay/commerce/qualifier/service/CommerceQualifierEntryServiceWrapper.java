@@ -41,11 +41,13 @@ public class CommerceQualifierEntryServiceWrapper
 	public com.liferay.commerce.qualifier.model.CommerceQualifierEntry
 			addCommerceQualifierEntry(
 				String sourceClassName, long sourceClassPK,
-				String targetClassName, long targetClassPK)
+				String sourceMetadataKey, String targetClassName,
+				long targetClassPK, String targetMetadataKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.addCommerceQualifierEntry(
-			sourceClassName, sourceClassPK, targetClassName, targetClassPK);
+			sourceClassName, sourceClassPK, sourceMetadataKey, targetClassName,
+			targetClassPK, targetMetadataKey);
 	}
 
 	@Override
@@ -110,51 +112,51 @@ public class CommerceQualifierEntryServiceWrapper
 		<com.liferay.commerce.qualifier.model.CommerceQualifierEntry>
 				getSourceCommerceQualifierEntries(
 					long companyId, String sourceClassName, long sourceClassPK,
-					String targetCommerceQualifierMetadataKey, String keywords,
-					int start, int end)
+					String targetMetadataKey, String keywords, int start,
+					int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.getSourceCommerceQualifierEntries(
-			companyId, sourceClassName, sourceClassPK,
-			targetCommerceQualifierMetadataKey, keywords, start, end);
+			companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+			keywords, start, end);
 	}
 
 	@Override
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords)
+			String targetMetadataKey, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.
 			getSourceCommerceQualifierEntriesCount(
-				companyId, sourceClassName, sourceClassPK,
-				targetCommerceQualifierMetadataKey, keywords);
+				companyId, sourceClassName, sourceClassPK, targetMetadataKey,
+				keywords);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.commerce.qualifier.model.CommerceQualifierEntry>
 				getTargetCommerceQualifierEntries(
-					long companyId, String sourceCommerceQualifierMetadataKey,
+					long companyId, String sourceMetadataKey,
 					String targetClassName, long targetClassPK, String keywords,
 					int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.getTargetCommerceQualifierEntries(
-			companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-			targetClassPK, keywords, start, end);
+			companyId, sourceMetadataKey, targetClassName, targetClassPK,
+			keywords, start, end);
 	}
 
 	@Override
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceQualifierEntryService.
 			getTargetCommerceQualifierEntriesCount(
-				companyId, sourceCommerceQualifierMetadataKey, targetClassName,
-				targetClassPK, keywords);
+				companyId, sourceMetadataKey, targetClassName, targetClassPK,
+				keywords);
 	}
 
 	@Override

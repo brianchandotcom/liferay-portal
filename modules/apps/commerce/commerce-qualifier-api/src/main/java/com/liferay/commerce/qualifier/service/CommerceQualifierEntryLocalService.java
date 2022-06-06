@@ -81,7 +81,8 @@ public interface CommerceQualifierEntryLocalService
 
 	public CommerceQualifierEntry addCommerceQualifierEntry(
 			long userId, String sourceClassName, long sourceClassPK,
-			String targetClassName, long targetClassPK)
+			String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String targetMetadataKey)
 		throws PortalException;
 
 	/**
@@ -287,34 +288,31 @@ public interface CommerceQualifierEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <E> List<E> getSourceCommerceQualifierEntries(
-		long companyId, Class<E> sourceClass,
-		String sourceCommerceQualifierMetadataKey,
+		long companyId, Class<E> sourceClass, String sourceMetadataKey,
 		CommerceQualifierSearchContext commerceQualifierSearchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getSourceCommerceQualifierEntries(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords,
-			int start, int end)
+			String targetMetadataKey, String keywords, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetCommerceQualifierMetadataKey, String keywords)
+			String targetMetadataKey, String keywords)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceQualifierEntry> getTargetCommerceQualifierEntries(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords,
-			int start, int end)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceCommerceQualifierMetadataKey,
-			String targetClassName, long targetClassPK, String keywords)
+			long companyId, String sourceMetadataKey, String targetClassName,
+			long targetClassPK, String keywords)
 		throws PortalException;
 
 	/**

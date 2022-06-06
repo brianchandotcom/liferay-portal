@@ -216,6 +216,21 @@ public interface CommerceQualifierEntryModel
 	public void setSourceClassPK(long sourceClassPK);
 
 	/**
+	 * Returns the source metadata key of this commerce qualifier entry.
+	 *
+	 * @return the source metadata key of this commerce qualifier entry
+	 */
+	@AutoEscape
+	public String getSourceMetadataKey();
+
+	/**
+	 * Sets the source metadata key of this commerce qualifier entry.
+	 *
+	 * @param sourceMetadataKey the source metadata key of this commerce qualifier entry
+	 */
+	public void setSourceMetadataKey(String sourceMetadataKey);
+
+	/**
 	 * Returns the target class name ID of this commerce qualifier entry.
 	 *
 	 * @return the target class name ID of this commerce qualifier entry
@@ -242,6 +257,21 @@ public interface CommerceQualifierEntryModel
 	 * @param targetClassPK the target class pk of this commerce qualifier entry
 	 */
 	public void setTargetClassPK(long targetClassPK);
+
+	/**
+	 * Returns the target metadata key of this commerce qualifier entry.
+	 *
+	 * @return the target metadata key of this commerce qualifier entry
+	 */
+	@AutoEscape
+	public String getTargetMetadataKey();
+
+	/**
+	 * Sets the target metadata key of this commerce qualifier entry.
+	 *
+	 * @param targetMetadataKey the target metadata key of this commerce qualifier entry
+	 */
+	public void setTargetMetadataKey(String targetMetadataKey);
 
 	@Override
 	public CommerceQualifierEntry cloneWithOriginalValues();

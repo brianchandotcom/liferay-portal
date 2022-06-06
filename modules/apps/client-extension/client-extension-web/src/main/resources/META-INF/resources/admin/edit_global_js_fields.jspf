@@ -19,7 +19,7 @@
 	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_GLOBAL_JS) %>"
 	id='<%= liferayPortletResponse.getNamespace() + "_fields_globalJS" %>'
 >
-	<aui:input ignoreRequestValue="<%= true %>" label="url" name="globalJSURLs" type="text" value="<%= editClientExtensionEntryDisplayContext.getGlobalJSURL() %>">
+	<aui:input ignoreRequestValue="<%= true %>" label="url" name="globalJSURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getGlobalJSURL() %>">
 		<aui:validator name="urlAllowRelative" />
 	</aui:input>
 </liferay-frontend:fieldset>

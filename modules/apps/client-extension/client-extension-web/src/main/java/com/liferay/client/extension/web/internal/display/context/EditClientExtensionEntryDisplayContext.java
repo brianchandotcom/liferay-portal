@@ -161,19 +161,22 @@ public class EditClientExtensionEntryDisplayContext {
 	public String getGlobalCSSURL() {
 		CETGlobalCSS cetGlobalCSS = _getCETGlobalCSS();
 
-		return cetGlobalCSS.getURL();
+		return ParamUtil.getString(
+			_portletRequest, "globalCSSURL", cetGlobalCSS.getURL());
 	}
 
 	public String getGlobalJSURL() {
 		CETGlobalJS cetGlobalJS = _getCETGlobalJS();
 
-		return cetGlobalJS.getURL();
+		return ParamUtil.getString(
+			_portletRequest, "globalJSURL", cetGlobalJS.getURL());
 	}
 
 	public String getIFrameURL() {
 		CETIFrame cetIFrame = _getCETIFrame();
 
-		return cetIFrame.getURL();
+		return ParamUtil.getString(
+			_portletRequest, "iFrameURL", cetIFrame.getURL());
 	}
 
 	public String getName() {
@@ -276,19 +279,22 @@ public class EditClientExtensionEntryDisplayContext {
 	public String getThemeCSSClayURL() {
 		CETThemeCSS cetThemeCSS = _getCETThemeCSS();
 
-		return cetThemeCSS.getClayURL();
+		return ParamUtil.getString(
+			_portletRequest, "themeCSSClayURL", cetThemeCSS.getClayURL());
 	}
 
 	public String getThemeCSSMainURL() {
 		CETThemeCSS cetThemeCSS = _getCETThemeCSS();
 
-		return cetThemeCSS.getMainURL();
+		return ParamUtil.getString(
+			_portletRequest, "themeCSSMainURL", cetThemeCSS.getMainURL());
 	}
 
 	public String getThemeFaviconURL() {
 		CETThemeFavicon cetThemeFavicon = _getCETThemeFavicon();
 
-		return cetThemeFavicon.getURL();
+		return ParamUtil.getString(
+			_portletRequest, "themeFaviconURL", cetThemeFavicon.getURL());
 	}
 
 	public String getThemeJSURL() {

@@ -1,5 +1,16 @@
 definition {
 
+	macro viewValueFieldKoroneiki {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
+	}
+	
 	macro accountTableProject {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}

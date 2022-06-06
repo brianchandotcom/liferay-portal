@@ -12,8 +12,6 @@ definition {
 
 		User.firstLoginPG();
 
-		//CustomerPortal.setUpForCP20();
-
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
 
@@ -24,48 +22,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
-			//CustomerPortal.tearDownForOktaAndSAML();
-
 			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
-	}
-
-	@description = "LPS-150142 - Verify if when the user clicks on button '+ Add Another Admin' the fields: - System Admin's Email Address - System Admin's First Name - System Admin's Last Name - System Admin's Github Username shows up"
-	@priority = "4"
-	test IfAddAnotherAdminButtonOptionsAppear {
-		Accounts.openAccountsAdmin();
-
-		CustomerPortal.accountTableProject(title = "Test Account 01");
-
-		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.enterOnProject(title = "Test Account 01");
-
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CP2TeamMembers.addFieldsTeamMembersExtra(
-			addMembers = "false",
-			position = "0",
-			positionNumber = "0",
-			rowEmail = "test01@project.com",
-			rowRole = "User");
-
-		CP2TeamMembers.clickTeamMembersSendInvitation();
-
-		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
-
-		CP2DXPCloudSetup.typeAllSetupDXPCloufEXtraInfo();
-
-		CP2DXPCloudSetup.viewSetupDXPCloufEXtraInfo();
 	}
 
 	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"

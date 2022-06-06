@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>FIELDS_KORONEIKI</td>
+	<td>//div[contains(@data-field-name, '${field}')]//input[contains(@value, '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE_SUPPORT</td>
+	<td>//p[contains(@class, 'text-paragraph-sm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNTS_TABLE</td>
 	<td>//tr[(@data-qa-id='row') and contains(., '${value}') and contains(., 'Active')]</td>
 	<td></td>

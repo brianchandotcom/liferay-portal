@@ -5,14 +5,12 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "false";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Customer Portal";
+	property testray.main.component.name = "Site Initializer Customer Portal";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		//CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
@@ -24,14 +22,72 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
-			//CustomerPortal.tearDownForOktaAndSAML();
-
 			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
 		}
 	}
+
+	@description = "LPS-144962 - Verify if slaCurrent = 'Gold' (or Platinum), show 'Requestor' on Roles"
+	@priority = "4"
+	test IsRequestorShowingUp {
+		CustomerPortal.viewValueFieldKoroneiki(
+			field = "slaCurrent",
+			value = "Platinum Subscription");
+
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal 2.0");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		AssertElementPresent(
+			key_rowNumber = "0",
+			locator1 = "CP2TeamMembers#ROLE_SELECT",
+			value1 = "Requester");
+	}
+
+	@description = "LPS-144961 - Verify max number of admin/ticket requestor"
+	@priority = "2"
+	test IsMaxNumberCorrect {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal 2.0");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#SUBTITLE_SUPPORT",
+			value1 = "Only 3 members per project (including yourself) have role permissions (Admins & Support Seats) to open Support tickets.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		CustomerPortal.viewValueFieldKoroneiki(
+			field = "maxRequestors",
+			value = "3");
+	}
+
 
 	@description = "LPS-144966 - Verify if trying to send invitation to members with a banned email shows a error"
 	@priority = "5"

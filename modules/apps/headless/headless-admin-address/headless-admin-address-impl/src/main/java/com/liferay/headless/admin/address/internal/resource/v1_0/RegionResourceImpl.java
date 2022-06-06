@@ -122,7 +122,8 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 		return _toRegion(
 			_regionService.addRegion(
 				countryId, GetterUtil.get(region.getActive(), true),
-				region.getName(), region.getPosition(), region.getRegionCode(),
+				region.getName(), GetterUtil.getDouble(region.getPosition()),
+				region.getRegionCode(),
 				ServiceContextFactory.getInstance(
 					Region.class.getName(), contextHttpServletRequest)));
 	}
@@ -132,7 +133,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 		return _toRegion(
 			_regionService.updateRegion(
 				regionId, GetterUtil.get(region.getActive(), true),
-				region.getName(), region.getPosition(),
+				region.getName(), GetterUtil.getDouble(region.getPosition()),
 				region.getRegionCode()));
 	}
 

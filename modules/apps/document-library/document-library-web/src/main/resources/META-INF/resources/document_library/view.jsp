@@ -228,97 +228,111 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		}
 		%>
 
-		<aui:script>
-			function <portlet:namespace />move(
-				itemsSelected,
-				parameterName,
-				parameterValue
-			) {
-				var dlComponent = Liferay.component('<portlet:namespace />DocumentLibrary');
-
-				if (dlComponent) {
-					dlComponent.showFolderDialog(
+		<c:choose>
+			<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-118829")) %>'>
+				<liferay-frontend:component
+					context='<%=
+						HashMapBuilder.<String, Object>put(
+							"namespace", "<portlet:namespace />"
+						).build()
+					%>'
+					module="document_library/js/DocumentLibrary"
+				/>
+			</c:when>
+			<c:otherwise>
+				<aui:script>
+					function <portlet:namespace />move(
 						itemsSelected,
 						parameterName,
 						parameterValue
+					) {
+						var dlComponent = Liferay.component('<portlet:namespace />DocumentLibrary');
+
+						if (dlComponent) {
+							dlComponent.showFolderDialog(
+								itemsSelected,
+								parameterName,
+								parameterValue
+							);
+						}
+					}
+				</aui:script>
+
+				<aui:script use="liferay-document-library">
+					Liferay.component(
+						'<portlet:namespace />DocumentLibrary',
+						new Liferay.Portlet.DocumentLibrary({
+							columnNames: ['<%= dlViewDisplayContext.getColumnNames() %>'],
+
+							<%
+							DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+							%>
+
+							decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+							displayStyle:
+								'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle()) %>',
+							editEntryUrl: '<%= dlViewDisplayContext.getEditEntryURL() %>',
+							downloadEntryUrl: '<%= dlViewDisplayContext.getDownloadEntryURL() %>',
+							folders: {
+								defaultParentFolderId: '<%= dlViewDisplayContext.getFolderId() %>',
+								dimensions: {
+									height:
+										'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
+									width:
+										'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>',
+								},
+							},
+							form: {
+								method: 'POST',
+								node: A.one(document.<portlet:namespace />fm2),
+							},
+							maxFileSize: <%= DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null) %>,
+							namespace: '<portlet:namespace />',
+							openViewMoreFileEntryTypesURL:
+								'<%= dlViewDisplayContext.getViewMoreFileEntryTypesURL() %>',
+							portletId:
+								'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
+							redirect: encodeURIComponent('<%= currentURL %>'),
+							selectFileEntryTypeURL:
+								'<%= dlViewDisplayContext.getSelectFileEntryTypeURL() %>',
+							selectFolderURL: '<%= dlViewDisplayContext.getSelectFolderURL() %>',
+							scopeGroupId: <%= scopeGroupId %>,
+							searchContainerId: 'entries',
+							trashEnabled: <%= dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId()) %>,
+							uploadable: <%= dlViewDisplayContext.isUploadable() %>,
+							uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
+							viewFileEntryTypeURL:
+								'<%= dlViewDisplayContext.getViewFileEntryTypeURL() %>',
+							viewFileEntryURL: '<%= dlViewDisplayContext.getViewFileEntryURL() %>',
+						}),
+						{
+							destroyOnNavigate: true,
+							portletId:
+								'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
+						}
 					);
-				}
-			}
-		</aui:script>
 
-		<aui:script use="liferay-document-library">
-			Liferay.component(
-				'<portlet:namespace />DocumentLibrary',
-				new Liferay.Portlet.DocumentLibrary({
-					columnNames: ['<%= dlViewDisplayContext.getColumnNames() %>'],
+					var changeScopeHandles = function (event) {
+						documentLibrary.destroy();
 
-					<%
-					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-					%>
+						Liferay.detach('changeScope', changeScopeHandles);
+					};
 
-					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-					displayStyle:
-						'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle()) %>',
-					editEntryUrl: '<%= dlViewDisplayContext.getEditEntryURL() %>',
-					downloadEntryUrl: '<%= dlViewDisplayContext.getDownloadEntryURL() %>',
-					folders: {
-						defaultParentFolderId: '<%= dlViewDisplayContext.getFolderId() %>',
-						dimensions: {
-							height:
-								'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
-							width:
-								'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>',
-						},
-					},
-					form: {
-						method: 'POST',
-						node: A.one(document.<portlet:namespace />fm2),
-					},
-					maxFileSize: <%= DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null) %>,
-					namespace: '<portlet:namespace />',
-					openViewMoreFileEntryTypesURL:
-						'<%= dlViewDisplayContext.getViewMoreFileEntryTypesURL() %>',
-					portletId:
-						'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
-					redirect: encodeURIComponent('<%= currentURL %>'),
-					selectFileEntryTypeURL:
-						'<%= dlViewDisplayContext.getSelectFileEntryTypeURL() %>',
-					selectFolderURL: '<%= dlViewDisplayContext.getSelectFolderURL() %>',
-					scopeGroupId: <%= scopeGroupId %>,
-					searchContainerId: 'entries',
-					trashEnabled: <%= dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId()) %>,
-					uploadable: <%= dlViewDisplayContext.isUploadable() %>,
-					uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
-					viewFileEntryTypeURL:
-						'<%= dlViewDisplayContext.getViewFileEntryTypeURL() %>',
-					viewFileEntryURL: '<%= dlViewDisplayContext.getViewFileEntryURL() %>',
-				}),
-				{
-					destroyOnNavigate: true,
-					portletId:
-						'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
-				}
-			);
+					Liferay.on('changeScope', changeScopeHandles);
 
-			var changeScopeHandles = function (event) {
-				documentLibrary.destroy();
+					var editFileEntryHandler = function (event) {
+						var uri = '<%= dlViewDisplayContext.getAddFileEntryURL() %>';
 
-				Liferay.detach('changeScope', changeScopeHandles);
-			};
+						location.href = Liferay.Util.addParams(
+							'<portlet:namespace />fileEntryTypeId' + '=' + event.fileEntryTypeId,
+							uri
+						);
+					};
 
-			Liferay.on('changeScope', changeScopeHandles);
-
-			var editFileEntryHandler = function (event) {
-				var uri = '<%= dlViewDisplayContext.getAddFileEntryURL() %>';
-
-				location.href = Liferay.Util.addParams(
-					'<portlet:namespace />fileEntryTypeId' + '=' + event.fileEntryTypeId,
-					uri
-				);
-			};
-
-			Liferay.on('<portlet:namespace />selectAddMenuItem', editFileEntryHandler);
-		</aui:script>
+					Liferay.on('<portlet:namespace />selectAddMenuItem', editFileEntryHandler);
+				</aui:script>
+			</c:otherwise>
+		</c:choose>
 
 		<%
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);

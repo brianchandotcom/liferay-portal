@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
@@ -230,26 +231,36 @@ export function FormInputGeneralPanel({item}) {
 					label={Liferay.Language.get('form-input-options')}
 					open
 				>
-					<FormInputMappingOptions
-						configurationValues={configurationValues}
-						form={{
-							classNameId,
-							classTypeId,
-							fields: formFields,
-							formId,
-						}}
-						item={item}
-						onValueSelect={handleValueSelect}
-					/>
+					{allowedInputTypes?.length ? (
+						<FormInputMappingOptions
+							configurationValues={configurationValues}
+							form={{
+								classNameId,
+								classTypeId,
+								fields: formFields,
+								formId,
+							}}
+							item={item}
+							onValueSelect={handleValueSelect}
+						/>
+					) : (
+						<ClayAlert displayType="info">
+							{Liferay.Language.get(
+								'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'
+							)}
+						</ClayAlert>
+					)}
 
-					<FieldSet
-						fields={fields}
-						item={item}
-						label=""
-						languageId={languageId}
-						onValueSelect={handleValueSelect}
-						values={configurationValues}
-					/>
+					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
+						<FieldSet
+							fields={fields}
+							item={item}
+							label=""
+							languageId={languageId}
+							onValueSelect={handleValueSelect}
+							values={configurationValues}
+						/>
+					)}
 				</Collapse>
 			</div>
 

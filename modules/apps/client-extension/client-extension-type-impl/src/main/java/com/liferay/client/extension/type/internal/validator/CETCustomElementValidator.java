@@ -19,6 +19,7 @@ import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementC
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInstanceableChangedException;
 import com.liferay.client.extension.type.internal.CETCustomElementImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -140,9 +141,7 @@ public class CETCustomElementValidator implements CETTypeValidator {
 			if (newCETCustomElementImpl.isInstanceable() !=
 					oldCETCustomElementImpl.isInstanceable()) {
 
-				// TODO Use a different exception
-
-				throw new IllegalArgumentException();
+				throw new ClientExtensionEntryInstanceableChangedException();
 			}
 		}
 	}

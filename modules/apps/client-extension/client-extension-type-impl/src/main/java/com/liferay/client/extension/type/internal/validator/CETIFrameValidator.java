@@ -17,6 +17,7 @@ package com.liferay.client.extension.type.internal.validator;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
 import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInstanceableChangedException;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -69,9 +70,7 @@ public class CETIFrameValidator implements CETTypeValidator {
 			if (newCETIFrameImpl.isInstanceable() !=
 					oldCETIFrameImpl.isInstanceable()) {
 
-				// TODO Use a different exception
-
-				throw new IllegalArgumentException();
+				throw new ClientExtensionEntryInstanceableChangedException();
 			}
 		}
 	}

@@ -11,6 +11,31 @@
 
 <tbody>
 <tr>
+	<td>FS_IMAGE_GALLERY_ARROW_NEXT</td>
+	<td>//div[@class='arrow next']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_IMAGE_GALLERY_ARROW_PREV</td>
+	<td>//div[@class='arrow prev']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_IMAGE_GALLERY_MAIN_IMAGE</td>
+	<td>//div[@class='product-gallery']/div/img[contains(@alt, '${key_fsProductImage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_IMAGE_GALLERY_OVERLAY</td>
+	<td>//div[@class='gallery-overlay']//img[contains(@alt, '${key_fsProductImage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_IMAGE_GALLERY_THUMBNAIL</td>
+	<td>//div[@class= 'gallery-thumbnails']//img[contains(@alt,'${key_fsProductImage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_COUNT</td>
 	<td>//div[contains(@class,'pull-right')]/p[contains(text(),'${key_productCount} Products Available')]</td>
 	<td></td>

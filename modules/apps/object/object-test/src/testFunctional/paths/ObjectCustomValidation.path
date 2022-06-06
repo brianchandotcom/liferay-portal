@@ -41,6 +41,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_BASIC_INFO_TAB</td>
+		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Basic Info')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_CONDITIONS_TAB</td>
 		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Conditions')]</td>
 		<td></td>

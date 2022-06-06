@@ -817,9 +817,14 @@ definition {
 
 		SelectFrame();
 
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "There are no results.");
+		if (IsElementPresent(locator1 = "Message#INFO")) {
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "There are no results.");
+		}
+		else {
+			AssertTextNotPresent(value1 = "${webContentTitle}");
+		}
 	}
 
 	macro assertFieldOnWebContent {

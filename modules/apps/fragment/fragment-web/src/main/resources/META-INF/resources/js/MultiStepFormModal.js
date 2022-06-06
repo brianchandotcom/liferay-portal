@@ -55,7 +55,9 @@ export function MultiStepFormModal({
 		}
 	};
 
-	const handleFormSubmit = () => {
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+
 		if (!isValid(currentStepElement)) {
 			return;
 		}
@@ -92,7 +94,12 @@ export function MultiStepFormModal({
 	};
 
 	return (
-		<ClayModal className={className} observer={observer} size={size}>
+		<ClayModal
+			className={className}
+			observer={observer}
+			onSubmit={handleFormSubmit}
+			size={size}
+		>
 			<ClayForm ref={formRef}>
 				{title && <ClayModal.Header>{title}</ClayModal.Header>}
 

@@ -705,12 +705,24 @@ public class UserAccountResourceImpl
 			organizationIds = longStream.toArray();
 		}
 
+		String oldPassword = null;
+		String newPassword1 = null;
+		String newPassword2 = null;
+
+		String password = userAccount.getPassword();
+
+		if (!Validator.isBlank(password)) {
+			oldPassword = password;
+			newPassword1 = password;
+			newPassword2 = password;
+		}
+
 		return _toUserAccount(
 			_userService.updateUser(
-				userAccountId, null, null, null, false, null, null,
-				userAccount.getAlternateName(), userAccount.getEmailAddress(),
-				true, null, user.getLanguageId(), user.getTimeZoneId(),
-				user.getGreeting(), user.getComments(),
+				userAccountId, oldPassword, newPassword1, newPassword2, false,
+				null, null, userAccount.getAlternateName(),
+				userAccount.getEmailAddress(), true, null, user.getLanguageId(),
+				user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),
 				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),

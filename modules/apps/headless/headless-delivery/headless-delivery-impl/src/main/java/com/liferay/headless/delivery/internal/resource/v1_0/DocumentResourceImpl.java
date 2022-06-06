@@ -127,6 +127,17 @@ public class DocumentResourceImpl
 	extends BaseDocumentResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+			assetLibraryId, externalReferenceCode);
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public void deleteDocument(Long documentId) throws Exception {
 		_dlAppService.deleteFileEntry(documentId);
 	}
@@ -147,6 +158,16 @@ public class DocumentResourceImpl
 			siteId, externalReferenceCode);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public Document getAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		return _toDocument(
+			_dlAppService.getFileEntryByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode));
 	}
 
 	@Override
@@ -370,6 +391,25 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		return _addDocument(null, siteId, siteId, null, multipartBody);
+	}
+
+	@Override
+	public Document putAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		if (fileEntry != null) {
+			return _updateDocument(fileEntry, multipartBody);
+		}
+
+		return _addDocument(
+			externalReferenceCode, assetLibraryId, assetLibraryId, null,
+			multipartBody);
 	}
 
 	@Override

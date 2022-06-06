@@ -236,8 +236,10 @@ public class ObjectActionServiceTest {
 			objectAction = _objectActionService.updateObjectAction(
 				objectAction.getObjectActionId(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new UnicodeProperties());
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				new UnicodeProperties());
 		}
 		finally {
 			if (objectAction != null) {

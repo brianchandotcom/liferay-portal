@@ -23,12 +23,54 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddEntryWhenPassesForAllValidations {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153556",
+			objectName = "CustomObject153556",
+			pluralLabelName = "Custom Objects 153556");
 
-		// TODO LPS-153556 CanAddEntryWhenPassesForAllValidations pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153556");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153556");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153556");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
+
+		ObjectPortlet.viewEntry(entry = "Allowed Entry");
 	}
 
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"

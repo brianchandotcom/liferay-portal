@@ -76,10 +76,10 @@
 	<exceptions>
 		<exception>ClientExtensionEntryCustomElementCSSURLs</exception>
 		<exception>ClientExtensionEntryCustomElementHTMLElementName</exception>
-		<exception>ClientExtensionEntryCustomElementURLs</exception>
 		<exception>ClientExtensionEntryFriendlyURLMapping</exception>
-		<exception>ClientExtensionEntryIFrameURL</exception>
 		<exception>ClientExtensionEntryInstanceableChanged</exception>
+		<exception>ClientExtensionEntryInvalidURL</exception>
+		<exception>ClientExtensionEntryInvalidURLs</exception>
 		<exception>ClientExtensionEntryType</exception>
 		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
 	</exceptions>

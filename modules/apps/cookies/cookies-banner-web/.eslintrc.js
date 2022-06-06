@@ -14,24 +14,9 @@
 
 module.exports = {
 	globals: {
-		YT: true,
 		configuration: true,
 		fragmentElement: true,
 		fragmentNamespace: true,
 		layoutMode: true,
 	},
-	overrides: [
-		{
-			files: '**/src/**/*.js',
-			rules: {
-
-				// For IE compatibility because JS here doesn't get transpiled.
-
-				'notice/notice': 'off',
-				'object-shorthand': 'off',
-				'prefer-arrow-callback': 'off',
-				'prefer-object-spread': 'off',
-			},
-		},
-	],
 };

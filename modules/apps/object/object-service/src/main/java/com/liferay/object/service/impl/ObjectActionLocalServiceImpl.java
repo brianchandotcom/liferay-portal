@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.exception.ObjectActionConditionExpressionException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
@@ -60,27 +61,9 @@ public class ObjectActionLocalServiceImpl
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(name);
-
-		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
-				objectActionExecutorKey)) {
-
-			throw new ObjectActionExecutorKeyException(objectActionExecutorKey);
-		}
-
-		if (!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE) &&
-			!_messageBus.hasDestination(objectActionTriggerKey)) {
-
-			throw new ObjectActionTriggerKeyException();
-		}
+		_validate(
+			conditionExpression, name, objectActionExecutorKey,
+			objectActionTriggerKey);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -160,7 +143,9 @@ public class ObjectActionLocalServiceImpl
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(name);
+		_validate(
+			conditionExpression, name, objectActionExecutorKey,
+			objectActionTriggerKey);
 
 		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
 			objectActionId);
@@ -176,9 +161,43 @@ public class ObjectActionLocalServiceImpl
 		return objectActionPersistence.update(objectAction);
 	}
 
-	private void _validate(String name) throws PortalException {
+	private void _validate(
+			String conditionExpression, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new ObjectActionNameException();
+		}
+
+		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
+				objectActionExecutorKey)) {
+
+			throw new ObjectActionExecutorKeyException(objectActionExecutorKey);
+		}
+
+		if (Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) ||
+			Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE) ||
+			Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)) {
+
+			return;
+		}
+
+		if (!_messageBus.hasDestination(objectActionTriggerKey)) {
+			throw new ObjectActionTriggerKeyException();
+		}
+
+		if (Validator.isNotNull(conditionExpression)) {
+			throw new ObjectActionConditionExpressionException(
+				"Cannot add a condition expression with " +
+					objectActionTriggerKey +
+						" as the object action trigger key");
 		}
 	}
 

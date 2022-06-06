@@ -326,6 +326,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when navigate through the site."
+	@priority = "5"
+	test PersistSelectedTabWhenNavigateThroughTheSite {
+		task ("Given a page creator has a widget page and a content page with a Tabs fragment") {
+			task ("Add a widget page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name");
+			}
+
+			task ("Add a Tabs fragment to a content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Tabs");
+			}
+
+			task ("Add a different fragment to each tab") {
+				var n = "1";
+
+				for (var fragmentName : list "Button,Card,Heading,HTML") {
+					var index = ${n} + 1;
+
+					PageEditor.addElementToTab(
+						collectionName = "Basic Components",
+						fragmentName = "${fragmentName}",
+						index = "${index}",
+						navItem = "Tab ${n}",
+						navTab = "Fragments",
+						position = "1");
+
+					var n = ${n} + 1;
+				}
+			}
+		}
+
+		task ("When the page creator selects the Tab 2") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 2");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Then the Tab 2 should be still selected after navigating through the site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_pageName = "Content Page Name",
+				locator1 = "Home#PAGE");
+
+			AssertElementPresent(
+				key_navItem = "Tab 2",
+				locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				id = "title",
+				position = "7",
+				text = "Card Title example");
+		}
+	}
+
 	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when reloading page."
 	@priority = "5"
 	test PersistSelectedTabWhenReloadPage {

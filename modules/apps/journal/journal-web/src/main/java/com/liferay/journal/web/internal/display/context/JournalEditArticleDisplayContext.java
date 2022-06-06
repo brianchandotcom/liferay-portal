@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -71,7 +73,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.portlet.RenderResponse;
 
@@ -871,12 +872,18 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	private boolean _isDDMFormValuesEdited() {
-		Map<String, String[]> parameterMap =
-			_httpServletRequest.getParameterMap();
+		Enumeration<String> enumeration =
+			_httpServletRequest.getParameterNames();
 
-		for (Map.Entry<String, ?> entry : parameterMap.entrySet()) {
-			if (Pattern.matches(_EDITED_VALUES_REGEX, entry.getKey()) &&
-				GetterUtil.getBoolean(((String[])entry.getValue())[0])) {
+		while (enumeration.hasMoreElements()) {
+			String parameterName = enumeration.nextElement();
+
+			if (StringUtil.startsWith(
+					parameterName,
+					DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX) &&
+				StringUtil.endsWith(parameterName, "_edited") &&
+				GetterUtil.getBoolean(
+					_httpServletRequest.getParameter(parameterName))) {
 
 				return true;
 			}
@@ -961,8 +968,6 @@ public class JournalEditArticleDisplayContext {
 			renderResponse.setTitle(_getTitle());
 		}
 	}
-
-	private static final String _EDITED_VALUES_REGEX = "^ddm\\$\\$.*_edited$";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditArticleDisplayContext.class);

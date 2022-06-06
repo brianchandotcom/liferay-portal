@@ -22,8 +22,10 @@
 
 		<column name="sourceClassNameId" type="long" />
 		<column name="sourceClassPK" type="long" />
+		<column name="sourceMetadataKey" type="String" />
 		<column name="targetClassNameId" type="long" />
 		<column name="targetClassPK" type="long" />
+		<column name="targetMetadataKey" type="String" />
 
 		<!-- Order -->
 

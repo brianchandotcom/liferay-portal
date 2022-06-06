@@ -50,7 +50,7 @@ public class LayoutStructureUtil {
 						layout.getGroupId(), layout.getPlid(), true);
 
 			String data = layoutPageTemplateStructure.getData(
-				_getSegmentsExperienceId(httpServletRequest));
+				getSegmentsExperienceId(httpServletRequest));
 
 			if (Validator.isNull(data)) {
 				return null;
@@ -70,6 +70,24 @@ public class LayoutStructureUtil {
 
 			return null;
 		}
+	}
+
+	public static long getSegmentsExperienceId(
+		HttpServletRequest httpServletRequest) {
+
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (selectedSegmentsExperienceId != -1) {
+			return selectedSegmentsExperienceId;
+		}
+
+		SegmentsExperienceManager segmentsExperienceManager =
+			new SegmentsExperienceManager(
+				ServletContextUtil.getSegmentsExperienceLocalService());
+
+		return segmentsExperienceManager.getSegmentsExperienceId(
+			httpServletRequest);
 	}
 
 	private static Layout _getLayout(long plid) {
@@ -105,24 +123,6 @@ public class LayoutStructureUtil {
 
 		return masterLayoutPageTemplateStructure.
 			getDefaultSegmentsExperienceData();
-	}
-
-	private static long _getSegmentsExperienceId(
-		HttpServletRequest httpServletRequest) {
-
-		long selectedSegmentsExperienceId = ParamUtil.getLong(
-			httpServletRequest, "segmentsExperienceId", -1);
-
-		if (selectedSegmentsExperienceId != -1) {
-			return selectedSegmentsExperienceId;
-		}
-
-		SegmentsExperienceManager segmentsExperienceManager =
-			new SegmentsExperienceManager(
-				ServletContextUtil.getSegmentsExperienceLocalService());
-
-		return segmentsExperienceManager.getSegmentsExperienceId(
-			httpServletRequest);
 	}
 
 	private static LayoutStructure _mergeLayoutStructure(

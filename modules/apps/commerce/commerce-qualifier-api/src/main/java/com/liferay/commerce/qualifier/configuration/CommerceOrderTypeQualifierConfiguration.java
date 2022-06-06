@@ -32,14 +32,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceOrderTypeQualifierConfiguration
 	extends CommerceQualifierConfiguration {
 
-	@Meta.AD(
-		deflt = "channel", name = "allowed-target-keys", required = false
-	)
+	@Meta.AD(deflt = "channel", name = "allowed-target-keys", required = false)
 	public String[] allowedTargetKeys();
 
-	@Meta.AD(
-		deflt = "channel", name = "order-by-target-keys", required = false
-	)
+	@Meta.AD(deflt = "channel", name = "order-by-target-keys", required = false)
 	public String[] orderByTargetKeys();
 
 }

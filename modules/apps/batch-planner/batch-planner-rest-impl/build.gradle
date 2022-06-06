@@ -11,6 +11,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-planner:batch-planner-api")
 	compileOnly project(":apps:batch-planner:batch-planner-rest-api")
+	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")

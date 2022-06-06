@@ -154,12 +154,29 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when creating a custom object the user can see the User ID, User Name, Resource ID, Resource Name, Resource Action, Client IP, Create Date of the custom object when created, updated or deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAllValuesOnColumnsOnCustomObject {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153572 CanViewAllValuesOnColumnsOnCustomObject pending implementation
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object 153572",
+			pluralLabelName = "Custom Objects 153572");
 
+		ObjectAdmin.saveCustomObject();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditEntries(
+			clientIP = "127.0.0.1",
+			createDate = "Seconds Ago",
+			id = "",
+			resourceAction = "ADD",
+			resourceID = "",
+			resourceName = "ObjectDefinition",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"

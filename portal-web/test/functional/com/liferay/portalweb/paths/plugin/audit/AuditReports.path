@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORTS_TABLE_ENTRIES</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_id}') and contains(.,'${key_userName}') and contains(.,'${key_resourceID}') and contains(.,'${key_resourceName}') and contains(.,'${key_resourceAction}') and contains(.,'${key_clientIP}') and contains(.,'${key_createDate}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

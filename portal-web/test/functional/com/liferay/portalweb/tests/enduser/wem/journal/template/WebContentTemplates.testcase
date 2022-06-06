@@ -275,10 +275,6 @@ definition {
 		task ("Disable Template Creation") {
 			Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-			SelectWindow(locator1 = "title=Home - ${siteName}");
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",

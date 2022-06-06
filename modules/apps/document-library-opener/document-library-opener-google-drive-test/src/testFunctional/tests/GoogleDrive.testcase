@@ -958,8 +958,6 @@ definition {
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
-		SelectWindow(locator1 = "title=Home - ${siteName}");
-
 		UserBar.signOut();
 
 		Close.closeWindow(locator1 = "title=Home - ${siteName}");

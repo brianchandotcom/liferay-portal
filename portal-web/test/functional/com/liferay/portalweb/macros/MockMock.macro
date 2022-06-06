@@ -9,8 +9,6 @@ definition {
 	macro _gotoMail {
 		if ("${newTab}" == "true") {
 			Open.openInTheNewTab(locator1 = "http://localhost:8282");
-
-			SelectWindow.selectPopUp(locator1 = "null");
 		}
 		else {
 			Navigator.openSpecificURL(url = "http://localhost:8282");

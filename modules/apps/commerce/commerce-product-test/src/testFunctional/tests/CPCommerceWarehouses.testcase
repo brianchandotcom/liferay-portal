@@ -1078,10 +1078,6 @@ definition {
 
 		Open.openInTheNewTab(locator1 = "${portalURL}");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		SelectWindow(locator1 = "title=Home - ${siteName}");
-
 		CommerceNavigator.gotoPortlet(
 			category = "Inventory Management",
 			portlet = "Warehouses");

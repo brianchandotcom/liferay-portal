@@ -803,10 +803,6 @@ definition {
 			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
 		}
 
-		task ("Switch to the new tab") {
-			SelectWindow(locator1 = "title=BBC - Homepage");
-		}
-
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("tabBlurred");
 		}
@@ -865,10 +861,6 @@ definition {
 
 		task ("Open the BBC home page in a new tab") {
 			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
-		}
-
-		task ("Switch to the new tab") {
-			SelectWindow(locator1 = "title=BBC - Homepage");
 		}
 
 		task ("Start Har recording") {

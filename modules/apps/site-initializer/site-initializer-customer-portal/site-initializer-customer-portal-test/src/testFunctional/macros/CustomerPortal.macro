@@ -247,8 +247,6 @@ definition {
 
 		Open.openInTheNewTab(locator1 = "https://login-dev.liferay.com/");
 
-		SelectWindow(locator1 = "title=Liferay-sandbox - Sign In");
-
 		Type(
 			locator1 = "CustomerPortalSite#OKTA_USERNAME",
 			value1 = "${userEmailAddress}");

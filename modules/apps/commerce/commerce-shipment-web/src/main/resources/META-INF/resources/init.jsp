@@ -34,6 +34,7 @@ page import="com.liferay.commerce.exception.CommerceShipmentItemQuantityExceptio
 page import="com.liferay.commerce.exception.CommerceShipmentShippingDateException" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentStatusException" %><%@
 page import="com.liferay.commerce.exception.DuplicateCommerceShipmentException" %><%@
+page import="com.liferay.commerce.exception.DuplicateCommerceShipmentItemException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentItemException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@

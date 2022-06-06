@@ -15,6 +15,8 @@
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
+import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -77,7 +79,33 @@ public class EditCommerceShipmentItemMVCActionCommand
 				_deleteCommerceShipmentItems(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				_updateCommerceShipmentItem(actionRequest);
+				try {
+					_updateCommerceShipmentItem(actionRequest);
+				}
+				catch (Exception exception) {
+					if (exception instanceof
+							DuplicateCommerceShipmentItemException ||
+						exception instanceof NoSuchShipmentException) {
+
+						hideDefaultErrorMessage(actionRequest);
+						hideDefaultSuccessMessage(actionRequest);
+
+						SessionErrors.add(actionRequest, exception.getClass());
+
+						String redirect = ParamUtil.getString(
+							actionRequest, "redirect");
+
+						sendRedirect(actionRequest, actionResponse, redirect);
+					}
+					else {
+						_log.error(exception);
+
+						String redirect = ParamUtil.getString(
+							actionRequest, "redirect");
+
+						sendRedirect(actionRequest, actionResponse, redirect);
+					}
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -251,7 +279,14 @@ public class EditCommerceShipmentItemMVCActionCommand
 			}
 		}
 
-		return commerceShipmentItem;
+		long commerceShipmentItemId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentItemId");
+
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
+
+		return _commerceShipmentItemService.updateExternalReferenceCode(
+			commerceShipmentItemId, externalReferenceCode);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

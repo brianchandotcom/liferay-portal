@@ -137,9 +137,7 @@ function SelectCategory({
 								items={items}
 								multiSelection={multiSelection}
 								onItems={setItems}
-								onSelectionChange={(selectedNodes) => {
-									setSelectedItems(selectedNodes);
-								}}
+								onSelectionChange={setSelectedItems}
 								selectedCategoryIds={selectedItems}
 							/>
 						) : (

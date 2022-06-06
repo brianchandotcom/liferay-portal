@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -94,6 +95,31 @@ public class LayoutFaviconTest {
 			expectedBytes, _getBytes(_layout.getFavicon()));
 	}
 
+	@Test
+	public void testGetFaviconFromLayoutAfterClear() throws Exception {
+		byte[] expectedBytes = _getExpectedBytes();
+
+		FileEntry fileEntry = _addFileEntry(expectedBytes);
+
+		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+
+		_layoutLocalService.updateLayout(_layout);
+
+		Assert.assertArrayEquals(
+			expectedBytes, _getBytes(_layout.getFavicon()));
+
+		_layoutLocalService.updateLayout(
+			_layout.getGroupId(), _layout.isPrivateLayout(),
+			_layout.getLayoutId(), _layout.getTypeSettings(), null,
+			_layout.getThemeId(), _layout.getColorSchemeId(),
+			_layout.getStyleBookEntryId(), _layout.getCss(), 0,
+			_layout.getMasterLayoutPlid());
+
+		Layout layout = _layoutLocalService.fetchLayout(_layout.getPlid());
+
+		Assert.assertNull(layout.getFavicon());
+	}
+
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -153,6 +179,9 @@ public class LayoutFaviconTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;

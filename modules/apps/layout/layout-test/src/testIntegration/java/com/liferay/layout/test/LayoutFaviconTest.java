@@ -131,22 +131,6 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromLayoutSet() throws Exception {
-		LayoutSet layoutSet = _layout.getLayoutSet();
-
-		byte[] expectedBytes = _getExpectedBytes();
-
-		FileEntry fileEntry = _addFileEntry(expectedBytes);
-
-		layoutSet.setFaviconFileEntryId(fileEntry.getFileEntryId());
-
-		_layoutSetLocalService.updateLayoutSet(layoutSet);
-
-		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFaviconURL()));
-	}
-
-	@Test
 	public void testGetFaviconFromLayoutWhenSetToLayoutAndLayoutSet()
 		throws Exception {
 
@@ -203,33 +187,6 @@ public class LayoutFaviconTest {
 
 		Assert.assertArrayEquals(
 			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));
-	}
-
-	@Test
-	public void testGetFaviconFromMasterLayout() throws Exception {
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				"Test Master Page",
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			masterLayoutPageTemplateEntry.getPlid());
-
-		byte[] expectedBytes = _getExpectedBytes();
-
-		FileEntry fileEntry = _addFileEntry(expectedBytes);
-
-		masterLayout.setFaviconFileEntryId(fileEntry.getFileEntryId());
-
-		_layoutLocalService.updateLayout(masterLayout);
-
-		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
-
-		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test

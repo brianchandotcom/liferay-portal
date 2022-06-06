@@ -1,0 +1,196 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-153903. The site designer could change favicon from the theme for page, page template, and group of pages."
+	@priority = "5"
+	test ChangeFavicons {
+		task ("Given a site designer has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
+		}
+
+		task ("When the site designer accesses to the widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+		}
+
+		task ("Then the site designer could view the favicon from theme") {
+			AssertElementPresent(
+				imageFileName = "classic-theme/images/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer changes favicon of widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Widget Page Name");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFavicon(uploadFileName = "Document_1.jpg");
+
+			AssertTextEquals(
+				faviconName = "Document_1.jpg",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Document_1.jpg");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+
+			AssertElementPresent(
+				imageFileName = "Document_1.jpg",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("Given a site designer has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "classic-theme/images/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer changes favicon of content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFavicon(uploadFileName = "Document_2.jpg");
+
+			AssertTextEquals(
+				faviconName = "Document_2.jpg",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Document_2.jpg");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on content page template") {
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "Document_2.jpg",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer changes favicon of pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFavicon(uploadFileName = "Document_3.jpg");
+
+			AssertTextEquals(
+				faviconName = "Document_3.jpg",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Document_3.jpg");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on new page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(
+				imageFileName = "Document_3.jpg",
+				locator1 = "Icon#FAVICON");
+
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+
+			AssertElementPresent(
+				imageFileName = "Document_1.jpg",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
+}

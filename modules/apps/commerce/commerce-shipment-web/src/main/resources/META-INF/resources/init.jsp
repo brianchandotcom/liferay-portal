@@ -33,6 +33,7 @@ page import="com.liferay.commerce.exception.CommerceShipmentExpectedDateExceptio
 page import="com.liferay.commerce.exception.CommerceShipmentItemQuantityException" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentShippingDateException" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentStatusException" %><%@
+page import="com.liferay.commerce.exception.DuplicateCommerceShipmentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentItemException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@

@@ -36,10 +36,17 @@ else {
 <liferay-ui:error embed="<%= false %>" exception="<%= CommerceShipmentStatusException.class %>" message="please-select-a-valid-warehouse-and-quantity-for-all-shipment-items" />
 <liferay-ui:error embed="<%= false %>" exception="<%= CommerceShipmentItemQuantityException.class %>" message="please-add-at-least-one-item-to-the-shipment" />
 
+<liferay-portlet:renderURL var="editCommerceShipmentExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_shipment/edit_commerce_shipment_external_reference_code" />
+	<portlet:param name="commerceShipmentId" value="<%= String.valueOf(commerceShipment.getCommerceShipmentId()) %>" />
+</liferay-portlet:renderURL>
+
 <commerce-ui:header
 	actions="<%= commerceShipmentDisplayContext.getHeaderActionModels() %>"
 	bean="<%= commerceShipment %>"
 	beanIdLabel="id"
+	externalReferenceCode="<%= commerceShipment.getExternalReferenceCode() %>"
+	externalReferenceCodeEditUrl="<%= editCommerceShipmentExternalReferenceCodeURL %>"
 	model="<%= CommerceShipment.class %>"
 	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(commerceAccount, themeDisplay.getPathImage()) %>"
 	title="<%= String.valueOf(commerceShipment.getCommerceShipmentId()) %>"

@@ -5509,6 +5509,95 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Document"
             tags: ["Document"]
+    "/asset-libraries/{assetLibraryId}/documents/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the asset library's document by external reference code.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Document"]
+        get:
+            # @review
+            description:
+                Retrieves the asset library's document by external reference code.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+            tags: ["Document"]
+        put:
+            # @review
+            description:
+                Replaces the document by external reference code with the information sent in the request body, or
+                replaces it if it not exists. Any missing fields are deleted, unless they are required. The request body
+                must be `multipart/form-data` with two parts, the file'sbytes (`file`), and an optional JSON string
+                (`document`) with the metadata.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                document:
+                                    $ref: "#/components/schemas/Document"
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+            tags: ["Document"]
     "/asset-libraries/{assetLibraryId}/documents/permissions":
         get:
             operationId: getAssetLibraryDocumentPermissionsPage

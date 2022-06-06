@@ -27,20 +27,19 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
+
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,8 +48,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
@@ -60,7 +66,59 @@ public class ObjectEntryOpenAPIResourceImpl
 	implements ObjectEntryOpenAPIResource {
 
 	@Override
-	public Response getOpenAPI(long objectDefinitionId, String type, UriInfo uriInfo)
+	public Map<String, Field> getObjectEntryEntityFields(
+			long objectDefinitionId, UriInfo uriInfo)
+		throws Exception {
+
+		Response response = getOpenAPI(objectDefinitionId, "json", uriInfo);
+
+		OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema schema = schemas.get(_objectDefinition.getShortName());
+
+		if (schema == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Field> fields = new HashMap<>();
+
+		List<String> requiredPropertySchemaNames =
+			_getRequiredPropertySchemaNames(schema);
+
+		Map<String, Schema> properties = schema.getProperties();
+
+		for (Map.Entry<String, Schema> schemaEntry : properties.entrySet()) {
+			String propertyName = schemaEntry.getKey();
+			Schema propertySchema = schemaEntry.getValue();
+
+			fields.put(
+				propertyName,
+				Field.of(
+					propertySchema.getDescription(), propertyName,
+					Optional.ofNullable(
+						propertySchema.getReadOnly()
+					).orElse(
+						false
+					),
+					requiredPropertySchemaNames.contains(propertyName),
+					propertySchema.getType(),
+					Optional.ofNullable(
+						propertySchema.getWriteOnly()
+					).orElse(
+						false
+					)));
+		}
+
+		return fields;
+	}
+
+	@Override
+	public Response getOpenAPI(
+			long objectDefinitionId, String type, UriInfo uriInfo)
 		throws Exception {
 
 		_objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
@@ -69,7 +127,9 @@ public class ObjectEntryOpenAPIResourceImpl
 		return _createObjectEntryOpenAPI(type, uriInfo);
 	}
 
-	private Response _createObjectEntryOpenAPI(String type, UriInfo uriInfo) throws Exception {
+	private Response _createObjectEntryOpenAPI(String type, UriInfo uriInfo)
+		throws Exception {
+
 		Response response = _openAPIResource.getOpenAPI(
 			_getOpenAPISchemaFilter(_objectDefinition.getRESTContextPath()),
 			new HashSet<Class<?>>() {
@@ -311,6 +371,16 @@ public class ObjectEntryOpenAPIResourceImpl
 		return relatedObjectDefinitionsMap;
 	}
 
+	private List<String> _getRequiredPropertySchemaNames(Schema schema) {
+		List<String> requiredPropertySchemaNames = schema.getRequired();
+
+		if (requiredPropertySchemaNames == null) {
+			requiredPropertySchemaNames = Collections.emptyList();
+		}
+
+		return requiredPropertySchemaNames;
+	}
+
 	private ObjectDefinition _objectDefinition;
 
 	@Reference
@@ -324,4 +394,5 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
+
 }

@@ -14,6 +14,10 @@
 
 package com.liferay.object.rest.openapi.v1_0;
 
+import com.liferay.portal.vulcan.batch.engine.Field;
+
+import java.util.Map;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -22,7 +26,12 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface ObjectEntryOpenAPIResource {
 
+	public Map<String, Field> getObjectEntryEntityFields(
+			long objectDefinitionId, UriInfo uriInfo)
+		throws Exception;
+
 	public Response getOpenAPI(
-		long objectDefinitionId, String type, UriInfo uriInfo) throws Exception;
+			long objectDefinitionId, String type, UriInfo uriInfo)
+		throws Exception;
 
 }

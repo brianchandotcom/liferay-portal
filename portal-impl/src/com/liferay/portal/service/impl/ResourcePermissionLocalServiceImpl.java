@@ -120,12 +120,20 @@ public class ResourcePermissionLocalServiceImpl
 		else if (serviceContext.isAddGroupPermissions() ||
 				 serviceContext.isAddGuestPermissions()) {
 
+			boolean addGroupPermissions =
+				serviceContext.isAddGroupPermissions();
+
+			long groupId = 0;
+
+			if (addGroupPermissions) {
+				groupId = getGroupId(auditedModel);
+			}
+
 			addResourcePermissions(
-				auditedModel.getCompanyId(), getGroupId(auditedModel),
-				auditedModel.getUserId(), auditedModel.getModelClassName(),
+				auditedModel.getCompanyId(), groupId, auditedModel.getUserId(),
+				auditedModel.getModelClassName(),
 				String.valueOf(auditedModel.getPrimaryKeyObj()), false,
-				serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
+				addGroupPermissions, serviceContext.isAddGuestPermissions());
 		}
 		else {
 			if (serviceContext.isDeriveDefaultPermissions()) {

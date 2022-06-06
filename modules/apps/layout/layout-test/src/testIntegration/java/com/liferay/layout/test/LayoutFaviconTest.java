@@ -147,6 +147,30 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
+	public void testGetFaviconFromLayoutWhenSetToLayoutAndLayoutSet()
+		throws Exception {
+
+		LayoutSet layoutSet = _layout.getLayoutSet();
+
+		FileEntry layoutSetFaviconFileEntry = _addFileEntry(
+			_getExpectedBytes("liferay-classic.ico"));
+
+		layoutSet.setFaviconFileEntryId(
+			layoutSetFaviconFileEntry.getFileEntryId());
+
+		_layoutSetLocalService.updateLayoutSet(layoutSet);
+
+		byte[] layoutFaviconBytes = _getExpectedBytes("dxp.ico");
+
+		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
+
+		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
+
+		Assert.assertArrayEquals(
+			layoutFaviconBytes, _getBytes(_layout.getFavicon()));
+	}
+
+	@Test
 	public void testGetFaviconFromMasterLayout() throws Exception {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(

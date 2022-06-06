@@ -102,7 +102,7 @@ public class LayoutFaviconTest {
 		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
 
 		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFavicon()));
+			expectedBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class LayoutFaviconTest {
 		_layoutLocalService.updateLayout(_layout);
 
 		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFavicon()));
+			expectedBytes, _getBytes(_layout.getFaviconURL()));
 
 		_layoutLocalService.updateLayout(
 			_layout.getGroupId(), _layout.isPrivateLayout(),
@@ -127,7 +127,7 @@ public class LayoutFaviconTest {
 
 		Layout layout = _layoutLocalService.fetchLayout(_layout.getPlid());
 
-		Assert.assertNull(layout.getFavicon());
+		Assert.assertNull(layout.getFaviconURL());
 	}
 
 	@Test
@@ -143,7 +143,7 @@ public class LayoutFaviconTest {
 		_layoutSetLocalService.updateLayoutSet(layoutSet);
 
 		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFavicon()));
+			expectedBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class LayoutFaviconTest {
 		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
 
 		Assert.assertArrayEquals(
-			layoutFaviconBytes, _getBytes(_layout.getFavicon()));
+			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class LayoutFaviconTest {
 		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
 
 		Assert.assertArrayEquals(
-			layoutFaviconBytes, _getBytes(_layout.getFavicon()));
+			layoutFaviconBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test
@@ -229,7 +229,7 @@ public class LayoutFaviconTest {
 		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
 		Assert.assertArrayEquals(
-			expectedBytes, _getBytes(_layout.getFavicon()));
+			expectedBytes, _getBytes(_layout.getFaviconURL()));
 	}
 
 	@Test
@@ -265,7 +265,7 @@ public class LayoutFaviconTest {
 
 		Assert.assertArrayEquals(
 			expectedBytes,
-			_getBytes(layoutPageTemplateDraftLayout.getFavicon()));
+			_getBytes(layoutPageTemplateDraftLayout.getFaviconURL()));
 	}
 
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {

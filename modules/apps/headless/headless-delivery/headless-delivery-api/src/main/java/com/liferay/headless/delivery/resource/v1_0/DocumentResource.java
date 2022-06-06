@@ -76,6 +76,19 @@ public interface DocumentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Document getAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Document putAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getAssetLibraryDocumentPermissionsPage(
 				Long assetLibraryId, String roleNames)

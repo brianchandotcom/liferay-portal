@@ -5514,6 +5514,7 @@ paths:
             # @review
             description:
                 Deletes the asset library's document by external reference code.
+            operationId: deleteAssetLibraryDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5536,6 +5537,7 @@ paths:
             # @review
             description:
                 Retrieves the asset library's document by external reference code.
+            operationId: getAssetLibraryDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -5565,6 +5567,7 @@ paths:
                 replaces it if it not exists. Any missing fields are deleted, unless they are required. The request body
                 must be `multipart/form-data` with two parts, the file'sbytes (`file`), and an optional JSON string
                 (`document`) with the metadata.
+            operationId: putAssetLibraryDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId

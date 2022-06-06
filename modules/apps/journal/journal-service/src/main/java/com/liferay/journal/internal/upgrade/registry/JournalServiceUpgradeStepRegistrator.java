@@ -63,6 +63,7 @@ import com.liferay.journal.internal.upgrade.v4_0_0.JournalArticleDDMFieldsUpgrad
 import com.liferay.journal.internal.upgrade.v4_1_0.JournalArticleExternalReferenceCodeUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_2_0.JournalFeedUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_3_0.JournalFolderExternalReferenceCodeUpgradeProcess;
+import com.liferay.journal.internal.upgrade.v4_3_1.ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
@@ -289,8 +290,10 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register("3.4.0", "3.4.1", new DummyUpgradeStep());
 
+		registry.register("3.4.1", "3.4.2", new DummyUpgradeStep());
+
 		registry.register(
-			"3.4.1", "3.5.0",
+			"3.4.2", "3.5.0",
 			new JournalArticleContentUpgradeProcess(
 				_journalContentCompatibilityConverter));
 
@@ -314,6 +317,12 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"4.2.0", "4.3.0",
 			new JournalFolderExternalReferenceCodeUpgradeProcess());
+
+		registry.register(
+			"4.3.0", "4.3.1",
+			new ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess(
+				_assetEntryLocalService, _companyLocalService,
+				_groupLocalService, _ddmStructureLocalService));
 	}
 
 	@Reference(unbind = "-")

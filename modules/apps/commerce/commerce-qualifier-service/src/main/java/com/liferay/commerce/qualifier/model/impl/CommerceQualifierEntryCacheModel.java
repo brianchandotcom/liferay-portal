@@ -78,7 +78,7 @@ public class CommerceQualifierEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,10 +98,14 @@ public class CommerceQualifierEntryCacheModel
 		sb.append(sourceClassNameId);
 		sb.append(", sourceClassPK=");
 		sb.append(sourceClassPK);
+		sb.append(", sourceCommerceQualifierMetadataKey=");
+		sb.append(sourceCommerceQualifierMetadataKey);
 		sb.append(", targetClassNameId=");
 		sb.append(targetClassNameId);
 		sb.append(", targetClassPK=");
 		sb.append(targetClassPK);
+		sb.append(", targetCommerceQualifierMetadataKey=");
+		sb.append(targetCommerceQualifierMetadataKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,8 +145,27 @@ public class CommerceQualifierEntryCacheModel
 
 		commerceQualifierEntryImpl.setSourceClassNameId(sourceClassNameId);
 		commerceQualifierEntryImpl.setSourceClassPK(sourceClassPK);
+
+		if (sourceCommerceQualifierMetadataKey == null) {
+			commerceQualifierEntryImpl.setSourceCommerceQualifierMetadataKey(
+				"");
+		}
+		else {
+			commerceQualifierEntryImpl.setSourceCommerceQualifierMetadataKey(
+				sourceCommerceQualifierMetadataKey);
+		}
+
 		commerceQualifierEntryImpl.setTargetClassNameId(targetClassNameId);
 		commerceQualifierEntryImpl.setTargetClassPK(targetClassPK);
+
+		if (targetCommerceQualifierMetadataKey == null) {
+			commerceQualifierEntryImpl.setTargetCommerceQualifierMetadataKey(
+				"");
+		}
+		else {
+			commerceQualifierEntryImpl.setTargetCommerceQualifierMetadataKey(
+				targetCommerceQualifierMetadataKey);
+		}
 
 		commerceQualifierEntryImpl.resetOriginalValues();
 
@@ -165,10 +188,12 @@ public class CommerceQualifierEntryCacheModel
 		sourceClassNameId = objectInput.readLong();
 
 		sourceClassPK = objectInput.readLong();
+		sourceCommerceQualifierMetadataKey = objectInput.readUTF();
 
 		targetClassNameId = objectInput.readLong();
 
 		targetClassPK = objectInput.readLong();
+		targetCommerceQualifierMetadataKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -195,9 +220,23 @@ public class CommerceQualifierEntryCacheModel
 
 		objectOutput.writeLong(sourceClassPK);
 
+		if (sourceCommerceQualifierMetadataKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sourceCommerceQualifierMetadataKey);
+		}
+
 		objectOutput.writeLong(targetClassNameId);
 
 		objectOutput.writeLong(targetClassPK);
+
+		if (targetCommerceQualifierMetadataKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(targetCommerceQualifierMetadataKey);
+		}
 	}
 
 	public long mvccVersion;
@@ -209,7 +248,9 @@ public class CommerceQualifierEntryCacheModel
 	public long modifiedDate;
 	public long sourceClassNameId;
 	public long sourceClassPK;
+	public String sourceCommerceQualifierMetadataKey;
 	public long targetClassNameId;
 	public long targetClassPK;
+	public String targetCommerceQualifierMetadataKey;
 
 }

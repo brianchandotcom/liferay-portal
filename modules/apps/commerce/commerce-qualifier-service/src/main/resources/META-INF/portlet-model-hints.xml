@@ -11,7 +11,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="sourceClassNameId" type="long" />
 		<field name="sourceClassPK" type="long" />
+		<field name="sourceCommerceQualifierMetadataKey" type="String" />
 		<field name="targetClassNameId" type="long" />
 		<field name="targetClassPK" type="long" />
+		<field name="targetCommerceQualifierMetadataKey" type="String" />
 	</model>
 </model-hints>

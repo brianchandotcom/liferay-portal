@@ -39,12 +39,14 @@ public class CommerceQualifierEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.qualifier.service.impl.CommerceQualifierEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException {
 
 		return getService().addCommerceQualifierEntry(
-			sourceClassName, sourceClassPK, targetClassName, targetClassPK);
+			sourceClassName, sourceClassPK, sourceCommerceQualifierMetadataKey,
+			targetClassName, targetClassPK, targetCommerceQualifierMetadataKey);
 	}
 
 	public static CommerceQualifierEntry deleteCommerceQualifierEntry(

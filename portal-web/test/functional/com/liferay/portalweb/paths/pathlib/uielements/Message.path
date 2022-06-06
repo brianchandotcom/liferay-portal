@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBTITLE_WITH_LABEL</td>
+	<td>//div[*//label[normalize-space()='${fieldLabel}']]//*[self::div or self::p][contains(@class,'text-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_INFO_DEPOT_HIDE</td>
 	<td>//div[not(contains(@class,'hide'))]//p[contains(@class,'text-secondary')]</td>
 	<td></td>

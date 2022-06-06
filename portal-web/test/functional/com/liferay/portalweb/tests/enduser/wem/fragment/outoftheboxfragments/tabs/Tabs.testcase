@@ -586,6 +586,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154576. The selected tab of Tabs fragment should be the first tab when access to page on a new window."
+	@priority = "4"
+	test ViewSelectedTabWhenAccessToPageOnNewWindow {
+		task ("Given a page creator has a content page with a Tabs fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("When the page creator selects the Tab 2") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 2");
+		}
+
+		task ("Then the Tab 1 should be selected after accessing to page on a new window") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/content-page-name?p_l_mode=edit");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				key_navItem = "Tab 1",
+				locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
+		}
+	}
+
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
 	@priority = "5"
 	@uitest

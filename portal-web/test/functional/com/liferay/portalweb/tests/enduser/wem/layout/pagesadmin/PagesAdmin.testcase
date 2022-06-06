@@ -1192,6 +1192,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144559. The breadcrumb should be unavailable to Link to a Page of This Site."
+	@priority = "4"
+	test ViewBreadcrumbUnavailableToLinkToAPageOfThisSite {
+		task ("Given a page creator has a site with a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page creator adds a page based on the Link to a Page of This Site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+
+			PagesAdmin._selectPageType(sitePageType = "Link to a Page of This Site");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Link to a Page of This Site");
+
+			Button.clickAdd();
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page creator shouldn't see the breadcrumb on Select Page modal") {
+			Click(
+				buttonId = "selectLayoutButton",
+				locator1 = "Button#BUTTON_ID");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementNotPresent(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+		}
+	}
+
 	@description = "This is a test for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
 	@priority = "4"
 	test ViewChildPage {

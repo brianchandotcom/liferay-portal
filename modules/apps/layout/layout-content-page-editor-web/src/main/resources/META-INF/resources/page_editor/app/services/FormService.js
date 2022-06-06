@@ -18,7 +18,7 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
-	 * Get available collection mapping fields
+	 * Get available form mapping fields
 	 * @param {object} options
 	 * @param {string} options.classNameId Form classNameId
 	 * @param {string} options.classTypeId Form classTypeId
@@ -31,6 +31,27 @@ export default {
 				body: {
 					classNameId,
 					classTypeId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
+	 * Get allowed field types for a given fragment entry
+	 * @param {object} options
+	 * @param {string} options.fragmentEntryKey
+	 * @param {function} options.onNetworkStatus
+	 */
+	getFragmentEntryInputFieldTypes({
+		fragmentEntryKey,
+		onNetworkStatus = () => {},
+	}) {
+		return serviceFetch(
+			config.getFragmentEntryInputFieldTypesURL,
+			{
+				body: {
+					fragmentEntryKey,
 				},
 			},
 			onNetworkStatus

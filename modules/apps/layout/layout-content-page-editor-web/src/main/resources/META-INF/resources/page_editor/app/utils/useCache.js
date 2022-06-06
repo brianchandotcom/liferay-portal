@@ -16,7 +16,13 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useCallback, useEffect, useState} from 'react';
 
 import {useDispatch} from '../contexts/StoreContext';
-import {CACHE_STATUS, getCacheItem, getCacheKey, setCacheItem} from './cache';
+import {
+	CACHE_STATUS,
+	deleteCacheItem,
+	getCacheItem,
+	getCacheKey,
+	setCacheItem,
+} from './cache';
 
 export default function useCache({fetcher, key}) {
 	const dispatch = useDispatch();
@@ -39,15 +45,22 @@ export default function useCache({fetcher, key}) {
 				status: CACHE_STATUS.loading,
 			});
 
-			nextLoadPromise.then((response) => {
-				setCacheItem({
-					data: response,
-					key: cacheKey,
-					status: CACHE_STATUS.saved,
-				});
+			nextLoadPromise
+				.then((response) => {
+					if (response.error) {
+						deleteCacheItem(cacheKey);
+					}
+					else {
+						setCacheItem({
+							data: response,
+							key: cacheKey,
+							status: CACHE_STATUS.saved,
+						});
+					}
 
-				triggerRender();
-			});
+					triggerRender();
+				})
+				.catch(() => deleteCacheItem(cacheKey));
 		}
 		else if (status === CACHE_STATUS.loading && loadPromise) {
 			loadPromise.then(triggerRender);

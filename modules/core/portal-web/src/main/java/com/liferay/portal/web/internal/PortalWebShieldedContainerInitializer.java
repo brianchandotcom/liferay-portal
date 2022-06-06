@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -204,6 +205,25 @@ public class PortalWebShieldedContainerInitializer
 						initParamElement -> dynamic.setInitParameter(
 							_getChildText(initParamElement, "param-name"),
 							_getChildText(initParamElement, "param-value")));
+
+					_forEachChildElement(
+						servletElement, "multipart-config",
+						multipartConfigElement -> dynamic.setMultipartConfig(
+							new MultipartConfigElement(
+								_getChildText(
+									multipartConfigElement, "location"),
+								GetterUtil.getLong(
+									_getChildText(
+										multipartConfigElement,
+										"max-file-size")),
+								GetterUtil.getLong(
+									_getChildText(
+										multipartConfigElement,
+										"max-request-size")),
+								GetterUtil.getInteger(
+									_getChildText(
+										multipartConfigElement,
+										"file-size-threshold")))));
 
 					List<String> urlPatterns = servletMappingMap.get(
 						servletName);

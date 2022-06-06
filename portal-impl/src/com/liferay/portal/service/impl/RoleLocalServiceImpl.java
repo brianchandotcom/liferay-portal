@@ -118,7 +118,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1241,7 +1240,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds) {
-		Set<Role> roles = new LinkedHashSet<>();
+		List<Role> roles = new ArrayList<>();
 
 		List<Role> userRoles = rolePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1289,14 +1288,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			roles.addAll(groupRoles);
 		}
 
-		return new ArrayList<>(roles);
+		return roles;
 	}
 
 	@Override
 	public List<Role> getUserTeamRoles(long userId, long groupId) {
 		long classNameId = _classNameLocalService.getClassNameId(Team.class);
 
-		Set<Role> roles = new LinkedHashSet<>();
+		List<Role> roles = new ArrayList<>();
 
 		List<Role> teamRoles = rolePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1361,7 +1360,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			roles.addAll(userGroupRoles);
 		}
 
-		return new ArrayList<>(roles);
+		return roles;
 	}
 
 	/**

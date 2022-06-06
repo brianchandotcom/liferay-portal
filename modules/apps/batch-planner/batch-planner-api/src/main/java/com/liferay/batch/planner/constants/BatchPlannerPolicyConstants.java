@@ -40,6 +40,8 @@ public class BatchPlannerPolicyConstants {
 				"onErrorFail", "checkbox"
 			).put(
 				"onUpdateDoPatch", "checkbox"
+			).put(
+				"siteId", "text"
 			).build());
 
 }

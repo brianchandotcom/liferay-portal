@@ -287,6 +287,8 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution."
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
+		property test.name.skip.portal.instance = "SecurityUsecase#ValidateNoLARRemoteCodeExecution";
+
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -349,6 +351,8 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki."
 	@priority = "5"
 	test ViewJSLoaderModulesURLNoWiki {
+		property test.name.skip.portal.instance = "SecurityUsecase#ViewJSLoaderModulesURLNoWiki";
+
 		task ("View JS loader modules") {
 			var portalURL = PropsUtil.get("portal.url");
 

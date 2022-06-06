@@ -33,14 +33,12 @@ public interface CommerceTermEntryQualifierConfiguration
 	extends CommerceQualifierConfiguration {
 
 	@Meta.AD(
-		deflt = "order-type", name = "allowed-target-keys",
-		required = false
+		deflt = "order-type", name = "allowed-target-keys", required = false
 	)
 	public String[] allowedTargetKeys();
 
 	@Meta.AD(
-		deflt = "order-type", name = "order-by-target-keys",
-		required = false
+		deflt = "order-type", name = "order-by-target-keys", required = false
 	)
 	public String[] orderByTargetKeys();
 

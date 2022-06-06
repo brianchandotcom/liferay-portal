@@ -98,8 +98,7 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 			String[] orderByTargetKeys =
 				commerceQualifierConfiguration.orderByTargetKeys();
 
-			int orderByTargetKeysLength =
-				orderByTargetKeys.length;
+			int orderByTargetKeysLength = orderByTargetKeys.length;
 
 			for (int i = 0; i < orderByTargetKeysLength; i++) {
 				String[] orderByTargetKeyArray = StringUtil.split(
@@ -131,8 +130,7 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 				}
 
 				whenThenStep = _getWhenThenStep(
-					whenThenStep, predicate,
-					orderByTargetKeysLength - i);
+					whenThenStep, predicate, orderByTargetKeysLength - i);
 			}
 
 			return ArrayUtil.append(

@@ -100,7 +100,7 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154408. An external video with a custom friendlyURL added to the Web content field can be published on a site."
+	@description = "This test covers LPS-154408. It ensures that an external video with a custom friendlyURL added to the Web content field can be published on a site."
 	@priority = "4"
 	test CanViewExternalVideoInWCAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";

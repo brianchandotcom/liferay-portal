@@ -252,7 +252,7 @@ public class MillerColumnsDisplayContext {
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(
 					"viewUrl",
-					_layoutsAdminDisplayContext.getViewLayoutURL(layout));
+					_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout));
 			}
 
 			layoutsJSONArray.put(layoutJSONObject);

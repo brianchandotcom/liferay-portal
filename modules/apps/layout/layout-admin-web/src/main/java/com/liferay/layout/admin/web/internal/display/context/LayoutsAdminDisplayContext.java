@@ -486,6 +486,20 @@ public class LayoutsAdminDisplayContext {
 		return _getDraftLayoutURL(layout);
 	}
 
+	public String getEditOrViewLayoutURL(Layout layout) throws Exception {
+		if ((isConversionDraft(layout) || layout.isTypeContent()) &&
+			isShowConfigureAction(layout)) {
+
+			return getEditLayoutURL(layout);
+		}
+
+		if (isShowViewLayoutAction(layout)) {
+			return getViewLayoutURL(layout);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getFaviconImage() {
 		LayoutSet layoutSet = getSelLayoutSet();
 

@@ -27,7 +27,7 @@
 	>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-200 table-title"
-			href="<%= layoutsAdminDisplayContext.isShowViewLayoutAction(layout) ? layoutsAdminDisplayContext.getViewLayoutURL(layout) : StringPool.BLANK %>"
+			href="<%= layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout) %>"
 			name="title"
 			value="<%= layout.getName(locale) %>"
 		/>

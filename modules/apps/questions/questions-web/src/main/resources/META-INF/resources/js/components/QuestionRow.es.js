@@ -135,7 +135,7 @@ export default function QuestionRow({
 						{
 							'question-seen':
 								question.seen ||
-								context.questionsVisited.includes(question.id),
+								context?.questionsVisited.includes(question.id),
 						}
 					)}
 				>

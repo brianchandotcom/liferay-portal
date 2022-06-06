@@ -2487,6 +2487,54 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a use case for LPS-152937."
+	test SortAccentedWords {
+		var digit = "1";
+
+		for (var content : list "Alicante,Barcelona,Álava,Alava") {
+			JSONWebcontent.addWebContent(
+				content = "${content}",
+				groupName = "Guest",
+				title = "WC-${digit}");
+
+			var digit = ${digit} + 1;
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			assetSubtype = "Basic Web Content",
+			selectedAsset = "Web Content Article");
+
+		IFrame.closeFrame();
+
+		AssetPublisherPortlet.configureAssetDisplayOrderPG(
+			fieldNameOrder = "content",
+			sortOrder = "Ascending");
+
+		IFrame.closeFrame();
+
+		var resultOrder = "1";
+
+		for (var title : list "WC-4,WC-3,WC-1,WC-2") {
+			AssetPublisherPortlet.viewDisplayOrderPG(
+				assetTitle = "${title}",
+				rowNumber = "${resultOrder}");
+
+			var resultOrder = ${resultOrder} + 1;
+		}
+	}
+
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewCreatedSearchPagePermissions {

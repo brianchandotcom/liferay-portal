@@ -64,7 +64,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 	@Override
 	public CommerceQualifierEntry addCommerceQualifierEntry(
 			long userId, String sourceClassName, long sourceClassPK,
-			String targetClassName, long targetClassPK)
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException {
 
 		CommerceQualifierEntry commerceQualifierEntry =
@@ -80,9 +81,13 @@ public class CommerceQualifierEntryLocalServiceImpl
 		commerceQualifierEntry.setSourceClassNameId(
 			classNameLocalService.getClassNameId(sourceClassName));
 		commerceQualifierEntry.setSourceClassPK(sourceClassPK);
+		commerceQualifierEntry.setSourceCommerceQualifierMetadataKey(
+			sourceCommerceQualifierMetadataKey);
 		commerceQualifierEntry.setTargetClassNameId(
 			classNameLocalService.getClassNameId(targetClassName));
 		commerceQualifierEntry.setTargetClassPK(targetClassPK);
+		commerceQualifierEntry.setTargetCommerceQualifierMetadataKey(
+			targetCommerceQualifierMetadataKey);
 
 		commerceQualifierEntry = commerceQualifierEntryPersistence.update(
 			commerceQualifierEntry);
@@ -372,6 +377,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 			"companyId"
 		).eq(
 			companyId
+		).and(
+			sourceCommerceQualifierMetadata.getFilterPredicate()
 		);
 
 		if (sourceAttributes != null) {
@@ -443,6 +450,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 					aliasCommerceQualifierEntryTable.sourceClassPK,
 					sourceCommerceQualifierMetadata.getPrimaryKeyColumn(),
 					aliasCommerceQualifierEntryTable.targetClassNameId,
+					aliasCommerceQualifierEntryTable.
+						targetCommerceQualifierMetadataKey,
 					allowedTargetKey));
 
 			Predicate targetPredicate = _getTargetPredicate(
@@ -527,6 +536,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 		Column<CommerceQualifierEntryTable, Long> sourceClassPKColumn,
 		Column<?, Long> sourceCommerceQualifierPrimaryColumn,
 		Column<CommerceQualifierEntryTable, Long> targetClassNameIdColumn,
+		Column<CommerceQualifierEntryTable, String>
+			targetCommerceQualifierMetadataKeyColumn,
 		String targetCommerceQualifierMetadataKey) {
 
 		CommerceQualifierMetadata targetCommerceQualifierMetadata =
@@ -537,7 +548,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 			classNameLocalService.getClassNameId(
 				targetCommerceQualifierMetadata.getModelClassName())
 		).and(
-			targetCommerceQualifierMetadata.getFilterPredicate()
+			targetCommerceQualifierMetadataKeyColumn.eq(
+				targetCommerceQualifierMetadataKey)
 		).and(
 			sourceClassNameIdColumn.eq(
 				classNameLocalService.getClassNameId(sourceClassName))

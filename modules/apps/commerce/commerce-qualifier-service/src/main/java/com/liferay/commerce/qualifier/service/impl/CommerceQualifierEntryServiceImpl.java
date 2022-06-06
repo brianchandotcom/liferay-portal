@@ -45,15 +45,17 @@ public class CommerceQualifierEntryServiceImpl
 
 	@Override
 	public CommerceQualifierEntry addCommerceQualifierEntry(
-			String sourceClassName, long sourceClassPK, String targetClassName,
-			long targetClassPK)
+			String sourceClassName, long sourceClassPK,
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException {
 
 		_checkPermission(sourceClassName, sourceClassPK, ActionKeys.UPDATE);
 
 		return commerceQualifierEntryLocalService.addCommerceQualifierEntry(
-			getUserId(), sourceClassName, sourceClassPK, targetClassName,
-			targetClassPK);
+			getUserId(), sourceClassName, sourceClassPK,
+			sourceCommerceQualifierMetadataKey, targetClassName, targetClassPK,
+			targetCommerceQualifierMetadataKey);
 	}
 
 	@Override

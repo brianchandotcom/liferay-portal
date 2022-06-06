@@ -605,12 +605,64 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageViaMGAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154382 CanViewImageViaMGAfterMovingToFolder pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		Navigator.gotoSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			selectRootFolder = "true");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Document_1",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		Navigator.gotoSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(dmRootFolderName = "DM Folder Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_mgImageName = "Document_1",
+			locator1 = "MediaGallery#ENTRY_IMAGE_PREVIEW");
 	}
 
 	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."

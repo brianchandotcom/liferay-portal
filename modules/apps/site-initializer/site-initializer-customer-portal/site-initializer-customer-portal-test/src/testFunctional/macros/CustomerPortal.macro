@@ -1,16 +1,5 @@
 definition {
 
-	macro viewValueFieldKoroneiki {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Koroneiki Accounts");
-
-		CustomerPortal.viewCPObjectInfo();
-
-		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
-	}
-	
 	macro accountTableProject {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
@@ -550,6 +539,17 @@ definition {
 			locator1 = "CustomerPortalSite#TABLE_STATUS",
 			status = "Future",
 			value1 = "Future");
+	}
+
+	macro viewValueFieldKoroneiki {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
 }

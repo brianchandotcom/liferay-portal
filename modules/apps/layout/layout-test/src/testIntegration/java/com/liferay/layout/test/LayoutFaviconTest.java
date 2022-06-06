@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.InputStream;
 
@@ -169,6 +171,42 @@ public class LayoutFaviconTest {
 
 		Assert.assertArrayEquals(
 			expectedBytes, _getBytes(_layout.getFavicon()));
+	}
+
+	@Test
+	public void testGetFaviconFromPageTemplateCreatedFromLayout()
+		throws Exception {
+
+		byte[] expectedBytes = _getExpectedBytes();
+
+		FileEntry fileEntry = _addFileEntry(expectedBytes);
+
+		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					"Test Page Template Collection", null, _serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				createLayoutPageTemplateEntryFromLayout(
+					SegmentsEntryConstants.ID_DEFAULT, _layout,
+					"Test Page Template",
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					_serviceContext);
+
+		Layout layoutPageTemplateLayout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout layoutPageTemplateDraftLayout =
+			layoutPageTemplateLayout.fetchDraftLayout();
+
+		Assert.assertArrayEquals(
+			expectedBytes,
+			_getBytes(layoutPageTemplateDraftLayout.getFavicon()));
 	}
 
 	private FileEntry _addFileEntry(byte[] bytes) throws Exception {

@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public interface CommerceQualifierMetadata<T extends ClassedModel> {
 
-	public String[][] getAllowedTargetKeyGroups();
+	public String[][] getAllowedTargetKeysArray();
 
 	public Predicate getFilterPredicate();
 

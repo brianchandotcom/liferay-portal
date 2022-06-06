@@ -47,23 +47,23 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 	extends BaseModelListener<T> implements CommerceQualifierMetadata<T> {
 
 	@Override
-	public String[][] getAllowedTargetKeyGroups() {
+	public String[][] getAllowedTargetKeysArray() {
 		try {
 			CommerceQualifierConfiguration commerceQualifierConfiguration =
 				_getCommerceQualifierConfiguration();
 
-			String[] allowedTargetGroupsArray =
-				commerceQualifierConfiguration.allowedTargetKeyGroupsArray();
+			String[] allowedTargetKeys =
+				commerceQualifierConfiguration.allowedTargetKeys();
 
-			String[][] allowedTargetKeyGroups =
-				new String[allowedTargetGroupsArray.length][];
+			String[][] allowedTargetKeysArray =
+				new String[allowedTargetKeys.length][];
 
-			for (int i = 0; i < allowedTargetGroupsArray.length; i++) {
-				allowedTargetKeyGroups[i] = StringUtil.split(
-					allowedTargetGroupsArray[i], StringPool.PIPE);
+			for (int i = 0; i < allowedTargetKeys.length; i++) {
+				allowedTargetKeysArray[i] = StringUtil.split(
+					allowedTargetKeys[i], StringPool.PIPE);
 			}
 
-			return allowedTargetKeyGroups;
+			return allowedTargetKeysArray;
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
@@ -95,25 +95,25 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 			CommerceQualifierConfiguration commerceQualifierConfiguration =
 				_getCommerceQualifierConfiguration();
 
-			String[] orderByTargetKeyGroupsArray =
-				commerceQualifierConfiguration.orderByTargetKeyGroupsArray();
+			String[] orderByTargetKeys =
+				commerceQualifierConfiguration.orderByTargetKeys();
 
-			int orderByTargetKeyGroupsArrayLength =
-				orderByTargetKeyGroupsArray.length;
+			int orderByTargetKeysLength =
+				orderByTargetKeys.length;
 
-			for (int i = 0; i < orderByTargetKeyGroupsArrayLength; i++) {
-				String[] orderByTargetKeyGroup = StringUtil.split(
-					orderByTargetKeyGroupsArray[i], StringPool.PIPE);
+			for (int i = 0; i < orderByTargetKeysLength; i++) {
+				String[] orderByTargetKeyArray = StringUtil.split(
+					orderByTargetKeys[i], StringPool.PIPE);
 
 				if (!targetAttributeKeySet.containsAll(
-						Arrays.asList(orderByTargetKeyGroup))) {
+						Arrays.asList(orderByTargetKeyArray))) {
 
 					continue;
 				}
 
 				Predicate predicate = null;
 
-				for (String orderByTargetKey : orderByTargetKeyGroup) {
+				for (String orderByTargetKey : orderByTargetKeyArray) {
 					Predicate subpredicate = _getPredicate(
 						orderByTargetKey,
 						targetAttributes.get(orderByTargetKey));
@@ -132,7 +132,7 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 
 				whenThenStep = _getWhenThenStep(
 					whenThenStep, predicate,
-					orderByTargetKeyGroupsArrayLength - i);
+					orderByTargetKeysLength - i);
 			}
 
 			return ArrayUtil.append(

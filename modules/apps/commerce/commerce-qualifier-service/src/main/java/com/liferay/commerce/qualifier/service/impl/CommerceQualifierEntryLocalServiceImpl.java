@@ -417,7 +417,7 @@ public class CommerceQualifierEntryLocalServiceImpl
 		}
 
 		String[] allowedTargetKeys = Stream.of(
-			sourceCommerceQualifierMetadata.getAllowedTargetKeyGroups()
+			sourceCommerceQualifierMetadata.getAllowedTargetKeysArray()
 		).flatMap(
 			Stream::of
 		).toArray(

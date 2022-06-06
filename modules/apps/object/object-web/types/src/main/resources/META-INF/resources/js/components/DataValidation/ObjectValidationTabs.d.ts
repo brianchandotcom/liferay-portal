@@ -13,7 +13,7 @@
  */
 
 import 'codemirror/mode/groovy/groovy';
-import {SideBarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import {ChangeEventHandler} from 'react';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
 declare function BasicInfo({
@@ -50,6 +50,6 @@ interface IBasicInfo extends ITabs {
 	componentLabel: string;
 }
 interface IConditions extends ITabs {
-	objectValidationRuleElements: SideBarCategory[];
+	objectValidationRuleElements: SidebarCategory[];
 }
 export {BasicInfo, Conditions};

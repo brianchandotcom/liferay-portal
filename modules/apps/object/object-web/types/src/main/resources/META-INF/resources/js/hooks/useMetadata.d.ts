@@ -12,7 +12,7 @@
  * details.
  */
 
-import {SideBarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 export default function useMetadata(
-	elementList: SideBarCategory[]
-): SideBarCategory[];
+	elementList: SidebarCategory[]
+): SidebarCategory[];

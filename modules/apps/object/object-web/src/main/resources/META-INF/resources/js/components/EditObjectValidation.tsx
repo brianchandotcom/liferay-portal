@@ -14,8 +14,8 @@
 
 import ClayTabs from '@clayui/tabs';
 import {
-	SideBarCategory,
 	SidePanelForm,
+	SidebarCategory,
 	closeSidePanel,
 	openToast,
 } from '@liferay/object-js-components-web';
@@ -137,6 +137,6 @@ export default function EditObjectValidation({
 
 interface IProps {
 	objectValidationRule: ObjectValidation;
-	objectValidationRuleElements: SideBarCategory[];
+	objectValidationRuleElements: SidebarCategory[];
 	readOnly: boolean;
 }

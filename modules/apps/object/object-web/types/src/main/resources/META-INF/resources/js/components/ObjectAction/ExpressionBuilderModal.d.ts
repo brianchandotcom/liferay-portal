@@ -14,11 +14,11 @@
 
 /// <reference types="react" />
 
-import {SideBarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 export default function ExpressionBuilderModal({
 	sidebarElements,
 }: IProps): JSX.Element;
 interface IProps {
-	sidebarElements: SideBarCategory[];
+	sidebarElements: SidebarCategory[];
 }
 export {};

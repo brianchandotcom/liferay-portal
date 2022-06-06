@@ -18,12 +18,12 @@ import React, {useRef} from 'react';
 
 import {FieldBase} from '../FieldBase';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
-import {SideBarCategory, Sidebar} from './SideBar';
+import {Sidebar, SidebarCategory} from './Sidebar';
 
 import './index.scss';
 
 export {default as CodeMirrorEditor} from './CodeMirrorEditor';
-export {SideBarCategory} from './SideBar';
+export {SidebarCategory} from './Sidebar';
 
 const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
 	({className, error, sidebarElements, ...options}, ref) => {
@@ -72,5 +72,5 @@ export default CodeEditor;
 
 interface IProps extends ICodeMirrorEditor {
 	error?: string;
-	sidebarElements?: SideBarCategory[];
+	sidebarElements?: SidebarCategory[];
 }

@@ -21,7 +21,7 @@ import {Element} from './Element';
 import './Sidebar.scss';
 
 export function Sidebar({editorRef, elements}: IProps) {
-	const handleClick = (item: SideBarElement) =>
+	const handleClick = (item: SidebarElement) =>
 		editorRef.current?.replaceSelection(item.content);
 
 	return (
@@ -47,15 +47,15 @@ export function Sidebar({editorRef, elements}: IProps) {
 }
 interface IProps {
 	editorRef: React.RefObject<CodeMirror.Editor>;
-	elements: SideBarCategory[];
+	elements: SidebarCategory[];
 }
 
-export interface SideBarCategory {
-	items: SideBarElement[];
+export interface SidebarCategory {
+	items: SidebarElement[];
 	label: string;
 }
 
-interface SideBarElement {
+interface SidebarElement {
 	content: string;
 	label: string;
 	tooltip: string;

@@ -12,16 +12,16 @@
  * details.
  */
 
-import {SideBarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import {useMemo} from 'react';
 
 import {METADATA} from '../components/ObjectView/context';
 import {defaultLanguageId} from '../utils/locale';
 
-export default function useMetadata(elementList: SideBarCategory[]) {
+export default function useMetadata(elementList: SidebarCategory[]) {
 	return useMemo(() => {
 		if (!elementList || elementList.length === 0) {
-			return [] as SideBarCategory[];
+			return [] as SidebarCategory[];
 		}
 
 		const [first, ...others] = elementList;

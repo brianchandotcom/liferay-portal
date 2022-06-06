@@ -13,5 +13,5 @@
  */
 
 declare module '@liferay/object-js-components-web' {
-	export * from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/js/index';
+	export * from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/index';
 }

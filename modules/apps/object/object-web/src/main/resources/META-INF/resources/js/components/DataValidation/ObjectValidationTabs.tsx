@@ -20,7 +20,7 @@ import {
 	Input,
 	InputLocalized,
 	Select,
-	SideBarCategory,
+	SidebarCategory,
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
@@ -196,7 +196,7 @@ interface IBasicInfo extends ITabs {
 }
 
 interface IConditions extends ITabs {
-	objectValidationRuleElements: SideBarCategory[];
+	objectValidationRuleElements: SidebarCategory[];
 }
 
 export {BasicInfo, Conditions};

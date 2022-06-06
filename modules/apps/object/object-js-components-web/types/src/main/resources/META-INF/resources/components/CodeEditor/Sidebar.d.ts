@@ -14,16 +14,19 @@
 
 import CodeMirror from 'codemirror';
 import React from 'react';
-import {ICodeMirrorEditor} from './CodeMirrorEditor';
-import {SideBarCategory} from './SideBar';
-import './index.scss';
-export {default as CodeMirrorEditor} from './CodeMirrorEditor';
-export {SideBarCategory} from './SideBar';
-declare const CodeEditor: React.ForwardRefExoticComponent<
-	IProps & React.RefAttributes<CodeMirror.Editor>
->;
-export default CodeEditor;
-interface IProps extends ICodeMirrorEditor {
-	error?: string;
-	sidebarElements?: SideBarCategory[];
+import './Sidebar.scss';
+export declare function Sidebar({editorRef, elements}: IProps): JSX.Element;
+interface IProps {
+	editorRef: React.RefObject<CodeMirror.Editor>;
+	elements: SidebarCategory[];
 }
+export interface SidebarCategory {
+	items: SidebarElement[];
+	label: string;
+}
+interface SidebarElement {
+	content: string;
+	label: string;
+	tooltip: string;
+}
+export {};

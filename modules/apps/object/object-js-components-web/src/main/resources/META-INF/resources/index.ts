@@ -18,7 +18,7 @@ export {CheckboxItem} from './components/CheckBoxItem';
 export {
 	default as CodeEditor,
 	CodeMirrorEditor,
-	SideBarCategory,
+	SidebarCategory,
 } from './components/CodeEditor/index';
 export {CustomSelect} from './components/CustomSelect';
 export * from './components/ExpressionBuilder';

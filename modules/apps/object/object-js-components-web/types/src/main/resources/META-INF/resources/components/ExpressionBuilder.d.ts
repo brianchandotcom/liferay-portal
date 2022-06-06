@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {SideBarCategory} from './CodeEditor/index';
+import {SidebarCategory} from './CodeEditor/index';
 import './ExpressionBuilder.scss';
 export declare function ExpressionBuilder({
 	className,
@@ -36,7 +36,7 @@ export declare function ExpressionBuilderModal({
 	sidebarElements,
 }: IModalProps): JSX.Element | null;
 interface IModalProps {
-	sidebarElements: SideBarCategory[];
+	sidebarElements: SidebarCategory[];
 }
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;

@@ -1,5 +1,5 @@
 {
-	"@generated": "0a1c198c1f0629b426e886d1f4cb9978b22f3177",
+	"@generated": "cf6d69bd91d21e7955bfb61004d4f3225b130460",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,9 +13,6 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/object-js-components-web": [
-				"../object-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
-			],
 			"frontend-js-components-web": [
 				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
@@ -35,9 +32,6 @@
 		"../../../global.d.ts"
 	],
 	"references": [
-		{
-			"path": "../object-js-components-web"
-		},
 		{
 			"path": "../../frontend-js/frontend-js-components-web"
 		}

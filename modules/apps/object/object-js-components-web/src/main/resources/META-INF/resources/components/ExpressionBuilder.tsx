@@ -17,7 +17,7 @@ import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useRef, useState} from 'react';
 
-import CodeEditor, {SideBarCategory} from './CodeEditor/index';
+import CodeEditor, {SidebarCategory} from './CodeEditor/index';
 import {FieldBase} from './FieldBase';
 
 import './ExpressionBuilder.scss';
@@ -163,7 +163,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 type Callback = (source?: string) => void;
 
 interface IModalProps {
-	sidebarElements: SideBarCategory[];
+	sidebarElements: SidebarCategory[];
 }
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;

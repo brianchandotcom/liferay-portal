@@ -251,6 +251,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				html, configuration);
 
 			_fragmentEntryValidator.validateConfiguration(configuration);
+			_fragmentEntryValidator.validateTypeOptions(typeOptions);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

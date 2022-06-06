@@ -27,7 +27,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
+<%@ page import="com.liferay.commerce.constants.CommercePriceConstants" %><%@
+page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.discount.constants.CommerceDiscountConstants" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException" %><%@

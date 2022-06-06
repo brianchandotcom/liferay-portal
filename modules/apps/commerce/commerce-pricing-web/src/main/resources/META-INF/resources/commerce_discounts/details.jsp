@@ -113,7 +113,8 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 				<div class="row">
 					<div class="<%= colCssClass %>">
 						<aui:input ignoreRequestValue="<%= true %>" name="amount" suffix="<%= amountSuffix %>" type="text" value="<%= commerceDiscountDisplayContext.getCommerceDiscountAmount(locale) %>">
-							<aui:validator name="min">0</aui:validator>
+							<aui:validator name="min"><%= CommercePriceConstants.COMMERCE_MIN_PRICE_VALUE %></aui:validator>
+							<aui:validator name="max"><%= CommercePriceConstants.COMMERCE_MAX_PRICE_VALUE %></aui:validator>
 							<aui:validator name="number" />
 						</aui:input>
 					</div>
@@ -121,7 +122,8 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 					<c:if test="<%= usePercentage %>">
 						<div class="<%= colCssClass %>">
 							<aui:input ignoreRequestValue="<%= true %>" name="maximumDiscountAmount" suffix="<%= HtmlUtil.escape(commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getMaximumDiscountAmount()) %>">
-								<aui:validator name="min">0</aui:validator>
+								<aui:validator name="min"><%= CommercePriceConstants.COMMERCE_MIN_PRICE_VALUE %></aui:validator>
+								<aui:validator name="max"><%= CommercePriceConstants.COMMERCE_MAX_PRICE_VALUE %></aui:validator>
 								<aui:validator name="number" />
 							</aui:input>
 						</div>

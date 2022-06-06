@@ -373,4 +373,137 @@ definition {
 		}
 	}
 
+	@description = "Verify a product's images can be viewed via an Image Gallery fragment deployed on a default Commerce Product Display Page Template."
+	@priority = "3"
+	test CanViewProductImagesUsingImageGalleryFragment {
+		task ("Given a new default Commerce Product type display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And given an Image Gallery fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Image Gallery",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And given the fragment contains 'The gallery component will be shown here.'") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Image Gallery",
+				messageInfo = "The gallery component will be shown here.");
+		}
+
+		task ("And given the page is published") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the page is marked as Default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given a new image is added for the U-Joint product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(imageTitles = "Black");
+		}
+
+		task ("And given the new image has the highest priority") {
+			CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_64.png");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "1");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			IFrame.selectTopFrame();
+
+			Button.clickPublish();
+		}
+
+		task ("When the buyer logs in and clicks on the U-Joint product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then the Image Gallery fragment is present") {
+			WaitForElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+		}
+
+		task ("And it is possible to use its functionalities(previous arrow, next arrow, select from the list of images, image overlay)") {
+			Click(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_OVERLAY");
+
+			Click(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_OVERLAY");
+
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+
+			Click(locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_ARROW_NEXT");
+
+			AssertElementPresent(
+				key_fsProductImage = "Minium_ProductImage",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+
+			Click(locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_ARROW_PREV");
+
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+
+			Click(
+				key_fsProductImage = "Minium_ProductImage",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_THUMBNAIL");
+
+			AssertElementPresent(
+				key_fsProductImage = "Minium_ProductImage",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+
+			Click(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_THUMBNAIL");
+
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+		}
+	}
+
 }

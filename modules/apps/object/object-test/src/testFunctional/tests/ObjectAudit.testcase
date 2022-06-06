@@ -305,12 +305,34 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateValueWhenEditCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153571",
+			objectName = "CustomObject153571",
+			pluralLabelName = "Custom Objects 153571");
 
-		// TODO LPS-153571 CanViewUpdateValueWhenEditCustomObject pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153571");
+
+		ObjectAdmin.editCustomObject(fieldLabelName = "Custom Object 153571 Edit");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Object 153571 Edit",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the Panel Category Key is updated when set on the object details"

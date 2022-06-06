@@ -208,12 +208,28 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDeleteValueWhenRemoveCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153570",
+			objectName = "CustomObject153570",
+			pluralLabelName = "Custom Objects 153570");
 
-		// TODO LPS-153570 CanViewDeleteValueWhenRemoveCustomObject pending implementation
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Object 153570",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "DELETE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"

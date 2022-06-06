@@ -1283,10 +1283,10 @@ public class StagingImpl implements Staging {
 					"site's-available-languages-x",
 				new String[] {
 					StringUtil.merge(
-						localeException.getSourceAvailableLocales(),
+						localeException.getSourceAvailableLanguageIds(),
 						StringPool.COMMA_AND_SPACE),
 					StringUtil.merge(
-						localeException.getTargetAvailableLocales(),
+						localeException.getTargetAvailableLanguageIds(),
 						StringPool.COMMA_AND_SPACE)
 				},
 				false);

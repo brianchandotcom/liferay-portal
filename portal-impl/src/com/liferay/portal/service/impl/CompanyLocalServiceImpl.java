@@ -1548,12 +1548,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				LocaleException localeException = new LocaleException(
 					LocaleException.TYPE_DISPLAY_SETTINGS);
 
-				localeException.setSourceAvailableLocales(
-					Arrays.asList(
-						LocaleUtil.fromLanguageIds(PropsValues.LOCALES)));
-				localeException.setTargetAvailableLocales(
-					Arrays.asList(
-						LocaleUtil.fromLanguageIds(languageIdsArray)));
+				localeException.setSourceAvailableLanguageIds(
+					Arrays.asList(PropsValues.LOCALES));
+				localeException.setTargetAvailableLanguageIds(
+					Arrays.asList(languageIdsArray));
 
 				throw localeException;
 			}

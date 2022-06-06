@@ -53,7 +53,7 @@ public class LayoutPageTemplateStructureServiceImpl
 					getPermissionChecker(), groupId, Layout.class.getName(),
 					plid, ActionKeys.UPDATE)) ||
 			(GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) &&
-			 _layoutPermission.containsLayoutBasicUpdatePermission(
+			 _layoutPermission.containsLayoutRestrictedUpdatePermission(
 				 getPermissionChecker(), plid))) {
 
 			return layoutPageTemplateStructureLocalService.

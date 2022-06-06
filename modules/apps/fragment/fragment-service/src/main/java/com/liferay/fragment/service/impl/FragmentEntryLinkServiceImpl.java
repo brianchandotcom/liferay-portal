@@ -165,7 +165,7 @@ public class FragmentEntryLinkServiceImpl
 		}
 
 		if (checkUpdateLayoutRestrictedPermission &&
-			_layoutPermission.containsLayoutBasicUpdatePermission(
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
 				getPermissionChecker(), classPK)) {
 
 			return;

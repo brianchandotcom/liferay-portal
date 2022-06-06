@@ -61,7 +61,7 @@ public class PageDesignOptionsSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (_layoutPermission.containsLayoutBasicUpdatePermission(
+			if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
 					permissionChecker, plid)) {
 
 				return true;

@@ -63,7 +63,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 
 		Layout layout = themeDisplay.getLayout();
 
-		LayoutPermissionUtil.checkLayoutBasicUpdatePermission(
+		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
 			themeDisplay.getPermissionChecker(), layout);
 
 		long styleBookEntryId = ParamUtil.getLong(

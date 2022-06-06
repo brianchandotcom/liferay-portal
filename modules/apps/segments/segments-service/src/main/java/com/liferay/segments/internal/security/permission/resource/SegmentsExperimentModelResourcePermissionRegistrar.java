@@ -90,7 +90,7 @@ public class SegmentsExperimentModelResourcePermissionRegistrar {
 				SegmentsExperiment segmentsExperiment, String actionId)
 			throws PortalException {
 
-			if (_layoutPermission.containsLayoutBasicUpdatePermission(
+			if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
 					permissionChecker, segmentsExperiment.getClassPK())) {
 
 				return true;

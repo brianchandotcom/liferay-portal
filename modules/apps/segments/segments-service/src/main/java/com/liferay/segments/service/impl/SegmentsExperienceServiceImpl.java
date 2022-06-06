@@ -276,7 +276,7 @@ public class SegmentsExperienceServiceImpl
 			return false;
 		}
 
-		if (_layoutPermission.containsLayoutBasicUpdatePermission(
+		if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
 				getPermissionChecker(), layout)) {
 
 			return true;

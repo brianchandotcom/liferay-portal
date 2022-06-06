@@ -76,7 +76,7 @@ public class ChangeMasterLayoutMVCActionCommand
 
 		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
 
-		LayoutPermissionUtil.checkLayoutBasicUpdatePermission(
+		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
 			themeDisplay.getPermissionChecker(), layout);
 
 		Layout updatedLayout = _layoutLocalService.updateMasterLayoutPlid(

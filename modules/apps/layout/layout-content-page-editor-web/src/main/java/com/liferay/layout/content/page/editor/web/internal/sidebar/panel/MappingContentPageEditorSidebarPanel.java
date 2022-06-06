@@ -77,7 +77,7 @@ public class MappingContentPageEditorSidebarPanel
 		}
 
 		try {
-			if (_layoutPermission.containsLayoutBasicUpdatePermission(
+			if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
 					permissionChecker, plid)) {
 
 				return true;

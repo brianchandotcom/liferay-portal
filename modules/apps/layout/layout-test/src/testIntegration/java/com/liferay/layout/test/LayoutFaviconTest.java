@@ -94,7 +94,7 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromLayout() throws Exception {
+	public void testGetFaviconURLFromLayout() throws Exception {
 		byte[] expectedBytes = _getExpectedBytes();
 
 		FileEntry fileEntry = _addFileEntry(expectedBytes);
@@ -106,7 +106,7 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromLayoutAfterClear() throws Exception {
+	public void testGetFaviconURLFromLayoutAfterClear() throws Exception {
 		byte[] expectedBytes = _getExpectedBytes();
 
 		FileEntry fileEntry = _addFileEntry(expectedBytes);
@@ -131,7 +131,7 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromLayoutWhenSetToLayoutAndLayoutSet()
+	public void testGetFaviconURLFromLayoutWhenSetToLayoutAndLayoutSet()
 		throws Exception {
 
 		LayoutSet layoutSet = _layout.getLayoutSet();
@@ -155,7 +155,7 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromLayoutWhenSetToLayoutAndMasterLayout()
+	public void testGetFaviconURLFromLayoutWhenSetToLayoutAndMasterLayout()
 		throws Exception {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -190,7 +190,7 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
-	public void testGetFaviconFromPageTemplateCreatedFromLayout()
+	public void testGetFaviconURLFromPageTemplateCreatedFromLayout()
 		throws Exception {
 
 		byte[] expectedBytes = _getExpectedBytes();

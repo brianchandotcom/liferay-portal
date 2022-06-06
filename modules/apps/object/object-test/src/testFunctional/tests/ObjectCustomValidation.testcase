@@ -542,12 +542,55 @@ definition {
 	}
 
 	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewLocalizedInputChanged {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153549",
+			objectName = "CustomObject153549",
+			pluralLabelName = "Custom Objects 153549");
 
-		// TODO LPS-153549 CanViewLocalizedInputChanged pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153549");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.gotoConditionsTab();
+
+		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
+
+		ObjectCustomValidation.gotoBasicInfoTab();
+
+		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
+
+		ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "Validação customizada");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153549");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.assertValidationPresent(
+			validationActive = "Não",
+			validationName = "Validação customizada",
+			validationType = "Groovy");
 	}
 
 	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, if it do not passes all validations from that Object, an alert is displayed in the lower left corner of the screen"

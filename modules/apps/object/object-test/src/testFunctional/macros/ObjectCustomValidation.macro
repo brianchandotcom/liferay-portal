@@ -50,6 +50,10 @@ definition {
 			value1 = "${editValidationName}");
 	}
 
+	macro gotoBasicInfoTab {
+		Click(locator1 = "ObjectCustomValidation#OBJECT_BASIC_INFO_TAB");
+	}
+
 	macro gotoConditionsTab {
 		Click(locator1 = "ObjectCustomValidation#OBJECT_CONDITIONS_TAB");
 	}

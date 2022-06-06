@@ -537,7 +537,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_VALIDATIONS_TAB</td>
-		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Validations')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Validations') or contains(text(), 'Validações')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -457,10 +457,10 @@ definition {
 		}
 
 		task ("View the warning message shown below the HTML Tag field") {
-			AssertVisible(
-				key_fieldLabel = "HTML Tag",
-				key_subtitle = "Misusing this setup might impact SEO.",
-				locator1 = "Message#SUBTITLE");
+			AssertTextEquals(
+				fieldLabel = "HTML Tag",
+				locator1 = "Message#SUBTITLE_WITH_LABEL",
+				value1 = "Misusing this setup might impact SEO.");
 		}
 
 		task ("View the HTML tag of Container is section") {

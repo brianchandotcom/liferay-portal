@@ -171,6 +171,41 @@ public class LayoutFaviconTest {
 	}
 
 	@Test
+	public void testGetFaviconFromLayoutWhenSetToLayoutAndMasterLayout()
+		throws Exception {
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				"Test Master Page",
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Layout masterLayout = _layoutLocalService.fetchLayout(
+			masterLayoutPageTemplateEntry.getPlid());
+
+		FileEntry masterLayoutFaviconFileEntry = _addFileEntry(
+			_getExpectedBytes("liferay-classic.ico"));
+
+		masterLayout.setFaviconFileEntryId(
+			masterLayoutFaviconFileEntry.getFileEntryId());
+
+		_layoutLocalService.updateLayout(masterLayout);
+
+		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+
+		byte[] layoutFaviconBytes = _getExpectedBytes("dxp.ico");
+
+		FileEntry layoutFaviconFileEntry = _addFileEntry(layoutFaviconBytes);
+
+		_layout.setFaviconFileEntryId(layoutFaviconFileEntry.getFileEntryId());
+
+		Assert.assertArrayEquals(
+			layoutFaviconBytes, _getBytes(_layout.getFavicon()));
+	}
+
+	@Test
 	public void testGetFaviconFromMasterLayout() throws Exception {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -256,7 +291,11 @@ public class LayoutFaviconTest {
 	}
 
 	private byte[] _getExpectedBytes() throws Exception {
-		return FileUtil.getBytes(getClass(), "dependencies/dxp.ico");
+		return _getExpectedBytes("dxp.ico");
+	}
+
+	private byte[] _getExpectedBytes(String fileName) throws Exception {
+		return FileUtil.getBytes(getClass(), "dependencies/" + fileName);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {

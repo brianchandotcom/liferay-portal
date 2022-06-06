@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FrontendIconsPacksConfiguration {
 
-	@Meta.AD(deflt = "clay", name = "selected-icon-packs", required = false)
+	@Meta.AD(deflt = "CLAY", name = "selected-icon-packs", required = false)
 	public String[] selectedIconPacks();
 
 }

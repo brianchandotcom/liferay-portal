@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class FrontendIconsSiteSettingsConfigurationDisplayContext {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				for (String selectedIconPack : _selectedIconPacks) {
-					jsonArray.put(selectedIconPack);
+					jsonArray.put(StringUtil.toUpperCase(selectedIconPack));
 				}
 
 				return jsonArray;

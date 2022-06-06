@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -58,6 +59,10 @@ public class SaveSiteFrontendIconsPacksMVCActionCommand
 
 		String[] selectedIconPacks = ParamUtil.getStringValues(
 			actionRequest, "selectedIconPacks");
+
+		for (int i = 0; i < selectedIconPacks.length; i++) {
+			selectedIconPacks[i] = StringUtil.toUpperCase(selectedIconPacks[i]);
+		}
 
 		try {
 			_configurationProvider.saveGroupConfiguration(

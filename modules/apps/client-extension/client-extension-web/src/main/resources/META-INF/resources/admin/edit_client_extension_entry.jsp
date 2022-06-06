@@ -37,9 +37,10 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
 	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
-	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
 	<liferay-ui:error exception="<%= ClientExtensionEntryFriendlyURLMappingException.class %>" message="please-enter-a-valid-friendly-url-mapping" />
-	<liferay-ui:error exception="<%= ClientExtensionEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryInstanceableChangedException.class %>" message="instanceable-field-cannot-be-changed" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryInvalidURLException.class %>" message="please-enter-valid-url" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryInvalidURLsException.class %>" message="please-enter-valid-urls" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>

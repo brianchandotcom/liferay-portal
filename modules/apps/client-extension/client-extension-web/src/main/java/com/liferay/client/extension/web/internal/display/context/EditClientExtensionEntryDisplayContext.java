@@ -17,8 +17,8 @@ package com.liferay.client.extension.web.internal.display.context;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
-import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInvalidURLException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInvalidURLsException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CETCustomElement;
 import com.liferay.client.extension.type.CETGlobalCSS;
@@ -486,7 +486,7 @@ public class EditClientExtensionEntryDisplayContext {
 	private String _getErrorSection() {
 		if (MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryIFrameURLException.class.getName())) {
+				ClientExtensionEntryInvalidURLException.class.getName())) {
 
 			return ClientExtensionEntryConstants.TYPE_IFRAME;
 		}
@@ -501,8 +501,7 @@ public class EditClientExtensionEntryDisplayContext {
 					getName()) ||
 			MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryCustomElementURLsException.class.
-					getName())) {
+				ClientExtensionEntryInvalidURLsException.class.getName())) {
 
 			return ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT;
 		}

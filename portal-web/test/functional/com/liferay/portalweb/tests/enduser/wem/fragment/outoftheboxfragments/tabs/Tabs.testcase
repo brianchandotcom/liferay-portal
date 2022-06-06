@@ -326,6 +326,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when reloading page."
+	@priority = "5"
+	test PersistSelectedTabWhenReloadPage {
+		task ("Given a page creator has a content page with a Tabs fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("When the page creator accesses to the General panel of Tabs fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+		}
+
+		task ("Then the page creator could see the Persist Selected Tab checked by default and relevant description") {
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Persist Selected Tab",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertTextEquals(
+				fieldLabel = "Persist Selected Tab",
+				locator1 = "Message#SUBTITLE_WITH_LABEL",
+				value1 = "Selected tab will be persisted when users reload the page or navigate through the site.");
+		}
+
+		task ("When the page creator selects the Tab 2") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 2");
+		}
+
+		task ("Then the Tab 2 should be still selected after reloading page") {
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				key_navItem = "Tab 2",
+				locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
+		}
+	}
+
 	@description = "This is for LPS-109298. Can not add elements to each tab of Tabs fragment that is inherited from custom master in content page."
 	@priority = "4"
 	test ViewInheriatedTabsWithoutDropzoneInContentPage {

@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.type.internal.validator;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
 import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
@@ -24,9 +25,15 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "type=" + ClientExtensionEntryConstants.TYPE_IFRAME,
+	service = CETTypeValidator.class
+)
 public class CETIFrameValidator implements CETTypeValidator {
 
 	@Override
@@ -60,7 +67,7 @@ public class CETIFrameValidator implements CETTypeValidator {
 				oldTypeSettingsUnicodeProperties);
 
 			if (newCETIFrameImpl.isInstanceable() !=
-				oldCETIFrameImpl.isInstanceable()) {
+					oldCETIFrameImpl.isInstanceable()) {
 
 				// TODO Use a different exception
 

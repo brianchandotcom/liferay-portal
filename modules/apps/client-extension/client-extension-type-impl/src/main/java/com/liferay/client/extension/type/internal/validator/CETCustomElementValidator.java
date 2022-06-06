@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.type.internal.validator;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
@@ -30,9 +31,15 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "type=" + ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
+	service = CETTypeValidator.class
+)
 public class CETCustomElementValidator implements CETTypeValidator {
 
 	@Override

@@ -14,16 +14,18 @@
 
 package com.liferay.client.extension.type.internal.validator;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeException;
 import com.liferay.client.extension.type.validator.CETValidator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
-import java.util.Objects;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,43 +62,30 @@ public class CETValidatorImpl implements CETValidator {
 			).build();
 		}
 
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
+		CETTypeValidator cetTypeValidator = _serviceTrackerMap.getService(type);
 
-			CETCustomElementValidator cetCustomElementValidator =
-				new CETCustomElementValidator();
+		if (cetTypeValidator == null) {
+			throw new ClientExtensionEntryTypeException(
+				"No CET type validator registered for type " + type);
+		}
 
-			cetCustomElementValidator.validate(
-				newTypeSettingsUnicodeProperties,
-				oldTypeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			CETIFrameValidator cetiFrameValidator = new CETIFrameValidator();
-
-			cetiFrameValidator.validate(
-				newTypeSettingsUnicodeProperties,
-				oldTypeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
-		}
-		else {
-			throw new ClientExtensionEntryTypeException("Invalid type " + type);
-		}
+		cetTypeValidator.validate(
+			newTypeSettingsUnicodeProperties, oldTypeSettingsUnicodeProperties);
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CETTypeValidator.class, "type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+
+		_serviceTrackerMap = null;
+	}
+
+	private ServiceTrackerMap<String, CETTypeValidator> _serviceTrackerMap;
 
 }

@@ -238,6 +238,35 @@ declare module Liferay {
 	}
 
 	namespace Util {
+		namespace Cookie {
+
+			/**
+			 * Object with cookie consent types as keys, for use in {@link Cookie.set}
+			 */
+			export const TYPES: Object;
+
+			/* Returns the stored value of a cookie, undefined if not present */
+			export function get(name: string): string | undefined;
+
+			/* Sets a cookie of a specific type if user has consented */
+			export function set(
+				name: string,
+				value: string,
+				type: string,
+				options: {
+					'domain'?: string;
+					'expires'?: string;
+					'max-age'?: string;
+					'path'?: string;
+					'samesite'?: string;
+					'secure'?: boolean;
+				}
+			): boolean;
+
+			/* Removes a cookie by expiring it */
+			export function remove(name: string): void;
+		}
+
 		namespace PortletURL {
 
 			/* Returns an action portlet URL in form of a URL object by setting the lifecycle parameter */

@@ -22,6 +22,15 @@ export {default as AOP} from './liferay/aop/AOP.es';
 
 export {default as autoSize} from './liferay/autosize/autosize.es';
 
+// Cookie API
+
+export {
+	COOKIE_TYPES,
+	getCookie,
+	setCookie,
+	removeCookie,
+} from './liferay/util/cookie';
+
 // Debounce API
 
 export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import Cookie from '../../../src/main/resources/META-INF/resources/liferay/util/Cookie';
+import Cookie from '../../../src/main/resources/META-INF/resources/liferay/util/cookie';
 
 describe('Liferay.Util.Cookie', () => {
 	const necessaryCookie = 'any-cookie';
@@ -20,10 +20,10 @@ describe('Liferay.Util.Cookie', () => {
 	const anyCookieValue = 'any-value';
 
 	const defaultCookieMap = {
-		[Cookie.types.NECESSARY]: true,
-		[Cookie.types.PERFORMANCE]: false,
-		[Cookie.types.PERSONALIZATION]: false,
-		[Cookie.types.FUNCTIONAL]: false,
+		[Cookie.TYPES.NECESSARY]: true,
+		[Cookie.TYPES.PERFORMANCE]: false,
+		[Cookie.TYPES.PERSONALIZATION]: false,
+		[Cookie.TYPES.FUNCTIONAL]: false,
 	};
 
 	beforeEach(() => {
@@ -43,7 +43,7 @@ describe('Liferay.Util.Cookie', () => {
 			const cookieIsSet = Cookie.set(
 				necessaryCookie,
 				anyCookieValue,
-				Cookie.types.NECESSARY
+				Cookie.TYPES.NECESSARY
 			);
 
 			expect(cookieIsSet).toBe(true);
@@ -55,15 +55,15 @@ describe('Liferay.Util.Cookie', () => {
 
 		it('Allows setting a performance cookie if enabled', () => {
 			Cookie.set(
-				Cookie.types.PERFORMANCE,
+				Cookie.TYPES.PERFORMANCE,
 				'true',
-				Cookie.types.NECESSARY
+				Cookie.TYPES.NECESSARY
 			);
 
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.PERFORMANCE
+				Cookie.TYPES.PERFORMANCE
 			);
 
 			expect(cookieIsSet).toBe(true);
@@ -77,7 +77,7 @@ describe('Liferay.Util.Cookie', () => {
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.PERFORMANCE
+				Cookie.TYPES.PERFORMANCE
 			);
 
 			expect(cookieIsSet).toBe(false);
@@ -86,15 +86,15 @@ describe('Liferay.Util.Cookie', () => {
 
 		it('Allows setting a personalization cookie if enabled', () => {
 			Cookie.set(
-				Cookie.types.PERSONALIZATION,
+				Cookie.TYPES.PERSONALIZATION,
 				'true',
-				Cookie.types.NECESSARY
+				Cookie.TYPES.NECESSARY
 			);
 
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.PERSONALIZATION
+				Cookie.TYPES.PERSONALIZATION
 			);
 
 			expect(cookieIsSet).toBe(true);
@@ -108,7 +108,7 @@ describe('Liferay.Util.Cookie', () => {
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.PERSONALIZATION
+				Cookie.TYPES.PERSONALIZATION
 			);
 
 			expect(cookieIsSet).toBe(false);
@@ -116,12 +116,12 @@ describe('Liferay.Util.Cookie', () => {
 		});
 
 		it('Allows setting a functional cookie if enabled', () => {
-			Cookie.set(Cookie.types.FUNCTIONAL, 'true', Cookie.types.NECESSARY);
+			Cookie.set(Cookie.TYPES.FUNCTIONAL, 'true', Cookie.TYPES.NECESSARY);
 
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.FUNCTIONAL
+				Cookie.TYPES.FUNCTIONAL
 			);
 
 			expect(cookieIsSet).toBe(true);
@@ -135,7 +135,7 @@ describe('Liferay.Util.Cookie', () => {
 			const cookieIsSet = Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.FUNCTIONAL
+				Cookie.TYPES.FUNCTIONAL
 			);
 
 			expect(cookieIsSet).toBe(false);
@@ -158,7 +158,7 @@ describe('Liferay.Util.Cookie', () => {
 			Cookie.set(
 				unnecessaryCookie,
 				anyCookieValue,
-				Cookie.types.NECESSARY,
+				Cookie.TYPES.NECESSARY,
 				{
 					'domain': domainValue,
 					'max-age': maxAgeValue,
@@ -186,17 +186,17 @@ describe('Liferay.Util.Cookie', () => {
 		});
 
 		it('Returns value as string if the cookie is set', () => {
-			expect(Cookie.get(Cookie.types.FUNCTIONAL)).toBe('false');
-			expect(Cookie.get(Cookie.types.NECESSARY)).toBe('true');
+			expect(Cookie.get(Cookie.TYPES.FUNCTIONAL)).toBe('false');
+			expect(Cookie.get(Cookie.TYPES.NECESSARY)).toBe('true');
 		});
 	});
 
 	describe('Liferay.Util.Cookie.remove', () => {
 		it('Removes cookie if it exists', () => {
-			expect(Cookie.get(Cookie.types.FUNCTIONAL)).not.toBeUndefined();
+			expect(Cookie.get(Cookie.TYPES.FUNCTIONAL)).not.toBeUndefined();
 
-			Cookie.remove(Cookie.types.FUNCTIONAL);
-			expect(Cookie.get(Cookie.types.FUNCTIONAL)).toBeUndefined();
+			Cookie.remove(Cookie.TYPES.FUNCTIONAL);
+			expect(Cookie.get(Cookie.TYPES.FUNCTIONAL)).toBeUndefined();
 		});
 
 		it("Cookie still doesn't exist if it didn't exist before removal", () => {
@@ -205,9 +205,9 @@ describe('Liferay.Util.Cookie', () => {
 		});
 	});
 
-	describe('Liferay.Util.Cookie.types', () => {
+	describe('Liferay.Util.Cookie.TYPES', () => {
 		it('Exists', () => {
-			expect(Cookie.types).not.toBeUndefined();
+			expect(Cookie.TYPES).not.toBeUndefined();
 		});
 	});
 });

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
@@ -159,6 +160,16 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		region.setRegionCode(existingRegion.getRegionCode());
 
 		_testPostCountryRegionProblem(region, DuplicateRegionException.class);
+
+		region = randomRegion();
+
+		region.setPosition((Double)null);
+
+		Region regionReturn = regionResource.postCountryRegion(
+			_country.getCountryId(), region);
+
+		Assert.assertEquals(
+			regionReturn.getPosition(), GetterUtil.DEFAULT_DOUBLE, 0);
 	}
 
 	@Override
@@ -194,6 +205,16 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		_testPutRegionProblem(
 			region1.getId(), randomRegion, DuplicateRegionException.class);
+
+		randomRegion = randomRegion();
+
+		randomRegion.setPosition((Double)null);
+
+		Region region3 = regionResource.putRegion(
+			region1.getId(), randomRegion);
+
+		Assert.assertEquals(
+			region3.getPosition(), GetterUtil.DEFAULT_DOUBLE, 0);
 	}
 
 	@Override

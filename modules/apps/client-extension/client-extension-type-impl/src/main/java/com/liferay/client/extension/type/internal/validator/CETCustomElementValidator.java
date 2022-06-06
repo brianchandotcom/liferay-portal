@@ -17,9 +17,9 @@ package com.liferay.client.extension.type.internal.validator;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
 import com.liferay.client.extension.exception.ClientExtensionEntryInstanceableChangedException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInvalidURLsException;
 import com.liferay.client.extension.type.internal.CETCustomElementImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -123,13 +123,13 @@ public class CETCustomElementValidator implements CETTypeValidator {
 		String urls = newCETCustomElementImpl.getURLs();
 
 		if (Validator.isNull(urls)) {
-			throw new ClientExtensionEntryCustomElementURLsException(
+			throw new ClientExtensionEntryInvalidURLsException(
 				"Invalid custom element URLs " + urls);
 		}
 
 		for (String url : urls.split(StringPool.NEW_LINE)) {
 			if (!Validator.isUrl(url, true)) {
-				throw new ClientExtensionEntryCustomElementURLsException(
+				throw new ClientExtensionEntryInvalidURLsException(
 					"Invalid custom element URL " + url);
 			}
 		}

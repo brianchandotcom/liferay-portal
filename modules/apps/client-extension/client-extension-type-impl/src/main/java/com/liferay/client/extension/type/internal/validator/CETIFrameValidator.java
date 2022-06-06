@@ -16,8 +16,8 @@ package com.liferay.client.extension.type.internal.validator;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
-import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
 import com.liferay.client.extension.exception.ClientExtensionEntryInstanceableChangedException;
+import com.liferay.client.extension.exception.ClientExtensionEntryInvalidURLException;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -59,7 +59,7 @@ public class CETIFrameValidator implements CETTypeValidator {
 		String url = newCETIFrameImpl.getURL();
 
 		if (!Validator.isUrl(url)) {
-			throw new ClientExtensionEntryIFrameURLException(
+			throw new ClientExtensionEntryInvalidURLException(
 				"Invalid URL " + url);
 		}
 

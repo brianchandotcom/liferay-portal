@@ -1038,6 +1038,30 @@ definition {
 			}
 		}
 
+		if (isSet(dmImage)) {
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			if ("${navTab}" == "Documents and Media") {
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						folderName = "${folderName}",
+						imageFileName = "${dmImage}",
+						navTab = "${navTab}");
+				}
+				else if (isSet(uploadFileName)) {
+					ItemSelector.uploadFile(
+						navTab = "${navTab}",
+						uploadFileName = "${dmImage}");
+				}
+				else {
+					ItemSelector.selectDMImage(
+						imageFileName = "${dmImage}",
+						navTab = "${navTab}");
+				}
+			}
+		}
+
 		if (isSet(embedVideo)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 

@@ -12,7 +12,6 @@ definition {
 		User.firstLoginPG();
 
 		RaylifeAP.createRaylifeAPSite(siteName = "Raylife AP");
-
 	}
 
 	tearDown {
@@ -42,9 +41,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
 		AssertElementPresent(
-            locator1 = "RaylifeAP#MENU_SIDEBAR",
-            menu = "applications");
-
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "applications");
 	}
 
 }

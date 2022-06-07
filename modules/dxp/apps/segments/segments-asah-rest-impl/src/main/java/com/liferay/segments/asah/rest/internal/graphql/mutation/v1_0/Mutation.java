@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
@@ -37,7 +36,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -88,19 +86,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteExperimentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_experimentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			experimentResource -> experimentResource.deleteExperimentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public ExperimentRun createExperimentRun(
 			@GraphQLName("experimentId") Long experimentId,
 			@GraphQLName("experimentRun") ExperimentRun experimentRun)
@@ -124,20 +109,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			statusResource -> statusResource.postExperimentStatus(
 				experimentId, status));
-	}
-
-	@GraphQLField
-	public Response createExperimentStatusBatch(
-			@GraphQLName("experimentId") Long experimentId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_statusResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			statusResource -> statusResource.postExperimentStatusBatch(
-				experimentId, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -189,9 +160,6 @@ public class Mutation {
 		experimentResource.setContextUser(_user);
 		experimentResource.setGroupLocalService(_groupLocalService);
 		experimentResource.setRoleLocalService(_roleLocalService);
-
-		experimentResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -220,9 +188,6 @@ public class Mutation {
 		statusResource.setContextUser(_user);
 		statusResource.setGroupLocalService(_groupLocalService);
 		statusResource.setRoleLocalService(_roleLocalService);
-
-		statusResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<ExperimentResource>
@@ -241,7 +206,5 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }

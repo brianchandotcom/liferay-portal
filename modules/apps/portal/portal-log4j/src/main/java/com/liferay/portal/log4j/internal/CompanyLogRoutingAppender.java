@@ -14,6 +14,7 @@
 
 package com.liferay.portal.log4j.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,6 +76,28 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 			CompanyThreadLocal.getCompanyId(), this::_createAppender);
 
 		appender.append(logEvent);
+	}
+
+	public String getCompanyLogDirectory(long companyId) {
+		Appender appender = _appenders.get(companyId);
+
+		if (appender == null) {
+			return null;
+		}
+
+		if (appender instanceof RollingFileAppender) {
+			RollingFileAppender rollingFileAppender =
+				(RollingFileAppender)appender;
+
+			String filePattern = rollingFileAppender.getFilePattern();
+
+			return filePattern.substring(
+				0,
+				StringUtil.lastIndexOfAny(
+					filePattern, new char[] {CharPool.SLASH}));
+		}
+
+		return null;
 	}
 
 	public static class Builder

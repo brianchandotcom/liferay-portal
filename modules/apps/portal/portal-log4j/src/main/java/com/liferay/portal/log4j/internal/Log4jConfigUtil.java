@@ -145,6 +145,17 @@ public class Log4jConfigUtil {
 		return Collections.emptyMap();
 	}
 
+	public static String getCompanyLogDirectory(long companyId) {
+		CompanyLogRoutingAppender companyLogRoutingAppender =
+			_centralizedConfiguration.getCompanyLogRoutingAppender();
+
+		if (companyLogRoutingAppender == null) {
+			return null;
+		}
+
+		return companyLogRoutingAppender.getCompanyLogDirectory(companyId);
+	}
+
 	public static java.util.logging.Level getJDKLevel(String levelString) {
 		if (StringUtil.equalsIgnoreCase(levelString, Level.DEBUG.toString())) {
 			return java.util.logging.Level.FINE;

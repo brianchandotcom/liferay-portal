@@ -22,11 +22,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,19 +47,21 @@ import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -77,21 +80,24 @@ import org.osgi.service.component.annotations.Reference;
 public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	@Activate
-	protected void activate() {
-		_defaultMessagingConfigurator = new DefaultMessagingConfigurator();
+	protected void activate(BundleContext bundleContext) {
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.FLAGS);
 
-		_defaultMessagingConfigurator.setDestinationConfigurations(
-			Collections.singleton(
-				new DestinationConfiguration(
-					DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-					DestinationNames.FLAGS)));
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
 
-		_defaultMessagingConfigurator.afterPropertiesSet();
+		_destinationServiceRegistration = bundleContext.registerService(
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_defaultMessagingConfigurator.destroy();
+		_destinationServiceRegistration.unregister();
 	}
 
 	@Override
@@ -316,7 +322,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private DefaultMessagingConfigurator _defaultMessagingConfigurator;
+	@Reference
+	private DestinationFactory _destinationFactory;
+
+	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

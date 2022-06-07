@@ -31,6 +31,10 @@ public class UpgradeCountryCode extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		dropIndexes("Country", "a2");
+		dropIndexes("Country", "a3");
+		dropIndexes("Country", "name");
+
 		runSQL(
 			"update Country set idd_ = '242', name = 'congo' where a2 = 'CG'");
 		runSQL(

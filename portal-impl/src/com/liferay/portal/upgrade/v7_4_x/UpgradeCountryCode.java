@@ -60,12 +60,12 @@ public class UpgradeCountryCode extends UpgradeProcess {
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
-						"select User_.companyId, User_.languageId, ",
-						"User_.userId from User_ join Company on ",
-						"User_.companyId = Company.companyId where ",
-						"User_.defaultUser = [$TRUE$] and Company.companyId ",
-						"not in (select companyId from Country where a2 = ",
-						"'NA')")));
+						"select User_.companyId as companyId, ",
+						"User_.languageId as languageId, User_.userId as ",
+						"userId from User_ join Company on User_.companyId = ",
+						"Company.companyId where User_.defaultUser = [$TRUE$] ",
+						"and Company.companyId not in (select companyId from ",
+						"Country where a2 = 'NA')")));
 			ResultSet resultSet = preparedStatement2.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -115,8 +115,9 @@ public class UpgradeCountryCode extends UpgradeProcess {
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
-						"select Country.countryId, User_.companyId, ",
-						"User_.languageId, User_.userId from User_ join ",
+						"select Country.countryId as countryId, ",
+						"User_.companyId as companyId, User_.languageId as ",
+						"languageId, User_.userId as userId from User_ join ",
 						"Country on User_.companyId = Country.companyId where ",
 						"User_.defaultUser = [$TRUE$] and Country.a2 = '",
 						countryA2, "' and Country.countryId not in (select ",

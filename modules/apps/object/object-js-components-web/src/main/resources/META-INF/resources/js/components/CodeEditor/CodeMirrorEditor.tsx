@@ -50,13 +50,10 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 
 			codeMirrorRef.current = editor;
 
-			if (!ref) {
-				return;
-			}
-			else if (ref instanceof Function) {
+			if (ref instanceof Function) {
 				ref(editor);
 			}
-			else {
+			else if (ref) {
 				(ref as React.MutableRefObject<
 					CodeMirror.Editor
 				>).current = editor;

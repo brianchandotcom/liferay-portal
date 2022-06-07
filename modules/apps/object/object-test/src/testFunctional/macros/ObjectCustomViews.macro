@@ -67,7 +67,7 @@ definition {
 
 	macro assertColumnNotPresentOnDefaultSort {
 		AssertElementNotPresent(
-			key_columnName = "${colunmName}",
+			key_columnName = "${columnName}",
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
 	}
 

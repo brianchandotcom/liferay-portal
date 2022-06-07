@@ -13,12 +13,12 @@ import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
 const EnterpriseSearch = () => {
-	const [{accountKey, sessionId}] = useCustomerPortal();
+	const [{project, sessionId}] = useCustomerPortal();
 
 	return (
 		<ActivationKeysLayout>
 			<ActivationKeysLayout.Inputs
-				accountKey={accountKey}
+				accountKey={project?.accountKey}
 				productKey="enterprise-search"
 				productTitle="Enterprise Search"
 				sessionId={sessionId}

@@ -142,7 +142,7 @@ function Inputs({onChange, value}) {
 					id="indexedFieldName"
 					onChange={_handleChangeValue('field')}
 					type="text"
-					value={value.field}
+					value={value.field || ''}
 				/>
 			</ClayInput.GroupItem>
 
@@ -155,7 +155,7 @@ function Inputs({onChange, value}) {
 					id="displayLabel"
 					onChange={_handleChangeValue('label')}
 					type="text"
-					value={value.label}
+					value={value.label || ''}
 				/>
 			</ClayInput.GroupItem>
 

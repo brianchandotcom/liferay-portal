@@ -38,11 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + OAuthClientAdminPortletKeys.OAUTH_CLIENT_ADMIN,
-		"mvc.command.name=/oauth_client_admin/update_o_auth_client"
+		"mvc.command.name=/oauth_client_admin/update_o_auth_client_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
+public class UpdateOAuthClientEntryMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -75,11 +76,11 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/admin/update_oauth_client.jsp";
+		return "/admin/update_oauth_client_entry.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateOAuthClientMVCRenderCommand.class);
+		UpdateOAuthClientEntryMVCRenderCommand.class);
 
 	@Reference
 	private OAuthClientEntryService _oAuthClientEntryService;

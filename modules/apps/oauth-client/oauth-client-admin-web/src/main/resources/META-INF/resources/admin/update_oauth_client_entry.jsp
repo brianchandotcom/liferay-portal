@@ -27,12 +27,12 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "new-oauth-client") : LanguageUtil.get(request, "edit-oauth-client"));
 %>
 
-<portlet:actionURL name="/oauth_client_admin/update_o_auth_client" var="updateOAuthClientEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client" />
+<portlet:actionURL name="/oauth_client_admin/update_o_auth_client_entry" var="updateOAuthClientEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_entry" />
 	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateOAuthClientEntryURL %>" id="oauth-client-fm" method="post" name="oauth-client-fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= updateOAuthClientEntryURL %>" id="oauth-client-entry-fm" method="post" name="oauth-client-entry-fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:model-context bean="<%= oAuthClientEntry %>" model="<%= OAuthClientEntry.class %>" />
@@ -92,7 +92,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />parametersJSON'
 		).value = parametersJSON;
 
-		submitForm(document.getElementById('<portlet:namespace />oauth-client-fm'));
+		submitForm(document.getElementById('<portlet:namespace />oauth-client-entry-fm'));
 	}
 
 	function <portlet:namespace />init() {

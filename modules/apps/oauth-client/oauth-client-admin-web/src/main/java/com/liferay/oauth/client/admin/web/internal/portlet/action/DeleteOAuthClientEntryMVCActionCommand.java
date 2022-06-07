@@ -37,11 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + OAuthClientAdminPortletKeys.OAUTH_CLIENT_ADMIN,
-		"mvc.command.name=/oauth_client_admin/delete_o_auth_client"
+		"mvc.command.name=/oauth_client_admin/delete_o_auth_client_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteOAuthClientMVCActionCommand implements MVCActionCommand {
+public class DeleteOAuthClientEntryMVCActionCommand
+	implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
@@ -70,7 +71,7 @@ public class DeleteOAuthClientMVCActionCommand implements MVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteOAuthClientMVCActionCommand.class);
+		DeleteOAuthClientEntryMVCActionCommand.class);
 
 	@Reference
 	private OAuthClientEntryService _oAuthClientEntryService;

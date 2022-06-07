@@ -36,10 +36,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Arthur Chan
  */
-public class OAuthClientsManagementToolbarDisplayContext
+public class OAuthClientEntriesManagementToolbarDisplayContext
 	extends BaseOAuthClientManagementToolbarDisplayContext {
 
-	public OAuthClientsManagementToolbarDisplayContext(
+	public OAuthClientEntriesManagementToolbarDisplayContext(
 		PortletURL currentURLObj, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -51,7 +51,7 @@ public class OAuthClientsManagementToolbarDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.putData("action", "deleteOAuthClients");
+				dropdownItem.putData("action", "deleteOAuthClientEntries");
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
@@ -62,11 +62,11 @@ public class OAuthClientsManagementToolbarDisplayContext
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"deleteOAuthClientsURL",
+			"deleteOAuthClientEntriesURL",
 			() -> PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
-				"/oauth_client_admin/delete_o_auth_clients"
+				"/oauth_client_admin/delete_o_auth_client_entries"
 			).buildString()
 		).build();
 	}
@@ -77,8 +77,8 @@ public class OAuthClientsManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName",
-					"/oauth_client_admin/update_o_auth_client", "redirect",
-					currentURLObj.toString());
+					"/oauth_client_admin/update_o_auth_client_entry",
+					"redirect", currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-oauth-client"));
 			}

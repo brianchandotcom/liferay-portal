@@ -19,23 +19,23 @@
 <%
 int oAuthClientEntriesCount = OAuthClientEntryLocalServiceUtil.getOAuthClientEntriesCount();
 
-OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplayContext = new OAuthClientsManagementToolbarDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
+OAuthClientEntriesManagementToolbarDisplayContext oAuthClientEntriesManagementToolbarDisplayContext = new OAuthClientEntriesManagementToolbarDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= oAuthClientsManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	additionalProps="<%= oAuthClientsManagementToolbarDisplayContext.getAdditionalProps() %>"
-	creationMenu="<%= oAuthClientsManagementToolbarDisplayContext.getCreationMenu() %>"
+	actionDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps="<%= oAuthClientEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
+	creationMenu="<%= oAuthClientEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= oAuthClientEntriesCount == 0 %>"
-	filterDropdownItems="<%= oAuthClientsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuthClientEntriesCount %>"
 	searchContainerId="oAuthClientEntrySearchContainer"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
-	sortingOrder="<%= oAuthClientsManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(oAuthClientsManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= oAuthClientsManagementToolbarDisplayContext.getViewTypes() %>"
+	sortingOrder="<%= oAuthClientEntriesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(oAuthClientEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <clay:container-fluid
@@ -59,7 +59,7 @@ OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplay
 			modelVar="oAuthClientEntry"
 		>
 			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client" />
+				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_entry" />
 				<portlet:param name="authServerWellKnownURI" value="<%= oAuthClientEntry.getAuthServerWellKnownURI() %>" />
 				<portlet:param name="clientId" value="<%= oAuthClientEntry.getClientId() %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -78,7 +78,7 @@ OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplay
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
-				path="/admin/oauth_client_actions.jsp"
+				path="/admin/oauth_client_entry_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -29,11 +29,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + OAuthClientAdminPortletKeys.OAUTH_CLIENT_ADMIN,
-		"mvc.command.name=/oauth_client_admin/view_o_auth_clients"
+		"mvc.command.name=/oauth_client_admin/view_o_auth_client_entries"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewOAuthClientsMVCRenderCommand implements MVCRenderCommand {
+public class ViewOAuthClientEntriesMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

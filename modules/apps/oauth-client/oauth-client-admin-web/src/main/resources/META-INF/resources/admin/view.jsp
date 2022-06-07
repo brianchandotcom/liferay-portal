@@ -31,7 +31,7 @@ String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
 						PortletURL portletURL = PortletURLBuilder.createRenderURL(
 							renderResponse
 						).setMVCRenderCommandName(
-							"/oauth_client_admin/view_o_auth_clients"
+							"/oauth_client_admin/view_o_auth_client_entries"
 						).setNavigation(
 							"oauth-clients"
 						).buildPortletURL();
@@ -64,7 +64,7 @@ String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
 
 <c:choose>
 	<c:when test='<%= navigation.equals("oauth-clients") %>'>
-		<liferay-util:include page="/admin/view_oauth_clients.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/view_oauth_client_entries.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= navigation.equals("oauth-client-as-local-metadata") %>'>
 		<liferay-util:include page="/admin/view_oauth_client_as_local_metadata.jsp" servletContext="<%= application %>" />

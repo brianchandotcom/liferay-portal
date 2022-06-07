@@ -140,6 +140,20 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getCurrentPassword() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currentPassword\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getCurrentPassword()));
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -546,6 +560,15 @@ public class UserAccountSerDes {
 				liferayToJSONDateFormat.format(userAccount.getBirthDate()));
 		}
 
+		if (userAccount.getCurrentPassword() == null) {
+			map.put("currentPassword", null);
+		}
+		else {
+			map.put(
+				"currentPassword",
+				String.valueOf(userAccount.getCurrentPassword()));
+		}
+
 		if (userAccount.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -773,6 +796,12 @@ public class UserAccountSerDes {
 				if (jsonParserFieldValue != null) {
 					userAccount.setBirthDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "currentPassword")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setCurrentPassword(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

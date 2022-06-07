@@ -188,6 +188,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		userAccount.setAdditionalName(regex);
 		userAccount.setAlternateName(regex);
+		userAccount.setCurrentPassword(regex);
 		userAccount.setDashboardURL(regex);
 		userAccount.setEmailAddress(regex);
 		userAccount.setExternalReferenceCode(regex);
@@ -209,6 +210,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(regex, userAccount.getAdditionalName());
 		Assert.assertEquals(regex, userAccount.getAlternateName());
+		Assert.assertEquals(regex, userAccount.getCurrentPassword());
 		Assert.assertEquals(regex, userAccount.getDashboardURL());
 		Assert.assertEquals(regex, userAccount.getEmailAddress());
 		Assert.assertEquals(regex, userAccount.getExternalReferenceCode());
@@ -2877,6 +2879,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("currentPassword", additionalAssertFieldName)) {
+				if (userAccount.getCurrentPassword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (userAccount.getCustomFields() == null) {
 					valid = false;
@@ -3177,6 +3187,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getBirthDate(),
 						userAccount2.getBirthDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currentPassword", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getCurrentPassword(),
+						userAccount2.getCurrentPassword())) {
 
 					return false;
 				}
@@ -3584,6 +3605,14 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("currentPassword")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getCurrentPassword()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3862,6 +3891,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				alternateName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				birthDate = RandomTestUtil.nextDate();
+				currentPassword = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dashboardURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();

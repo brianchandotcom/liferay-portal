@@ -142,6 +142,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected Date birthDate;
 
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+
+	public void setCurrentPassword(
+		UnsafeSupplier<String, Exception> currentPasswordUnsafeSupplier) {
+
+		try {
+			currentPassword = currentPasswordUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String currentPassword;
+
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}

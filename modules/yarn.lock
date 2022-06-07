@@ -875,14 +875,14 @@
     "@clayui/layout" "^3.56.0"
     classnames "^2.2.6"
 
-"@clayui/autocomplete@3.58.0", "@clayui/autocomplete@^3.58.0":
-  version "3.58.0"
-  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.58.0.tgz#92e538004c01494ba2b8efc949a1b809a1442062"
-  integrity sha512-bb9md+o99nGqgD7tZvmUc71510BMNpRBzIdhjO3fKVbuPT1/r9b/OAzjW2D6Bgl97xfZHnE2TT+zd1JR8bdPZQ==
+"@clayui/autocomplete@3.60.0", "@clayui/autocomplete@^3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.60.0.tgz#195b1a2081e5d22c56973d5c73f9f2ade109782b"
+  integrity sha512-Ok/s0BmuPVuhabDAWz3RDe3epW9O4AUpjOLmwUQPccnzLAoPWsvmFTdN23nB6wBffWn6vstq6LXIiRXuAd9LAA==
   dependencies:
     "@clayui/drop-down" "^3.58.0"
     "@clayui/form" "^3.58.0"
-    "@clayui/loading-indicator" "^3.56.0"
+    "@clayui/loading-indicator" "^3.60.0"
     fuzzy "^0.1.3"
 
 "@clayui/badge@3.56.0":
@@ -951,16 +951,16 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/core@3.58.1":
-  version "3.58.1"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.58.1.tgz#3743904a6c58dfbb7fb4d2de6f9125f5c902837e"
-  integrity sha512-GkKArnJdyXf567vFOl1FdUp4/ouDgwlnpyEvvxiezd0iN8SCbT6W60cpklQwRXGh8cZBdwuXqNk92w355W181Q==
+"@clayui/core@3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.60.0.tgz#44cbcb8ca76c533d1507912d0a8f2f4179f13e36"
+  integrity sha512-sp8R7XSv3DBJRHbnzCIYuzvJ/zN4qrenxb72+53YDcapDmJ9NBiYe9u8IVv7P3VMEkFzA45XPp26x0DKiTxyAA==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.58.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/layout" "^3.56.0"
-    "@clayui/loading-indicator" "^3.56.0"
+    "@clayui/loading-indicator" "^3.60.0"
     "@clayui/modal" "^3.58.1"
     "@clayui/provider" "^3.56.0"
     "@clayui/shared" "^3.58.0"
@@ -969,10 +969,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.59.0":
-  version "3.59.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.59.0.tgz#affc9571b90955cd1b1632fd21069ee111185819"
-  integrity sha512-dVDz8+tV4MThDUWJSRaAv5ztQdkFGI9McEqTakUCLYCSQIhTEuwHQD9g6h9Pvxwuf1JgD+nW+mzsQyJmGjiFXA==
+"@clayui/css@3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.60.0.tgz#26c27e11255591e1e355b7b6f6865317248774ff"
+  integrity sha512-KjjVvhZQIXvtQ6WLG6C5Ekt86PzqPDNTiIdnazleSyBjOOsbiU0E44uNuC7jqcEk5trENPBLNlQqa77vDfyqQw==
 
 "@clayui/data-provider@3.58.0":
   version "3.58.0"
@@ -1075,10 +1075,10 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/loading-indicator@3.56.0", "@clayui/loading-indicator@^3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.56.0.tgz#743c878d862a0e5729727813ab1fc38cf4330ac4"
-  integrity sha512-sHIyRKsoVgKBqVhc9fneioqPyLmiN6PtZjMs2Vfl0mJERceXv5D9ieCaPZgnRj1bEtn24vsU2/7NG/w/3+LruQ==
+"@clayui/loading-indicator@3.60.0", "@clayui/loading-indicator@^3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.60.0.tgz#d5573f0d391367599740fb23d1999a9064ba71b1"
+  integrity sha512-UpPwjJqex0tX+asB4hDRe50qJop6hvAyvDjfE6P6ivYxpuLjdTqhk7CN9QKLWSesPh8DFvmG32BYnuW9OZ59XQ==
   dependencies:
     classnames "^2.2.6"
 
@@ -1114,17 +1114,17 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/multi-select@3.58.0":
-  version "3.58.0"
-  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.58.0.tgz#26dc10343399399c27d18b338a9ba66d528934eb"
-  integrity sha512-EQ0xyFrDTak4SccDx4SjoTjZYjZfAkgGvPiLmAvJa3PAUkfwqlxDG0lki/JtdPsQvexPr4tmoV+vfupFPBc6kg==
+"@clayui/multi-select@3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.60.0.tgz#68fd23f6b7a0533bb27e3010650ae03cfff69d36"
+  integrity sha512-uyAGxQQMtDdMuyp+kVi9Zk9jH9nXhEvGwI2YhcJuIWKCRtC5475hylnPgzMzAdraPJ8LdYmjj84xCj65EpTs8g==
   dependencies:
-    "@clayui/autocomplete" "^3.58.0"
+    "@clayui/autocomplete" "^3.60.0"
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.58.0"
     "@clayui/form" "^3.58.0"
     "@clayui/label" "^3.56.0"
-    "@clayui/loading-indicator" "^3.56.0"
+    "@clayui/loading-indicator" "^3.60.0"
     "@clayui/shared" "^3.58.0"
     classnames "^2.2.6"
     fuzzy "^0.1.3"

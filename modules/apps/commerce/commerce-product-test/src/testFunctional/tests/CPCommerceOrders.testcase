@@ -1214,13 +1214,13 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 		}
 
-		task ("Then the 'Re-try payment' is not present because the order is still on open") {
+		task ("Then the 'Retry Payment' is not present because the order is still on open") {
 			Click(
 				key_orderAuthor = "Commerce Account",
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
 			AssertElementNotPresent(
-				key_text = "Re-try payment",
+				key_text = "Retry Payment",
 				locator1 = "Button#ANY");
 		}
 	}

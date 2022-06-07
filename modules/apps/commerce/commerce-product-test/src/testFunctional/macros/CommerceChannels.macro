@@ -435,6 +435,16 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
+	macro gotoShippingMethodShippingOptions {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "${shippingMethod}",
+			table = "Shipping Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+	}
+
 	macro openChannelsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

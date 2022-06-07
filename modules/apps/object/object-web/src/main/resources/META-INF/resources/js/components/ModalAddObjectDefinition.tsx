@@ -75,7 +75,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		};
 
 		if (Liferay.FeatureFlags['LPS-135430']) {
-			objectDefinition.storageType = storageType;
+			objectDefinition.storageType = storageType.toLowerCase();
 		}
 		const response = await fetch(apiURL, {
 			body: JSON.stringify(objectDefinition),

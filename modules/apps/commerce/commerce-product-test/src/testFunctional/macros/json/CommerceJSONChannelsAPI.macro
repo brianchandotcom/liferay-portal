@@ -57,6 +57,33 @@ definition {
 		}
 	}
 
+	macro _getCommerceChannelIdByName {
+		Variables.assertDefined(parameterList = "${channelName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(channelCount)) {
+			var channelsCount = "${channelCount}";
+		}
+		else {
+			var channelsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var channelId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${channelName}')].['id']");
+
+		return "${channelId}";
+	}
+
 	macro _getCommerceChannelIds {
 		var baseURL = "${baseURL}";
 

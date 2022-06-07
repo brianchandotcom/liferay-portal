@@ -108,6 +108,8 @@
 			rightTitle="available"
 		/>
 	</aui:fieldset>
+
+	<aui:input label="allow-using-instance-languages-from-site-administration" name='<%= "settings--" + PropsKeys.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN, PropsValues.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN) %>" />
 </aui:fieldset>
 
 <aui:script use="aui-alert,aui-base">

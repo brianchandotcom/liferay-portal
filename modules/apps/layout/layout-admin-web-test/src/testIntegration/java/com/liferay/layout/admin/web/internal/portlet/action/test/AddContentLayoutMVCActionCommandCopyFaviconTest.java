@@ -66,7 +66,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class AddContentLayoutMVCActionCommandFaviconTest {
+public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 
 	@ClassRule
 	@Rule

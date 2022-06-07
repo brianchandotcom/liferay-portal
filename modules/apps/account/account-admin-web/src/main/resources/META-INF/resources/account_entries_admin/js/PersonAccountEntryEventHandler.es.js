@@ -73,7 +73,11 @@ class PersonAccountEntryEventHandler extends PortletBase {
 
 	_selectAccountUser() {
 		openSelectionModal({
+			containerProps: {
+				className: '',
+			},
 			id: this.ns(this.selectUserEventName),
+			iframeBodyCssClass: '',
 			onSelect: this._handleOnSelect.bind(this),
 			selectEventName: this.ns(this.selectUserEventName),
 			selectedData: [this.userIdInput.value],

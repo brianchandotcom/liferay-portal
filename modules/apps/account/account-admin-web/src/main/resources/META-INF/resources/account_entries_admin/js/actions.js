@@ -18,6 +18,10 @@ export const ACTIONS = {
 	assignRoleAccountUsers(itemData, portletNamespace) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
+			containerProps: {
+				className: '',
+			},
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (Array.isArray(selectedItems)) {

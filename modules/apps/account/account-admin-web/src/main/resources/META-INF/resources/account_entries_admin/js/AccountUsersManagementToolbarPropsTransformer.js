@@ -63,6 +63,10 @@ export default function propsTransformer({
 		onCreateButtonClick: () => {
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('assign'),
+				containerProps: {
+					className: '',
+				},
+				iframeBodyCssClass: '',
 				multiple: true,
 				onSelect: (selectedItems) => {
 					if (!selectedItems?.length) {

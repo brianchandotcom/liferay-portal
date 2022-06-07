@@ -74,6 +74,10 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAccountEntries = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
+			containerProps: {
+				className: '',
+			},
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (!selectedItems?.length) {

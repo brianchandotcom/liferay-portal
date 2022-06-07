@@ -38,7 +38,11 @@ export default function ({
 	const openSelectionModal = (title, type) => {
 		Liferay.Util.openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('save'),
+			containerProps: {
+				className: '',
+			},
 			id: '<portlet:namespace />selectDefaultAddress',
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (!selectedItem) {

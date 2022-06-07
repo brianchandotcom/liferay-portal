@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;

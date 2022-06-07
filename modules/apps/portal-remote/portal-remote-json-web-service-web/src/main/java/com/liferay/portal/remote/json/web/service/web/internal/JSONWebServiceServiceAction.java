@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.JSONServiceAction;
-import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
-import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -34,6 +32,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceDiscoverAction;
+import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;

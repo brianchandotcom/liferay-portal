@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice.action;
+package com.liferay.portal.remote.json.web.service.web.internal.action;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.data.FileData;
 import com.liferay.portal.json.transformer.BeanAnalyzerTransformer;
-import com.liferay.portal.jsonwebservice.JSONWebServiceNamingUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.remote.json.web.service.web.internal.JSONWebServiceNamingUtil;
 
 import java.io.File;
 import java.io.Serializable;

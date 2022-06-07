@@ -92,7 +92,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.image.ImageToolImpl" />
 		<Logger level="INFO" name="com.liferay.portal.internal.servlet.MainServlet" />
 		<Logger level="WARN" name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
-		<Logger level="WARN" name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -162,8 +162,7 @@ public class JSONWebServiceActionsManagerImpl
 			return Collections.emptyList();
 		}
 
-		return new ArrayList<JSONWebServiceActionMapping>(
-			jsonWebServiceActionConfigs);
+		return new ArrayList<>(jsonWebServiceActionConfigs);
 	}
 
 	@Override

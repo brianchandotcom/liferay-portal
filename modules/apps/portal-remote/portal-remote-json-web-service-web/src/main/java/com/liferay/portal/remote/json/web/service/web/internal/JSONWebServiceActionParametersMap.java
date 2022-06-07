@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,7 @@ import java.util.Map;
  */
 public class JSONWebServiceActionParametersMap extends HashMap<String, Object> {
 
-	public List<Map.Entry<String, Object>> getInnerParameters(String baseName) {
+	public List<Entry<String, Object>> getInnerParameters(String baseName) {
 		if (_innerParameters == null) {
 			return null;
 		}
@@ -124,8 +123,7 @@ public class JSONWebServiceActionParametersMap extends HashMap<String, Object> {
 				_innerParameters = new HashMap<>();
 			}
 
-			List<Map.Entry<String, Object>> values = _innerParameters.get(
-				baseName);
+			List<Entry<String, Object>> values = _innerParameters.get(baseName);
 
 			if (values == null) {
 				values = new ArrayList<>();
@@ -133,8 +131,7 @@ public class JSONWebServiceActionParametersMap extends HashMap<String, Object> {
 				_innerParameters.put(baseName, values);
 			}
 
-			values.add(
-				new AbstractMap.SimpleImmutableEntry<>(innerName, value));
+			values.add(new SimpleImmutableEntry<>(innerName, value));
 
 			return value;
 		}
@@ -171,7 +168,7 @@ public class JSONWebServiceActionParametersMap extends HashMap<String, Object> {
 	}
 
 	private List<DefaultParameter> _defaultParameters;
-	private Map<String, List<Map.Entry<String, Object>>> _innerParameters;
+	private Map<String, List<Entry<String, Object>>> _innerParameters;
 	private Map<String, String> _parameterTypes;
 
 }

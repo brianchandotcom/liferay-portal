@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;

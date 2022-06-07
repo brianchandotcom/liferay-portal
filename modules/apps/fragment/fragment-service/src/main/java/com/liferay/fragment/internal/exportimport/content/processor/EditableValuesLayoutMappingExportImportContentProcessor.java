@@ -20,7 +20,6 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -57,7 +56,7 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableProcessorJSONObject == null) {
-			return JSONFactoryUtil.createJSONObject();
+			return editableValuesJSONObject;
 		}
 
 		Iterator<String> editableKeysIterator =

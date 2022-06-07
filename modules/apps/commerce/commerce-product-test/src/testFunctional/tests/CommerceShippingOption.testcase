@@ -160,6 +160,74 @@ definition {
 		}
 	}
 
+	@description = "Verify the Active column for the default account shipping option displays 'Yes' if the default shipping option is active and 'No' if it is innactive."
+	@priority = "3"
+	test MakeADefaultShippingOptionActiveAndInactive {
+		task ("Given Flat Rate / Expedited Delivery is set as the default shipping option for the Commerce Account") {
+			CommerceJSONShippingMethods._setDefaultAccountShippingOption(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Expedited Delivery");
+		}
+
+		task ("When the Sales Manager goes into the Minium Portal channel and disables the Flat Rate Shipping Method") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editShippingMethod(
+				active = "false",
+				shippingMethod = "Flat Rate");
+		}
+
+		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("Then the the status of the Active column for Minium Portal is No") {
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Flat Rate",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_productName = "Minium Portal",
+				key_value = "Expedited Delivery",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_productName = "Minium Portal",
+				key_value = "No",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+
+		task ("When the Sales Manager goes into the Minium Portal channel and enables the Flat Rate Shipping Method") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editShippingMethod(
+				active = "true",
+				shippingMethod = "Flat Rate");
+		}
+
+		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("Then the the status of the Active column for Minium Portal is Yes") {
+			CommerceChannels.assertDefaultAccountShippingOption(
+				active = "Yes",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Expedited Delivery");
+		}
+	}
+
 	@description = "Verify the default account shipping option reverts to Use Priority Settings if the current default account shipping option is deleted."
 	@priority = "3"
 	test RemoveAShippingOptionThatIsLinkedAsDefault {

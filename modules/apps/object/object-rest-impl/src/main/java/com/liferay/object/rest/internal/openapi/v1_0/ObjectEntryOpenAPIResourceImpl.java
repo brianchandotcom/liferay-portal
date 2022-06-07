@@ -95,6 +95,29 @@ public class ObjectEntryOpenAPIResourceImpl
 			String propertyName = schemaEntry.getKey();
 			Schema propertySchema = schemaEntry.getValue();
 
+			if (Optional.ofNullable(
+					propertySchema.getReadOnly()
+				).orElse(
+					false
+				) ||
+				Optional.ofNullable(
+					propertySchema.getWriteOnly()
+				).orElse(
+					false
+				) || propertyName.startsWith("x-")) {
+
+				continue;
+			}
+
+			if (propertySchema.getExtensions() != null) {
+				Map<String, Object> propertySchemaExtensions =
+					propertySchema.getExtensions();
+
+				propertyName =
+					propertySchemaExtensions.get("x-parent-map") + "_" +
+						propertyName;
+			}
+
 			fields.put(
 				propertyName,
 				Field.of(

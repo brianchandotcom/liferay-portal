@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAVICON_NAME</td>
+	<td>//span[contains(@id,'faviconFileEntryTitle')][contains(.,'${faviconName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

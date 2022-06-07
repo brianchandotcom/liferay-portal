@@ -12,6 +12,7 @@
     build/**
     classes/**
     css/clay/**
+    types/**/*.d.ts
 
 ##
 ## Template Files

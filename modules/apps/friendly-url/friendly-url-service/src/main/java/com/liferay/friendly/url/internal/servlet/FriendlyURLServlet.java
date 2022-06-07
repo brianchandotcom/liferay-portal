@@ -61,10 +61,12 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.redirect.model.RedirectEntry;
@@ -283,10 +285,17 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				boolean localeUnavailable = false;
 
+				boolean allowCompanyLocalesInSiteAdmin =
+					PrefsPropsUtil.getBoolean(
+						portal.getCompanyId(httpServletRequest),
+						PropsKeys.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN,
+						PropsValues.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN);
+
 				if (Validator.isNotNull(i18nLanguageId) &&
 					!LanguageUtil.isAvailableLocale(
 						group.getGroupId(), i18nLanguageId) &&
-					(!portal.isGroupControlPanelPath(path) ||
+					(!allowCompanyLocalesInSiteAdmin ||
+					 !portal.isGroupControlPanelPath(path) ||
 					 !LanguageUtil.isAvailableLocale(i18nLanguageId))) {
 
 					localeUnavailable = true;

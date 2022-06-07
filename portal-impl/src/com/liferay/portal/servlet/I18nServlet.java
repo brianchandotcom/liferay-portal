@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
 
@@ -191,7 +193,14 @@ public class I18nServlet extends HttpServlet {
 				siteDefaultLocale = LanguageUtil.getLocale(
 					siteGroup.getGroupId(), i18nLanguageCode);
 
+				boolean allowCompanyLocalesInSiteAdmin =
+					PrefsPropsUtil.getBoolean(
+						PortalUtil.getCompanyId(httpServletRequest),
+						PropsKeys.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN,
+						PropsValues.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN);
+
 				if ((siteDefaultLocale == null) &&
+					allowCompanyLocalesInSiteAdmin &&
 					PortalUtil.isGroupControlPanelPath(path)) {
 
 					siteDefaultLocale = LanguageUtil.getLocale(

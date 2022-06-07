@@ -1,0 +1,248 @@
+[
+	{
+		"description": "This is a customElement description",
+		"name": "customElement",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "custom-element.css",
+				"name": "cssURLs",
+				"type": "list"
+			},
+			{
+				"default": "custom-element",
+				"name": "friendlyURLMapping",
+				"type": "string"
+			},
+			{
+				"default": "custom-element",
+				"name": "htmlElementName",
+				"type": "string"
+			},
+			{
+				"default": "category.remote-apps",
+				"name": "portletCategoryName",
+				"type": "string"
+			},
+			{
+				"default": "index.js",
+				"name": "urls",
+				"type": "list"
+			},
+			{
+				"default": "false",
+				"name": "instanceable",
+				"type": "boolean"
+			},
+			{
+				"default": "false",
+				"name": "useESM",
+				"type": "boolean"
+			}
+		]
+	},
+	{
+		"description": "This is a globalCSS description",
+		"name": "globalCSS",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "global.css",
+				"name": "url",
+				"type": "string"
+			}
+		]
+	},
+	{
+		"description": "This is a globalJS description",
+		"name": "globalJS",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "global.js",
+				"name": "url",
+				"type": "string"
+			}
+		]
+	},
+	{
+		"description": "This is a iframe description",
+		"name": "iframe",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "iframe",
+				"name": "friendlyURLMapping",
+				"type": "string"
+			},
+			{
+				"default": "category.remote-apps",
+				"name": "portletCategoryName",
+				"type": "string"
+			},
+			{
+				"default": "https://example.com",
+				"name": "url",
+				"type": "string"
+			},
+			{
+				"default": "false",
+				"name": "instanceable",
+				"type": "boolean"
+			}
+		]
+	},
+	{
+		"description": "This is a themeCSS description",
+		"name": "themeCSS",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "clay.css",
+				"name": "clayURL",
+				"type": "string"
+			},
+			{
+				"default": "main.css",
+				"name": "mainURL",
+				"type": "string"
+			}
+		]
+	},
+	{
+		"description": "This is a themeFavicon description",
+		"name": "themeFavicon",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "favicon.ico",
+				"name": "url",
+				"type": "string"
+			}
+		]
+	},
+	{
+		"description": "This is a themeJS description",
+		"name": "themeJS",
+		"properties": [
+			{
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"default": "https://www.liferay.com",
+				"name": "sourceCodeURL",
+				"type": "string"
+			},
+			{
+				"name": "type",
+				"type": "string"
+			},
+			{
+				"default": "theme.js",
+				"name": "url",
+				"type": "string"
+			}
+		]
+	}
+]

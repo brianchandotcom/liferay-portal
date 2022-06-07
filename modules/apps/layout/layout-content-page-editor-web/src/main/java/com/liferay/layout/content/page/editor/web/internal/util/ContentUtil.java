@@ -468,7 +468,8 @@ public class ContentUtil {
 					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 						fragmentEntryLink.getFragmentEntryLinkId());
 
-				if (ListUtil.exists(
+				if ((layoutStructureItem == null) ||
+					ListUtil.exists(
 						layoutStructure.getDeletedLayoutStructureItems(),
 						deletedLayoutStructureItem -> Objects.equals(
 							deletedLayoutStructureItem.getItemId(),

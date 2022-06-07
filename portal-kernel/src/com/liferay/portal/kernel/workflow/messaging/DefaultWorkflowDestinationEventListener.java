@@ -59,6 +59,9 @@ public class DefaultWorkflowDestinationEventListener
 			DestinationNames.WORKFLOW_LOG, _workflowLogManagerListener);
 
 		MessageBusUtil.unregisterMessageListener(
+			DestinationNames.WORKFLOW_STATUS, _workflowStatusManagerListener);
+
+		MessageBusUtil.unregisterMessageListener(
 			DestinationNames.WORKFLOW_TASK, _workflowTaskManagerListener);
 	}
 
@@ -92,6 +95,9 @@ public class DefaultWorkflowDestinationEventListener
 
 		MessageBusUtil.registerMessageListener(
 			DestinationNames.WORKFLOW_LOG, _workflowLogManagerListener);
+
+		MessageBusUtil.registerMessageListener(
+			DestinationNames.WORKFLOW_STATUS, _workflowStatusManagerListener);
 
 		MessageBusUtil.registerMessageListener(
 			DestinationNames.WORKFLOW_TASK, _workflowTaskManagerListener);
@@ -131,6 +137,12 @@ public class DefaultWorkflowDestinationEventListener
 		_workflowLogManagerListener = workflowLogManagerListener;
 	}
 
+	public void setWorkflowStatusManagerListener(
+		MessageListener workflowStatusManagerListener) {
+
+		_workflowStatusManagerListener = workflowStatusManagerListener;
+	}
+
 	public void setWorkflowTaskManagerListener(
 		MessageListener workflowTaskManagerListener) {
 
@@ -156,6 +168,7 @@ public class DefaultWorkflowDestinationEventListener
 	private String _workflowEngineName;
 	private MessageListener _workflowInstanceManagerListener;
 	private MessageListener _workflowLogManagerListener;
+	private MessageListener _workflowStatusManagerListener;
 	private MessageListener _workflowTaskManagerListener;
 
 }

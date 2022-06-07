@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
+import com.liferay.portal.kernel.workflow.WorkflowStatusManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.kernel.workflow.messaging.DefaultWorkflowDestinationEventListener;
@@ -188,6 +189,14 @@ public class KaleoWorkflowMessagingConfigurator {
 		_defaultWorkflowDestinationEventListener.setWorkflowLogManagerListener(
 			workflowLogManagerProxyMessageListener);
 
+		MessageListener workflowStatusManagerProxyMessageListener =
+			_registerProxyMessageListener(
+				_workflowStatusManager, DestinationNames.WORKFLOW_STATUS);
+
+		_defaultWorkflowDestinationEventListener.
+			setWorkflowStatusManagerListener(
+				workflowStatusManagerProxyMessageListener);
+
 		MessageListener workflowTaskManagerProxyMessageListener =
 			_registerProxyMessageListener(
 				_workflowTaskManager, DestinationNames.WORKFLOW_TASK);
@@ -317,6 +326,9 @@ public class KaleoWorkflowMessagingConfigurator {
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowLogManager _workflowLogManager;
+
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowStatusManager _workflowStatusManager;
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowTaskManager _workflowTaskManager;

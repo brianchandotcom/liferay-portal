@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow;
+package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -22,9 +22,15 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  */
+@Component(
+	immediate = true, property = "proxy.bean=false",
+	service = WorkflowStatusManager.class
+)
 public class WorkflowStatusManagerImpl implements WorkflowStatusManager {
 
 	@Override

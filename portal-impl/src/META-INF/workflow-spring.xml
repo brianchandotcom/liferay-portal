@@ -146,19 +146,5 @@
 				</bean>
 			</util:set>
 		</property>
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/workflow_status">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.workflow_status" />
-					</list>
-				</entry>
-			</map>
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener" id="messageListener.workflow_status">
-		<property name="manager">
-			<bean class="com.liferay.portal.workflow.WorkflowStatusManagerImpl" />
-		</property>
 	</bean>
 </beans>

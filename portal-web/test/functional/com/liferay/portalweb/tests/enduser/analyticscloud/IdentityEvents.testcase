@@ -443,6 +443,113 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11310 | Test Summary: Login as same user keeps userid"
+	@priority = "3"
+	test CheckLoginSameUserKeepUserId {
+		property proxy.server.enabled = "true";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Get the userId number of the identity event") {
+			var userId = ACUtils.getPageRefRequestPropertyValue(
+				pageRef = "identity",
+				property = "userId");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${userId}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("Download the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem2}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Download the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem3 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem3}",
+				expected = "${localStorageItem2}");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
 	@priority = "3"
 	test CheckIdentityTriggeredWhenLoginAfterASessionClose {

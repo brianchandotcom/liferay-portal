@@ -48,7 +48,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<aui:input name="oAuthClientEntryId" type="hidden" />
 
-				<aui:input helpMessage="oauth-client-parameters-json-help" label="oauth-client-parameters-json" name="parametersJSON" style="min-height: 200px;" type="textarea" value='{"authorization_request_parameters":{"resource":["resource1","resource2"]},"token_request_parameters":{"audience":"audience1","resource":["resource1","resource2"]}}' />
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-parameters-json" name="parametersJSON" style="min-height: 200px;" type="textarea" value='{"authorization_request_parameters":{"resource":["resource1","resource2"]},"token_request_parameters":{"audience":"audience1","resource":["resource1","resource2"]}}' />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />

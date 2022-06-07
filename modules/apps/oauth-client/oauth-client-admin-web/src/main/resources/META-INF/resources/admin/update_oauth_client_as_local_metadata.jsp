@@ -44,7 +44,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 			<aui:fieldset>
 				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" />
 
-				<aui:input helpMessage="oauth-client-as-local-well-known-uri-suffix-help" label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-as-local-well-known-uri-suffix-help", "openid-configuration", false) %>' label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />
 
 				<aui:input helpMessage="oauth-client-as-local-metadata-json-help" label="oauth-client-as-local-metadata-json" name="metadataJSON" style="min-height: 600px;" type="textarea" value='{"issuer":"","authorization_endpoint":"","token_endpoint":"","userinfo_endpoint":""}' />
 

@@ -30,6 +30,7 @@ export function MultiStepFormModal({
 	className,
 	observer,
 	onClose,
+	onFormError,
 	size,
 	submitLabel = Liferay.Language.get('submit'),
 	submitURL,
@@ -69,9 +70,12 @@ export function MultiStepFormModal({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then((response) => {
-				if (response.redirectURL) {
-					navigate(response.redirectURL);
+			.then(({error, redirectURL}) => {
+				if (error) {
+					onFormError(error);
+				}
+				if (redirectURL) {
+					navigate(redirectURL);
 				}
 			})
 			.catch(() => {

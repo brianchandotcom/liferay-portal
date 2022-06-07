@@ -92,7 +92,7 @@ export default function () {
 
 	return (
 		<div className="applications-products-container d-flex flex-column flex-shrink-0 pb-4 pt-3 px-3">
-			<div className="applications-products-title font-weight-bolder h4">
+			<div className="applications-products-title font-weight-bold h4">
 				Products
 			</div>
 

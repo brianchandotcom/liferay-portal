@@ -25,6 +25,11 @@ definition {
 				imageFileName = "${imageFileName}",
 				navTab = "${navTab}");
 		}
+		else if (isSet(imageFileName)) {
+			ItemSelector.selectDMImage(
+				imageFileName = "${imageFileName}",
+				navTab = "${navTab}");
+		}
 		else {
 			ItemSelector.uploadFile(
 				navTab = "${navTab}",

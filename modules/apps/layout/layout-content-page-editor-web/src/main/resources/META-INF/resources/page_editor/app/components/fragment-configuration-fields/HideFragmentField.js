@@ -143,14 +143,6 @@ export function HideFragmentField({
 				</div>
 			</ClayForm.Group>
 
-			{value === 'none' && !hiddenAncestorId && (
-				<p className="small text-secondary">
-					{Liferay.Language.get(
-						'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-the-advanced-tab'
-					)}
-				</p>
-			)}
-
 			{hiddenAncestorId && (
 				<>
 					<p className="m-0 small text-secondary">

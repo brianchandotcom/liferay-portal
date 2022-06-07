@@ -59,7 +59,7 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 			modelVar="oAuthClientASLocalMetadata"
 		>
 			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_as_local_metadata" />
+				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_as_local_metadata" />
 				<portlet:param name="localWellKnownURI" value="<%= oAuthClientASLocalMetadata.getLocalWellKnownURI() %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>

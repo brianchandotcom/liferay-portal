@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + OAuthClientAdminPortletKeys.OAUTH_CLIENT_ADMIN,
-		"mvc.command.name=/oauth_client_admin/view_o_auth_client_entries"
+		"mvc.command.name=/oauth_client_admin/view_oauth_client_entries"
 	},
 	service = MVCRenderCommand.class
 )

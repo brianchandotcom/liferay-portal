@@ -59,7 +59,7 @@ OAuthClientEntriesManagementToolbarDisplayContext oAuthClientEntriesManagementTo
 			modelVar="oAuthClientEntry"
 		>
 			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_entry" />
 				<portlet:param name="authServerWellKnownURI" value="<%= oAuthClientEntry.getAuthServerWellKnownURI() %>" />
 				<portlet:param name="clientId" value="<%= oAuthClientEntry.getClientId() %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

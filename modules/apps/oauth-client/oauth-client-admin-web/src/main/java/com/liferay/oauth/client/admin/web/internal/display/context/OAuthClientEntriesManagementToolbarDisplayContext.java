@@ -66,7 +66,7 @@ public class OAuthClientEntriesManagementToolbarDisplayContext
 			() -> PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
-				"/oauth_client_admin/delete_o_auth_client_entries"
+				"/oauth_client_admin/delete_oauth_client_entries"
 			).buildString()
 		).build();
 	}
@@ -77,8 +77,8 @@ public class OAuthClientEntriesManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName",
-					"/oauth_client_admin/update_o_auth_client_entry",
-					"redirect", currentURLObj.toString());
+					"/oauth_client_admin/update_oauth_client_entry", "redirect",
+					currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-oauth-client"));
 			}

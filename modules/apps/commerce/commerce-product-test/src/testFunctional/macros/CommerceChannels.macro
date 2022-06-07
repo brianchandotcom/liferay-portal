@@ -144,6 +144,29 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
+	macro assertDefaultAccountShippingOption {
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_productName = "${channelName}",
+			key_value = "${shippingMethod}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+		AssertElementPresent(
+			key_columnNumber = "2",
+			key_productName = "${channelName}",
+			key_value = "${shippingOption}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+		if (isSet(active)) {
+			AssertTextEquals(
+				key_columnNumber = "3",
+				key_productName = "${channelName}",
+				key_value = "${active}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${active}");
+		}
+	}
+
 	macro assertMercanetConfigurationEnvironment {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "${paymentMethod}",

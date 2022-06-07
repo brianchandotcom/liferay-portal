@@ -53,17 +53,11 @@ definition {
 
 			IFrame.selectTopFrame();
 
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "Minium Portal",
-				key_value = "Flat Rate",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-
-			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "Minium Portal",
-				key_value = "Expedited Delivery",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			CommerceChannels.assertDefaultAccountShippingOption(
+				active = "Yes",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Expedited Delivery");
 		}
 
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry and selects a different shipping option") {
@@ -84,17 +78,11 @@ definition {
 		}
 
 		task ("Then the default account shipping option is updated") {
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "Minium Portal",
-				key_value = "Flat Rate",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-
-			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "Minium Portal",
-				key_value = "Standard Delivery",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			CommerceChannels.assertDefaultAccountShippingOption(
+				active = "Yes",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
 		}
 
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry and selects Use Priority Settings") {
@@ -115,17 +103,10 @@ definition {
 		}
 
 		task ("Then the default account shipping option is updated to Use Priority Settings") {
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-
-			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			CommerceChannels.assertDefaultAccountShippingOption(
+				channelName = "Minium Portal",
+				shippingMethod = "Use Priority Settings",
+				shippingOption = "Use Priority Settings");
 		}
 
 		task ("And the Active column becomes empty") {
@@ -217,17 +198,11 @@ definition {
 		}
 
 		task ("Then the Default shipping option for that account reverts to Use Priority Settings") {
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-
-			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			CommerceChannels.assertDefaultAccountShippingOption(
+				active = "",
+				channelName = "Minium Portal",
+				shippingMethod = "Use Priority Settings",
+				shippingOption = "Use Priority Settings");
 		}
 	}
 
@@ -428,17 +403,11 @@ definition {
 		}
 
 		task ("And given Use Priority Settings is pre-selected for Default Account Commerce Channels Shipping Options") {
-			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-
-			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "Minium Portal",
-				key_value = "Use Priority Settings",
-				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			CommerceChannels.assertDefaultAccountShippingOption(
+				active = "",
+				channelName = "Minium Portal",
+				shippingMethod = "Use Priority Settings",
+				shippingOption = "Use Priority Settings");
 		}
 
 		task ("When the Sales Manager clicks on the Edit button for the Minium Channel entry") {

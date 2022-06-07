@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>TESTFLOW_SIDEBAR</td>
-	<td>//a[contains(@href, '#/testflow')]</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//a[contains(@href, 'testflow')]</td>
 	<td></td>
 </tr>
 <tr>

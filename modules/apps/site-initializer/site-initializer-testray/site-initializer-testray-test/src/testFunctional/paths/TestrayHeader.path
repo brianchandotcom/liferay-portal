@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>PAGE_TAB_TITLE</td>
-	<td>//div[contains(@class, 'testray-page')]//div[contains(@class, 'testray-content') and contains(., '${key_pageTabTitle}')]</td>
+	<td>//div[contains(@class, 'testray-page')]//section[contains(@class, 'testray-content') and contains(., '${key_pageTabTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

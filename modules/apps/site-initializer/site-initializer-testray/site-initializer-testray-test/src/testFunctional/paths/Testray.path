@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>ADD_PROJECT</td>
-	<td>//div[contains(@class, 'testray-page')]//li[contains(@class, 'nav-item')]//button[contains(@class, 'nav-btn')]</td>
+	<td>//li[contains(@class, 'nav-item ml-2')]//button[contains(@class, 'nav-btn') and contains(@type, 'button')]</td>
 	<td></td>
 </tr>
 <tr>

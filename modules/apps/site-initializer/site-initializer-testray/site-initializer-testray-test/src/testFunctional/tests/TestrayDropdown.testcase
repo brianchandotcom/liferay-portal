@@ -29,7 +29,7 @@ definition {
 
 	@description = "This is a test for LPS-149726 - Verify that User can go to a project page."
 	@priority = "5"
-	test CanAcessProjectByDropdown {
+	test CanAccessProjectByDropdown {
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 		}
@@ -53,7 +53,7 @@ definition {
 
 	@description = "This is a test for LPS-149728 - Verify that User can go to the Project directory."
 	@priority = "5"
-	test CanAcessProjectDirectoryByDropdown {
+	test CanAccessProjectDirectoryByDropdown {
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 		}
@@ -73,28 +73,28 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-149730 - Verify that User can't acess dropdown on Projects Directory page"
+	@description = "This is a test for LPS-149730 - Verify that User can't access dropdown on Projects Directory page"
 	@priority = "2"
-	test CanNotAcessDropdownOnProjectDirectory {
+	test CanNotAccessDropdownOnProjectDirectory {
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 		}
 
-		task ("Verify that User can't acess dropdown on Projects Directory page") {
+		task ("Verify that User can't access dropdown on Projects Directory page") {
 			TestrayLayout.clickResultsOnSidebar();
 
 			TestrayDropdown.assertTheDropdownDisabled();
 		}
 	}
 
-	@description = "This is a test for LPS-149729 - Verify that User can't acess dropdown on Testflow page"
+	@description = "This is a test for LPS-149729 - Verify that User can't access dropdown on Testflow page"
 	@priority = "2"
-	test CanNotAcessDropdownOnTestfow {
+	test CanNotAccessDropdownOnTestfow {
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 		}
 
-		task ("Verify that User can't acess dropdown on Testflow page") {
+		task ("Verify that User can't access dropdown on Testflow page") {
 			TestrayLayout.clickTestfowOnSidebar();
 
 			TestrayDropdown.assertTheDropdownDisabled();

@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>MANAGE_SIDEBAR</td>
-	<td>//div[(@class='testray-sidebar')]//div[contains(@class, 'dropdown-toggle') and contains(., 'Manage')]</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//div[contains(@class, 'dropdown-toggle') and contains(., 'Manage')]</td>
 	<td></td>
 </tr>
 <tr>

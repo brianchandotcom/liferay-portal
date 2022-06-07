@@ -343,7 +343,7 @@ definition {
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Edit Master",
 				locator1 = "Button#ANY");
 
@@ -502,7 +502,7 @@ definition {
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Edit Master",
 				locator1 = "Button#ANY");
 
@@ -695,7 +695,7 @@ definition {
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Edit Master",
 				locator1 = "Button#ANY");
 
@@ -827,7 +827,7 @@ definition {
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Edit Master",
 				locator1 = "Button#ANY");
 
@@ -976,7 +976,7 @@ definition {
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Edit Master",
 				locator1 = "Button#ANY");
 

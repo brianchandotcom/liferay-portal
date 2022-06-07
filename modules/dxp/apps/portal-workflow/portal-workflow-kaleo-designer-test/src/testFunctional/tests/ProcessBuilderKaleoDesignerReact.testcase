@@ -1575,11 +1575,90 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Fork node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWithForkNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithForkNode";
 
-		// TODO CanPublishWithForkNode pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Fork",
+            nodePosition = "600,-400");
+        
+        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+        
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Task",
+            nodePosition = "100,-200");
+        
+        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "State",
+			nodePosition = "60,100");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Join",
+            nodePosition = "-40,20");
+
+        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "fork",
+            connectorLabel = "Connector",
+            connectorOut = "start",
+            key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "task",
+            connectorLabel = "Connector",
+            connectorOut = "fork",
+            key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "state",
+            connectorLabel = "Connector",
+            connectorOut = "fork",
+            key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+        
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "join",
+            connectorLabel = "Connector",
+            connectorOut = "task",
+            key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "join",
+            connectorLabel = "Connector",
+            connectorOut = "state",
+            key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+        
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "end",
+            connectorLabel = "Connector",
+            connectorOut = "join",
+            key_direction = "right");
+        
+        PortletEntry.publish();
+
+        Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+        Workflow.openWorkflowListView();
+
 
 	}
 

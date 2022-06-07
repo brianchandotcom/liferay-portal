@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL_NUMBER</td>
+	<td>xpath=(//label)[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAJOR_VERSION</td>
 	<td>//label[contains(.,'Major Version')]</td>
 	<td></td>

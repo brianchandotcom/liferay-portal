@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.internal.upgrade.v7_0_0;
 
+import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
@@ -97,19 +98,36 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private int _getTypeId(int commerceAddressType) {
+	private long _getTypeId(int commerceAddressType) {
+		String typeName;
+
 		if (CommerceAddressConstants.ADDRESS_TYPE_BILLING ==
 				commerceAddressType) {
 
-			return 14000;
+			typeName =
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING;
 		}
 		else if (CommerceAddressConstants.ADDRESS_TYPE_SHIPPING ==
 					commerceAddressType) {
 
-			return 14002;
+			typeName =
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING;
+		}
+		else {
+			typeName =
+				AccountListTypeConstants.
+					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING;
 		}
 
-		return 14001;
+		ListType listType = _listTypeLocalService.getListType(
+			typeName, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+
+		if (listType == null) {
+			listType = _listTypeLocalService.addListType(
+				typeName, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+		}
+
+		return listType.getListTypeId();
 	}
 
 	private void _setDefaultBilling(Address address, boolean defaultBilling) {

@@ -806,6 +806,12 @@ components:
                         The user's date of birth, in ISO 8601 format.
                     format: date-time
                     type: string
+                currentPassword:
+                    description:
+                        The user's current password. Used to authenticate a user when they attempt to update their own
+                        password.
+                    type: string
+                    writeOnly: true
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"

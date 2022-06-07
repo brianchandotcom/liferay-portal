@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Portal Upgrade Test
 Bundle-SymbolicName: com.liferay.portal.upgrade.test
 Bundle-Version: 1.0.0
--includeresource: @com.liferay.portal.impl-*.jar!/META-INF/portal-hbm.xml
+-includeresource: @com.liferay.portal.impl-*.jar!/META-INF/portal-hbm.xml,\
+@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sql/dependencies/indexes.sql,\
+@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sql/dependencies/portal-tables.sql

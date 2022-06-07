@@ -28,11 +28,15 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,6 +97,38 @@ public class HttpComponentsUtil {
 		sb.append(anchor);
 
 		return shortenURL(sb.toString());
+	}
+
+	public static <T> Set<T> appendAttribute(
+		HttpServletRequest httpServletRequest, String key, T value) {
+
+		Set<T> values = Optional.ofNullable(
+			(Set<T>)httpServletRequest.getAttribute(key)
+		).orElse(
+			new HashSet<>()
+		);
+
+		values.add(value);
+
+		httpServletRequest.setAttribute(key, values);
+
+		return values;
+	}
+
+	public static <T> Set<T> appendAttribute(
+		PortletRequest portletRequest, String key, T value) {
+
+		Set<T> values = Optional.ofNullable(
+			(Set<T>)portletRequest.getAttribute(key)
+		).orElse(
+			new HashSet<>()
+		);
+
+		values.add(value);
+
+		portletRequest.setAttribute(key, values);
+
+		return values;
 	}
 
 	public static String decodePath(String path) {
@@ -862,6 +898,25 @@ public class HttpComponentsUtil {
 		}
 
 		return url;
+	}
+
+	public static <T> Set<T> replaceAttribute(
+		HttpServletRequest httpServletRequest, String key, T oldValue,
+		T newValue) {
+
+		Set<T> values = Optional.ofNullable(
+			(Set<T>)httpServletRequest.getAttribute(key)
+		).orElse(
+			new HashSet<>()
+		);
+
+		values.remove(oldValue);
+
+		values.add(newValue);
+
+		httpServletRequest.setAttribute(key, values);
+
+		return values;
 	}
 
 	public static String sanitizeHeader(String header) {

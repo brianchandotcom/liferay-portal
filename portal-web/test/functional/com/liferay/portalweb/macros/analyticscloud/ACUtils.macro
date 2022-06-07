@@ -390,6 +390,14 @@ definition {
 		}
 	}
 
+	macro clearLocalStorage {
+		var javaScript = '''
+		localStorage.clear();
+		''';
+
+		var localStorageItem = selenium.getEval("${javaScript}");
+	}
+
 	macro clearSearchBar {
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
@@ -632,6 +640,20 @@ definition {
 		}
 
 		return "${country}";
+	}
+
+	macro getLocalStorageItem {
+		var javaScript = '''
+		var localStorageItem = localStorage.getItem('${keyName}');
+
+		return localStorageItem;
+		''';
+
+		var localStorageItem = selenium.getEval("${javaScript}");
+
+		var localStorageItem = StringUtil.replace("${localStorageItem}", "\"", "");
+
+		return "${localStorageItem}";
 	}
 
 	macro getPageRefRequestPropertyValue {
@@ -1059,27 +1081,6 @@ definition {
 
 	macro waitForLoading {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
-	}
-
-	macro getLocalStorageItem {
-		var javaScript = '''
-		var localStorageItem = localStorage.getItem('${keyName}');
-
-		return localStorageItem;
-		''';
-
-		var localStorageItem = selenium.getEval("${javaScript}");
-		var localStorageItem = StringUtil.replace("${localStorageItem}", "\"", "");
-
-		return "${localStorageItem}";
-	}
-
-	macro clearLocalStorage {
-		var javaScript = '''
-		localStorage.clear();
-		''';
-
-		var localStorageItem = selenium.getEval("${javaScript}");
 	}
 
 }

@@ -1426,6 +1426,9 @@ public interface PropsKeys {
 	@Deprecated
 	public static final String LIVE_USERS_ENABLED = "live.users.enabled";
 
+	public static final String LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN =
+		"locale.allow.company.locales.in.site.admin";
+
 	public static final String LOCALE_DEFAULT_REQUEST =
 		"locale.default.request";
 

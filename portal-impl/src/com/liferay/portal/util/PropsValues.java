@@ -1195,6 +1195,11 @@ public class PropsValues {
 	public static final boolean LIVE_USERS_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.LIVE_USERS_ENABLED));
 
+	public static final boolean LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.LOCALE_ALLOW_COMPANY_LOCALES_IN_SITE_ADMIN));
+
 	public static final boolean LOCALE_DEFAULT_REQUEST = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.LOCALE_DEFAULT_REQUEST));
 

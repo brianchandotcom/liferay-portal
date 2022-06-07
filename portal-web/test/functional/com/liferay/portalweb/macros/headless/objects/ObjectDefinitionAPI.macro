@@ -158,7 +158,6 @@ definition {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-
 		var curl = '''
         	${portalURL}/o/c/employees/${employeeId} \
 			-u test@liferay.com:test
@@ -173,7 +172,6 @@ definition {
 		Variables.assertDefined(parameterList = "${managerId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-
 		var curl = '''
         	${portalURL}/o/c/managers/${managerId} \
 			-u test@liferay.com:test
@@ -236,7 +234,6 @@ definition {
 		Variables.assertDefined(parameterList = "${relationshipId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-
 		var curl = '''
         	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
 			-u test@liferay.com:test

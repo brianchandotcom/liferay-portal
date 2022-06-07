@@ -12,6 +12,10 @@ definition {
 		User.firstLoginPG();
 
 		JSONPublications.enablePublications();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 	}
 
 	tearDown {

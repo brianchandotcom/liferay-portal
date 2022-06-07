@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -407,18 +408,23 @@ public class AssetEntryQueryTest {
 	}
 
 	@Test
+	public void testLinkedAssetMultipleLayoutContents() throws Exception {
+		testLinkedAsset(3, true);
+	}
+
+	@Test
 	public void testLinkedAssetMultipleLinked() throws Exception {
-		testLinkedAsset(3);
+		testLinkedAsset(3, false);
 	}
 
 	@Test
 	public void testLinkedAssetNoLinked() throws Exception {
-		testLinkedAsset(0);
+		testLinkedAsset(0, false);
 	}
 
 	@Test
 	public void testLinkedAssetOneLinked() throws Exception {
-		testLinkedAsset(1);
+		testLinkedAsset(1, false);
 	}
 
 	@Test
@@ -815,7 +821,8 @@ public class AssetEntryQueryTest {
 			not, expectedAssetEntriesCount);
 	}
 
-	protected void testLinkedAsset(int expectedAssetEntriesCount)
+	protected void testLinkedAsset(
+			int expectedAssetEntriesCount, boolean multipleLayoutContents)
 		throws Exception {
 
 		ThreadLocalCache<Object[]> threadLocalCache =
@@ -843,6 +850,10 @@ public class AssetEntryQueryTest {
 
 		AssetEntry assetEntry1 = AssetEntryLocalServiceUtil.getEntry(
 			BlogsEntry.class.getName(), blogsEntry1.getEntryId());
+
+		List<Long> layoutAssetEntryIds = new ArrayList<>();
+
+		layoutAssetEntryIds.add(assetEntry1.getEntryId());
 
 		List<BlogsEntry> blogsEntries = new ArrayList<>();
 
@@ -873,6 +884,52 @@ public class AssetEntryQueryTest {
 			linkedAssetEntryIds.add(linkedAssetEntry.getEntryId());
 		}
 
+		if (multipleLayoutContents) {
+			BlogsEntry blogsEntry2 = BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), StringUtil.randomString(),
+				StringPool.BLANK, StringUtil.randomString(),
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null, serviceContext);
+
+			AssetEntry assetEntry2 = AssetEntryLocalServiceUtil.getEntry(
+				BlogsEntry.class.getName(), blogsEntry2.getEntryId());
+
+			layoutAssetEntryIds.add(assetEntry2.getEntryId());
+
+			blogsEntries.add(blogsEntry2);
+
+			AssetLink commonAssetLink = AssetLinkLocalServiceUtil.addLink(
+				TestPropsValues.getUserId(), assetEntry1.getEntryId(),
+				assetEntry2.getEntryId(), 0, 0);
+
+			assetLinks.add(commonAssetLink);
+
+			for (int i = 0; i < expectedAssetEntriesCount; i++) {
+				BlogsEntry linkedBlogsEntry =
+					BlogsEntryLocalServiceUtil.addEntry(
+						TestPropsValues.getUserId(), StringUtil.randomString(),
+						StringPool.BLANK, StringUtil.randomString(),
+						RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true,
+						true, null, StringPool.BLANK, null, null,
+						serviceContext);
+
+				AssetEntry linkedAssetEntry =
+					AssetEntryLocalServiceUtil.getEntry(
+						BlogsEntry.class.getName(),
+						linkedBlogsEntry.getEntryId());
+
+				AssetLink assetLink = AssetLinkLocalServiceUtil.addLink(
+					TestPropsValues.getUserId(), assetEntry2.getEntryId(),
+					linkedAssetEntry.getEntryId(), 0, 0);
+
+				blogsEntries.add(linkedBlogsEntry);
+
+				assetLinks.add(assetLink);
+
+				linkedAssetEntryIds.add(linkedAssetEntry.getEntryId());
+			}
+		}
+
 		BlogsEntry notLinkedBlogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringPool.BLANK, StringUtil.randomString(),
@@ -882,7 +939,7 @@ public class AssetEntryQueryTest {
 		blogsEntries.add(notLinkedBlogsEntry);
 
 		assetEntryQuery.setLinkedAssetEntryIds(
-			new long[] {assetEntry1.getEntryId()});
+			ArrayUtil.toLongArray(layoutAssetEntryIds));
 
 		threadLocalCache.removeAll();
 
@@ -890,7 +947,8 @@ public class AssetEntryQueryTest {
 			assetEntryQuery);
 
 		Assert.assertEquals(
-			initialAssetEntriesCount + expectedAssetEntriesCount,
+			initialAssetEntriesCount +
+				(expectedAssetEntriesCount * layoutAssetEntryIds.size()),
 			assetEntriesCount);
 
 		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
@@ -898,7 +956,8 @@ public class AssetEntryQueryTest {
 
 		Assert.assertEquals(
 			assetEntries.toString(),
-			initialAssetEntriesCount + expectedAssetEntriesCount,
+			initialAssetEntriesCount +
+				(expectedAssetEntriesCount * layoutAssetEntryIds.size()),
 			assetEntries.size());
 
 		for (AssetEntry assetEntry : assetEntries) {

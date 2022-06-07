@@ -985,13 +985,13 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 		}
 
-		task ("Then the 'Re-try payment' is not present because the payment status is 'Failed'") {
+		task ("Then the 'Retry Payment' is not present because the payment status is 'Failed'") {
 			Click(
 				key_orderAuthor = "Commerce Account",
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
 			AssertElementNotPresent(
-				key_text = "Re-try payment",
+				key_text = "Retry Payment",
 				locator1 = "Button#ANY");
 		}
 

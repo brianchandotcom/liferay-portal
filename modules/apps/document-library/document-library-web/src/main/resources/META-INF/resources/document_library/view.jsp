@@ -238,6 +238,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 							"namespace", "<portlet:namespace />"
 						).put(
 							"searchContainerId", "entries"
+						).put(
+							"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
 						).build()
 					%>'
 					module="document_library/js/DocumentLibrary"

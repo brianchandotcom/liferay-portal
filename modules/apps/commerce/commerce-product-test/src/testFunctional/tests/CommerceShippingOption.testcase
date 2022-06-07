@@ -138,6 +138,47 @@ definition {
 		}
 	}
 
+	@description = "Verify only one default account shipping option can be set."
+	@priority = "3"
+	test DefaultShippingOptionsAreSingleSelectable {
+		task ("Given the Sales Manager is on the Order Defaults tab in the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry") {
+			Click(
+				key_entryName = "Minium Portal",
+				key_table = "Default Account Commerce Channels Shipping Options",
+				locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("And clicks on Flat Rate/Standard Delivery") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Flat Rate / Standard Delivery",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("And clicks on Flat Rate/Expedited Delivery") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Flat Rate / Expedited Delivery",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("Then the first selected shipping option is unselected because only one default shipping option can be set") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Flat Rate / Standard Delivery",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("And the second shipping option remains selected") {
+			AssertChecked.assertCheckedNotVisible(
+				key_radioOption = "Flat Rate / Expedited Delivery",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
 	@description = "Verify the list of selectable default shipping options is sorted alphanumerically by name and that Use Priority Settings is an option."
 	@priority = "3"
 	test VerifyIfDefaultShippingOptionsAreSortedAndIfUsePrioritySettingArePresentIntoTheList {

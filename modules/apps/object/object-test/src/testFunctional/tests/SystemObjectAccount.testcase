@@ -23,13 +23,74 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify is possible to associate each types of Accounts with Custom Object (Bussiness, Guest and Person)"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssociateAnyTypeOfAccount {
 		property portal.acceptance = "true";
 
-		// TODO LPS-153535 CanAssociateAnyTypeOfAccount pending implementation
+		Accounts.openAccountsAdmin();
 
+		Accounts.addBusinessAccount(
+			accountDescription = "Bussines Account Description",
+			accountName = "Bussines Account Name");
+
+		Navigator.gotoBack();
+
+		Accounts.addPersonAccount(accountName = "Person Account Name");
+
+		Navigator.gotoBack();
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Guest Account Description",
+			accountEntryName = "Guest Account Name",
+			accountEntryType = "Guest");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		for (var typeLabel : list "business,person,guest") {
+			LexiconEntry.gotoAdd();
+
+			WaitForSPARefresh();
+
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+			Click(
+				key_picklistOption = "${typeLabel}",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+			Button.clickSave();
+
+			WaitForSPARefresh();
+
+			Navigator.gotoBack();
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		for (var typeLabel : list "business,person,guest") {
+			ObjectPortlet.viewEntry(entry = "${typeLabel}");
+		}
 	}
 
 	@description = "LPS-151765 - Verify if is possible to create Custom Action on System Object Account"

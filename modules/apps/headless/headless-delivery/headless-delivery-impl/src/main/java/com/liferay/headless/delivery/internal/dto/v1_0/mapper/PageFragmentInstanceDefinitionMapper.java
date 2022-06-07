@@ -165,13 +165,23 @@ public class PageFragmentInstanceDefinitionMapper {
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());
 
-			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor");
+			JSONObject configJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					"com.liferay.fragment.entry.processor.freemarker." +
+						"FreeMarkerFragmentEntryProcessor");
 
-			if (jsonObject == null) {
-				return Collections.emptyMap();
+			if (configJSONObject == null) {
+				configJSONObject =
+					_fragmentEntryConfigurationParser.
+						getConfigurationDefaultValuesJSONObject(
+							fragmentEntryLink.getConfiguration());
+
+				if (configJSONObject == null) {
+					return Collections.emptyMap();
+				}
 			}
+
+			JSONObject jsonObject = configJSONObject;
 
 			return new HashMap<String, Object>() {
 				{

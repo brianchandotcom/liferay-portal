@@ -182,6 +182,17 @@ describe('Liferay.Util.Cookie', () => {
 				true
 			);
 		});
+
+		it('Allows setting cookies if preference cookies are not set', () => {
+			for (const type in Object.keys(Cookie.TYPES)) {
+				document.cookie += `${type}=false; max-age=0`;
+
+				Cookie.set(necessaryCookie, anyCookieValue, type);
+
+				expect(Cookie.get(type)).toBeUndefined();
+				expect(Cookie.get(necessaryCookie)).toBe(anyCookieValue);
+			}
+		});
 	});
 
 	describe('Liferay.Util.Cookie.get', () => {

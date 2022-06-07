@@ -22,6 +22,14 @@ export const COOKIE_TYPES = {
 const generateCookie = (name, value, options = {}) => {
 	let cookie = `${name}=${value}`;
 
+	if (!options.path) {
+		cookie += `; path=/`;
+	}
+
+	if (!options.expires && !('max-age' in options)) {
+		cookie += `; max-age=${365 * 24 * 60 * 60}`;
+	}
+
 	for (const [key, value] of Object.entries(options)) {
 		if (key === 'secure') {
 			cookie += value ? '; secure' : '';
@@ -30,11 +38,20 @@ const generateCookie = (name, value, options = {}) => {
 		cookie += `; ${key}=${value}`;
 	}
 
-	return cookie.trim();
+	return cookie;
 };
 
+/**
+ * Checks whether the user has consented to a specific type of cookie by looking at the config cookie value.
+ * - If it's 'true', the user has consented.
+ * - If it's 'false', the user has rejected that specific cookie type.
+ * - If it doesn't exist, cookie consent doesn't apply and cookie can be set.
+ *
+ * @param {string} type Type of consent, from {@link COOKIE_TYPES}
+ * @returns {boolean} Boolean representing whether we are allowed to set the cookie
+ */
 function checkConsent(type) {
-	return type === COOKIE_TYPES.NECESSARY || getCookie(type) === 'true';
+	return type === COOKIE_TYPES.NECESSARY || getCookie(type) !== 'false';
 }
 
 /**

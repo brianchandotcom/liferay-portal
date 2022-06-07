@@ -768,7 +768,7 @@ export function setCookie(
 	name: string,
 	value: string,
 	type: TYPE_VALUES,
-	options: {
+	options?: {
 		'domain'?: string;
 		'expires'?: string;
 		'max-age'?: string;

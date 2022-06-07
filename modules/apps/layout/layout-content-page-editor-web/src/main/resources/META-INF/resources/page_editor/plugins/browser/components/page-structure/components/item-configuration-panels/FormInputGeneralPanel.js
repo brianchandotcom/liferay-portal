@@ -172,6 +172,73 @@ export function FormInputGeneralPanel({item}) {
 		key: [CACHE_KEYS.allowedInputTypes, fragmentEntryKey],
 	});
 
+	const filteredFormFields = useSelectorCallback(
+		(state) => {
+			if (!formFields || !allowedInputTypes) {
+				return [];
+			}
+
+			let nextFields = formFields;
+
+			const selectedFields = (() => {
+				const selectedFields = [];
+
+				const findSelectedFields = (itemId) => {
+					const inputItem = state.layoutData.items[itemId];
+
+					if (
+						inputItem?.itemId !== item.itemId &&
+						inputItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
+					) {
+						const {
+							editableValues,
+							fragmentEntryType,
+						} = selectFragmentEntryLink(state, inputItem);
+
+						if (
+							fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
+							editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR][
+								FIELD_ID_CONFIGURATION_KEY
+							]
+						) {
+							selectedFields.push(
+								editableValues[
+									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+								][FIELD_ID_CONFIGURATION_KEY]
+							);
+						}
+					}
+
+					inputItem?.children.forEach(findSelectedFields);
+				};
+
+				findSelectedFields(formId);
+
+				return selectedFields;
+			})();
+
+			nextFields = nextFields
+				.map((fieldset) => ({
+					...fieldset,
+					fields: fieldset.fields
+						.filter(
+							(field) =>
+								allowedInputTypes.includes(field.type) &&
+								!selectedFields.includes(field.key)
+						)
+						.map((field) =>
+							field.required
+								? {...field, label: `${field.label}*`}
+								: field
+						),
+				}))
+				.filter((fieldset) => fieldset.fields.length);
+
+			return nextFields;
+		},
+		[allowedInputTypes, item.itemId, formFields]
+	);
+
 	const configFields = useMemo(() => {
 		let nextFields = getInputCommonConfiguration(
 			configurationValues,
@@ -239,15 +306,15 @@ export function FormInputGeneralPanel({item}) {
 					label={Liferay.Language.get('form-input-options')}
 					open
 				>
-					{allowedInputTypes?.length ? (
+					{filteredFormFields.flatMap((fieldSet) => fieldSet.fields)
+						.length ? (
 						<FormInputMappingOptions
 							allowedInputTypes={allowedInputTypes}
 							configurationValues={configurationValues}
 							form={{
 								classNameId,
 								classTypeId,
-								fields: formFields,
-								formId,
+								fields: filteredFormFields,
 							}}
 							item={item}
 							onValueSelect={handleValueSelect}
@@ -278,14 +345,8 @@ export function FormInputGeneralPanel({item}) {
 	);
 }
 
-function FormInputMappingOptions({
-	allowedInputTypes,
-	configurationValues,
-	form,
-	item,
-	onValueSelect,
-}) {
-	const {classNameId, classTypeId, fields, formId} = form;
+function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
+	const {classNameId, classTypeId, fields} = form;
 
 	const itemTypes = useCache({
 		fetcher: () =>
@@ -298,81 +359,14 @@ function FormInputMappingOptions({
 		[itemTypes, classNameId, classTypeId]
 	);
 
-	const filteredFields = useSelectorCallback(
-		(state) => {
-			if (!fields || !allowedInputTypes) {
-				return null;
-			}
-
-			let nextFields = fields;
-
-			const selectedFields = (() => {
-				const selectedFields = [];
-
-				const findSelectedFields = (itemId) => {
-					const inputItem = state.layoutData.items[itemId];
-
-					if (
-						inputItem?.itemId !== item.itemId &&
-						inputItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
-					) {
-						const {
-							editableValues,
-							fragmentEntryType,
-						} = selectFragmentEntryLink(state, inputItem);
-
-						if (
-							fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
-							editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR][
-								FIELD_ID_CONFIGURATION_KEY
-							]
-						) {
-							selectedFields.push(
-								editableValues[
-									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-								][FIELD_ID_CONFIGURATION_KEY]
-							);
-						}
-					}
-
-					inputItem?.children.forEach(findSelectedFields);
-				};
-
-				findSelectedFields(formId);
-
-				return selectedFields;
-			})();
-
-			nextFields = nextFields
-				.map((fieldset) => ({
-					...fieldset,
-					fields: fieldset.fields
-						.filter(
-							(field) =>
-								allowedInputTypes.includes(field.type) &&
-								!selectedFields.includes(field.key)
-						)
-						.map((field) =>
-							field.required
-								? {...field, label: `${field.label}*`}
-								: field
-						),
-				}))
-				.filter((fieldset) => fieldset.fields.length);
-
-			return nextFields;
-		},
-		[allowedInputTypes, item.itemId, fields]
-	);
-
 	if (!classNameId || !classTypeId) {
 		return null;
 	}
 
-	return filteredFields ? (
+	return fields ? (
 		<>
 			<MappingFieldSelector
-				fields={filteredFields}
+				fields={fields}
 				onValueSelect={(event) =>
 					onValueSelect(
 						FIELD_ID_CONFIGURATION_KEY,

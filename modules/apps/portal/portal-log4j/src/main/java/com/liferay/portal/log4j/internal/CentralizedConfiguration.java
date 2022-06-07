@@ -66,8 +66,12 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 		loggerContext.updateLoggers();
 	}
 
-	public CompanyLogRoutingAppender getCompanyLogRoutingAppender() {
-		return _companyLogRoutingAppender;
+	public String getCompanyLogDirectory(long companyId) {
+		if (_companyLogRoutingAppender == null) {
+			return null;
+		}
+
+		return _companyLogRoutingAppender.getCompanyLogDirectory(companyId);
 	}
 
 	@Override

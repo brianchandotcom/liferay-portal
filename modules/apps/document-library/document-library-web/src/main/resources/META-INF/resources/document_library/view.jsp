@@ -233,7 +233,11 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				<liferay-frontend:component
 					context='<%=
 						HashMapBuilder.<String, Object>put(
+							"editEntryUrl", dlViewDisplayContext.getEditEntryURL()
+						).put(
 							"namespace", "<portlet:namespace />"
+						).put(
+							"searchContainerId", "entries"
 						).build()
 					%>'
 					module="document_library/js/DocumentLibrary"

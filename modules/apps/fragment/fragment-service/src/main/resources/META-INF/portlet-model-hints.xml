@@ -35,7 +35,9 @@
 		<field name="fragmentCollectionId" type="long" />
 		<field name="fragmentCompositionKey" type="String" />
 		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="data" type="String">
 			<hint-collection name="CLOB" />
 		</field>

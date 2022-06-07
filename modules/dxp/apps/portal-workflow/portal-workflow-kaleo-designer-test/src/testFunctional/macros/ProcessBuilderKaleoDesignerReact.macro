@@ -804,9 +804,9 @@ definition {
 	}
 
 	macro viewNodeInfo {
-		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
-
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
+
+		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
 
 		if (isSet(labelValue)) {
 			AssertElementPresent(

@@ -47,15 +47,14 @@ public class DeleteOAuthClientMVCActionCommand implements MVCActionCommand {
 	public boolean processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String authServerWellKnownURI = ParamUtil.getString(
-			actionRequest, "authServerWellKnownURI");
-
-		String clientId = ParamUtil.getString(actionRequest, "clientId");
-
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			String authServerWellKnownURI = ParamUtil.getString(
+				actionRequest, "authServerWellKnownURI");
+			String clientId = ParamUtil.getString(actionRequest, "clientId");
+
 			_oAuthClientEntryService.deleteOAuthClientEntry(
 				themeDisplay.getCompanyId(), authServerWellKnownURI, clientId);
 		}

@@ -48,13 +48,13 @@ public class DeleteOAuthClientASLocalMetadataMVCActionCommand
 	public boolean processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String localWellKnownURI = ParamUtil.getString(
-			actionRequest, "localWellKnownURI");
-
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			String localWellKnownURI = ParamUtil.getString(
+				actionRequest, "localWellKnownURI");
+
 			_oAuthClientASLocalMetadataService.deleteOAuthClientASLocalMetadata(
 				themeDisplay.getCompanyId(), localWellKnownURI);
 		}

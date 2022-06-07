@@ -49,14 +49,15 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		String localWellKnownURI = ParamUtil.getString(
-			renderRequest, "localWellKnownURI");
+		try {
+			String localWellKnownURI = ParamUtil.getString(
+				renderRequest, "localWellKnownURI");
 
-		if (Validator.isNotNull(localWellKnownURI)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (Validator.isNotNull(localWellKnownURI)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			try {
 				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 					_oAuthClientASLocalMetadataService.
 						getOAuthClientASLocalMetadata(
@@ -66,10 +67,10 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 					OAuthClientASLocalMetadata.class.getName(),
 					oAuthClientASLocalMetadata);
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 

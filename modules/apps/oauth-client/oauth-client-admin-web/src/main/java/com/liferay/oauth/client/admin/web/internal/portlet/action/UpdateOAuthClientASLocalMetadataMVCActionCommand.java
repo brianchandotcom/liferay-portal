@@ -50,16 +50,15 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 	public boolean processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String localWellKnownURI = ParamUtil.getString(
-			actionRequest, "localWellKnownURI");
-
-		String metadataJSON = ParamUtil.getString(
-			actionRequest, "metadataJSON");
-
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			String localWellKnownURI = ParamUtil.getString(
+				actionRequest, "localWellKnownURI");
+			String metadataJSON = ParamUtil.getString(
+				actionRequest, "metadataJSON");
+
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata = null;
 
 			if (Validator.isNull(localWellKnownURI)) {
@@ -89,10 +88,9 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				_log.debug(portalException);
 			}
 
-			Class<?> peClass = portalException.getClass();
+			Class<?> clazz = portalException.getClass();
 
-			SessionErrors.add(
-				actionRequest, peClass.getName(), portalException);
+			SessionErrors.add(actionRequest, clazz.getName(), portalException);
 
 			return false;
 		}

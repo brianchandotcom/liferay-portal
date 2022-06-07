@@ -48,18 +48,17 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		String authServerWellKnownURI = ParamUtil.getString(
-			renderRequest, "authServerWellKnownURI");
+		try {
+			String authServerWellKnownURI = ParamUtil.getString(
+				renderRequest, "authServerWellKnownURI");
+			String clientId = ParamUtil.getString(renderRequest, "clientId");
 
-		String clientId = ParamUtil.getString(renderRequest, "clientId");
+			if (Validator.isNotNull(authServerWellKnownURI) &&
+				Validator.isNotNull(clientId)) {
 
-		if (Validator.isNotNull(authServerWellKnownURI) &&
-			Validator.isNotNull(clientId)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			try {
 				OAuthClientEntry oAuthClientEntry =
 					_oAuthClientEntryService.getOAuthClientEntry(
 						themeDisplay.getCompanyId(), authServerWellKnownURI,
@@ -68,10 +67,10 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(
 					OAuthClientEntry.class.getName(), oAuthClientEntry);
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 

@@ -47,21 +47,19 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 	public boolean processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String authServerWellKnownURI = ParamUtil.getString(
-			actionRequest, "authServerWellKnownURI");
-
-		String infoJSON = ParamUtil.getString(actionRequest, "infoJSON");
-
-		long oAuthClientEntryId = ParamUtil.getLong(
-			actionRequest, "oAuthClientEntryId");
-
-		String parametersJSON = ParamUtil.getString(
-			actionRequest, "parametersJSON");
-
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			long oAuthClientEntryId = ParamUtil.getLong(
+				actionRequest, "oAuthClientEntryId");
+
+			String authServerWellKnownURI = ParamUtil.getString(
+				actionRequest, "authServerWellKnownURI");
+			String infoJSON = ParamUtil.getString(actionRequest, "infoJSON");
+			String parametersJSON = ParamUtil.getString(
+				actionRequest, "parametersJSON");
+
 			if (oAuthClientEntryId > 0) {
 				_oAuthClientEntryService.updateOAuthClientEntry(
 					oAuthClientEntryId, authServerWellKnownURI, infoJSON,
@@ -80,10 +78,10 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 				_log.error(portalException);
 			}
 
-			Class<?> exceptionClass = portalException.getClass();
+			Class<?> clazz = portalException.getClass();
 
 			SessionErrors.add(
-				actionRequest, exceptionClass.getName(), portalException);
+				actionRequest, clazz.getName(), portalException);
 
 			return false;
 		}

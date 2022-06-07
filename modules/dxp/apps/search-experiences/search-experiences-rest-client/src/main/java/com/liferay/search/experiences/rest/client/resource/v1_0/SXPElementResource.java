@@ -56,14 +56,6 @@ public interface SXPElementResource {
 			SXPElement sxpElement)
 		throws Exception;
 
-	public void postSXPElementBatch(
-			SXPElement sxpElement, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postSXPElementBatchHttpResponse(
-			SXPElement sxpElement, String callbackURL, Object object)
-		throws Exception;
-
 	public SXPElement postSXPElementValidate(String string) throws Exception;
 
 	public HttpInvoker.HttpResponse postSXPElementValidateHttpResponse(
@@ -74,14 +66,6 @@ public interface SXPElementResource {
 
 	public HttpInvoker.HttpResponse deleteSXPElementHttpResponse(
 			Long sxpElementId)
-		throws Exception;
-
-	public void deleteSXPElementBatch(
-			Long sxpElementId, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteSXPElementBatchHttpResponse(
-			Long sxpElementId, String callbackURL, Object object)
 		throws Exception;
 
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception;
@@ -362,83 +346,6 @@ public interface SXPElementResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postSXPElementBatch(
-				SXPElement sxpElement, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSXPElementBatchHttpResponse(
-					sxpElement, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse postSXPElementBatchHttpResponse(
-				SXPElement sxpElement, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/search-experiences-rest/v1.0/sxp-elements/batch");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public SXPElement postSXPElementValidate(String string)
 			throws Exception {
 
@@ -590,85 +497,6 @@ public interface SXPElementResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}");
-
-			httpInvoker.path("sxpElementId", sxpElementId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteSXPElementBatch(
-				Long sxpElementId, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteSXPElementBatchHttpResponse(
-					sxpElementId, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteSXPElementBatchHttpResponse(
-				Long sxpElementId, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch");
 
 			httpInvoker.path("sxpElementId", sxpElementId);
 

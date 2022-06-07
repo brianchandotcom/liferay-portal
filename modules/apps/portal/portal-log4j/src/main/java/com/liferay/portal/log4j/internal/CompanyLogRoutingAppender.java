@@ -92,9 +92,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 			String filePattern = rollingFileAppender.getFilePattern();
 
 			return filePattern.substring(
-				0,
-				StringUtil.lastIndexOfAny(
-					filePattern, new char[] {CharPool.SLASH}));
+				0, filePattern.lastIndexOf(CharPool.SLASH));
 		}
 
 		return null;

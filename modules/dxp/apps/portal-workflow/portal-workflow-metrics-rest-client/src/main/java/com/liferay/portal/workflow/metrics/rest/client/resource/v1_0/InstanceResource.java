@@ -64,14 +64,6 @@ public interface InstanceResource {
 			Long processId, Instance instance)
 		throws Exception;
 
-	public void postProcessInstanceBatch(
-			Long processId, String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postProcessInstanceBatchHttpResponse(
-			Long processId, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteProcessInstance(Long processId, Long instanceId)
 		throws Exception;
 
@@ -396,85 +388,6 @@ public interface InstanceResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/portal-workflow-metrics/v1.0/processes/{processId}/instances");
-
-			httpInvoker.path("processId", processId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void postProcessInstanceBatch(
-				Long processId, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postProcessInstanceBatchHttpResponse(
-					processId, callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse postProcessInstanceBatchHttpResponse(
-				Long processId, String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/batch");
 
 			httpInvoker.path("processId", processId);
 

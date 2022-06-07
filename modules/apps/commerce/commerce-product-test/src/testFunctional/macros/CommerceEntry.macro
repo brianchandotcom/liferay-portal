@@ -1015,14 +1015,16 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 		}
 
-		if (isSet(shippingMethod)) {
-			CommerceEntry.clickTableEntryEditButton(
-				entryName = "${shippingMethod}",
-				table = "Shipping Methods");
+		if (isSet(shippingOption)) {
+			if (isSet(shippingMethod)) {
+				CommerceEntry.clickTableEntryEditButton(
+					entryName = "${shippingMethod}",
+					table = "Shipping Methods");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+				CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+			}
 
 			CommerceNavigator.gotoEntry(entryName = "${shippingOption}");
 
@@ -1196,6 +1198,14 @@ definition {
 			else if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
 				Button.clickSave();
 			}
+		}
+
+		if (isSet(shippingOption)) {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 		}
 	}
 

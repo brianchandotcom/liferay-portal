@@ -16,6 +16,7 @@ import ClayCard from '@clayui/card';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -33,6 +34,7 @@ export default function AddFragmentModal({
 }) {
 	const [name, setName] = useState('');
 	const [type, setType] = useState(fragmentTypes[0]);
+	const [nameError, setNameError] = useState(null);
 
 	const [visible, setVisible] = useState(true);
 	const {observer, onClose} = useModal({
@@ -45,6 +47,7 @@ export default function AddFragmentModal({
 				className="add-fragment-modal"
 				observer={observer}
 				onClose={onClose}
+				onFormError={setNameError}
 				submitLabel={Liferay.Language.get('add')}
 				submitURL={addFragmentEntryURL}
 				title={Liferay.Language.get('add-fragment')}
@@ -75,7 +78,9 @@ export default function AddFragmentModal({
 				</MultiStepFormModalStep>
 
 				<MultiStepFormModalStep>
-					<ClayForm.Group>
+					<ClayForm.Group
+						className={classNames({'has-error': nameError})}
+					>
 						<label htmlFor={getFieldName(namespace, 'name')}>
 							{Liferay.Language.get('fragment-name')}
 						</label>
@@ -88,6 +93,14 @@ export default function AddFragmentModal({
 							type="text"
 							value={name}
 						/>
+
+						{nameError && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									{nameError}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 					</ClayForm.Group>
 
 					{type.name === 'form' && (

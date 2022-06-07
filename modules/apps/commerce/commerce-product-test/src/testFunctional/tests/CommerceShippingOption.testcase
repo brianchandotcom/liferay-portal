@@ -179,6 +179,58 @@ definition {
 		}
 	}
 
+	@description = "Verify the default account shipping option reverts to Use Priority Settings if the current default account shipping option is deleted."
+	@priority = "3"
+	test RemoveAShippingOptionThatIsLinkedAsDefault {
+		task ("Given a new Flat Rate shipping option (Test Shipping Option)") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
+
+			CommerceChannels.addShippingOption(
+				key = "test-shipping-option",
+				name = "Test Shipping Option");
+		}
+
+		task ("And given Flat Rate / Test Shipping Option is set as the default shipping option for the Commerce Account") {
+			CommerceJSONShippingMethods._setDefaultAccountShippingOption(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Test Shipping Option");
+		}
+
+		task ("When the Sales Manager goes into the Minium Portal channel and deletes Test Shipping Option inside Flat Rate") {
+			Click(
+				key_value = "Test Shipping Option",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("Then the Default shipping option for that account reverts to Use Priority Settings") {
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Use Priority Settings",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_productName = "Minium Portal",
+				key_value = "Use Priority Settings",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
 	@description = "Verify the eligible shipping option with the highest priority is used at checkout if the default shipping option is not linked to the order type of the order."
 	@priority = "3"
 	test UseANotEligibleDefaultShippingOptionIntoTheCheckoutWithOrderType {
@@ -298,7 +350,7 @@ definition {
 	@priority = "3"
 	test UseDefaultShippingOptionIntoTheCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		
+
 		task ("Given a buyer user associated with the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",

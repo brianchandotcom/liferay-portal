@@ -115,8 +115,8 @@ public class WorkspaceExtension {
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
-		_dockerLocalRegistryUrl = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.local.registry.url");
+		_dockerLocalRegistryAddress = GradleUtil.getProperty(
+			settings, "liferay.workspace.docker.local.registry.address");
 		_dockerPullPolicy = GradleUtil.getProperty(
 			settings, "liferay.workspace.docker.pull.policy",
 			_DOCKER_PULL_POLICY);
@@ -294,8 +294,8 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_dockerImageLiferay);
 	}
 
-	public String getDockerLocalRegistryUrl() {
-		return GradleUtil.toString(_dockerLocalRegistryUrl);
+	public String getDockerLocalRegistryAddress() {
+		return GradleUtil.toString(_dockerLocalRegistryAddress);
 	}
 
 	public boolean getDockerPullPolicy() {
@@ -424,8 +424,10 @@ public class WorkspaceExtension {
 		_dockerImageLiferay = dockerImageLiferay;
 	}
 
-	public void setDockerLocalRegistryUrl(Object dockerLocalRegistryUrl) {
-		_dockerLocalRegistryUrl = dockerLocalRegistryUrl;
+	public void setDockerLocalRegistryAddress(
+		Object dockerLocalRegistryAddress) {
+
+		_dockerLocalRegistryAddress = dockerLocalRegistryAddress;
 	}
 
 	public void setDockerPullPolicy(Object dockerPullPolicy) {
@@ -711,7 +713,7 @@ public class WorkspaceExtension {
 	private Object _dockerDir;
 	private Object _dockerImageId;
 	private Object _dockerImageLiferay;
-	private Object _dockerLocalRegistryUrl;
+	private Object _dockerLocalRegistryAddress;
 	private Object _dockerPullPolicy;
 	private Object _dockerUserName;
 	private Object _environment;

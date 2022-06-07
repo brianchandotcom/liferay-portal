@@ -46,6 +46,7 @@ const SimpleInputModal = ({
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
+	const [highlighted, setHighlighted] = useState(false);
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [visible, setVisible] = useState(initialVisible);
 	const [inputValue, setInputValue] = useState(mainFieldValue);
@@ -56,12 +57,9 @@ const SimpleInputModal = ({
 	};
 
 	const handleMainFieldRef = (mainFieldElement) => {
-		if (
-			mainFieldElement &&
-			mainFieldValue &&
-			mainFieldValue === inputValue
-		) {
-			mainFieldElement.setSelectionRange(0, inputValue.length);
+		if (mainFieldElement && mainFieldValue && !highlighted) {
+			mainFieldElement.setSelectionRange(0, mainFieldValue.length);
+			setHighlighted(true);
 		}
 	};
 

@@ -146,6 +146,31 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
+	protected Long
+			testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Document
+			testGetAssetLibraryDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return testPostAssetLibraryDocument_addDocument(
+			randomDocument(), getMultipartFiles());
+	}
+
+	@Override
+	protected Long
+			testGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
 		throws Exception {
 
@@ -165,6 +190,30 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	protected Document testGraphQLDocument_addDocument() throws Exception {
 		return testPostDocumentFolderDocument_addDocument(
 			randomDocument(), getMultipartFiles());
+	}
+
+	@Override
+	protected Document
+			testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return testGetAssetLibraryDocumentByExternalReferenceCode_addDocument();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Long
+			testPutAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
 	}
 
 	private String _read(String url) throws Exception {

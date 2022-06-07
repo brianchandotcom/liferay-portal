@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portlet.configuration.web.internal.configuration.RoleVisibilityConfiguration;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
@@ -67,6 +68,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -741,6 +743,35 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return true;
 	}
 
+	public Map<String, List<String>> populateResourcePermissionActionIds(
+			long groupId, Role role, List<Resource> resources,
+			List<String> actions, List<String> individualActions,
+			List<String> groupActions, List<String> groupTemplateActions,
+			List<String> companyActions)
+		throws PortalException {
+
+		Map<String, List<String>> resourceActionsMap = new HashMap<>();
+
+		for (Resource resource : resources) {
+			ResourcePermissionUtil.populateResourcePermissionActionIds(
+				groupId, role, resource, actions, individualActions,
+				groupActions, groupTemplateActions, companyActions);
+
+			List<String> availableResourcePermissionActionIds =
+				ResourcePermissionLocalServiceUtil.
+					getAvailableResourcePermissionActionIds(
+						resource.getCompanyId(), resource.getName(),
+						resource.getScope(), resource.getPrimKey(),
+						role.getRoleId(), actions);
+
+			_populateResourceActionsMap(
+				availableResourcePermissionActionIds, resourceActionsMap,
+				resource.getPrimKey());
+		}
+
+		return resourceActionsMap;
+	}
+
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
 		if (group == null) {
 			return defaultRoleTypes;
@@ -808,12 +839,31 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _roleTypesParam;
 	}
 
+	private void _populateResourceActionsMap(
+		List<String> actionIds, Map<String, List<String>> resourceActionsMap,
+		String resourcePrimKey) {
+
+		for (String actionId : actionIds) {
+			List<String> resourceActions = resourceActionsMap.get(actionId);
+
+			if (ListUtil.isNull(resourceActions)) {
+				resourceActions = new ArrayList<>();
+			}
+
+			if (!resourceActions.contains(resourcePrimKey)) {
+				resourceActions.add(resourcePrimKey);
+			}
+
+			resourceActionsMap.put(actionId, resourceActions);
+		}
+	}
+
 	private static final int[] _TYPES_DEPOT_AND_REGULAR = {
 		RoleConstants.TYPE_DEPOT, RoleConstants.TYPE_REGULAR
 	};
 
 	private List<String> _actions;
-	private Group _group;
+	private final Group _group;
 	private final long _groupId;
 	private List<String> _guestUnsupportedActions;
 	private final HttpServletRequest _httpServletRequest;

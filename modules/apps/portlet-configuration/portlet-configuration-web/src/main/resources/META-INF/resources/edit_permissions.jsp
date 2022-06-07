@@ -104,7 +104,7 @@ String resourceName = resource.getName();
 					Map<String, List<String>> resourceActionsMap = new HashMap<>();
 
 					if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-						resourceActionsMap = ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+						resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 					}
 					else {
 						ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);

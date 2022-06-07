@@ -348,26 +348,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki."
-	@priority = "5"
-	test ViewJSLoaderModulesURLNoWiki {
-		property test.name.skip.portal.instance = "SecurityUsecase#ViewJSLoaderModulesURLNoWiki";
-
-		task ("View JS loader modules") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Open.openNoError(locator1 = "${portalURL}/o/js_loader_modules");
-
-			AssertConsoleTextPresent(value1 = "com.liferay.wiki.engine.html");
-
-			AssertConsoleTextPresent(value1 = "com.liferay.wiki.engine.text");
-
-			AssertTextNotPresent(value1 = "com.liferay.wiki.engine.html");
-
-			AssertTextNotPresent(value1 = "com.liferay.wiki.engine.text");
-		}
-	}
-
 	@description = "This is a use case for LPS-55622. View no invoked portlet via URL."
 	@priority = "5"
 	test ViewNoInvokedPortletViaURL {

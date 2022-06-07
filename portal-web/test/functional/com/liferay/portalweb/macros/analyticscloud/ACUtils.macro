@@ -1061,4 +1061,17 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro getLocalStorageItem {
+		var javaScript = '''
+		var localStorageItem = localStorage.getItem('${keyName}');
+
+		return localStorageItem;
+		''';
+
+		var localStorageItem = selenium.getEval("${javaScript}");
+		var localStorageItem = StringUtil.replace("${localStorageItem}", "\"", "");
+
+		return "${localStorageItem}";
+	}
+
 }

@@ -207,6 +207,38 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date birthDate;
 
+	@Schema(
+		description = "The user's current password. Used to authenticate a user when they attempt to update their own password."
+	)
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+
+	@JsonIgnore
+	public void setCurrentPassword(
+		UnsafeSupplier<String, Exception> currentPasswordUnsafeSupplier) {
+
+		try {
+			currentPassword = currentPasswordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The user's current password. Used to authenticate a user when they attempt to update their own password."
+	)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected String currentPassword;
+
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
@@ -935,6 +967,20 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(birthDate));
+
+			sb.append("\"");
+		}
+
+		if (currentPassword != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currentPassword\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(currentPassword));
 
 			sb.append("\"");
 		}

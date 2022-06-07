@@ -2993,6 +2993,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("currentPassword", additionalAssertFieldName)) {
+				if (userAccount.getCurrentPassword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (userAccount.getCustomFields() == null) {
 					valid = false;
@@ -3553,6 +3561,17 @@ public abstract class BaseOrganizationResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getBirthDate(),
 						userAccount2.getBirthDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currentPassword", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getCurrentPassword(),
+						userAccount2.getCurrentPassword())) {
 
 					return false;
 				}
@@ -4126,6 +4145,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				additionalName = RandomTestUtil.randomString();
 				alternateName = RandomTestUtil.randomString();
 				birthDate = RandomTestUtil.nextDate();
+				currentPassword = RandomTestUtil.randomString();
 				dashboardURL = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

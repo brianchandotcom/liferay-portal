@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
@@ -405,13 +406,15 @@ const FragmentEditor = ({
 
 							<ClayForm.Group>
 								<div className="sheet-section">
-									<p className="sheet-subtitle">json</p>
+									<h2 className="sheet-subtitle">json</h2>
 
-									<p>
-										{Liferay.Language.get(
-											'add-the-json-configuration'
-										)}
-									</p>
+									{!readOnly && (
+										<p>
+											{Liferay.Language.get(
+												'add-the-json-configuration'
+											)}
+										</p>
+									)}
 
 									<CodeMirrorEditor
 										content={initialConfiguration}
@@ -437,58 +440,56 @@ function FieldTypeSelector({
 	onRemoveFieldType,
 	readOnly,
 }) {
-	if (readOnly) {
-		return fieldTypes.length ? (
-			<ClayForm.Group>
-				<div className="sheet-section">
-					<p className="sheet-subtitle">
-						{Liferay.Language.get('field-types')}
-					</p>
-
-					{fieldTypes.map((fieldType) => {
-						const label = availableFieldTypes.find(
-							({key}) => key === fieldType
-						).label;
-
-						return (
-							<p className="mb-1" key={fieldType}>
-								{label}
-							</p>
-						);
-					})}
-				</div>
-			</ClayForm.Group>
-		) : null;
-	}
-
 	return (
 		<ClayForm.Group>
 			<div className="sheet-section">
-				<p className="sheet-subtitle">
+				<h2 className="sheet-subtitle">
 					{Liferay.Language.get('field-types')}
-				</p>
+				</h2>
 
-				<p>
-					{Liferay.Language.get(
-						'specify-which-field-types-this-fragment-supports'
-					)}
-				</p>
+				{readOnly ? (
+					fieldTypes.length ? (
+						fieldTypes.map((fieldType) => {
+							const label = availableFieldTypes.find(
+								({key}) => key === fieldType
+							).label;
 
-				<div>
-					{availableFieldTypes.map(({key, label}) => (
-						<ClayCheckbox
-							aria-label={label}
-							checked={fieldTypes.includes(key)}
-							key={key}
-							label={label}
-							onChange={(event) =>
-								event.target.checked
-									? onAddFieldType(key)
-									: onRemoveFieldType(key)
-							}
-						/>
-					))}
-				</div>
+							return (
+								<p className="mb-1" key={fieldType}>
+									{label}
+								</p>
+							);
+						})
+					) : (
+						<ClayAlert displayType="info">
+							{Liferay.Language.get(
+								'no-field-type-defined-for-this-fragment'
+							)}
+						</ClayAlert>
+					)
+				) : (
+					<>
+						<p>
+							{Liferay.Language.get(
+								'specify-which-field-types-this-fragment-supports'
+							)}
+						</p>
+
+						{availableFieldTypes.map(({key, label}) => (
+							<ClayCheckbox
+								aria-label={label}
+								checked={fieldTypes.includes(key)}
+								key={key}
+								label={label}
+								onChange={(event) =>
+									event.target.checked
+										? onAddFieldType(key)
+										: onRemoveFieldType(key)
+								}
+							/>
+						))}
+					</>
+				)}
 			</div>
 		</ClayForm.Group>
 	);

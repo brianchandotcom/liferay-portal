@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + OAuthClientAdminPortletKeys.OAUTH_CLIENT_ADMIN,
-		"mvc.command.name=/oauth_client_admin/update_o_auth_client_entry"
+		"mvc.command.name=/oauth_client_admin/update_oauth_client_entry"
 	},
 	service = MVCActionCommand.class
 )

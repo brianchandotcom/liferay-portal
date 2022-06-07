@@ -31,7 +31,7 @@ String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
 						PortletURL portletURL = PortletURLBuilder.createRenderURL(
 							renderResponse
 						).setMVCRenderCommandName(
-							"/oauth_client_admin/view_o_auth_client_entries"
+							"/oauth_client_admin/view_oauth_client_entries"
 						).setNavigation(
 							"oauth-clients"
 						).buildPortletURL();
@@ -48,7 +48,7 @@ String navigation = ParamUtil.getString(request, "navigation", "oauth-clients");
 						PortletURL portletURL = PortletURLBuilder.createRenderURL(
 							renderResponse
 						).setMVCRenderCommandName(
-							"/oauth_client_admin/view_o_auth_client_as_local_metadata"
+							"/oauth_client_admin/view_oauth_client_as_local_metadata"
 						).setNavigation(
 							"oauth-client-as-local-metadata"
 						).buildPortletURL();

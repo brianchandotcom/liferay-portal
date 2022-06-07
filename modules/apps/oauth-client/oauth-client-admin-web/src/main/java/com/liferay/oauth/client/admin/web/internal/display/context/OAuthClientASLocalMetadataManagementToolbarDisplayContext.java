@@ -67,7 +67,7 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 			() -> PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
-				"/oauth_client_admin/delete_o_auth_client_as_local_metadata"
+				"/oauth_client_admin/delete_oauth_client_as_local_metadata"
 			).buildString()
 		).build();
 	}
@@ -78,8 +78,7 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName",
-					"/oauth_client_admin" +
-						"/update_o_auth_client_as_local_metadata",
+					"/oauth_client_admin/update_oauth_client_as_local_metadata",
 					"redirect", currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(

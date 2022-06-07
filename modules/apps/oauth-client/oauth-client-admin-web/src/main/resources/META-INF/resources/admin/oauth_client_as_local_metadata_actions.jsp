@@ -30,7 +30,7 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 	showWhenSingleIcon="<%= true %>"
 >
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_o_auth_client_as_local_metadata" />
+		<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_as_local_metadata" />
 		<portlet:param name="localWellKnownURI" value="<%= oAuthClientASLocalMetadata.getLocalWellKnownURI() %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
@@ -40,7 +40,7 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 		url="<%= editURL.toString() %>"
 	/>
 
-	<portlet:actionURL name="/oauth_client_admin/delete_o_auth_client_as_local_metadata" var="deleteURL">
+	<portlet:actionURL name="/oauth_client_admin/delete_oauth_client_as_local_metadata" var="deleteURL">
 		<portlet:param name="localWellKnownURI" value="<%= oAuthClientASLocalMetadata.getLocalWellKnownURI() %>" />
 	</portlet:actionURL>
 

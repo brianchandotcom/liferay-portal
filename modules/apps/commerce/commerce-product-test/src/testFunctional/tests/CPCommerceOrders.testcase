@@ -1118,7 +1118,7 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 		}
 
-		task ("Then the Order Status is 'In Progress' and the button 'Re-try payment' is present to continue the checkout Options") {
+		task ("Then the Order Status is 'In Progress' and the button 'Retry Payment' is present to continue the checkout Options") {
 			Click(
 				key_orderAuthor = "Commerce Account",
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
@@ -1128,7 +1128,7 @@ definition {
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_STATUS");
 
 			AssertElementPresent(
-				key_text = "Re-try payment",
+				key_text = "Retry Payment",
 				locator1 = "Button#ANY");
 		}
 	}

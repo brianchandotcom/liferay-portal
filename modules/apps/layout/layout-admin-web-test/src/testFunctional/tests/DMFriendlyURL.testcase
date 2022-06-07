@@ -280,12 +280,47 @@ definition {
 	}
 
 	@description = "This ensures that an image in the WC content field can be rendered correctly after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageInWCAfterMovingToFolder {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154377 CanViewImageInWCAfterMovingToFolder pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedImage = "true",
+			imageFileName = "Document_1",
+			siteName = "Site Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Document_1",
+			folderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_imageTitle = "document_1",
+			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}
 
 	@description = "This ensures that an image in Asset Publisher can be rendered correctly after moving it to a folder."

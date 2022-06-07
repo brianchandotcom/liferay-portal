@@ -25,6 +25,10 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
+		task ("Create a Document And Media") {
+			ACUtils.createDMAndAddToPage();
+		}
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

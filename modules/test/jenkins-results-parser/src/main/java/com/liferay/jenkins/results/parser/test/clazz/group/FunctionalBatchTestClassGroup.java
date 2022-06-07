@@ -30,6 +30,8 @@ import com.liferay.poshi.core.util.PropsUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -275,6 +277,70 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
+	private String _concatPQL(File file, File testBaseDir) {
+		if (file == null) {
+			return null;
+		}
+
+		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
+
+		File parentFile = canonicalFile.getParentFile();
+
+		if ((parentFile == null) || !parentFile.exists()) {
+			return "";
+		}
+
+		File modulesBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+		Path modulesBaseDirPath = modulesBaseDir.toPath();
+
+		Path parentFilePath = parentFile.toPath();
+
+		if (parentFilePath.equals(modulesBaseDirPath)) {
+			return _combinedTestBatchRunPropertyQuery;
+		}
+
+		if (!canonicalFile.isDirectory()) {
+			return _concatPQL(parentFile, testBaseDir);
+		}
+
+		File testPropertiesFile = new File(canonicalFile, "test.properties");
+
+		if (!testPropertiesFile.exists()) {
+			return _concatPQL(parentFile, testBaseDir);
+		}
+
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.run.property.query", getTestSuiteName(), batchName,
+			canonicalFile, JobProperty.Type.MODULE_TEST_DIR);
+
+		String testBatchPropertyQuery = jobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBatchPropertyQuery) &&
+			!testBatchPropertyQuery.equals("false") &&
+			!_combinedTestBatchRunPropertyQuery.contains(
+				testBatchPropertyQuery)) {
+
+			recordJobProperty(jobProperty);
+
+			if (!_combinedTestBatchRunPropertyQuery.isEmpty()) {
+				_combinedTestBatchRunPropertyQuery +=
+					JenkinsResultsParserUtil.combine(
+						" OR (", testBatchPropertyQuery, ")");
+			}
+			else {
+				_combinedTestBatchRunPropertyQuery += testBatchPropertyQuery;
+			}
+		}
+
+		if (!parentFilePath.equals(modulesBaseDirPath)) {
+			_concatPQL(parentFile, testBaseDir);
+		}
+
+		return getDefaultTestBatchRunPropertyQuery(testBaseDir, testSuiteName);
+	}
+
 	private List<File> _getFunctionalRequiredModuleDirs(List<File> moduleDirs) {
 		List<File> functionalRequiredModuleDirs = Lists.newArrayList(
 			moduleDirs);
@@ -456,6 +522,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	private static final Pattern _poshiTestCasePattern = Pattern.compile(
 		"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#(?<methodName>.*)");
 
+	private String _combinedTestBatchRunPropertyQuery = new String();
 	private final Map<File, String> _testBatchRunPropertyQueries =
 		new HashMap<>();
 

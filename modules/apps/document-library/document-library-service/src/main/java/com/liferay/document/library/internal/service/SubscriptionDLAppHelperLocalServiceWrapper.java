@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.document.library.internal.util.DLSubscriptionSender;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
-import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -197,9 +197,8 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			folder = _dlAppLocalService.getFolder(folderId);
 		}
 
-		SubscriptionSender subscriptionSender =
-			new GroupSubscriptionCheckSubscriptionSender(
-				DLConstants.RESOURCE_NAME);
+		SubscriptionSender subscriptionSender = new DLSubscriptionSender(
+			DLConstants.RESOURCE_NAME, folderId);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

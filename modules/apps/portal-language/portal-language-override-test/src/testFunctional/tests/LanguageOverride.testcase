@@ -55,6 +55,30 @@ definition {
 		}
 	}
 
+	@description = "This test changes the display style from list to table."
+	@priority = "2"
+	test CanChangeTheDisplayStyletoTableView {
+		task ("Given the default display style is List") {
+			LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewAnyList(listEntry = "+-add-address-line");
+		}
+
+		task ("When change the display style to Table") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		}
+
+		task ("Then the exist language keys diplay in Table style") {
+			LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "+-add-address-line");
+
+			AssertElementNotPresent(
+				key_listEntry = "+-add-address-line",
+				locator1 = "LexiconList#ANY_LIST");
+		}
+	}
+
 	@description = "This test filters to only see Overrides."
 	@priority = "4"
 	test CanFilterOverrides {

@@ -70,7 +70,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
 				collectionQuery.getPagination(), sortOptional.orElse(null));
 
-			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
+			assetEntryQuery.setLinkedAssetEntryIds(
+				new long[] {assetEntry.getEntryId()});
 
 			return InfoPage.of(
 				_assetEntryService.getEntries(assetEntryQuery),
@@ -141,7 +142,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(), null, sort);
 
-			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
+			assetEntryQuery.setLinkedAssetEntryIds(
+				new long[] {assetEntry.getEntryId()});
 
 			return _assetEntryService.getEntriesCount(assetEntryQuery);
 		}

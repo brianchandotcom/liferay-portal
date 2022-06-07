@@ -1191,7 +1191,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		String portletName, AssetEntryQuery assetEntryQuery) {
 
 		if (_assetPublisherWebConfiguration.searchWithIndex() &&
-			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+			ArrayUtil.isEmpty(assetEntryQuery.getLinkedAssetEntryIds()) &&
 			!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
 			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
@@ -1206,7 +1206,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		String portletName, AssetEntryQuery assetEntryQuery) {
 
 		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
-			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+			ArrayUtil.isNotEmpty(assetEntryQuery.getLinkedAssetEntryIds())) {
 
 			return true;
 		}

@@ -37,11 +37,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,9 +61,16 @@ public class RelatedAssetsInfoCollectionProvider
 	public InfoPage<AssetEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		long assetEntryId = _getLayoutAssetEntryId();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		if (assetEntryId == 0) {
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		Set<Long> linkedAssetEntryIds =
+			(Set<Long>)httpServletRequest.getAttribute(
+				WebKeys.LINKED_ASSET_ENTRY_IDS);
+
+		if (SetUtil.isEmpty(linkedAssetEntryIds)) {
 			return InfoPage.of(
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
@@ -69,7 +78,8 @@ public class RelatedAssetsInfoCollectionProvider
 		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 			collectionQuery.getPagination());
 
-		assetEntryQuery.setLinkedAssetEntryId(assetEntryId);
+		assetEntryQuery.setLinkedAssetEntryIds(
+			ArrayUtil.toLongArray(linkedAssetEntryIds));
 
 		try {
 			return InfoPage.of(
@@ -156,23 +166,6 @@ public class RelatedAssetsInfoCollectionProvider
 		}
 
 		return assetEntryQuery;
-	}
-
-	private long _getLayoutAssetEntryId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		AssetEntry layoutAssetEntry =
-			(AssetEntry)httpServletRequest.getAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (layoutAssetEntry != null) {
-			return layoutAssetEntry.getEntryId();
-		}
-
-		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

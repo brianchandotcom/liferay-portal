@@ -419,6 +419,24 @@ definition {
 			value1 = "Published");
 	}
 
+	macro viewSandboxedPublication {
+		var key_publicationName = "${sandboxedPublicationName}";
+
+		if ("${sandboxedUser}" == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+				value1 = "${sandboxedPublicationName}");
+		}
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Publications#PUBLICATION_NAME_IN_ONGOING",
+			value1 = "${sandboxedPublicationName}");
+	}
+
 	macro workOnProduction {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 

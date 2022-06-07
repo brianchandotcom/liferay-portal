@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.messaging.config;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
@@ -30,8 +28,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -182,45 +178,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	public void setMessageListeners(
 		Map<String, List<MessageListener>> messageListeners) {
 
-		for (List<MessageListener> messageListenersList :
-				messageListeners.values()) {
-
-			for (MessageListener messageListener : messageListenersList) {
-				Class<?> messageListenerClass = messageListener.getClass();
-
-				try {
-					Method setMessageBusMethod = messageListenerClass.getMethod(
-						"setMessageBus", MessageBus.class);
-
-					setMessageBusMethod.setAccessible(true);
-
-					setMessageBusMethod.invoke(messageListener, _messageBus);
-
-					continue;
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-
-				try {
-					Method setMessageBusMethod =
-						messageListenerClass.getDeclaredMethod(
-							"setMessageBus", MessageBus.class);
-
-					setMessageBusMethod.setAccessible(true);
-
-					setMessageBusMethod.invoke(messageListener, _messageBus);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
-		}
-
 		_messageListeners.putAll(messageListeners);
 	}
 
@@ -334,9 +291,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 					null));
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultMessagingConfigurator.class);
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();

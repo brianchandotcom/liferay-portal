@@ -138,6 +138,22 @@ definition {
 		return "${relationshipId}";
 	}
 
+	macro _deleteEmployee {
+		Variables.assertDefined(parameterList = "${employeeId}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/employees/${employeeId} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var response = JSONCurlUtil.delete("${curl}");
+
+		return "${response}";
+	}
+
 	macro _getEmployeeFirstnameById {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
@@ -287,6 +303,34 @@ definition {
 			responseToParse = "${responseToParse}");
 	}
 
+	macro assertResponseIncludesDetailsOfNotDeletedEmployee {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId2} && @.r_supervisor_c_managerId==${managerId2})].r_supervisor_c_managerId");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${managerId2}");
+	}
+
+	macro assertResponseNotIncludesDetailsOfDeletedEmployee {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId1} && @.r_supervisor_c_managerId==${managerId1})].r_supervisor_c_managerId");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "");
+	}
+
+	macro assertResponseOnlyIncludesDetailsOfNotDeletedEmployee {
+		ObjectDefinitionAPI.assertResponseNotIncludesDetailsOfDeletedEmployee(
+			employeeId1 = "${employeeId1}",
+			managerId1 = "${managerId1}",
+			responseToParse = "${responseToParse}");
+
+		ObjectDefinitionAPI.assertResponseIncludesDetailsOfNotDeletedEmployee(
+			employeeId2 = "${employeeId2}",
+			managerId2 = "${managerId2}",
+			responseToParse = "${responseToParse}");
+	}
+
 	macro createAndPublishObjectDefinition {
 		var objectDefinitionId = ObjectDefinitionAPI._createObjectDefinition(
 			en_US_label = "${en_US_label}",
@@ -347,6 +391,10 @@ definition {
 			expected = "${name}");
 
 		return "${relationshipName}";
+	}
+
+	macro deleteEmployee {
+		ObjectDefinitionAPI._deleteEmployee(employeeId = "${employeeId}");
 	}
 
 	macro getObjectsWithNestedField {

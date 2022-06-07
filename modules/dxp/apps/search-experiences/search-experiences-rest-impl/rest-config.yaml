@@ -7,4 +7,5 @@ application:
 author: "Brian Wing Shun Chan"
 clientDir: "../search-experiences-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: false
 testDir: "../search-experiences-rest-test/src/testIntegration/java"

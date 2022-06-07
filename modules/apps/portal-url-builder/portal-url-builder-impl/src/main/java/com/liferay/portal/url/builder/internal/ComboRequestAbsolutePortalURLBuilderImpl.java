@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class ComboRequestAbsolutePortalURLBuilderImpl
 
 	@Override
 	public ComboRequestAbsolutePortalURLBuilder addFile(String filePath) {
-		_filePaths.add(filePath);
+		_filePaths.add(URLUtil.removeParams(filePath));
 
 		return this;
 	}
@@ -84,7 +84,7 @@ public class ComboRequestAbsolutePortalURLBuilderImpl
 	}
 
 	private final String _cdnHost;
-	private final Set<String> _filePaths = new HashSet<>();
+	private final Set<String> _filePaths = new LinkedHashSet<>();
 	private final HttpServletRequest _httpServletRequest;
 	private final String _pathContext;
 	private final String _pathProxy;

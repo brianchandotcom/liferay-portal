@@ -114,4 +114,14 @@ public class URLUtil {
 		return pathModule + webContextPath;
 	}
 
+	public static String removeParams(String url) {
+		int i = url.indexOf(StringPool.QUESTION);
+
+		if (i == -1) {
+			return url;
+		}
+
+		return url.substring(0, i);
+	}
+
 }

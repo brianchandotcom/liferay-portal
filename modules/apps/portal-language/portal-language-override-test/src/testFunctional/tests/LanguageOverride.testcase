@@ -10,10 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Language Override");
+		LanguageOverride.openLanguageOverridePortlet();
 	}
 
 	tearDown {

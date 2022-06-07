@@ -302,7 +302,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Test Test");
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
 

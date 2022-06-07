@@ -26,6 +26,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
 import java.util.HashMap;
@@ -252,16 +253,32 @@ public class ProxyUtil {
 
 			Class<?> delegateClass = delegateObject.getClass();
 
-			for (Method method : interfaceClass.getMethods()) {
-				try {
-					Method delegateMethod = delegateClass.getMethod(
-						method.getName(), method.getParameterTypes());
+			for (Method delegateMethod : delegateClass.getDeclaredMethods()) {
+				int modifiers = delegateMethod.getModifiers();
 
-					delegateMethod.setAccessible(true);
+				if (!Modifier.isPublic(modifiers) ||
+					Modifier.isStatic(modifiers)) {
 
-					delegateMethods.put(method, delegateMethod);
+					continue;
 				}
-				catch (NoSuchMethodException noSuchMethodException) {
+
+				Method objectMethod = _toObjectMethod(delegateMethod);
+
+				if (objectMethod == null) {
+					try {
+						Method interfaceMethod = interfaceClass.getMethod(
+							delegateMethod.getName(),
+							delegateMethod.getParameterTypes());
+
+						delegateMethod.setAccessible(true);
+
+						delegateMethods.put(interfaceMethod, delegateMethod);
+					}
+					catch (NoSuchMethodException noSuchMethodException) {
+					}
+				}
+				else {
+					delegateMethods.put(objectMethod, delegateMethod);
 				}
 			}
 
@@ -269,6 +286,42 @@ public class ProxyUtil {
 
 			_delegateObject = delegateObject;
 			_defaultObject = defaultObject;
+		}
+
+		private Method _toObjectMethod(Method method) {
+			String name = method.getName();
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			if (name.equals("equals") && (parameterTypes.length == 1) &&
+				(parameterTypes[0] == Object.class)) {
+
+				return _equalsMethod;
+			}
+
+			if (name.equals("hashCode") && (parameterTypes.length == 0)) {
+				return _hashCodeMethod;
+			}
+
+			if (name.equals("toString") && (parameterTypes.length == 0)) {
+				return _toStringMethod;
+			}
+
+			return null;
+		}
+
+		private static final Method _equalsMethod;
+		private static final Method _hashCodeMethod;
+		private static final Method _toStringMethod;
+
+		static {
+			try {
+				_equalsMethod = Object.class.getMethod("equals", Object.class);
+				_hashCodeMethod = Object.class.getMethod("hashCode");
+				_toStringMethod = Object.class.getMethod("toString");
+			}
+			catch (NoSuchMethodException noSuchMethodException) {
+				throw new ExceptionInInitializerError(noSuchMethodException);
+			}
 		}
 
 		private final Object _defaultObject;

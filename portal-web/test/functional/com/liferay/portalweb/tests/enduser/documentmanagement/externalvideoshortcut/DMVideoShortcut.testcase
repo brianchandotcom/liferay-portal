@@ -564,6 +564,9 @@ definition {
 	@description = "This ensures that an external video in the WC content field can be rendered correctly after moving it to a folder."
 	@priority = "4"
 	test CanViewVideoInWCAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(

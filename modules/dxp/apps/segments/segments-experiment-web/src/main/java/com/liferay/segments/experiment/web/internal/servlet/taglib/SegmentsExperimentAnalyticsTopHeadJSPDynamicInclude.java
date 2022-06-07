@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.manager.SegmentsExperienceManager;
@@ -101,7 +102,11 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperienceId);
 
-		return segmentsExperience.getSegmentsExperienceKey();
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceKey();
+		}
+
+		return SegmentsExperienceConstants.KEY_DEFAULT;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

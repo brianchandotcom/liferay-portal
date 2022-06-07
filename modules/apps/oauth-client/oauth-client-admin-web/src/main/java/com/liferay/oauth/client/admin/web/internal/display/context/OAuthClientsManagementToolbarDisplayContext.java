@@ -96,7 +96,6 @@ public class OAuthClientsManagementToolbarDisplayContext
 						).put(
 							"createDate", "createDate"
 						).build()));
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}

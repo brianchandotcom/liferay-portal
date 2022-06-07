@@ -100,7 +100,6 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 						).put(
 							"localWellKnownURI", "localWellKnownURI"
 						).build()));
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}

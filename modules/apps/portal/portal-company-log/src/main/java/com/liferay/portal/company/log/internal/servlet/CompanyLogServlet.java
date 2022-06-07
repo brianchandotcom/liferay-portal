@@ -14,6 +14,7 @@
 
 package com.liferay.portal.company.log.internal.servlet;
 
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -32,8 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -127,12 +126,16 @@ public class CompanyLogServlet extends HttpServlet {
 				permissionChecker.getUserId());
 		}
 
+		String logFilesDirPath = Log4JUtil.getCompanyLogDirectory(companyId);
+
+		if (logFilesDirPath == null) {
+			return;
+		}
+
 		String fileName = pathArray[1];
 
 		String path = StringBundler.concat(
-			StringUtil.replace(
-				PropsUtil.get(PropsKeys.LIFERAY_HOME), '\\', '/'),
-			"/logs/companies/", companyId, StringPool.SLASH, fileName);
+			logFilesDirPath, StringPool.SLASH, fileName);
 
 		File logFile = new File(path);
 
@@ -209,11 +212,14 @@ public class CompanyLogServlet extends HttpServlet {
 		HttpServletRequest httpServletRequest, PrintWriter printWriter,
 		Company company) {
 
-		File logFilesDir = new File(
-			StringBundler.concat(
-				StringUtil.replace(
-					PropsUtil.get(PropsKeys.LIFERAY_HOME), '\\', '/'),
-				"/logs/companies/", company.getCompanyId()));
+		String logFilesDirPath = Log4JUtil.getCompanyLogDirectory(
+			company.getCompanyId());
+
+		if (logFilesDirPath == null) {
+			return;
+		}
+
+		File logFilesDir = new File(logFilesDirPath);
 
 		if (!logFilesDir.isDirectory()) {
 			return;

@@ -19,9 +19,9 @@
 		<!-- Other fields -->
 
 		<column name="accessToken" type="String" />
-		<column name="configurationPid" type="String" />
+		<column name="authServerWellKnownURI" type="String" />
+		<column name="clientId" type="String" />
 		<column name="idToken" type="String" />
-		<column name="providerName" type="String" />
 		<column name="refreshToken" type="String" />
 
 		<!-- Finder methods -->
@@ -29,12 +29,15 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="ConfigurationPid" return-type="Collection">
-			<finder-column name="configurationPid" />
+		<finder name="C_A_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="authServerWellKnownURI" />
+			<finder-column name="clientId" />
 		</finder>
-		<finder name="U_C" return-type="OpenIdConnectSession" unique="true">
+		<finder name="U_A_C" return-type="OpenIdConnectSession" unique="true">
 			<finder-column name="userId" />
-			<finder-column name="configurationPid" />
+			<finder-column name="authServerWellKnownURI" />
+			<finder-column name="clientId" />
 		</finder>
 	</entity>
 	<exceptions>

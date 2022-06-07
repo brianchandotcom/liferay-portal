@@ -36,17 +36,19 @@ public class OpenIdConnectSessionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteOpenIdConnectSessions(String configurationPid) {
-		openIdConnectSessionPersistence.removeByConfigurationPid(
-			configurationPid);
+	public void deleteOpenIdConnectSessions(
+		long companyId, String authServerWellKnownURI, String clientId) {
+
+		openIdConnectSessionPersistence.removeByC_A_C(
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	@Override
 	public OpenIdConnectSession fetchOpenIdConnectSession(
-		long userId, String configurationPid) {
+		long userId, String authServerWellKnownURI, String clientId) {
 
-		return openIdConnectSessionPersistence.fetchByU_C(
-			userId, configurationPid);
+		return openIdConnectSessionPersistence.fetchByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 }

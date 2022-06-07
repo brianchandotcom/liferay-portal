@@ -10,13 +10,15 @@
 		<field name="accessToken" type="String">
 			<hint name="max-length">3000</hint>
 		</field>
-		<field name="configurationPid" type="String">
+		<field name="authServerWellKnownURI" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="clientId" type="String">
 			<hint name="max-length">256</hint>
 		</field>
 		<field name="idToken" type="String">
 			<hint name="max-length">3999</hint>
 		</field>
-		<field name="providerName" type="String" />
 		<field name="refreshToken" type="String">
 			<hint name="max-length">2000</hint>
 		</field>

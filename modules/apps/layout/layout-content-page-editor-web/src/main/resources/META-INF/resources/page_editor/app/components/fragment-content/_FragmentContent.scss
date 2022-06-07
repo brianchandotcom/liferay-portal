@@ -8,6 +8,10 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		&--master .page-editor .portlet-options {
+			display: inline-block;
+		}
+
 		&--portlet-topper-hidden
 			.portlet
 			> .cadmin.portlet-topper

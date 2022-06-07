@@ -54,6 +54,7 @@ definition {
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11307 | Test Summary: Logout continues to track user"
 	@priority = "4"
 	test CheckLogoutContinuesToTrackUserWithSameUserId {
+		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
 		task ("Add a new user") {
@@ -169,6 +170,7 @@ definition {
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11308 | Test Summary: Delete browser storage changes userid and anonymous user appears"
 	@priority = "3"
 	test CheckDeleteBrowserStorageChangesUserId {
+		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
 		task ("Add a new user") {
@@ -316,6 +318,7 @@ definition {
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11309 | Test Summary: New user changes userid"
 	@priority = "5"
 	test CheckLoginNewUserChangesUserId {
+		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
 		task ("Add two new users") {
@@ -455,6 +458,7 @@ definition {
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11310 | Test Summary: Login as same user keeps userid"
 	@priority = "3"
 	test CheckLoginSameUserKeepUserId {
+		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
 		task ("Add a new user") {

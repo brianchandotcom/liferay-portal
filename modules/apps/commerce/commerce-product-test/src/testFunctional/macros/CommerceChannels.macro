@@ -433,6 +433,48 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro editShippingMethod {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "${shippingMethod}",
+			table = "Shipping Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(name)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${name}");
+		}
+
+		if (isSet(description)) {
+			Type(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${description}");
+		}
+
+		if (isSet(priority)) {
+			Type(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "${priority}");
+		}
+
+		if ("${active}" == "true") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+		}
+
+		if ("${active}" == "false") {
+			Uncheck.uncheckToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro editShippingOption {
 		CommerceNavigator.gotoEntry(entryName = "${shippingOption}");
 

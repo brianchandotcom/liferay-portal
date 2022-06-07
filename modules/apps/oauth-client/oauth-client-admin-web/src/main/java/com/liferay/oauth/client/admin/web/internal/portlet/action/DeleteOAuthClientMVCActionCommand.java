@@ -48,8 +48,8 @@ public class DeleteOAuthClientMVCActionCommand implements MVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			String authServerWellKnownURI = ParamUtil.getString(
 				actionRequest, "authServerWellKnownURI");

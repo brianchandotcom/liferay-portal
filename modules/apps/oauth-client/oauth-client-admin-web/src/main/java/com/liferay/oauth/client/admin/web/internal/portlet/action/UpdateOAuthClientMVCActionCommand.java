@@ -48,9 +48,6 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			long oAuthClientEntryId = ParamUtil.getLong(
 				actionRequest, "oAuthClientEntryId");
 
@@ -66,6 +63,10 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 					parametersJSON);
 			}
 			else {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				_oAuthClientEntryService.addOAuthClientEntry(
 					themeDisplay.getUserId(), authServerWellKnownURI, infoJSON,
 					parametersJSON);
@@ -80,8 +81,7 @@ public class UpdateOAuthClientMVCActionCommand implements MVCActionCommand {
 
 			Class<?> clazz = portalException.getClass();
 
-			SessionErrors.add(
-				actionRequest, clazz.getName(), portalException);
+			SessionErrors.add(actionRequest, clazz.getName(), portalException);
 
 			return false;
 		}

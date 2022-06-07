@@ -57,7 +57,8 @@ public class UpdateOAuthClientMVCRenderCommand implements MVCRenderCommand {
 				Validator.isNotNull(clientId)) {
 
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				OAuthClientEntry oAuthClientEntry =
 					_oAuthClientEntryService.getOAuthClientEntry(

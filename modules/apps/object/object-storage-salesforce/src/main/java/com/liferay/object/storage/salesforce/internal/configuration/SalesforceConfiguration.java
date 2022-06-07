@@ -25,10 +25,19 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface SalesforceConfiguration {
 
+	@Meta.AD(name = "url", required = false)
+	public String url();
+
 	@Meta.AD(name = "consumer-key", required = false)
 	public String consumerKey();
 
 	@Meta.AD(name = "consumer-secret", required = false)
 	public String consumerSecret();
+
+	@Meta.AD(name = "username", required = false)
+	public String username();
+
+	@Meta.AD(name = "password", required = false, type = Meta.Type.Password)
+	public String password();
 
 }

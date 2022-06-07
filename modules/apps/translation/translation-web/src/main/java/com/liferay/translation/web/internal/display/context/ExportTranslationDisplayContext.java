@@ -281,8 +281,9 @@ public class ExportTranslationDisplayContext {
 
 	private String _getExportTranslationURLString() throws Exception {
 		URIBuilder.URIBuilderWrapper uriBuilderWrapper = URIBuilder.create(
-			PortalUtil.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE +
-				"/translation/export_translation"
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(), PortalUtil.getPathContext(),
+				Portal.PATH_MODULE, "/translation/export_translation")
 		).addParameter(
 			"classNameId", String.valueOf(_classNameId)
 		);

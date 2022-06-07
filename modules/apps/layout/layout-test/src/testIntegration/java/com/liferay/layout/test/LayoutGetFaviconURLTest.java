@@ -70,7 +70,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class LayoutFaviconTest {
+public class LayoutGetFaviconURLTest {
 
 	@ClassRule
 	@Rule

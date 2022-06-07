@@ -1765,9 +1765,6 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_PROPERTIES =
 		"module.framework.properties.";
 
-	public static final String MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE =
-		"module.framework.resolver.revision.batch.size";
-
 	public static final String MODULE_FRAMEWORK_RUNTIME_START_LEVEL =
 		"module.framework.runtime.start.level";
 

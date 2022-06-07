@@ -1894,7 +1894,8 @@ public class VerifyProperties {
 		"module.framework.properties.file.install.optionalImportRefreshScope",
 		"module.framework.properties.lpkg.deployer.dir",
 		"module.framework.properties.lpkg.index.validator.enabled",
-		"module.framework.register.liferay.services", "msn.login",
+		"module.framework.register.liferay.services",
+		"module.framework.resolver.revision.batch.size", "msn.login",
 		"msn.password", "multicast.group.address[\"hibernate\"]",
 		"multicast.group.port[\"hibernate\"]", "my.sites.display.style",
 		"multi.value.map.com.liferay.portal.convert." +

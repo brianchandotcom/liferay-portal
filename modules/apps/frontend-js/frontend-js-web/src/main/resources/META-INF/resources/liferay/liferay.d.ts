@@ -243,7 +243,13 @@ declare module Liferay {
 			/**
 			 * Object with cookie consent types as keys, for use in {@link Cookie.set}
 			 */
-			export const TYPES: Object;
+			export const TYPES: {[key: string]: TYPE_VALUES};
+
+			export type TYPE_VALUES =
+				| 'CONSENT_TYPE_FUNCTIONAL'
+				| 'CONSENT_TYPE_NECESSARY'
+				| 'CONSENT_TYPE_PERFORMANCE'
+				| 'CONSENT_TYPE_PERSONALIZATION';
 
 			/* Returns the stored value of a cookie, undefined if not present */
 			export function get(name: string): string | undefined;
@@ -252,7 +258,7 @@ declare module Liferay {
 			export function set(
 				name: string,
 				value: string,
-				type: string,
+				type: TYPE_VALUES,
 				options: {
 					'domain'?: string;
 					'expires'?: string;

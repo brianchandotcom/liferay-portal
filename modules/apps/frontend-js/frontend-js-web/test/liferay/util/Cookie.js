@@ -49,6 +49,7 @@ describe('Liferay.Util.Cookie', () => {
 			expect(cookieIsSet).toBe(true);
 
 			const setCookieValue = Cookie.get(necessaryCookie);
+
 			expect(setCookieValue).not.toBeUndefined();
 			expect(setCookieValue).toBe(anyCookieValue);
 		});
@@ -69,6 +70,7 @@ describe('Liferay.Util.Cookie', () => {
 			expect(cookieIsSet).toBe(true);
 
 			const setCookieValue = Cookie.get(unnecessaryCookie);
+
 			expect(setCookieValue).not.toBeUndefined();
 			expect(setCookieValue).toBe(anyCookieValue);
 		});
@@ -100,6 +102,7 @@ describe('Liferay.Util.Cookie', () => {
 			expect(cookieIsSet).toBe(true);
 
 			const setCookieValue = Cookie.get(unnecessaryCookie);
+
 			expect(setCookieValue).not.toBeUndefined();
 			expect(setCookieValue).toBe(anyCookieValue);
 		});
@@ -127,6 +130,7 @@ describe('Liferay.Util.Cookie', () => {
 			expect(cookieIsSet).toBe(true);
 
 			const setCookieValue = Cookie.get(unnecessaryCookie);
+
 			expect(setCookieValue).not.toBeUndefined();
 			expect(setCookieValue).toBe(anyCookieValue);
 		});

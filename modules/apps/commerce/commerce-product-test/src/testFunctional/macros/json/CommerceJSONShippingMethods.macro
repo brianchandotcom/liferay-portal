@@ -1,0 +1,42 @@
+definition {
+
+	macro _setDefaultAccountShippingOption {
+		Variables.assertDefined(parameterList = "${accountName},${channelName},${shippingOption}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountName}");
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = "${channelName}");
+		var commerceShippingOptionKey = StringUtil.lowerCase("${shippingOption}");
+
+		var commerceShippingOptionKey = StringUtil.replace("${commerceShippingOptionKey}", " ", "-");
+
+		if (!(isSet(commerceShippingMethodKey))) {
+			Variables.assertDefined(parameterList = "${shippingMethod}");
+
+			if ("${shippingMethod}" == "Flat Rate") {
+				var commerceShippingMethodKey = "fixed";
+			}
+
+			if ("${shippingMethod}" == "Variable Rate") {
+				var commerceShippingMethodKey = "by-weight";
+			}
+		}
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+				${baseURL}/api/jsonws/commerce.commerceshippingoptionaccountentryrel/add-commerce-shipping-option-account-entry-rel \
+				-u test@liferay.com:test \
+				-d accountEntryId=${accountEntryId} \
+				-d commerceChannelId=${commerceChannelId} \
+				-d commerceShippingMethodKey='${commerceShippingMethodKey}' \
+				-d commerceShippingOptionKey='${commerceShippingOptionKey}'
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+}

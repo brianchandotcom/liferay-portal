@@ -179,6 +179,80 @@ definition {
 		}
 	}
 
+	@description = "Verify the default account shipping option is pre-selected at checkout."
+	@priority = "3"
+	test UseDefaultShippingOptionIntoTheCheckout {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		
+		task ("Given a buyer user associated with the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the Sales Manager edits the priority for Standard Delivery to 1 and Expedited Delivery to 2") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
+
+			CommerceChannels.editShippingOption(
+				priority = "1",
+				shippingOption = "Standard Delivery");
+
+			CommerceChannels.editShippingOption(
+				priority = "2",
+				shippingOption = "Expedited Delivery");
+		}
+
+		task ("And given Flat Rate / Standard Delivery is set as the default shipping option for the Commerce Account") {
+			CommerceJSONShippingMethods._setDefaultAccountShippingOption(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("When the buyer start a checkout") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then the default shipping option used at checkout is Standard Delivery") {
+			CommerceCheckout.initializersCheckout(
+				defaultShippingMethod = "Standard",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "Verify the list of selectable default shipping options is sorted alphanumerically by name and that Use Priority Settings is an option."
 	@priority = "3"
 	test VerifyIfDefaultShippingOptionsAreSortedAndIfUsePrioritySettingArePresentIntoTheList {

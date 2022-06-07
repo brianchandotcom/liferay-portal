@@ -173,6 +173,8 @@ describe('SelectFileExtension', () => {
 		expect(getByText('clear-all')).toBeInTheDocument();
 
 		const checkbox = container.querySelector('input[type=checkbox]');
+
+		fireEvent.click(checkbox);
 		fireEvent.click(checkbox);
 
 		expect(getByText('2 items-selected')).toBeInTheDocument();

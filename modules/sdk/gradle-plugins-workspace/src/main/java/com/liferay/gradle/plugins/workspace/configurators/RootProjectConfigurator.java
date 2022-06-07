@@ -727,6 +727,77 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerfile;
 	}
 
+	private void _addTaskCreateDockerfileAll(
+		Project project, WorkspaceExtension workspaceExtension,
+		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
+
+		long buildTime = System.currentTimeMillis();
+
+		File configsDir = workspaceExtension.getConfigsDir();
+
+		String[] environments = configsDir.list(
+			new FilenameFilter() {
+
+				@Override
+				public boolean accept(File file, String name) {
+					if (!name.startsWith(".") && file.isDirectory() &&
+						!name.equals("common") && !name.equals("docker")) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		if ((environments == null) || (environments.length == 0)) {
+			return;
+		}
+
+		Task createDockerfileAllTask = GradleUtil.addTask(
+			project, CREATE_DOCKERFILE_ALL_TASK_NAME, DefaultTask.class);
+
+		createDockerfileAllTask.setDescription(
+			"create docker file for each environment.");
+		createDockerfileAllTask.setGroup(DOCKER_GROUP);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					for (String environment : environments) {
+						Dockerfile createDockerfileTask =
+							_addTaskCreateDockerfile(
+								project,
+								CREATE_DOCKERFILE_TASK_NAME +
+									StringUtil.capitalize(environment),
+								environment, workspaceExtension, dockerDeploy,
+								verifyProductTask);
+
+						RegularFileProperty destRegularFileProperty =
+							createDockerfileTask.getDestFile();
+
+						Provider<Directory> destProvider =
+							createDockerfileTask.getDestDir();
+
+						Directory destDirectory = destProvider.get();
+
+						File destDir = destDirectory.getAsFile();
+
+						destRegularFileProperty.set(
+							new File(
+								destDir,
+								"Dockerfile." + environment + "-" + buildTime));
+
+						createDockerfileAllTask.dependsOn(createDockerfileTask);
+					}
+				}
+
+			});
+	}
+
 	private CreateTokenTask _addTaskCreateToken(Project project) {
 		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
@@ -1188,78 +1259,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerRemoveContainer;
-	}
-
-	private void _addTaskCreateDockerfileAll(
-		Project project, WorkspaceExtension workspaceExtension,
-		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
-
-		long buildTime = System.currentTimeMillis();
-
-		File configsDir = workspaceExtension.getConfigsDir();
-
-		String[] environments = configsDir.list(
-			new FilenameFilter() {
-
-				@Override
-				public boolean accept(File file, String name) {
-					if (!name.startsWith(".") && file.isDirectory() &&
-						!name.equals("common") && !name.equals("docker")) {
-
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		if ((environments == null) || (environments.length == 0)) {
-			return;
-		}
-
-		Task createDockerfileAllTask = GradleUtil.addTask(
-			project, CREATE_DOCKERFILE_ALL_TASK_NAME, DefaultTask.class);
-
-		createDockerfileAllTask.setDescription(
-			"create docker file for each environment.");
-		createDockerfileAllTask.setGroup(DOCKER_GROUP);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					for (String environment : environments) {
-						Dockerfile createDockerfileTask =
-							_addTaskCreateDockerfile(
-								project,
-								CREATE_DOCKERFILE_TASK_NAME +
-									StringUtil.capitalize(environment),
-								environment, workspaceExtension, dockerDeploy,
-								verifyProductTask);
-
-						RegularFileProperty destRegularFileProperty =
-							createDockerfileTask.getDestFile();
-
-						Provider<Directory> destProvider =
-							createDockerfileTask.getDestDir();
-
-						Directory destDirectory = destProvider.get();
-
-						File destDir = destDirectory.getAsFile();
-
-						destRegularFileProperty.set(
-							new File(
-								destDir,
-								"Dockerfile." + environment + "-" + buildTime));
-
-						createDockerfileAllTask.dependsOn(
-							createDockerfileTask);
-					}
-				}
-
-			});
 	}
 
 	private void _addTasksDistBundleArchive(

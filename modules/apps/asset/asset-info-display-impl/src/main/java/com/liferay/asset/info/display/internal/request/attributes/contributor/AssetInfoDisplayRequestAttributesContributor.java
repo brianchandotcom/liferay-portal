@@ -28,6 +28,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -117,6 +118,10 @@ public class AssetInfoDisplayRequestAttributesContributor
 		}
 
 		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		HttpComponentsUtil.appendAttribute(
+			httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			assetEntry.getEntryId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1012,8 +1013,13 @@ public class JournalContentDisplayContext {
 			ddmTemplateModelResourcePermission;
 
 		if (isShowArticle()) {
-			portletRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, _getAssetEntry());
+			AssetEntry assetEntry = _getAssetEntry();
+
+			portletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			HttpComponentsUtil.appendAttribute(
+				portletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				assetEntry.getEntryId());
 		}
 
 		if (Validator.isNull(getPortletResource()) && !isShowArticle()) {

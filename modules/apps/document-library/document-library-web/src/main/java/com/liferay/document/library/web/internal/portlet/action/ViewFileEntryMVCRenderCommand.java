@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -170,6 +171,10 @@ public class ViewFileEntryMVCRenderCommand
 
 		renderRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+
+		HttpComponentsUtil.appendAttribute(
+			renderRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			layoutAssetEntry.getEntryId());
 	}
 
 	@Reference

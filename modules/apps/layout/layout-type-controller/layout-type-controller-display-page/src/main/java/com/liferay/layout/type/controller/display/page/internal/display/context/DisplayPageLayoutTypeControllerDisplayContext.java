@@ -32,6 +32,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -105,6 +106,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 					InfoItemFieldValuesProvider.class, className));
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			HttpComponentsUtil.appendAttribute(
+				_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				assetEntry.getEntryId());
 		}
 
 		_infoItem = infoItem;

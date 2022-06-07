@@ -135,6 +135,8 @@ if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
+HttpComponentsUtil.appendAttribute(request, WebKeys.LINKED_ASSET_ENTRY_IDS, layoutAssetEntry.getEntryId());
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {

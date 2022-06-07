@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -83,6 +84,10 @@ public class JournalServicePreAction extends Action {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+
+			HttpComponentsUtil.appendAttribute(
+				httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				layoutAssetEntry.getEntryId());
 		}
 		catch (NoSuchArticleException noSuchArticleException) {
 			if (_log.isWarnEnabled()) {

@@ -58,6 +58,8 @@ if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
 	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 }
 
+HttpComponentsUtil.appendAttribute(request, WebKeys.LINKED_ASSET_ENTRY_IDS, assetEntry.getEntryId());
+
 request.setAttribute("view_entry_content.jsp-entry", entry);
 
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -283,6 +284,14 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, originalAssetEntry);
+
+			if (originalAssetEntry instanceof AssetEntry) {
+				AssetEntry assetEntry = (AssetEntry)originalAssetEntry;
+
+				HttpComponentsUtil.appendAttribute(
+					httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+					assetEntry.getEntryId());
+			}
 
 			themeDisplay.setScopeGroupId(originalScopeGroupId);
 
@@ -621,6 +630,10 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, scopedAssetEntry);
+
+			HttpComponentsUtil.replaceAttribute(
+				httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				assetEntry.getEntryId(), scopedAssetEntry.getEntryId());
 		}
 	}
 

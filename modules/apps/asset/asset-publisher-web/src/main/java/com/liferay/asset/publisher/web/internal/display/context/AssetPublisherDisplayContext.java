@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1904,6 +1905,10 @@ public class AssetPublisherDisplayContext {
 
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			HttpComponentsUtil.appendAttribute(
+				_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				assetEntry.getEntryId());
 		}
 	}
 

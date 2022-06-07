@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -126,9 +127,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
 			layoutDisplayPageProvider);
-		httpServletRequest.setAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY,
-			_getAssetEntry(layoutDisplayPageObjectProvider));
+
+		AssetEntry assetEntry = _getAssetEntry(layoutDisplayPageObjectProvider);
+
+		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		HttpComponentsUtil.appendAttribute(
+			httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			assetEntry.getEntryId());
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(

@@ -318,7 +318,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageTitle = "document_1",
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}

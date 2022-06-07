@@ -14,20 +14,37 @@
 
 package com.liferay.client.extension.type;
 
+import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETType;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@CETType(description = "This is a iframe description", name = "iframe")
 @ProviderType
 public interface CETIFrame extends CET {
 
+	@CETProperty(
+		defaultValue = "iframe", name = "friendlyURLMapping", type = "string"
+	)
 	public String getFriendlyURLMapping();
 
+	@CETProperty(
+		defaultValue = "category.remote-apps", name = "portletCategoryName",
+		type = "string"
+	)
 	public String getPortletCategoryName();
 
+	@CETProperty(
+		defaultValue = "https://example.com", name = "url", type = "string"
+	)
 	public String getURL();
 
+	@CETProperty(
+		defaultValue = "false", name = "instanceable", type = "boolean"
+	)
 	public boolean isInstanceable();
 
 }

@@ -14,14 +14,19 @@
 
 package com.liferay.client.extension.type;
 
+import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETType;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eudaldo Alonso
  */
+@CETType(description = "This is a globalCSS description", name = "globalCSS")
 @ProviderType
 public interface CETGlobalCSS extends CET {
 
+	@CETProperty(defaultValue = "global.css", name = "url", type = "string")
 	public String getURL();
 
 }

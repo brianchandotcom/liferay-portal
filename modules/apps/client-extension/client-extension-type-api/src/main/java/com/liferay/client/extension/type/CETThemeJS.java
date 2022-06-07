@@ -14,14 +14,19 @@
 
 package com.liferay.client.extension.type;
 
+import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETType;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Iván Zaera Avellón
  */
+@CETType(description = "This is a themeJS description", name = "themeJS")
 @ProviderType
 public interface CETThemeJS extends CET {
 
+	@CETProperty(defaultValue = "theme.js", name = "url", type = "string")
 	public String getURL();
 
 }

@@ -492,15 +492,20 @@ public class ContentDashboardAdminPortletTest {
 
 	@Test
 	public void testGetSearchContainerWithDefaultOrder() throws Exception {
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletRenderRequest());
+
+		int initialCount = searchContainer.getTotal();
+
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
 
-		SearchContainer<Object> searchContainer = _getSearchContainer(
+		searchContainer = _getSearchContainer(
 			_getMockLiferayPortletRenderRequest());
 
-		Assert.assertEquals(2, searchContainer.getTotal());
+		Assert.assertEquals(initialCount + 2, searchContainer.getTotal());
 
 		List<Object> results = searchContainer.getResults();
 
@@ -524,6 +529,15 @@ public class ContentDashboardAdminPortletTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
 
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.addParameter(
+			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "title");
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletRenderRequest);
+
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 
@@ -539,18 +553,13 @@ public class ContentDashboardAdminPortletTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest();
-
-		mockLiferayPortletRenderRequest.addParameter(
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "title");
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
+		SearchContainer<Object> actualSearchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
-		Assert.assertEquals(2, searchContainer.getTotal());
+		Assert.assertEquals(
+			searchContainer.getTotal() + 2, actualSearchContainer.getTotal());
 
-		List<Object> results = searchContainer.getResults();
+		List<Object> results = actualSearchContainer.getResults();
 
 		Assert.assertEquals(
 			journalArticle1.getTitle(LocaleUtil.US),
@@ -834,11 +843,6 @@ public class ContentDashboardAdminPortletTest {
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-				user.getUserId(), _group.getGroupId(), 0);
-			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-				_user.getUserId(), _group.getGroupId(), 0);
-
 			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 				_getMockLiferayPortletRenderRequest();
 
@@ -852,7 +856,17 @@ public class ContentDashboardAdminPortletTest {
 			SearchContainer<Object> searchContainer = _getSearchContainer(
 				mockLiferayPortletRenderRequest);
 
-			Assert.assertEquals(2, searchContainer.getTotal());
+			int initialCount = searchContainer.getTotal();
+
+			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+				user.getUserId(), _group.getGroupId(), 0);
+			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			Assert.assertEquals(initialCount + 2, searchContainer.getTotal());
 
 			List<Object> results = searchContainer.getResults();
 
@@ -1042,6 +1056,11 @@ public class ContentDashboardAdminPortletTest {
 			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 				_getMockLiferayPortletRenderRequest();
 
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			int initialCount = searchContainer.getTotal();
+
 			JournalTestUtil.addArticle(
 				_user.getUserId(), _group.getGroupId(), 0);
 
@@ -1066,12 +1085,12 @@ public class ContentDashboardAdminPortletTest {
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(
 				googleDriveShortcutFileEntry);
 
-			SearchContainer<Object> searchContainer = _getSearchContainer(
+			searchContainer = _getSearchContainer(
 				mockLiferayPortletRenderRequest);
 
 			int actualCount = searchContainer.getTotal();
 
-			Assert.assertEquals(3, actualCount);
+			Assert.assertEquals(initialCount + 3, actualCount);
 
 			List<Object> results = searchContainer.getResults();
 
@@ -1094,16 +1113,22 @@ public class ContentDashboardAdminPortletTest {
 
 	@Test
 	public void testGetSearchContainerWithPagination() throws Exception {
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletRenderRequest());
+
+		int initialCount = searchContainer.getTotal();
+
 		for (int i = 0; i <= SearchContainer.DEFAULT_DELTA; i++) {
 			JournalTestUtil.addArticle(
 				_user.getUserId(), _group.getGroupId(), 0);
 		}
 
-		SearchContainer<Object> searchContainer = _getSearchContainer(
+		searchContainer = _getSearchContainer(
 			_getMockLiferayPortletRenderRequest());
 
 		Assert.assertEquals(
-			SearchContainer.DEFAULT_DELTA + 1, searchContainer.getTotal());
+			initialCount + SearchContainer.DEFAULT_DELTA + 1,
+			searchContainer.getTotal());
 
 		List<Object> objects = searchContainer.getResults();
 
@@ -1154,13 +1179,6 @@ public class ContentDashboardAdminPortletTest {
 				_company.getCompanyId(), _group.getGroupId(),
 				_user.getUserId());
 
-		JournalArticle journalArticle1 = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), true, serviceContext);
-		JournalArticle journalArticle2 = JournalTestUtil.addArticleWithWorkflow(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, serviceContext);
-
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
 
@@ -1170,7 +1188,18 @@ public class ContentDashboardAdminPortletTest {
 		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
-		Assert.assertEquals(2, searchContainer.getTotal());
+		int initialCount = searchContainer.getTotal();
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), true, serviceContext);
+		JournalArticle journalArticle2 = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, serviceContext);
+
+		searchContainer = _getSearchContainer(mockLiferayPortletRenderRequest);
+
+		Assert.assertEquals(initialCount + 2, searchContainer.getTotal());
 
 		List<Object> results = searchContainer.getResults();
 
@@ -1197,6 +1226,17 @@ public class ContentDashboardAdminPortletTest {
 
 	@Test
 	public void testGetSearchContainerWithStatusApproved() throws Exception {
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletRenderRequest);
+
+		int initialCount = searchContainer.getTotal();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_company.getCompanyId(), _group.getGroupId(),
@@ -1210,16 +1250,9 @@ public class ContentDashboardAdminPortletTest {
 			_group.getGroupId(), 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, serviceContext);
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest();
+		searchContainer = _getSearchContainer(mockLiferayPortletRenderRequest);
 
-		mockLiferayPortletRenderRequest.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			mockLiferayPortletRenderRequest);
-
-		Assert.assertEquals(1, searchContainer.getTotal());
+		Assert.assertEquals(initialCount + 1, searchContainer.getTotal());
 
 		List<Object> results = searchContainer.getResults();
 
@@ -1274,6 +1307,11 @@ public class ContentDashboardAdminPortletTest {
 				_company.getCompanyId(), _company.getGroupId(),
 				_user.getUserId());
 
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletRenderRequest());
+
+		int initialCount = searchContainer.getTotal();
+
 		AssetVocabulary audienceAssetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				serviceContext.getScopeGroupId(), "audience");
@@ -1298,10 +1336,10 @@ public class ContentDashboardAdminPortletTest {
 				journalArticle, RandomTestUtil.randomString(),
 				journalArticle.getContent(), true, false, serviceContext);
 
-			SearchContainer<Object> searchContainer = _getSearchContainer(
+			searchContainer = _getSearchContainer(
 				_getMockLiferayPortletRenderRequest());
 
-			Assert.assertEquals(1, searchContainer.getTotal());
+			Assert.assertEquals(initialCount + 1, searchContainer.getTotal());
 
 			List<Object> results = searchContainer.getResults();
 
@@ -1322,6 +1360,17 @@ public class ContentDashboardAdminPortletTest {
 	public void testGetSearchContainerWithStatusDraftAndHasApprovedVersion()
 		throws Exception {
 
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletRenderRequest);
+
+		int initialCount = searchContainer.getTotal();
+
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
 
@@ -1332,16 +1381,9 @@ public class ContentDashboardAdminPortletTest {
 				_company.getCompanyId(), _group.getGroupId(),
 				_user.getUserId()));
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest();
+		searchContainer = _getSearchContainer(mockLiferayPortletRenderRequest);
 
-		mockLiferayPortletRenderRequest.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			mockLiferayPortletRenderRequest);
-
-		Assert.assertEquals(1, searchContainer.getTotal());
+		Assert.assertEquals(initialCount + 1, searchContainer.getTotal());
 
 		List<Object> results = searchContainer.getResults();
 

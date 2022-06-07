@@ -50,6 +50,11 @@
 	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MENU_SIDEBAR</td>
+	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "middle-bar")]/div[contains(@class, "applications")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -244,6 +244,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"/object_entries/view_object_entries.jsp"
 				).put(
 					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"javax.portlet.version", "3.0"
 				).build()),
 			_bundleContext.registerService(
 				MVCActionCommand.class,

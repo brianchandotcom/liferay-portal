@@ -76,6 +76,45 @@ definition {
 		}
 	}
 
+	@description = "Nested fields in oneToMany relationship after object deletion"
+	@priority = "5"
+	test CanReturnNestedFieldsDetailsInOneToManyRelationshipAfterObjectDeletion {
+		property portal.acceptance = "true";
+
+		task ("Given two manager accounts created") {
+			var managerId1 = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
+			var managerId2 = ObjectDefinitionAPI.createManager(managerFirstname = "Aaron");
+		}
+
+		task ("Given two employee accounts created") {
+			var employeeId1 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Bruce",
+				managerId = "${managerId1}");
+			var employeeId2 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Riley",
+				managerId = "${managerId2}");
+		}
+
+		task ("Given deleting one of the employees") {
+			ObjectDefinitionAPI.deleteEmployee(employeeId = "${employeeId1}");
+		}
+
+		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
+			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedObject = "manager",
+				objects = "employees");
+		}
+
+		task ("Then 'employee' information should not include 'manager' information assigned to the deleted employee") {
+			ObjectDefinitionAPI.assertResponseOnlyIncludesDetailsOfNotDeletedEmployee(
+				employeeId1 = "${employeeId1}",
+				employeeId2 = "${employeeId2}",
+				managerId1 = "${managerId1}",
+				managerId2 = "${managerId2}",
+				responseToParse = "${responseToParse}");
+		}
+	}
+
 	@description = "Nested fields in oneToMany Updated relationship"
 	@priority = "5"
 	test CanReturnNestedFieldsDetailsInOneToManyUpdatedRelationship {

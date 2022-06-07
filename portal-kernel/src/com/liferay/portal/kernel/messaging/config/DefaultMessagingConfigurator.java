@@ -188,16 +188,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	protected void initialize() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		ClassLoader operatingClassLoader = getOperatingClassLoader();
-
-		if (contextClassLoader == operatingClassLoader) {
-			_portalMessagingConfigurator = true;
-		}
-
 		registerMessageBusEventListeners();
 
 		registerDestinations();
@@ -208,7 +198,7 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 		String servletContextName =
 			ServletContextClassLoaderPool.getServletContextName(
-				operatingClassLoader);
+				getOperatingClassLoader());
 
 		if (servletContextName != null) {
 			MessagingConfiguratorRegistry.registerMessagingConfigurator(
@@ -302,7 +292,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		new ArrayList<>();
 	private final Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<>();
-	private boolean _portalMessagingConfigurator;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 

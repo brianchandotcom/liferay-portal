@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,7 +49,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Michael C. Han
  */
 @RunWith(Arquillian.class)
-public class BaseMessagingConfiguratorTest {
+public class DefaultMessagingConfiguratorTest {
 
 	@ClassRule
 	@Rule
@@ -60,7 +59,7 @@ public class BaseMessagingConfiguratorTest {
 	@BeforeClass
 	public static void setUpClass() {
 		Bundle bundle = FrameworkUtil.getBundle(
-			BaseMessagingConfiguratorTest.class);
+			DefaultMessagingConfiguratorTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}
@@ -81,7 +80,7 @@ public class BaseMessagingConfiguratorTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		_baseMessagingConfigurator = new BaseMessagingConfigurator() {
+		_baseMessagingConfigurator = new DefaultMessagingConfigurator() {
 
 			@Override
 			protected ClassLoader getOperatingClassLoader() {
@@ -249,7 +248,7 @@ public class BaseMessagingConfiguratorTest {
 
 	private static BundleContext _bundleContext;
 
-	private BaseMessagingConfigurator _baseMessagingConfigurator;
+	private DefaultMessagingConfigurator _baseMessagingConfigurator;
 	private ServiceTracker<Destination, Destination> _serviceTracker;
 
 	private static class TestClassLoaderMessageListener

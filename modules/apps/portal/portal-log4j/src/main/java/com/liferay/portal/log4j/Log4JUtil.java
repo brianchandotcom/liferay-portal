@@ -98,6 +98,10 @@ public class Log4JUtil {
 		}
 	}
 
+	public static String getCompanyLogDirectory(long companyId) {
+		return Log4jConfigUtil.getCompanyLogDirectory(companyId);
+	}
+
 	public static Map<String, String> getCustomLogSettings() {
 		return new HashMap<>(_customLogSettings);
 	}

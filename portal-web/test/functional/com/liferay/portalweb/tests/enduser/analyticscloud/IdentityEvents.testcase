@@ -46,6 +46,11 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
+		ACUtils.tearDownAC();
+	}
+
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11307 | Test Summary: Logout continues to track user"
 	@priority = "4"
 	test CheckLogoutContinuesToTrackUserWithSameUserId {

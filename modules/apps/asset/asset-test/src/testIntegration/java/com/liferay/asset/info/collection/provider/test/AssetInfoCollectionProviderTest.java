@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -280,6 +281,10 @@ public class AssetInfoCollectionProviderTest {
 		_httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry1);
 
+		HttpComponentsUtil.appendAttribute(
+			_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			assetEntry1.getEntryId());
+
 		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class,
@@ -298,6 +303,10 @@ public class AssetInfoCollectionProviderTest {
 
 		_httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry2);
+
+		HttpComponentsUtil.appendAttribute(
+			_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			assetEntry2.getEntryId());
 
 		assetEntriesInfoPage = infoCollectionProvider.getCollectionInfoPage(
 			new CollectionQuery());

@@ -17,6 +17,7 @@ package com.liferay.analytics.reports.journal.internal.content.dashboard.item.ac
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
@@ -227,11 +228,16 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY,
-			_assetEntryLocalService.getEntry(
-				JournalArticle.class.getName(),
-				_journalArticle.getResourcePrimKey()));
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey());
+
+		HttpComponentsUtil.appendAttribute(
+			mockHttpServletRequest, WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		HttpComponentsUtil.appendAttribute(
+			mockHttpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+			assetEntry.getEntryId());
 
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,

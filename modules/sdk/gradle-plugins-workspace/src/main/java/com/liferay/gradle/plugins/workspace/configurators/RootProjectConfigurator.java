@@ -322,7 +322,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			workspaceExtension.getEnvironment(), workspaceExtension,
 			dockerDeploy, verifyProductTask);
 
-		_addTasksCreateDockerfileAll(
+		_addTaskCreateDockerfileAll(
 			project, workspaceExtension, dockerDeploy, verifyProductTask);
 
 		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
@@ -1190,7 +1190,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerRemoveContainer;
 	}
 
-	private void _addTasksCreateDockerfileAll(
+	private void _addTaskCreateDockerfileAll(
 		Project project, WorkspaceExtension workspaceExtension,
 		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
 
@@ -1231,7 +1231,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					for (String environment : environments) {
-						Dockerfile createDockerfileEnvTask =
+						Dockerfile createDockerfileTask =
 							_addTaskCreateDockerfile(
 								project,
 								CREATE_DOCKERFILE_TASK_NAME +
@@ -1239,23 +1239,23 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								environment, workspaceExtension, dockerDeploy,
 								verifyProductTask);
 
-						RegularFileProperty destFile =
-							createDockerfileEnvTask.getDestFile();
+						RegularFileProperty destRegularFileProperty =
+							createDockerfileTask.getDestFile();
 
-						Provider<Directory> destDirProvider =
-							createDockerfileEnvTask.getDestDir();
+						Provider<Directory> destProvider =
+							createDockerfileTask.getDestDir();
 
-						Directory destDirectory = destDirProvider.get();
+						Directory destDirectory = destProvider.get();
 
-						File dirFile = destDirectory.getAsFile();
+						File destDir = destDirectory.getAsFile();
 
-						destFile.set(
+						destRegularFileProperty.set(
 							new File(
-								dirFile,
+								destDir,
 								"Dockerfile." + environment + "-" + buildTime));
 
 						createDockerfileAllTask.dependsOn(
-							createDockerfileEnvTask);
+							createDockerfileTask);
 					}
 				}
 

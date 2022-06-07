@@ -19,7 +19,7 @@
 <%
 int oAuthClientEntriesCount = OAuthClientEntryLocalServiceUtil.getOAuthClientEntriesCount();
 
-OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplayContext = new OAuthClientsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+OAuthClientsManagementToolbarDisplayContext oAuthClientsManagementToolbarDisplayContext = new OAuthClientsManagementToolbarDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar

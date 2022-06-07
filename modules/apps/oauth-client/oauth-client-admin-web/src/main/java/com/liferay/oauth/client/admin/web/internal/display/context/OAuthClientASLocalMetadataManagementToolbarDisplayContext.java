@@ -40,13 +40,12 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 	extends BaseOAuthClientManagementToolbarDisplayContext {
 
 	public OAuthClientASLocalMetadataManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		PortletURL currentURLObj, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
-			liferayPortletRequest.getHttpServletRequest(),
-			liferayPortletRequest, liferayPortletResponse, currentURLObj);
+			currentURLObj, liferayPortletRequest.getHttpServletRequest(),
+			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

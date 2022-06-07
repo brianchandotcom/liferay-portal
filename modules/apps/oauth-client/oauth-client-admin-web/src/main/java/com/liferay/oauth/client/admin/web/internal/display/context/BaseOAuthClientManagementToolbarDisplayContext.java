@@ -43,15 +43,14 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseOAuthClientManagementToolbarDisplayContext {
 
 	public BaseOAuthClientManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
+		PortletURL currentURLObj, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		LiferayPortletResponse liferayPortletResponse) {
 
+		this.currentURLObj = currentURLObj;
 		this.httpServletRequest = httpServletRequest;
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
-		this.currentURLObj = currentURLObj;
 	}
 
 	public String getDisplayStyle() {

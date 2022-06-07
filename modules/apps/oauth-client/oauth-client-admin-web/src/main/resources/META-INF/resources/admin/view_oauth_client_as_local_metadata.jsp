@@ -19,7 +19,7 @@
 <%
 int oAuthClientASLocalMetadataCount = OAuthClientASLocalMetadataLocalServiceUtil.getOAuthClientASLocalMetadatasCount();
 
-OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMetadataManagementToolbarDisplayContext = new OAuthClientASLocalMetadataManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMetadataManagementToolbarDisplayContext = new OAuthClientASLocalMetadataManagementToolbarDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar

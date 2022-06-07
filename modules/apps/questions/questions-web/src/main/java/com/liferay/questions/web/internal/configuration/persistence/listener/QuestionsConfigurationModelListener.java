@@ -149,6 +149,8 @@ public class QuestionsConfigurationModelListener
 
 			_sapEntryService.addSAPEntry(
 				StringBundler.concat(
+					"com.liferay.commerce.product.service.",
+					"CommerceCatalogService#getCommerceCatalogs\n",
 					"com.liferay.expando.kernel.service.",
 					"ExpandoValueService#getData\n", mbPackage,
 					"MBCategoryService#getCategory\n", mbPackage,

@@ -132,7 +132,10 @@ export default function ({
 
 		try {
 			const response = await fetch(
-				`${HEADLESS_BATCH_PLANNER_URL}/plans/${selectedOption.value}/fields?export=${isExport}`,
+				`${HEADLESS_BATCH_PLANNER_URL}/plans/${selectedOption.value.replace(
+					'#',
+					encodeURIComponent('#')
+				)}/fields?export=${isExport}`,
 				{
 					credentials: 'include',
 					headers: HEADERS,

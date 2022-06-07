@@ -70,6 +70,12 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
+		if (internalClassName.contains("object.rest.dto")) {
+			taskItemDelegateName = _handleTaskItemDelegateName(
+				internalClassName);
+			internalClassName = _handleInternalClassName(internalClassName);
+		}
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, externalType, StringPool.SLASH, internalClassName, name,
@@ -103,6 +109,12 @@ public class BatchPlannerPlanHelper {
 		String taskItemDelegateName = ParamUtil.getString(
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
+
+		if (internalClassName.contains("object.rest.dto")) {
+			taskItemDelegateName = _handleTaskItemDelegateName(
+				internalClassName);
+			internalClassName = _handleInternalClassName(internalClassName);
+		}
 
 		int size = 0;
 
@@ -329,6 +341,20 @@ public class BatchPlannerPlanHelper {
 		}
 
 		return batchPlannerMappings;
+	}
+
+	private String _handleInternalClassName(String internalClassName) {
+		String[] internalClassNameObjectDefinitionName =
+			internalClassName.split("#");
+
+		return internalClassNameObjectDefinitionName[0];
+	}
+
+	private String _handleTaskItemDelegateName(String internalClassName) {
+		String[] internalClassNameObjectDefinitionName =
+			internalClassName.split("#");
+
+		return internalClassNameObjectDefinitionName[1].replace("C_", "");
 	}
 
 	private BatchPlannerPlan _updateBatchPlannerPlan(

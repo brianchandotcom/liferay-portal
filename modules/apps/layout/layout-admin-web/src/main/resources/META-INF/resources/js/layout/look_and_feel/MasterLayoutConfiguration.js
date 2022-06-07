@@ -89,7 +89,9 @@ export default function MasterLayoutConfiguration({
 				{masterLayout.name}
 			</p>
 
-			{editMasterLayoutURL ? (
+			{editMasterLayoutURL &&
+			masterLayout.plid &&
+			masterLayout.plid !== DEFAULT_MASTER_LAYOUT_PLID ? (
 				<ClayButton.Group spaced>
 					<ClayLink
 						className="btn btn-secondary btn-sm"

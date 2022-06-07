@@ -632,9 +632,17 @@ definition {
 			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
 
 			if ("${navTab}" == "Documents and Media") {
-				ItemSelector.selectDMImage(
-					imageFileName = "${dmImage}",
-					navTab = "${navTab}");
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						imageFileName = "${dmImage}",
+						navTab = "${navTab}");
+				}
+				else {
+					ItemSelector.selectDMImage(
+						imageFileName = "${dmImage}",
+						navTab = "${navTab}");
+				}
 			}
 		}
 

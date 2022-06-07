@@ -188,7 +188,9 @@ definition {
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		Click(locator1 = "ObjectAction#TAB_GENERIC");
+		Click(
+			key_tabName = "Basic Info",
+			locator1 = "ObjectAction#TAB_GENERIC");
 
 		Button.clickSave();
 

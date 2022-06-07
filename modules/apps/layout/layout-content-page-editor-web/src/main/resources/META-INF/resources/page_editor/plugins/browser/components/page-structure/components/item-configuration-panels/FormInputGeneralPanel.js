@@ -172,7 +172,7 @@ export function FormInputGeneralPanel({item}) {
 		key: [CACHE_KEYS.allowedInputTypes, fragmentEntryKey],
 	});
 
-	const fields = useMemo(() => {
+	const configFields = useMemo(() => {
 		let nextFields = getInputCommonConfiguration(
 			configurationValues,
 			formFields
@@ -195,7 +195,8 @@ export function FormInputGeneralPanel({item}) {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];
 
 		const localizable =
-			fields.find((field) => field.name === key)?.localizable || false;
+			configFields.find((field) => field.name === key)?.localizable ||
+			false;
 
 		if (localizable) {
 			keyPath.push(languageId);
@@ -261,7 +262,7 @@ export function FormInputGeneralPanel({item}) {
 
 					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
 						<FieldSet
-							fields={fields}
+							fields={configFields}
 							item={item}
 							label=""
 							languageId={languageId}

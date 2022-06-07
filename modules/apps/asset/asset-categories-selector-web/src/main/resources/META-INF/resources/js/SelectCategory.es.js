@@ -31,7 +31,7 @@ function SelectCategory({
 	namespace,
 	nodes,
 	selectedCategoryIds,
-	showSelectedCounter,
+	showSelectedCounter = false,
 }) {
 	const [items, setItems] = useState(() => {
 		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
@@ -157,10 +157,6 @@ function SelectCategory({
 		</div>
 	);
 }
-
-SelectCategory.defaultProps = {
-	showSelectedCounter: false,
-};
 
 SelectCategory.propTypes = {
 	addCategoryURL: PropTypes.string,

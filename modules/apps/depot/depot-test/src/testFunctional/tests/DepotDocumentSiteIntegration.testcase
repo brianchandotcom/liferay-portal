@@ -353,12 +353,56 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the KB content field can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageInKBAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154384 CanViewImageInKBAfterMovingToFolder pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Site Name",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "site-name");
+
+		KBArticle.editCP(
+			depotName = "Test Depot Name",
+			dmImage = "Document_1",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
+			navTab = "Documents and Media",
+			skipNavigation = "true");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		KBArticle.openToKBArticleInSite(
+			groupName = "Site Name",
+			kbArticleTitle = "Knowledge Base Article Title Edit",
+			siteURLKey = "site-name");
+
+		KBArticle.viewImageViaContentCmd();
 	}
 
 	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site after moving it to a folder."

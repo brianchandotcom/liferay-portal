@@ -415,7 +415,7 @@ YUI.add(
 						syntaxLog.delegate(
 							'click',
 							A.bind('handleCurrentScopeSelect', instance),
-							'.conditional-function > .line-container, .function > .line-container, .macro > .line-container, .test-group > .line-container'
+							'.conditional-function > .line-container, .function > .line-container, .macro > .line-container, .take-screenshot > .line-container, .test-group > .line-container'
 						);
 
 						syntaxLog.delegate(
@@ -921,6 +921,8 @@ YUI.add(
 
 						var detailsNodes = instance.get(STR_SYNTAX_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_SCREENSHOT + ', ' + SELECTOR_WARNING);
 
+						var failNodes = instance.get(STR_SYNTAX_LOG).all(SELECTOR_FAIL);
+
 						instance.set(STR_DETAILS, detailsNodes);
 
 						instance._transitionCommandLog(commandLog);
@@ -935,6 +937,10 @@ YUI.add(
 							detailsNodes.each(instance._displayNode, instance);
 
 							var lastFailNode = detailsNodes.first();
+
+							if(failNodes.size() > 0) {
+								lastFailNode = failNodes.first();
+							}
 
 							instance._selectCurrentScope(lastFailNode);
 							instance._scrollToNode(lastFailNode);

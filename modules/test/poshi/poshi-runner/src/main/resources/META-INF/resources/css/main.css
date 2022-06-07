@@ -695,7 +695,7 @@ opacity: 0; }
 .syntax-log *:not(.transitioning) .current-scope > .line-container:nth-child(2):after {
 animation: ping 0.25s cubic-bezier(1, 0.9, 0.47, 1.92); }
 
-.function > .line-container, .macro > .line-container:nth-of-type(2) {
+.function > .line-container, .macro > .line-container:nth-of-type(2), .take-screenshot > .line-container {
 cursor: pointer; }
 
 .macro.hover {
@@ -795,7 +795,7 @@ color: #FF8787; }
 .command-logger .syntax-log .fail > .line-container {
 border-left-color: #FF8787; }
 
-.command-logger .syntax-log .function.fail:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.fail.hover > .line-container, .command-logger .syntax-log .function.pass:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.pass.hover > .line-container, .command-logger .syntax-log .function.pending:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.pending.hover > .line-container, .command-logger .syntax-log .function.warning:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.warning.hover > .line-container, .command-logger .syntax-log .macro.fail:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.fail.hover > .line-container, .command-logger .syntax-log .macro.pass:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.pass.hover > .line-container, .command-logger .syntax-log .macro.pending:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.pending.hover > .line-container, .command-logger .syntax-log .macro.warning:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.warning.hover > .line-container {
+.command-logger .syntax-log .function.fail:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.fail.hover > .line-container, .command-logger .syntax-log .function.pass:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.pass.hover > .line-container, .command-logger .syntax-log .function.pending:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.pending.hover > .line-container, .command-logger .syntax-log .function.warning:not(.macro) > .line-container:hover, .command-logger .syntax-log .function.warning.hover > .line-container, .command-logger .syntax-log .macro.fail:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.fail.hover > .line-container, .command-logger .syntax-log .macro.pass:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.pass.hover > .line-container, .command-logger .syntax-log .macro.pending:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.pending.hover > .line-container, .command-logger .syntax-log .macro.warning:not(.macro) > .line-container:hover, .command-logger .syntax-log .macro.warning.hover > .line-container, .take-screenshot > .line-container:hover {
 -webkit-filter: blur(0);
 background-color: #F7F7F7;
 box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.04), -1px 1px 3px 1px rgba(0, 0, 0, 0.1);

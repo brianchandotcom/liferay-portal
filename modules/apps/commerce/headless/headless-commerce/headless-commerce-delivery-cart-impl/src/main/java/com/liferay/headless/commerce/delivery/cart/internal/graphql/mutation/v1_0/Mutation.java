@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
@@ -85,18 +84,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteCartBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartResource -> cartResource.deleteCartBatch(callbackURL, object));
-	}
-
-	@GraphQLField
 	public Cart patchCart(
 			@GraphQLName("cartId") Long cartId, @GraphQLName("cart") Cart cart)
 		throws Exception {
@@ -116,18 +103,6 @@ public class Mutation {
 			_cartResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			cartResource -> cartResource.putCart(cartId, cart));
-	}
-
-	@GraphQLField
-	public Response updateCartBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartResource -> cartResource.putCartBatch(callbackURL, object));
 	}
 
 	@GraphQLField
@@ -180,19 +155,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteCartCommentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartCommentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartCommentResource -> cartCommentResource.deleteCartCommentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public CartComment patchCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -219,19 +181,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response updateCartCommentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartCommentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartCommentResource -> cartCommentResource.putCartCommentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public CartComment createCartComment(
 			@GraphQLName("cartId") Long cartId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -252,19 +201,6 @@ public class Mutation {
 			_cartItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			cartItemResource -> cartItemResource.deleteCartItem(cartItemId));
-	}
-
-	@GraphQLField
-	public Response deleteCartItemBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartItemResource -> cartItemResource.deleteCartItemBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField(description = "Retrive information of the given Cart.")
@@ -291,19 +227,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			cartItemResource -> cartItemResource.putCartItem(
 				cartItemId, cartItem));
-	}
-
-	@GraphQLField
-	public Response updateCartItemBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartItemResource -> cartItemResource.putCartItemBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -370,9 +293,6 @@ public class Mutation {
 		cartResource.setContextUser(_user);
 		cartResource.setGroupLocalService(_groupLocalService);
 		cartResource.setRoleLocalService(_roleLocalService);
-
-		cartResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -387,9 +307,6 @@ public class Mutation {
 		cartCommentResource.setContextUser(_user);
 		cartCommentResource.setGroupLocalService(_groupLocalService);
 		cartCommentResource.setRoleLocalService(_roleLocalService);
-
-		cartCommentResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(CartItemResource cartItemResource)
@@ -403,9 +320,6 @@ public class Mutation {
 		cartItemResource.setContextUser(_user);
 		cartItemResource.setGroupLocalService(_groupLocalService);
 		cartItemResource.setRoleLocalService(_roleLocalService);
-
-		cartItemResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<CartResource>
@@ -424,7 +338,5 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
 
 }

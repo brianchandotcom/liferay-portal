@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -60,9 +59,6 @@ public interface CartCommentResource {
 
 	public Response deleteCartComment(Long cartCommentId) throws Exception;
 
-	public Response deleteCartCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public CartComment getCartComment(Long cartCommentId) throws Exception;
 
 	public CartComment patchCartComment(
@@ -71,9 +67,6 @@ public interface CartCommentResource {
 
 	public CartComment putCartComment(
 			Long cartCommentId, CartComment cartComment)
-		throws Exception;
-
-	public Response putCartCommentBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<CartComment> getCartCommentsPage(
@@ -119,10 +112,6 @@ public interface CartCommentResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

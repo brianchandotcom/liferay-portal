@@ -65,9 +65,9 @@ definition {
 		}
 
 		task ("Then I should see in response content1 with the updated priority value") {
-			HeadlessWebcontentAPI.assertPriorityFieldIsFilteredWithCorrectValue(
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "3.0",
-				responseToParse = "${responseToParse}");
+				responseToParse = "${response}");
 		}
 	}
 

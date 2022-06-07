@@ -998,6 +998,17 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro selectFavicon {
+		if (isSet(imageFileName)) {
+			ItemSelector.selectDMImage(imageFileName = "${imageFileName}");
+		}
+		else {
+			ItemSelector.uploadFile(uploadFileName = "${uploadFileName}");
+		}
+
+		SelectFrameTop();
+	}
+
 	macro selectPageItem {
 		var key_pageName = "${pageName}";
 

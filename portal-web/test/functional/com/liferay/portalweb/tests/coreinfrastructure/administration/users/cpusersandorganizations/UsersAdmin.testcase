@@ -147,10 +147,12 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		// Workaround for LPS-154041
+
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "user%27ea@liferay.com");
+			userEmailAddress = "user'ea@liferay.com");
 
 		Navigator.openURL();
 
@@ -178,9 +180,11 @@ definition {
 			userLoginEmailAddress = "user1@liferay.com",
 			userLoginFullName = "user1 user1");
 
+		// Workaround for LPS-154041
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "user%27ea@liferay.com");
+			userEmailAddress = "user'ea@liferay.com");
 
 		Navigator.openURL();
 

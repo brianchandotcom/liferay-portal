@@ -136,6 +136,15 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro getSandboxedPublicationName {
+		var sandboxTime = DateUtil.getFormattedCurrentDate("hh:mm");
+		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy");
+
+		var sandboxedPublicationName = "${userFirstName} ${userLastName} - ${sandboxDate} ${sandboxTime}";
+
+		return "${sandboxedPublicationName}";
+	}
+
 	macro inviteUsers {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",

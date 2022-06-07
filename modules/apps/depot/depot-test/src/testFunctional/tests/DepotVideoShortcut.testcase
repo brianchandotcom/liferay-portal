@@ -335,12 +335,56 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connected site after moving it to a folder."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewVideoInWCAfterMovingToFolder {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154385 CanViewVideoInWCAfterMovingToFolder pending implementation
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "Web Content Title");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title");
+
+		WebContent.editCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video",
+			webContentContentEdit = "Web Content Content",
+			webContentTitle = "Web Content Title",
+			webContentTitleEdit = "Web Content Title");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Test YouTube Video",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewVideoPreview(
+			service = "https://www.youtube.com",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connect site when publication is enabled."

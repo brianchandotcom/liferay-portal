@@ -148,6 +148,38 @@ public class ObjectEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public ObjectLayoutBox getCategorizationObjectLayoutBox()
+		throws PortalException {
+
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		if (!StringUtil.equals(
+				objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			return null;
+		}
+
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+
+		if (objectLayoutTab == null) {
+			return null;
+		}
+
+		for (ObjectLayoutBox objectLayoutBox :
+				objectLayoutTab.getObjectLayoutBoxes()) {
+
+			if (StringUtil.equals(
+					objectLayoutBox.getType(),
+					ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
+
+				return objectLayoutBox;
+			}
+		}
+
+		return null;
+	}
+
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		ObjectLayout objectLayout = getObjectLayout();
 
@@ -258,38 +290,6 @@ public class ObjectEntryDisplayContext {
 
 			return null;
 		}
-	}
-
-	public ObjectLayoutBox getCategorizationObjectLayoutBox()
-		throws PortalException {
-
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
-		if (!StringUtil.equals(
-				objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
-			return null;
-		}
-
-		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
-
-		if (objectLayoutTab == null) {
-			return null;
-		}
-
-		for (ObjectLayoutBox objectLayoutBox :
-				objectLayoutTab.getObjectLayoutBoxes()) {
-
-			if (StringUtil.equals(
-					objectLayoutBox.getType(),
-					ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
-
-				return objectLayoutBox;
-			}
-		}
-
-		return null;
 	}
 
 	public ObjectLayoutTab getObjectLayoutTab() throws PortalException {

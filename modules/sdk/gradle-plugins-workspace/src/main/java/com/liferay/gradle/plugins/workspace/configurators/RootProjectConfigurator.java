@@ -78,10 +78,12 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.logging.Logger;
@@ -89,6 +91,7 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -126,6 +129,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_DOCKER_CONTAINER_TASK_NAME =
 		"createDockerContainer";
+
+	public static final String CREATE_DOCKERFILE_ALL_TASK_NAME =
+		"createDockerfileAll";
 
 	public static final String CREATE_DOCKERFILE_TASK_NAME = "createDockerfile";
 
@@ -312,6 +318,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
+			project, CREATE_DOCKERFILE_TASK_NAME,
+			workspaceExtension.getEnvironment(), workspaceExtension,
+			dockerDeploy, verifyProductTask);
+
+		_addTasksCreateDockerfileAll(
 			project, workspaceExtension, dockerDeploy, verifyProductTask);
 
 		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
@@ -575,18 +586,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Dockerfile _addTaskCreateDockerfile(
-		Project project, final WorkspaceExtension workspaceExtension,
-		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
+		Project project, String taskName, String environment,
+		final WorkspaceExtension workspaceExtension, Copy dockerDeploy,
+		VerifyProductTask verifyProductTask) {
 
 		Dockerfile dockerfile = GradleUtil.addTask(
-			project, CREATE_DOCKERFILE_TASK_NAME, Dockerfile.class);
+			project, taskName, Dockerfile.class);
 
 		dockerfile.dependsOn(verifyProductTask, dockerDeploy);
 		dockerfile.mustRunAfter(verifyProductTask);
 
 		dockerfile.instruction(
-			"ENV LIFERAY_WORKSPACE_ENVIRONMENT=" +
-				workspaceExtension.getEnvironment());
+			"ENV LIFERAY_WORKSPACE_ENVIRONMENT=" + environment);
 
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /mnt/liferay/deploy");
@@ -1177,6 +1188,77 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerRemoveContainer;
+	}
+
+	private void _addTasksCreateDockerfileAll(
+		Project project, WorkspaceExtension workspaceExtension,
+		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
+
+		long buildTime = System.currentTimeMillis();
+
+		File configsDir = workspaceExtension.getConfigsDir();
+
+		String[] environments = configsDir.list(
+			new FilenameFilter() {
+
+				@Override
+				public boolean accept(File file, String name) {
+					if (!name.startsWith(".") && file.isDirectory() &&
+						!name.equals("common") && !name.equals("docker")) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		if ((environments == null) || (environments.length == 0)) {
+			return;
+		}
+
+		Task createDockerfileAllTask = GradleUtil.addTask(
+			project, CREATE_DOCKERFILE_ALL_TASK_NAME, DefaultTask.class);
+
+		createDockerfileAllTask.setDescription(
+			"create docker file for each environment.");
+		createDockerfileAllTask.setGroup(DOCKER_GROUP);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					for (String environment : environments) {
+						Dockerfile createDockerfileEnvTask =
+							_addTaskCreateDockerfile(
+								project,
+								CREATE_DOCKERFILE_TASK_NAME +
+									StringUtil.capitalize(environment),
+								environment, workspaceExtension, dockerDeploy,
+								verifyProductTask);
+
+						RegularFileProperty destFile =
+							createDockerfileEnvTask.getDestFile();
+
+						Provider<Directory> destDirProvider =
+							createDockerfileEnvTask.getDestDir();
+
+						Directory destDirectory = destDirProvider.get();
+
+						File dirFile = destDirectory.getAsFile();
+
+						destFile.set(
+							new File(
+								dirFile,
+								"Dockerfile." + environment + "-" + buildTime));
+
+						createDockerfileAllTask.dependsOn(createDockerfileEnvTask);
+					}
+				}
+
+			});
 	}
 
 	private void _addTasksDistBundleArchive(

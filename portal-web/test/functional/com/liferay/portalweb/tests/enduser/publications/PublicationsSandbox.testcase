@@ -1,0 +1,90 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "All users with access to publications (view and access in control panel) will be sandboxed."
+	@priority = "4"
+	test UserWithAccessToPublicationsPermissionsCanbeSandboxed {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Publications User",
+			userEmailAddress = "userea@liferay.com");
+
+		Publications.enablePublications(enableSandboxOnly = "true");
+
+		Publications.createNewPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		Publications.viewSandboxedPublication(
+			sandboxedPublicationName = "${sandboxedPublicationName1}",
+			sandboxedUser = "true");
+
+		Publications.deletePublication(publicationName = "${sandboxedPublicationName1}");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		Publications.viewSandboxedPublication(sandboxedPublicationName = "${sandboxedPublicationName1}");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		var sandboxedPublicationName2 = Publications.getSandboxedPublicationName(
+			userFirstName = "test",
+			userLastName = "test");
+
+		Publications.viewSandboxedPublication(
+			sandboxedPublicationName = "${sandboxedPublicationName2}",
+			sandboxedUser = "true");
+	}
+
+}

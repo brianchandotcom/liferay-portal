@@ -685,18 +685,13 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			MouseOver(
-				key_text = "Web Content Title",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "Web Content Title",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-			Click.mouseOverClick(
-				key_listEntry = "Web Content Title",
-				key_text = "view",
-				locator1 = "LexiconList#ANY_ICON");
+			MenuItem.click(menuItem = "View");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
 			var jornalURL = Navigator.getCurrentURL();
 

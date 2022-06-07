@@ -35,6 +35,13 @@ definition {
 		Confirm();
 	}
 
+	macro viewAnyList {
+		AssertTextEquals.assertPartialText(
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#ANY_LIST",
+			value1 = "${listEntry}");
+	}
+
 	macro viewListEntryLabel {
 		AssertTextEquals(
 			key_listEntry = "${listEntry}",

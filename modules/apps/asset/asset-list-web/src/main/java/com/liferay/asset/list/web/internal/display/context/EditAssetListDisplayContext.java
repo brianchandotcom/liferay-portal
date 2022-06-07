@@ -57,6 +57,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -1326,6 +1328,10 @@ public class EditAssetListDisplayContext {
 				companyId);
 		}
 		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+
 			return false;
 		}
 	}
@@ -1380,6 +1386,9 @@ public class EditAssetListDisplayContext {
 	}
 
 	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = -1;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditAssetListDisplayContext.class);
 
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;

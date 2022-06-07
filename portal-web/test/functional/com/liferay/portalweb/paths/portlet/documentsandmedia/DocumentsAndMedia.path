@@ -137,6 +137,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_DOCUMENT_ON_CUSTOM_ATTACHMENT</td>
+	<td>//div[@class='card card-interactive']//span[contains(text(),'${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

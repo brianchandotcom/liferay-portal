@@ -16,7 +16,7 @@ definition {
 			value1 = "${folderName}");
 	}
 
-	macro assertDocumentsAndMediaHomeFolder {
+	macro assertDocumentsAndMediaHomeFolderByCompany {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
@@ -26,6 +26,18 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "${infoText}");
+	}
+
+	macro assertDocumentsAndMediaHomeFolderBySite {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_viewHomeFolder = "${viewHomeFolder}",
+			locator1 = "ObjectField#VIEW_HOME_FOLDER");
+
+		AssertElementPresent(
+			key_imageName = "${imageName}",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ON_CUSTOM_ATTACHMENT");
 	}
 
 	macro assertLabel {

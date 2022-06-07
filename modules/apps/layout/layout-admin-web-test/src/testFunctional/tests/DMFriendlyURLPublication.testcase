@@ -30,21 +30,91 @@ definition {
 	}
 
 	@description = "This ensures that an image in the WC content field can be rendered correctly when publication is enabled."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewImageInWC {
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		// TODO LPS-154390 CanViewImageInWC pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedImage = "true",
+			imageFileName = "Document_1",
+			siteName = "Site Name",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "document_1",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that an external video in the WC content field can be rendered correctly when publication is enabled."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewVideoInWC {
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		// TODO LPS-154390 CanViewVideoInWC pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewVideoPreview(
+			service = "youtube",
+			webContentTitle = "WC WebContent Title");
 	}
 
 }

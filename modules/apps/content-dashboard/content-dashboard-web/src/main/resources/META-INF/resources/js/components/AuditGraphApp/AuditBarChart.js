@@ -135,15 +135,15 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 			style.textContent = Object.entries(colors).reduce(
 				(acc, [dataKey, color]) => {
 					return acc.concat(`
-						 .custom-control-color-${dataKey}.custom-control-input:checked ~
-							 .custom-control-label::before {
-								 background-color: ${color};
-								 border-color: ${color};
-						 }
-						 .custom-control-color-${dataKey}.custom-control-input:not(:checked) ~
-							 .custom-control-label::before {
-								 border-color: ${color};
-						 }
+						html:not(#__):not(#___) .cadmin .custom-control-color-${dataKey}.custom-control-input:checked ~
+							.custom-control-label::before {
+								background-color: ${color};
+								border-color: ${color};
+						}
+						html:not(#__):not(#___) .cadmin .custom-control-color-${dataKey}.custom-control-input:not(:checked) ~
+							.custom-control-label::before {
+								border-color: ${color};
+						}
 					 `);
 				},
 				''

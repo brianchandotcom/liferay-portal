@@ -30,7 +30,7 @@ create table FragmentComposition (
 	fragmentCollectionId LONG,
 	fragmentCompositionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	data_ TEXT null,
 	previewFileEntryId LONG,
 	lastPublishDate DATE null,

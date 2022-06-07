@@ -172,14 +172,19 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	private InfoForm _getInfoForm(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
+		long classNameId = formStyledLayoutStructureItem.getClassNameId();
+
+		if (classNameId <= 0) {
+			return null;
+		}
+
 		InfoItemServiceTracker infoItemServiceTracker =
 			ServletContextUtil.getInfoItemServiceTracker();
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormProvider.class,
-				PortalUtil.getClassName(
-					formStyledLayoutStructureItem.getClassNameId()));
+				PortalUtil.getClassName(classNameId));
 
 		if (infoItemFormProvider != null) {
 			try {

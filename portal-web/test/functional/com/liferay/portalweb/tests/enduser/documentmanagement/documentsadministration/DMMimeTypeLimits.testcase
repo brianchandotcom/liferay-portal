@@ -169,8 +169,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test InstanceTakesEffectOverSystemLimit {
-		DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
-
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = "30720",
 			mimeTypeValue = "application/pdf");
@@ -194,11 +192,11 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Document_1.pdf");
 	}
 
-	@description = "This test ensures that when setting a system/instance maximum file size, the limits in site settings will take effect if it is smaller than the system/instance setting."
+	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Site, System Settings and Instance Settings), the lower limit from the site will take effect."
 	@priority = "4"
 	@uitest
-	test SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings";
+	test SiteSizeLimitTakesEffectOverSystemAndInstanceSettings {
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverSystemAndInstanceSettings";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = "51200",

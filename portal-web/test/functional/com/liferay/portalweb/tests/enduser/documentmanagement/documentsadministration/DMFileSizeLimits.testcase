@@ -128,11 +128,11 @@ definition {
 		LexiconCard.viewCardThumbnail(card = "Document_4.jpg");
 	}
 
-	@description = "This test ensures that when setting a system/instance maximum file size, the limits in site settings will take effect if it is smaller than the system/instance setting."
+	@description = "This test ensures that when setting the Maximum File Size at different levels(Site, System Settings and Instance Settings), the lower limit from instance settings will take effect."
 	@priority = "4"
 	@uitest
-	test SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings";
+	test InstanceSizeLimitTakesEffectOverSiteAndSystemSettings {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#InstanceSizeLimitTakesEffectOverSiteAndSystemSettings";
 
 		DMDocument.updateMaximumFileSize(fieldValue = "51200");
 
@@ -143,7 +143,7 @@ definition {
 			fieldValue = "51200");
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "30720",
+			fieldValue = "20480",
 			instanceSettings = "true");
 
 		DMNavigator.openToConfigInSiteSettings(
@@ -152,10 +152,10 @@ definition {
 
 		SystemSettings.viewInputText(
 			fieldLabel = "Maximum File Size",
-			fieldValue = "30720");
+			fieldValue = "20480");
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "20480",
+			fieldValue = "30720",
 			siteSettings = "true",
 			siteURLKey = "guest");
 

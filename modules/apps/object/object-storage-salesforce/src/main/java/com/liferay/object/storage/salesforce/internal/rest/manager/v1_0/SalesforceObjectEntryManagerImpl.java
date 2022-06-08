@@ -114,20 +114,31 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _salesforceClient.query(
+		JSONObject responseJSONObject1 = _salesforceClient.query(
 			"SELECT FIELDS(ALL) FROM " +
 				_getSalesforceObjectName(objectDefinition.getName()) +
 					_getSalesforcePagination(pagination));
 
-		if ((responseJSONObject == null) ||
-			(responseJSONObject.length() == 0)) {
+		if ((responseJSONObject1 == null) ||
+			(responseJSONObject1.length() == 0)) {
 
 			return Page.of(Collections.emptyList());
 		}
 
+		JSONObject responseJSONObject2 = _salesforceClient.query(
+			"SELECT COUNT(Id) FROM " +
+				_getSalesforceObjectName(objectDefinition.getName()));
+
+		JSONArray jsonArray = responseJSONObject2.getJSONArray("records");
+
 		return Page.of(
-			_toObjectEntries(responseJSONObject.getJSONArray("records")),
-			pagination, responseJSONObject.getInt("totalSize"));
+			_toObjectEntries(responseJSONObject1.getJSONArray("records")),
+			pagination,
+			jsonArray.getJSONObject(
+				0
+			).getInt(
+				"expr0"
+			));
 	}
 
 	@Override

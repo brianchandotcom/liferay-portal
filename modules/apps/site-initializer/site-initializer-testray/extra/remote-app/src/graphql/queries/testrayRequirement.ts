@@ -31,14 +31,14 @@ export type TestrayRequirement = {
 
 export const getRequirements = gql`
 	query getRequirements(
-		$filter: String
+		$filter: String = ""
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
 		requirements(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Requirement"
-				path: "requirements?page={args.page}&pageSize={args.pageSize}&nestedFields=component,team"
+				path: "requirements?page={args.page}&pageSize={args.pageSize}&filter={args.filter}&nestedFields=component,team&nestedFieldsDepth=2"
 			) {
 			items {
 				components
@@ -71,7 +71,7 @@ export const getRequirement = gql`
 		requirement(requirementId: $requirementId)
 			@rest(
 				type: "C_Requirement"
-				path: "requirements/{args.requirementId}?nestedFields=component,team"
+				path: "requirements/{args.requirementId}?nestedFields=component,team&nestedFieldsDepth=2"
 			) {
 			components
 			description

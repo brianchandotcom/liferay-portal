@@ -12,6 +12,28 @@
  * details.
  */
 
+export * from './liferayRole';
+export * from './liferayUserAccount';
+export * from './testrayAttachment';
+export * from './testrayBuild';
+export * from './testrayCase';
+export * from './testrayCaseResult';
+export * from './testrayCaseType';
+export * from './testrayComponent';
+export * from './testrayFactorCategory';
+export * from './testrayFactorOptions';
+export * from './testrayProductVersion';
+export * from './testrayProject';
+export * from './testrayRequirement';
+export * from './testrayRequirementCase';
+export * from './testrayRoutine';
+export * from './testrayShared';
+export * from './testraySuite';
+export * from './testraySuiteCase';
+export * from './testrayTask';
+export * from './testrayTeam';
+export * from './testrayWarning';
+
 export type CType<ObjectKey extends string, Query = any> = {
 	c: {
 		[key in ObjectKey]: Query;
@@ -47,23 +69,3 @@ export type TypePagination<ObjectKey extends string, Query = any> = {
 export type CTypePagination<ObjectKey extends string, Query = any> = {
 	c: TypePagination<ObjectKey, Query>;
 };
-
-export * from './liferayRole';
-export * from './liferayUserAccount';
-export * from './testrayAttachment';
-export * from './testrayBuild';
-export * from './testrayCase';
-export * from './testrayCaseResult';
-export * from './testrayCaseType';
-export * from './testrayComponent';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRequirementCase';
-export * from './testrayRoutine';
-export * from './testrayShared';
-export * from './testraySuite';
-export * from './testraySuiteCase';
-export * from './testrayTask';
-export * from './testrayWarning';

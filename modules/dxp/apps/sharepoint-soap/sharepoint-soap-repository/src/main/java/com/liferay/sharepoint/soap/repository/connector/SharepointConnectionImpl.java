@@ -61,7 +61,7 @@ import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.client.Stub;
 import org.apache.axis2.namespace.Constants;
 import org.apache.axis2.transport.http.HTTPConstants;
-import org.apache.axis2.transport.http.impl.httpclient3.HttpTransportPropertiesImpl;
+import org.apache.axis2.transport.http.impl.httpclient4.HttpTransportPropertiesImpl;
 import org.apache.http.client.config.AuthSchemes;
 
 /**

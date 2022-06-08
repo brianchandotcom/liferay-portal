@@ -545,8 +545,9 @@ definition {
 
 		WebContent.editCP(
 			depotName = "Test Depot Name",
-			dmImage = "DM Document Title",
 			navTab = "Documents and Media",
+			selectViaCKEditor = "true",
+			webContentImage = "DM Document Title",
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title");
 

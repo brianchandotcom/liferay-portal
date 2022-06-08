@@ -1102,6 +1102,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/document_library/error.jsp");
 		}
 		else {
+			SessionErrors.add(actionRequest, exception.getClass());
+
 			if (cmd.equals(Constants.ADD_DYNAMIC)) {
 				JSONObject jsonObject;
 

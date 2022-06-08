@@ -125,15 +125,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		if (isSet(searchScope)) {
-			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
-				Select(
-					locator1 = "Select#SCOPE_CONFIGURATION",
-					value1 = "${searchScope}");
-			}
-			else {
-				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
-			}
 		}
 
 		if (isSet(destinationPage)) {
@@ -146,6 +137,17 @@ definition {
 			Type(
 				locator1 = "SearchConfiguration#DESTINATION_PAGE",
 				value1 = "${destinationPage}");
+		}
+
+		if (isSet(searchScope)) {
+			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+				Select(
+					locator1 = "Select#SCOPE_CONFIGURATION",
+					value1 = "${searchScope}");
+			}
+			else {
+				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+			}
 		}
 
 		PortletEntry.save();

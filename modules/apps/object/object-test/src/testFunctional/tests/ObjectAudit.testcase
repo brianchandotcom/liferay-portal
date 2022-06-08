@@ -410,12 +410,34 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's  Additional Information of the scope is updated when is modified on the object details"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateWhenChangeScope {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153578",
+			objectName = "CustomObject153578",
+			pluralLabelName = "Custom Objects 153578");
 
-		// TODO LPS-153578 CanViewUpdateWhenChangeScope pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153578");
+
+		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+
+		CreateObject.saveObject();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "site",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's when updated the basic info or the Searchable of the field, the Additional Information is updated"

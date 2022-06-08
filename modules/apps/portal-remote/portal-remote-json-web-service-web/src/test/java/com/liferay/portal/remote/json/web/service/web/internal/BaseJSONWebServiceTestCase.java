@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.remote.json.web.service.web.internal.util.MethodParametersResolverImpl;
-import com.liferay.portal.remote.json.web.service.web.internal.util.MethodParametersResolverUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Method;
@@ -64,12 +62,6 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			new JSONWebServiceActionsManagerUtil(),
 			"_jsonWebServiceActionsManager",
 			new JSONWebServiceActionsManagerImpl());
-
-		MethodParametersResolverUtil methodParametersResolverUtil =
-			new MethodParametersResolverUtil();
-
-		methodParametersResolverUtil.setMethodParametersResolver(
-			new MethodParametersResolverImpl());
 	}
 
 	protected static void registerAction(Object action) {

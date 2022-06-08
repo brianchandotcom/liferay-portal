@@ -188,16 +188,18 @@ public class CompanyLogServlet extends HttpServlet {
 
 		printWriter.println("<html><body>");
 
+		StringBundler sb = new StringBundler();
+
 		if (permissionChecker.isOmniadmin()) {
 			_companyLocalService.forEachCompany(
 				company -> _listCompanyLogFiles(
-					httpServletRequest, printWriter, company));
+					httpServletRequest, sb, company));
 		}
 		else if (permissionChecker.isCompanyAdmin()) {
 			User user = permissionChecker.getUser();
 
 			_listCompanyLogFiles(
-				httpServletRequest, printWriter,
+				httpServletRequest, sb,
 				_companyLocalService.getCompany(user.getCompanyId()));
 		}
 		else {
@@ -205,11 +207,16 @@ public class CompanyLogServlet extends HttpServlet {
 				permissionChecker.getUserId());
 		}
 
+		if (sb.length() == 0) {
+			sb.append("No log is available.");
+		}
+
+		printWriter.println(sb.toString());
 		printWriter.println("</body></html>");
 	}
 
 	private void _listCompanyLogFiles(
-		HttpServletRequest httpServletRequest, PrintWriter printWriter,
+		HttpServletRequest httpServletRequest, StringBundler sb,
 		Company company) {
 
 		String logFilesDirPath = Log4JUtil.getCompanyLogDirectory(
@@ -225,8 +232,9 @@ public class CompanyLogServlet extends HttpServlet {
 			return;
 		}
 
-		printWriter.println("<h1>" + company.getWebId() + "</h1>");
-		printWriter.println("<ul>");
+		sb.append("<h1>");
+		sb.append(company.getWebId());
+		sb.append("</h1><ul>");
 
 		for (File file : logFilesDir.listFiles()) {
 			String href = StringBundler.concat(
@@ -234,15 +242,14 @@ public class CompanyLogServlet extends HttpServlet {
 				_portal.getPathContext(), "/o/company-log/",
 				company.getCompanyId(), StringPool.SLASH, file.getName());
 
-			printWriter.println(
-				"<li><a target=\"_self\" href=\"" + href + "\">");
-
-			printWriter.println(file.getName());
-			printWriter.println("</a>");
-			printWriter.println("</li>");
+			sb.append("<li><a target=\"_self\" href=\"");
+			sb.append(href);
+			sb.append("\">");
+			sb.append(file.getName());
+			sb.append("</a></li>");
 		}
 
-		printWriter.println("</ul>");
+		sb.append("</ul>");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

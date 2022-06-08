@@ -1,6 +1,7 @@
 @component-name = "portal-batch-engine"
 definition {
 
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Batch Engine";
@@ -37,7 +38,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 		}
@@ -81,7 +82,7 @@ definition {
 		}
 
 		task ("When the user selects an entity and clicks on the Download a Sample File for This Entity button") {
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 
 			Click.clickAt(locator1 = "ImportExport#SAMPLE_FILE_DOWNLOAD_BUTTON");
 		}
@@ -120,7 +121,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "CSV");
 		}
@@ -144,7 +145,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
 
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("When the user maps only specific fields and imports the file") {
@@ -207,7 +208,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "JSON");
 		}
@@ -242,7 +243,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "JSONL");
 		}
@@ -283,7 +284,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "CSV");
 		}
@@ -325,7 +326,7 @@ definition {
 
 			ImportExport.exportFile(
 				containsHeaders = "false",
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "CSV");
 		}
@@ -366,7 +367,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON");
 		}
@@ -407,7 +408,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSONL");
 		}
@@ -428,14 +429,14 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "CSV");
 		}
@@ -508,7 +509,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
 				templateName = "Test Account Import Template");
@@ -518,7 +519,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
 				templateName = "Test Account Export Template");
@@ -570,7 +571,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 		}
@@ -628,7 +629,7 @@ definition {
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("Then the user should be able to map account fields to columns in the CSV file") {
@@ -681,7 +682,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
 				fileName = "json_account_import.json");
 		}
@@ -732,7 +733,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
 				fileName = "jsonl_account_import.jsonl");
 		}
@@ -783,7 +784,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				fieldMappings = "name:Channel Name,type:Channel Type",
 				fileName = "csv_channel_import.csv");
 		}
@@ -846,14 +847,14 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description",
 				exportFileFormat = "CSV");
 		}
@@ -904,7 +905,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
 				templateName = "Test Account Export Template");
@@ -923,7 +924,7 @@ definition {
 
 		task ("Then the export should be configured according to the template") {
 			ImportExport.assertExportTemplate(
-				entityType = "Account (v1_0)",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
 				templateName = "Test Account Export Template");
@@ -941,7 +942,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
 				templateName = "Test Account Import Template");
@@ -960,7 +961,7 @@ definition {
 
 		task ("Then the import should be configured according to the template") {
 			ImportExport.assertImportTemplate(
-				entityType = "Account (v1_0)",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				templateName = "Test Account Import Template");
 		}
 	}
@@ -976,7 +977,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON");
 		}
@@ -1005,7 +1006,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 		}
@@ -1034,7 +1035,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description",
 				fileName = "csv_account_import.csv",
 				templateName = "Test Account Import Template");
@@ -1110,14 +1111,14 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "CSV");
 		}
@@ -1126,14 +1127,14 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				fieldMappings = "name:Channel Name,type:Channel Type,currencyCode:Currency Code",
 				fileName = "csv_channel_import.csv");
 
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.exportFile(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "CSV");
 		}
@@ -1244,7 +1245,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv",
 				templateName = "Test Account Import Template");
@@ -1254,7 +1255,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
 				templateName = "Test Account Export Template");
@@ -1266,7 +1267,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				fieldMappings = "name:Channel Name,type:Channel Type,currencyCode:Currency Code",
 				fileName = "csv_channel_import.csv",
 				templateName = "Test Channel Import Template");
@@ -1276,7 +1277,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "CSV",
 				templateName = "Test Channel Export Template");
@@ -1364,7 +1365,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "JSON",
 				templateName = "Test Account Export Template");
@@ -1427,7 +1428,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "",
 				exportFileFormat = "CSV");
 
@@ -1494,7 +1495,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
 				stopImportOnError = "true");
@@ -1538,7 +1539,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
 				stopImportOnError = "true");
@@ -1554,7 +1555,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 		}
@@ -1607,7 +1608,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
 				stopImportOnError = "true");
@@ -1662,7 +1663,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1684,7 +1685,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1706,7 +1707,7 @@ definition {
 		}
 
 		task ("When I select the entity type") {
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("Then the fields are automatically mapped") {
@@ -1725,7 +1726,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
 				stopImportOnError = "true");
@@ -1766,7 +1767,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
 
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1789,7 +1790,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import.csv");
 		}
@@ -1824,7 +1825,7 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.importFile(
-				entityType = "admin.user.dto.v1_0.Account",
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
 				fileName = "csv_account_import_error.csv",
 				stopImportOnError = "false");
@@ -1858,7 +1859,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
 
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1881,7 +1882,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
 				fileName = "json_channel_import.json");
 		}
@@ -1915,7 +1916,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "jsonl_account_import.jsonl");
 
-			ImportExport.selectEntity(entityType = "admin.user.dto.v1_0.Account");
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
 		}
 
 		task ("When the user maps the import fields") {
@@ -1938,7 +1939,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "commerce.admin.channel.dto.v1_0.Channel",
+				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
 				fileName = "jsonl_channel_import.jsonl");
 		}
@@ -1972,7 +1973,7 @@ definition {
 		}
 
 		task ("When the user selects the import entity") {
-			ImportExport.selectEntity(entityType = "commerce.admin.channel.dto.v1_0.Channel");
+			ImportExport.selectEntity(entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)");
 		}
 
 		task ("Then the required and optional fields should be shown for that entity.") {

@@ -381,7 +381,7 @@ definition {
 
 		Select(
 			locator1 = "ImportExport#ENTITY_TYPE",
-			value1 = "value=com.liferay.headless.${entityType}");
+			value1 = "${entityType}");
 	}
 
 }

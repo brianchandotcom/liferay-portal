@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 import java.net.HttpURLConnection;
 
 import java.util.Map;
@@ -49,15 +51,26 @@ public class SalesforceClient {
 		try {
 			Http.Options options = new Http.Options();
 
-			options.addHeader("Authorization", "Bearer " + _getAccessToken());
+			options.addHeader(
+				"Authorization", "Bearer " + _getAccessToken(false));
+
 			options.setLocation(
 				HttpComponentsUtil.addParameter(
 					_instanceUrl + "/services/data/v54.0/query/", "q",
 					queryString));
 
 			String responseJSON = _http.URLtoString(options);
-
 			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() ==
+					HttpURLConnection.HTTP_UNAUTHORIZED) {
+
+				options.addHeader(
+					"Authorization", "Bearer " + _getAccessToken(true));
+
+				responseJSON = _http.URLtoString(options);
+				response = options.getResponse();
+			}
 
 			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new PortalException(
@@ -70,7 +83,8 @@ public class SalesforceClient {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(
+					"Unable to execute query: " + queryString, exception);
 			}
 
 			return JSONFactoryUtil.createJSONObject();
@@ -84,7 +98,7 @@ public class SalesforceClient {
 			SalesforceConfiguration.class, properties);
 	}
 
-	private JSONObject _autenticate() {
+	private JSONObject _autenticate() throws PortalException {
 		try {
 			Http.Options options = new Http.Options();
 
@@ -99,19 +113,33 @@ public class SalesforceClient {
 				_salesforceConfiguration.url() + "/services/oauth2/token");
 			options.setPost(true);
 
-			return _jsonFactory.createJSONObject(_http.URLtoString(options));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+			String responseJSON = _http.URLtoString(options);
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				_log.error("Unable to authenticate with Salesforce");
+
+				throw new PortalException(
+					StringBundler.concat(
+						"Unable to authenticate with Salesforce. Unexpected ",
+						"response status ", response.getResponseCode(),
+						" with response message: ", responseJSON));
 			}
 
-			return JSONFactoryUtil.createJSONObject();
+			return _jsonFactory.createJSONObject(_http.URLtoString(options));
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to authenticate with Salesforce");
+
+			throw new PortalException(
+				"Unable to authenticate with Salesforce", ioException);
 		}
 	}
 
-	private String _getAccessToken() {
-		if (Validator.isNull(_accessToken)) {
+	private String _getAccessToken(boolean forceAuthentication)
+		throws PortalException {
+
+		if (Validator.isNull(_accessToken) || forceAuthentication) {
 			JSONObject responseJSONObject = _autenticate();
 
 			_accessToken = responseJSONObject.getString("access_token");

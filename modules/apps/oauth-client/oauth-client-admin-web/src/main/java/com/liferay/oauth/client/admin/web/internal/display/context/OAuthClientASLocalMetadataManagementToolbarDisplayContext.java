@@ -37,7 +37,7 @@ import javax.portlet.PortletURL;
  * @author Arthur Chan
  */
 public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
-	extends BaseOAuthClientManagementToolbarDisplayContext {
+	extends BaseManagementToolbarDisplayContext {
 
 	public OAuthClientASLocalMetadataManagementToolbarDisplayContext(
 		PortletURL currentURLObj, LiferayPortletRequest liferayPortletRequest,

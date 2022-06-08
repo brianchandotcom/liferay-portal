@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Arthur Chan
  */
-public abstract class BaseOAuthClientManagementToolbarDisplayContext {
+public abstract class BaseManagementToolbarDisplayContext {
 
-	public BaseOAuthClientManagementToolbarDisplayContext(
+	public BaseManagementToolbarDisplayContext(
 		PortletURL currentURLObj, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {

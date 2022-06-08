@@ -3438,14 +3438,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",

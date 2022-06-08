@@ -3136,8 +3136,6 @@ definition {
 	}
 
 	test ViewSortWidgetConfigurationNewUI {
-		property custom.properties = "feature.flag.LPS-134052=true";
-
 		for (var title : list "Banana,Apple,Cherry") {
 			JSONWebcontent.addWebContent(
 				content = "Content ",

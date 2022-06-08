@@ -40,7 +40,6 @@ Export-Package:\
 	!com.liferay.portal.service,\
 	!com.liferay.portal.sharepoint.*,\
 	!com.liferay.portal.spring.bean,\
-	!com.liferay.portal.spring.context,\
 	!com.liferay.portal.systemevent,\
 	!com.liferay.portal.tools.comparator,\
 	!com.liferay.portal.tools.javadocformatter,\
@@ -148,9 +147,13 @@ Export-Package:\
 	\
 	jodd.io.*;version='6.0.1',\
 	\
+	jodd.json.*;version='6.0.1',\
+	\
 	jodd.net.*;version='6.0.1',\
 	\
 	jodd.time.*;version='6.0.1',\
+	\
+	jodd.typeconverter.*;version='6.0.1',\
 	\
 	jodd.util.*;version='6.0.1',\
 	\

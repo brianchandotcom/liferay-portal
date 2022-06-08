@@ -1,3 +1,44 @@
+@component-name = "portal-search"
+definition {
+
+	property custom.properties = "feature.flag.LPS-152597=true";
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Search";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			WebContent.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			WikiPage.tearDownCP();
+
+			Vocabulary.tearDownCP();
+
+			Tag.tearDownCP(site = "Guest");
+
+			PagesAdmin.tearDownCP();
+		}
+	}
 
 	@priority = "4"
 	test CanViewSearchBarSuggestionsResultDetails {
@@ -120,3 +161,48 @@
 			searchAssetTitle = "Apple");
 	}
 
+	@priority = "5"
+	test ShowBasicSuggestionsAcrossDifferentScopes {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Apple Pie",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie");
+
+		Refresh();
+
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "DM Document Description",
+			searchAssetTitle = "Apple Pie");
+	}
+
+}

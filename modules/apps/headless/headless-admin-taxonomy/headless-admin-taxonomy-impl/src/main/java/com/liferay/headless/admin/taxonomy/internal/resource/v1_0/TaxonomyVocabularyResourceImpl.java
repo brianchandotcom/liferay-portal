@@ -90,6 +90,20 @@ public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				getAssetVocabularyByExternalReferenceCode(
+					assetLibraryId, externalReferenceCode);
+
+		_assetVocabularyService.deleteVocabulary(
+			assetVocabulary.getVocabularyId());
+	}
+
+	@Override
 	public void deleteSiteTaxonomyVocabularyByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
@@ -118,6 +132,19 @@ public class TaxonomyVocabularyResourceImpl
 
 		return getSiteTaxonomyVocabulariesPage(
 			assetLibraryId, search, filter, pagination, sorts);
+	}
+
+	@Override
+	public TaxonomyVocabulary
+			getAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_getTaxonomyVocabularyByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		return _toTaxonomyVocabulary(assetVocabulary);
 	}
 
 	@Override
@@ -165,18 +192,8 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.
-				getAssetVocabularyByExternalReferenceCode(
-					siteId, externalReferenceCode);
-
-		String resourceName = getPermissionCheckerResourceName(
-			assetVocabulary.getVocabularyId());
-		Long resourceId = getPermissionCheckerResourceId(
-			assetVocabulary.getVocabularyId());
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(assetVocabulary.getVocabularyId()));
+			_getTaxonomyVocabularyByExternalReferenceCode(
+				siteId, externalReferenceCode);
 
 		return _toTaxonomyVocabulary(assetVocabulary);
 	}
@@ -262,6 +279,28 @@ public class TaxonomyVocabularyResourceImpl
 			_addAssetVocabulary(
 				taxonomyVocabulary.getExternalReferenceCode(), siteId,
 				taxonomyVocabulary));
+	}
+
+	@Override
+	public TaxonomyVocabulary
+			putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					assetLibraryId, externalReferenceCode);
+
+		if (assetVocabulary != null) {
+			return _toTaxonomyVocabulary(
+				_updateVocabulary(assetVocabulary, taxonomyVocabulary));
+		}
+
+		return _toTaxonomyVocabulary(
+			_addAssetVocabulary(
+				externalReferenceCode, assetLibraryId, taxonomyVocabulary));
 	}
 
 	@Override
@@ -577,6 +616,28 @@ public class TaxonomyVocabularyResourceImpl
 		assetVocabularySettingsHelper.setMultiValued(true);
 
 		return assetVocabularySettingsHelper.toString();
+	}
+
+	private AssetVocabulary _getTaxonomyVocabularyByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				getAssetVocabularyByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+		String resourceName = getPermissionCheckerResourceName(
+			assetVocabulary.getVocabularyId());
+
+		Long resourceId = getPermissionCheckerResourceId(
+			assetVocabulary.getVocabularyId());
+
+		PermissionUtil.checkPermission(
+			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
+			getPermissionCheckerGroupId(assetVocabulary.getVocabularyId()));
+
+		return assetVocabulary;
 	}
 
 	private TaxonomyVocabulary _toTaxonomyVocabulary(

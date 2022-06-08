@@ -114,7 +114,7 @@ public class AssetCategoriesDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
-			"/edit_category.jsp"
+			"/edit_asset_category.jsp"
 		).setParameter(
 			"itemSelectorEventName",
 			() -> {

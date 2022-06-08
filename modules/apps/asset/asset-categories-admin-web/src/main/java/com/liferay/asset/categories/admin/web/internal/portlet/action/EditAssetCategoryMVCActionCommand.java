@@ -51,11 +51,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-		"mvc.command.name=/asset_categories_admin/edit_category"
+		"mvc.command.name=/asset_categories_admin/edit_asset_category"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
+public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

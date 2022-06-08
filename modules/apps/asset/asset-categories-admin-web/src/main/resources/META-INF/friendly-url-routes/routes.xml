@@ -4,12 +4,12 @@
 <routes>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/category/{parentCategoryId:\d+}/new</pattern>
-		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/edit_asset_category.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/category/{categoryId:\d+}/edit</pattern>
-		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/edit_asset_category.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
@@ -19,7 +19,7 @@
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/categories/new</pattern>
-		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/edit_asset_category.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
@@ -29,7 +29,7 @@
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/set_category_display_page_template</pattern>
-		<implicit-parameter name="mvcPath">/set_category_display_page_template.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/set_asset_category_display_page_template.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

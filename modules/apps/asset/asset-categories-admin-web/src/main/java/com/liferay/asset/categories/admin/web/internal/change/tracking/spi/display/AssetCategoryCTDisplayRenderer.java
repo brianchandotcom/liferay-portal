@@ -74,7 +74,7 @@ public class AssetCategoryCTDisplayRenderer
 				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/edit_category.jsp"
+			"/edit_asset_category.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(

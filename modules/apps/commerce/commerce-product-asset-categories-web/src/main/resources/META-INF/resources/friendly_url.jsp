@@ -29,7 +29,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 PortletURL categoryRedirectURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCPath(
-	"/view_categories.jsp"
+	"/view_asset_categories.jsp"
 ).buildPortletURL();
 
 if (parentCategoryId > 0) {

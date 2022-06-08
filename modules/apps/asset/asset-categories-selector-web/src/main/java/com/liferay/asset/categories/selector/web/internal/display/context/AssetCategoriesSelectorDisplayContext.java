@@ -102,7 +102,7 @@ public class AssetCategoriesSelectorDisplayContext {
 				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/edit_category.jsp"
+			"/edit_asset_category.jsp"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(

@@ -301,7 +301,7 @@
 					</c:if>
 
 					<clay:sheet-section>
-						<liferay-util:include page="/view_categories.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/view_asset_categories.jsp" servletContext="<%= application %>" />
 					</clay:sheet-section>
 				</clay:sheet>
 			</c:if>

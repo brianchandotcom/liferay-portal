@@ -26,7 +26,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 	propsTransformer="js/AssetCategoriesManagementToolbarPropsTransformer"
 />
 
-<portlet:actionURL name="/asset_categories_admin/delete_category" var="deleteCategoryURL">
+<portlet:actionURL name="/asset_categories_admin/delete_asset_category" var="deleteCategoryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

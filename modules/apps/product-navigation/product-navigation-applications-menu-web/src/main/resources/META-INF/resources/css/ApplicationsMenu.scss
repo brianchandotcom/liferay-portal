@@ -3,6 +3,10 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.applications-menu-modal {
+			.btn-monospaced {
+				color: $cadmin-secondary;
+			}
+
 			.modal-dialog {
 				margin: 0;
 				max-width: none;
@@ -16,10 +20,6 @@ html#{$cadmin-selector} {
 
 			.modal-body {
 				padding: 0;
-			}
-
-			.btn-monospaced {
-				color: $cadmin-secondary;
 			}
 
 			.tab-pane {

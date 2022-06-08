@@ -362,9 +362,11 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			const newObjectFields: TObjectField[] = [];
 
-			METADATA.map((field) => {
-				newObjectFields.push(field);
-			});
+			if (!Liferay.FeatureFlags['LPS-154872']) {
+				METADATA.map((field) => {
+					newObjectFields.push(field);
+				});
+			}
 
 			objectFieldsWithCheck.map((field: TObjectField) => {
 				newObjectFields.push(field);

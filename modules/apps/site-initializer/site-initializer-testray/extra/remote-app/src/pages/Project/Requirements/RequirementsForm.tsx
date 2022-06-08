@@ -27,6 +27,7 @@ import {
 	TestrayComponent,
 	TestrayRequirement,
 	getComponents,
+	getRequirements,
 } from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
@@ -93,6 +94,9 @@ const RequirementsForm: React.FC = () => {
 			{
 				createMutation: CreateRequirement,
 				updateMutation: UpdateRequirement,
+			},
+			{
+				refetchQueries: [{query: getRequirements}],
 			}
 		);
 	};

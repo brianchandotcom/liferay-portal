@@ -14,6 +14,9 @@
 
 type Key = string;
 type Value = string | number;
+type Filter = {
+	[key: string]: string | number | string[] | number[];
+};
 
 export const searchUtil = {
 	eq: (key: Key, value: Value) => `${key} eq '${value}'`,
@@ -36,6 +39,16 @@ export const searchUtil = {
 export class SearchBuilder {
 	#query: string = '';
 
+	#setContext(query: string) {
+		this.#query += ` ${query}`;
+
+		return this;
+	}
+
+	and() {
+		return this.#setContext('and');
+	}
+
 	build() {
 		const query = this.#query.trim();
 
@@ -46,14 +59,40 @@ export class SearchBuilder {
 		return query;
 	}
 
-	#setContext(query: string) {
-		this.#query += ` ${query}`;
+	static removeEmptyFilter(filter: Filter) {
+		const _filter: Filter = {};
 
-		return this;
+		for (const key in filter) {
+			const value = filter[key];
+
+			if (!value) {
+				continue;
+			}
+
+			_filter[key] = value;
+		}
+
+		return _filter;
 	}
 
-	and() {
-		return this.#setContext('and');
+	static createFilter(filter: Filter, baseFilters?: string) {
+		const _filter = [baseFilters];
+
+		for (const key in filter) {
+			const value = filter[key];
+
+			if (!value) {
+				continue;
+			}
+
+			const _value = Array.isArray(value)
+				? searchUtil.in(key, value)
+				: searchUtil.eq(key, value);
+
+			_filter.push(_value);
+		}
+
+		return _filter.join(' and ');
 	}
 
 	eq(key: Key, value: Value) {

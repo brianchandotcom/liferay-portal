@@ -38,6 +38,16 @@ liferay-remote-app-testray {
 	@import 'components/progress_bar';
 	@import 'components/table';
 	@import 'components/tablechart';
+
+	.subnav-tbar-primary {
+		background-color: white;
+
+		.result-filter {
+			background-color: $color-primary-dark;
+			border-color: $color-primary-dark;
+			color: $color-white;
+		}
+	}
 }
 
 .dropdown-section .custom-control-label {
@@ -59,5 +69,19 @@ liferay-remote-app-testray {
 
 	div:nth-child(1) {
 		max-width: none;
+	}
+}
+
+.management-toolbar-filter-dropdown {
+	width: 300px;
+	max-height: 600px;
+
+	label {
+		font-size: 14px;
+		font-weight: normal !important;
+	}
+
+	.form-control {
+		margin-bottom: 15px;
 	}
 }

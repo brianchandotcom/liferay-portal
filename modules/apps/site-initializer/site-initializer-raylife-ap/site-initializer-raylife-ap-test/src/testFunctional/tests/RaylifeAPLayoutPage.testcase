@@ -32,7 +32,9 @@ definition {
 	test CanViewSideBarExpand {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
-		AssertElementPresent(locator1 = "RaylifeAP#MENU_SIDEBAR");
+		AssertElementPresent(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "policies");
 	}
 
 	@description = "LPS-151596 - Check that the 'Applications' section is present in the sidebar"

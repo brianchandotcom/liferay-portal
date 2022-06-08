@@ -134,12 +134,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String CREATE_DOCKERFILE_ALL_TASK_NAME =
 		"createDockerfileAll";
 
-	public static final String CREATE_REGISTRY_CONTAINER_TASK_NAME =
-			"createRegistryContainer";
-
-	public static final String CREATE_DOCKER_LOCAL_REGISTRY_TASK_NAME =
-		"createDockerLocalRegistry";
-
 	public static final String CREATE_DOCKERFILE_TASK_NAME = "createDockerfile";
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
@@ -380,7 +374,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Property<Boolean> pullProperty = dockerBuildImage.getPull();
 
-		pullProperty.set(true);
+		pullProperty.set(workspaceExtension.getDockerPullPolicy());
 
 		DockerRegistryCredentials credentials =
 			dockerBuildImage.getRegistryCredentials();
@@ -744,9 +738,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								workspaceExtension.
 									getDockerLocalRegistryAddress();
 
-							if (!workspaceExtension.getDockerPullPolicy() &&
-								Objects.nonNull(dockerLocalRegistryAddress)) {
-
+							if (Objects.nonNull(dockerLocalRegistryAddress)) {
 								dockerImageLiferay = dockerImageLiferay.replace(
 									"liferay", dockerLocalRegistryAddress);
 							}
@@ -1226,8 +1218,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		String dockerUserName = workspaceExtension.getDockerUserName();
 
-		if (!workspaceExtension.getDockerPullPolicy() &&
-			Objects.nonNull(
+		if (Objects.nonNull(
 				workspaceExtension.getDockerLocalRegistryAddress())) {
 
 			property.set(
@@ -1273,13 +1264,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		SetProperty<String> property = dockerPushImage.getImages();
 
-		String dockerLocalRegistryUrl =
-			workspaceExtension.getDockerLocalRegistryAddress();
-
 		String dockerUserName = workspaceExtension.getDockerUserName();
 
-		if (!workspaceExtension.getDockerPullPolicy() &&
-			Objects.nonNull(dockerLocalRegistryUrl)) {
+		if (Objects.nonNull(
+				workspaceExtension.getDockerLocalRegistryAddress())) {
 
 			property.add(
 				workspaceExtension.getDockerLocalRegistryAddress() + "/" +

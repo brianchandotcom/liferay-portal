@@ -228,6 +228,12 @@ definition {
 				imageFileName = "${uploadedFileName}",
 				navTab = "${navTab}");
 		}
+		else if (isSet(depotName)) {
+			ItemSelector.selectRepositoryImage(
+				depotName = "${depotName}",
+				imageFileName = "${imageFileName}",
+				navTab = "${navTab}");
+		}
 		else {
 			ItemSelector.uploadFile(
 				navTab = "${navTab}",

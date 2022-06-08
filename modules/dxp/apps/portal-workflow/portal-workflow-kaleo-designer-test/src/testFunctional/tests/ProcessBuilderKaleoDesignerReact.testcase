@@ -1733,11 +1733,28 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Join node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWithJoinNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinNode";
+		
+			
 
-		// TODO CanPublishWithJoinNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "process-with-join-node-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join");
+
+		PortletEntry.publish();
+
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+
 
 	}
 

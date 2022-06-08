@@ -282,12 +282,37 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is updated when the name, label or plural label of the object is modified"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewInformationAreCorrectWhenUpdateCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153574",
+			objectName = "CustomObject153574",
+			pluralLabelName = "Custom Objects 153574");
 
-		// TODO LPS-153574 CanViewInformationAreCorrectWhenUpdateCustomObject pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153574");
+
+		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+
+		ObjectAdmin.editCustomObject(
+			fieldLabelName = "Custom Object Edit 153574",
+			fieldName = "CustomObjectEdit153574",
+			pluralLabelName = "Custom Objects Plural 153574");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "site,Custom Object Edit 153574,CustomObjectEdit153574,Custom Objects Plural 153574",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's when add, delete or update a field the user can view two Resource Name (ObjectField and ObjectFieldSetting) created"

@@ -1,0 +1,22 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "accountSubscriptionERC"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "accountSubscriptionGroupERC"
+	},
+	{
+		"dataType": 9,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "provisionedCount"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "status"
+	}
+]

@@ -15,35 +15,15 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 /**
  * @author Shuyang Zhou
  */
 public class PropsValuesTestUtil {
-
-	public static void setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
-	}
 
 	public static SafeCloseable swapWithSafeCloseable(
 		String propsKeysFieldName, Object value) {

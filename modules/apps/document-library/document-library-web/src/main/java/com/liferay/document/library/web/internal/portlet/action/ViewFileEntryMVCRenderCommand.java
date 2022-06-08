@@ -172,9 +172,11 @@ public class ViewFileEntryMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-		HttpComponentsUtil.appendAttribute(
-			renderRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
-			layoutAssetEntry.getEntryId());
+		if (layoutAssetEntry != null) {
+			HttpComponentsUtil.appendAttribute(
+				renderRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				layoutAssetEntry.getEntryId());
+		}
 	}
 
 	@Reference

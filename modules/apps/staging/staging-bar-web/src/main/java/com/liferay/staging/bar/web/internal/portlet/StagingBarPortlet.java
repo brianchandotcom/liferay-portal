@@ -631,9 +631,11 @@ public class StagingBarPortlet extends MVCPortlet {
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, scopedAssetEntry);
 
-			HttpComponentsUtil.replaceAttribute(
-				httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
-				assetEntry.getEntryId(), scopedAssetEntry.getEntryId());
+			if (scopedAssetEntry != null) {
+				HttpComponentsUtil.replaceAttribute(
+					httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+					assetEntry.getEntryId(), scopedAssetEntry.getEntryId());
+			}
 		}
 	}
 

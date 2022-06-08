@@ -132,9 +132,11 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
-		HttpComponentsUtil.appendAttribute(
-			httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
-			assetEntry.getEntryId());
+		if (assetEntry != null) {
+			HttpComponentsUtil.appendAttribute(
+				httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+				assetEntry.getEntryId());
+		}
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(

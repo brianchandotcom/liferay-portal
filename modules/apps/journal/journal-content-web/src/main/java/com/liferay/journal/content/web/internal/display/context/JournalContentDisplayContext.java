@@ -1012,9 +1012,9 @@ public class JournalContentDisplayContext {
 		_ddmTemplateModelResourcePermission =
 			ddmTemplateModelResourcePermission;
 
-		if (isShowArticle()) {
-			AssetEntry assetEntry = _getAssetEntry();
+		AssetEntry assetEntry = _getAssetEntry();
 
+		if (isShowArticle() && (assetEntry != null)) {
 			HttpComponentsUtil.appendAttribute(
 				portletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
 				assetEntry.getEntryId());

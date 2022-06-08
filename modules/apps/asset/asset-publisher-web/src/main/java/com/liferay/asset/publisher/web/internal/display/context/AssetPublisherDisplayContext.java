@@ -1906,9 +1906,11 @@ public class AssetPublisherDisplayContext {
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
-			HttpComponentsUtil.appendAttribute(
-				_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
-				assetEntry.getEntryId());
+			if (assetEntry != null) {
+				HttpComponentsUtil.appendAttribute(
+					_httpServletRequest, WebKeys.LINKED_ASSET_ENTRY_IDS,
+					assetEntry.getEntryId());
+			}
 		}
 	}
 

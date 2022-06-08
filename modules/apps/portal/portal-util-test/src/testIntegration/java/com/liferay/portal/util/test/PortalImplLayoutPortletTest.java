@@ -88,7 +88,11 @@ public class PortalImplLayoutPortletTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ContentLayoutTestUtil.addPortletToLayout(layout, _TEST_PORTLET_NAME);
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addPortletToLayout(draftLayout, _TEST_PORTLET_NAME);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		Assert.assertEquals(
 			layout.getPlid(),

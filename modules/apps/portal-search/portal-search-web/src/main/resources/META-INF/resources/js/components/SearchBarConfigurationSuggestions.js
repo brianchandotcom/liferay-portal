@@ -77,6 +77,49 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 		onClose: () => setShowModal(false),
 	});
 
+	useEffect(() => {
+
+		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
+		// title is not saved within initialSuggestionsContributorConfiguration.
+
+		if (value.attributes?.sxpBlueprintId) {
+			setSXPBlueprint({loading: true, title: ''});
+
+			fetch(
+				`${window.location.origin}/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
+				{
+					headers: new Headers({
+						'Accept': 'application/json',
+						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+						'Content-Type': 'application/json',
+					}),
+					method: 'GET',
+				}
+			)
+				.then((response) =>
+					response.json().then((data) => ({
+						data,
+						ok: response.ok,
+					}))
+				)
+				.then(({data, ok}) => {
+					setSXPBlueprint({
+						loading: false,
+						title:
+							!ok || data.status === 'NOT_FOUND'
+								? `${value.attributes?.sxpBlueprintId}`
+								: data.title,
+					});
+				})
+				.catch(() => {
+					setSXPBlueprint({
+						loading: false,
+						title: `${value.attributes?.sxpBlueprintId}`,
+					});
+				});
+		}
+	}, []); //eslint-disable-line
+
 	const _handleSXPBlueprintSelectorSubmit = (id, title) => {
 		onChange({
 			attributes: {
@@ -136,49 +179,6 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 		});
 		setMultiSelectItems(newValue);
 	};
-
-	useEffect(() => {
-
-		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
-		// title is not saved within initialSuggestionsContributorConfiguration.
-
-		if (value.attributes?.sxpBlueprintId) {
-			setSXPBlueprint({loading: true, title: ''});
-
-			fetch(
-				`${window.location.origin}/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
-				{
-					headers: new Headers({
-						'Accept': 'application/json',
-						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-						'Content-Type': 'application/json',
-					}),
-					method: 'GET',
-				}
-			)
-				.then((response) =>
-					response.json().then((data) => ({
-						data,
-						ok: response.ok,
-					}))
-				)
-				.then(({data, ok}) => {
-					setSXPBlueprint({
-						loading: false,
-						title:
-							!ok || data.status === 'NOT_FOUND'
-								? `${value.attributes?.sxpBlueprintId}`
-								: data.title,
-					});
-				})
-				.catch(() => {
-					setSXPBlueprint({
-						loading: false,
-						title: `${value.attributes?.sxpBlueprintId}`,
-					});
-				});
-		}
-	}, []); //eslint-disable-line
 
 	return (
 		<>

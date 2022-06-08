@@ -289,6 +289,10 @@ definition {
 			UserBar.signOut();
 		}
 
+		task ("Clear local storage") {
+			ACUtils.clearLocalStorage();
+		}
+
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("identity");
 		}

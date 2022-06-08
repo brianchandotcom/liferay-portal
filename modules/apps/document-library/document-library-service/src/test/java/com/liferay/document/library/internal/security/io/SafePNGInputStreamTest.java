@@ -179,8 +179,7 @@ public class SafePNGInputStreamTest {
 	private static byte[] _getBytes(String fileName) throws Exception {
 		return _getBytes(
 			SafePNGInputStreamTest.class.getResourceAsStream(
-				"/com/liferay/document/library/internal/security/io" +
-					"/dependencies/" + fileName));
+				"dependencies/" + fileName));
 	}
 
 	private InputStream _createInputStream(byte[]... bytes) {

@@ -70,7 +70,7 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
-		if (internalClassName.contains("object.rest.dto")) {
+		if (internalClassName.contains("#")) {
 			taskItemDelegateName = _handleTaskItemDelegateName(
 				internalClassName);
 			internalClassName = _handleInternalClassName(internalClassName);
@@ -110,7 +110,7 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
-		if (internalClassName.contains("object.rest.dto")) {
+		if (internalClassName.contains("#")) {
 			taskItemDelegateName = _handleTaskItemDelegateName(
 				internalClassName);
 			internalClassName = _handleInternalClassName(internalClassName);
@@ -321,11 +321,17 @@ public class BatchPlannerPlanHelper {
 			String suffix = StringUtil.extractLast(
 				parameterName, StringPool.UNDERLINE);
 
-			if (Validator.isNull(
-					ParamUtil.getString(
-						portletRequest, "internalFieldName_" + suffix))) {
+			String internalFieldName = ParamUtil.getString(
+				portletRequest, "internalFieldName_" + suffix);
 
-				continue;
+			if (Validator.isNull(internalFieldName) &&
+				parameterName.contains("properties_") &&
+				Validator.isNotNull(
+					ParamUtil.getString(
+						portletRequest,
+						"internalFieldName_properties_" + suffix))) {
+
+				internalFieldName = suffix;
 			}
 
 			BatchPlannerMapping batchPlannerMapping =
@@ -333,9 +339,7 @@ public class BatchPlannerPlanHelper {
 
 			batchPlannerMapping.setExternalFieldName(
 				ParamUtil.getString(portletRequest, parameterName));
-			batchPlannerMapping.setInternalFieldName(
-				ParamUtil.getString(
-					portletRequest, "internalFieldName_" + suffix));
+			batchPlannerMapping.setInternalFieldName(internalFieldName);
 
 			batchPlannerMappings.add(batchPlannerMapping);
 		}

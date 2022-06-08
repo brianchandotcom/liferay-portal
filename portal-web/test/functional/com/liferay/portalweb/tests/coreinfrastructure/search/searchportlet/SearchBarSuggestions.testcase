@@ -1,3 +1,50 @@
+
+	@priority = "4"
+	test CanViewSearchBarSuggestionsResultDetails {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Apple Pie",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "DM Document Description",
+			searchAssetTitle = "Apple Pie");
+
+		SearchBarSuggestions.showMoreSuggestions();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple Pie",
+			searchAssetType = "Document");
+
+		Type(
+			locator1 = "Search#SEARCH_BAR_WIDGET",
+			value1 = "Apple");
+
+		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple Pie");
+
+		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple Pie");
+	}
+
 	@description = "This is a use case for LPS-155317"
 	@priority = "4"
 	test DisablingSuggestionsSAPHidesSuggestionsFromGuests {

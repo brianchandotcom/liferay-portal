@@ -34,7 +34,13 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 
 	return (
 		<Modal
-			last={<Form.Footer isModal onClose={onClose} onSubmit={onSave} />}
+			last={
+				<Form.Footer
+					isModal
+					onClose={onClose}
+					onSubmit={() => onSave(state)}
+				/>
+			}
 			observer={observer}
 			size="full-screen"
 			title={i18n.translate(type)}

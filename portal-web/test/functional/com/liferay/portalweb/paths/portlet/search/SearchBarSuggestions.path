@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>SearchBarSuggestions</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SearchBarSuggestions</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>RESULTS_LIST_ITEM_DESCRIPTION</td>
+	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']/following-sibling::div[contains(@class,'suggestion-item-description') and contains(.,'${key_searchAssetDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_LIST_ITEM_TITLE</td>
+	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

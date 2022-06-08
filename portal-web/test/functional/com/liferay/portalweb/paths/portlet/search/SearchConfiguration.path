@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHARACTER_THRESHOLD_FOR_DISPLAYING_SUGGESTIONS</td>
+	<td>//input[contains(@name,'suggestionsDisplayThreshold')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESTINATION_PAGE</td>
 	<td>//input[contains(@name,'destination')]</td>
 	<td></td>

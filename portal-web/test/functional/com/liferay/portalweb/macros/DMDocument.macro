@@ -2727,28 +2727,19 @@ definition {
 		if ("${indexNumber}" == "2") {
 			Click(locator1 = "Button#DUPLICATE");
 
-			if (isSet(mimeTypeValue)) {
-				Type(
-					key_fieldLabel = "Mime Type",
-					key_indexNumber = "${indexNumber}",
-					locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
-					value1 = "${mimeTypeValue}");
+			Type(
+				key_fieldLabel = "Mime Type",
+				key_indexNumber = "${indexNumber}",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = "${mimeTypeValue}");
 
-				Type(
-					key_fieldLabel = "Maximum File Size",
-					key_indexNumber = "${indexNumber}",
-					locator1 = "TextInput#GENERIC_NUMBER_INPUT_N",
-					value1 = "${maximumFileSizeValue}");
-			}
-			else {
-				Type(
-					key_indexNumber = "${indexNumber}",
-					key_label = "Mime Type Size Limit",
-					locator1 = "TextArea#ANY_LABELED_N",
-					value1 = "${fieldValue}");
-			}
+			Type(
+				key_fieldLabel = "Maximum File Size",
+				key_indexNumber = "${indexNumber}",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT_N",
+				value1 = "${maximumFileSizeValue}");
 		}
-		else if (isSet(mimeTypeValue)) {
+		else {
 			Type(
 				key_fieldLabel = "Mime Type",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -2758,12 +2749,6 @@ definition {
 				key_fieldLabel = "Maximum File Size",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${maximumFileSizeValue}");
-		}
-		else {
-			Type(
-				key_label = "Mime Type Size Limit",
-				locator1 = "TextArea#ANY_LABELED",
-				value1 = "${fieldValue}");
 		}
 
 		SystemSettings.saveConfiguration();

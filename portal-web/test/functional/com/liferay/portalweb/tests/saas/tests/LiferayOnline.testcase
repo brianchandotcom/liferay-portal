@@ -293,7 +293,7 @@ definition {
 		}
 
 		task ("Assert the Remote App is Not Present") {
-			RemoteApps.assertTableEntryNameNotPresent(entryName = "My New Remote App");
+			RemoteApps.viewEmptyRemoteTable();
 		}
 	}
 

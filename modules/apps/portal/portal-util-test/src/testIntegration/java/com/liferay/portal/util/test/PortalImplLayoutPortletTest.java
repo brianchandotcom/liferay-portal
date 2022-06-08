@@ -17,6 +17,7 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -49,6 +50,7 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Dante Wang
+ * @author Evan Thibodeau
  */
 @RunWith(Arquillian.class)
 public class PortalImplLayoutPortletTest {
@@ -105,56 +107,71 @@ public class PortalImplLayoutPortletTest {
 	public void testGetPlidFromPortletIdContentLayoutPrefOwnerTypeGroup()
 		throws Exception {
 
-		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP, true);
+		_testGetPlidFromPortletIdContentLayout(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP);
 	}
 
 	@Test
 	public void testGetPlidFromPortletIdContentLayoutPrefOwnerTypeLayout()
 		throws Exception {
 
-		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT, true);
+		_testGetPlidFromPortletIdContentLayout(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT);
 	}
 
 	@Test
 	public void testGetPlidFromPortletIdPortletLayoutPrefOwnerTypeGroup()
 		throws Exception {
 
-		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP, false);
+		_testGetPlidFromPortletIdPortletLayout(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP);
 	}
 
 	@Test
 	public void testGetPlidFromPortletIdPortletLayoutPrefOwnerTypeLayout()
 		throws Exception {
 
-		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT, false);
+		_testGetPlidFromPortletIdPortletLayout(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT);
 	}
 
-	private void testGetPlidFromPortletId(
-			String portletId, boolean contentLayout)
+	private void _testGetPlidFromPortletIdContentLayout(String portletId)
 		throws Exception {
 
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout;
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		if (contentLayout) {
-			layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout draftLayout = layout.fetchDraftLayout();
 
-			Layout draftLayout = layout.fetchDraftLayout();
-
+		JSONObject layoutDataJSONObject =
 			ContentLayoutTestUtil.addPortletToLayout(draftLayout, portletId);
 
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-		}
-		else {
-			layout = LayoutTestUtil.addTypePortletLayout(_group);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-			LayoutTestUtil.addPortletToLayout(layout, portletId);
-		}
+		Assert.assertEquals(
+			layout.getPlid(),
+			_portal.getPlidFromPortletId(_group.getGroupId(), portletId));
+
+		ContentLayoutTestUtil.markItemForDeletionFromLayout(
+			draftLayout, portletId,
+			layoutDataJSONObject.getString("addedItemId"));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		Assert.assertNotEquals(
+			layout.getPlid(),
+			_portal.getPlidFromPortletId(_group.getGroupId(), portletId));
+	}
+
+	private void _testGetPlidFromPortletIdPortletLayout(String portletId)
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		LayoutTestUtil.addPortletToLayout(layout, portletId);
 
 		Assert.assertEquals(
 			layout.getPlid(),

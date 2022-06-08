@@ -16,6 +16,8 @@ import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.
 import SegmentsExperimentsContext from './context.es';
 import APIService from './util/APIService.es';
 
+import '../css/main.scss';
+
 export default function ({context, portletNamespace, props}) {
 	const isAnalyticsSync = props.analyticsData?.isSynced;
 	const {endpoints, imagesPath, page} = context;

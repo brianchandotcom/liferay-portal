@@ -17,8 +17,8 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import ImportModal from './ImportModal';
 import ImportPreviewModalBody from './ImportPreviewModalBody';
-import ImportProcessModalBody from './ImportProcessModalBody';
 
 function ImportSubmit({
 	evaluateForm,
@@ -69,7 +69,7 @@ function ImportSubmit({
 			)}
 
 			{modalVisibile && stage === 'import' && (
-				<ImportProcessModalBody
+				<ImportModal
 					closeModal={onClose}
 					formDataQuerySelector={formDataQuerySelector}
 					formImportURL={formImportURL}

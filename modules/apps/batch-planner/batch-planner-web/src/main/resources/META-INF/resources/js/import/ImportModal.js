@@ -24,7 +24,7 @@ import {importStatus} from '../BatchPlannerImport';
 import Poller from '../Poller';
 import {EXPORT_FILE_NAME} from '../constants';
 
-const ImportProcessModalBody = ({
+const ImportModal = ({
 	closeModal,
 	formDataQuerySelector,
 	formImportURL,
@@ -110,8 +110,8 @@ const ImportProcessModalBody = ({
 	);
 };
 
-ImportProcessModalBody.propTypes = {
+ImportModal.propTypes = {
 	formImportURL: PropTypes.string.isRequired,
 };
 
-export default ImportProcessModalBody;
+export default ImportModal;

@@ -106,7 +106,7 @@ public class PortalImplLayoutPortletTest {
 		throws Exception {
 
 		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP);
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP, true);
 	}
 
 	@Test
@@ -114,21 +114,47 @@ public class PortalImplLayoutPortletTest {
 		throws Exception {
 
 		testGetPlidFromPortletId(
-			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT);
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT, true);
 	}
 
-	private void testGetPlidFromPortletId(String portletId)
+	@Test
+	public void testGetPlidFromPortletIdPortletLayoutPrefOwnerTypeGroup()
+		throws Exception {
+
+		testGetPlidFromPortletId(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP, false);
+	}
+
+	@Test
+	public void testGetPlidFromPortletIdPortletLayoutPrefOwnerTypeLayout()
+		throws Exception {
+
+		testGetPlidFromPortletId(
+			_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT, false);
+	}
+
+	private void testGetPlidFromPortletId(
+			String portletId, boolean contentLayout)
 		throws Exception {
 
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout;
 
-		Layout draftLayout = layout.fetchDraftLayout();
+		if (contentLayout) {
+			layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ContentLayoutTestUtil.addPortletToLayout(draftLayout, portletId);
+			Layout draftLayout = layout.fetchDraftLayout();
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+			ContentLayoutTestUtil.addPortletToLayout(draftLayout, portletId);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		}
+		else {
+			layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+			LayoutTestUtil.addPortletToLayout(layout, portletId);
+		}
 
 		Assert.assertEquals(
 			layout.getPlid(),

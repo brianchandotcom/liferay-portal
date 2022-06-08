@@ -21,6 +21,7 @@ declare type TState = {
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
 	objectRelationships: TObjectRelationship[];
+	ffMetadataFieldsAsSystemFields: boolean;
 };
 declare type TAction = {
 	payload: {
@@ -54,6 +55,7 @@ interface ILayoutContextProviderProps
 		isViewOnly: boolean;
 		objectFieldTypes: ObjectFieldType[];
 		objectLayoutId: string;
+		ffMetadataFieldsAsSystemFields: boolean;
 	};
 }
 export declare function LayoutContextProvider({

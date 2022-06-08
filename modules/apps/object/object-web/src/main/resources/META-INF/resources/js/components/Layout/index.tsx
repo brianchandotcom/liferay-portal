@@ -59,6 +59,7 @@ const normalizeObjectFields: TNormalizeObjectFields = ({
 	objectLayout,
 }) => {
 	const visitor = new TabsVisitor(objectLayout);
+
 	const objectFieldIds = objectFields.map(({id}) => id);
 
 	const normalizedObjectFields = [...objectFields];
@@ -162,15 +163,32 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				items: TObjectField[];
 			} = (await objectFieldsResponse.json()) as any;
 
-			dispatch({
-				payload: {
-					objectFields: normalizeObjectFields({
-						objectFields,
-						objectLayout,
-					}),
-				},
-				type: TYPES.ADD_OBJECT_FIELDS,
-			});
+			if (Liferay.FeatureFlags['LPS-154872']) {
+				const filteredObjectFields = objectFields.filter(
+					({system}) => !system
+				);
+
+				dispatch({
+					payload: {
+						objectFields: normalizeObjectFields({
+							objectFields: filteredObjectFields,
+							objectLayout,
+						}),
+					},
+					type: TYPES.ADD_OBJECT_FIELDS,
+				});
+			}
+			else {
+				dispatch({
+					payload: {
+						objectFields: normalizeObjectFields({
+							objectFields,
+							objectLayout,
+						}),
+					},
+					type: TYPES.ADD_OBJECT_FIELDS,
+				});
+			}
 
 			const {
 				items: objectRelationships,

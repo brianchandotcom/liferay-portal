@@ -55,6 +55,7 @@ export declare type TObjectField = {
 	listTypeDefinitionId: boolean;
 	name: string;
 	required: boolean;
+	system: boolean;
 };
 export declare type TObjectRelationship = {
 	id: number;

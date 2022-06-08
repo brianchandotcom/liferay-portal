@@ -62,6 +62,7 @@ export type TObjectField = {
 	listTypeDefinitionId: boolean;
 	name: string;
 	required: boolean;
+	system: boolean;
 };
 
 export type TObjectRelationship = {

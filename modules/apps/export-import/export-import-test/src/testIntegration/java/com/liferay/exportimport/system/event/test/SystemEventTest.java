@@ -25,7 +25,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -48,12 +49,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.util.List;
 import java.util.Map;
@@ -82,108 +79,98 @@ public class SystemEventTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	public long doTestRemoteStaging() throws Exception {
-		setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET",
-			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
 
-		setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+			_stagingGroup = GroupTestUtil.addGroup();
 
-		_stagingGroup = GroupTestUtil.addGroup();
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setScopeGroupId(_stagingGroup.getGroupId());
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(_stagingGroup.getGroupId());
+			Map<String, Serializable> attributes =
+				serviceContext.getAttributes();
 
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
+			attributes.putAll(
+				ExportImportConfigurationParameterMapFactoryUtil.
+					buildParameterMap());
 
-		attributes.putAll(
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap());
+			attributes.put(
+				PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+				new String[] {Boolean.FALSE.toString()});
+			attributes.put(
+				PortletDataHandlerKeys.PORTLET_DATA_ALL,
+				new String[] {Boolean.FALSE.toString()});
 
-		attributes.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.FALSE.toString()});
-		attributes.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.FALSE.toString()});
+			String pathContext = _portal.getPathContext();
 
-		String pathContext = _portal.getPathContext();
+			UserTestUtil.setUser(TestPropsValues.getUser());
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+			// Fall back to default port
 
-		// Fall back to default port
+			if (_serverPort <= 0) {
+				_serverPort = 8080;
+			}
 
-		if (_serverPort <= 0) {
-			_serverPort = 8080;
-		}
+			StagingLocalServiceUtil.enableRemoteStaging(
+				TestPropsValues.getUserId(), _stagingGroup, false, false,
+				"localhost", _serverPort, pathContext, false,
+				_liveGroup.getGroupId(), serviceContext);
 
-		StagingLocalServiceUtil.enableRemoteStaging(
-			TestPropsValues.getUserId(), _stagingGroup, false, false,
-			"localhost", _serverPort, pathContext, false,
-			_liveGroup.getGroupId(), serviceContext);
+			_exportImportConfiguration =
+				ExportImportConfigurationFactory.
+					buildDefaultRemotePublishingExportImportConfiguration(
+						TestPropsValues.getUser(), _stagingGroup.getGroupId(),
+						false, "localhost", _serverPort, pathContext, false,
+						_liveGroup.getGroupId());
 
-		_exportImportConfiguration =
-			ExportImportConfigurationFactory.
-				buildDefaultRemotePublishingExportImportConfiguration(
-					TestPropsValues.getUser(), _stagingGroup.getGroupId(),
-					false, "localhost", _serverPort, pathContext, false,
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_stagingGroup.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _exportImportConfiguration);
+
+			List<JournalArticle> articles =
+				JournalArticleLocalServiceUtil.getArticles(
 					_liveGroup.getGroupId());
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_stagingGroup.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			Assert.assertEquals(articles.toString(), 1, articles.size());
 
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), _exportImportConfiguration);
+			JournalArticleLocalServiceUtil.deleteArticle(
+				_stagingGroup.getGroupId(), journalArticle.getArticleId(),
+				new ServiceContext());
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticles(_liveGroup.getGroupId());
+			Assert.assertNotNull(
+				SystemEventLocalServiceUtil.fetchSystemEvent(
+					_stagingGroup.getGroupId(),
+					ClassNameLocalServiceUtil.getClassNameId(
+						JournalArticle.class),
+					journalArticle.getResourcePrimKey(),
+					SystemEventConstants.TYPE_DELETE));
 
-		Assert.assertEquals(articles.toString(), 1, articles.size());
+			GroupUtil.clearCache();
 
-		JournalArticleLocalServiceUtil.deleteArticle(
-			_stagingGroup.getGroupId(), journalArticle.getArticleId(),
-			new ServiceContext());
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _exportImportConfiguration);
 
-		Assert.assertNotNull(
-			SystemEventLocalServiceUtil.fetchSystemEvent(
-				_stagingGroup.getGroupId(),
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				journalArticle.getResourcePrimKey(),
-				SystemEventConstants.TYPE_DELETE));
+			Assert.assertEquals(
+				0,
+				JournalArticleLocalServiceUtil.getArticlesCount(
+					_liveGroup.getGroupId()));
 
-		GroupUtil.clearCache();
+			journalArticle = articles.get(0);
 
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), _exportImportConfiguration);
-
-		Assert.assertEquals(
-			0,
-			JournalArticleLocalServiceUtil.getArticlesCount(
-				_liveGroup.getGroupId()));
-
-		journalArticle = articles.get(0);
-
-		return journalArticle.getResourcePrimKey();
-	}
-
-	public void setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
+			return journalArticle.getResourcePrimKey();
+		}
 	}
 
 	@Before
@@ -271,28 +258,36 @@ public class SystemEventTest {
 
 	@Test
 	public void testRemoteStaging1() throws Exception {
-		setPortalProperty("STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED", false);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED", false)) {
 
-		long classPK = doTestRemoteStaging();
+			long classPK = doTestRemoteStaging();
 
-		Assert.assertNull(
-			SystemEventLocalServiceUtil.fetchSystemEvent(
-				_liveGroup.getGroupId(),
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				classPK, SystemEventConstants.TYPE_DELETE));
+			Assert.assertNull(
+				SystemEventLocalServiceUtil.fetchSystemEvent(
+					_liveGroup.getGroupId(),
+					ClassNameLocalServiceUtil.getClassNameId(
+						JournalArticle.class),
+					classPK, SystemEventConstants.TYPE_DELETE));
+		}
 	}
 
 	@Test
 	public void testRemoteStaging2() throws Exception {
-		setPortalProperty("STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED", true);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED", true)) {
 
-		long classPK = doTestRemoteStaging();
+			long classPK = doTestRemoteStaging();
 
-		Assert.assertNotNull(
-			SystemEventLocalServiceUtil.fetchSystemEvent(
-				_liveGroup.getGroupId(),
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				classPK, SystemEventConstants.TYPE_DELETE));
+			Assert.assertNotNull(
+				SystemEventLocalServiceUtil.fetchSystemEvent(
+					_liveGroup.getGroupId(),
+					ClassNameLocalServiceUtil.getClassNameId(
+						JournalArticle.class),
+					classPK, SystemEventConstants.TYPE_DELETE));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -17,6 +17,7 @@ package com.liferay.staging.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -900,38 +901,42 @@ public class StagingGroupHelperTest {
 		_remoteLiveGroup = GroupTestUtil.addGroup();
 		_remoteStagingGroup = GroupTestUtil.addGroup();
 
-		PropsValuesTestUtil.setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET",
-			"F0E1D2C3B4A5968778695A4B3C2D1E0F");
-		PropsValuesTestUtil.setPortalProperty(
-			"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
 
-		int serverPort = PortalUtil.getPortalServerPort(false);
+			int serverPort = PortalUtil.getPortalServerPort(false);
 
-		Assert.assertFalse(
-			"Invalid server port: " + serverPort,
-			(serverPort < 1) || (serverPort > 65535));
+			Assert.assertFalse(
+				"Invalid server port: " + serverPort,
+				(serverPort < 1) || (serverPort > 65535));
 
-		String pathContext = PortalUtil.getPathContext();
+			String pathContext = PortalUtil.getPathContext();
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+			UserTestUtil.setUser(TestPropsValues.getUser());
 
-		ServiceContext serviceContext = new ServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAttribute(
-			"staged--staged-portlet_" + _PORTLET_ID_BLOGS + "--", "false");
-		serviceContext.setAttribute(
-			"staged--staged-portlet_" + _PORTLET_ID_BOOKMARKS + "--", "true");
+			serviceContext.setAttribute(
+				"staged--staged-portlet_" + _PORTLET_ID_BLOGS + "--", "false");
+			serviceContext.setAttribute(
+				"staged--staged-portlet_" + _PORTLET_ID_BOOKMARKS + "--",
+				"true");
 
-		StagingLocalServiceUtil.enableRemoteStaging(
-			TestPropsValues.getUserId(), _remoteStagingGroup, false, false,
-			"localhost", serverPort, pathContext, false,
-			_remoteLiveGroup.getGroupId(), serviceContext);
+			StagingLocalServiceUtil.enableRemoteStaging(
+				TestPropsValues.getUserId(), _remoteStagingGroup, false, false,
+				"localhost", serverPort, pathContext, false,
+				_remoteLiveGroup.getGroupId(), serviceContext);
 
-		GroupUtil.clearCache();
+			GroupUtil.clearCache();
 
-		_remoteLiveGroup = GroupLocalServiceUtil.getGroup(
-			_remoteLiveGroup.getGroupId());
+			_remoteLiveGroup = GroupLocalServiceUtil.getGroup(
+				_remoteLiveGroup.getGroupId());
+		}
 	}
 
 	private Group _addScopeGroup(Group group) throws Exception {

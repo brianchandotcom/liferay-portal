@@ -206,6 +206,10 @@ definition {
 		PortletEntry.inputTitle(title = "${title}");
 	}
 
+	macro gotoInfoWorkflowDefinition {
+		Click(locator1 = "Icon#INFO");
+	}
+
 	macro gotoManageTranslations {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_BUTTON");
 	}

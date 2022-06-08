@@ -2337,12 +2337,36 @@ definition {
 	}
 
 	@description = "Verify that the user can switch between Details and Revision Story Tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSwitchBetweenDetailsRevisionTabs {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSwitchBetweenDetailsRevisionTabs";
 
-		// TODO CanSwitchBetweenDetailsRevisionTabs pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "bottom");
+
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+
+		Navigator.gotoNavTab(navTab = "Revision History");
+		
+
+		Navigator.gotoNavTab(navTab = "Details");
 	}
 
 	@description = "Verify that the user can turn on the Timers recurrence mode"

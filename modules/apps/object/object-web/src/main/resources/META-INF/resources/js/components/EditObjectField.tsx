@@ -67,6 +67,8 @@ export default function EditObjectField({
 	readOnly,
 }: IProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
+		delete objectField.system;
+
 		const response = await fetch(
 			`/o/object-admin/v1.0/object-fields/${id}`,
 			{
@@ -111,7 +113,12 @@ export default function EditObjectField({
 		onSubmit,
 	});
 
-	const disabled = !!(readOnly || isApproved || values.relationshipType);
+	const disabled = !!(
+		readOnly ||
+		isApproved ||
+		values.relationshipType ||
+		values.system
+	);
 
 	const [locale, setSelectedLocale] = useState(
 		defaultLocale as {

@@ -187,6 +187,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 			"relationshipType", objectField.getRelationshipType()
 		).put(
 			"required", objectField.isRequired()
+		).put(
+			"system", objectField.isSystem()
 		);
 	}
 

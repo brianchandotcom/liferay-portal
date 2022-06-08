@@ -15,13 +15,13 @@
 import React from 'react';
 import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 declare type TState = {
+	ffMetadataFieldsAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
 	objectRelationships: TObjectRelationship[];
-	ffMetadataFieldsAsSystemFields: boolean;
 };
 declare type TAction = {
 	payload: {
@@ -52,10 +52,10 @@ declare const initialState: TState;
 interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		ffMetadataFieldsAsSystemFields: boolean;
 		isViewOnly: boolean;
 		objectFieldTypes: ObjectFieldType[];
 		objectLayoutId: string;
-		ffMetadataFieldsAsSystemFields: boolean;
 	};
 }
 export declare function LayoutContextProvider({

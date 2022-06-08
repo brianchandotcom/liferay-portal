@@ -14,10 +14,10 @@
 
 import React from 'react';
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	ffMetadataFieldsAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
 	objectLayoutId: string;
-	ffMetadataFieldsAsSystemFields: boolean;
 }
 declare const LayoutWrapper: React.FC<ILayoutWrapperProps>;
 export default LayoutWrapper;

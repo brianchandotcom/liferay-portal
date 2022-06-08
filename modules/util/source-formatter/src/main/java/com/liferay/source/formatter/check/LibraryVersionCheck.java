@@ -17,13 +17,22 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,9 +44,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * @author Qi Zhang
@@ -49,6 +56,11 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		_pageNumber = GetterUtil.getInteger(
+			getAttributeValue(_QUERY_ARGUMENTS_PAGE_NUMBER, absolutePath));
+		_severities = getAttributeValues(
+			_QUERY_ARGUMENTS_SEVERITIES, absolutePath);
+
 		if (fileName.endsWith(".properties")) {
 			_propertiesLibraryVersionCheck(fileName, content);
 		}
@@ -58,21 +70,29 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		else if (fileName.endsWith(".gradle")) {
 			_gradleLibraryVersionCheck(fileName, content);
 		}
+		else if (fileName.endsWith(".json")) {
+			_jsonLibraryVersionCheck(fileName, content);
+		}
 
 		return content;
 	}
 
 	private void _checkIsContainVulnerabilities(
-		String fileName, String packageName, String version,
-		CloseableHttpClient httpClient) {
+			String fileName, String packageName, String version,
+			CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+		throws IOException {
 
 		_checkIsContainVulnerabilities(
-			fileName, packageName, version, null, httpClient);
+			fileName, packageName, version, null, httpClient,
+			securityAdvisoryEcosystemEnum);
 	}
 
 	private void _checkIsContainVulnerabilities(
-		String fileName, String packageName, String version, String cursor,
-		CloseableHttpClient httpClient) {
+			String fileName, String packageName, String version, String cursor,
+			CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+		throws IOException {
 
 		HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
 
@@ -82,9 +102,17 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			"Content-Type",
 			"application/json; charset=utf-8; application/graphql");
 
-		String queryArguments =
-			"first: 50, package:\\\"" + packageName +
-				"\\\", severities: [CRITICAL]";
+		if (_pageNumber == 0) {
+			return;
+		}
+
+		String queryArguments = StringBundler.concat(
+			"first: ", _pageNumber, ", package:\\\"", packageName,
+			"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
+
+		if (ListUtil.isNotNull(_severities)) {
+			queryArguments = queryArguments + ", severities: " + _severities;
+		}
 
 		if (Validator.isNotNull(cursor)) {
 			queryArguments += "after: \\\"" + cursor + "\\\"";
@@ -110,7 +138,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			StatusLine statusLine = httpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() == 200) {
-				JSONObject jsonObject = new JSONObject(
+				JSONObject jsonObject = new JSONObjectImpl(
 					EntityUtils.toString(httpResponse.getEntity(), "UTF-8"));
 
 				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
@@ -160,12 +188,37 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
 					_checkIsContainVulnerabilities(
 						fileName, packageName, version,
-						pageInfoJSONObject.getString("endCursor"), httpClient);
+						pageInfoJSONObject.getString("endCursor"), httpClient,
+						securityAdvisoryEcosystemEnum);
 				}
 			}
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+	}
+
+	private void _checkVersionInJsonFile(
+			String fileName, CloseableHttpClient httpClient,
+			JSONObject jsonObject)
+		throws IOException {
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		for (String packageName : jsonObject.keySet()) {
+			String version = jsonObject.getString(packageName);
+
+			if (version.startsWith("^|~|\\*")) {
+				continue;
+			}
+
+			_checkIsContainVulnerabilities(
+				fileName, packageName, version, httpClient,
+				SecurityAdvisoryEcosystemEnum.NPM);
 		}
 	}
 
@@ -175,6 +228,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		boolean result = false;
 
 		int count = 1;
+
+		ComparableVersion currentComparableVersion = new ComparableVersion(
+			version);
 
 		for (String vulnerableVersion : vulnerableVersionArray) {
 			vulnerableVersion = StringUtil.trim(vulnerableVersion);
@@ -196,24 +252,30 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			boolean tmpResult = false;
 
+			ComparableVersion vulnerableComparableVersion =
+				new ComparableVersion(vulnerableVersionNumber);
+
+			int compareResult = currentComparableVersion.compareTo(
+				vulnerableComparableVersion);
+
 			if (StringUtil.equals(StringPool.LESS_THAN, operator)) {
-				tmpResult = version.compareTo(vulnerableVersionNumber) < 0;
+				tmpResult = compareResult < 0;
 			}
 			else if (StringUtil.equals(
 						StringPool.LESS_THAN_OR_EQUAL, operator)) {
 
-				tmpResult = version.compareTo(vulnerableVersionNumber) <= 0;
+				tmpResult = compareResult <= 0;
 			}
 			else if (StringUtil.equals(StringPool.GREATER_THAN, operator)) {
-				tmpResult = version.compareTo(vulnerableVersionNumber) > 0;
+				tmpResult = compareResult > 0;
 			}
 			else if (StringUtil.equals(
 						StringPool.GREATER_THAN_OR_EQUAL, operator)) {
 
-				tmpResult = version.compareTo(vulnerableVersionNumber) >= 0;
+				tmpResult = compareResult >= 0;
 			}
 			else if (StringUtil.equals(StringPool.EQUAL, operator)) {
-				tmpResult = version.compareTo(vulnerableVersionNumber) == 0;
+				tmpResult = compareResult == 0;
 			}
 
 			if (count == 1) {
@@ -302,7 +364,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 				_checkIsContainVulnerabilities(
 					fileName, group + StringPool.COLON + name, version,
-					httpClient);
+					httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
 		finally {
@@ -310,7 +372,50 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				httpClient.close();
 			}
 			catch (IOException ioException) {
-				ioException.printStackTrace();
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
+			}
+		}
+	}
+
+	private void _jsonLibraryVersionCheck(String fileName, String content)
+		throws IOException {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		try {
+			JSONObject contentJSONObject = new JSONObjectImpl(content);
+
+			JSONObject dependenciesJSONObject = contentJSONObject.getJSONObject(
+				"dependencies");
+
+			_checkVersionInJsonFile(
+				fileName, httpClient, dependenciesJSONObject);
+
+			JSONObject devDependenciesJSONObject =
+				contentJSONObject.getJSONObject("devDependencies");
+
+			_checkVersionInJsonFile(
+				fileName, httpClient, devDependenciesJSONObject);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+		finally {
+			try {
+				httpClient.close();
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
 			}
 		}
 	}
@@ -347,7 +452,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 				_checkIsContainVulnerabilities(
 					fileName, libraryAndVersion.substring(0, colonIndex),
-					libraryAndVersion.substring(colonIndex + 1), httpClient);
+					libraryAndVersion.substring(colonIndex + 1), httpClient,
+					SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
 		finally {
@@ -355,12 +461,16 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				httpClient.close();
 			}
 			catch (IOException ioException) {
-				ioException.printStackTrace();
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
 			}
 		}
 	}
 
-	private void _xmlLibraryVersionCheck(String fileName, String content) {
+	private void _xmlLibraryVersionCheck(String fileName, String content)
+		throws IOException {
+
 		int x = -1;
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -434,7 +544,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			_checkIsContainVulnerabilities(
 				fileName, group + StringPool.COLON + artifact, version,
-				httpClient);
+				httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
 
 			x++;
 		}
@@ -443,9 +553,20 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			httpClient.close();
 		}
 		catch (IOException ioException) {
-			ioException.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
 		}
 	}
+
+	private static final String _QUERY_ARGUMENTS_PAGE_NUMBER =
+		"queryArgumentsPageNumber";
+
+	private static final String _QUERY_ARGUMENTS_SEVERITIES =
+		"queryArgumentsSeverities";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LibraryVersionCheck.class);
 
 	private static final Pattern _gradleGroupPattern = Pattern.compile(
 		"group: \"([^,\n\\\\)]+)\"");
@@ -465,5 +586,14 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		"<version>(.+)</version>");
 	private static final Pattern _xmlVersionPattern2 = Pattern.compile(
 		"rev=\"([^ /\n]+)\"");
+
+	private int _pageNumber;
+	private List<String> _severities;
+
+	private enum SecurityAdvisoryEcosystemEnum {
+
+		COMPOSER, GO, MAVEN, NPM, NUGET, PIP, RUBYGEMS, RUST
+
+	}
 
 }

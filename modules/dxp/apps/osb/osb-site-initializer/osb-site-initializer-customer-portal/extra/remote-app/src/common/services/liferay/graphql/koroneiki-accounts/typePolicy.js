@@ -10,7 +10,7 @@
  */
 
 import {SLA_STATUS_TYPES} from '../../../../utils/constants';
-import pagePageSizePagination from '../common/utils/pagePageSizePagination';
+import concatPageSizePagination from '../common/utils/concatPageSizePagination';
 
 export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
@@ -34,7 +34,7 @@ export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccountPage: {
 		fields: {
 			items: {
-				...pagePageSizePagination(),
+				...concatPageSizePagination(),
 			},
 		},
 	},

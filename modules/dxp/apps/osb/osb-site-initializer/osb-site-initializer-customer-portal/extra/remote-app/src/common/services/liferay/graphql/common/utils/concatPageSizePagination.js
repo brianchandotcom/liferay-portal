@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default function pagePageSizePagination(keyArgs = false) {
+export default function concatPageSizePagination(keyArgs = false) {
 	return {
 		keyArgs,
 		merge(existing = [], incoming, {variables}) {

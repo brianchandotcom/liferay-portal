@@ -215,6 +215,30 @@ public class ContentLayoutTestUtil {
 		return themeDisplay;
 	}
 
+	public static JSONObject markItemForDeletionFromLayout(
+			Layout layout, String portletId, String itemId)
+		throws Exception {
+
+		MVCActionCommand markItemForDeletionMVCActionCommand =
+			getMVCActionCommand(
+				"/layout_content_page_editor/mark_item_for_deletion");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			getMockLiferayPortletActionRequest(
+				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
+				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"portletIds", new String[] {portletId});
+		mockLiferayPortletActionRequest.addParameter("itemId", itemId);
+
+		return ReflectionTestUtil.invoke(
+			markItemForDeletionMVCActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+	}
+
 	public static void publishLayout(Layout draftLayout, Layout layout)
 		throws Exception {
 

@@ -391,13 +391,94 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-154427."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154427. It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewImageInContentFieldAfterFriendlyURLIsUpdated";
 
-		// TODO LPS-154427
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Document_1",
+			friendlyURLEdit = "custom-url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		BlogsEntry.editContent(
+			dmImage = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Document_1",
+			friendlyURLEdit = "custom-url-edit");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "custom-url");
 	}
 
 	@description = "This test covers LPS-154429."

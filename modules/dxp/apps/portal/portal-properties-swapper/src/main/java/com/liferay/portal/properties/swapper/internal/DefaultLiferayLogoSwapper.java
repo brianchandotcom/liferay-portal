@@ -14,19 +14,13 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
-import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
-
-import java.lang.reflect.Method;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -49,27 +43,6 @@ public class DefaultLiferayLogoSwapper {
 			bundle.getBundleId() +
 				";com/liferay/portal/properties/swapper/internal" +
 					"/default_liferay_logo.png");
-
-		Class<?> clazz = _imageTool.getClass();
-
-		try {
-			Method method = clazz.getMethod("afterPropertiesSet");
-
-			method.invoke(_imageTool);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to swap default Liferay logo",
-					reflectiveOperationException);
-			}
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultLiferayLogoSwapper.class);
-
-	@Reference
-	private ImageTool _imageTool;
 
 }

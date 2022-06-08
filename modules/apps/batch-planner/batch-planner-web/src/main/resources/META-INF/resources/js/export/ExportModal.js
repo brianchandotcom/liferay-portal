@@ -79,7 +79,7 @@ const ExportModal = ({
 							displayType="secondary"
 							onClick={closeModal}
 						>
-							{Liferay.Language.get('cancel')}
+							{Liferay.Language.get('back-to-the-list')}
 						</ClayButton>
 
 						<ClayButton

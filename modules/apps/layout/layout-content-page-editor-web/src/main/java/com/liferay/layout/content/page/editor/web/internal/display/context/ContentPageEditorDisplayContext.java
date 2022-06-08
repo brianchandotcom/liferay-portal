@@ -91,6 +91,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -341,6 +342,14 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"featureFlagLps150277",
 				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277"))
+			).put(
+				"fragmentCompositionDescriptionMaxLength",
+				() -> ModelHintsUtil.getMaxLength(
+					FragmentComposition.class.getName(), "description")
+			).put(
+				"fragmentCompositionNameMaxLength",
+				() -> ModelHintsUtil.getMaxLength(
+					FragmentComposition.class.getName(), "name")
 			).put(
 				"frontendTokens",
 				() -> {

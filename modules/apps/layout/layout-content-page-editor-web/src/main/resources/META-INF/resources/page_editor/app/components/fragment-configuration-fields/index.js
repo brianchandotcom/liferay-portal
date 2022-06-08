@@ -12,6 +12,7 @@
  * details.
  */
 
+import CSSClassSelectorField from './CSSClassSelectorField';
 import {CategoryTreeNodeSelectorField} from './CategoryTreeNodeSelectorField';
 import {CheckboxField} from './CheckboxField';
 import {CollectionSelectorField} from './CollectionSelectorField';
@@ -32,6 +33,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,
 	colorPicker: ColorPickerField,
+	cssClassSelector: CSSClassSelectorField,
 	hideFragment: HideFragmentField,
 	imageSelector: ImageSelectorField,
 	itemSelector: ItemSelectorField,

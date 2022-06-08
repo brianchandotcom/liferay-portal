@@ -12,15 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
+
+import java.util.List;
 
 /**
  * @author Igor Spasic
  */
-public interface FooData {
+public class OpenService {
 
-	public String getValue();
+	public static void run1(List<Long> fooIds) {
+	}
 
-	public void setId(int id);
+	public static void run2(byte[] bytes) {
+	}
+
+	public static void run3(Object object) {
+	}
 
 }

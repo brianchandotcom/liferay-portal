@@ -12,14 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSON;
 
 /**
  * @author Igor Spasic
  */
-public class FooDataImpl implements FooData {
+public class FooDataAltImpl implements FooData {
+
+	public int[] getArray() {
+		return _array;
+	}
 
 	public int getHeight() {
 		return _height;
@@ -36,6 +40,10 @@ public class FooDataImpl implements FooData {
 	@Override
 	public String getValue() {
 		return _value;
+	}
+
+	public void setArray(int... array) {
+		_array = array;
 	}
 
 	public void setHeight(int height) {
@@ -55,15 +63,14 @@ public class FooDataImpl implements FooData {
 		_value = value;
 	}
 
-	@Override
-	public String toString() {
-		return StringBundler.concat(
-			"h=", _height, "/id=", _id, "/n=", _name, "/v=", _value);
-	}
+	@JSON(include = true)
+	private int[] _array;
 
 	private int _height = 177;
 	private int _id = -1;
 	private String _name = "John Doe";
-	private String _value = "foo!";
+
+	@JSON(include = false)
+	private String _value;
 
 }

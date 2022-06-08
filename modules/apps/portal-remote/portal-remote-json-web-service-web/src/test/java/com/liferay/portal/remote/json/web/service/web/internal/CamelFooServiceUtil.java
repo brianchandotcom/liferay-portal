@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
-
-import java.util.List;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 /**
  * @author Igor Spasic
  */
-public class OpenService {
+public class CamelFooServiceUtil extends CamelFooService {
 
-	public static void run1(List<Long> fooIds) {
-	}
-
-	public static void run2(byte[] bytes) {
-	}
-
-	public static void run3(Object object) {
-	}
+	// Simple trick (for test purposes) to skip writing util methods
 
 }

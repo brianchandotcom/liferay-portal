@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.json.transformer.SortedHashMapJSONTransformer;
-import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
@@ -26,9 +25,11 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.util.MethodParametersResolverImpl;
 import com.liferay.portal.util.PropsImpl;
 
@@ -59,10 +60,9 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		JSONWebServiceActionsManagerUtil jsonWebServiceActionsManagerUtil =
-			new JSONWebServiceActionsManagerUtil();
-
-		jsonWebServiceActionsManagerUtil.setJSONWebServiceActionsManager(
+		ReflectionTestUtil.setFieldValue(
+			new JSONWebServiceActionsManagerUtil(),
+			"_jsonWebServiceActionsManager",
 			new JSONWebServiceActionsManagerImpl());
 
 		MethodParametersResolverUtil methodParametersResolverUtil =

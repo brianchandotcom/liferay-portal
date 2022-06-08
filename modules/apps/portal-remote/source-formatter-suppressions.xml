@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="VariableNameCheck" files="portal-remote-json-web-service-web/src/test/java/com/liferay/portal/remote/json/web/service/web/internal/FooService\.java" />
+	</checkstyle>
+</suppressions>

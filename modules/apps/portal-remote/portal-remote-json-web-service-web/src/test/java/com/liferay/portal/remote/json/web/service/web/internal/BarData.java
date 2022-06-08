@@ -12,65 +12,43 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.portal.kernel.json.JSON;
 
 /**
  * @author Igor Spasic
  */
-public class FooDataAltImpl implements FooData {
+public class BarData {
 
+	@JSON
 	public int[] getArray() {
 		return _array;
 	}
 
-	public int getHeight() {
-		return _height;
+	@JSON(include = false)
+	public String getSecret() {
+		return _secret;
 	}
 
-	public int getId() {
-		return _id;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	@Override
 	public String getValue() {
 		return _value;
 	}
 
-	public void setArray(int... array) {
+	public void setArray(int[] array) {
 		_array = array;
 	}
 
-	public void setHeight(int height) {
-		_height = height;
-	}
-
-	@Override
-	public void setId(int id) {
-		_id = id;
-	}
-
-	public void setName(String name) {
-		_name = name;
+	public void setSecret(String secret) {
+		_secret = secret;
 	}
 
 	public void setValue(String value) {
 		_value = value;
 	}
 
-	@JSON(include = true)
-	private int[] _array;
-
-	private int _height = 177;
-	private int _id = -1;
-	private String _name = "John Doe";
-
-	@JSON(include = false)
-	private String _value;
+	private int[] _array = {1, 2, 3};
+	private String _secret = "secret";
+	private String _value = "value";
 
 }

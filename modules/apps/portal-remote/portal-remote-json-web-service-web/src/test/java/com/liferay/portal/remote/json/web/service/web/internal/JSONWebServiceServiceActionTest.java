@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -85,10 +86,9 @@ public class JSONWebServiceServiceActionTest
 
 	@Before
 	public void setUp() {
-		JSONWebServiceActionsManagerUtil jsonWebServiceActionsManagerUtil =
-			new JSONWebServiceActionsManagerUtil();
-
-		jsonWebServiceActionsManagerUtil.setJSONWebServiceActionsManager(
+		ReflectionTestUtil.setFieldValue(
+			new JSONWebServiceActionsManagerUtil(),
+			"_jsonWebServiceActionsManager",
 			new JSONWebServiceActionsManagerImpl());
 	}
 

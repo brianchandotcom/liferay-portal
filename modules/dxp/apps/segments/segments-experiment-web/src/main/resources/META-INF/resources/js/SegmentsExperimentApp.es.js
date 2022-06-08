@@ -37,7 +37,7 @@ export default function ({context, portletNamespace, props}) {
 
 	useEffect(() => {
 		if (segmentsExperimentPanelToggle) {
-			const sidenavInstance = Liferay.SideNavigation.initialize(
+			const sidenavInstance = Liferay.SideNavigation.instance(
 				segmentsExperimentPanelToggle
 			);
 

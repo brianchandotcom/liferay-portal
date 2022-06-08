@@ -303,10 +303,20 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 		long[] roleIds = getRoleIds(getUserId(), liveGroup.getGroupId());
 
-		Role role = _roleLocalService.getRole(
+		Role memberRole = _roleLocalService.getRole(
 			liveGroup.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
-		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
+		if (Arrays.binarySearch(roleIds, memberRole.getRoleId()) >= 0) {
+			return true;
+		}
+
+		Role connectedSiteMemberRole = _roleLocalService.getRole(
+			liveGroup.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
+
+		if (Arrays.binarySearch(roleIds, connectedSiteMemberRole.getRoleId()) >=
+				0) {
+
 			return true;
 		}
 

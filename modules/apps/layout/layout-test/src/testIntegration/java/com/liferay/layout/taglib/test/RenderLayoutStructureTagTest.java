@@ -178,6 +178,7 @@ public class RenderLayoutStructureTagTest {
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(

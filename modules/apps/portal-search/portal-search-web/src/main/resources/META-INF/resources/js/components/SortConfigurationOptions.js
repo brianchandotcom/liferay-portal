@@ -207,6 +207,44 @@ function SortConfigurationOptions({
 	const [view, setView] = useState(VIEWS.NEW);
 
 	useEffect(() => {
+		const formElement = document.getElementById(`${namespace}fm`);
+
+		const handleFormSubmit = () => {
+
+			// This directly manipulates the input element to avoid
+			// re-rendering the component. This doesn't update the
+			// `classicFields` state since it will re-render the component
+			// and `submitForm` might be called before the input value is
+			// updated since `setState` is asynchronous.
+			//
+			// This also checks for the element id `${namespace}fieldsId` to
+			// determine if the classic view is being used instead of the state
+			// `view`. Otherwise, switching between views will add and remove
+			// the event listener and cause an unresolved issue where the form
+			// is submitted twice after submitting the classic view more than
+			// once.
+
+			if (document.getElementById(`${namespace}fieldsId`)) {
+				const fieldsInputElement = document.getElementsByName(
+					`${namespace}${fieldsInputName}`
+				)[0];
+
+				fieldsInputElement.value = JSON.stringify(
+					_getInputElementsFieldsArray().filter(
+						({field, label}) => label || field
+					)
+				);
+			}
+		};
+
+		formElement.addEventListener('submit', handleFormSubmit);
+
+		return () => {
+			formElement.removeEventListener('submit', handleFormSubmit);
+		};
+	}, [fieldsInputName, namespace]);
+
+	useEffect(() => {
 		if (view.value !== VIEWS.CLASSIC.value) {
 			return;
 		}
@@ -218,6 +256,36 @@ function SortConfigurationOptions({
 			}).render();
 		});
 	}, [namespace, view]);
+
+	/**
+	 * Since the classic view is controlled by the Liferay.AutoFields component,
+	 * the `classicFields` state isn't updated when items are added or removed.
+	 * This is needed to grab the current values when switching to the new view
+	 * or submitting the form.
+	 * @returns {Array}
+	 */
+	const _getInputElementsFieldsArray = () => {
+		const newFields = [];
+
+		const autoFieldFormRows = [
+			...document.getElementsByClassName('field-form-row'),
+		].filter((element) => {
+			return !element.hidden;
+		});
+
+		autoFieldFormRows.forEach((item) => {
+			const field = item.getElementsByClassName('sort-field-input')[0]
+				.value;
+			const label = item.getElementsByClassName('label-input')[0].value;
+
+			newFields.push({
+				field,
+				label,
+			});
+		});
+
+		return newFields;
+	};
 
 	const _handleChangeClassicValue = (index, property) => (event) => {
 		const newClassicFields = [...classicFields];
@@ -245,25 +313,7 @@ function SortConfigurationOptions({
 			setView(VIEWS.CLASSIC);
 		}
 		else {
-			const newFields = [];
-
-			const autoFieldFormRows = [
-				...document.getElementsByClassName('field-form-row'),
-			].filter((element) => {
-				return !element.hidden;
-			});
-
-			autoFieldFormRows.forEach((item) => {
-				const field = item.getElementsByClassName('sort-field-input')[0]
-					.value;
-				const label = item.getElementsByClassName('label-input')[0]
-					.value;
-
-				newFields.push({
-					field,
-					label,
-				});
-			});
+			const newFields = _getInputElementsFieldsArray();
 
 			setFields(transformFieldsJSONArrayToFieldsArray(newFields));
 

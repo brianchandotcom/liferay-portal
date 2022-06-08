@@ -117,7 +117,7 @@ public class SalesforceObjectEntryManagerImpl
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _salesforceHttp.get(
+		JSONObject responseJSONObject1 = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			HttpComponentsUtil.addParameter(
 				"query", "q",
@@ -126,15 +126,29 @@ public class SalesforceObjectEntryManagerImpl
 					_getSalesforceObjectName(objectDefinition.getName()),
 					_getSalesforcePagination(pagination))));
 
-		if ((responseJSONObject == null) ||
-			(responseJSONObject.length() == 0)) {
+		if ((responseJSONObject1 == null) ||
+			(responseJSONObject1.length() == 0)) {
 
 			return Page.of(Collections.emptyList());
 		}
 
+		JSONObject responseJSONObject2 = _salesforceHttp.get(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			HttpComponentsUtil.addParameter(
+				"query", "q",
+				"SELECT COUNT(Id) FROM " +
+					_getSalesforceObjectName(objectDefinition.getName())));
+
+		JSONArray jsonArray = responseJSONObject2.getJSONArray("records");
+
 		return Page.of(
-			_toObjectEntries(responseJSONObject.getJSONArray("records")),
-			pagination, responseJSONObject.getInt("totalSize"));
+			_toObjectEntries(responseJSONObject1.getJSONArray("records")),
+			pagination,
+			jsonArray.getJSONObject(
+				0
+			).getInt(
+				"expr0"
+			));
 	}
 
 	@Override

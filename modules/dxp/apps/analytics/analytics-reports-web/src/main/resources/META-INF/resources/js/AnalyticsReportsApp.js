@@ -54,7 +54,7 @@ export default function AnalyticsReportsApp({context, portletNamespace}) {
 
 	useEffect(() => {
 		if (analyticsReportsPanelToggle) {
-			const sidenavInstance = Liferay.SideNavigation.initialize(
+			const sidenavInstance = Liferay.SideNavigation.instance(
 				analyticsReportsPanelToggle
 			);
 

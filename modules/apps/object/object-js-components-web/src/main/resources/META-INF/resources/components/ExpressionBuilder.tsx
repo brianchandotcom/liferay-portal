@@ -24,6 +24,7 @@ import {FieldBase} from './FieldBase';
 import './ExpressionBuilder.scss';
 
 export function ExpressionBuilder({
+	buttonDisabled,
 	className,
 	component,
 	disabled,
@@ -67,6 +68,7 @@ export function ExpressionBuilder({
 
 				<ClayInput.GroupItem append shrink>
 					<ClayButtonWithIcon
+						disabled={buttonDisabled}
 						displayType="secondary"
 						onClick={onOpenModal}
 						symbol="code"
@@ -199,6 +201,7 @@ interface IModalProps {
 	sidebarElements: SidebarCategory[];
 }
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	buttonDisabled?: boolean;
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
 	disabled?: boolean;
 	error?: string;

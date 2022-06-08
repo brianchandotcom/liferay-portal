@@ -21,6 +21,7 @@ export default function Action({
 	objectAction: initialValues,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
 	successMessage,
@@ -31,6 +32,7 @@ interface IProps {
 	objectAction: Partial<ObjectAction>;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
 	requestParams: {
 		method: 'GET' | 'POST' | 'DELETE' | 'PUT';

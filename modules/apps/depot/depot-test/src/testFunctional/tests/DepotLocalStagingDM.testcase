@@ -3477,13 +3477,81 @@ definition {
 			navTab = "Documents and Media");
 	}
 
-	@description = "This test covers LPS-154418."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154418. It validates that an image with a custom friendlyURL can be correctly rendered in the Blog content field on a site after its friendlyURL is edited and published from an asset library"
 	@priority = "5"
 	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154418
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			depotName = "Test Depot Name",
+			entryContent = "Blogs Entry Content",
+			imageFileName = "DM Document Title",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.openToEditDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title",
+			staging = "true");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "dm-document-title");
 	}
 
 	@description = "This test covers LPS-154422."

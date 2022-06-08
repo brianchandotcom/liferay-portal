@@ -553,6 +553,7 @@ paths:
             # @review
             description:
                 Deletes the asset library's taxonomy vocabulary by external reference code.
+            operationId: deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -575,6 +576,7 @@ paths:
             # @review
             description:
                 Retrieves the asset library's taxonomy vocabulary by external reference code.
+            operationId: getAssetLibraryTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -602,6 +604,7 @@ paths:
             description:
                 Updates the asset library's taxonomy vocabulary with the given external reference code, or creates it if
                 it not exists.
+            operationId: putAssetLibraryTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryId

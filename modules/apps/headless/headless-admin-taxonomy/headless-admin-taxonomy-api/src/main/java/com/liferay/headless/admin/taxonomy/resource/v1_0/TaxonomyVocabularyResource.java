@@ -72,6 +72,21 @@ public interface TaxonomyVocabularyResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyVocabulary
+			getAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyVocabulary
+			putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getAssetLibraryTaxonomyVocabularyPermissionsPage(
 				Long assetLibraryId, String roleNames)

@@ -59,7 +59,7 @@ const ObjectField = ({
 
 	const options = useMemo(() => {
 		const filteredObjectFields = objectFields.filter(
-			({listTypeDefinitionId, relationshipType, type}) => {
+			({listTypeDefinitionId, relationshipType, system, type}) => {
 				if (
 					!listTypeDefinitionId &&
 					(focusedFieldType === 'radio' ||
@@ -92,7 +92,7 @@ const ObjectField = ({
 				) {
 					return true;
 				}
-				else if (relationshipType) {
+				else if (relationshipType || system) {
 					return false;
 				}
 

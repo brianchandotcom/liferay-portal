@@ -43,7 +43,7 @@ public class ComponentExecutorFactoryBundleActivator
 	@Override
 	public void start(BundleContext bundleContext) {
 		boolean threadPoolEnabled = GetterUtil.getBoolean(
-			bundleContext.getProperty("dependency.manager.thread.pool.enabled"),
+			PropsUtil.get(PropsKeys.DEPENDENCY_MANAGER_THREAD_POOL_ENABLED),
 			true);
 
 		if (!threadPoolEnabled) {

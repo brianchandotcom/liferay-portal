@@ -675,6 +675,9 @@ public interface PropsKeys {
 	public static final String DEPENDENCY_MANAGER_SYNC_TIMEOUT =
 		"dependency.manager.sync.timeout";
 
+	public static final String DEPENDENCY_MANAGER_THREAD_POOL_ENABLED =
+		"dependency.manager.thread.pool.enabled";
+
 	public static final String DIRECT_SERVLET_CONTEXT_ENABLED =
 		"direct.servlet.context.enabled";
 

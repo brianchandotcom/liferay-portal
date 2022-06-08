@@ -1591,8 +1591,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowConfigureAction(Layout layout) throws PortalException {
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
+		return LayoutPermissionUtil.containsLayoutUpdatePermission(
+			themeDisplay.getPermissionChecker(), layout);
 	}
 
 	public boolean isShowConvertLayoutAction(Layout layout) {

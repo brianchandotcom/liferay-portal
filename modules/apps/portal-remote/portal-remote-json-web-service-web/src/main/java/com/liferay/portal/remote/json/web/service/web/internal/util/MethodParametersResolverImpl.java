@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.remote.json.web.service.web.internal.util;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.MethodParameter;
-import com.liferay.portal.kernel.util.MethodParametersResolver;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;

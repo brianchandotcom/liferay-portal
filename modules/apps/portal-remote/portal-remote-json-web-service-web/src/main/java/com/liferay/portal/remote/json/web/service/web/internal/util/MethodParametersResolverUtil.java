@@ -12,15 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.remote.json.web.service.web.internal.util;
+
+import com.liferay.portal.kernel.util.MethodParameter;
 
 import java.lang.reflect.Method;
 
 /**
  * @author Igor Spasic
  */
-public interface MethodParametersResolver {
+public class MethodParametersResolverUtil {
 
-	public MethodParameter[] resolveMethodParameters(Method method);
+	public static MethodParametersResolver getMethodParametersResolver() {
+		return _methodParametersResolver;
+	}
+
+	public static MethodParameter[] resolveMethodParameters(Method method) {
+		return _methodParametersResolver.resolveMethodParameters(method);
+	}
+
+	public void setMethodParametersResolver(
+		MethodParametersResolver methodParametersResolver) {
+
+		_methodParametersResolver = methodParametersResolver;
+	}
+
+	private static MethodParametersResolver _methodParametersResolver;
 
 }

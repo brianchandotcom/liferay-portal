@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.util.MethodParametersResolverImpl;
+import com.liferay.portal.remote.json.web.service.web.internal.util.MethodParametersResolverImpl;
+import com.liferay.portal.remote.json.web.service.web.internal.util.MethodParametersResolverUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Method;

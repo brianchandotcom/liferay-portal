@@ -83,3 +83,40 @@
 
 		SignIn.signIn(userEmailAddress = "test@liferay.com");
 	}
+
+	@priority = "4"
+	test DisplaySuggestionsAfterCharacterThresholdIsMet {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		SearchPortlets.configureEmbeddedSearchBar(characterThresholdForDisplayingSuggestions = "3");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "App");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Appl");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "DM Document Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+	}
+

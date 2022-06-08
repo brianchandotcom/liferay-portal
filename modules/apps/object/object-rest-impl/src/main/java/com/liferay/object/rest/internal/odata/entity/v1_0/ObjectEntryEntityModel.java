@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -167,7 +168,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 					ObjectFieldConstants.DB_TYPE_DATE)) {
 
 			return Optional.of(
-				new DateTimeEntityField(
+				new DateEntityField(
 					objectField.getName(),
 					locale ->
 						"nestedFieldArray.value_date#" + objectField.getName(),

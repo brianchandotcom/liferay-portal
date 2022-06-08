@@ -90,7 +90,8 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 			"1.0.5", "1.0.6",
 			new com.liferay.change.tracking.web.internal.upgrade.v1_0_6.
 				PublicationsUserRoleUpgradeProcess(
-					_resourcePermissionLocalService, _roleLocalService));
+					_companyLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
 	}
 
 	@Reference

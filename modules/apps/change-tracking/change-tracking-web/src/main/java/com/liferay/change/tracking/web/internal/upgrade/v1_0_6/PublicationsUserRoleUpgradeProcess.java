@@ -18,12 +18,10 @@ import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Samuel Trong Tran
@@ -31,22 +29,19 @@ import java.sql.ResultSet;
 public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 
 	public PublicationsUserRoleUpgradeProcess(
+		CompanyLocalService companyLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
+		_companyLocalService = companyLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				Role role = _roleLocalService.getRole(
 					companyId, RoleConstants.PUBLICATIONS_USER);
 
@@ -55,10 +50,10 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(role.getCompanyId()), role.getRoleId(),
 					CTActionKeys.ADD_PUBLICATION);
-			}
-		}
+			});
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

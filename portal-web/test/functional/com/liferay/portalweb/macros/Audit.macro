@@ -132,9 +132,11 @@ definition {
 			locator1 = "AuditReports#REPORTS_DETAIL_USER_NAME",
 			value1 = "${userName}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
-			value1 = "${additionalInformation}");
+		for (var additionalInformationList : list "${additionalInformation}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
+				value1 = "${additionalInformationList}");
+		}
 
 		if (isSet(clientIp)) {
 			AssertTextEquals.assertPartialText(

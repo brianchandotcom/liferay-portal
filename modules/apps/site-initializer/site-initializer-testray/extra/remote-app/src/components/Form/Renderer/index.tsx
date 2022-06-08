@@ -13,8 +13,10 @@
  */
 
 import Form from '..';
-import {TypedDocumentNode} from '@apollo/client';
+import {ApolloQueryResult, TypedDocumentNode} from '@apollo/client';
+import {useEffect, useState} from 'react';
 
+import client from '../../../graphql/apolloClient';
 import i18n from '../../../i18n';
 import {AutoCompleteProps} from '../AutoComplete';
 
@@ -24,26 +26,100 @@ export type RendererFields = {
 	label: string;
 	name: string;
 	options?: RenderedFieldOptions;
-	type: 'autocomplete' | 'checkbox' | 'text' | 'select' | 'multiselect';
+	type:
+		| 'autocomplete'
+		| 'checkbox'
+		| 'text'
+		| 'textarea'
+		| 'select'
+		| 'multiselect';
 } & Partial<AutoCompleteProps>;
 
 type RendererProps = {
 	fields: RendererFields[];
 	filter?: string;
+	onChange: (event: any) => void;
 };
 
-const Renderer: React.FC<RendererProps> = ({fields, filter}) => {
+const Renderer: React.FC<RendererProps> = ({fields, filter, onChange}) => {
+	const [gqlOptions, setGqlOptions] = useState<{[key: string]: []}>({});
+
 	const fieldsFiltered = fields.filter(({label}) =>
 		filter ? label.toLowerCase().includes(filter.toLowerCase()) : true
 	);
 
+	const fetchQueries = (
+		gqlQueries: (
+			| RendererFields
+			| (() => Promise<ApolloQueryResult<any>>)
+		)[][]
+	) => {
+		Promise.allSettled(
+			gqlQueries.map(([, query]) => (query as any)())
+		).then((results) => {
+			let i = 0;
+			const _gqlOptions: any = {};
+			for (const result of results) {
+				if (result.status === 'fulfilled') {
+					const queries: any[][] = [...(gqlQueries as any)];
+					const field: RendererFields = queries[i][0];
+
+					if (field.transformData) {
+						_gqlOptions[field.name] = field.transformData(
+							result.value.data
+						);
+					}
+				}
+				i++;
+			}
+
+			setGqlOptions(_gqlOptions);
+		});
+	};
+
+	useEffect(() => {
+		const gqlQueries = fields
+			.filter(({gqlQuery}) => gqlQuery)
+			.map(({gqlQuery, gqlVariables, ...field}) => [
+				field,
+				() =>
+					client.query({
+						query: gqlQuery as any,
+						variables: gqlVariables,
+					}),
+			]);
+
+		fetchQueries(gqlQueries);
+	}, [fields]);
+
 	return (
-		<div>
+		<div className="form-renderer">
 			{fieldsFiltered.map((field, index) => {
 				const {label, name, type, options = [], gqlQuery} = field;
 
-				if (type === 'text') {
-					return <Form.Input key={index} {...field} />;
+				const getOptions = () => {
+					const _options =
+						gqlOptions[name] ||
+						(options || []).map((option) =>
+							typeof option === 'object'
+								? option
+								: {
+										label: option,
+										value: option,
+								  }
+						);
+
+					return _options;
+				};
+
+				if (['text', 'textarea'].includes(type)) {
+					return (
+						<Form.Input
+							key={index}
+							onChange={onChange}
+							{...field}
+						/>
+					);
 				}
 
 				if (type === 'select') {
@@ -52,14 +128,8 @@ const Renderer: React.FC<RendererProps> = ({fields, filter}) => {
 							key={index}
 							label={label}
 							name={name}
-							options={(options || []).map((option) =>
-								typeof option === 'object'
-									? option
-									: {
-											label: option,
-											value: option,
-									  }
-							)}
+							onChange={onChange}
+							options={getOptions()}
 						/>
 					);
 				}
@@ -77,6 +147,7 @@ const Renderer: React.FC<RendererProps> = ({fields, filter}) => {
 											? option
 											: option.label
 									}
+									onChange={onChange}
 								/>
 							))}
 						</div>

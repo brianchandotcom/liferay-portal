@@ -52,6 +52,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 			<select
 				className={classNames('form-control rounded-xs', className)}
 				id={id}
+				name={name}
 				{...otherProps}
 				{...register(name, {required})}
 			>

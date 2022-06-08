@@ -21,6 +21,7 @@ import useDebounce from '../../../hooks/useDebounce';
 
 export type AutoCompleteProps = {
 	gqlQuery: TypedDocumentNode;
+	gqlVariables?: any;
 	label?: string;
 	objectName: string;
 	onSearch: (keyword: string) => any;

@@ -101,10 +101,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
+ * @author Gregory Amerson
  */
 public class WabProcessor {
 
@@ -116,7 +119,14 @@ public class WabProcessor {
 	}
 
 	public File getProcessedFile() throws IOException {
-		_pluginDir = _autoDeploy();
+		String fileExtension = MapUtil.getString(_parameters, "fileExtension");
+
+		if (Objects.equals(fileExtension, "zip")) {
+			_pluginDir = _convertToClientExtensionBundleDir();
+		}
+		else {
+			_pluginDir = _autoDeploy();
+		}
 
 		if ((_pluginDir == null) || !_pluginDir.exists() ||
 			!_pluginDir.isDirectory()) {
@@ -254,6 +264,55 @@ public class WabProcessor {
 		autoDeploymentContext.setDestDir(file.getAbsolutePath());
 
 		return autoDeploymentContext;
+	}
+
+	private File _convertToClientExtensionBundleDir() {
+		Path clientExtensionBundlePath = null;
+
+		try (ZipFile zipFile = new ZipFile(_file)) {
+			clientExtensionBundlePath = Files.createTempDirectory(
+				"clientextension");
+
+			Path metatInfResourcesPath = _takePath(
+				clientExtensionBundlePath, "META-INF/resources");
+			Path osgiInfConfiguratorPath = _takePath(
+				clientExtensionBundlePath, "OSGI-INF/configurator");
+
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (zipEntry.isDirectory()) {
+					if (name.startsWith("static/")) {
+						Path destPath = metatInfResourcesPath.resolve(
+							name.replaceAll("^static/", ""));
+
+						Files.createDirectories(destPath);
+					}
+				}
+				else {
+					if (!name.contains("/") && name.endsWith(".config.json")) {
+						Files.copy(
+							zipFile.getInputStream(zipEntry),
+							osgiInfConfiguratorPath.resolve(name));
+					}
+					else if (name.startsWith("static/")) {
+						Path destPath = metatInfResourcesPath.resolve(
+							name.replaceAll("^static/", ""));
+
+						Files.copy(zipFile.getInputStream(zipEntry), destPath);
+					}
+				}
+			}
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+		}
+
+		return clientExtensionBundlePath.toFile();
 	}
 
 	private Discover _findDiscoveryMode(Document document) {
@@ -985,6 +1044,17 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.REQUIRE_BUNDLE, sb.toString());
 	}
 
+	private void _processRequireOsgiConfigurator(Jar jar, Builder analyzer) {
+		Stream<Resource> resources = jar.getResources(
+			res -> res.startsWith("OSGI-INF/configurator/"));
+
+		if (resources.count() != 0) {
+			_appendProperty(
+				analyzer, Constants.REQUIRE_CAPABILITY,
+				_OSGI_CONFIGURATOR_REQUIREMENTS);
+		}
+	}
+
 	private void _processResourceActionXML() throws IOException {
 		File dir = new File(_pluginDir, "WEB-INF/classes");
 
@@ -1274,6 +1344,14 @@ public class WabProcessor {
 		}
 	}
 
+	private Path _takePath(Path parentPath, String take) throws IOException {
+		Path path = parentPath.resolve(take);
+
+		Files.createDirectories(path);
+
+		return path;
+	}
+
 	private File _transformToOSGiBundle(Jar jar) throws IOException {
 		try (Builder analyzer = new Builder()) {
 			analyzer.setBase(_pluginDir);
@@ -1350,6 +1428,8 @@ public class WabProcessor {
 			analyzer.setProperties(pluginPackageProperties);
 
 			_processBeans(analyzer);
+
+			_processRequireOsgiConfigurator(jar, analyzer);
 
 			try {
 				jar = analyzer.build();
@@ -1445,6 +1525,10 @@ public class WabProcessor {
 	private static final String[] _KNOWN_PROPERTY_KEYS = {
 		"jdbc.driverClassName"
 	};
+
+	private static final String _OSGI_CONFIGURATOR_REQUIREMENTS =
+		"osgi.extender;filter:=\"(&(osgi.extender=osgi.configurator)" +
+			"(version>=1.0)(!(version>=2.0)))\"";
 
 	private static final String _XPATHS_HOOK = StringUtil.merge(
 		new String[] {

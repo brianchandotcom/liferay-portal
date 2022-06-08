@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
@@ -34,6 +35,7 @@ import java.util.zip.ZipFile;
 /**
  * @author Miguel Pastor
  * @author Raymond Augé
+ * @author Gregory Amerson
  */
 public class WarArtifactUrlTransformer implements FileInstaller {
 
@@ -45,15 +47,19 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
-		if (!name.endsWith(".war")) {
-			return false;
+		if (name.endsWith(".war")) {
+			if (!_hasResources(artifact)) {
+				return true;
+			}
+
+			return _portalIsReady.get();
 		}
 
-		if (!_hasResources(artifact)) {
+		if (name.endsWith(".zip") && _isClientExtensionZip(artifact)) {
 			return true;
 		}
 
-		return _portalIsReady.get();
+		return false;
 	}
 
 	@Override
@@ -92,6 +98,41 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 				return Validator.isNotNull(
 					properties.getProperty("resources-importer-external-dir"));
 			}
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to check resources in " + artifact, ioException);
+		}
+
+		return false;
+	}
+
+	private boolean _isClientExtensionZip(File artifact) {
+		try (ZipFile zipFile = new ZipFile(artifact)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			boolean foundConfigJson = false;
+			boolean foundStatic = false;
+
+			while (enumeration.hasMoreElements() &&
+				   (!foundConfigJson || !foundStatic)) {
+
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith("config.json") && (name.indexOf("/") == -1)) {
+					foundConfigJson = true;
+				}
+				else if (name.startsWith("static/")) {
+					foundStatic = true;
+				}
+			}
+
+			if (foundConfigJson && foundStatic) {
+				return true;
+			}
+
+			return false;
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to check resources in " + artifact, ioException);

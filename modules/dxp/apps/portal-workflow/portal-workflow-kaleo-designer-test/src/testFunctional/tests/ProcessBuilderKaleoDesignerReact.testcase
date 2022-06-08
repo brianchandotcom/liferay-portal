@@ -1583,7 +1583,6 @@ definition {
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
-
 	}
 
 	@description = "Verify that the user can publish a definition with Fork node"

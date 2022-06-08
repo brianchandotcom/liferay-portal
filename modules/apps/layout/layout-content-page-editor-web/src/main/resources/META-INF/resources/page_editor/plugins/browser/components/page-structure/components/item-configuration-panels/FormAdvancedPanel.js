@@ -16,9 +16,15 @@ import React from 'react';
 
 import {HideFromSearchField} from '../../../../../../app/components/fragment-configuration-fields/HideFromSearchField';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
+import CSSFieldSet from './CSSFieldSet';
 
 export default function FormAdvancedPanel({item}) {
-	return <HideFromSearchField item={item} />;
+	return (
+		<>
+			<HideFromSearchField item={item} />;
+			<CSSFieldSet item={item} />
+		</>
+	);
 }
 
 FormAdvancedPanel.propTypes = {

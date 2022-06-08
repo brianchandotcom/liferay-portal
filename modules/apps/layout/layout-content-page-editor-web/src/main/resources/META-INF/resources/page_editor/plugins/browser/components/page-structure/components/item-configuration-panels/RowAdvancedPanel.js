@@ -16,9 +16,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {HideFromSearchField} from '../../../../../../app/components/fragment-configuration-fields/HideFromSearchField';
+import CSSFieldSet from './CSSFieldSet';
 
 export function RowAdvancedPanel({item}) {
-	return <HideFromSearchField item={item} />;
+	return (
+		<>
+			<HideFromSearchField item={item} />
+			<CSSFieldSet item={item} />
+		</>
+	);
 }
 
 RowAdvancedPanel.propTypes = {

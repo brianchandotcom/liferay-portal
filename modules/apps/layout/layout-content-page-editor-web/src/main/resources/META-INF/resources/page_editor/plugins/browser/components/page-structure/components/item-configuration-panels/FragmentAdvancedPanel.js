@@ -27,6 +27,7 @@ import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
+import CSSFieldSet from './CSSFieldSet';
 import {FieldSet} from './FieldSet';
 
 export function FragmentAdvancedPanel({item}) {
@@ -80,6 +81,8 @@ export function FragmentAdvancedPanel({item}) {
 				})}
 
 			<HideFromSearchField item={item} />
+
+			<CSSFieldSet item={item} />
 		</>
 	);
 }

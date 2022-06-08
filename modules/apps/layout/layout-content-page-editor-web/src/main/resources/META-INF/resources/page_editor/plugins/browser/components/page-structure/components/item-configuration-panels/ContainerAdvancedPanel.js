@@ -23,6 +23,7 @@ import {
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
+import CSSFieldSet from './CSSFieldSet';
 
 const HTML_TAGS = [
 	'div',
@@ -71,6 +72,8 @@ export default function ContainerAdvancedPanel({item}) {
 			</p>
 
 			<HideFromSearchField item={item} />
+
+			<CSSFieldSet item={item} />
 		</>
 	);
 }

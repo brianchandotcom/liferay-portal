@@ -32,9 +32,9 @@ definition {
 	test ClickSubsectionApplicationsRedirectedToApplications {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
-        Click(
-            locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
-            section = "Review Eligibility Reports");
+		Click(
+			locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+			section = "Review Eligibility Reports");
 
 		AssertElementPresent(
 			locator1 = "RaylifeAP#MENU_SIDEBAR",
@@ -46,9 +46,9 @@ definition {
 	test ClickSubsectionPoliciesRedirectedToPolicies {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
-        Click(
-            locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
-            section = "Contact Expiring Policies");
+		Click(
+			locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+			section = "Contact Expiring Policies");
 
 		AssertElementPresent(
 			locator1 = "RaylifeAP#MENU_SIDEBAR",

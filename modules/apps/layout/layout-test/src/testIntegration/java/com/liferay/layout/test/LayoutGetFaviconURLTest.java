@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -144,13 +145,13 @@ public class LayoutGetFaviconURLTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group.getGroupId(),
-					"Test Page Template Collection", null, _serviceContext);
+					RandomTestUtil.randomString(), null, _serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
 				createLayoutPageTemplateEntryFromLayout(
 					SegmentsEntryConstants.ID_DEFAULT, _layout,
-					"Test Page Template",
+					RandomTestUtil.randomString(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					_serviceContext);
@@ -193,7 +194,7 @@ public class LayoutGetFaviconURLTest {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				"Test Master Page",
+				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

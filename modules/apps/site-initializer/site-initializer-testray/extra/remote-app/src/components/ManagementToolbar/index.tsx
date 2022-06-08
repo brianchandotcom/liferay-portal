@@ -44,27 +44,26 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	title,
 	totalItems,
 }) => {
-	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
+	const [{columns: contextColumns, filters}, dispatch] = useContext(
+		ListViewContext
+	);
 
 	const disabled = totalItems === 0;
 
 	const columns = [
 		{
 			items: tableProps.columns.map((column) => ({
-				checked: (filters.columns || {})[column.key] ?? true,
+				checked: (contextColumns || {})[column.key] ?? true,
 				label: column.value,
 				onChange: (value: boolean) => {
 					dispatch({
 						payload: {
-							filters: {
-								...filters,
-								columns: {
-									...filters.columns,
-									[column.key]: value,
-								},
+							columns: {
+								...contextColumns,
+								[column.key]: value,
 							},
 						},
-						type: ListViewTypes.SET_UPDATE_FILTERS_AND_SORT,
+						type: ListViewTypes.SET_COLUMNS,
 					});
 				},
 				type: 'checkbox',
@@ -73,10 +72,6 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 			type: 'group',
 		},
 	];
-
-	const onSearch = (searchText: string) => {
-		dispatch({payload: searchText, type: ListViewTypes.SET_SEARCH});
-	};
 
 	return (
 		<>
@@ -93,12 +88,8 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 			</ClayManagementToolbar>
 
-			{keywords && (
-				<ManagementToolbarResultsBar
-					keywords={keywords}
-					onClear={() => onSearch('')}
-					totalItems={totalItems}
-				/>
+			{!!filters.entries?.length && (
+				<ManagementToolbarResultsBar totalItems={totalItems} />
 			)}
 		</>
 	);

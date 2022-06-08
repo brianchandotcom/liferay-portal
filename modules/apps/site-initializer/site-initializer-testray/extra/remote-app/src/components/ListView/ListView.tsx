@@ -14,7 +14,14 @@
 
 import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {memo, useCallback, useContext, useEffect, useMemo} from 'react';
+import {
+	ReactNode,
+	memo,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+} from 'react';
 
 import ListViewContextProvider, {
 	InitialState as ListViewContextState,
@@ -24,8 +31,8 @@ import ListViewContextProvider, {
 } from '../../context/ListViewContext';
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
+import {SearchBuilder} from '../../util/search';
 import EmptyState from '../EmptyState';
-import {RendererFields} from '../Form/Renderer';
 import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
@@ -39,7 +46,7 @@ type LiferayQueryResponse<T = any> = {
 };
 
 export type ListViewProps<T = any> = {
-	filterFields?: RendererFields[];
+	children?: ({items}: {items: any[]}) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -58,6 +65,7 @@ export type ListViewProps<T = any> = {
 };
 
 const ListView: React.FC<ListViewProps> = ({
+	children,
 	forceRefetch,
 	managementToolbarProps: {
 		visible: managementToolbarVisible = true,
@@ -67,12 +75,29 @@ const ListView: React.FC<ListViewProps> = ({
 	query,
 	tableProps,
 	transformData,
-	variables,
-	pagination = {displayTop: false},
+	variables: _variables,
+	pagination = {displayTop: true},
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
-	const {filters, selectedRows} = listViewContext;
+	const {
+		columns: columnsContext,
+		filters,
+		selectedRows,
+		sort,
+	} = listViewContext;
+
+	const variables = useMemo(() => {
+		return {
+			..._variables,
+			filter:
+				SearchBuilder.createFilter(
+					filters.filter,
+					_variables?.filter
+				) || '',
+			sort,
+		};
+	}, [_variables, sort, filters]);
 
 	const {data, error, loading, refetch} = useQuery(query, {
 		variables,
@@ -85,7 +110,7 @@ const ListView: React.FC<ListViewProps> = ({
 	const columns = useMemo(
 		() =>
 			tableProps.columns.filter(({key}) => {
-				const columns = filters.columns || {};
+				const columns = columnsContext || {};
 
 				if (columns[key] === undefined) {
 					return true;
@@ -93,7 +118,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 				return columns[key];
 			}),
-		[filters.columns, tableProps.columns]
+		[columnsContext, tableProps.columns]
 	);
 
 	const onRefetch = useCallback(
@@ -166,6 +191,8 @@ const ListView: React.FC<ListViewProps> = ({
 
 			{!!items.length && (
 				<>
+					{children && children({items})}
+
 					{pagination?.displayTop && (
 						<div className="mt-4">{Pagination}</div>
 					)}

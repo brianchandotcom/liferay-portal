@@ -22,8 +22,22 @@ export type Sort = {
 	key: string;
 };
 
+export type Entry = {
+	label: string;
+	name: string;
+	value: string;
+};
+
 export type InitialState = {
-	filters: any;
+	columns: {
+		[key: string]: boolean;
+	};
+	filters: {
+		entries: Entry[];
+		filter: {
+			[key: string]: string;
+		};
+	};
 	keywords: string;
 	page: number;
 	pageSize: number;
@@ -32,7 +46,11 @@ export type InitialState = {
 };
 
 const initialState: InitialState = {
-	filters: {},
+	columns: {},
+	filters: {
+		entries: [],
+		filter: {},
+	},
 	keywords: '',
 	page: 1,
 	pageSize: 20,
@@ -43,6 +61,7 @@ const initialState: InitialState = {
 export enum ListViewTypes {
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
+	SET_COLUMNS = 'SET_COLUMNS',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
 	SET_REMOVE_FILTER = 'SET_REMOVE_FILTER',
@@ -54,6 +73,7 @@ export enum ListViewTypes {
 type ListViewPayload = {
 	[ListViewTypes.SET_CHECKED_ROW]: number;
 	[ListViewTypes.SET_CLEAR]: null;
+	[ListViewTypes.SET_COLUMNS]: {columns: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
 	[ListViewTypes.SET_REMOVE_FILTER]: string;
@@ -70,6 +90,35 @@ export const ListViewContext = createContext<
 
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
+		case ListViewTypes.SET_CHECKED_ROW:
+			const rowId = action.payload;
+			const rowAlreadyInserted = state.selectedRows.includes(rowId);
+			let selectedRows = [...state.selectedRows];
+
+			if (rowAlreadyInserted) {
+				selectedRows = selectedRows.filter((row) => row !== rowId);
+			} else {
+				selectedRows = [...selectedRows, rowId];
+			}
+
+			return {
+				...state,
+				selectedRows,
+			};
+
+		case ListViewTypes.SET_CLEAR:
+			return {
+				...state,
+				filters: initialState.filters,
+				keywords: '',
+			};
+
+		case ListViewTypes.SET_COLUMNS:
+			return {
+				...state,
+				columns: action.payload.columns,
+			};
+
 		case ListViewTypes.SET_PAGE:
 			return {
 				...state,
@@ -83,22 +132,22 @@ const reducer = (state: InitialState, action: AppActions) => {
 				pageSize: action.payload,
 			};
 
-		case ListViewTypes.SET_CLEAR:
-			return {
-				...state,
-				filters: {},
-				keywords: '',
-			};
-
 		case ListViewTypes.SET_REMOVE_FILTER: {
 			const filterKey = action.payload;
 			const updatedFilters = {...state.filters};
 
-			delete updatedFilters[filterKey];
+			delete updatedFilters.filter[filterKey];
+
+			const filterEntries = updatedFilters.entries.filter(
+				({name}) => name !== filterKey
+			);
 
 			return {
 				...state,
-				filters: updatedFilters,
+				filters: {
+					entries: filterEntries,
+					filter: updatedFilters.filter,
+				},
 			};
 		}
 
@@ -107,23 +156,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 				...state,
 				keywords: action.payload,
 				page: 1,
-			};
-
-		case ListViewTypes.SET_CHECKED_ROW:
-			const rowId = action.payload;
-			const rowAlreadyInserted = state.selectedRows.includes(rowId);
-			let selectedRows = [...state.selectedRows];
-
-			if (rowAlreadyInserted) {
-				selectedRows = selectedRows.filter((row) => row !== rowId);
-			}
-			else {
-				selectedRows = [...selectedRows, rowId];
-			}
-
-			return {
-				...state,
-				selectedRows,
 			};
 
 		case ListViewTypes.SET_SORT:

@@ -13,33 +13,74 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import {ClayResultsBar} from '@clayui/management-toolbar';
+import {useContext} from 'react';
 
+import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
 
 type ManagementToolbarResultsBarProps = {
-	keywords: string;
-	onClear: (event: any) => void;
 	totalItems: number;
 };
 
 const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = ({
-	keywords,
-	onClear,
 	totalItems,
 }) => {
+	const [
+		{
+			filters: {entries},
+		},
+		dispatch,
+	] = useContext(ListViewContext);
+
+	const onClear = () => {
+		dispatch({payload: null, type: ListViewTypes.SET_CLEAR});
+	};
+
+	const onRemoveFilter = (filterName: string) => {
+		dispatch({payload: filterName, type: ListViewTypes.SET_REMOVE_FILTER});
+	};
+
 	return (
 		<ClayResultsBar>
-			<ClayResultsBar.Item expand>
+			<ClayResultsBar.Item>
 				<span className="component-text text-truncate-inline">
 					<span className="text-truncate">
 						{i18n.sub('x-results-for-x', [
 							totalItems.toString(),
-							keywords,
+							'',
 						])}
 					</span>
 				</span>
 			</ClayResultsBar.Item>
+
+			{entries.map((entry, index) => {
+				return (
+					<ClayResultsBar.Item
+						expand={index === entries.length - 1}
+						key={index}
+					>
+						<ClayLabel
+							className="component-label result-filter tbar-label"
+							displayType="unstyled"
+						>
+							<span className="d-flex flex-row">
+								<b>{entry.label}</b>
+
+								{`: ${entry.value}`}
+
+								<ClayIcon
+									className="cursor-pointer ml-2"
+									onClick={() => onRemoveFilter(entry.name)}
+									symbol="times"
+								/>
+							</span>
+						</ClayLabel>
+					</ClayResultsBar.Item>
+				);
+			})}
 
 			<ClayResultsBar.Item>
 				<ClayButton
@@ -47,7 +88,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 					displayType="unstyled"
 					onClick={onClear}
 				>
-					Clear
+					{i18n.translate('clear')}
 				</ClayButton>
 			</ClayResultsBar.Item>
 		</ClayResultsBar>

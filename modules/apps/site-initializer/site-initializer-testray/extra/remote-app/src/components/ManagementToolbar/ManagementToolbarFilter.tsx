@@ -15,9 +15,12 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 
+import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
+import useFormActions from '../../hooks/useFormActions';
 import i18n from '../../i18n';
+import {SearchBuilder} from '../../util/search';
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
 
@@ -25,17 +28,60 @@ type ManagementToolbarFilterProps = {
 	filterFields?: RendererFields[];
 };
 
+const getInitialFilters = (fields?: RendererFields[]) => {
+	if (fields) {
+		const initialValues: {[key: string]: string} = {};
+
+		for (const field of fields) {
+			initialValues[field.name] = '';
+		}
+
+		return initialValues;
+	}
+
+	return {};
+};
+
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	filterFields,
 }) => {
+	const initialFilters = getInitialFilters(filterFields);
+	const [, dispatch] = useContext(ListViewContext);
 	const [filter, setFilter] = useState('');
-	const [active, setActive] = useState(false);
+	const [form, setForm] = useState(initialFilters);
+	const formActions = useFormActions();
 
-	const hasFilter = !!filterFields?.length;
+	const onChange = formActions.form.onChange({form, setForm});
+
+	const onClear = () => {
+		dispatch({
+			payload: null,
+			type: ListViewTypes.SET_CLEAR,
+		});
+	};
+
+	const onApply = () => {
+		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
+
+		const entries = Object.keys(filterCleaned).map((key) => ({
+			label: filterFields?.find(({name}) => name === key)?.label,
+			name: key,
+			value: filterCleaned[key],
+		}));
+
+		dispatch({
+			payload: {filters: {entries, filter: filterCleaned}},
+			type: ListViewTypes.SET_UPDATE_FILTERS_AND_SORT,
+		});
+	};
 
 	return (
 		<ClayDropDown
+			menuElementAttrs={{
+				className: 'management-toolbar-filter-dropdown',
+			}}
 			menuWidth="sm"
+			renderMenuOnClick
 			trigger={
 				<ClayButton className="nav-link" displayType="unstyled">
 					<span className="navbar-breakpoint-down-d-none">
@@ -51,10 +97,12 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 				</ClayButton>
 			}
 		>
-			{hasFilter && (
+			{!!filterFields?.length && (
 				<>
 					<div className="px-3">
-						<p className="font-weight-bold my-2">Filter Results</p>
+						<p className="font-weight-bold my-2">
+							{i18n.translate('filter-results')}
+						</p>
 
 						<Form.Input
 							name="search-filter"
@@ -67,17 +115,25 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					<Form.Divider />
 
 					<div className="px-3">
-						<Form.Renderer fields={filterFields} filter={filter} />
+						<Form.Renderer
+							fields={filterFields}
+							filter={filter}
+							onChange={onChange}
+						/>
 					</div>
 
 					<Form.Divider />
 
 					<div className="mb-2 px-3">
-						<ClayButton onClick={() => setActive(!active)}>
+						<ClayButton onClick={onApply}>
 							{i18n.translate('apply')}
 						</ClayButton>
 
-						<ClayButton className="ml-3" displayType="secondary">
+						<ClayButton
+							className="ml-3"
+							displayType="secondary"
+							onClick={onClear}
+						>
 							{i18n.translate('clear')}
 						</ClayButton>
 					</div>

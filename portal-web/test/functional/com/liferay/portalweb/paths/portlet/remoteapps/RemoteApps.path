@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>EMPTY_REMOTE_TABLE_MESSAGE</td>
-	<td>//div[contains(@class,'sheet-text') and contains(.,'No items were found.')]</td>
+	<td>//div[contains(@class,'empty-state-text') and contains(.,'Sorry, no results were found.')]</td>
 	<td></td>
 </tr>
 <tr>

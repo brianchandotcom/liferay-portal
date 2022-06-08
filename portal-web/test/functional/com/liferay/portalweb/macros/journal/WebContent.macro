@@ -996,14 +996,19 @@ definition {
 		}
 
 		if (isSet(webContentImage)) {
-			if (!(isSet(webContentImageFieldLabel))) {
-				var webContentImageFieldLabel = "Image";
+			if (isSet(selectViaCKEditor)) {
+				ItemSelector.gotoItemSelectorViaCKEditor();
 			}
+			else {
+				if (!(isSet(webContentImageFieldLabel))) {
+					var webContentImageFieldLabel = "Image";
+				}
 
-			Click(
-				fieldLabel = "${webContentImageFieldLabel}",
-				locator1 = "Button#BUTTON_LABEL",
-				text = "Select");
+				Click(
+					fieldLabel = "${webContentImageFieldLabel}",
+					locator1 = "Button#BUTTON_LABEL",
+					text = "Select");
+			}
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(depotName)) {

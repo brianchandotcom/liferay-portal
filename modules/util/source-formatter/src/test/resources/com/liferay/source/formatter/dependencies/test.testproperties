@@ -1,0 +1,24 @@
+##
+## Test Batch
+##
+
+    #
+    # Backend
+    #
+
+    test.batch.dist.app.servers[backend]=tomcat
+
+    #
+    # Analytics Cloud Quarantine
+    #
+
+    test.batch.dist.app.servers[analytics-cloud-quarantine]=tomcat
+
+    test.batch.names[analytics-cloud-quarantine]=\
+        functional-tomcat90-mysql57-jdk8
+
+##
+## Build
+##
+
+    build.app.server=false

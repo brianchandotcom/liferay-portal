@@ -27,6 +27,18 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testPropertiesBlockOrderCheck() throws Exception {
+		test(
+			"test.testproperties",
+			new String[] {
+				"Incorrect order: Properties block '# Backend' should come " +
+					"after '# Analytics Cloud Quarantine'",
+				"Incorrect order: Properties block '## Test Batch' should " +
+					"come after '## Build'"
+			});
+	}
+
+	@Test
 	public void testSortDefinitionKeys() throws Exception {
 		test("FormatProperties/liferay-plugin-package.testproperties");
 		test("FormatProperties/TLiferayBatchFileProperties.testproperties");

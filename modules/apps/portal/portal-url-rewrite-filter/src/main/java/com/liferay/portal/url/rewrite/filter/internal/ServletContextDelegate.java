@@ -34,7 +34,7 @@ public class ServletContextDelegate {
 	public InputStream getResourceAsStream(String path) {
 		if (Objects.equals(path, UrlRewriteFilter.DEFAULT_WEB_CONF_PATH)) {
 			return ServletContextDelegate.class.getResourceAsStream(
-				"/urlrewrite.xml");
+				"dependencies/urlrewrite.xml");
 		}
 
 		return _servletContext.getResourceAsStream(path);

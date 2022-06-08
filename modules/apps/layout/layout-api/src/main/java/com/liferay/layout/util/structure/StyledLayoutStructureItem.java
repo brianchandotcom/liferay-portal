@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Pavel Savinov
@@ -103,6 +105,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return StringPool.BLANK;
 	}
 
+	public Set<String> getCssClasses() {
+		return _cssClasses;
+	}
+
 	public String getDisplay() {
 		return _getStringStyleProperty("display");
 	}
@@ -129,7 +135,11 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		JSONObject jsonObject = JSONUtil.put("styles", stylesJSONObject);
+		JSONObject jsonObject = JSONUtil.put(
+			"cssClasses", JSONFactoryUtil.createJSONArray(_cssClasses)
+		).put(
+			"styles", stylesJSONObject
+		);
 
 		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
@@ -233,8 +243,21 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public void setCssClasses(Set<String> cssClasses) {
+		_cssClasses = cssClasses;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("cssClasses")) {
+			LinkedHashSet<String> cssClasses = new LinkedHashSet<>();
+
+			JSONUtil.addToStringCollection(
+				cssClasses, itemConfigJSONObject.getJSONArray("cssClasses"));
+
+			setCssClasses(cssClasses);
+		}
+
 		try {
 			_updateItemConfigValues(stylesJSONObject, itemConfigJSONObject);
 
@@ -418,5 +441,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		StyledLayoutStructureItem.class);
 
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
+
+	private Set<String> _cssClasses;
 
 }

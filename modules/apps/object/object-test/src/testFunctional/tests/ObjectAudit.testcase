@@ -437,12 +437,36 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is updated when the object is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateWhenPublishCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153576",
+			objectName = "CustomObject153576",
+			pluralLabelName = "Custom Objects 153576");
 
-		// TODO LPS-153576 CanViewUpdateWhenPublishCustomObject pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153576");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153576");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "true,active",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the toggle active and inactive of the object is updated when set on the object details"

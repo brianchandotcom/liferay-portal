@@ -116,6 +116,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentAsGuest {
+		property test.name.skip.portal.instance = "PGSharepoint2013#ViewDocumentAsGuest";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoRepository(dmRepositoryName = "Sharepoint Repository Name");

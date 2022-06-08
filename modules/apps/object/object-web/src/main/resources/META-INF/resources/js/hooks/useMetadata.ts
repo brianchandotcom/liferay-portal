@@ -27,13 +27,15 @@ export default function useMetadata(elementList: SidebarCategory[]) {
 		const [first, ...others] = elementList;
 		const items = [...first.items];
 
-		METADATA.forEach(({label, name}) => {
-			items.push({
-				content: name,
-				label: label[defaultLanguageId],
-				tooltip: '',
+		if (!Liferay.FeatureFlags['LPS-154872']) {
+			METADATA.forEach(({label, name}) => {
+				items.push({
+					content: name,
+					label: label[defaultLanguageId],
+					tooltip: '',
+				});
 			});
-		});
+		}
 
 		return [{...first, items}, ...others];
 	}, [elementList]);

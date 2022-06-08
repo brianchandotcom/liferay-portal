@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -50,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Guilherme Camacho
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = true, immediate = true,
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )
@@ -241,9 +240,7 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 			if (key.equals("Id")) {
 				objectEntry.setExternalReferenceCode(jsonObject.getString(key));
 			}
-			else if (StringUtil.contains(key, "__c", StringPool.BLANK) &&
-					 Validator.isNotNull(jsonObject.get(key))) {
-
+			else if (StringUtil.contains(key, "__c", StringPool.BLANK)) {
 				String customFieldName = StringUtil.removeLast(key, "__c");
 
 				customFieldName = StringUtil.removeSubstring(
@@ -254,7 +251,9 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				properties.put(customFieldName, jsonObject.get(key));
+				properties.put(
+					customFieldName,
+					jsonObject.isNull(key) ? null : jsonObject.get(key));
 			}
 		}
 

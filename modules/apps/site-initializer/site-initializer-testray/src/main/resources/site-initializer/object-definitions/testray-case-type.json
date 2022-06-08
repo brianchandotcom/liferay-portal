@@ -7,12 +7,12 @@
 		{
 			"DBType": "String",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
+			"required": true,
 			"type": "String"
 		}
 	],

@@ -6,8 +6,8 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Key"
 			},
@@ -17,8 +17,8 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Summary"
 			},
@@ -28,8 +28,8 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Components"
 			},
@@ -39,8 +39,8 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Link Title"
 			},
@@ -50,8 +50,8 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Link URL"
 			},

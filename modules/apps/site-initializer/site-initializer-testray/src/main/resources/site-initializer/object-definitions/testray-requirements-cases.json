@@ -6,13 +6,13 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
+			"required": true,
 			"type": "String"
 		}
 	],

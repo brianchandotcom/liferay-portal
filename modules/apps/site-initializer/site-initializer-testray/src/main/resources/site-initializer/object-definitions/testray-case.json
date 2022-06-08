@@ -7,7 +7,7 @@
 		{
 			"DBType": "String",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
@@ -84,7 +84,7 @@
 		{
 			"DBType": "Long",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Case Number"
 			},

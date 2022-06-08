@@ -7,7 +7,7 @@
 		{
 			"DBType": "String",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"indexedLanguageId": "",
 			"label": {
 				"en_US": "Name"

@@ -39,7 +39,7 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Name"
@@ -61,13 +61,13 @@
 		},
 		{
 			"DBType": "Integer",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Status"
 			},
 			"name": "dueStatus",
-			"required": false,
+			"required": true,
 			"type": "Integer"
 		},
 		{

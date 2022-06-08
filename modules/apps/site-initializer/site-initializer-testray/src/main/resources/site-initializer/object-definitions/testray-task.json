@@ -7,23 +7,23 @@
 		{
 			"DBType": "String",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
 			"DBType": "Integer",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Status"
 			},
 			"name": "dueStatus",
-			"required": false,
+			"required": true,
 			"type": "Integer"
 		},
 		{

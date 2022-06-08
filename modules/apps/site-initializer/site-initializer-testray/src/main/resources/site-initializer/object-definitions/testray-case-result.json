@@ -16,19 +16,8 @@
 			"type": "Long"
 		},
 		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Assigned User Id"
-			},
-			"name": "assignedUserId",
-			"required": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "Date",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Start Date"
@@ -39,7 +28,7 @@
 		},
 		{
 			"DBType": "Date",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Closed Date"

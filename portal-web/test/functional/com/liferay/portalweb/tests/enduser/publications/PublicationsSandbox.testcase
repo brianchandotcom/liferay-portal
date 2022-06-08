@@ -87,4 +87,52 @@ definition {
 			sandboxedUser = "true");
 	}
 
+	@description = "The user without access to publications Permissions can not be sandboxed."
+	@priority = "4"
+	test UserWithoutAccessToPublicationsPermissionsCannotBeSandboxed {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Power User",
+			userEmailAddress = "userea@liferay.com");
+
+		Publications.enablePublications(enableSandboxOnly = "true");
+
+		Publications.createNewPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertElementNotPresent(
+			key_publicationName = "${sandboxedPublicationName}",
+			locator1 = "Publications#PUBLICATION_NAME_IN_ONGOING");
+	}
+
 }

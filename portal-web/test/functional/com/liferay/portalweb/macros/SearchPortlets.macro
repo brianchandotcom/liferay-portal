@@ -125,6 +125,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if (isSet(characterThresholdForDisplayingSuggestions)) {
+			Type(
+				locator1 = "SearchConfiguration#CHARACTER_THRESHOLD_FOR_DISPLAYING_SUGGESTIONS",
+				value1 = "${characterThresholdForDisplayingSuggestions}");
 		}
 
 		if (isSet(destinationPage)) {

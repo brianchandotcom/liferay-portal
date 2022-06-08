@@ -1,0 +1,40 @@
+definition {
+
+	macro gotoSuggestionResultDetails {
+		Click.mouseDownMouseUp(
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
+	}
+
+	macro showMoreSuggestions {
+		Click.mouseDownMouseUp(locator1 = "Button#SHOW_MORE");
+	}
+
+	macro viewNoResultAssetTitle {
+		AssertElementNotPresent(
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
+	}
+
+	macro viewSuggestionResultDetails {
+		AssertTextEquals(
+			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			value1 = "${searchAssetTitle}");
+	}
+
+	macro viewSuggestions {
+		AssertTextEquals.assertPartialText(
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE",
+			value1 = "${searchAssetTitle}");
+
+		if (isSet(searchAssetDescription)) {
+			AssertTextEquals.assertPartialText(
+				key_searchAssetDescription = "${searchAssetDescription}",
+				key_searchAssetTitle = "${searchAssetTitle}",
+				locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION",
+				value1 = "${searchAssetDescription}");
+		}
+	}
+
+}

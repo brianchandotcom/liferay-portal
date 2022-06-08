@@ -3,25 +3,21 @@ definition {
 	macro addCustomElementRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
-		var response = JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
+		JSONRemoteAppAPI._addCustomElementRemoteAppEntry(
 			customElementCssurl = "${customElementCssurl}",
 			customElementHtmlName = "${customElementHtmlName}",
 			customElementName = "${customElementName}",
 			customElementProperties = "${customElementProperties}",
 			customElementURL = "${customElementURL}",
 			customElementUseESM = "${customElementUseESM}");
-
-		return "{response}";
 	}
 
 	macro addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
-		var response = JSONRemoteAppAPI._addIFrameRemoteAppEntry(
+		JSONRemoteAppAPI._addIFrameRemoteAppEntry(
 			iFrameURL = "${iFrameURL}",
 			name = "${name}");
-
-		return "${response}";
 	}
 
 	macro deleteIFrameRemoteAppEntry {

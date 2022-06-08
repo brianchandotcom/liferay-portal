@@ -39,17 +39,10 @@ definition {
 				  -d properties=${customElementPropertiesModified} \
 				  -d sourceCodeURL= \
 				  -d type='customElement' \
-				  -d typeSettings='cssURLs=${customElementCssurlModified}%0A \
-				     	htmlElementName=${htmlNameModified}%0A \
-				     	urls=${customElementURLModified}%0A \
-				     	useESM=${customElementUseESMValue}%0A \
-				     	instanceable=true%0A \
-				     	portletCategoryName=category.remote-apps'
+				  -d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.remote-apps
 		''';
 
-		var externalReferenceCode = JSONCurlUtil.post("${curl}", "$.['externalReferenceCode']");
-
-		return "${externalReferenceCode}";
+		JSONCurlUtil.post("${curl}");
 	}
 
 	macro _addIFrameRemoteAppEntry {
@@ -71,9 +64,7 @@ definition {
 				-d typeSettings='url=${iFrameURLModified}'
 		''';
 
-		var externalReferenceCode = JSONCurlUtil.post("${curl}", "$.['externalReferenceCode']");
-
-		return "${externalReferenceCode}";
+		JSONCurlUtil.post("${curl}");
 	}
 
 	macro _deleteIFrameRemoteAppEntry {

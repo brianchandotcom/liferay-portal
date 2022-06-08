@@ -20,6 +20,7 @@ import com.github.scribejava.core.builder.ServiceBuilderOAuth20;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -152,8 +153,9 @@ public class OAuth2Manager {
 	}
 
 	private String _getRedirectURI(String portalURL) {
-		return portalURL + Portal.PATH_MODULE +
-			"/document_library/onedrive/oauth2";
+		return StringBundler.concat(
+			portalURL, _portal.getPathContext(), Portal.PATH_MODULE,
+			"/document_library/onedrive/oauth2");
 	}
 
 	private Optional<AccessToken> _refreshOAuth2AccessToken(
@@ -186,5 +188,8 @@ public class OAuth2Manager {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

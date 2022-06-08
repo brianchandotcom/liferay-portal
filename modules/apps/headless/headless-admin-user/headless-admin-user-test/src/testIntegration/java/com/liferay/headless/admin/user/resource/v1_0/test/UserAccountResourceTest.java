@@ -80,6 +80,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -571,6 +572,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_assertAuthenticationResult(
 			Authenticator.SUCCESS, _regularUserAccount.getEmailAddress(),
 			newPassword);
+
+		_setUpTestUserAccountResource();
+
+		_regularUserAccountResource.patchUserAccount(
+			_regularUserAccount.getId(),
+			new UserAccount() {
+				{
+					givenName = RandomTestUtil.randomString();
+				}
+			});
 	}
 
 	@Override
@@ -808,6 +819,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_assertAuthenticationResult(
 			Authenticator.SUCCESS, _regularUserAccount.getEmailAddress(),
 			newPassword);
+
+		_setUpTestUserAccountResource();
+
+		_regularUserAccountResource.putUserAccount(
+			_regularUserAccount.getId(),
+			_randomUserAccount(
+				userAccount -> {
+					userAccount.setCurrentPassword(() -> null);
+					userAccount.setPassword(() -> null);
+				}));
 	}
 
 	@Override
@@ -858,6 +879,16 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_assertAuthenticationResult(
 			Authenticator.SUCCESS, _regularUserAccount.getEmailAddress(),
 			newPassword);
+
+		_setUpTestUserAccountResource();
+
+		_regularUserAccountResource.putUserAccountByExternalReferenceCode(
+			_regularUserAccount.getExternalReferenceCode(),
+			_randomUserAccount(
+				userAccount -> {
+					userAccount.setCurrentPassword(() -> null);
+					userAccount.setPassword(() -> null);
+				}));
 	}
 
 	@Override
@@ -1270,6 +1301,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				setStreetAddressLine3(RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	private UserAccount _randomUserAccount(
+			Consumer<UserAccount> userAccountConsumer)
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		userAccountConsumer.accept(randomUserAccount);
+
+		return randomUserAccount;
 	}
 
 	private UserAccountContactInformation _randomUserAccountContactInformation()

@@ -71,7 +71,7 @@ $table-responsive-margin-left-md: 375px !default;
 		}
 	}
 
-	a:not(.component-action) {
+	a:not(.component-action):not(.btn) {
 		color: $dark;
 	}
 

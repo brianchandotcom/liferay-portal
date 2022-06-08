@@ -198,7 +198,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 
 									<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 										<clay:content-col>
-											<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
+											<aui:a cssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
 										</clay:content-col>
 									</c:if>
 								</clay:content-row>

@@ -5,6 +5,13 @@
 		overflow: hidden;
 		overflow-y: scroll;
 
+		.reference-mark {
+			color: #b95000;
+			font-size: 6px;
+			margin-top: 2px;
+			padding-left: 4px;
+		}
+
 		.custom-control-label {
 			font-weight: 600;
 			margin-left: 5px;

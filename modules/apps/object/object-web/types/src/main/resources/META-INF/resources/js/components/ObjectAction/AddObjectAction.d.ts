@@ -20,6 +20,7 @@ export default function AddObjectAction({
 	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionsRelationshipsURL,
 	validateExpressionURL,
 }: IProps): JSX.Element;
 interface IProps {
@@ -27,6 +28,7 @@ interface IProps {
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionsRelationshipsURL: string;
 	validateExpressionURL: string;
 }
 export {};

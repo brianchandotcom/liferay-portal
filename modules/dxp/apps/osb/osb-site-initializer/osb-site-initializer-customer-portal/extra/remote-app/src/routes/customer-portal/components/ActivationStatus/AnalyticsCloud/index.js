@@ -19,8 +19,8 @@ import {Button, ButtonDropDown} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptionGroups,
-	getAccountSubscriptionsTerms,
 	getAnalyticsCloudWorkspace,
+	getCommerceOrderItems,
 	updateAccountSubscriptionGroups,
 	updateAnalyticsCloudWorkspace,
 } from '../../../../../common/services/liferay/graphql/queries';
@@ -171,10 +171,10 @@ const ActivationStatusAnalyticsCloud = ({
 		];
 
 	useEffect(() => {
-		const getSubscriptionTerms = async () => {
-			const filterAccountSubscriptionERC = `accountSubscriptionGroupERC eq '${project.accountKey}_analytics-cloud'`;
+		const fetchCommerceOrderItems = async () => {
+			const filterAccountSubscriptionERC = `customFields/name eq 'accountSubscriptionGroupERC' and customFields/customValue/data eq '${project.accountKey}_analytics-cloud'`;
 			const {data} = await client.query({
-				query: getAccountSubscriptionsTerms,
+				query: getCommerceOrderItems,
 				variables: {
 					filter: filterAccountSubscriptionERC,
 				},
@@ -182,13 +182,13 @@ const ActivationStatusAnalyticsCloud = ({
 
 			if (data) {
 				const activationStatusDateRange = getActivationStatusDateRange(
-					data.c?.accountSubscriptionTerms?.items
+					data.orderItems?.items
 				);
 				setActivationStatusDate(activationStatusDateRange);
 			}
 		};
 
-		getSubscriptionTerms();
+		fetchCommerceOrderItems();
 	}, [client, project]);
 
 	const updateAnalyticsCloudWorkspaceId = async () => {

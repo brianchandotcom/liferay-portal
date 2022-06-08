@@ -17,7 +17,7 @@ import {Button} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptions,
-	getAccountSubscriptionsTerms,
+	getCommerceOrderItems,
 } from '../../../../../common/services/liferay/graphql/queries';
 import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES} from '../../../../../common/utils/constants';
@@ -49,10 +49,7 @@ const ActivationKeysInputs = ({
 		setSelectedAccountSubscriptionName,
 	] = useState('');
 
-	const [
-		accountSubscriptionsTermsDates,
-		setAccountSubscriptionsTermsDates,
-	] = useState([]);
+	const [orderItemsDates, setAccountOrderItemsDates] = useState([]);
 	const [selectDateInterval, setSelectedDateInterval] = useState();
 
 	const [hasLicenseDownloadError, setLicenseDownloadError] = useState(false);
@@ -78,33 +75,32 @@ const ActivationKeysInputs = ({
 	}, [accountKey, client, productKey]);
 
 	useEffect(() => {
-		const getSubscriptionTerms = async () => {
-			const filterAccountSubscriptionERC = `accountSubscriptionERC eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
+		const getOrderItems = async () => {
+			const filterAccountSubscriptionERC = `customFields/name eq 'accountSubscriptionERC' and customFields/customValue/data eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
 
 			const {data} = await client.query({
-				query: getAccountSubscriptionsTerms,
+				query: getCommerceOrderItems,
 				variables: {
 					filter: filterAccountSubscriptionERC,
 				},
 			});
 
 			if (data) {
-				const accountSubscriptionsTerms =
-					data.c?.accountSubscriptionTerms?.items || [];
+				const orderItems = data.orderItems?.items || [];
 
-				if (accountSubscriptionsTerms.length) {
+				if (orderItems.length) {
 					const dateIntervals = getYearlyTerms(
-						accountSubscriptionsTerms[0]
+						JSON.parse(orderItems[0].options)
 					);
 
-					setAccountSubscriptionsTermsDates(dateIntervals);
+					setAccountOrderItemsDates(dateIntervals);
 					setSelectedDateInterval(dateIntervals[0]);
 				}
 			}
 		};
 
 		if (selectedAccountSubscriptionName) {
-			getSubscriptionTerms();
+			getOrderItems();
 		}
 	}, [accountKey, client, productKey, selectedAccountSubscriptionName]);
 
@@ -241,30 +237,26 @@ const ActivationKeysInputs = ({
 						<ClaySelect
 							onChange={(event) => {
 								setSelectedDateInterval(
-									accountSubscriptionsTermsDates[
-										event.target.value
-									]
+									orderItemsDates[event.target.value]
 								);
 							}}
 						>
-							{accountSubscriptionsTermsDates.map(
-								(dateInterval, index) => {
-									const formattedDate = `${getCurrentEndDate(
-										dateInterval.startDate
-									)} - ${getCurrentEndDate(
-										dateInterval.endDate
-									)}`;
+							{orderItemsDates.map((dateInterval, index) => {
+								const formattedDate = `${getCurrentEndDate(
+									dateInterval.startDate
+								)} - ${getCurrentEndDate(
+									dateInterval.endDate
+								)}`;
 
-									return (
-										<ClaySelect.Option
-											className="options"
-											key={index}
-											label={formattedDate}
-											value={index}
-										/>
-									);
-								}
-							)}
+								return (
+									<ClaySelect.Option
+										className="options"
+										key={index}
+										label={formattedDate}
+										value={index}
+									/>
+								);
+							})}
 						</ClaySelect>
 					</div>
 				</label>

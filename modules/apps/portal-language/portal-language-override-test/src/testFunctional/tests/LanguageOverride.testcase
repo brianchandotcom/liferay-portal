@@ -442,4 +442,33 @@ definition {
 		}
 	}
 
+	@description = "This test assert the OOTB Language Key added by default has no override related information."
+	@priority = "3"
+	test NoOverrideRelatedInfosDisplayForOOTBLanguageKey {
+		task ("Given that assert no existing keys when filter by Any Language") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No language entries were found.");
+		}
+
+		task ("When remove any language fiter") {
+			Click(locator1 = "LanguageOverride#FILTER_BY_ANY_LANGUAGE_REMOVE_ANY_LANGUAGE_FILTER");
+		}
+
+		task ("Then the OOTB language keys display") {
+			AssertTextEquals(
+				key_languageKey = "0-analytics-cloud-connection",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "0-analytics-cloud-connection");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "0-analytics-cloud-connection",
+				listEntrySubtitle = "Analytics Cloud Connection");
+
+			AssertElementNotPresent(locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL");
+		}
+	}
+
 }

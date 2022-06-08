@@ -455,12 +455,44 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test UserCanViewUpdateOnAdditionalInformation {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153575",
+			objectName = "CustomObject153575",
+			pluralLabelName = "Custom Objects 153575");
 
-		// TODO LPS-153575 UserCanViewUpdateOnAdditionalInformation pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153575");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153575");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "titleObjectFieldId",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 }

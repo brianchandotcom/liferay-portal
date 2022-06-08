@@ -26,7 +26,13 @@
 		gap: 1.5rem;
 		padding: 1.5rem;
 
-		&--inline,
+		&--inline {
+			align-items: center;
+			flex-direction: row;
+			gap: 1rem;
+			padding: 0;
+		}
+
 		&--no-padding {
 			padding: 0;
 		}

@@ -22,6 +22,7 @@ export default function AddObjectAction({
 	ffNotificationTemplates,
 	objectActionExecutors = [],
 	objectActionTriggers = [],
+	objectDefinitionsRelationshipsURL,
 	validateExpressionURL,
 }: IProps) {
 	return (
@@ -30,6 +31,9 @@ export default function AddObjectAction({
 			objectAction={{active: true}}
 			objectActionExecutors={objectActionExecutors}
 			objectActionTriggers={objectActionTriggers}
+			objectDefinitionsRelationshipsURL={
+				objectDefinitionsRelationshipsURL
+			}
 			requestParams={{
 				method: 'POST',
 				url: apiURL,
@@ -48,5 +52,6 @@ interface IProps {
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionsRelationshipsURL: string;
 	validateExpressionURL: string;
 }

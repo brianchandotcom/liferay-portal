@@ -31,6 +31,7 @@ export {Select} from './components/Select';
 export {Toggle} from './components/Toggle';
 export {invalidateRequired, useForm, FormError} from './hooks/useForm';
 export {onActionDropdownItemClick} from './utils/fdsUtil';
+export {SelectWithOption} from './components/SelectWithOption';
 export {
 	closeSidePanel,
 	openToast,

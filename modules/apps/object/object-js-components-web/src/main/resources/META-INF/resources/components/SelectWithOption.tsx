@@ -12,45 +12,54 @@
  * details.
  */
 
+import {ClaySelect, ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
-import {SidebarCategory} from './CodeEditor/index';
-import './ExpressionBuilder.scss';
-export declare function ExpressionBuilder({
-	buttonDisabled,
+
+import {FieldBase} from './FieldBase';
+
+export function SelectWithOption({
+	ariaLabel,
 	className,
-	component,
 	disabled,
 	error,
 	feedbackMessage,
 	id,
 	label,
-	name,
-	onChange,
-	onInput,
-	onOpenModal,
 	required,
-	type,
-	value,
+	tooltip,
 	...otherProps
-}: IProps): JSX.Element;
-export declare function ExpressionBuilderModal({
-	sidebarElements,
-}: IModalProps): JSX.Element | null;
-interface IModalProps {
-	sidebarElements: SidebarCategory[];
+}: IProps) {
+	return (
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
+			tooltip={tooltip}
+		>
+			<ClaySelectWithOption {...otherProps} aria-label={ariaLabel} />
+		</FieldBase>
+	);
 }
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-	buttonDisabled?: boolean;
-	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
+
+interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+	ariaLabel?: string;
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
-	id?: string;
 	label?: string;
-	name?: string;
-	onOpenModal: () => void;
+	options: Array<
+		(
+			| React.ComponentProps<typeof ClaySelect.Option>
+			| React.ComponentProps<typeof ClaySelect.OptGroup>
+		) & {
+			options?: Array<React.ComponentProps<typeof ClaySelect.Option>>;
+			type?: 'group';
+		}
+	>;
 	required?: boolean;
-	type?: 'number' | 'text';
-	value?: string | number | string[];
+	tooltip?: string;
 }
-export {};

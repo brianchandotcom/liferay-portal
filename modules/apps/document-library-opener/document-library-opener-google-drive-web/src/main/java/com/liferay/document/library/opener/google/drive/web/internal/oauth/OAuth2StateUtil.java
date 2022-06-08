@@ -18,6 +18,7 @@ import com.liferay.document.library.opener.google.drive.web.internal.constants.D
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class OAuth2StateUtil {
 	}
 
 	public static String getRedirectURI(String portalURL) {
-		return portalURL + Portal.PATH_MODULE +
+		return portalURL + PortalUtil.getPathContext() + Portal.PATH_MODULE +
 			DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_SERVLET_PATH;
 	}
 

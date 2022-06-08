@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -135,17 +135,28 @@ public class FDSSamplePortlet extends MVCPortlet {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user.getUserId(), objectDefinition.getObjectDefinitionId());
 
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.set(2020, 0, 1, 1, 1, 1);
+		calendar.set(Calendar.MILLISECOND, 0);
+
 		for (int i = 1; i <= 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
-					"date", new Date()
+					"date", calendar.getTime()
 				).put(
 					"description", "This is a description for sample " + i + "."
 				).put(
 					"title", "Sample" + i
 				).build(),
 				new ServiceContext());
+
+			calendar.add(Calendar.MONTH, 1);
+			calendar.add(Calendar.DATE, 1);
+			calendar.add(Calendar.HOUR, 1);
+			calendar.add(Calendar.MINUTE, 1);
+			calendar.add(Calendar.SECOND, 1);
 		}
 	}
 

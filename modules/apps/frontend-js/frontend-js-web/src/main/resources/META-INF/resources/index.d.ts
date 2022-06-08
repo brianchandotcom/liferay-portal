@@ -641,6 +641,33 @@ export class PortletBase {
  */
 export function throttle(fn: () => void, interval: number): () => void;
 
+/**
+ * Returns a resource portlet URL in form of a URL object by setting the lifecycle parameter
+ **/
+export function createResourceURL(
+	basePortletURL: string,
+	parameters?: Object
+): URL;
+
+export function openSelectionModal<T>(init: {
+	buttonAddLabel?: string;
+	buttonCancelLabel?: string;
+	containerProps?: Object;
+	customSelectEvent?: boolean;
+	height?: string;
+	id?: string;
+	iframeBodyCssClass?: string;
+	multiple?: boolean;
+	onClose?: () => void;
+	onSelect?: (item: T) => void;
+	selectEventName?: string;
+	selectedData?: any;
+	size?: 'full-screen' | 'lg' | 'md' | 'sm';
+	title?: string;
+	url?: string;
+	zIndex?: number;
+}): void;
+
 export function openToast({
 	autoClose,
 	container,
@@ -669,7 +696,14 @@ export function openToast({
 
 export function openWindow(config: object, callback?: Function): void;
 
-export function fetch(resource: string | Request, init?: Object): Promise<any>;
+/**
+ * Fetches a resource. A thin wrapper around ES6 Fetch API, with standardized
+ * default configuration.
+ */
+export function fetch(
+	input: RequestInfo,
+	init?: RequestInit
+): Promise<Response>;
 
 export function getCheckedCheckboxes(
 	form: HTMLFormElement,

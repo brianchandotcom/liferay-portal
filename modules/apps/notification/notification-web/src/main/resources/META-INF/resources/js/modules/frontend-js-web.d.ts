@@ -12,20 +12,6 @@
  * details.
  */
 
-type HTTPMethods = 'GET' | 'POST' | 'DELETE' | 'PUT';
-
 declare module 'frontend-js-web' {
-	function fetch(
-		url: string | Request,
-		options?: {
-			body?: string;
-			headers?: {[key: string]: string} | Headers;
-			method?: HTTPMethods;
-		}
-	): Promise<{
-		json: () => Promise<unknown>;
-		ok: boolean;
-		status: number;
-	}>;
-	const createResourceURL: any;
+	export * from 'frontend-js-web/src/main/resources/META-INF/resources/index';
 }

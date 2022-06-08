@@ -12,4 +12,6 @@
  * details.
  */
 
-declare module 'frontend-js-web';
+declare module 'frontend-js-web' {
+	export * from 'frontend-js-web/src/main/resources/META-INF/resources/index';
+}

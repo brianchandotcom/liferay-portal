@@ -16,6 +16,8 @@ interface ItemIdName {
 	id: string;
 	name: string;
 }
+type Locale = Liferay.Language.Locale;
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 interface ObjectAction {
 	active: boolean;

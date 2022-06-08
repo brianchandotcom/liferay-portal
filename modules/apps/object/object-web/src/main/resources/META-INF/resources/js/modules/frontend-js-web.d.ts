@@ -12,4 +12,6 @@
  * details.
  */
 
-type HTTPMethods = 'GET' | 'POST' | 'DELETE' | 'PUT';
+declare module 'frontend-js-web' {
+	export * from 'frontend-js-web/src/main/resources/META-INF/resources/index';
+}

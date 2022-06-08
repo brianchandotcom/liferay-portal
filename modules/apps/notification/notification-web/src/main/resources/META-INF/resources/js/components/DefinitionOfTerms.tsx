@@ -141,7 +141,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 				objectDefinitionId: objectDefinition.id,
 				p_p_resource_id:
 					'/notification_templates/get_notification_template_terms',
-			})
+			}).toString()
 		);
 
 		const responseJSON = (await response.json()) as any[];

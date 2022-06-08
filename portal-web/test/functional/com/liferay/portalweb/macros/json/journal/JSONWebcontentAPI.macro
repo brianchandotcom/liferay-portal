@@ -24,6 +24,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
 				-u ${userEmailAddress}:${userPassword} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${folderName} \

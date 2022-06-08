@@ -25,9 +25,9 @@ definition {
 				imageFileName = "${imageFileName}",
 				navTab = "${navTab}");
 		}
-		else if (isSet(imageFileName)) {
+		else if (isSet(currentSiteImage)) {
 			ItemSelector.selectDMImage(
-				imageFileName = "${imageFileName}",
+				imageFileName = "${currentSiteImage}",
 				navTab = "${navTab}");
 		}
 		else {

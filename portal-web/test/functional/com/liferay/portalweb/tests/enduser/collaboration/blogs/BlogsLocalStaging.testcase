@@ -1154,8 +1154,8 @@ definition {
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.addContentWithInlineImage(
+			currentSiteImage = "Document_1.jpg",
 			entryContent = "Blogs Entry Content",
-			imageFileName = "Document_1.jpg",
 			navTab = "Documents and Media");
 
 		PortletEntry.publish();

@@ -40,7 +40,16 @@ const restLink = new RestLink({
 });
 
 const client = new ApolloClient({
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache({
+		typePolicies: {
+			Mutationc: {
+				merge: true,
+			},
+			c: {
+				merge: true,
+			},
+		},
+	}),
 	link: from([restLink, httpLink]),
 });
 

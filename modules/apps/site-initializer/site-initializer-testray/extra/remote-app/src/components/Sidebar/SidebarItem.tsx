@@ -46,7 +46,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 			)}
 			to={path as string}
 		>
-			<ClayIcon fontSize={20} symbol={icon} />
+			<ClayIcon
+				color={active ? 'white' : undefined}
+				fontSize={20}
+				symbol={icon}
+			/>
 
 			<span
 				className={classNames('ml-1 testray-sidebar-text', {

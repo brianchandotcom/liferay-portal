@@ -21,6 +21,14 @@ html#{$cadmin-selector} {
 			.btn-monospaced {
 				color: $cadmin-secondary;
 			}
+
+			.tab-pane {
+				$footerHeight: 65px;
+				$headerHeight: 60px;
+
+				max-height: calc(100vh - #{$footerHeight + $headerHeight});
+				overflow-y: auto;
+			}
 		}
 
 		.applications-menu-header .nav-link {

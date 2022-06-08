@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -36,8 +37,9 @@ public class SelectDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		return selectDDMFormFieldValueAccessor.getOptionsLabels(
-			ddmFormFieldValue, locale);
+		return HtmlUtil.escape(
+			selectDDMFormFieldValueAccessor.getOptionsLabels(
+				ddmFormFieldValue, locale));
 	}
 
 	@Reference

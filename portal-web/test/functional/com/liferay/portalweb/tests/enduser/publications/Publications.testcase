@@ -684,6 +684,34 @@ definition {
 			value1 = "En progreso");
 	}
 
+	@description = "This is a use case for LPS-153949. Users should always be able to modify their account regardless of whether they are in a publication."
+	@priority = "4"
+	test MyAccountActionsAreForcedToProduction {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userScreenNameEdit = "testscreen");
+
+		User.viewUserInfomation(
+			userEmailAddress = "test@liferay.com",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userScreenName = "testscreen");
+
+		Publications.workOnProduction();
+
+		Navigator.gotoAccountSettings();
+
+		User.viewUserInfomation(
+			userEmailAddress = "test@liferay.com",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userScreenName = "testscreen");
+	}
+
 	@priority = "4"
 	test NoChangesShouldDisplayAfterNavigatingPersonalAppLayouts {
 		JSONPublications.addPublication(publicationName = "Publication Name");

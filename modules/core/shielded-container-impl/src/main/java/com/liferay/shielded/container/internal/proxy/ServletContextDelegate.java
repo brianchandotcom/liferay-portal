@@ -37,13 +37,22 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class ServletContextDelegate {
 
-	public ServletContextDelegate(
-		ProxyFactory proxyFactory, ServletContext servletContext,
-		ClassLoader classLoader) {
+	public static ServletContext create(
+		ClassLoader classLoader, ServletContext servletContext) {
 
-		_proxyFactory = proxyFactory;
-		_servletContext = servletContext;
-		_classLoader = classLoader;
+		ProxyFactory proxyFactory = new ProxyFactory(classLoader);
+
+		ServletContextDelegate servletContextDelegate =
+			new ServletContextDelegate(
+				proxyFactory, servletContext, classLoader);
+
+		servletContext = proxyFactory.createASMWrapper(
+			classLoader, ServletContext.class, servletContextDelegate,
+			servletContext);
+
+		servletContextDelegate._proxiedServletContext = servletContext;
+
+		return servletContext;
 	}
 
 	public FilterRegistration.Dynamic addFilter(
@@ -232,8 +241,13 @@ public class ServletContextDelegate {
 		return _servletContext.setInitParameter(_encodeName(name), value);
 	}
 
-	public void setProxiedServletContext(ServletContext proxiedServletContext) {
-		_proxiedServletContext = proxiedServletContext;
+	private ServletContextDelegate(
+		ProxyFactory proxyFactory, ServletContext servletContext,
+		ClassLoader classLoader) {
+
+		_proxyFactory = proxyFactory;
+		_servletContext = servletContext;
+		_classLoader = classLoader;
 	}
 
 	private String _decodeName(String name) {

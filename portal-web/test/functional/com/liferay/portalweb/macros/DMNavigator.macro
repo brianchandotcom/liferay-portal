@@ -353,27 +353,26 @@ definition {
 		}
 
 		if ("${portlet}" == "Documents and Media Size Limits") {
-			var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=dl-size-limit-configuration-company");
 		}
+		else {
+			if ("${portlet}" == "Cache Control") {
+				var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
+			}
 
-		if ("${portlet}" == "Cache Control") {
-			var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
+			if ("${portlet}" == "Google Drive") {
+				var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
+			}
+
+			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 		}
-
-		if ("${portlet}" == "Google Drive") {
-			var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
-		}
-
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToConfigInSiteSettings {
 		var baseURL = PropsUtil.get("portal.url");
 
 		if ("${portlet}" == "Documents and Media Size Limits") {
-			var portletKey = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
-
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_pid=${portletKey}");
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=dl-size-limit-configuration-group");
 		}
 
 		if ("${portlet}" == "Documents and Media") {
@@ -390,51 +389,56 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "AWS Translator") {
-			var portletId = "com.liferay.translation.translator.aws.internal.configuration.AWSTranslatorConfiguration";
-		}
-
-		if ("${portlet}" == "Azure Translator") {
-			var portletId = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration";
-		}
-
 		if ("${portlet}" == "Documents and Media Size Limits") {
-			var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_configurationScreenKey=dl-size-limit-configuration-system");
 		}
+		else {
+			if ("${portlet}" == "AWS Translator") {
+				var portletId = "com.liferay.translation.translator.aws.internal.configuration.AWSTranslatorConfiguration";
+			}
 
-		if ("${portlet}" == "File Entries") {
-			var portletId = "com.liferay.document.library.configuration.DLFileEntryConfiguration";
+			if ("${portlet}" == "Azure Translator") {
+				var portletId = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration";
+			}
+
+			if ("${portlet}" == "Documents and Media Size Limits") {
+				var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+			}
+
+			if ("${portlet}" == "File Entries") {
+				var portletId = "com.liferay.document.library.configuration.DLFileEntryConfiguration";
+			}
+
+			if ("${portlet}" == "FFMPEG Audio Converter") {
+				var portletId = "com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration";
+			}
+
+			if ("${portlet}" == "FFMPEG Video Converter") {
+				var portletId = "com.liferay.document.library.video.internal.configuration.DLVideoFFMPEGVideoConverterConfiguration";
+			}
+
+			if ("${portlet}" == "Google Cloud Translator") {
+				var portletId = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration";
+			}
+
+			if ("${portlet}" == "Google Drive") {
+				var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
+			}
+
+			if ("${portlet}" == "One Drive") {
+				var portletId = "com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration";
+			}
+
+			if ("${portlet}" == "Service") {
+				var portletId = "com.liferay.document.library.configuration.DLConfiguration";
+			}
+
+			if ("${portlet}" == "Cache Control") {
+				var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
+			}
+
+			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 		}
-
-		if ("${portlet}" == "FFMPEG Audio Converter") {
-			var portletId = "com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration";
-		}
-
-		if ("${portlet}" == "FFMPEG Video Converter") {
-			var portletId = "com.liferay.document.library.video.internal.configuration.DLVideoFFMPEGVideoConverterConfiguration";
-		}
-
-		if ("${portlet}" == "Google Cloud Translator") {
-			var portletId = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration";
-		}
-
-		if ("${portlet}" == "Google Drive") {
-			var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
-		}
-
-		if ("${portlet}" == "One Drive") {
-			var portletId = "com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration";
-		}
-
-		if ("${portlet}" == "Service") {
-			var portletId = "com.liferay.document.library.configuration.DLConfiguration";
-		}
-
-		if ("${portlet}" == "Cache Control") {
-			var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
-		}
-
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToEditEntryInSite {

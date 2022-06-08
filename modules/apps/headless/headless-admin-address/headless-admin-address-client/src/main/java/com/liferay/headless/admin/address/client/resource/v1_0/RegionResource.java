@@ -158,6 +158,12 @@ public interface RegionResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -181,6 +187,7 @@ public interface RegionResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -283,7 +290,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}/regions");
 
 			httpInvoker.path("countryId", countryId);
@@ -366,7 +373,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}/regions");
 
 			httpInvoker.path("countryId", countryId);
@@ -445,7 +452,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}/regions/batch");
 
 			httpInvoker.path("countryId", countryId);
@@ -528,7 +535,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}/regions/by-region-code/{regionCode}");
 
 			httpInvoker.path("countryId", countryId);
@@ -632,7 +639,8 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/headless-admin-address/v1.0/regions");
+					_builder._port + _builder._pathContext +
+						"/o/headless-admin-address/v1.0/regions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -707,7 +715,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/{regionId}");
 
 			httpInvoker.path("regionId", regionId);
@@ -784,7 +792,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -860,7 +868,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/{regionId}");
 
 			httpInvoker.path("regionId", regionId);
@@ -943,7 +951,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/{regionId}");
 
 			httpInvoker.path("regionId", regionId);
@@ -1024,7 +1032,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/{regionId}");
 
 			httpInvoker.path("regionId", regionId);
@@ -1101,7 +1109,7 @@ public interface RegionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/regions/batch");
 
 			httpInvoker.userNameAndPassword(

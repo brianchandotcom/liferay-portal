@@ -186,6 +186,12 @@ public interface WarehouseItemResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -209,6 +215,7 @@ public interface WarehouseItemResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -281,7 +288,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -365,7 +372,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -440,7 +447,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -526,7 +533,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -593,7 +600,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/{id}");
 
 			httpInvoker.path("id", id);
@@ -671,7 +678,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/batch");
 
 			httpInvoker.path("id", id);
@@ -749,7 +756,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/{id}");
 
 			httpInvoker.path("id", id);
@@ -821,7 +828,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/{id}");
 
 			httpInvoker.path("id", id);
@@ -913,7 +920,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -999,7 +1006,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1089,7 +1096,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}/warehouseItems");
 
 			httpInvoker.path("id", id);
@@ -1173,7 +1180,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}/warehouseItems");
 
 			httpInvoker.path("id", id);
@@ -1278,7 +1285,7 @@ public interface WarehouseItemResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-inventory/v1.0/warehouseItems/updated");
 
 			httpInvoker.userNameAndPassword(

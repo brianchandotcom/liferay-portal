@@ -172,6 +172,12 @@ public interface PriceEntryResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -195,6 +201,7 @@ public interface PriceEntryResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -266,7 +273,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -350,7 +357,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -425,7 +432,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -492,7 +499,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/{id}");
 
 			httpInvoker.path("id", id);
@@ -570,7 +577,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/batch");
 
 			httpInvoker.path("id", id);
@@ -648,7 +655,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/{id}");
 
 			httpInvoker.path("id", id);
@@ -720,7 +727,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/{id}");
 
 			httpInvoker.path("id", id);
@@ -812,7 +819,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceLists/by-externalReferenceCode/{externalReferenceCode}/priceEntries");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -898,7 +905,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceLists/by-externalReferenceCode/{externalReferenceCode}/priceEntries");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -988,7 +995,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceLists/{id}/priceEntries");
 
 			httpInvoker.path("id", id);
@@ -1072,7 +1079,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceLists/{id}/priceEntries");
 
 			httpInvoker.path("id", id);
@@ -1152,7 +1159,7 @@ public interface PriceEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/priceLists/priceEntries/batch");
 
 			httpInvoker.path("id", id);

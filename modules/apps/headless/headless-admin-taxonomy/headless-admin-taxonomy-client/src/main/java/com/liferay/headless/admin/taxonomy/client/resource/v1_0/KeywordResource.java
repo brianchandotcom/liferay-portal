@@ -216,6 +216,12 @@ public interface KeywordResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -239,6 +245,7 @@ public interface KeywordResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -342,7 +349,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -426,7 +433,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -506,7 +513,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -594,7 +601,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/permissions");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -688,7 +695,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/permissions");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -785,7 +792,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/ranked");
 
 			httpInvoker.userNameAndPassword(
@@ -862,7 +869,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
 
 			httpInvoker.path("keywordId", keywordId);
@@ -939,7 +946,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1015,7 +1022,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
 
 			httpInvoker.path("keywordId", keywordId);
@@ -1098,7 +1105,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
 
 			httpInvoker.path("keywordId", keywordId);
@@ -1175,7 +1182,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1252,7 +1259,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/subscribe");
 
 			httpInvoker.path("keywordId", keywordId);
@@ -1331,7 +1338,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/unsubscribe");
 
 			httpInvoker.path("keywordId", keywordId);
@@ -1435,7 +1442,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords");
 
 			httpInvoker.path("siteId", siteId);
@@ -1518,7 +1525,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords");
 
 			httpInvoker.path("siteId", siteId);
@@ -1596,7 +1603,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/batch");
 
 			httpInvoker.path("siteId", siteId);
@@ -1683,7 +1690,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -1776,7 +1783,7 @@ public interface KeywordResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/permissions");
 
 			httpInvoker.path("siteId", siteId);

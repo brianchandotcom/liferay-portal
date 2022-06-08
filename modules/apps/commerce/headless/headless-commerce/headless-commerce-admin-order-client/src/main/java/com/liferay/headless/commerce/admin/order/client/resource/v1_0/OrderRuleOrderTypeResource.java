@@ -142,6 +142,12 @@ public interface OrderRuleOrderTypeResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -165,6 +171,7 @@ public interface OrderRuleOrderTypeResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -245,7 +252,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rule-order-types/{orderRuleOrderTypeId}");
 
 			httpInvoker.path("orderRuleOrderTypeId", orderRuleOrderTypeId);
@@ -324,7 +331,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rule-order-types/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -414,7 +421,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-order-types");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -503,7 +510,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-order-types");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -598,7 +605,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-order-types");
 
 			httpInvoker.path("id", id);
@@ -684,7 +691,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-order-types");
 
 			httpInvoker.path("id", id);
@@ -764,7 +771,7 @@ public interface OrderRuleOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-rules/order-rule-order-types/batch");
 
 			httpInvoker.path("id", id);

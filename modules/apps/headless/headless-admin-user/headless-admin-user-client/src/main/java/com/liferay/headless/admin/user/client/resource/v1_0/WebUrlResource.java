@@ -97,6 +97,12 @@ public interface WebUrlResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -120,6 +126,7 @@ public interface WebUrlResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -199,7 +206,7 @@ public interface WebUrlResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls");
 
 			httpInvoker.path("organizationId", organizationId);
@@ -280,7 +287,7 @@ public interface WebUrlResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls");
 
 			httpInvoker.path("userAccountId", userAccountId);
@@ -358,7 +365,7 @@ public interface WebUrlResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-user/v1.0/web-urls/{webUrlId}");
 
 			httpInvoker.path("webUrlId", webUrlId);

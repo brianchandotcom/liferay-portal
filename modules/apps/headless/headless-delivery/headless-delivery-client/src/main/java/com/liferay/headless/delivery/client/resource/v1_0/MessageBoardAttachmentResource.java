@@ -178,6 +178,12 @@ public interface MessageBoardAttachmentResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -201,6 +207,7 @@ public interface MessageBoardAttachmentResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -283,7 +290,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}");
 
 			httpInvoker.path(
@@ -364,7 +371,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-attachments/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -444,7 +451,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}");
 
 			httpInvoker.path(
@@ -530,7 +537,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments");
 
 			httpInvoker.path("messageBoardMessageId", messageBoardMessageId);
@@ -630,7 +637,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments");
 
 			httpInvoker.path("messageBoardMessageId", messageBoardMessageId);
@@ -717,7 +724,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments/batch");
 
 			httpInvoker.path("messageBoardMessageId", messageBoardMessageId);
@@ -802,7 +809,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -902,7 +909,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -989,7 +996,7 @@ public interface MessageBoardAttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments/batch");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);

@@ -158,6 +158,12 @@ public interface MappedProductResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -181,6 +187,7 @@ public interface MappedProductResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -259,7 +266,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}");
 
 			httpInvoker.path("mappedProductId", mappedProductId);
@@ -336,7 +343,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -418,7 +425,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}");
 
 			httpInvoker.path("mappedProductId", mappedProductId);
@@ -520,7 +527,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -606,7 +613,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -691,7 +698,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products/by-sequence/{sequence}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -793,7 +800,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products");
 
 			httpInvoker.path("productId", productId);
@@ -878,7 +885,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products");
 
 			httpInvoker.path("productId", productId);
@@ -962,7 +969,7 @@ public interface MappedProductResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products/by-sequence/{sequence}");
 
 			httpInvoker.path("productId", productId);

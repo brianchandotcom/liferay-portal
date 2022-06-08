@@ -159,6 +159,12 @@ public interface CountryResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -182,6 +188,7 @@ public interface CountryResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -284,7 +291,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries");
 
 			httpInvoker.userNameAndPassword(
@@ -362,7 +369,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries");
 
 			httpInvoker.userNameAndPassword(
@@ -437,7 +444,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -513,7 +520,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/by-a2/{a2}");
 
 			httpInvoker.path("a2", a2);
@@ -591,7 +598,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/by-a3/{a3}");
 
 			httpInvoker.path("a3", a3);
@@ -670,7 +677,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/by-name/{name}");
 
 			httpInvoker.path("name", name);
@@ -749,7 +756,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/by-number/{number}");
 
 			httpInvoker.path("number", number);
@@ -828,7 +835,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}");
 
 			httpInvoker.path("countryId", countryId);
@@ -905,7 +912,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -981,7 +988,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}");
 
 			httpInvoker.path("countryId", countryId);
@@ -1064,7 +1071,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}");
 
 			httpInvoker.path("countryId", countryId);
@@ -1147,7 +1154,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/{countryId}");
 
 			httpInvoker.path("countryId", countryId);
@@ -1224,7 +1231,7 @@ public interface CountryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-address/v1.0/countries/batch");
 
 			httpInvoker.userNameAndPassword(

@@ -233,6 +233,12 @@ public interface TaxonomyCategoryResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -256,6 +262,7 @@ public interface TaxonomyCategoryResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -349,7 +356,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked");
 
 			httpInvoker.userNameAndPassword(
@@ -454,7 +461,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
 
 			httpInvoker.path(
@@ -543,7 +550,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
 
 			httpInvoker.path(
@@ -625,7 +632,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -703,7 +710,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -782,7 +789,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -867,7 +874,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -952,7 +959,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -1029,7 +1036,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1115,7 +1122,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -1209,7 +1216,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
@@ -1318,7 +1325,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
@@ -1405,7 +1412,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
@@ -1486,7 +1493,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/batch");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
@@ -1571,7 +1578,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
@@ -1657,7 +1664,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
@@ -1748,7 +1755,7 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);

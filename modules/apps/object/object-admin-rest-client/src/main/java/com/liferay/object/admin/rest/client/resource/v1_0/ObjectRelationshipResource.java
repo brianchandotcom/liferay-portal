@@ -144,6 +144,12 @@ public interface ObjectRelationshipResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -167,6 +173,7 @@ public interface ObjectRelationshipResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -268,7 +275,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-relationships");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -355,7 +362,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-relationships");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -435,7 +442,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-relationships/batch");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -516,7 +523,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-relationships/{objectRelationshipId}");
 
 			httpInvoker.path("objectRelationshipId", objectRelationshipId);
@@ -595,7 +602,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-relationships/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -675,7 +682,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-relationships/{objectRelationshipId}");
 
 			httpInvoker.path("objectRelationshipId", objectRelationshipId);
@@ -762,7 +769,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-relationships/{objectRelationshipId}");
 
 			httpInvoker.path("objectRelationshipId", objectRelationshipId);
@@ -840,7 +847,7 @@ public interface ObjectRelationshipResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-relationships/batch");
 
 			httpInvoker.userNameAndPassword(

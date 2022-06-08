@@ -155,6 +155,12 @@ public interface NotificationTemplateResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -178,6 +184,7 @@ public interface NotificationTemplateResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -258,7 +265,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/{notificationTemplateId}");
 
 			httpInvoker.path("notificationTemplateId", notificationTemplateId);
@@ -338,7 +345,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -418,7 +425,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/{notificationTemplateId}");
 
 			httpInvoker.path("notificationTemplateId", notificationTemplateId);
@@ -506,7 +513,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/{notificationTemplateId}");
 
 			httpInvoker.path("notificationTemplateId", notificationTemplateId);
@@ -594,7 +601,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/{notificationTemplateId}");
 
 			httpInvoker.path("notificationTemplateId", notificationTemplateId);
@@ -673,7 +680,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-template/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -777,7 +784,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-templates");
 
 			httpInvoker.userNameAndPassword(
@@ -860,7 +867,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-templates");
 
 			httpInvoker.userNameAndPassword(
@@ -937,7 +944,7 @@ public interface NotificationTemplateResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/notification/v1.0/notification-templates/batch");
 
 			httpInvoker.userNameAndPassword(

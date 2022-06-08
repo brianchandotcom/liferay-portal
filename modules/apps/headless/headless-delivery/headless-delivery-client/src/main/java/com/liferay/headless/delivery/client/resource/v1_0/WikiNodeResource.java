@@ -210,6 +210,12 @@ public interface WikiNodeResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -233,6 +239,7 @@ public interface WikiNodeResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -336,7 +343,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes");
 
 			httpInvoker.path("siteId", siteId);
@@ -419,7 +426,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes");
 
 			httpInvoker.path("siteId", siteId);
@@ -497,7 +504,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/batch");
 
 			httpInvoker.path("siteId", siteId);
@@ -581,7 +588,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -666,7 +673,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -754,7 +761,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -842,7 +849,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -935,7 +942,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -1014,7 +1021,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1091,7 +1098,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1167,7 +1174,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1250,7 +1257,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1327,7 +1334,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1411,7 +1418,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/permissions");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1503,7 +1510,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/permissions");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1582,7 +1589,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/subscribe");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);
@@ -1661,7 +1668,7 @@ public interface WikiNodeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/unsubscribe");
 
 			httpInvoker.path("wikiNodeId", wikiNodeId);

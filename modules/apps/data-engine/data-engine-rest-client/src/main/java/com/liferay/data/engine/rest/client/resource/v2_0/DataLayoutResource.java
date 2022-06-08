@@ -166,6 +166,12 @@ public interface DataLayoutResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -189,6 +195,7 @@ public interface DataLayoutResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -269,7 +276,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts");
 
 			httpInvoker.path("dataDefinitionId", dataDefinitionId);
@@ -370,7 +377,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts");
 
 			httpInvoker.path("dataDefinitionId", dataDefinitionId);
@@ -456,7 +463,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts");
 
 			httpInvoker.path("dataDefinitionId", dataDefinitionId);
@@ -536,7 +543,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts/batch");
 
 			httpInvoker.path("dataDefinitionId", dataDefinitionId);
@@ -615,7 +622,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}");
 
 			httpInvoker.path("dataLayoutId", dataLayoutId);
@@ -692,7 +699,8 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/data-engine/v2.0/data-layouts/batch");
+					_builder._port + _builder._pathContext +
+						"/o/data-engine/v2.0/data-layouts/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -768,7 +776,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}");
 
 			httpInvoker.path("dataLayoutId", dataLayoutId);
@@ -852,7 +860,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}");
 
 			httpInvoker.path("dataLayoutId", dataLayoutId);
@@ -929,7 +937,8 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/data-engine/v2.0/data-layouts/batch");
+					_builder._port + _builder._pathContext +
+						"/o/data-engine/v2.0/data-layouts/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1003,7 +1012,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}/context");
 
 			httpInvoker.path("dataLayoutId", dataLayoutId);
@@ -1087,7 +1096,7 @@ public interface DataLayoutResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/data-engine/v2.0/sites/{siteId}/data-layouts/by-content-type/{contentType}/by-data-layout-key/{dataLayoutKey}");
 
 			httpInvoker.path("siteId", siteId);

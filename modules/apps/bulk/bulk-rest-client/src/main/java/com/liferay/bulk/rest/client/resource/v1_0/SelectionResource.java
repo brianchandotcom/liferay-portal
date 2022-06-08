@@ -85,6 +85,12 @@ public interface SelectionResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -108,6 +114,7 @@ public interface SelectionResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -192,7 +199,8 @@ public interface SelectionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/bulk/v1.0/bulk-selection");
+					_builder._port + _builder._pathContext +
+						"/o/bulk/v1.0/bulk-selection");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

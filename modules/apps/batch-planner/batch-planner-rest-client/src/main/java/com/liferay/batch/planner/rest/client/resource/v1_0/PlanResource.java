@@ -112,6 +112,12 @@ public interface PlanResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -135,6 +141,7 @@ public interface PlanResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -219,7 +226,8 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/batch-planner/v1.0/plans");
+					_builder._port + _builder._pathContext +
+						"/o/batch-planner/v1.0/plans");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -295,7 +303,8 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/batch-planner/v1.0/plans");
+					_builder._port + _builder._pathContext +
+						"/o/batch-planner/v1.0/plans");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -360,7 +369,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/batch-planner/v1.0/plans/{internalClassName}/template");
 
 			httpInvoker.path("internalClassName", internalClassName);
@@ -438,7 +447,8 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
+					_builder._port + _builder._pathContext +
+						"/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 
@@ -514,7 +524,8 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
+					_builder._port + _builder._pathContext +
+						"/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 
@@ -594,7 +605,8 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
+					_builder._port + _builder._pathContext +
+						"/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 

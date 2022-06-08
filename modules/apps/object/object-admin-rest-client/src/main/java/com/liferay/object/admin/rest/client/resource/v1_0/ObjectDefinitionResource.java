@@ -156,6 +156,12 @@ public interface ObjectDefinitionResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -179,6 +185,7 @@ public interface ObjectDefinitionResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -282,7 +289,8 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/object-admin/v1.0/object-definitions");
+					_builder._port + _builder._pathContext +
+						"/o/object-admin/v1.0/object-definitions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -363,7 +371,8 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/object-admin/v1.0/object-definitions");
+					_builder._port + _builder._pathContext +
+						"/o/object-admin/v1.0/object-definitions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -437,7 +446,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -516,7 +525,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -594,7 +603,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -673,7 +682,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -758,7 +767,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -843,7 +852,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -920,7 +929,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -999,7 +1008,7 @@ public interface ObjectDefinitionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/publish");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);

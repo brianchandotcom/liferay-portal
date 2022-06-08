@@ -140,6 +140,12 @@ public interface OrderTypeChannelResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -163,6 +169,7 @@ public interface OrderTypeChannelResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -243,7 +250,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}");
 
 			httpInvoker.path("orderTypeChannelId", orderTypeChannelId);
@@ -321,7 +328,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-type-channels/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -411,7 +418,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -500,7 +507,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -601,7 +608,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels");
 
 			httpInvoker.path("id", id);
@@ -687,7 +694,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels");
 
 			httpInvoker.path("id", id);
@@ -767,7 +774,7 @@ public interface OrderTypeChannelResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/order-types/order-type-channels/batch");
 
 			httpInvoker.path("id", id);

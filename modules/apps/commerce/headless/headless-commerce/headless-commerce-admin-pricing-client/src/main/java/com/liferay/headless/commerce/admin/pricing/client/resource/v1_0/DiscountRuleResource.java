@@ -147,6 +147,12 @@ public interface DiscountRuleResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -170,6 +176,7 @@ public interface DiscountRuleResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -261,7 +268,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discount/by-externalReferenceCode/{externalReferenceCode}/discountRules");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -347,7 +354,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discount/by-externalReferenceCode/{externalReferenceCode}/discountRules");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -414,7 +421,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountRules/{id}");
 
 			httpInvoker.path("id", id);
@@ -492,7 +499,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountRules/batch");
 
 			httpInvoker.path("id", id);
@@ -570,7 +577,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountRules/{id}");
 
 			httpInvoker.path("id", id);
@@ -642,7 +649,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountRules/{id}");
 
 			httpInvoker.path("id", id);
@@ -732,7 +739,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountRules");
 
 			httpInvoker.path("id", id);
@@ -816,7 +823,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountRules");
 
 			httpInvoker.path("id", id);
@@ -896,7 +903,7 @@ public interface DiscountRuleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/discountRules/batch");
 
 			httpInvoker.path("id", id);

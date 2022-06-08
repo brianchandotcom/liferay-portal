@@ -117,6 +117,12 @@ public interface ShippingFixedOptionTermResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -140,6 +146,7 @@ public interface ShippingFixedOptionTermResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -223,7 +230,7 @@ public interface ShippingFixedOptionTermResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-channel/v1.0/shipping-fixed-option-terms/{shippingFixedOptionTermId}");
 
 			httpInvoker.path(
@@ -304,7 +311,7 @@ public interface ShippingFixedOptionTermResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-channel/v1.0/shipping-fixed-option-terms/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -408,7 +415,7 @@ public interface ShippingFixedOptionTermResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-channel/v1.0/shipping-fixed-options/{id}/shipping-fixed-option-terms");
 
 			httpInvoker.path("id", id);
@@ -496,7 +503,7 @@ public interface ShippingFixedOptionTermResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-channel/v1.0/shipping-fixed-options/{id}/shipping-fixed-option-terms");
 
 			httpInvoker.path("id", id);

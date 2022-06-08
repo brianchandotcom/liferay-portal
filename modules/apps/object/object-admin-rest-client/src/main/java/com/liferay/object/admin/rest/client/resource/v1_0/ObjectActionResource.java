@@ -148,6 +148,12 @@ public interface ObjectActionResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -171,6 +177,7 @@ public interface ObjectActionResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -249,7 +256,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/{objectActionId}");
 
 			httpInvoker.path("objectActionId", objectActionId);
@@ -326,7 +333,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -405,7 +412,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/{objectActionId}");
 
 			httpInvoker.path("objectActionId", objectActionId);
@@ -489,7 +496,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/{objectActionId}");
 
 			httpInvoker.path("objectActionId", objectActionId);
@@ -573,7 +580,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/{objectActionId}");
 
 			httpInvoker.path("objectActionId", objectActionId);
@@ -650,7 +657,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-actions/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -744,7 +751,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -830,7 +837,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);
@@ -910,7 +917,7 @@ public interface ObjectActionResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions/batch");
 
 			httpInvoker.path("objectDefinitionId", objectDefinitionId);

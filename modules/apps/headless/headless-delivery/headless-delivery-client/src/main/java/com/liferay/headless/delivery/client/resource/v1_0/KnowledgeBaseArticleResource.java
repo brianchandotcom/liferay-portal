@@ -353,6 +353,12 @@ public interface KnowledgeBaseArticleResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -376,6 +382,7 @@ public interface KnowledgeBaseArticleResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -456,7 +463,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -536,7 +543,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -616,7 +623,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -704,7 +711,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -792,7 +799,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -871,7 +878,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -953,7 +960,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1037,7 +1044,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1123,7 +1130,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1209,7 +1216,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1297,7 +1304,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/permissions");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1391,7 +1398,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/permissions");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1475,7 +1482,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1559,7 +1566,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe");
 
 			httpInvoker.path("knowledgeBaseArticleId", knowledgeBaseArticleId);
@@ -1674,7 +1681,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles");
 
 			httpInvoker.path(
@@ -1765,7 +1772,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles");
 
 			httpInvoker.path(
@@ -1879,7 +1886,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles");
 
 			httpInvoker.path("knowledgeBaseFolderId", knowledgeBaseFolderId);
@@ -1968,7 +1975,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles");
 
 			httpInvoker.path("knowledgeBaseFolderId", knowledgeBaseFolderId);
@@ -2049,7 +2056,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/batch");
 
 			httpInvoker.path("knowledgeBaseFolderId", knowledgeBaseFolderId);
@@ -2161,7 +2168,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles");
 
 			httpInvoker.path("siteId", siteId);
@@ -2248,7 +2255,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles");
 
 			httpInvoker.path("siteId", siteId);
@@ -2328,7 +2335,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/batch");
 
 			httpInvoker.path("siteId", siteId);
@@ -2412,7 +2419,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2498,7 +2505,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2589,7 +2596,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2678,7 +2685,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -2772,7 +2779,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -2853,7 +2860,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/subscribe");
 
 			httpInvoker.path("siteId", siteId);
@@ -2934,7 +2941,7 @@ public interface KnowledgeBaseArticleResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/unsubscribe");
 
 			httpInvoker.path("siteId", siteId);

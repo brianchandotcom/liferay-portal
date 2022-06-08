@@ -134,6 +134,12 @@ public interface TermOrderTypeResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -157,6 +163,7 @@ public interface TermOrderTypeResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -235,7 +242,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/term-order-types/{termOrderTypeId}");
 
 			httpInvoker.path("termOrderTypeId", termOrderTypeId);
@@ -312,7 +319,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/term-order-types/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -402,7 +409,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -488,7 +495,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -581,7 +588,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/terms/{id}/term-order-types");
 
 			httpInvoker.path("id", id);
@@ -665,7 +672,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/terms/{id}/term-order-types");
 
 			httpInvoker.path("id", id);
@@ -745,7 +752,7 @@ public interface TermOrderTypeResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-order/v1.0/terms/term-order-types/batch");
 
 			httpInvoker.path("id", id);

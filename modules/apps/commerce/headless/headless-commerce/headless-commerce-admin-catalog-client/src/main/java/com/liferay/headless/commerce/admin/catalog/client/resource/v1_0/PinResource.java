@@ -132,6 +132,12 @@ public interface PinResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -155,6 +161,7 @@ public interface PinResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -231,7 +238,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}");
 
 			httpInvoker.path("pinId", pinId);
@@ -308,7 +315,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/pins/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -387,7 +394,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}");
 
 			httpInvoker.path("pinId", pinId);
@@ -488,7 +495,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -574,7 +581,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -674,7 +681,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/pins");
 
 			httpInvoker.path("productId", productId);
@@ -755,7 +762,7 @@ public interface PinResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/pins");
 
 			httpInvoker.path("productId", productId);

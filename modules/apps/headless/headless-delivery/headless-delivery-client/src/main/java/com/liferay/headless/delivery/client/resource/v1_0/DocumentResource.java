@@ -342,6 +342,12 @@ public interface DocumentResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -365,6 +371,7 @@ public interface DocumentResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -475,7 +482,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -568,7 +575,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -653,7 +660,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents/batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -741,7 +748,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents/permissions");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -835,7 +842,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents/permissions");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
@@ -947,7 +954,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents");
 
 			httpInvoker.path("documentFolderId", documentFolderId);
@@ -1040,7 +1047,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents");
 
 			httpInvoker.path("documentFolderId", documentFolderId);
@@ -1125,7 +1132,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents/batch");
 
 			httpInvoker.path("documentFolderId", documentFolderId);
@@ -1204,7 +1211,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}");
 
 			httpInvoker.path("documentId", documentId);
@@ -1281,7 +1288,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1357,7 +1364,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}");
 
 			httpInvoker.path("documentId", documentId);
@@ -1449,7 +1456,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}");
 
 			httpInvoker.path("documentId", documentId);
@@ -1541,7 +1548,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}");
 
 			httpInvoker.path("documentId", documentId);
@@ -1622,7 +1629,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1699,7 +1706,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/my-rating");
 
 			httpInvoker.path("documentId", documentId);
@@ -1778,7 +1785,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/my-rating");
 
 			httpInvoker.path("documentId", documentId);
@@ -1861,7 +1868,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/my-rating");
 
 			httpInvoker.path("documentId", documentId);
@@ -1944,7 +1951,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/my-rating");
 
 			httpInvoker.path("documentId", documentId);
@@ -2030,7 +2037,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/permissions");
 
 			httpInvoker.path("documentId", documentId);
@@ -2122,7 +2129,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/permissions");
 
 			httpInvoker.path("documentId", documentId);
@@ -2206,7 +2213,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}");
 
 			httpInvoker.path("documentId", documentId);
@@ -2318,7 +2325,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents");
 
 			httpInvoker.path("siteId", siteId);
@@ -2410,7 +2417,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents");
 
 			httpInvoker.path("siteId", siteId);
@@ -2493,7 +2500,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/batch");
 
 			httpInvoker.path("siteId", siteId);
@@ -2577,7 +2584,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2662,7 +2669,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2757,7 +2764,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2845,7 +2852,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -2938,7 +2945,7 @@ public interface DocumentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/documents/permissions");
 
 			httpInvoker.path("siteId", siteId);

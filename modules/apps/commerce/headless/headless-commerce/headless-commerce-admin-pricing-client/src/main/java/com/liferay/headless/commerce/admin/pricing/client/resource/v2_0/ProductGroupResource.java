@@ -94,6 +94,12 @@ public interface ProductGroupResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -117,6 +123,7 @@ public interface ProductGroupResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -201,7 +208,7 @@ public interface ProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/discount-product-groups/{discountProductGroupId}/product-group");
 
 			httpInvoker.path("discountProductGroupId", discountProductGroupId);
@@ -286,7 +293,7 @@ public interface ProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}/product-group");
 
 			httpInvoker.path(

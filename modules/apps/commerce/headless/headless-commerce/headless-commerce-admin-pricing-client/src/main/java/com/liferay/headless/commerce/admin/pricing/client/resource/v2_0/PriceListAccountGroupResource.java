@@ -146,6 +146,12 @@ public interface PriceListAccountGroupResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -169,6 +175,7 @@ public interface PriceListAccountGroupResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -250,7 +257,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-list-account-groups/{priceListAccountGroupId}");
 
 			httpInvoker.path(
@@ -331,7 +338,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-list-account-groups/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -421,7 +428,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-account-groups");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -511,7 +518,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-account-groups");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -617,7 +624,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-list-account-groups");
 
 			httpInvoker.path("id", id);
@@ -704,7 +711,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-list-account-groups");
 
 			httpInvoker.path("id", id);
@@ -784,7 +791,7 @@ public interface PriceListAccountGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-lists/price-list-account-groups/batch");
 
 			httpInvoker.path("id", id);

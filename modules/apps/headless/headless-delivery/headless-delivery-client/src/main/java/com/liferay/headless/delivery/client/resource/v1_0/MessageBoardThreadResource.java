@@ -297,6 +297,12 @@ public interface MessageBoardThreadResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -320,6 +326,7 @@ public interface MessageBoardThreadResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -428,7 +435,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads");
 
 			httpInvoker.path("messageBoardSectionId", messageBoardSectionId);
@@ -516,7 +523,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads");
 
 			httpInvoker.path("messageBoardSectionId", messageBoardSectionId);
@@ -597,7 +604,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads/batch");
 
 			httpInvoker.path("messageBoardSectionId", messageBoardSectionId);
@@ -717,7 +724,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/ranked");
 
 			httpInvoker.userNameAndPassword(
@@ -796,7 +803,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -875,7 +882,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -955,7 +962,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1042,7 +1049,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1129,7 +1136,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1207,7 +1214,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -1288,7 +1295,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1370,7 +1377,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1456,7 +1463,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1542,7 +1549,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1630,7 +1637,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/permissions");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1724,7 +1731,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/permissions");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1807,7 +1814,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/subscribe");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -1890,7 +1897,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/unsubscribe");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
@@ -2002,7 +2009,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads");
 
 			httpInvoker.path("siteId", siteId);
@@ -2087,7 +2094,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads");
 
 			httpInvoker.path("siteId", siteId);
@@ -2167,7 +2174,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads/batch");
 
 			httpInvoker.path("siteId", siteId);
@@ -2251,7 +2258,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads/by-friendly-url-path/{friendlyUrlPath}");
 
 			httpInvoker.path("siteId", siteId);
@@ -2340,7 +2347,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads/permissions");
 
 			httpInvoker.path("siteId", siteId);
@@ -2434,7 +2441,7 @@ public interface MessageBoardThreadResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads/permissions");
 
 			httpInvoker.path("siteId", siteId);

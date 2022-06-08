@@ -126,6 +126,12 @@ public interface StructuredContentResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -149,6 +155,7 @@ public interface StructuredContentResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -260,7 +267,7 @@ public interface StructuredContentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-content/v1.0/sites/{siteId}/structured-contents");
 
 			httpInvoker.path("siteId", siteId);
@@ -346,7 +353,7 @@ public interface StructuredContentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-content/v1.0/sites/{siteId}/structured-contents/draft");
 
 			httpInvoker.path("siteId", siteId);
@@ -430,7 +437,7 @@ public interface StructuredContentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/by-version/{version}");
 
 			httpInvoker.path("structuredContentId", structuredContentId);
@@ -515,7 +522,7 @@ public interface StructuredContentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/by-version/{version}");
 
 			httpInvoker.path("structuredContentId", structuredContentId);
@@ -600,7 +607,7 @@ public interface StructuredContentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions");
 
 			httpInvoker.path("structuredContentId", structuredContentId);

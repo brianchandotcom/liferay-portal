@@ -145,6 +145,12 @@ public interface ListTypeEntryResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -168,6 +174,7 @@ public interface ListTypeEntryResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -275,7 +282,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}/list-type-entries");
 
 			httpInvoker.path("listTypeDefinitionId", listTypeDefinitionId);
@@ -361,7 +368,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}/list-type-entries");
 
 			httpInvoker.path("listTypeDefinitionId", listTypeDefinitionId);
@@ -442,7 +449,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}/list-type-entries/batch");
 
 			httpInvoker.path("listTypeDefinitionId", listTypeDefinitionId);
@@ -521,7 +528,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}");
 
 			httpInvoker.path("listTypeEntryId", listTypeEntryId);
@@ -598,7 +605,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-entries/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -677,7 +684,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}");
 
 			httpInvoker.path("listTypeEntryId", listTypeEntryId);
@@ -761,7 +768,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}");
 
 			httpInvoker.path("listTypeEntryId", listTypeEntryId);
@@ -838,7 +845,7 @@ public interface ListTypeEntryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-admin-list-type/v1.0/list-type-entries/batch");
 
 			httpInvoker.userNameAndPassword(

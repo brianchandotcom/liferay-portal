@@ -149,6 +149,12 @@ public interface PriceModifierProductGroupResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -172,6 +178,7 @@ public interface PriceModifierProductGroupResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -255,7 +262,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}");
 
 			httpInvoker.path(
@@ -336,7 +343,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/batch");
 
 			httpInvoker.userNameAndPassword(
@@ -426,7 +433,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-product-groups");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -516,7 +523,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-product-groups");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -622,7 +629,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-product-groups");
 
 			httpInvoker.path("id", id);
@@ -712,7 +719,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-product-groups");
 
 			httpInvoker.path("id", id);
@@ -792,7 +799,7 @@ public interface PriceModifierProductGroupResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/price-modifier-product-groups/batch");
 
 			httpInvoker.path("id", id);

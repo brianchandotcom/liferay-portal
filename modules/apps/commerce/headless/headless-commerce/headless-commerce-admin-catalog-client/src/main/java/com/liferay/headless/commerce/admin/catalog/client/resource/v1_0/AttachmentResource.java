@@ -223,6 +223,12 @@ public interface AttachmentResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -246,6 +252,7 @@ public interface AttachmentResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -336,7 +343,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -422,7 +429,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -509,7 +516,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -595,7 +602,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-url");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -686,7 +693,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -772,7 +779,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -859,7 +866,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images/by-base64");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -945,7 +952,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images/by-url");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1034,7 +1041,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments");
 
 			httpInvoker.path("id", id);
@@ -1118,7 +1125,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments");
 
 			httpInvoker.path("id", id);
@@ -1198,7 +1205,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/attachments/batch");
 
 			httpInvoker.path("id", id);
@@ -1284,7 +1291,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments/by-base64");
 
 			httpInvoker.path("id", id);
@@ -1369,7 +1376,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments/by-url");
 
 			httpInvoker.path("id", id);
@@ -1458,7 +1465,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/images");
 
 			httpInvoker.path("id", id);
@@ -1541,7 +1548,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/images");
 
 			httpInvoker.path("id", id);
@@ -1625,7 +1632,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/images/by-base64");
 
 			httpInvoker.path("id", id);
@@ -1709,7 +1716,7 @@ public interface AttachmentResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/images/by-url");
 
 			httpInvoker.path("id", id);

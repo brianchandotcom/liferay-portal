@@ -137,6 +137,12 @@ public interface DiscountCategoryResource {
 			return this;
 		}
 
+		public Builder pathContext(String pathContext) {
+			_pathContext = pathContext;
+
+			return this;
+		}
+
 		public Builder parameters(String... parameters) {
 			if ((parameters.length % 2) != 0) {
 				throw new IllegalArgumentException(
@@ -160,6 +166,7 @@ public interface DiscountCategoryResource {
 		private String _host = "localhost";
 		private Locale _locale;
 		private String _login = "";
+		private String _pathContext = "";
 		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
@@ -227,7 +234,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountCategories/{id}");
 
 			httpInvoker.path("id", id);
@@ -306,7 +313,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discountCategories/batch");
 
 			httpInvoker.path("id", id);
@@ -398,7 +405,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discountCategories");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -487,7 +494,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discountCategories");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -577,7 +584,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountCategories");
 
 			httpInvoker.path("id", id);
@@ -663,7 +670,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountCategories");
 
 			httpInvoker.path("id", id);
@@ -743,7 +750,7 @@ public interface DiscountCategoryResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
+					_builder._port + _builder._pathContext +
 						"/o/headless-commerce-admin-pricing/v1.0/discounts/discountCategories/batch");
 
 			httpInvoker.path("id", id);

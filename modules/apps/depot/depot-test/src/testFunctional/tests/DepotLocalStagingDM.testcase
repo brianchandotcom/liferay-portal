@@ -3587,8 +3587,6 @@ definition {
 
 		Staging.publishToLive();
 
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
 		DepotNavigator.openToEditDMEntryInDepot(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document Title",
@@ -3609,10 +3607,6 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
 
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",

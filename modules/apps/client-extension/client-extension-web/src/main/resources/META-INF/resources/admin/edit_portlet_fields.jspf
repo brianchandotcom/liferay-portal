@@ -19,7 +19,15 @@
 	disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT, ClientExtensionEntryConstants.TYPE_IFRAME) %>"
 	id='<%= liferayPortletResponse.getNamespace() + "_fields_customElement_iframe" %>'
 >
-	<aui:input disabled="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+	<c:choose>
+		<c:when test="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>">
+			<aui:input disabled="<%= true %>" label="instanceable" name="instanceable-disabled" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+			<aui:input name="instanceable" type="hidden" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:input label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
+		</c:otherwise>
+	</c:choose>
 
 	<clay:select
 		label="portlet-category-name"

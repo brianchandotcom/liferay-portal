@@ -1,0 +1,169 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			Site.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Asset Library and Instance Settings), the lower limit from AL will take effect."
+	@priority = "4"
+	test ALTakesEffectOverInstanceLimit {
+		property custom.properties = "feature.flag.LPS-114786=true";
+
+		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			instanceSettings = "true",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "image/jpeg");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			depotName = "Test Depot Name",
+			maximumFileSizeValue = "10240",
+			mimeTypeValue = "image/jpeg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.jpeg",
+			dmDocumentTitle = "Document_1.jpeg",
+			validationError = "Please enter a file with a valid file size no larger than 10 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewNoCardThumbnail(card = "Document_1.jpeg");
+	}
+
+	@description = "This test ensures that user is able to upload files to an asset library that is not bigger than the Mime Type Size Limit in the asset library."
+	@priority = "4"
+	test CanLimitMultipleMimeTypesSize {
+		property custom.properties = "feature.flag.LPS-114786=true";
+
+		DMDocument.updateMimeTypeSizeLimit(
+			depotName = "Test Depot Name",
+			maximumFileSizeValue = "40960",
+			mimeTypeValue = "image/jpeg");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			depotName = "Test Depot Name",
+			indexNumber = "2",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "application/*");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addMultipleCP(
+			dmDocumentFileFailed = "Document_1.doc,large_file.pdf,Commerce_Blue.jpg",
+			dmDocumentFileList = "Commerce_Black.jpg,Commerce_Blue.jpg,Document_2.pdf,large_file.pdf,Document_1.doc,Document_3.docx",
+			validationError = "Please enter a file with a valid file size no larger than 20 KB,Please enter a file with a valid file size no larger than 20 KB,Please enter a file with a valid file size no larger than 40 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		for (var fileName : list "Document_1,large_file,Commerce_Blue") {
+			LexiconCard.viewCardNotPresent(card = "${fileName}");
+		}
+
+		for (var fileName : list "Commerce_Black,Document_3,Document_2") {
+			LexiconCard.viewCardTitle(card = "${fileName}");
+		}
+	}
+
+	@description = "This test ensures that the mime typy size limit setting only take effects in current asset library."
+	@priority = "4"
+	test CanLimitSizeOnlyInCurrentDepot {
+		property custom.properties = "feature.flag.LPS-114786=true";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name New");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			depotName = "Test Depot Name",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "image/png");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png",
+			validationError = "Please enter a file with a valid file size no larger than 20 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.png",
+			dmDocumentTitle = "Document_2.png");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewNoCardThumbnail(card = "Document_1.png");
+
+		LexiconCard.viewCardThumbnail(card = "Document_2.png");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name New");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name New");
+
+		LexiconCard.viewCardThumbnail(card = "Document_1.png");
+	}
+
+	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Asset Library and System Settings), the lower limit from system Settings will take effect."
+	@priority = "4"
+	@uitest
+	test SystemTakesEffectOverALLimit {
+		property custom.properties = "feature.flag.LPS-114786=true";
+
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "10240",
+			mimeTypeValue = "image/*");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			depotName = "Test Depot Name",
+			maximumFileSizeValue = "40960",
+			mimeTypeValue = "image/jpeg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "Commerce_Black.jpg",
+			validationError = "Please enter a file with a valid file size no larger than 10 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewNoCardThumbnail(card = "Commerce_Black.jpg");
+	}
+
+}

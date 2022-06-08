@@ -158,6 +158,35 @@ definition {
 		LexiconCard.viewCardTitle(card = "DM Document Title");
 	}
 
+	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Instance Settings and System Settings), the lower limit from Instance Settings will take effect."
+	@priority = "4"
+	@uitest
+	test InstanceTakesEffectOverSystemLimit {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "30720",
+			mimeTypeValue = "application/pdf");
+
+		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			instanceSettings = "true",
+			maximumFileSizeValue = "10240",
+			mimeTypeValue = "application/pdf");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.pdf",
+			dmDocumentTitle = "Document_1.pdf",
+			validationError = "Please enter a file with a valid file size no larger than 10 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewCardNotPresent(card = "Document_1.pdf");
+	}
+
 	@description = "This test ensures that when setting a system/instance maximum file size, the limits in site settings will take effect if it is smaller than the system/instance setting."
 	@priority = "4"
 	@uitest

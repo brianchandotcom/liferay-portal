@@ -27,6 +27,17 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAssetPublisherArchive706 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.6";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
 	test ViewAssetPublisherArchive713 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -38,12 +49,85 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAssetPublisherArchive721 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive730 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive7310 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive7421 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
 	test ViewAssetPublisherArchive70106 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
 		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive71103 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive72101 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewDefaultPage();
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive74321 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
 
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}

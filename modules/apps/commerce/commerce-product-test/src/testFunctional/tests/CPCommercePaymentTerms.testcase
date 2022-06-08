@@ -409,14 +409,58 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify the sales manager is able to change the status of payment terms."
+	@priority = "3"
 	test ChangeTheStatus {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
+		task ("Given an active payment term") {
+			CommerceOrders.openTermsAndConditionsAdmin();
 
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "0");
+
+			CommerceOrders.openTermsAndConditionsAdmin();
+		}
+
+		task ("When the sales manager opens the payment term entry and disables the active toggle") {
+			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
+
+			Uncheck.uncheckToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the entry appears as inactive in the Terms and Conditions dashboard") {
+			CommerceOrders.openTermsAndConditionsAdmin();
+
+			CommercePaymentTerms.viewTermsAndConditionEntry(
+				termsAndConditionActiveStatus = "No",
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "0");
+		}
+
+		task ("When the sales manager opens the payment term entry and enables the active switch") {
+			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
+
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the entry appears as active in the Terms and Conditions dashboard") {
+			CommerceOrders.openTermsAndConditionsAdmin();
+
+			CommercePaymentTerms.viewTermsAndConditionEntry(
+				termsAndConditionActiveStatus = "Yes",
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "0");
+		}
 	}
 
 }

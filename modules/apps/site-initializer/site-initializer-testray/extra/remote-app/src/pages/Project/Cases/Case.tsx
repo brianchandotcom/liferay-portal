@@ -81,14 +81,12 @@ const Case = () => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					initialContext={{
-						filters: {
-							columns: {
-								caseType: false,
-								dateCreated: false,
-								dateModified: false,
-								issues: false,
-								team: false,
-							},
+						columns: {
+							caseType: false,
+							dateCreated: false,
+							dateModified: false,
+							issues: false,
+							team: false,
 						},
 					}}
 					managementToolbarProps={{

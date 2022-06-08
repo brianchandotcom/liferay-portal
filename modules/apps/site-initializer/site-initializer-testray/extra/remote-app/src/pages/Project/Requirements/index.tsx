@@ -21,6 +21,7 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getRequirements} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {filters} from '../../../schema/filter';
 import {searchUtil} from '../../../util/search';
 import RequirementsModal from './RequirementModal';
 import useRequirementActions from './useRequirementActions';
@@ -58,6 +59,7 @@ const Requirements = () => {
 								</ClayManagementToolbar.Item>
 							</>
 						),
+						filterFields: filters.requirement as any,
 						title: i18n.translate('requirements'),
 					}}
 					query={getRequirements}

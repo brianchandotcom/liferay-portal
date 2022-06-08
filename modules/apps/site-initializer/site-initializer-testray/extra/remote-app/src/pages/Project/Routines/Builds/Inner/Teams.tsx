@@ -17,20 +17,23 @@ import ListView from '../../../../../components/ListView/ListView';
 import ProgressBar from '../../../../../components/ProgressBar';
 import {getTeams} from '../../../../../graphql/queries/testrayTeam';
 import i18n from '../../../../../i18n';
+import {filters} from '../../../../../schema/filter';
 
 const Teams = () => {
 	return (
-		<Container className="mt-4" title={i18n.translate('teams')}>
+		<Container className="mt-4">
 			<ListView
 				initialContext={{
-					filters: {
-						columns: {
-							blocked: false,
-							in_progress: false,
-							test_fix: false,
-							untested: false,
-						},
+					columns: {
+						blocked: false,
+						in_progress: false,
+						test_fix: false,
+						untested: false,
 					},
+				}}
+				managementToolbarProps={{
+					filterFields: filters.build.teams,
+					title: i18n.translate('teams'),
 				}}
 				query={getTeams}
 				tableProps={{

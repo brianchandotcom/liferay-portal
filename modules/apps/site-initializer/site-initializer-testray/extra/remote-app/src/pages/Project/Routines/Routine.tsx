@@ -22,6 +22,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {filters} from '../../../schema/filter';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -35,40 +36,22 @@ const Routine = () => {
 	const navigate = useNavigate();
 
 	return (
-		<Container title={i18n.translate('build-history')}>
-			<ClayChart
-				axis={{
-					y: {
-						label: {
-							position: 'outer-middle',
-							text: i18n.translate('tests').toUpperCase(),
-						},
-					},
-				}}
-				data={{
-					colors,
-					columns: barChart.columns,
-					stack: {
-						normalize: true,
-					},
-					type: 'area',
-				}}
-				legend={{position: 'top-right'}}
-			/>
-
+		<Container>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
 				initialContext={{
-					filters: {
-						columns: {
-							in_progress: false,
-							passed: false,
-							total: false,
-							untested: false,
-						},
+					columns: {
+						in_progress: false,
+						passed: false,
+						total: false,
+						untested: false,
 					},
 				}}
-				managementToolbarProps={{addButton: () => navigate('update')}}
+				managementToolbarProps={{
+					addButton: () => navigate('update'),
+					filterFields: filters.build.index as any,
+					title: i18n.translate('build-history'),
+				}}
 				query={getBuilds}
 				tableProps={{
 					actions: actionsRoutine,
@@ -204,7 +187,61 @@ const Routine = () => {
 				variables={{
 					filter: searchUtil.eq('routineId', routineId as string),
 				}}
-			/>
+			>
+				{() => (
+					<div className="graph-container graph-container-sm">
+						<ClayChart
+							axis={{
+								x: {
+									label: {
+										position: 'outer-center',
+										text: i18n.translate(
+											'builds-ordered-by-date'
+										),
+									},
+								},
+								y: {
+									label: {
+										position: 'outer-middle',
+										text: i18n
+											.translate('tests')
+											.toUpperCase(),
+									},
+								},
+							}}
+							bar={{
+								width: {
+									max: 30,
+								},
+							}}
+							data={{
+								colors,
+								columns: barChart.columns,
+								stack: {
+									normalize: true,
+								},
+								type: 'area',
+							}}
+							legend={{
+								inset: {
+									anchor: 'top-right',
+									step: 1,
+									x: 10,
+									y: -30,
+								},
+								item: {
+									tile: {
+										height: 12,
+										width: 12,
+									},
+								},
+								position: 'inset',
+							}}
+							padding={{bottom: 5, top: 30}}
+						/>
+					</div>
+				)}
+			</ListView>
 
 			<RoutineBuildModal modal={formModal.modal} />
 		</Container>

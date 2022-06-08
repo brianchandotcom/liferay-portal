@@ -19,6 +19,7 @@ import ListView from '../../../../../components/ListView/ListView';
 import {APIResponse, CTypePagination} from '../../../../../graphql/queries';
 import {TestrayRun, getRuns} from '../../../../../graphql/queries/testrayRun';
 import i18n from '../../../../../i18n';
+import {filters} from '../../../../../schema/filter';
 import {searchUtil} from '../../../../../util/search';
 
 const transformData = (
@@ -55,8 +56,12 @@ const Runs = () => {
 	const {buildId} = useParams();
 
 	return (
-		<Container className="mt-4" title={i18n.translate('runs')}>
+		<Container className="mt-4">
 			<ListView
+				managementToolbarProps={{
+					filterFields: filters.build.runs,
+					title: i18n.translate('runs'),
+				}}
 				query={getRuns}
 				tableProps={{
 					columns: [

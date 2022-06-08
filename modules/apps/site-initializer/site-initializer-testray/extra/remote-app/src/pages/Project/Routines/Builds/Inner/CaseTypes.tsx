@@ -17,19 +17,22 @@ import ListView from '../../../../../components/ListView/ListView';
 import ProgressBar from '../../../../../components/ProgressBar';
 import {getCaseTypes} from '../../../../../graphql/queries';
 import i18n from '../../../../../i18n';
+import {filters} from '../../../../../schema/filter';
 
 const CaseTypes = () => (
-	<Container className="mt-4" title={i18n.translate('case-types')}>
+	<Container className="mt-4">
 		<ListView
 			initialContext={{
-				filters: {
-					columns: {
-						blocked: false,
-						in_progress: false,
-						test_fix: false,
-						untested: false,
-					},
+				columns: {
+					blocked: false,
+					in_progress: false,
+					test_fix: false,
+					untested: false,
 				},
+			}}
+			managementToolbarProps={{
+				filterFields: filters.build.caseTypes,
+				title: i18n.translate('case-types'),
 			}}
 			query={getCaseTypes}
 			tableProps={{

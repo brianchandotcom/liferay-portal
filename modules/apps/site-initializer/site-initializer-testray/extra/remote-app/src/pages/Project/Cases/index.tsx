@@ -51,7 +51,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create', {state: {back: pathname}}),
-				filterFields: filters.case,
+				filterFields: filters.case as any,
 				title: i18n.translate('cases'),
 			}}
 			query={getCases}
@@ -122,14 +122,12 @@ const Cases = () => {
 					formModal={formModal}
 					listViewProps={{
 						initialContext: {
-							filters: {
-								columns: {
-									caseType: false,
-									dateCreated: false,
-									dateModified: false,
-									issues: false,
-									team: false,
-								},
+							columns: {
+								caseType: false,
+								dateCreated: false,
+								dateModified: false,
+								issues: false,
+								team: false,
 							},
 						},
 					}}

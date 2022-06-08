@@ -24,6 +24,7 @@ import client from '../../../../graphql/apolloClient';
 import {UpdateCaseResult} from '../../../../graphql/mutations';
 import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
+import {filters} from '../../../../schema/filter';
 import {Liferay} from '../../../../services/liferay';
 import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
@@ -44,8 +45,12 @@ const Build = () => {
 	};
 
 	return (
-		<Container className="mt-4" title={i18n.translate('tests')}>
+		<Container className="mt-4">
 			<ListView
+				managementToolbarProps={{
+					filterFields: filters.build.results as any,
+					title: i18n.translate('tests'),
+				}}
 				query={getCaseResults}
 				tableProps={{
 					columns: [

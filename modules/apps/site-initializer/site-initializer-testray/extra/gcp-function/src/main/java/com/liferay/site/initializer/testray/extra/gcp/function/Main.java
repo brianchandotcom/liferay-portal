@@ -69,7 +69,7 @@ public class Main {
 		Properties properties = new Properties();
 
 		try (InputStream inputStream = Main.class.getResourceAsStream(
-				"/application.properties")) {
+				"dependencies/application.properties")) {
 
 			properties.load(inputStream);
 		}
@@ -125,7 +125,7 @@ public class Main {
 		Storage storage = StorageOptions.newBuilder(
 		).setCredentials(
 			GoogleCredentials.fromStream(
-				Main.class.getResourceAsStream("/" + _s3APIKeyPath))
+				Main.class.getResourceAsStream("dependencies/" + _s3APIKeyPath))
 		).build(
 		).getService();
 

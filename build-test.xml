@@ -10600,7 +10600,7 @@ ${update.properties}</echo>
 
 		<Logger level="INFO" name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" />
 
-		<Logger level="DEBUG" name="com.liferay.portal.equinox.log.bridge.internal" />
+		<Logger level="DEBUG" name="com.liferay.portal.bootstrap.log" />
 
 		${invoker.filter.helper.log.level}
 

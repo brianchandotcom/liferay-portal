@@ -61,7 +61,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 		<Logger level="ERROR" name="com.liferay.portal.editor" />
-		<Logger level="INFO" name="com.liferay.portal.equinox.log.bridge.internal" />
 		<Logger level="INFO" name="com.liferay.portal.events.ChannelHubAppShutdownAction" />
 		<Logger level="INFO" name="com.liferay.portal.events.ChannelHubAppStartupAction" />
 		<Logger level="INFO" name="com.liferay.portal.events.ChannelLoginPostAction" />

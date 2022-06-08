@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Change Tracking SPI
 Bundle-SymbolicName: com.liferay.change.tracking.spi
-Bundle-Version: 2.2.3
+Bundle-Version: 2.3.0
 Export-Package:\
 	com.liferay.change.tracking.spi.display,\
 	com.liferay.change.tracking.spi.display.context,\
@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.change.tracking.spi.reference,\
 	com.liferay.change.tracking.spi.reference.builder,\
 	com.liferay.change.tracking.spi.resolver,\
-	com.liferay.change.tracking.spi.resolver.context
+	com.liferay.change.tracking.spi.resolver.context,\
+	com.liferay.change.tracking.spi.search

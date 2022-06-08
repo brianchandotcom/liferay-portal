@@ -17,12 +17,11 @@ package com.liferay.change.tracking.internal.search.spi.model.query.contributor;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleTable;
-import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.change.tracking.spi.search.CTSearchExcludeModelClassPKContributor;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -107,9 +106,12 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 					excludeProductionModelClassPKs.add(
 						ctEntry.getModelClassPK());
 				}
-				else if (className.equals(JournalArticle.class.getName())) {
-					_excludeProductionJournalArticles(
-						ctEntry, excludeProductionModelClassPKs);
+
+				for (CTSearchExcludeModelClassPKContributor
+						ctSEMCPKContributor : _serviceTrackerList) {
+
+					ctSEMCPKContributor.contribute(
+						className, ctEntry, excludeProductionModelClassPKs);
 				}
 			}
 
@@ -158,41 +160,16 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 
 				emitter.emit(modelClass.getName());
 			});
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, CTSearchExcludeModelClassPKContributor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTrackerList.close();
+
 		_serviceTrackerMap.close();
-	}
-
-	private void _excludeProductionJournalArticles(
-		CTEntry ctEntry, List<Long> excludeProductionModelClassPKs) {
-
-		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					JournalArticleTable.INSTANCE
-				).from(
-					JournalArticleTable.INSTANCE
-				).where(
-					JournalArticleTable.INSTANCE.ctCollectionId.eq(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION
-					).and(
-						JournalArticleTable.INSTANCE.resourcePrimKey.in(
-							DSLQueryFactoryUtil.select(
-								JournalArticleTable.INSTANCE.resourcePrimKey
-							).from(
-								JournalArticleTable.INSTANCE
-							).where(
-								JournalArticleTable.INSTANCE.id.eq(
-									ctEntry.getModelClassPK())
-							))
-					)
-				));
-
-		for (JournalArticle journalArticle : journalArticles) {
-			excludeProductionModelClassPKs.add(journalArticle.getId());
-		}
 	}
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
@@ -206,9 +183,8 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
-
+	private ServiceTrackerList<CTSearchExcludeModelClassPKContributor>
+		_serviceTrackerList;
 	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 
 	@Reference

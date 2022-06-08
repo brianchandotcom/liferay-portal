@@ -14,20 +14,16 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,10 +69,11 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		List<String> annotationsBlocks = _getAnnotationsBlocks(content);
+		List<String> annotationsBlocks = SourceUtil.getAnnotationsBlocks(
+			content);
 
 		for (String annotationsBlock : annotationsBlocks) {
-			String indent = _getIndent(annotationsBlock);
+			String indent = SourceUtil.getIndent(annotationsBlock);
 
 			String newAnnotationsBlock = _formatAnnotations(
 				fileName, absolutePath, javaClass, fileContent,
@@ -174,7 +171,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			String fileContent, String annotationsBlock, String indent)
 		throws IOException {
 
-		List<String> annotations = _splitAnnotations(annotationsBlock, indent);
+		List<String> annotations = SourceUtil.splitAnnotations(
+			annotationsBlock, indent);
 
 		for (String annotation : annotations) {
 			String newAnnotation = formatAnnotation(
@@ -194,103 +192,9 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		return annotationsBlock;
 	}
 
-	private List<String> _getAnnotationsBlocks(String content) {
-		List<String> annotationsBlocks = new ArrayList<>();
-
-		Matcher matcher = _modifierPattern.matcher(content);
-
-		while (matcher.find()) {
-			int lineNumber = getLineNumber(content, matcher.end());
-
-			String annotationsBlock = StringPool.BLANK;
-
-			for (int i = lineNumber - 1;; i--) {
-				String line = getLine(content, i);
-
-				if (Validator.isNull(line) ||
-					line.matches("\t*(private|public|protected| \\*/).*")) {
-
-					if (Validator.isNotNull(annotationsBlock)) {
-						annotationsBlocks.add(annotationsBlock);
-					}
-
-					break;
-				}
-
-				annotationsBlock = line + "\n" + annotationsBlock;
-			}
-		}
-
-		return annotationsBlocks;
-	}
-
-	private String _getIndent(String s) {
-		StringBundler sb = new StringBundler();
-
-		for (char c : s.toCharArray()) {
-			if (c != CharPool.TAB) {
-				break;
-			}
-
-			sb.append(c);
-		}
-
-		return sb.toString();
-	}
-
-	private List<String> _splitAnnotations(
-			String annotationsBlock, String indent)
-		throws IOException {
-
-		List<String> annotations = new ArrayList<>();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new UnsyncStringReader(annotationsBlock))) {
-
-			String annotation = null;
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (annotation == null) {
-					if (line.startsWith(indent + StringPool.AT)) {
-						annotation = line + "\n";
-					}
-
-					continue;
-				}
-
-				String lineIndent = _getIndent(line);
-
-				if (lineIndent.length() < indent.length()) {
-					annotations.add(annotation);
-
-					annotation = null;
-				}
-				else if (line.startsWith(indent + StringPool.AT)) {
-					annotations.add(annotation);
-
-					annotation = line + "\n";
-				}
-				else {
-					annotation += line + "\n";
-				}
-			}
-
-			if (Validator.isNotNull(annotation)) {
-				annotations.add(annotation);
-			}
-		}
-
-		return annotations;
-	}
-
 	private static final Pattern _annotationLineBreakPattern1 = Pattern.compile(
 		"[{=]\n.*(\" \\+\n\t*\")");
 	private static final Pattern _arrayPattern = Pattern.compile("=\\s+\\{");
-	private static final Pattern _modifierPattern = Pattern.compile(
-		"[^\n]\n(\t*)(public|protected|private)");
 	private static final Pattern _pipePattern = Pattern.compile(
 		"(= \".*)( \\| | \\||\\| )");
 

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,6 +79,36 @@ public class SourceUtil {
 
 	public static String getAbsolutePath(String fileName) {
 		return getAbsolutePath(Paths.get(fileName));
+	}
+
+	public static List<String> getAnnotationsBlocks(String content) {
+		List<String> annotationsBlocks = new ArrayList<>();
+
+		Matcher matcher = _modifierPattern.matcher(content);
+
+		while (matcher.find()) {
+			int lineNumber = getLineNumber(content, matcher.end());
+
+			String annotationsBlock = StringPool.BLANK;
+
+			for (int i = lineNumber - 1;; i--) {
+				String line = getLine(content, i);
+
+				if (Validator.isNull(line) ||
+					line.matches("\t*(private|public|protected| \\*/).*")) {
+
+					if (Validator.isNotNull(annotationsBlock)) {
+						annotationsBlocks.add(annotationsBlock);
+					}
+
+					break;
+				}
+
+				annotationsBlock = line + "\n" + annotationsBlock;
+			}
+		}
+
+		return annotationsBlocks;
 	}
 
 	public static String getIndent(String s) {
@@ -323,6 +355,54 @@ public class SourceUtil {
 		return saxReader.read(new UnsyncStringReader(content));
 	}
 
+	public static List<String> splitAnnotations(
+			String annotationsBlock, String indent)
+		throws IOException {
+
+		List<String> annotations = new ArrayList<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(annotationsBlock))) {
+
+			String annotation = null;
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (annotation == null) {
+					if (line.startsWith(indent + StringPool.AT)) {
+						annotation = line + "\n";
+					}
+
+					continue;
+				}
+
+				String lineIndent = getIndent(line);
+
+				if (lineIndent.length() < indent.length()) {
+					annotations.add(annotation);
+
+					annotation = null;
+				}
+				else if (line.startsWith(indent + StringPool.AT)) {
+					annotations.add(annotation);
+
+					annotation = line + "\n";
+				}
+				else {
+					annotation += line + "\n";
+				}
+			}
+
+			if (Validator.isNotNull(annotation)) {
+				annotations.add(annotation);
+			}
+		}
+
+		return annotations;
+	}
+
 	private static final String[] _ARTICLES = {"a", "an", "the"};
 
 	private static final String[] _CONJUNCTIONS = {
@@ -347,5 +427,8 @@ public class SourceUtil {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
+
+	private static final Pattern _modifierPattern = Pattern.compile(
+		"[^\n]\n(\t*)(public|protected|private)");
 
 }

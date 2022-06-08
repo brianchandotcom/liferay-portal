@@ -103,6 +103,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		properties.setProperty(
 			"hibernate.allow_update_outside_transaction", "true");
 
+		properties.setProperty(
+			"hibernate.current_session_context_class",
+			PortalCurrentSessionContext.class.getName());
+
 		setHibernateProperties(properties);
 
 		BootstrapServiceRegistryBuilder bootstrapServiceRegistryBuilder =

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,10 +54,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Igor Spasic
  * @author Raymond Augé
  */
+@Component(immediate = true, service = JSONWebServiceActionsManager.class)
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 
@@ -90,7 +94,7 @@ public class JSONWebServiceActionsManagerImpl
 		}
 		else {
 			if (method.equals(HttpMethods.POST) &&
-				!PortalUtil.isMultipartRequest(httpServletRequest)) {
+				!_portal.isMultipartRequest(httpServletRequest)) {
 
 				jsonRPCRequest = JSONRPCRequest.detectJSONRPCRequest(
 					httpServletRequest);
@@ -620,6 +624,10 @@ public class JSONWebServiceActionsManagerImpl
 			new ConcurrentHashMap<>();
 	private final Map<String, List<JSONWebServiceActionConfig>>
 		_pathIndexedJSONWebServiceActionConfigs = new ConcurrentHashMap<>();
+
+	@Reference
+	private Portal _portal;
+
 	private final ConcurrentMap<String, JSONWebServiceActionConfig>
 		_signatureIndexedJSONWebServiceActionConfigs =
 			new ConcurrentHashMap<>();

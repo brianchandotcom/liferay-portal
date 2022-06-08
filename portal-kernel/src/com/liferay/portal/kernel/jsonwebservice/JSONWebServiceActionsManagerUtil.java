@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
 import java.lang.reflect.Method;
 
 import java.util.List;
@@ -93,12 +95,11 @@ public class JSONWebServiceActionsManagerUtil {
 			servletContext);
 	}
 
-	public void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
-	}
-
-	private static JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+	private static volatile JSONWebServiceActionsManager
+		_jsonWebServiceActionsManager =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				JSONWebServiceActionsManager.class,
+				JSONWebServiceActionsManagerUtil.class,
+				"_jsonWebServiceActionsManager", true);
 
 }

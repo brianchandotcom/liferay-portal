@@ -85,10 +85,6 @@
 	<bean class="com.liferay.portal.kernel.json.JSONFactoryUtil" id="com.liferay.portal.kernel.json.JSONFactoryUtil">
 		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
-	<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager" />
-	<bean class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
-		<property name="JSONWebServiceActionsManager" ref="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.language.LanguageUtil" id="com.liferay.portal.kernel.language.LanguageUtil">
 		<property name="language" ref="com.liferay.portal.language.LanguageImpl" />
 	</bean>

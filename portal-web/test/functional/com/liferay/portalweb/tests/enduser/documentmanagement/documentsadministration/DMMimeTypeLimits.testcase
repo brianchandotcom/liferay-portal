@@ -31,13 +31,19 @@ definition {
 	test CanLimitMultipleMimeTypesSize {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitMultipleMimeTypesSize";
 
-		DMDocument.updateMimeTypeSizeLimit(fieldValue = "image/jpeg:40960");
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "40960",
+			mimeTypeValue = "image/jpeg");
 
-		for (var fieldValue : list "application/pdf:30720,application/msword:20480") {
-			DMDocument.updateMimeTypeSizeLimit(
-				fieldValue = "${fieldValue}",
-				indexNumber = "2");
-		}
+		DMDocument.updateMimeTypeSizeLimit(
+			indexNumber = "2",
+			maximumFileSizeValue = "30720",
+			mimeTypeValue = "application/pdf");
+
+		DMDocument.updateMimeTypeSizeLimit(
+			indexNumber = "2",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "application/msword");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -64,7 +70,8 @@ definition {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			fieldValue = "image/jpeg:20480",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "image/jpeg",
 			siteSettings = "true",
 			siteURLKey = "site-name");
 
@@ -193,28 +200,40 @@ definition {
 	test SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesPrecedenceOverSystemAndInstanceSettings";
 
-		DMDocument.updateMimeTypeSizeLimit(fieldValue = "image/jpeg:51200");
+		DMDocument.updateMimeTypeSizeLimit(
+			maximumFileSizeValue = "51200",
+			mimeTypeValue = "image/jpeg");
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
-		SystemSettings.viewTextareaPartialText(
-			key_label = "Mime Type Size Limit",
-			settingValue = "image/jpeg:51200");
+		SystemSettings.viewInputText(
+			fieldLabel = "Mime Type",
+			fieldValue = "image/jpeg");
+
+		SystemSettings.viewNumberInputText(
+			fieldLabel = "Maximum File Size",
+			fieldValue = "51200");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			fieldValue = "image/jpeg:30720",
-			instanceSettings = "true");
+			instanceSettings = "true",
+			maximumFileSizeValue = "30720",
+			mimeTypeValue = "image/jpeg");
 
 		DMNavigator.openToConfigInSiteSettings(
 			portlet = "Documents and Media Size Limits",
 			siteURLKey = "guest");
 
-		SystemSettings.viewTextareaPartialText(
-			key_label = "Mime Type Size Limit",
-			settingValue = "image/jpeg:30720");
+		SystemSettings.viewInputText(
+			fieldLabel = "Mime Type",
+			fieldValue = "image/jpeg");
+
+		SystemSettings.viewNumberInputText(
+			fieldLabel = "Maximum File Size",
+			fieldValue = "30720");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			fieldValue = "image/jpeg:20480",
+			maximumFileSizeValue = "20480",
+			mimeTypeValue = "image/jpeg",
 			siteSettings = "true",
 			siteURLKey = "guest");
 

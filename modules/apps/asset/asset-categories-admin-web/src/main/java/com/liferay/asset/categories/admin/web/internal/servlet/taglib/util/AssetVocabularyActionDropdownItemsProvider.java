@@ -63,7 +63,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								PortletURLBuilder.createRenderURL(
 									_renderResponse
 								).setMVCPath(
-									"/edit_vocabulary.jsp"
+									"/edit_asset_vocabulary.jsp"
 								).setParameter(
 									"vocabularyId", vocabulary.getVocabularyId()
 								).buildString());
@@ -115,7 +115,8 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								PortletURLBuilder.createActionURL(
 									_renderResponse
 								).setActionName(
-									"/asset_categories_admin/delete_vocabulary"
+									"/asset_categories_admin" +
+										"/delete_asset_vocabulary"
 								).setRedirect(
 									_getDefaultRedirect()
 								).setParameter(

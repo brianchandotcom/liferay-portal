@@ -453,7 +453,7 @@ public class AssetCategoriesDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
-			"/edit_vocabulary.jsp"
+			"/edit_asset_vocabulary.jsp"
 		).buildPortletURL();
 	}
 

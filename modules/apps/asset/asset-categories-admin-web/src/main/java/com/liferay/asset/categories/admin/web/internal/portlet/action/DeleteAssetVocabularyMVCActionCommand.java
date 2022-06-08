@@ -33,11 +33,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-		"mvc.command.name=/asset_categories_admin/delete_vocabulary"
+		"mvc.command.name=/asset_categories_admin/delete_asset_vocabulary"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteVocabularyMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteAssetVocabularyMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

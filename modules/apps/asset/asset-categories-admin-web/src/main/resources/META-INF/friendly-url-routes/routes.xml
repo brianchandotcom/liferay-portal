@@ -24,7 +24,7 @@
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/edit</pattern>
-		<implicit-parameter name="mvcPath">/edit_vocabulary.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/edit_asset_vocabulary.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
@@ -39,7 +39,7 @@
 	</route>
 	<route>
 		<pattern>/vocabularies/new</pattern>
-		<implicit-parameter name="mvcPath">/edit_vocabulary.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/edit_asset_vocabulary.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

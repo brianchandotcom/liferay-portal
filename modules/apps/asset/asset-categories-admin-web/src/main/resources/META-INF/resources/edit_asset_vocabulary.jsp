@@ -33,8 +33,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vocabulary") : vocabulary.getTitle(locale));
 %>
 
-<portlet:actionURL name="/asset_categories_admin/edit_vocabulary" var="editVocabularyURL">
-	<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
+<portlet:actionURL name="/asset_categories_admin/edit_asset_vocabulary" var="editVocabularyURL">
+	<portlet:param name="mvcPath" value="/edit_asset_vocabulary.jsp" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

@@ -35,6 +35,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -135,9 +136,11 @@ public class StagingImplTest {
 			TestPropsValues.getUserId(), _remoteStagingGroup.getGroupId(),
 			_remoteLiveGroup.getGroupId(), false, parameters);
 
-		Layout remoteLiveGroupLayout = StagingUtil.getRemoteLayout(
-			TestPropsValues.getUserId(), remoteStagingGroupLayout.getGroupId(),
-			remoteStagingGroupLayout.getPlid());
+		Layout remoteLiveGroupLayout = _executeWithRemoteCredentials(
+			() -> StagingUtil.getRemoteLayout(
+				TestPropsValues.getUserId(),
+				remoteStagingGroupLayout.getGroupId(),
+				remoteStagingGroupLayout.getPlid()));
 
 		Assert.assertNotNull(remoteLiveGroupLayout);
 
@@ -157,10 +160,11 @@ public class StagingImplTest {
 			_remoteStagingGroup);
 
 		Assert.assertFalse(
-			StagingUtil.hasRemoteLayout(
-				TestPropsValues.getUserId(),
-				remoteStagingGroupLayout.getGroupId(),
-				remoteStagingGroupLayout.getPlid()));
+			_executeWithRemoteCredentials(
+				() -> StagingUtil.hasRemoteLayout(
+					TestPropsValues.getUserId(),
+					remoteStagingGroupLayout.getGroupId(),
+					remoteStagingGroupLayout.getPlid())));
 
 		Map<String, String[]> parameters =
 			ExportImportConfigurationParameterMapFactoryUtil.
@@ -171,10 +175,11 @@ public class StagingImplTest {
 			_remoteLiveGroup.getGroupId(), false, parameters);
 
 		Assert.assertTrue(
-			StagingUtil.hasRemoteLayout(
-				TestPropsValues.getUserId(),
-				remoteStagingGroupLayout.getGroupId(),
-				remoteStagingGroupLayout.getPlid()));
+			_executeWithRemoteCredentials(
+				() -> StagingUtil.hasRemoteLayout(
+					TestPropsValues.getUserId(),
+					remoteStagingGroupLayout.getGroupId(),
+					remoteStagingGroupLayout.getPlid())));
 	}
 
 	@Test
@@ -594,6 +599,22 @@ public class StagingImplTest {
 			category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private <T> T _executeWithRemoteCredentials(
+			UnsafeSupplier<T, Exception> unsafeSupplier)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
+
+			return unsafeSupplier.get();
+		}
 	}
 
 	private static final Locale[] _locales = {

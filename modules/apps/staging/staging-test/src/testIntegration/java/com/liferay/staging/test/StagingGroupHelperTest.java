@@ -42,6 +42,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
+import java.util.function.Supplier;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -144,14 +146,21 @@ public class StagingGroupHelperTest {
 
 		Assert.assertEquals(
 			_remoteLiveGroup,
-			_stagingGroupHelper.fetchLiveGroup(_remoteStagingGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchLiveGroup(_remoteStagingGroup)));
 		Assert.assertEquals(
 			_remoteLiveGroup,
-			_stagingGroupHelper.fetchLiveGroup(_remoteStagingScopeGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchLiveGroup(
+					_remoteStagingScopeGroup)));
 
-		Assert.assertNull(_stagingGroupHelper.fetchLiveGroup(_remoteLiveGroup));
 		Assert.assertNull(
-			_stagingGroupHelper.fetchLiveGroup(_remoteLiveScopeGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchLiveGroup(_remoteLiveGroup)));
+		Assert.assertNull(
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchLiveGroup(
+					_remoteLiveScopeGroup)));
 
 		Assert.assertNull(_stagingGroupHelper.fetchLiveGroup(_regularGroup));
 	}
@@ -228,15 +237,23 @@ public class StagingGroupHelperTest {
 
 		Assert.assertEquals(
 			_remoteLiveGroup,
-			_stagingGroupHelper.fetchRemoteLiveGroup(_remoteStagingGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchRemoteLiveGroup(
+					_remoteStagingGroup)));
 		Assert.assertEquals(
 			_remoteLiveGroup,
-			_stagingGroupHelper.fetchRemoteLiveGroup(_remoteStagingScopeGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchRemoteLiveGroup(
+					_remoteStagingScopeGroup)));
 
 		Assert.assertNull(
-			_stagingGroupHelper.fetchRemoteLiveGroup(_remoteLiveGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchRemoteLiveGroup(
+					_remoteLiveGroup)));
 		Assert.assertNull(
-			_stagingGroupHelper.fetchRemoteLiveGroup(_remoteLiveScopeGroup));
+			_executeWithRemoteCredentials(
+				() -> _stagingGroupHelper.fetchRemoteLiveGroup(
+					_remoteLiveScopeGroup)));
 
 		Assert.assertNull(
 			_stagingGroupHelper.fetchRemoteLiveGroup(_regularGroup));
@@ -951,6 +968,19 @@ public class StagingGroupHelperTest {
 			).build(),
 			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
 			false, true, null);
+	}
+
+	private Group _executeWithRemoteCredentials(Supplier<Group> groupSupplier) {
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true)) {
+
+			return groupSupplier.get();
+		}
 	}
 
 	private static final String _PORTLET_ID_BLOGS =

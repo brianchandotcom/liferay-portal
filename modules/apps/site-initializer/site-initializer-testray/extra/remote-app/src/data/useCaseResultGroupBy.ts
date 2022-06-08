@@ -41,13 +41,14 @@ function getStatusesMap(
 	return facetValueMap;
 }
 
-const useCaseResultGroupBy = (buildId: number) => {
+const useCaseResultGroupBy = (buildId: number = 0) => {
 	const {data, loading} = useQuery<
 		FacetAggregationQuery<'caseResultAggregation'>
 	>(getCaseResultsAggregation, {
+		skip: buildId === 0,
 		variables: {
 			aggregation: 'dueStatus',
-			filter: searchUtil.eq('buildId', buildId),
+			filter: searchUtil.eq('buildId', buildId as number),
 		},
 	});
 

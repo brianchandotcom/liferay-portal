@@ -48,7 +48,7 @@ const TestFlowTasks = () => {
 	const testrayTask = data?.task;
 
 	const {status: testrayCaseResultOverview} = useCaseResultGroupBy(
-		testrayTask?.build?.id || 0
+		testrayTask?.build?.id
 	);
 
 	const {setHeading, setTabs} = useHeader();

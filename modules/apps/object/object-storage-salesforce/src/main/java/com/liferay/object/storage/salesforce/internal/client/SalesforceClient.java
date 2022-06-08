@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration",
-	enabled = false, immediate = true, service = SalesforceClient.class
+	enabled = true, immediate = true, service = SalesforceClient.class
 )
 public class SalesforceClient {
 
@@ -99,7 +99,7 @@ public class SalesforceClient {
 			SalesforceConfiguration.class, properties);
 	}
 
-	private JSONObject _autenticate() throws PortalException {
+	private JSONObject _authenticate() throws PortalException {
 		try {
 			Http.Options options = new Http.Options();
 
@@ -141,7 +141,7 @@ public class SalesforceClient {
 		throws PortalException {
 
 		if (Validator.isNull(_accessToken) || forceAuthentication) {
-			JSONObject responseJSONObject = _autenticate();
+			JSONObject responseJSONObject = _authenticate();
 
 			_accessToken = responseJSONObject.getString("access_token");
 			_instanceUrl = responseJSONObject.getString("instance_url");

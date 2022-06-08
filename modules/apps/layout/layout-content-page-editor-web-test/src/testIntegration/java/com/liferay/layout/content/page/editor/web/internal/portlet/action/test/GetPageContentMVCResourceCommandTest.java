@@ -20,8 +20,6 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -29,6 +27,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -67,7 +66,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -267,24 +265,14 @@ public class GetPageContentMVCResourceCommandTest {
 
 	@Test
 	public void testFragmentEntryLinkMapped() throws Exception {
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				StringUtil.randomString(), StringUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
+
 		JournalArticle journalArticle = _createJournalArticle();
 
-		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			defaultSegmentsExperienceId, _layout.getPlid(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor",
@@ -296,8 +284,7 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString(),
-			StringPool.BLANK, 0, null, _serviceContext);
+			).toString());
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(defaultSegmentsExperienceId);
@@ -322,24 +309,14 @@ public class GetPageContentMVCResourceCommandTest {
 	public void testFragmentEntryLinkMappedInAnotherSegmentsExperience()
 		throws Exception {
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				StringUtil.randomString(), StringUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
+
 		JournalArticle journalArticle = _createJournalArticle();
 
-		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			defaultSegmentsExperienceId, _layout.getPlid(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor",
@@ -351,8 +328,7 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString(),
-			StringPool.BLANK, 0, null, _serviceContext);
+			).toString());
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -367,11 +343,8 @@ public class GetPageContentMVCResourceCommandTest {
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
 				_portal.getClassNameId(Layout.class), _layout.getPlid());
 
-		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			segmentsExperience.getSegmentsExperienceId(), _layout.getPlid(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			_layout, segmentsExperience.getSegmentsExperienceId(),
 			JSONUtil.put(
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor",
@@ -383,8 +356,7 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString(),
-			StringPool.BLANK, 0, null, _serviceContext);
+			).toString());
 
 		jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",

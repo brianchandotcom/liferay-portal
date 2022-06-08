@@ -9,7 +9,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/runtime-main.js$]"
 		],
-		"externalReferenceCode": "ERC-001",
+		"externalReferenceCode": "CP001",
 		"htmlElementName": "liferay-remote-app-customer-portal",
 		"name_i18n": {
 			"en_US": "Customer Portal"

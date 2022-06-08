@@ -1051,13 +1051,79 @@ definition {
 			entryTitle = "New Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-154410."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154410
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test YouTube Video",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test YouTube Video",
+			friendlyURLEdit = "custom-url");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addEntryContent(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test YouTube Video",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test YouTube Video",
+			friendlyURLEdit = "new-custom-url");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "true",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-154409.It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."

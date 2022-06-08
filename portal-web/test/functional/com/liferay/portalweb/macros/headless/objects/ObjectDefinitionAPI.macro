@@ -35,7 +35,7 @@ definition {
 	}
 
 	macro _createEmployee {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/employees \
@@ -54,7 +54,7 @@ definition {
 	}
 
 	macro _createManager {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/managers \
@@ -74,7 +74,7 @@ definition {
 	macro _createObjectDefinition {
 		Variables.assertDefined(parameterList = "${en_US_label},${name},${requiredStringFieldName},${en_US_plural_label}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
@@ -115,7 +115,7 @@ definition {
 	macro _createRelationship {
 		Variables.assertDefined(parameterList = "${deletionType},${en_US_label},${name},${objectDefinitionId1},${objectDefinitionId2},${type}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId1}/object-relationships \
@@ -141,7 +141,7 @@ definition {
 	macro _deleteEmployee {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/employees/${employeeId} \
@@ -157,9 +157,10 @@ definition {
 	macro _getEmployeeFirstnameById {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
-        	http://localhost:8080/o/c/employees/${employeeId} \
+        	${portalURL}/o/c/employees/${employeeId} \
 			-u test@liferay.com:test
 		''';
 
@@ -171,9 +172,10 @@ definition {
 	macro _getManagerFirstnameById {
 		Variables.assertDefined(parameterList = "${managerId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
-        	http://localhost:8080/o/c/managers/${managerId} \
+        	${portalURL}/o/c/managers/${managerId} \
 			-u test@liferay.com:test
 		''';
 
@@ -197,7 +199,7 @@ definition {
 	macro _getObjectDefinitionStatusById {
 		Variables.assertDefined(parameterList = "${objectDefinitionId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
         	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
@@ -218,7 +220,7 @@ definition {
 	macro _getObjectsWithNestedField {
 		Variables.assertDefined(parameterList = "${nestedField}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
         	${portalURL}/o/c/${objects}?nestedFields=${nestedField} \
@@ -233,9 +235,10 @@ definition {
 	macro _getRelationshipNameById {
 		Variables.assertDefined(parameterList = "${relationshipId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
-        	http://localhost:8080/o/object-admin/v1.0/object-relationships/${relationshipId} \
+        	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
 			-u test@liferay.com:test
 		''';
 
@@ -247,7 +250,7 @@ definition {
 	macro _publishObjectDefinition {
 		Variables.assertDefined(parameterList = "${objectDefinitionId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
         	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
@@ -262,7 +265,7 @@ definition {
 	macro _updateEmployee {
 		Variables.assertDefined(parameterList = "${employeeId},${firstname},${managerId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/employees/${employeeId} \

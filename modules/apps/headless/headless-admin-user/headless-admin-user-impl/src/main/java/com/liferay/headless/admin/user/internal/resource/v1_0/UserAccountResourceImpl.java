@@ -43,11 +43,16 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
+import com.liferay.portal.kernel.exception.UserLockoutException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
@@ -58,7 +63,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
+import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -74,6 +82,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -99,6 +108,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -705,24 +717,15 @@ public class UserAccountResourceImpl
 			organizationIds = longStream.toArray();
 		}
 
-		String oldPassword = null;
-		String newPassword1 = null;
-		String newPassword2 = null;
-
-		String password = userAccount.getPassword();
-
-		if (!Validator.isBlank(password)) {
-			oldPassword = password;
-			newPassword1 = password;
-			newPassword2 = password;
-		}
+		_updatePassword(
+			user, userAccount.getCurrentPassword(), userAccount.getPassword());
 
 		return _toUserAccount(
 			_userService.updateUser(
-				userAccountId, oldPassword, newPassword1, newPassword2, false,
-				null, null, userAccount.getAlternateName(),
-				userAccount.getEmailAddress(), true, null, user.getLanguageId(),
-				user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+				userAccountId, null, null, null, false, null, null,
+				userAccount.getAlternateName(), userAccount.getEmailAddress(),
+				true, null, user.getLanguageId(), user.getTimeZoneId(),
+				user.getGreeting(), user.getComments(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),
 				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
@@ -751,11 +754,16 @@ public class UserAccountResourceImpl
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
-		boolean autoPassword = false;
+		boolean autoPassword = true;
 		String password = userAccount.getPassword();
 
-		if (Validator.isNull(password)) {
-			autoPassword = true;
+		if (Validator.isNotNull(password)) {
+			autoPassword = false;
+
+			_checkCurrentPassword(
+				_userLocalService.fetchUserByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode),
+				userAccount.getCurrentPassword());
 		}
 
 		User user = _userService.addOrUpdateUser(
@@ -877,6 +885,64 @@ public class UserAccountResourceImpl
 			).ifPresent(
 				existingUserAccount::setCustomFields
 			);
+		}
+	}
+
+	private void _checkCurrentPassword(User user, String currentPassword)
+		throws Exception {
+
+		if ((user == null) || (contextUser.getUserId() != user.getUserId())) {
+			return;
+		}
+
+		if (Validator.isNull(currentPassword)) {
+			throw new UserPasswordException.MustMatchCurrentPassword(
+				user.getUserId());
+		}
+
+		Company company = contextCompany;
+
+		String authType = company.getAuthType();
+
+		Map<String, String[]> headerMap = new HashMap<>();
+		Map<String, String[]> parameterMap = new HashMap<>();
+		Map<String, Object> resultsMap = new HashMap<>();
+
+		int authResult = Authenticator.FAILURE;
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			authResult = _userLocalService.authenticateByEmailAddress(
+				company.getCompanyId(), user.getEmailAddress(), currentPassword,
+				headerMap, parameterMap, resultsMap);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			authResult = _userLocalService.authenticateByUserId(
+				company.getCompanyId(), user.getUserId(), currentPassword,
+				headerMap, parameterMap, resultsMap);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			authResult = _userLocalService.authenticateByScreenName(
+				company.getCompanyId(), user.getScreenName(), currentPassword,
+				headerMap, parameterMap, resultsMap);
+		}
+
+		if (authResult == Authenticator.FAILURE) {
+			if (user.isLockout()) {
+				HttpServletRequest originalHttpServletRequest =
+					_portal.getOriginalServletRequest(
+						contextHttpServletRequest);
+				HttpServletResponse httpServletResponse =
+					contextHttpServletResponse;
+
+				AuthenticatedSessionManagerUtil.logout(
+					originalHttpServletRequest, httpServletResponse);
+
+				throw new UserLockoutException.PasswordPolicyLockout(
+					user, user.getPasswordPolicy());
+			}
+
+			throw new UserPasswordException.MustMatchCurrentPassword(
+				user.getUserId());
 		}
 	}
 
@@ -1094,6 +1160,23 @@ public class UserAccountResourceImpl
 		);
 	}
 
+	private boolean _isPasswordResetRequired(User user) throws Exception {
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		boolean ldapPasswordPolicyEnabled =
+			LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId());
+
+		if ((user.getLastLoginDate() == null) &&
+			(((passwordPolicy == null) && !ldapPasswordPolicyEnabled) ||
+			 ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+			  passwordPolicy.isChangeRequired()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private UserAccount _toUserAccount(
 			Map<String, Map<String, String>> actions, long userId)
 		throws Exception {
@@ -1109,6 +1192,21 @@ public class UserAccountResourceImpl
 	private UserAccount _toUserAccount(User user) throws Exception {
 		return _userResourceDTOConverter.toDTO(
 			_getDTOConverterContext(user.getUserId()), user);
+	}
+
+	private void _updatePassword(
+			User user, String currentPassword, String password)
+		throws Exception {
+
+		if ((user == null) || Validator.isNull(password)) {
+			return;
+		}
+
+		_checkCurrentPassword(user, currentPassword);
+
+		_userService.updatePassword(
+			user.getUserId(), password, password,
+			_isPasswordResetRequired(user));
 	}
 
 	private static final EntityModel _entityModel =
@@ -1156,6 +1254,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserAccountResourceDTOConverter _userAccountResourceDTOConverter;

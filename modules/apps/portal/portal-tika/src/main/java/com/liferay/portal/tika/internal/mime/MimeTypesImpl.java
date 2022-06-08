@@ -149,7 +149,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		read(
 			MimeTypesImpl.class.getResourceAsStream(
-				"/tika/custom-mimetypes.xml"),
+				"dependencies/custom-mimetypes.xml"),
 			extensionsMap);
 
 		for (Map.Entry<String, Set<String>> entry : extensionsMap.entrySet()) {

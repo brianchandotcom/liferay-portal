@@ -30,7 +30,7 @@ public class TikaConfigUtil {
 	static {
 		try {
 			_tikaConfig = new TikaConfig(
-				TikaConfigUtil.class.getResource("/tika/tika.xml"));
+				TikaConfigUtil.class.getResource("dependencies/tika.xml"));
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);

@@ -17,18 +17,14 @@ const dateFormat = {
 	year: 'numeric',
 };
 
-export default function getActivationStatusDateRange(accountSubscriptionTerms) {
-	const dates = accountSubscriptionTerms.reduce(
-		(dateAccumulator, accountSubscriptionTerm) => {
+export default function getActivationStatusDateRange(orderItems) {
+	const dates = orderItems.reduce(
+		(dateAccumulator, orderItem) => {
+			const options = JSON.parse(orderItem.options);
+
 			return {
-				endDates: [
-					...dateAccumulator.endDates,
-					accountSubscriptionTerm.endDate,
-				],
-				startDates: [
-					...dateAccumulator.startDates,
-					accountSubscriptionTerm.startDate,
-				],
+				endDates: [...dateAccumulator.endDates, options.endDate],
+				startDates: [...dateAccumulator.startDates, options.startDate],
 			};
 		},
 		{endDates: [], startDates: []}

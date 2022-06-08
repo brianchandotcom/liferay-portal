@@ -14,7 +14,7 @@ import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 import i18n from '../../../../common/I18n';
 import {Button, StatusTag, Table} from '../../../../common/components';
-import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
+import {getCommerceOrderItems} from '../../../../common/services/liferay/graphql/queries';
 import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
 import getKebabCase from '../../../../common/utils/getKebabCase';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
@@ -97,25 +97,57 @@ const ModalCardSubscription = ({
 }) => {
 	const [activePage, setActivePage] = useState(1);
 
-	const {data: subscriptionsTerms} = useQuery(getAccountSubscriptionsTerms, {
+	const {data: orderItems} = useQuery(getCommerceOrderItems, {
 		variables: {
-			filter: `accountSubscriptionERC eq '${accountSubscriptionERC}'`,
+			filter: `customFields/name eq 'accountSubscriptionERC' and customFields/customValue/data eq '${accountSubscriptionERC}'`,
 			page: activePage,
 			pageSize: 5,
 		},
 	});
 
-	const dataAccountSubscriptionTerms =
-		subscriptionsTerms?.c?.accountSubscriptionTerms?.items || [];
+	const dataOrderItems = orderItems?.items || [];
 
-	const totalCount =
-		subscriptionsTerms?.c?.accountSubscriptionTerms?.totalCount;
+	const totalCount = orderItems?.totalCount;
 
 	const columnsWithoutProvisioned = () => {
 		const customColumns = [...columns];
 		customColumns.splice(provisionedIndex, 1);
 
 		return customColumns;
+	};
+
+	const getRowByColumns = () => {
+		return dataOrderItems.map(({customFields, options, quantity}) => {
+			const optionsParsed = JSON.parse(options);
+			const fields = customFields.reduce(
+				(fieldsAccumulator, currentField) => ({
+					...fieldsAccumulator,
+					[currentField.name]: currentField.customValue.data,
+				}),
+				{}
+			);
+
+			return {
+				'instance-size': optionsParsed.instanceSize || '-',
+				'provisioned': fields.provisionedCount || '-',
+				'quantity': quantity || '-',
+				'start-end-date': `${getDateCustomFormat(
+					optionsParsed.startDate,
+					dateFormat
+				)} - ${getDateCustomFormat(optionsParsed.endDate, dateFormat)}`,
+				'subscription-term-status':
+					(fields.status && (
+						<StatusTag
+							currentStatus={i18n.translate(
+								STATUS_TAG_TYPES[
+									`${fields.status.toLowerCase()}`
+								]
+							)}
+						/>
+					)) ||
+					'-',
+			};
+		});
 	};
 
 	return (
@@ -159,38 +191,7 @@ const ModalCardSubscription = ({
 							setActivePage,
 							totalCount,
 						}}
-						rows={dataAccountSubscriptionTerms.map(
-							({
-								endDate,
-								instanceSize,
-								provisioned,
-								quantity,
-								startDate,
-								subscriptionTermStatus,
-							}) => ({
-								'instance-size': instanceSize || '-',
-								'provisioned': provisioned || '-',
-								'quantity': quantity || '-',
-								'start-end-date': `${getDateCustomFormat(
-									startDate,
-									dateFormat
-								)} - ${getDateCustomFormat(
-									endDate,
-									dateFormat
-								)}`,
-								'subscription-term-status':
-									(subscriptionTermStatus && (
-										<StatusTag
-											currentStatus={i18n.translate(
-												STATUS_TAG_TYPES[
-													`${subscriptionTermStatus.toLowerCase()}`
-												]
-											)}
-										/>
-									)) ||
-									'-',
-							})
-						)}
+						rows={getRowByColumns()}
 						tableVerticalAlignment="middle"
 					/>
 				</div>

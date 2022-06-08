@@ -1,0 +1,38 @@
+	@description = "This is a use case for LPS-155317"
+	@priority = "4"
+	test DisablingSuggestionsSAPHidesSuggestionsFromGuests {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Service Access Policy");
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			enabled = "false",
+			policyName = "SEARCH_SUGGESTIONS");
+
+		Navigator.openURL();
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "App");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SignOut.signOut();
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "App");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple");
+
+		SignIn.signIn(userEmailAddress = "test@liferay.com");
+	}

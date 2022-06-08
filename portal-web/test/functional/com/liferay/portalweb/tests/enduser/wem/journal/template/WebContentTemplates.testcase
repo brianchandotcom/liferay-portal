@@ -296,6 +296,8 @@ definition {
 		}
 
 		task ("View template creation failure") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 			Close.closeAndSelectWindow(locator1 = "title=New Template - Test Site Name - ${siteName}");
 
 			WebContentTemplates.inputTemplateAddScreenFields(

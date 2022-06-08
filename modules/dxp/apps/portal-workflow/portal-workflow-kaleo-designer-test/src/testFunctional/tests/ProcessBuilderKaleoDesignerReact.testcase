@@ -1566,11 +1566,23 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Condition node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWithConditionNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithConditionNode";
 
-		// TODO CanPublishWithConditionNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "process-with-condition-node-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
+
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
 
 	}
 

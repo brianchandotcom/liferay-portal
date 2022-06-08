@@ -548,6 +548,90 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyVocabulary"
             tags: ["TaxonomyVocabulary"]
+    "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the asset library's taxonomy vocabulary by external reference code.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["TaxonomyVocabulary"]
+        get:
+            # @review
+            description:
+                Retrieves the asset library's taxonomy vocabulary by external reference code.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+            tags: ["TaxonomyVocabulary"]
+        put:
+            # @review
+            description:
+                Updates the asset library's taxonomy vocabulary with the given external reference code, or creates it if
+                it not exists.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+            tags: ["TaxonomyVocabulary"]
     "/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/permissions":
         get:
             operationId: getAssetLibraryTaxonomyVocabularyPermissionsPage

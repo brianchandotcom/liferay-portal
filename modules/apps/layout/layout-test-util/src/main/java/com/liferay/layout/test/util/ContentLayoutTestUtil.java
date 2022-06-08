@@ -14,6 +14,15 @@
 
 package com.liferay.layout.test.util;
 
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -29,11 +38,15 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Collection;
@@ -51,6 +64,62 @@ import org.osgi.framework.ServiceReference;
  * @author Lourdes Fernández Besada
  */
 public class ContentLayoutTestUtil {
+
+	public static FragmentEntryLink addFragmentEntryLinkToLayout(
+			Layout layout, long fragmentEntryId, long segmentsExperienceId,
+			String css, String html, String js, String configuration,
+			String editableValues, String rendererKey)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkServiceUtil.addFragmentEntryLink(
+				layout.getGroupId(), 0, fragmentEntryId, segmentsExperienceId,
+				layout.getPlid(), css, html, js, configuration, editableValues,
+				StringPool.BLANK, 0, rendererKey,
+				ServiceContextTestUtil.getServiceContext(
+					layout.getGroupId(), TestPropsValues.getUserId()));
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			layoutStructure.getMainItemId(), 0);
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
+
+		return fragmentEntryLink;
+	}
+
+	public static FragmentEntryLink addFragmentEntryLinkToLayout(
+			Layout layout, long segmentsExperienceId, String editableValues)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.addFragmentEntry(
+				TestPropsValues.getUserId(), layout.getGroupId(), 0,
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					layout.getGroupId(), TestPropsValues.getUserId()));
+
+		return addFragmentEntryLinkToLayout(
+			layout, fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			editableValues, fragmentEntry.getFragmentEntryKey());
+	}
 
 	public static JSONObject addPortletToLayout(Layout layout, String portletId)
 		throws Exception {

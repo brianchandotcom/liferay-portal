@@ -52,7 +52,12 @@
 </tr>
 <tr>
 	<td>MENU_SIDEBAR</td>
-	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "middle-bar")]/div[contains(@class, "applications")]</td>
+	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "middle-bar")]/div[contains(@class, "${menu}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TASKS_SECTION</td>
+	<td>//div[contains(@class, "tasks-container")]//div[contains(@class, "section-content")]//div[contains(text(),'${section}')]</td>
 	<td></td>
 </tr>
 </tbody>

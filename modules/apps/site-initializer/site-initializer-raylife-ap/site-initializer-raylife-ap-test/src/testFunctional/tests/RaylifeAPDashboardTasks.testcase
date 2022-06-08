@@ -1,0 +1,58 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		RaylifeAP.createRaylifeAPSite(siteName = "Raylife AP");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		RaylifeAP.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-152291 - Verify that when I click on the 'Review Eligibility Reports' subsection in Tasks, I am redirected to the 'Applications' section page"
+	@priority = "4"
+	test ClickSubsectionApplicationsRedirectedToApplications {
+		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+
+        Click(
+            locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+            section = "Review Eligibility Reports");
+
+		AssertElementPresent(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "applications");
+	}
+
+	@description = "LPS-152292 - Verify if clicking on the 'Contact Expiring Policies' subsection in Tasks, takes me to the 'Policies' section page"
+	@priority = "4"
+	test ClickSubsectionPoliciesRedirectedToPolicies {
+		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+
+        Click(
+            locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+            section = "Contact Expiring Policies");
+
+		AssertElementPresent(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "policies");
+	}
+
+}

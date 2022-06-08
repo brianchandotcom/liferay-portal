@@ -3611,7 +3611,7 @@ definition {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",
-			siteURLKey = "site-name-staging");
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "dm-document-title");
 	}

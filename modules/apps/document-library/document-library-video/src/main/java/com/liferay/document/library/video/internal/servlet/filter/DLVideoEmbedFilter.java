@@ -142,8 +142,11 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 	}
 
 	private String _getFileVersionId(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
 		List<String> pathParts = StringUtil.split(
-			httpServletRequest.getRequestURI(), CharPool.SLASH);
+			requestURI.substring(requestURI.indexOf("/documents")),
+			CharPool.SLASH);
 
 		if (pathParts.size() < 4) {
 			return StringPool.BLANK;

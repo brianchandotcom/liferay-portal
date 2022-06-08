@@ -470,12 +470,60 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the toggle active and inactive of the object is updated when set on the object details"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateWhenToggleIsActiveOrInactive {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153577",
+			objectName = "CustomObject153577",
+			pluralLabelName = "Custom Objects 153577");
 
-		// TODO LPS-153577 CanViewUpdateWhenToggleIsActiveOrInactive pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153577");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153577");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "true",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153577");
+
+		CreateObject.checkToggleInactive();
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "false",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"

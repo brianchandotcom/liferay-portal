@@ -316,6 +316,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewNumberInputText {
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewSettingsText {
 		AssertTextEquals.assertPartialText(
 			key_settingsText = "${settingsText}",

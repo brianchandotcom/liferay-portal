@@ -46,7 +46,6 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,12 +75,8 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -119,22 +114,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
-	}
-
-	public void setPortalProperty(String propertyName, Object value)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, value);
 	}
 
 	@Before

@@ -313,13 +313,87 @@ definition {
 			uploadFileName = "Document_2.jpg");
 	}
 
-	@description = "This test covers LPS-154428."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154428. It asserts that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";
 
-		// TODO LPS-154428
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Vimeo Video Name",
+			videoURL = "https://vimeo.com/483035084");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test Vimeo Video Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test Vimeo Video Name",
+			friendlyURLEdit = "custom-url");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		Blogs.addEntry(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test Vimeo Video Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test Vimeo Video Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test Vimeo Video Name",
+			friendlyURLEdit = "custom-url-edit");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "vimeo",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-154402. It asserts that an external video with a custom friendlyURL added in the Blog content field can be published on a site."

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.upgrade.v3_1_0.util;
+package com.liferay.client.extension.internal.upgrade.v3_2_0.util;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

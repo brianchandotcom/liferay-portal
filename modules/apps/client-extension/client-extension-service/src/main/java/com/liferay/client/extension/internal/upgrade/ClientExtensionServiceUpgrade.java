@@ -15,7 +15,7 @@
 package com.liferay.client.extension.internal.upgrade;
 
 import com.liferay.client.extension.internal.upgrade.v3_0_0.ClassNamesUpgradeProcess;
-import com.liferay.client.extension.internal.upgrade.v3_1_0.util.ClientExtensionEntryRelTable;
+import com.liferay.client.extension.internal.upgrade.v3_2_0.util.ClientExtensionEntryRelTable;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -72,12 +72,12 @@ public class ClientExtensionServiceUpgrade implements UpgradeStepRegistrator {
 				ClientExtensionEntryUpgradeProcess());
 
 		registry.register(
-			"3.0.0", "3.1.0", ClientExtensionEntryRelTable.create(),
+			"3.0.0", "3.1.0",
 			new com.liferay.client.extension.internal.upgrade.v3_1_0.
 				ClientExtensionEntryUpgradeProcess());
 
 		registry.register(
-			"3.1.0", "3.2.0",
+			"3.1.0", "3.2.0", ClientExtensionEntryRelTable.create(),
 			new CTModelUpgradeProcess(
 				"ClientExtensionEntry", "ClientExtensionEntryRel"));
 	}

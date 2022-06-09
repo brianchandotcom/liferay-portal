@@ -34,15 +34,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,10 +54,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,18 +71,6 @@ public class ObjectActionLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		_props = PropsUtil.getProps();
-
-		PropsTestUtil.setProps("feature.flag.LPS-152181", "true");
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		PropsUtil.setProps(_props);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -498,8 +481,6 @@ public class ObjectActionLocalServiceTest {
 					return null;
 				}));
 	}
-
-	private static Props _props;
 
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 

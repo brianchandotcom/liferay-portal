@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -109,12 +108,10 @@ public class ObjectActionResourceImpl
 			Long objectDefinitionId, ObjectAction objectAction)
 		throws Exception {
 
-		if ((!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152180")) &&
-			 StringUtil.equals(
-				 objectAction.getObjectActionExecutorKey(),
-				 ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY)) ||
-			(!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152181")) &&
-			 Validator.isNotNull(objectAction.getConditionExpression()))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152180")) &&
+			StringUtil.equals(
+				objectAction.getObjectActionExecutorKey(),
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -134,12 +131,10 @@ public class ObjectActionResourceImpl
 			Long objectActionId, ObjectAction objectAction)
 		throws Exception {
 
-		if ((!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152180")) &&
-			 StringUtil.equals(
-				 objectAction.getObjectActionExecutorKey(),
-				 ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY)) ||
-			(!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152181")) &&
-			 Validator.isNotNull(objectAction.getConditionExpression()))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152180")) &&
+			StringUtil.equals(
+				objectAction.getObjectActionExecutorKey(),
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY)) {
 
 			throw new UnsupportedOperationException();
 		}

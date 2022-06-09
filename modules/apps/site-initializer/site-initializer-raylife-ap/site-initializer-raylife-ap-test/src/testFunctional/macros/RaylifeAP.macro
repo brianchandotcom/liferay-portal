@@ -20,10 +20,6 @@ definition {
 
 		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
 
-		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			Pause(locator1 = "1500");
-		}
-
 		Refresh();
 
 		WaitForElementPresent(

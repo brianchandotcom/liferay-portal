@@ -205,6 +205,10 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 				setCurrentStepIndex(index);
 			}
 			else {
+				console.error(
+					`Walkthrough Exception: ${steps[index].nodeToHighlight} element for highlight does not exist in DOM`
+				);
+
 				setCurrentStepIndex(
 					index === steps.length - 1
 						? index - 1

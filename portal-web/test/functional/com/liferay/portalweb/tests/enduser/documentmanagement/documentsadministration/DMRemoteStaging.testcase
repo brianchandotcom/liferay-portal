@@ -306,13 +306,78 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title");
 	}
 
-	@description = "This test covers LPS-154430."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154430. It ensures that an image with a custom friendlyURL added to a manual collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "4"
 	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154430
+		JSONAssetlist.addManualAssetListEntryWithItemType(
+			groupName = "Site Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			title = "Manual Collection");
 
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document_1",
+			assetType = "Basic Document");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Document_1",
+			friendlyURLEdit = "custom-url");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1");
 	}
 
 	@description = "This test covers LPS-154404. It ensures that an image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."

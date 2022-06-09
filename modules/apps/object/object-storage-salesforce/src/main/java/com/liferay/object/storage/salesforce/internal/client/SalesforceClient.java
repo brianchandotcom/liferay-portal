@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration",
-	enabled = true, immediate = true, service = SalesforceClient.class
+	immediate = true, service = SalesforceClient.class
 )
 public class SalesforceClient {
 
@@ -58,34 +58,39 @@ public class SalesforceClient {
 					_instanceUrl + "/services/data/v54.0/query/", "q",
 					queryString));
 
-			String responseJSON = _http.URLtoString(options);
-
-			Http.Response response = options.getResponse();
-
-			if (response.getResponseCode() ==
-					HttpURLConnection.HTTP_UNAUTHORIZED) {
-
-				options.addHeader(
-					"Authorization", "Bearer " + _getAccessToken(true));
-
-				responseJSON = _http.URLtoString(options);
-
-				response = options.getResponse();
-			}
-
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new PortalException(
-					StringBundler.concat(
-						"Response code ", response.getResponseCode(), ": ",
-						responseJSON));
-			}
-
-			return _jsonFactory.createJSONObject(responseJSON);
+			return _invoke(options);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to execute query: " + queryString, exception);
+			}
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+	}
+
+	public JSONObject retrieveSObject(String identifier, String objectName) {
+		try {
+			Http.Options options = new Http.Options();
+
+			options.addHeader(
+				"Authorization", "Bearer " + _getAccessToken(false));
+
+			options.setLocation(
+				StringBundler.concat(
+					_instanceUrl, "/services/data/v54.0/sobjects/", objectName,
+					"/", identifier));
+
+			return _invoke(options);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get sObject: ", objectName,
+						"with identifier: ", identifier),
+					exception);
 			}
 
 			return JSONFactoryUtil.createJSONObject();
@@ -148,6 +153,32 @@ public class SalesforceClient {
 		}
 
 		return _accessToken;
+	}
+
+	private JSONObject _invoke(Http.Options options)
+		throws IOException, PortalException {
+
+		String responseJSON = _http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+			options.addHeader(
+				"Authorization", "Bearer " + _getAccessToken(true));
+
+			responseJSON = _http.URLtoString(options);
+
+			response = options.getResponse();
+		}
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new PortalException(
+				StringBundler.concat(
+					"Response code ", response.getResponseCode(), ": ",
+					responseJSON));
+		}
+
+		return _jsonFactory.createJSONObject(responseJSON);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

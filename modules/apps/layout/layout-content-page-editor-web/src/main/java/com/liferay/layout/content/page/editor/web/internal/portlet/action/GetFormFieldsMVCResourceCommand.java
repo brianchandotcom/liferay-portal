@@ -63,7 +63,7 @@ public class GetFormFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				MappingContentUtil.getMappingFieldsJSONArray(
+				MappingContentUtil.getEditableMappingFieldsJSONArray(
 					classTypeId, themeDisplay.getScopeGroupId(),
 					_infoItemServiceTracker, _portal.getClassName(classNameId),
 					themeDisplay.getLocale()));

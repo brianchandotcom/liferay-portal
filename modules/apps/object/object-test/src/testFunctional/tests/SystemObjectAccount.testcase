@@ -672,12 +672,21 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is possible to edit Title Field the System Object Account"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test EditTitleFieldOnSystemAccount {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-153519 EditTitleFieldOnSystemAccount pending implementation
+		ObjectPortlet.selectSystemObject(label = "Account");
 
+		CreateObject.selectTitleField(fieldLabel = "Type");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		CreateObject.assertTitleFieldIsSelected(fieldLabel = "Type");
 	}
 
 	@description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"

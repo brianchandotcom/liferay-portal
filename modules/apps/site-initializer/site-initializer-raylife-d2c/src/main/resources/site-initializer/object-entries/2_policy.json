@@ -263,6 +263,18 @@
 			"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAYAPP-004$]",
 			"renewalDue": 2,
 			"startDate": "2022-05-15T00:00:00Z"
+		},
+		{
+			"commission": "1200.00",
+			"externalReferenceCode": "RAYPOL-023",
+			"finishDate": "2023-06-06T00:00:00Z",
+			"monthlyPremium": "123.00",
+			"name": "test 23",
+			"policyNumber": "12345",
+			"product": "Business Owners Policy",
+			"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAYAPP-005$]",
+			"renewalDue": 2,
+			"startDate": "2022-06-06T00:00:00Z"
 		}
 	],
 	"objectDefinitionName": "RaylifePolicy"

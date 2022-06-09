@@ -82,9 +82,7 @@ export default function () {
 			const maxIndexOfMonthsArray = 11;
 			const thisMonthTimePeriod = 1;
 			const sixMonthsTimePeriod = 5;
-			const indexOfCurrentMonth = CONSTANTS.MONTHS_ABREVIATIONS.indexOf(
-				`${currentMonth}`
-			);
+			const indexOfCurrentMonth = new Date().getMonth();
 
 			function populateCommissions(policiesResult, policiesArray) {
 				policiesResult.forEach((policy) => {
@@ -112,9 +110,8 @@ export default function () {
 
 			function sumCommissionsPerMonth(comissionsArray) {
 				const totalCommission = comissionsArray.reduce(
-					(commissionSum, commission) => {
-						return commissionSum + commission;
-					}
+					(commissionSum, commission) => commissionSum + commission,
+					0
 				);
 
 				return totalCommission;
@@ -125,9 +122,11 @@ export default function () {
 					.map((values) => {
 						return Object.values(values)[0];
 					})
-					.reduce((commissionSum, commission) => {
-						return commissionSum + commission;
-					});
+					.reduce(
+						(commissionSum, commission) =>
+							commissionSum + commission,
+						0
+					);
 
 				return totalValue;
 			}

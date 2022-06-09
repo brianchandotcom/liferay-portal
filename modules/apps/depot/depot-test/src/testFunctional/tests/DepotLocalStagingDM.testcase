@@ -3513,7 +3513,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+		WebContent.viewVideoPreview(service = "youtube");
 	}
 
 	@description = "This test covers LPS-154401. This ensures that an external video with a custom friendlyURL can be published from an asset library and rendered correctly in the Web content field on a site."

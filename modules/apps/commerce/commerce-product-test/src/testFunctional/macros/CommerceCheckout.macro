@@ -111,6 +111,14 @@ definition {
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 			}
 
+			if (isSet(eligibleShippingMethods)) {
+				for (var eligibleShippingMethod : list "${eligibleShippingMethods}") {
+					AssertElementPresent(
+						key_radioOption = "${eligibleShippingMethod}",
+						locator1 = "CommerceEntry#RADIO_BUTTON");
+				}
+			}
+
 			if (isSet(notEligibleShippingMethods)) {
 				for (var notEligibleShippingMethod : list "${notEligibleShippingMethods}") {
 					AssertElementNotPresent(

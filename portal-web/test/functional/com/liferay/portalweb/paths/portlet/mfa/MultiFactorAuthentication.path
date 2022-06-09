@@ -117,7 +117,7 @@
 
 <tr>
 	<td>ORDER_FIELD</td>
-	<td>//input[contains(@name,'ranking')]</td>
+	<td>//input[contains(@name,'serviceRanking')]</td>
 	<td></td>
 </tr>
 

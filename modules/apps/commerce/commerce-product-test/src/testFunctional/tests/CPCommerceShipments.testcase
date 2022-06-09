@@ -438,6 +438,330 @@ definition {
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 	}
 
+	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
+	@priority = "3"
+	test CanEditShipmentERC {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer places an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When admin creates shipment for the order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Create Shipment",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				key_productSku = "MIN55861",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Refresh();
+		}
+
+		task("And verifies that the Shipment ERC is the same value as the Shipment ID when first created") {
+			var idValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ID_VALUE");
+
+			var ercValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+			
+			TestUtils.assertEquals(
+				actual = "${idValue}",
+				expected = "${ercValue}");
+		}
+		
+		task ("And edits the ERC of the shipment") {
+			CommerceOrders.editAndCheckOrderAndShipmentERC(
+				keyReferenceCode = "testERC",
+				checkReferenceCode = "true");
+		}
+
+		task ("Then the ERC of the shipment remains the same during the shipment steps") {
+			Click(
+				key_index = "Finish Processing",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			AssertElementPresent(
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
+				key_erc = "testERC");
+
+			Click(
+				key_index = "Ship",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			AssertElementPresent(
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
+				key_erc = "testERC");
+
+			Click(
+				key_index = "Deliver",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			AssertElementPresent(
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
+				key_erc = "testERC");			
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
+	@priority = "3"
+	test CanNotUseTheSameERCForDifferentShipments {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer places an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("And admin creates shipment for the first order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Create Shipment",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				key_productSku = "MIN55861",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Refresh();
+		}
+
+		task ("And edits the ERC of the shipment") {
+			CommerceOrders.editAndCheckOrderAndShipmentERC(
+				keyReferenceCode = "testERC",
+				checkReferenceCode = "true");
+		}
+
+		task ("And given the buyer places a second order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+			
+			FrontStore.addInitializerProductToCart(
+				productName = "Torque Converters",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productUnitPrice = "34",
+				shippingMethod = "Standard");
+		}
+		
+		task ("And admin creates shipment of the second order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Create Shipment",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				key_productSku = "MIN55859",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55859");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Refresh();
+		}
+
+		task ("Then admin edits the ERC of the second shipment using the same ERC of the previous one, and an error alert is thrown") {
+			CommerceOrders.editAndCheckOrderAndShipmentERC(
+				keyReferenceCode = "testERC",
+				uniqueERC = "true");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
 	@priority = "3"
 	test CreateMultipleShipmentsForOneOrder {

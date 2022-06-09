@@ -62,13 +62,15 @@ public class InfoRequestFieldValuesProviderHelper {
 		Map<String, String[]> parameterMap =
 			httpServletRequest.getParameterMap();
 
-		for (InfoField infoField : _getInfoFields(className)) {
-			if (ArrayUtil.isNotEmpty(parameterMap.get(infoField.getName()))) {
-				String[] values = parameterMap.get(infoField.getName());
+		for (InfoField<?> infoField : _getInfoFields(className)) {
+			if (ArrayUtil.isEmpty(parameterMap.get(infoField.getName()))) {
+				continue;
+			}
 
-				for (String value : values) {
-					infoFieldValues.add(_getInfoFieldValue(infoField, value));
-				}
+			String[] values = parameterMap.get(infoField.getName());
+
+			for (String value : values) {
+				infoFieldValues.add(_getInfoFieldValue(infoField, value));
 			}
 		}
 

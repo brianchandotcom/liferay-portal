@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Marko Cikos
- */
-public class FDSSampleFDSNames {
+<%
+ReactFDSDisplayContext reactFDSDisplayContext = new ReactFDSDisplayContext(request);
+%>
 
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
-
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
-
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
-
-	public static final String REACT =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-react";
-
-}
+<react:component
+	module="js/SampleReactFrontendDataSet"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"apiURL", reactFDSDisplayContext.getAPIURL()
+		).put(
+			"id", FDSSampleFDSNames.REACT
+		).put(
+			"style", "fluid"
+		).put(
+			"views", reactFDSDisplayContext.getViews()
+		).build()
+	%>'
+/>

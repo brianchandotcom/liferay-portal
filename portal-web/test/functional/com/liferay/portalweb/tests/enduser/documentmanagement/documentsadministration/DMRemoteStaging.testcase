@@ -56,7 +56,7 @@ definition {
 	@priority = "5"
 	test AllActionsAreAvailableInRepository {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStagingDM#AllActionsAreAvailableInRepository";
+		property test.name.skip.portal.instance = "DMRemoteStaging#AllActionsAreAvailableInRepository";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -71,7 +71,7 @@ definition {
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
 	@priority = "5"
 	test CanNavigateToRemoteLiveViaToolbar {
-		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanNavigateToRemoteLiveViaToolbar";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanNavigateToRemoteLiveViaToolbar";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -96,7 +96,7 @@ definition {
 	test CanViewExternalVideoInMGAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property test.name.skip.portal.instance = "RemoteStagingDM#CanViewExternalVideoInMGAfterPublish";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterPublish";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -247,7 +247,7 @@ definition {
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterPublish";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInDynamicCollectionViaAPAfterPublish";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -320,7 +320,7 @@ definition {
 	test CanViewImageInManualCollectionViaAPAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInManualCollectionViaAPAfterPublish";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInManualCollectionViaAPAfterPublish";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -423,7 +423,7 @@ definition {
 	test CanViewImageInMGAfterPublish {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property test.name.skip.portal.instance = "RemoteStagingDM#CanViewImageInMGAfterPublish";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInMGAfterPublish";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -490,7 +490,7 @@ definition {
 	@refactorneeded
 	test DeleteDocumentWithCustomType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#DeleteDocumentWithCustomType";
+		property test.name.skip.portal.instance = "DMRemoteStaging#DeleteDocumentWithCustomType";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -568,7 +568,7 @@ definition {
 	test DocumentCanBeRepublishedAfterCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#DocumentCanBeRepublishedAfterCheckout";
+		property test.name.skip.portal.instance = "DMRemoteStaging#DocumentCanBeRepublishedAfterCheckout";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -684,7 +684,7 @@ definition {
 	@refactorneeded
 	test EditDocumentWithCustomType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#EditDocumentWithCustomType";
+		property test.name.skip.portal.instance = "DMRemoteStaging#EditDocumentWithCustomType";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -775,7 +775,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEditsToDocumentType {
-		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentType";
+		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToDocumentType";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -881,7 +881,7 @@ definition {
 	@refactorneeded
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToDocumentUsingCustomTypeAndSet";
+		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToDocumentUsingCustomTypeAndSet";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -993,7 +993,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEditsToMetadataSet {
-		property test.name.skip.portal.instance = "RemoteStagingDM#PublishEditsToMetadataSet";
+		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToMetadataSet";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -1118,7 +1118,7 @@ definition {
 	@refactorneeded
 	test ViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#ViewRepublishedDocumentInfo";
+		property test.name.skip.portal.instance = "DMRemoteStaging#ViewRepublishedDocumentInfo";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1272,7 +1272,7 @@ definition {
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithDeletedImage";
+		property test.name.skip.portal.instance = "DMRemoteStaging#ViewWebContentWithDeletedImage";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -1393,7 +1393,7 @@ definition {
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithRepublishedImage";
+		property test.name.skip.portal.instance = "DMRemoteStaging#ViewWebContentWithRepublishedImage";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

@@ -51,6 +51,8 @@ definition {
 			Pause(locator1 = "1500");
 		}
 
+		Refresh();
+
 		WaitForElementPresent(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");

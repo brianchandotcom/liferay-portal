@@ -17,12 +17,7 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.BooleanInfoFieldType;
-import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.field.type.NumberInfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -37,6 +32,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
+import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -117,53 +113,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			themeDisplay);
 	}
 
-	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
-		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			return TextInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
-
-			return BooleanInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_DOUBLE) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_INTEGER) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_LONG)) {
-
-			return NumberInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BLOB)) {
-
-			return ImageInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_DATE)) {
-
-			return DateInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_STRING)) {
-
-			return TextInfoFieldType.INSTANCE;
-		}
-
-		return TextInfoFieldType.INSTANCE;
-	}
-
 	private List<InfoFieldValue<Object>> _getObjectEntryInfoFieldValues(
 		ObjectEntry objectEntry) {
 
@@ -210,7 +159,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectField -> new InfoFieldValue<>(
 						InfoField.builder(
 						).infoFieldType(
-							_getInfoFieldType(objectField)
+							ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
 						).namespace(
 							ObjectField.class.getSimpleName()
 						).name(
@@ -258,7 +207,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (Objects.equals(
-				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
+				ObjectFieldDBTypeUtil.getInfoFieldType(objectField),
+				ImageInfoFieldType.INSTANCE)) {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				new String((byte[])values.get(objectField.getName())));

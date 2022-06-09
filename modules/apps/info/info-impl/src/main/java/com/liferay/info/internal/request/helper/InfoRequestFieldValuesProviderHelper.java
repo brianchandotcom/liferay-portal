@@ -67,9 +67,7 @@ public class InfoRequestFieldValuesProviderHelper {
 				continue;
 			}
 
-			String[] values = parameterMap.get(infoField.getName());
-
-			for (String value : values) {
+			for (String value : parameterMap.get(infoField.getName())) {
 				infoFieldValues.add(_getInfoFieldValue(infoField, value));
 			}
 		}

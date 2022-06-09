@@ -8,7 +8,7 @@ dependencies {
 	compileIncludePlatform group: "com.azure", name: "azure-identity"
 	compileIncludePlatform group: "com.azure", name: "azure-storage-blob"
 	compileIncludePlatform group: "com.azure", name: "azure-storage-blob-batch"
-	compileIncludePlatform platform("com.azure:azure-sdk-bom:1.0.2")
+	compileIncludePlatform platform("com.azure:azure-sdk-bom:1.0.4")
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

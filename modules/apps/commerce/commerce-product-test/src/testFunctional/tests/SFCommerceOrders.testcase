@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
-			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
 
 			AssertTextEquals(
 				key_orderId = "",
@@ -444,7 +444,7 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
-			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
 
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",

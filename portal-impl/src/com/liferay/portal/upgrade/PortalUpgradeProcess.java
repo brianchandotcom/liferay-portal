@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -145,7 +146,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					if (resultSet.getInt("buildNumber") >=
-							_INITIAL_BUILD_NUMBER_SUPPORTS_RETRY) {
+							ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER) {
 
 						return true;
 					}
@@ -234,17 +235,15 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				"update Release_ set buildNumber = ?, schemaVersion = ? " +
 					"where servletContextName = ? and buildNumber < ?")) {
 
-			preparedStatement.setLong(1, _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY);
+			preparedStatement.setInt(1, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 			preparedStatement.setString(2, _initialSchemaVersion.toString());
 			preparedStatement.setString(
 				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-			preparedStatement.setLong(4, _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY);
+			preparedStatement.setInt(4, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 			preparedStatement.execute();
 		}
 	}
-
-	private static final int _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY = 7100;
 
 	private static final Class<?>[] _PORTAL_UPGRADE_PROCESS_REGISTRIES = {
 		PortalUpgradeProcessRegistryImpl.class,

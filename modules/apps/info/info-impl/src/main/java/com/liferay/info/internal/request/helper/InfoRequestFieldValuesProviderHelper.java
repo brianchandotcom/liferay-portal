@@ -24,11 +24,12 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.ParseException;
 
@@ -56,6 +57,10 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String className = PortalUtil.getClassName(
 			ParamUtil.getLong(httpServletRequest, "classNameId"));
 
@@ -68,7 +73,9 @@ public class InfoRequestFieldValuesProviderHelper {
 			}
 
 			for (String value : parameterMap.get(infoField.getName())) {
-				infoFieldValues.add(_getInfoFieldValue(infoField, value));
+				infoFieldValues.add(
+					_getInfoFieldValue(
+						infoField, themeDisplay.getLocale(), value));
 			}
 		}
 
@@ -76,9 +83,7 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getDateInfoFieldValue(
-		InfoField<DateInfoFieldType> infoField, String value) {
-
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		InfoField<DateInfoFieldType> infoField, Locale locale, String value) {
 
 		try {
 			Date date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
@@ -122,24 +127,17 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField infoField, String value) {
+		InfoField infoField, Locale locale, String value) {
 
 		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
-			return _getDateInfoFieldValue(infoField, value);
+			return _getDateInfoFieldValue(infoField, locale, value);
 		}
 
 		if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
-			return _getTextInfoFieldValue(infoField, value);
+			return _getInfoFieldValue(infoField, locale, (Object)value);
 		}
 
 		return null;
-	}
-
-	private InfoFieldValue<Object> _getTextInfoFieldValue(
-		InfoField<TextInfoFieldType> infoField, String value) {
-
-		return _getInfoFieldValue(
-			infoField, LocaleThreadLocal.getThemeDisplayLocale(), value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

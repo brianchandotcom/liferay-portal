@@ -288,6 +288,10 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getActiveObjectFields(objectFields);
 	}
 
+	public static List<ObjectField> getCustomObjectFields(long objectFieldId) {
+		return getService().getCustomObjectFields(objectFieldId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

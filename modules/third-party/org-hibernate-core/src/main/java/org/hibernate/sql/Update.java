@@ -181,7 +181,7 @@ public class Update {
 	public String toStatementString() {
 		StringBuffer buf = new StringBuffer( (columns.size() * 15) + tableName.length() + 10 );
 		if ( comment!=null ) {
-			buf.append( "/* " ).append( comment ).append( " */ " );
+			buf.append( "/* " ).append( Dialect.escapeComment( comment ) ).append( " */ " );
 		}
 		buf.append( "update " ).append( tableName ).append( " set " );
 		boolean assignmentsAppended = false;
@@ -240,3 +240,4 @@ public class Update {
 		return buf.toString();
 	}
 }
+/* @generated */

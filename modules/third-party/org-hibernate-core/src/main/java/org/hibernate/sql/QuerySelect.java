@@ -135,7 +135,7 @@ public class QuerySelect {
 
 	public String toQueryString() {
 		StringBuffer buf = new StringBuffer(50);
-		if (comment!=null) buf.append("/* ").append(comment).append(" */ ");
+		if (comment!=null) buf.append("/* ").append( Dialect.escapeComment( comment ) ).append(" */ ");
 		buf.append("select ");
 		if (distinct) buf.append("distinct ");
 		String from = joins.toFromFragmentString();
@@ -211,3 +211,4 @@ public class QuerySelect {
 	}
 
 }
+/* @generated */

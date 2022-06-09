@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.hibernate.dialect.Dialect;
+
 /**
  * An SQL <tt>DELETE</tt> statement
  *
@@ -55,7 +57,7 @@ public class Delete {
 	public String toStatementString() {
 		StringBuffer buf = new StringBuffer( tableName.length() + 10 );
 		if ( comment!=null ) {
-			buf.append( "/* " ).append(comment).append( " */ " );
+			buf.append( "/* " ).append( Dialect.escapeComment( comment ) ).append( " */ " );
 		}
 		buf.append( "delete from " ).append(tableName);
 		if ( where != null || !primaryKeyColumns.isEmpty() || versionColumnName != null ) {
@@ -140,3 +142,4 @@ public class Delete {
 	}
 
 }
+/* @generated */

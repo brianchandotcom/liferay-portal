@@ -59,7 +59,7 @@ public class Select {
 	public String toStatementString() {
 		StringBuffer buf = new StringBuffer(guesstimatedBufferSize);
 		if ( StringHelper.isNotEmpty(comment) ) {
-			buf.append("/* ").append(comment).append(" */ ");
+			buf.append( "/* " ).append( Dialect.escapeComment( comment ) ).append( " */ " );
 		}
 		
 		buf.append("select ").append(selectClause)
@@ -207,3 +207,4 @@ public class Select {
 	}
 
 }
+/* @generated */

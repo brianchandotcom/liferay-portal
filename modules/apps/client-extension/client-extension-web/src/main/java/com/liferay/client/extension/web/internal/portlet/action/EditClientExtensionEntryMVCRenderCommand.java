@@ -16,10 +16,12 @@ package com.liferay.client.extension.web.internal.portlet.action;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext;
+import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryPartDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,12 +55,30 @@ public class EditClientExtensionEntryMVCRenderCommand
 		throws PortletException {
 
 		try {
+			ClientExtensionEntry clientExtensionEntry =
+				_fetchClientExtensionEntry(renderRequest);
+
+			CET cet;
+
+			if (clientExtensionEntry == null) {
+				cet = _cetFactory.cet(
+					renderRequest, ParamUtil.getString(renderRequest, "type"));
+			}
+			else {
+				cet = _cetFactory.cet(clientExtensionEntry);
+			}
+
 			renderRequest.setAttribute(
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					_cetFactory, _fetchClientExtensionEntry(renderRequest),
-					renderRequest));
+					cet, clientExtensionEntry, renderRequest));
+
+			renderRequest.setAttribute(
+				ClientExtensionAdminWebKeys.
+					EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT,
+				new EditClientExtensionEntryPartDisplayContext(
+					cet, clientExtensionEntry, renderRequest));
 
 			return "/admin/edit_client_extension_entry.jsp";
 		}

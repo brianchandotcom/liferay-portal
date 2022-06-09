@@ -14,14 +14,12 @@
 
 package com.liferay.client.extension.web.internal.display.context;
 
+import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.client.extension.web.internal.util.CETLabelsUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -33,45 +31,50 @@ import javax.servlet.http.HttpServletRequest;
 public class ClientExtensionAdminDisplayContext {
 
 	public ClientExtensionAdminDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		CETFactory cetFactory, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_cetFactory = cetFactory;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/client_extension_admin/edit_client_extension_entry"
-					).setRedirect(
-						_getRedirect()
-					).buildPortletURL());
+		CreationMenu creationMenu = new CreationMenu();
 
-				dropdownItem.setLabel(_getLabel("add-remote-web-app"));
-			}
-		).build();
-	}
+		for (String type : _cetFactory.getTypes()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCRenderCommandName(
+							"/client_extension_admin" +
+								"/edit_client_extension_entry"
+						).setRedirect(
+							_getRedirect()
+						).setParameter(
+							"type", type
+						).buildPortletURL());
 
-	public PortletURL getCurrentPortletURL() {
-		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
+					dropdownItem.setLabel(
+						CETLabelsUtil.getAddLabel(
+							_getHttpServletRequest(), type));
+				});
+		}
+
+		return creationMenu;
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_renderRequest);
 	}
 
-	private String _getLabel(String label) {
-		return LanguageUtil.get(_getHttpServletRequest(), label);
-	}
-
 	private String _getRedirect() {
 		return PortalUtil.getCurrentURL(_getHttpServletRequest());
 	}
 
+	private final CETFactory _cetFactory;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

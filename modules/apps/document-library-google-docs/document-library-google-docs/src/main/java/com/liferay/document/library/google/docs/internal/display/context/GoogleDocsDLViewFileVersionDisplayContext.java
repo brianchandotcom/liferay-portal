@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -89,7 +91,10 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
-		if (!isActionsVisible()) {
+		if (!isActionsVisible() ||
+			!ReleaseFeatureFlagManagerUtil.isEnabled(
+				ReleaseFeatureFlag.GOOGLE_DRIVE_SHORTCUTS)) {
+
 			return menu;
 		}
 

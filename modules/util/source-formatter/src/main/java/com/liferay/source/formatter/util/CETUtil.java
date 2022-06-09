@@ -15,6 +15,11 @@
 package com.liferay.source.formatter.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -38,77 +43,52 @@ public class CETUtil {
 	public static String getJSONContent(List<String> fileNames)
 		throws IOException, ParseException {
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("[");
-
 		List<CET> cets = _getCETs(fileNames);
 
+		JSONArray cetJSONArray = new JSONArrayImpl();
+
 		for (CET cet : cets) {
-			sb.append("\n\t{\n");
+			JSONObject cetJSONObject = new JSONObjectImpl();
 
-			sb.append("\t\t\"description\": \"");
-			sb.append(cet.getDescription());
-			sb.append("\",\n");
+			cetJSONObject.put(
+				"description", cet.getDescription()
+			).put(
+				"name", cet.getName()
+			);
 
-			sb.append("\t\t\"name\": \"");
-			sb.append(cet.getName());
-			sb.append("\",\n");
-
-			sb.append("\t\t\"properties\": [\n");
+			JSONArray cetPropertiesJSONArray = new JSONArrayImpl();
 
 			List<CETProperty> cetProperties = cet.getCETProperties();
 
 			for (CETProperty cetProperty : cetProperties) {
-				sb.append("\t\t\t{\n");
-
+				JSONObject cetPropertiesJSONObject = new JSONObjectImpl();
 				String defaultValue = cetProperty.getDefaultValue();
 
 				if (defaultValue != null) {
-					sb.append("\t\t\t\t\"default\": \"");
-					sb.append(defaultValue);
-					sb.append("\",\n");
+					cetPropertiesJSONObject.put("default", defaultValue);
 				}
 
 				String name = cetProperty.getName();
 
 				if (name != null) {
-					sb.append("\t\t\t\t\"name\": \"");
-					sb.append(name);
-					sb.append("\",\n");
+					cetPropertiesJSONObject.put("name", name);
 				}
 
 				String type = cetProperty.getType();
 
 				if (type != null) {
-					sb.append("\t\t\t\t\"type\": \"");
-					sb.append(type);
-					sb.append("\"\n");
+					cetPropertiesJSONObject.put("type", type);
 				}
 
-				sb.append("\t\t\t},\n");
+				cetPropertiesJSONArray.put(cetPropertiesJSONObject);
 			}
 
-			if (!cetProperties.isEmpty()) {
-				sb.setLength(sb.length() - 2);
+			cetJSONObject.put("properties", cetPropertiesJSONArray);
 
-				sb.append("\n");
-			}
-
-			sb.append("\t\t]\n");
-
-			sb.append("\t},");
+			cetJSONArray.put(cetJSONObject);
 		}
 
-		if (!cets.isEmpty()) {
-			sb.setLength(sb.length() - 1);
-
-			sb.append("\n");
-		}
-
-		sb.append("]");
-
-		return sb.toString();
+		return JSONUtil.toString(cetJSONArray);
 	}
 
 	private static CET _getCET(

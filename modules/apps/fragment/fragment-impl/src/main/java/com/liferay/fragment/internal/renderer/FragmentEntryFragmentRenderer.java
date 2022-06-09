@@ -169,6 +169,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentEntry =
 				_fragmentCollectionContributorTracker.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
+
+			if (fragmentEntry == null) {
+				return false;
+			}
 		}
 
 		if (fragmentEntry == null) {

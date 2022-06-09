@@ -12,23 +12,11 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import React from 'react';
 
-/**
- * @author Marko Cikos
- */
-public class FDSSampleFDSNames {
+const SampleReactFrontendDataSet = (props) => {
+	return <FrontendDataSet {...props} />;
+};
 
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
-
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
-
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
-
-	public static final String REACT =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-react";
-
-}
+export default SampleReactFrontendDataSet;

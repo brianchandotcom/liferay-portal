@@ -12,23 +12,30 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+package com.liferay.frontend.data.set.sample.web.internal.servlet;
+
+import com.liferay.frontend.data.set.view.FDSViewSerializer;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marko Cikos
  */
-public class FDSSampleFDSNames {
+@Component(service = {})
+public class ServletContextUtil {
 
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
+	public static FDSViewSerializer getFDSViewSerializer() {
+		return _fdsViewSerializer;
+	}
 
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
+	@Reference(unbind = "-")
+	protected void setFDSViewSerializer(
+		FDSViewSerializer fdsDisplayViewSerializer) {
 
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
+		_fdsViewSerializer = fdsDisplayViewSerializer;
+	}
 
-	public static final String REACT =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-react";
+	private static FDSViewSerializer _fdsViewSerializer;
 
 }

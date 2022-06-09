@@ -357,9 +357,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		DMDocument.editFriendlyURL(
-			dmDocumentTitle = "Document_1",
-			friendlyURLEdit = "custom-url");
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
 		Navigator.openSitePage(
 			pageName = "Staging DM Page",

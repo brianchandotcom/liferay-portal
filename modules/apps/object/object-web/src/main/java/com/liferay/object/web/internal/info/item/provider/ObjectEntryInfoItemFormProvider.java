@@ -208,25 +208,19 @@ public class ObjectEntryInfoItemFormProvider
 					if (Validator.isNotNull(
 							objectField.getRelationshipType())) {
 
-						try {
-							ObjectRelationship objectRelationship =
-								_objectRelationshipLocalService.
-									fetchObjectRelationshipByObjectFieldId2(
-										objectField.getObjectFieldId());
+						ObjectRelationship objectRelationship =
+							_objectRelationshipLocalService.
+								fetchObjectRelationshipByObjectFieldId2(
+									objectField.getObjectFieldId());
 
-							ObjectDefinition relatedObjectDefinition =
-								_objectDefinitionLocalService.
-									getObjectDefinition(
-										objectRelationship.
-											getObjectDefinitionId1());
+						ObjectDefinition relatedObjectDefinition =
+							_objectDefinitionLocalService.fetchObjectDefinition(
+								objectRelationship.getObjectDefinitionId1());
 
-							if (!relatedObjectDefinition.isActive()) {
-								continue;
-							}
-						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(
-								"Unexpected exception", portalException);
+						if ((relatedObjectDefinition == null) ||
+							!relatedObjectDefinition.isActive()) {
+
+							continue;
 						}
 					}
 

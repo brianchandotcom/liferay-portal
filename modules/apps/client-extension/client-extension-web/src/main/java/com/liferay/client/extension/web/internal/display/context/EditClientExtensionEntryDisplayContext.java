@@ -110,7 +110,7 @@ public class EditClientExtensionEntryDisplayContext {
 	}
 
 	public boolean isPropertiesVisible() {
-		return true;
+		return _cet.hasProperties();
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {

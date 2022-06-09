@@ -79,4 +79,9 @@ public class CETThemeCSSImpl extends BaseCETImpl implements CETThemeCSS {
 		return ClientExtensionEntryConstants.TYPE_THEME_CSS;
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return false;
+	}
+
 }

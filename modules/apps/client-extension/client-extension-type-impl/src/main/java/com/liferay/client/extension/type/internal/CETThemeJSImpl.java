@@ -72,4 +72,9 @@ public class CETThemeJSImpl extends BaseCETImpl implements CETThemeJS {
 		return getString("url");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return false;
+	}
+
 }

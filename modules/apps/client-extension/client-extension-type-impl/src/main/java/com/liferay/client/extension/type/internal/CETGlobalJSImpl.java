@@ -72,4 +72,9 @@ public class CETGlobalJSImpl extends BaseCETImpl implements CETGlobalJS {
 		return getString("url");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return false;
+	}
+
 }

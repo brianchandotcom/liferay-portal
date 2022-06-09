@@ -75,4 +75,9 @@ public class CETThemeFaviconImpl
 		return getString("url");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return false;
+	}
+
 }

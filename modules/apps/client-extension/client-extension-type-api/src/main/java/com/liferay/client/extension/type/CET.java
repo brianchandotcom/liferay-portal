@@ -54,6 +54,8 @@ public interface CET {
 	@CETProperty(name = "type", type = "string")
 	public String getType();
 
+	public boolean hasProperties();
+
 	public boolean isReadOnly();
 
 }

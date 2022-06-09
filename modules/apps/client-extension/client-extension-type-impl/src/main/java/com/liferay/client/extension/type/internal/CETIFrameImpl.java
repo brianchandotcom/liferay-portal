@@ -88,6 +88,11 @@ public class CETIFrameImpl extends BaseCETImpl implements CETIFrame {
 		return getString("url");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return true;
+	}
+
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
 	}

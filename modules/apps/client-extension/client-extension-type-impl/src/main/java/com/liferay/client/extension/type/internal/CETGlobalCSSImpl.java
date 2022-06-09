@@ -72,4 +72,9 @@ public class CETGlobalCSSImpl extends BaseCETImpl implements CETGlobalCSS {
 		return getString("url");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return false;
+	}
+
 }

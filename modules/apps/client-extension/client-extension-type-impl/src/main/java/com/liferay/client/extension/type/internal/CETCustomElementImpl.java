@@ -114,6 +114,11 @@ public class CETCustomElementImpl
 		return getString("urls");
 	}
 
+	@Override
+	public boolean hasProperties() {
+		return true;
+	}
+
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
 	}

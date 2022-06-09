@@ -63,11 +63,12 @@ export default function CSSClassSelectorField({
 		setDropdownActive(false);
 
 		if (!items.some((item) => item.value === newItem)) {
+			const nextItems = [...items, {label: newItem, value: newItem}];
+
+			setItems(nextItems);
 			onValueSelect(
 				field.name,
-				[...items, {label: newItem, value: newItem}].map(
-					(item) => item.value
-				)
+				nextItems.map((item) => item.value)
 			);
 		}
 
@@ -158,7 +159,8 @@ function CSSClassSelectorDropDown({
 
 	const filteredCssClasses = useMemo(() => {
 		return availableCssClasses.filter(
-			(availableCssClass) => availableCssClass.indexOf(cssClass) !== -1
+			(availableCssClass) =>
+				availableCssClass.indexOf(cssClass.trim()) !== -1
 		);
 	}, [availableCssClasses, cssClass]);
 

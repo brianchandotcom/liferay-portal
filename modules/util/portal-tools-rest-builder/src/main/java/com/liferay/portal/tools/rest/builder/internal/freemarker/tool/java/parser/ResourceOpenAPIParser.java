@@ -277,10 +277,11 @@ public class ResourceOpenAPIParser {
 			if (methodName.equals("post" + parentSchemaName + schemaName)) {
 				createStrategies.add("INSERT");
 			}
-			else if (methodName.equals(
-						StringBundler.concat(
-							"put", parentSchemaName, schemaName,
-							"ByExternalReferenceCode")) &&
+			else if ((methodName.equals("putByExternalReferenceCode") ||
+					  methodName.equals(
+						  StringBundler.concat(
+							  "put", parentSchemaName, schemaName,
+							  "ByExternalReferenceCode"))) &&
 					 propertyNames.contains("externalReferenceCode")) {
 
 				createStrategies.add("UPSERT");

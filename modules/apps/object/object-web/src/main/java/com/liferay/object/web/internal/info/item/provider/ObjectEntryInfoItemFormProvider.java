@@ -237,6 +237,8 @@ public class ObjectEntryInfoItemFormProvider
 							).values(
 								objectField.getLabelMap()
 							).build()
+						).required(
+							objectField.isRequired()
 						).build());
 				}
 			}

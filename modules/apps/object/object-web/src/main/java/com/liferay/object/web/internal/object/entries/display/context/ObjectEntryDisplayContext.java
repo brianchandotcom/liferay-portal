@@ -595,12 +595,11 @@ public class ObjectEntryDisplayContext {
 			}
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
 		if (objectLayoutTab == null) {
-			for (ObjectField objectField : objectFields) {
+			for (ObjectField objectField :
+					_objectFieldLocalService.getCustomObjectFields(
+						objectDefinition.getObjectDefinitionId())) {
+
 				if (!_isActive(objectField)) {
 					continue;
 				}
@@ -610,7 +609,11 @@ public class ObjectEntryDisplayContext {
 			}
 		}
 		else {
-			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab, readOnly);
+			_addDDMFormFields(
+				ddmForm,
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()),
+				objectLayoutTab, readOnly);
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());

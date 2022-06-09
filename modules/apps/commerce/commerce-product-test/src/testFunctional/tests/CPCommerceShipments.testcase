@@ -535,20 +535,19 @@ definition {
 			Refresh();
 		}
 
-		task("And verifies that the Shipment ERC is the same value as the Shipment ID when first created") {
+		task ("And verifies that the Shipment ERC is the same value as the Shipment ID when first created") {
 			var idValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ID_VALUE");
-
 			var ercValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
-			
+
 			TestUtils.assertEquals(
 				actual = "${idValue}",
 				expected = "${ercValue}");
 		}
-		
+
 		task ("And edits the ERC of the shipment") {
 			CommerceOrders.editAndCheckOrderAndShipmentERC(
-				keyReferenceCode = "testERC",
-				checkReferenceCode = "true");
+				checkReferenceCode = "true",
+				keyReferenceCode = "testERC");
 		}
 
 		task ("Then the ERC of the shipment remains the same during the shipment steps") {
@@ -557,24 +556,24 @@ definition {
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 			AssertElementPresent(
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
-				key_erc = "testERC");
+				key_erc = "testERC",
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
 
 			Click(
 				key_index = "Ship",
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 			AssertElementPresent(
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
-				key_erc = "testERC");
+				key_erc = "testERC",
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
 
 			Click(
 				key_index = "Deliver",
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 			AssertElementPresent(
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
-				key_erc = "testERC");			
+				key_erc = "testERC",
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
 		}
 	}
 
@@ -677,8 +676,8 @@ definition {
 
 		task ("And edits the ERC of the shipment") {
 			CommerceOrders.editAndCheckOrderAndShipmentERC(
-				keyReferenceCode = "testERC",
-				checkReferenceCode = "true");
+				checkReferenceCode = "true",
+				keyReferenceCode = "testERC");
 		}
 
 		task ("And given the buyer places a second order") {
@@ -688,7 +687,7 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-			
+
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
 				productQuantity = "1");
@@ -706,7 +705,7 @@ definition {
 				productUnitPrice = "34",
 				shippingMethod = "Standard");
 		}
-		
+
 		task ("And admin creates shipment of the second order") {
 			User.logoutPG();
 

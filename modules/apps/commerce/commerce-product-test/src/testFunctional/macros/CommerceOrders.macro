@@ -255,6 +255,29 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editAndCheckOrderAndShipmentERC {
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		Button.clickSubmitButton();
+
+		if (isSet(checkReferenceCode)) {
+			AssertElementPresent(
+				key_erc = "${keyReferenceCode}",
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+		}
+
+		if (isSet(uniqueERC)) {
+			Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
+		}
+	}
+
 	macro editCartPortletOrderQuantity {
 		Type(
 			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_QUANTITY",
@@ -386,29 +409,6 @@ definition {
 		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
 
 		IFrame.selectTopFrame();
-	}
-
-	macro editAndCheckOrderAndShipmentERC {
-		Click(locator1 = "Icon#EDIT_PENCIL");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
-		Type(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
-
-		Button.clickSubmitButton();
-
-		if (isSet(checkReferenceCode)) {
-			AssertElementPresent(
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE",
-				key_erc = "${keyReferenceCode}");
-			}
-		
-		if (isSet(uniqueERC)) {
-			Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
-			}
 	}
 
 	macro importFromOrder {

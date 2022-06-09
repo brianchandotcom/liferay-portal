@@ -577,27 +577,33 @@ public class ObjectEntryLocalServiceImpl
 		List<BaseModel<?>> baseModels = persistedModelLocalService.dslQuery(
 			dslQuery);
 
-		if (baseModels.isEmpty()) {
-			return new HashMap<>();
+		Map<String, Object> baseModelAttributes = new HashMap<>();
+
+		if (!baseModels.isEmpty()) {
+			BaseModel<?> baseModel = baseModels.get(0);
+
+			baseModelAttributes = baseModel.getModelAttributes();
 		}
-
-		BaseModel<?> baseModel = baseModels.get(0);
-
-		Map<String, Object> baseModelAttributes =
-			baseModel.getModelAttributes();
 
 		Map<String, Object> modelAttributes =
 			HashMapBuilder.<String, Object>put(
-				"createDate", baseModelAttributes.get("createDate")
+				"createDate",
+				GetterUtil.get(
+					baseModelAttributes.get("createDate"), objectEntryId)
 			).put(
 				"externalReferenceCode",
-				baseModelAttributes.get("externalReferenceCode")
+				GetterUtil.get(
+					baseModelAttributes.get("externalReferenceCode"),
+					objectEntryId)
 			).put(
-				"modifiedDate", baseModelAttributes.get("modifiedDate")
+				"modifiedDate",
+				GetterUtil.get(
+					baseModelAttributes.get("modifiedDate"), objectEntryId)
 			).put(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 			).put(
-				"uuid", baseModelAttributes.get("uuid")
+				"uuid",
+				GetterUtil.get(baseModelAttributes.get("uuid"), objectEntryId)
 			).build();
 
 		for (ObjectField objectField :
@@ -606,7 +612,9 @@ public class ObjectEntryLocalServiceImpl
 
 			modelAttributes.put(
 				objectField.getName(),
-				baseModelAttributes.get(objectField.getDBColumnName()));
+				GetterUtil.getObject(
+					baseModelAttributes.get(objectField.getDBColumnName()),
+					objectEntryId));
 		}
 
 		return modelAttributes;

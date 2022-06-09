@@ -188,22 +188,14 @@ public class ObjectEntryInfoItemFormProvider
 			long objectDefinitionId)
 		throws NoSuchFormVariationException {
 
-		ObjectDefinition objectDefinition = null;
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinitionId);
 
-		try {
-			objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-		}
-		catch (NoSuchObjectDefinitionException
-					noSuchObjectDefinitionException) {
-
+		if (objectDefinition == null) {
 			throw new NoSuchFormVariationException(
 				String.valueOf(objectDefinitionId),
-				noSuchObjectDefinitionException);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException("Unexpected exception", portalException);
+				new NoSuchObjectDefinitionException());
 		}
 
 		return InfoFieldSet.builder(

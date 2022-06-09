@@ -644,10 +644,7 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE",
-			value1 = "Document_1.jpg");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 }

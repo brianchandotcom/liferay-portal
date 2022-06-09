@@ -46,8 +46,6 @@ import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -900,31 +898,9 @@ public class UserAccountResourceImpl
 				user.getUserId());
 		}
 
-		Company company = contextCompany;
-
-		String authType = company.getAuthType();
-
-		Map<String, String[]> headerMap = new HashMap<>();
-		Map<String, String[]> parameterMap = new HashMap<>();
-		Map<String, Object> resultsMap = new HashMap<>();
-
-		int authResult = Authenticator.FAILURE;
-
-		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			authResult = _userLocalService.authenticateByEmailAddress(
-				company.getCompanyId(), user.getEmailAddress(), currentPassword,
-				headerMap, parameterMap, resultsMap);
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			authResult = _userLocalService.authenticateByUserId(
-				company.getCompanyId(), user.getUserId(), currentPassword,
-				headerMap, parameterMap, resultsMap);
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			authResult = _userLocalService.authenticateByScreenName(
-				company.getCompanyId(), user.getScreenName(), currentPassword,
-				headerMap, parameterMap, resultsMap);
-		}
+		int authResult = _userLocalService.authenticateByUserId(
+			contextCompany.getCompanyId(), user.getUserId(), currentPassword,
+			new HashMap<>(), new HashMap<>(), new HashMap<>());
 
 		if (authResult == Authenticator.FAILURE) {
 			if (user.isLockout()) {

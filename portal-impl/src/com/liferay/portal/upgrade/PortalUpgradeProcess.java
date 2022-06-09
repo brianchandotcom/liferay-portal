@@ -168,7 +168,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_initializeSchemaVersion(connection);
+		_initializeRelease(connection);
 
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion(connection))) {
@@ -203,20 +203,22 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _initializeSchemaVersion(Connection connection)
-		throws Exception {
-
+	private void _initializeRelease(Connection connection) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ? where " +
-					"servletContextName = ? and buildNumber < 7100")) {
+				"update Release_ set buildNumber = ?, schemaVersion = ? " +
+					"where servletContextName = ? and buildNumber < ?")) {
 
-			preparedStatement.setString(1, _initialSchemaVersion.toString());
+			preparedStatement.setLong(1, _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY);
+			preparedStatement.setString(2, _initialSchemaVersion.toString());
 			preparedStatement.setString(
-				2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+			preparedStatement.setLong(4, _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY);
 
 			preparedStatement.execute();
 		}
 	}
+
+	private static final int _INITIAL_BUILD_NUMBER_SUPPORTS_RETRY = 7100;
 
 	private static final Class<?>[] _PORTAL_UPGRADE_PROCESS_REGISTRIES = {
 		PortalUpgradeProcessRegistryImpl.class,

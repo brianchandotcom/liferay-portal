@@ -51,7 +51,7 @@ public class InfoRequestFieldValuesProviderHelper {
 		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
-	public <T> List<InfoFieldValue<Object>> getInfoFieldValues(
+	public List<InfoFieldValue<Object>> getInfoFieldValues(
 		HttpServletRequest httpServletRequest) {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();

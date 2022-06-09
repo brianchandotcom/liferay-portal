@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.storage.salesforce.internal.http.SalesforceHttp;
@@ -29,7 +30,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -43,6 +46,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -142,7 +146,8 @@ public class SalesforceObjectEntryManagerImpl
 		JSONArray jsonArray = responseJSONObject2.getJSONArray("records");
 
 		return Page.of(
-			_toObjectEntries(responseJSONObject1.getJSONArray("records")),
+			_toObjectEntries(
+				companyId, responseJSONObject1.getJSONArray("records")),
 			pagination,
 			jsonArray.getJSONObject(
 				0
@@ -222,27 +227,34 @@ public class SalesforceObjectEntryManagerImpl
 			pagination.getStartPosition());
 	}
 
-	private List<ObjectEntry> _toObjectEntries(JSONArray jsonArray)
+	private List<ObjectEntry> _toObjectEntries(
+			long companyId, JSONArray jsonArray)
 		throws Exception {
 
 		DateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		return JSONUtil.toList(
-			jsonArray, jsonObject -> _toObjectEntry(dateFormat, jsonObject));
+			jsonArray,
+			jsonObject -> _toObjectEntry(companyId, dateFormat, jsonObject));
 	}
 
 	private ObjectEntry _toObjectEntry(
-			DateFormat dateFormat, JSONObject jsonObject)
+			long companyId, DateFormat dateFormat, JSONObject jsonObject)
 		throws Exception {
 
 		ObjectEntry objectEntry = new ObjectEntry() {
 			{
 				actions = Collections.emptyMap();
+				creator = CreatorUtil.toCreator(
+					_portal, Optional.empty(),
+					_userLocalService.fetchUserByExternalReferenceCode(
+						companyId, jsonObject.getString("OwnerId")));
 				dateCreated = dateFormat.parse(
 					jsonObject.getString("CreatedDate"));
 				dateModified = dateFormat.parse(
 					jsonObject.getString("LastModifiedDate"));
+				externalReferenceCode = jsonObject.getString("Id");
 				status = new Status() {
 					{
 						code = 0;
@@ -258,10 +270,7 @@ public class SalesforceObjectEntryManagerImpl
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			if (key.equals("Id")) {
-				objectEntry.setExternalReferenceCode(jsonObject.getString(key));
-			}
-			else if (StringUtil.contains(key, "__c", StringPool.BLANK)) {
+			if (StringUtil.contains(key, "__c", StringPool.BLANK)) {
 				String customFieldName = StringUtil.removeLast(key, "__c");
 
 				customFieldName = StringUtil.removeSubstring(
@@ -282,6 +291,12 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SalesforceHttp _salesforceHttp;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

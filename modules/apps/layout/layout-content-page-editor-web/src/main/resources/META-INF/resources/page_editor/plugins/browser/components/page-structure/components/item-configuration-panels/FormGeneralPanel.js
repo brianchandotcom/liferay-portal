@@ -17,8 +17,6 @@ import React, {useCallback, useMemo} from 'react';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
-import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -61,63 +59,12 @@ export function FormGeneralPanel({item}) {
 }
 
 function FormOptions({item, onValueSelect}) {
-	const isDisplayPage = config.layoutType === LAYOUT_TYPES.display;
-
-	const showTypeMapping =
-		!isDisplayPage ||
-		item.config.formConfig === FORM_MAPPING_SOURCES.otherContentType;
-
 	return (
 		<div className="mb-3">
 			<Collapse label={Liferay.Language.get('form-options')} open>
-				{isDisplayPage ? (
-					<MappingSource item={item} onValueSelect={onValueSelect} />
-				) : null}
-
-				{showTypeMapping ? (
-					<OtherTypeMapping
-						item={item}
-						onValueSelect={onValueSelect}
-					/>
-				) : null}
+				<OtherTypeMapping item={item} onValueSelect={onValueSelect} />
 			</Collapse>
 		</div>
-	);
-}
-
-function MappingSource({item, onValueSelect}) {
-	return (
-		<SelectField
-			field={{
-				label: Liferay.Language.get('source'),
-				name: 'mappingSource',
-				typeOptions: {
-					validValues: [
-						{
-							label: Liferay.Util.sub(
-								Liferay.Language.get('x-default'),
-								config.selectedMappingTypes?.subtype?.label ||
-									config.selectedMappingTypes?.type?.label
-							),
-							value: FORM_MAPPING_SOURCES.displayPage,
-						},
-						{
-							label: Liferay.Language.get('other-content-type'),
-							value: FORM_MAPPING_SOURCES.otherContentType,
-						},
-					],
-				},
-			}}
-			onValueSelect={(_name, formConfig) => {
-				onValueSelect({formConfig});
-			}}
-			value={
-				item.config.formConfig === FORM_MAPPING_SOURCES.default &&
-				config.layoutType === LAYOUT_TYPES.display
-					? FORM_MAPPING_SOURCES.displayPage
-					: item.config.formConfig
-			}
-		/>
 	);
 }
 

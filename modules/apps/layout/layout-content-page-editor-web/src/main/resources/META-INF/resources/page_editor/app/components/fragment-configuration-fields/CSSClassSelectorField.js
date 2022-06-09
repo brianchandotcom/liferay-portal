@@ -118,6 +118,7 @@ function CSSClassSelectorDropDown({
 	onSetActive,
 }) {
 	const dropdownRef = useRef();
+	const dropdownItemRef = useRef();
 
 	const availableCssClasses = useSelector((state) => {
 		const layoutData = state.layoutData;
@@ -139,6 +140,12 @@ function CSSClassSelectorDropDown({
 		);
 	}, [availableCssClasses, cssClass]);
 
+	useEffect(() => {
+		if (active) {
+			dropdownItemRef.current?.focus();
+		}
+	}, [active]);
+
 	return (
 		<ClayDropDown.Menu
 			active={active}
@@ -150,6 +157,7 @@ function CSSClassSelectorDropDown({
 				<ClayDropDown.Group header={Liferay.Language.get('new-class')}>
 					<ClayDropDown.Item
 						className="align-items-center d-flex text-3"
+						innerRef={dropdownItemRef}
 						onClick={() => onItemClick(cssClass)}
 					>
 						{Liferay.Language.get('create')}

@@ -17,11 +17,11 @@ import TableKeyDetails from '../TableKeyDetails';
 
 const ModalKeyDetails = ({
 	activationKeys,
-	liferayWebDAV,
 	downloadActivationLicenseKey,
-	provisioningServerAPI,
+	liferayWebDAV,
 	observer,
 	onClose,
+	provisioningServerAPI,
 	sessionId,
 }) => {
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');

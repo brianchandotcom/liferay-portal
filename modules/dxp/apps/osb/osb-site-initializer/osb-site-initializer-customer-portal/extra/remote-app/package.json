@@ -47,6 +47,12 @@
 		"react-scripts": "^4.0.3",
 		"yarn": "^1.22.18"
 	},
+	"devDependencies": {
+		"@faker-js/faker": "^7.1.0",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^12.1.5",
+		"@testing-library/user-event": "^14.2.0"
+	},
 	"name": "@liferay/osb-site-initializer-customer-portal-remote-app",
 	"private": true,
 	"scripts": {
@@ -54,11 +60,5 @@
 		"start": "react-scripts start",
 		"test": "react-scripts test"
 	},
-	"version": "1.0.0",
-	"devDependencies": {
-		"@faker-js/faker": "^7.1.0",
-		"@testing-library/jest-dom": "^5.16.4",
-		"@testing-library/react": "^12.1.5",
-		"@testing-library/user-event": "^14.2.0"
-	}
+	"version": "1.0.0"
 }

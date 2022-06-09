@@ -19,6 +19,6 @@ package com.liferay.release.feature.flag;
  */
 public enum ReleaseFeatureFlag {
 
-	DISABLE_PRIVATE_LAYOUTS
+	DISABLE_PRIVATE_LAYOUTS, GOOGLE_DRIVE_SHORTCUTS
 
 }

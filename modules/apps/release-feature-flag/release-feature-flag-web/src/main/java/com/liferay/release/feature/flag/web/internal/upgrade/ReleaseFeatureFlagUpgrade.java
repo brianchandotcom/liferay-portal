@@ -16,6 +16,7 @@ package com.liferay.release.feature.flag.web.internal.upgrade;
 
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -39,6 +40,13 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 			"0.0.0", "1.0.0",
 			new ReleaseFeatureFlagUpgradeStep(
 				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS));
+
+		registry.register("1.0.0", "1.0.8", new DummyUpgradeStep());
+
+		registry.register(
+			"1.0.8", "1.0.9",
+			new ReleaseFeatureFlagUpgradeStep(
+				ReleaseFeatureFlag.GOOGLE_DRIVE_SHORTCUTS));
 	}
 
 	public class ReleaseFeatureFlagUpgradeStep implements UpgradeStep {

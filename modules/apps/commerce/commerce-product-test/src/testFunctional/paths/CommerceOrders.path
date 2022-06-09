@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_ORDER_TYPE</td>
-	<td>//dt[contains(text(),'Order Type')]/..//dd[contains(text(),'${key_orderType}')]</td>
+	<td>//dt[contains(text(),'Order Type')]/..//dd[contains(.,'${key_orderType}')]</td>
 	<td></td>
 </tr>
 <tr>

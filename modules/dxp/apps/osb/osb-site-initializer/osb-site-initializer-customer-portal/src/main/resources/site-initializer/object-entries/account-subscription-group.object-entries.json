@@ -145,6 +145,13 @@
 			"menuOrder": 100000,
 			"name": "Partnership",
 			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-010",
+			"hasActivation": true,
+			"menuOrder": 100000,
+			"name": "Partnership",
+			"tabOrder": 1
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

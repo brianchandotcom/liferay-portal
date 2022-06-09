@@ -3,9 +3,7 @@
 		"accountBriefs": [
 			{
 				"externalReferenceCode": "ERC-001",
-				"roleBriefs": [
-					"Account Administrator"
-				]
+				"roleBriefs": ["Account Administrator"]
 			},
 			{
 				"externalReferenceCode": "ERC-002"
@@ -48,18 +46,14 @@
 		"accountBriefs": [
 			{
 				"externalReferenceCode": "ERC-001",
-				"roleBriefs": [
-					"Provisioning"
-				]
+				"roleBriefs": ["Provisioning"]
 			},
 			{
 				"externalReferenceCode": "ERC-002"
 			},
 			{
 				"externalReferenceCode": "ERC-003",
-				"roleBriefs": [
-					"Provisioning"
-				]
+				"roleBriefs": ["Provisioning"]
 			},
 			{
 				"externalReferenceCode": "ERC-004"
@@ -78,6 +72,9 @@
 			},
 			{
 				"externalReferenceCode": "ERC-009"
+			},
+			{
+				"externalReferenceCode": "ERC-010"
 			}
 		],
 		"alternateName": "test",

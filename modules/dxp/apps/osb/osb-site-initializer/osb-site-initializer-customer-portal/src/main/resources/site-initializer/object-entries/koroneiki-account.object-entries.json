@@ -129,6 +129,26 @@
 			"slaFuture": "Gold Subscription",
 			"slaFutureEndDate": "2023-08-25 00:00:00.0",
 			"slaFutureStartDate": "2022-08-25 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-010",
+			"code": "PROJECT10",
+			"dxpVersion": "7.4",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Project 10",
+			"partner": false,
+			"region": "England",
+			"slaCurrent": "Platinum Subscription",
+			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
+			"slaExpired": "Platinum Subscription",
+			"slaExpiredEndDate": "2021-08-23 00:00:00.0",
+			"slaExpiredStartDate": "2020-08-23 00:00:00.0",
+			"slaFuture": "Gold Subscription",
+			"slaFutureEndDate": "2023-08-25 00:00:00.0",
+			"slaFutureStartDate": "2022-08-25 00:00:00.0"
 		}
 	],
 	"objectDefinitionName": "KoroneikiAccount"

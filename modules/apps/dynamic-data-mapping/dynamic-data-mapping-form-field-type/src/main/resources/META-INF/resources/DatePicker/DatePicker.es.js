@@ -235,6 +235,21 @@ export default function DatePicker({
 		}
 	};
 
+	const [expanded, setExpanded] = useState(false);
+
+	const handleExpandedChange = (value) => {
+		if (value !== expanded) {
+			setExpanded(value);
+
+			if (value) {
+				onFocus?.();
+			}
+			else {
+				onBlur?.();
+			}
+		}
+	};
+
 	return (
 		<FieldBase
 			localizedValue={localizedValue}
@@ -246,9 +261,11 @@ export default function DatePicker({
 				dateFormat={clayFormat}
 				dir={dir}
 				disabled={readOnly}
+				expanded={expanded}
 				firstDayOfWeek={firstDayOfWeek}
 				months={months}
 				onBlur={onBlur}
+				onExpandedChange={handleExpandedChange}
 				onFocus={onFocus}
 				onInput={({target: {value}}) => maskRef.current.update(value)}
 				onValueChange={handleValueChange}

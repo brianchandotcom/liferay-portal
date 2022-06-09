@@ -83,7 +83,7 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getDateInfoFieldValue(
-		InfoField<DateInfoFieldType> infoField, Locale locale, String value) {
+		InfoField<?> infoField, Locale locale, String value) {
 
 		try {
 			Date date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
@@ -110,7 +110,7 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField infoField, Locale locale, Object object) {
+		InfoField<?> infoField, Locale locale, Object object) {
 
 		if (infoField.isLocalizable()) {
 			return new InfoFieldValue<>(
@@ -127,7 +127,7 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField infoField, Locale locale, String value) {
+		InfoField<?> infoField, Locale locale, String value) {
 
 		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 			return _getDateInfoFieldValue(infoField, locale, value);

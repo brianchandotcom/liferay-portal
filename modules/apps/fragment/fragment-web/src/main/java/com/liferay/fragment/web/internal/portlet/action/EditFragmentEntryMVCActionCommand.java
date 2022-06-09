@@ -88,7 +88,6 @@ public class EditFragmentEntryMVCActionCommand
 		String css = ParamUtil.getString(actionRequest, "cssContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 		String js = ParamUtil.getString(actionRequest, "jsContent");
-		boolean cacheable = ParamUtil.getBoolean(actionRequest, "cacheable");
 		String configuration = ParamUtil.getString(
 			actionRequest, "configurationContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");
@@ -99,7 +98,6 @@ public class EditFragmentEntryMVCActionCommand
 		draftFragmentEntry.setCss(css);
 		draftFragmentEntry.setHtml(html);
 		draftFragmentEntry.setJs(js);
-		draftFragmentEntry.setCacheable(cacheable);
 		draftFragmentEntry.setConfiguration(configuration);
 
 		if (draftFragmentEntry.getType() == FragmentConstants.TYPE_INPUT) {
@@ -115,6 +113,12 @@ public class EditFragmentEntryMVCActionCommand
 			typeOptionsJSONObject.put("fieldTypes", fieldTypesJSONArray);
 
 			draftFragmentEntry.setTypeOptions(typeOptionsJSONObject.toString());
+		}
+		else {
+			boolean cacheable = ParamUtil.getBoolean(
+				actionRequest, "cacheable");
+
+			draftFragmentEntry.setCacheable(cacheable);
 		}
 
 		draftFragmentEntry.setStatus(status);

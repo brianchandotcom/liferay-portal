@@ -24,3 +24,10 @@
 .dm-field-repeatable-add-button {
 	right: 16px;
 }
+
+.size-limit-row {
+	margin-top: 2rem;
+	.form-feedback-group {
+		position: absolute;
+	}
+}

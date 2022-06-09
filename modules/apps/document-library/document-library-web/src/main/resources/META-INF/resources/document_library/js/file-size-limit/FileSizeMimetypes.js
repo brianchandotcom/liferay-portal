@@ -38,7 +38,7 @@ const FileSizeField = ({
 	const [sizeErrorMessage, setSizeErrorMessage] = useState('');
 
 	return (
-		<ClayLayout.Row className="mt-4">
+		<ClayLayout.Row className="size-limit-row">
 			<ClayLayout.Col md="6">
 				<label htmlFor="mimeType">
 					{Liferay.Language.get('mime-type-field-label')}

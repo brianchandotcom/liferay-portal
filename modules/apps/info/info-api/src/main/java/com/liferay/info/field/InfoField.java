@@ -105,6 +105,10 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return HashUtil.hash(hash, _builder._name);
 	}
 
+	public boolean isEditable() {
+		return _builder._editable;
+	}
+
 	public boolean isLocalizable() {
 		return _builder._localizable;
 	}
@@ -141,6 +145,7 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		private final Map
 			<InfoFieldType.Attribute<? extends InfoFieldType, ?>, Object>
 				_attributes = new HashMap<>();
+		private boolean _editable;
 		private InfoFieldType _infoFieldType;
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
 		private boolean _localizable;
@@ -169,6 +174,12 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			}
 
 			return new InfoField<>(_builder);
+		}
+
+		public FinalStep<T> editable(boolean editable) {
+			_builder._editable = editable;
+
+			return this;
 		}
 
 		public FinalStep<T> labelInfoLocalizedValue(

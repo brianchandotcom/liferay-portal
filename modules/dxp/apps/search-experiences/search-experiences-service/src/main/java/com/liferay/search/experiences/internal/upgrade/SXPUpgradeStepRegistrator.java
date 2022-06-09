@@ -20,7 +20,6 @@ import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgrad
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPElementUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen

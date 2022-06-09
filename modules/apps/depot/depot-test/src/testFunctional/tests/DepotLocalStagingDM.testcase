@@ -3449,13 +3449,75 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-154426."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154426. This ensures that an external video with a custom friendlyURL added to the Web content field can be rendered properly on a site after its friendlyURL is edited and published from an asset library"
 	@priority = "4"
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154426
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Web Content Display");
+
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		WebContent.addCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.openToEditDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Test YouTube Video",
+			staging = "true");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Test YouTube Video",
+			friendlyURLEdit = "custom-url");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 	}
 
 	@description = "This test covers LPS-154401. This ensures that an external video with a custom friendlyURL can be published from an asset library and rendered correctly in the Web content field on a site."

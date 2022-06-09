@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Guilherme Camacho
  */
 @Component(
-	enabled = true, immediate = true,
+	immediate = true,
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )
@@ -184,7 +184,14 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		return null;
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+		return _toObjectEntry(
+			companyId, dateFormat,
+			_salesforceClient.retrieveSObject(
+				externalReferenceCode,
+				_getSalesforceObjectName(objectDefinition.getName())));
 	}
 
 	@Override

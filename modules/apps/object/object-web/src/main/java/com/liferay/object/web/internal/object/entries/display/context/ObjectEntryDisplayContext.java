@@ -67,6 +67,7 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.object.web.internal.util.ObjectDefinitionPermissionUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -441,10 +442,8 @@ public class ObjectEntryDisplayContext {
 				return false;
 			}
 
-			ObjectDefinition objectDefinition = getObjectDefinition();
-
-			return !_objectEntryService.hasModelResourcePermission(
-				objectDefinition.getObjectDefinitionId(), objectEntry.getId(),
+			return !ObjectDefinitionPermissionUtil.hasModelResourcePermission(
+				getObjectDefinition(), objectEntry, _objectEntryService,
 				ActionKeys.UPDATE);
 		}
 		catch (PortalException portalException) {
@@ -589,9 +588,10 @@ public class ObjectEntryDisplayContext {
 			ObjectEntry objectEntry = getObjectEntry();
 
 			if (objectEntry != null) {
-				readOnly = !_objectEntryService.hasModelResourcePermission(
-					objectDefinition.getObjectDefinitionId(),
-					objectEntry.getId(), ActionKeys.UPDATE);
+				readOnly =
+					!ObjectDefinitionPermissionUtil.hasModelResourcePermission(
+						objectDefinition, objectEntry, _objectEntryService,
+						ActionKeys.UPDATE);
 			}
 		}
 

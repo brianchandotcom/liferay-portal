@@ -46,23 +46,31 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<%@ include file="/admin/edit_common_fields.jspf" %>
+			<aui:field-wrapper label="name" name="name">
+				<liferay-ui:input-localized
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="name"
+					xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
+				/>
+			</aui:field-wrapper>
 
-			<%@ include file="/admin/edit_custom_element_fields.jspf" %>
+			<liferay-editor:editor
+				contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
+				editorName="contentEditor"
+				name="description"
+				placeholder="description"
+			/>
 
-			<%@ include file="/admin/edit_global_css_fields.jspf" %>
+			<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
 
-			<%@ include file="/admin/edit_global_js_fields.jspf" %>
+			<aui:input disabled="<%= true %>" label="type" name="typeLabel" type="text" value="<%= editClientExtensionEntryDisplayContext.getTypeLabel() %>" />
+			<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
 
-			<%@ include file="/admin/edit_iframe_fields.jspf" %>
+			<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
 
-			<%@ include file="/admin/edit_portlet_fields.jspf" %>
-
-			<%@ include file="/admin/edit_theme_css_fields.jspf" %>
-
-			<%@ include file="/admin/edit_theme_favicon_fields.jspf" %>
-
-			<%@ include file="/admin/edit_theme_js_fields.jspf" %>
+			<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
+				<aui:input label="properties" name="properties" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
+			</c:if>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

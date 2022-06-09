@@ -17,9 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
+page import="com.liferay.client.extension.type.CETCustomElement" %><%@
+page import="com.liferay.client.extension.type.CETGlobalCSS" %><%@
+page import="com.liferay.client.extension.type.CETGlobalJS" %><%@
+page import="com.liferay.client.extension.type.CETIFrame" %><%@
+page import="com.liferay.client.extension.type.CETThemeCSS" %><%@
+page import="com.liferay.client.extension.type.CETThemeFavicon" %><%@
+page import="com.liferay.client.extension.type.CETThemeJS" %><%@
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames" %><%@
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ClientExtensionAdminDisplayContext" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryPartDisplayContext" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %>

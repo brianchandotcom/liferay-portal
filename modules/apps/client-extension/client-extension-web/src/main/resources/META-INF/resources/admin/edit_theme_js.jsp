@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,25 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onChange: (event) => {
-			const {value} = event.currentTarget;
+<%@ include file="/admin/init.jsp" %>
 
-			document
-				.querySelectorAll(`fieldset[id*='${portletNamespace}_fields_']`)
-				.forEach((fieldset) => {
-					fieldset.classList.add('d-none');
-					fieldset.setAttribute('disabled', true);
+<%
+EditClientExtensionEntryPartDisplayContext<CETThemeJS> editClientExtensionEntryPartDisplayContext = (EditClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
 
-					if (fieldset.id.includes('_' + value)) {
-						fieldset.classList.remove('d-none');
-						fieldset.removeAttribute('disabled');
-					}
-				});
-		},
-		portletNamespace,
-	};
-}
+CETThemeJS cetThemeJS = editClientExtensionEntryPartDisplayContext.getCET();
+%>
+
+<aui:input ignoreRequestValue="<%= true %>" label="url" name="url" type="text" value="<%= cetThemeJS.getURL() %>">
+	<aui:validator name="urlAllowRelative" />
+</aui:input>

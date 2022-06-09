@@ -67,9 +67,10 @@ export default function hasRequiredInputChild({
 			return false;
 		}
 
-		const {inputFieldId, inputRequired} = fragmentEntryLinks[
-			item.config.fragmentEntryLinkId
-		].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+		const {inputFieldId, inputRequired} =
+			fragmentEntryLinks[item.config.fragmentEntryLinkId].editableValues[
+				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+			] || {};
 
 		return (
 			(!checkHidden ||

@@ -20,6 +20,11 @@ import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type'
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+const HEADERS = new Headers({
+	'Accept': 'application/json',
+	'Content-Type': 'application/json',
+});
+
 const NETWORK_STATUS_LOADING = 1;
 const NETWORK_STATUS_UNUSED = 4;
 
@@ -42,7 +47,6 @@ const LoadingWithDebounce = ({loading, render}) => {
 export function ObjectRelationship({
 	apiURL,
 	id,
-	initialLabel,
 	inputName,
 	labelKey = 'label',
 	name,
@@ -58,9 +62,26 @@ export function ObjectRelationship({
 }) {
 	const [active, setActive] = useState(false);
 	const [networkStatus, setNetworkStatus] = useState(NETWORK_STATUS_LOADING);
-	const [search, setSearch] = useState(initialLabel || '');
+	const [search, setSearch] = useState('');
 	const autocompleteRef = useRef();
 	const dropdownRef = useRef();
+
+	useEffect(() => {
+		if (value !== '') {
+			const makeRequest = async () => {
+				const response = await fetch(`${apiURL}/${value}`, {
+					headers: HEADERS,
+					method: 'GET',
+				});
+
+				const reponseJSON = await response.json();
+
+				setSearch(getLabel(reponseJSON, labelKey));
+			};
+
+			makeRequest();
+		}
+	}, [apiURL, labelKey, value]);
 
 	useEffect(() => {
 		function handleClick(event) {

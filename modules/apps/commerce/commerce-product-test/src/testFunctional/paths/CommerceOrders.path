@@ -96,6 +96,16 @@
 	 <td></td>
 </tr>
 <tr>
+	<td>ORDER_AND_SHIPMENT_ID_VALUE</td>
+	<td>//span[@title="Identification Number"]//..//strong[contains(@class,'header-info-value') and normalize-space(text()='${key_id}')]</td>
+	 <td></td>
+</tr>
+<tr>
+	<td>ORDER_AND_SHIPMENT_ERC_VALUE</td>
+	<td>//span[@title="External Reference Code"]//..//strong[contains(@class,'header-info-value') and normalize-space(text()='${key_erc}')]</td>
+	 <td></td>
+</tr>
+<tr>
 	<td>PENDING_ORDERS_ORDER_ID</td>
 	<td>//dt[contains(text(),'Order Id')]/..//dd</td>
 	<td></td>

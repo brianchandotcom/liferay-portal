@@ -14,11 +14,14 @@
 
 package com.liferay.info.internal.struts;
 
+import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,6 +61,22 @@ public class CreateInfoItemStrutsAction implements StrutsAction {
 			infoItemCreator.createFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
 				).build());
+		}
+		catch (InfoFormValidationException infoFormValidationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Info item validation failed", infoFormValidationException);
+			}
+
+			SessionErrors.add(
+				originalHttpServletRequest,
+				infoFormValidationException.getInfoFieldUniqueId(),
+				infoFormValidationException);
+
+			httpServletResponse.sendRedirect(
+				httpServletRequest.getHeader(HttpHeaders.REFERER));
+
+			return null;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

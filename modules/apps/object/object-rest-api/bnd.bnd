@@ -1,7 +1,8 @@
 Bundle-Name: Liferay Object REST API
 Bundle-SymbolicName: com.liferay.object.rest.api
-Bundle-Version: 5.0.1
+Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.object.rest.dto.v1_0,\
+	com.liferay.object.rest.dto.v1_0.util,\
 	com.liferay.object.rest.manager.v1_0,\
 	com.liferay.object.rest.resource.v1_0

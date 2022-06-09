@@ -20,7 +20,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelAcceptsOnlySelectedCookies";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.openCookieConsentPanel();
 		}
@@ -42,7 +42,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeAddedToASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
 		}
@@ -58,11 +58,11 @@ definition {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomized";
 
 		task ("Given: a site configured to show the Banner") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 		}
 
 		task ("When: the End User opens the 'Cookie Consent' panel") {
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+			CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
 
 			CookieConsentAdmin.setCustomTextForAllFields(text = "SITE");
 
@@ -89,11 +89,11 @@ definition {
 				layoutName = "PolicyPage",
 				widgetName = "Type Facet");
 
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 		}
 
 		task ("When: the End User opens the 'Cookie Consent' panel and clicks on the 'Cookie Policy Link's Display Link Text' with the configured URL as a link on that after the Description") {
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+			CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
 
 			CookieConsentAdmin.setCookiePolicyLink(cookiePolicyLink = "/web/guest/policypage");
 
@@ -120,7 +120,7 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.config");
 
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+			CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
 
 			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
 		}
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Then: all the configuration value changes are not saved.") {
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+			CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
 
 			CookieConsentAdmin.verifyAllConfigurationElementsAreConfigured(text = "SITE");
 		}
@@ -162,7 +162,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
 		}
@@ -182,7 +182,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentDeclineAllSelected";
 
 		task ("Given: Use opens the Cookie consent portlet in a popup") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.openCookieConsentPanel();
 		}

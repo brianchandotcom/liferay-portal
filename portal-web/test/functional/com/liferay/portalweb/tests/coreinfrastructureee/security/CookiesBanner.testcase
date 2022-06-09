@@ -20,7 +20,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerAcceptAllSelected";
 
 		task ("Given: User click on Accept all") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.cookiesBannerAcceptAll();
 		}
@@ -36,7 +36,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerCouldBeEnabledAndCustomized";
 
 		task ("Given: a site configured to show the Banner") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBannerAdmin.setCustomTextForAllFields(text = "CUSTOM");
 		}
@@ -62,9 +62,17 @@ definition {
 		task ("Given: a site configured to show the Banner via OSGI file") {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
-				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config");
+				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration.scoped~default.config");
 
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesBannerConfiguration.scoped~default.config");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.scoped~default.config");
+
+			CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
 		}
@@ -76,7 +84,7 @@ definition {
 		}
 
 		task ("Then: all the configuration value changes are not saved.") {
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+			CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
 		}
@@ -88,7 +96,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerDeclineAllSelected";
 
 		task ("Given: User click on Decline all") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.cookiesBannerDeclineAll();
 		}
@@ -101,8 +109,6 @@ definition {
 	@description = "This is a use case for LPS-148320. Combined AC-1, AC-2, AC-4. Verify Privacy Policy Links can be configured from a local site similarly to an external page with giving its url."
 	@priority = "5"
 	test PrivacyPolicyLinksCanBeConfiguredFromALocalSite {
-		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "CookiesBanner#PrivacyPolicyLinksCanBeConfiguredFromALocalSite";
 
 		task ("Given: a site configured to show the Banner") {
@@ -117,7 +123,9 @@ definition {
 		}
 
 		task ("When: the End User opens the 'Cookie Consent' panel and clicks on the 'Cookie Policy Link's Display Link Text' with the configured URL as a link on that after the Description") {
-			CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
+
+			CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 			CookieBannerAdmin.saveSettings(privacyPolicyLink = "/web/guest/policypage");
 

@@ -20,7 +20,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerAndCookieConsentPanelElementsAreVisible";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.verifyAllElementsArePresent();
 		}
@@ -44,7 +44,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired";
 
 		task ("Given: Cookie Banner is present on the Site.") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.cookiesBannerAcceptAll();
 		}
@@ -67,7 +67,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
 
 		task ("Given: Cookie Banner is present on the Site.") {
-			CookieBannerAdmin.configuredToShowBanner();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
 
 			CookieBanner.cookiesBannerAcceptAll();
 		}

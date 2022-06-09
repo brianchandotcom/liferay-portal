@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
@@ -22,29 +22,10 @@ import uuidv4 from 'uuid/v4';
 
 import '../../css/file_size_mimetypes.scss';
 
-const VALID_INPUT_KEYS = new Set([
-	'0',
-	'1',
-	'2',
-	'3',
-	'4',
-	'5',
-	'6',
-	'7',
-	'8',
-	'9',
-	'ArrowUp',
-	'ArrowRight',
-	'ArrowDown',
-	'ArrowLeft',
-	'Backspace',
-	'Up',
-	'Right',
-	'Down',
-	'Left',
-	'Enter',
-	'Tab',
-]);
+const NumberErrorMessage =
+	Liferay.Language.get('error-colon') +
+	' ' +
+	Liferay.Language.get('please-enter-a-valid-number');
 
 const FileSizeField = ({
 	handleAddClick,
@@ -53,80 +34,97 @@ const FileSizeField = ({
 	mimeType = '',
 	portletNamespace,
 	size = '',
-}) => (
-	<ClayLayout.Row className="mt-4">
-		<ClayLayout.Col md="6">
-			<label htmlFor="mimeType">
-				{Liferay.Language.get('mime-type-field-label')}
+}) => {
+	const [sizeErrorMessage, setSizeErrorMessage] = useState('');
 
-				<span
-					className="inline-item-after"
-					title={Liferay.Language.get('mime-type-help-message')}
-				>
-					<ClayIcon symbol="question-circle-full" />
-				</span>
-			</label>
+	return (
+		<ClayLayout.Row className="mt-4">
+			<ClayLayout.Col md="6">
+				<label htmlFor="mimeType">
+					{Liferay.Language.get('mime-type-field-label')}
 
-			<ClayInput
-				defaultValue={mimeType}
-				id="mimeType"
-				name={`${portletNamespace}mimeType_${index}`}
-				type="text"
-			/>
-		</ClayLayout.Col>
+					<span
+						className="inline-item-after"
+						title={Liferay.Language.get('mime-type-help-message')}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
+				</label>
 
-		<ClayLayout.Col md="6">
-			<label htmlFor="size">
-				{Liferay.Language.get('maximum-file-size')}
+				<ClayInput
+					defaultValue={mimeType}
+					id="mimeType"
+					name={`${portletNamespace}mimeType_${index}`}
+					type="text"
+				/>
+			</ClayLayout.Col>
 
-				<span
-					className="inline-item-after"
-					title={Liferay.Language.get(
-						'maximum-file-size-help-message'
-					)}
-				>
-					<ClayIcon symbol="question-circle-full" />
-				</span>
-			</label>
+			<ClayLayout.Col
+				className={sizeErrorMessage ? 'has-error' : ''}
+				md="6"
+			>
+				<label htmlFor="size">
+					{Liferay.Language.get('maximum-file-size')}
 
-			<ClayInput
-				defaultValue={size}
-				id="size"
-				min="0"
-				name={`${portletNamespace}size_${index}`}
-				onKeyDown={(event) => {
-					if (!VALID_INPUT_KEYS.has(event.key)) {
-						event.preventDefault();
-					}
-				}}
-				type="number"
-			/>
+					<span
+						className="inline-item-after"
+						title={Liferay.Language.get(
+							'maximum-file-size-help-message'
+						)}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
+				</label>
 
-			{index > 0 && (
+				<ClayInput
+					defaultValue={size}
+					id="size"
+					min="0"
+					name={`${portletNamespace}size_${index}`}
+					onChange={({target}) => {
+						setSizeErrorMessage(
+							target.validity.valid ? '' : NumberErrorMessage
+						);
+					}}
+					type="number"
+				/>
+
+				{index > 0 && (
+					<ClayButton
+						aria-label={Liferay.Language.get('remove')}
+						className="dm-field-repeatable-delete-button"
+						onClick={() => handleRemoveClick(index)}
+						small
+						title={Liferay.Language.get('remove')}
+						type="button"
+					>
+						<ClayIcon symbol="hr" />
+					</ClayButton>
+				)}
+
 				<ClayButton
-					aria-label={Liferay.Language.get('remove')}
-					className="dm-field-repeatable-delete-button"
-					onClick={() => handleRemoveClick(index)}
+					className="dm-field-repeatable-add-button"
+					onClick={() => handleAddClick(index)}
 					small
-					title={Liferay.Language.get('remove')}
+					title={Liferay.Language.get('add')}
 					type="button"
 				>
-					<ClayIcon symbol="hr" />
+					<ClayIcon symbol="plus" />
 				</ClayButton>
-			)}
 
-			<ClayButton
-				className="dm-field-repeatable-add-button"
-				onClick={() => handleAddClick(index)}
-				small
-				title={Liferay.Language.get('add')}
-				type="button"
-			>
-				<ClayIcon symbol="plus" />
-			</ClayButton>
-		</ClayLayout.Col>
-	</ClayLayout.Row>
-);
+				{sizeErrorMessage && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{sizeErrorMessage}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	);
+};
 
 const FileSizePerMimeType = ({
 	description = Liferay.Language.get('file-size-mime-type-description'),

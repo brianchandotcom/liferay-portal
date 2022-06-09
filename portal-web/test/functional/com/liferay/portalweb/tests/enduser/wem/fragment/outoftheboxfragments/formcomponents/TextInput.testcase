@@ -1,0 +1,358 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-150278. The sites designer cannot hide a Text Input fragment on content page."
+	@priority = "4"
+	test CannotHideTextInputFragmentOnContentPage {
+		property test.name.skip.portal.instance = "TextInput#CannotHideTextInputFragmentOnContentPage";
+
+		task ("Given a page designer has a Text Input fragment to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+		}
+
+		task ("When the page designer opens the browser panel on page editor") {
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		task ("Then the page designer could not view the hide icon on structure tree") {
+			AssertElementNotPresent(
+				key_index = "1",
+				key_nodeName = "Text Input",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+		}
+
+		task ("When the page designer accesses to the General panel of Text Input fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Text Input");
+		}
+
+		task ("Then the page designer could not view the Hide fragment checkbox on general tab") {
+			AssertElementNotPresent(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("When the page designer opens the dropdown menu of Text Input fragment's topper bar") {
+			Click.waitForMenuToggleJSClick(
+				key_fragmentName = "Text Input",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("Then the page designer could not view the hide menu item on dropdown menu") {
+			MenuItem.viewNotPresent(menuItem = "Hide Fragment");
+		}
+	}
+
+	@description = "This is a test for LPS-150278. The sites designer cannot hide a Text Input fragment on display page template."
+	@priority = "4"
+	test CannotHideTextInputFragmentOnDisplayPageTemplate {
+		property test.name.skip.portal.instance = "TextInput#CannotHideTextInputFragmentOnDisplayPageTemplate";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page designer has a Text Input fragment to a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+		}
+
+		task ("When the page designer opens the browser panel on page editor") {
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		task ("Then the page designer could not view the hide icon on structure tree") {
+			AssertElementNotPresent(
+				key_index = "1",
+				key_nodeName = "Text Input",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+		}
+
+		task ("When the page designer accesses to the General panel of Text Input fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Text Input");
+		}
+
+		task ("Then the page designer could not view the Hide fragment checkbox on general tab") {
+			AssertElementNotPresent(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("When the page designer opens the dropdown menu of Text Input fragment's topper bar") {
+			Click.waitForMenuToggleJSClick(
+				key_fragmentName = "Text Input",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("Then the page designer could not view the hide menu item on dropdown menu") {
+			MenuItem.viewNotPresent(menuItem = "Hide Fragment");
+		}
+	}
+
+	@description = "This is a test for LPS-150278. View warning modal when hiding and publishing a layout elements that contains a required Text Input fragment on content page."
+	@priority = "4"
+	test ViewWarningWhenHideRequiredTextInputOnContentPage {
+		property test.name.skip.portal.instance = "TextInput#ViewWarningWhenHideRequiredTextInputOnContentPage";
+
+		task ("Given a page designer has a required Text Input fragment inside a Container on content page") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Web Content Article",
+					panel = "General");
+			}
+
+			task ("Add a Container inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Mark the Text Input fragment as required after added to Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input",
+					navTab = "Fragments");
+
+				PageEditor.editInput(
+					field = "Title",
+					fragmentName = "Text Input",
+					markAsRequired = "true");
+			}
+		}
+
+		task ("When the page designer tries to hide the Container") {
+			Click.clickNoWaitForVisible(
+				key_index = "2",
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+		}
+
+		task ("Then the page designer could view a warning message for required form fragment") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?");
+		}
+
+		task ("When the page designer cancels the hide action") {
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the page designer can see the fragments") {
+			for (var fragmentName : list "Form Container,Container,Text Input") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("When the page designer hides the Container") {
+			PageEditor.hideFragmentViaPageStructure(
+				fragmentName = "Container",
+				index = "2");
+		}
+
+		task ("Then the page designer cannot see hidden fragments") {
+			PageEditor.viewFragment(fragmentName = "Form Container");
+
+			for (var fragmentName : list "Container,Text Input") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("When the page designer publishes the page") {
+			Modal.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+		}
+
+		task ("Then the page designer cannot see hidden fragments at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertNotVisible(
+				key_text = "Title*",
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+		}
+	}
+
+	@description = "This is a test for LPS-150278. View warning modal when hiding and publishing a layout elements that contains a required Text Input fragment on display page template."
+	@priority = "4"
+	test ViewWarningWhenHideRequiredTextInputOnDisplayPageTemplate {
+		property test.name.skip.portal.instance = "TextInput#ViewWarningWhenHideRequiredTextInputOnDisplayPageTemplate";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page designer has a required Text Input fragment inside a Container on display page template") {
+			task ("Add a Form Container framgment to display page template") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Add a Grid inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Layout Elements",
+					fragmentName = "Grid");
+			}
+
+			task ("Mark the Text Input fragment as required after added to Grid") {
+				PageEditor.addElementToColumn(
+					collectionName = "Form Components",
+					columnNumber = "1",
+					fragmentName = "Text Input",
+					navTab = "Fragments");
+
+				PageEditor.editInput(
+					field = "Description",
+					fragmentName = "Text Input",
+					markAsRequired = "true");
+			}
+		}
+
+		task ("When the page designer tries to hide the Container") {
+			Click.clickNoWaitForVisible(
+				key_index = "1",
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+		}
+
+		task ("Then the page designer could view a warning message for required form fragment") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?");
+		}
+
+		task ("When the page designer cancels the hide action") {
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the page designer can see the fragments") {
+			for (var fragmentName : list "Form Container,Grid,Text Input") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("When the page designer hides the Container") {
+			PageEditor.hideFragmentViaPageStructure(fragmentName = "Grid");
+		}
+
+		task ("Then the page designer cannot see hidden fragments") {
+			PageEditor.viewFragment(fragmentName = "Form Container");
+
+			for (var fragmentName : list "Grid,Text Input") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("When the page designer marks the display page template as default") {
+			Modal.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the page designer cannot see hidden fragments in associated display page template") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertNotVisible(
+				key_text = "Description*",
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+		}
+	}
+
+}

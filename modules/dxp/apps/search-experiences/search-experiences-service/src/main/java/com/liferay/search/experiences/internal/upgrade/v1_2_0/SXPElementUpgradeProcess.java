@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.internal.upgrade.v1_2_0;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,31 +27,37 @@ import java.sql.ResultSet;
  */
 public class SXPElementUpgradeProcess extends UpgradeProcess {
 
-	public SXPElementUpgradeProcess(CounterLocalService counterLocalService) {
-		_counterLocalService = counterLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(2);
+		if (hasColumn("SXPElement", "key_")) {
+			alterTableDropColumn("SXPElement", "key_");
+		}
 
-		sb.append("select SXPElement.key_, SXPElement.sxpElementId, ");
-		sb.append("SXPElement.version from SXPElement");
+		if (!hasColumn("SXPElement", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"SXPElement", "externalReferenceCode", "VARCHAR(75)");
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select SXPElement.externalReferenceCode, ");
+		sb.append("SXPElement.sxpElementId, SXPElement.version from ");
+		sb.append("SXPElement");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sb.toString());
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update SXPElement set key_ = ?, version = ? where " +
-						"sxpElementId = ?")) {
+					"update SXPElement set externalReferenceCode = ?, " +
+						"version = ? where sxpElementId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String key = resultSet.getString(1);
+					String externalReferenceCode = resultSet.getString(1);
 
-					if (Validator.isNull(key)) {
-						key = String.valueOf(_counterLocalService.increment());
+					if (Validator.isNull(externalReferenceCode)) {
+						continue;
 					}
 
 					long sxpElementId = resultSet.getLong(2);
@@ -63,7 +68,7 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 						version = "1.0";
 					}
 
-					preparedStatement2.setString(1, key);
+					preparedStatement2.setString(1, externalReferenceCode);
 					preparedStatement2.setString(2, version);
 
 					preparedStatement2.setLong(3, sxpElementId);
@@ -75,7 +80,5 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
-
-	private final CounterLocalService _counterLocalService;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.internal.upgrade.v1_2_0;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -39,18 +38,24 @@ import java.util.Objects;
  */
 public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
-	public SXPBlueprintUpgradeProcess(CounterLocalService counterLocalService) {
-		_counterLocalService = counterLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (hasColumn("SXPBlueprint", "key_")) {
+			alterTableDropColumn("SXPBlueprint", "key_");
+		}
+
+		if (!hasColumn("SXPBlueprint", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"SXPBlueprint", "externalReferenceCode", "VARCHAR(75)");
+		}
+
 		List<SXPElement> sxpElements = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append("select SXPElement.key_, SXPElement.sxpElementId, ");
-		sb.append("SXPElement.version from SXPElement");
+		sb.append("select SXPElement.externalReferenceCode, ");
+		sb.append("SXPElement.sxpElementId, SXPElement.version from ");
+		sb.append("SXPElement");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString());
@@ -59,7 +64,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				SXPElementImpl sxpElementImpl = new SXPElementImpl();
 
-				sxpElementImpl.setKey(resultSet.getString(1));
+				sxpElementImpl.setExternalReferenceCode(resultSet.getString(1));
 				sxpElementImpl.setSXPElementId(resultSet.getLong(2));
 				sxpElementImpl.setVersion(resultSet.getString(3));
 
@@ -67,26 +72,28 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		sb = new StringBundler(3);
+		sb = new StringBundler(4);
 
 		sb.append("select SXPBlueprint.elementInstancesJSON, ");
-		sb.append("SXPBlueprint.key_, SXPBlueprint.sxpBlueprintId, ");
-		sb.append("SXPBlueprint.version from SXPBlueprint");
+		sb.append("SXPBlueprint.externalReferenceCode, ");
+		sb.append("SXPBlueprint.sxpBlueprintId, SXPBlueprint.version from ");
+		sb.append("SXPBlueprint");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sb.toString());
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update SXPBlueprint set elementInstancesJSON = ?, key_ " +
-						"= ?, version = ? where sxpBlueprintId = ?")) {
+					"update SXPBlueprint set elementInstancesJSON = ?, " +
+						"externalReferenceCode = ?, version = ? where " +
+							"sxpBlueprintId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String key = resultSet.getString(2);
+					String externalReferenceCode = resultSet.getString(2);
 
-					if (Validator.isNull(key)) {
-						key = String.valueOf(_counterLocalService.increment());
+					if (Validator.isNull(externalReferenceCode)) {
+						continue;
 					}
 
 					long sxpBlueprintId = resultSet.getLong(3);
@@ -101,7 +108,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						1,
 						_getElementInstancesJSON(
 							resultSet.getString(1), sxpElements));
-					preparedStatement2.setString(2, key);
+					preparedStatement2.setString(2, externalReferenceCode);
 					preparedStatement2.setString(3, version);
 
 					preparedStatement2.setLong(4, sxpBlueprintId);
@@ -145,13 +152,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			sxpElementDTO.setKey(sxpElement.getKey());
+			sxpElementDTO.setExternalReferenceCode(
+				sxpElement.getExternalReferenceCode());
 			sxpElementDTO.setVersion(sxpElement.getVersion());
 		}
 
 		return Arrays.toString(elementInstances);
 	}
-
-	private final CounterLocalService _counterLocalService;
 
 }

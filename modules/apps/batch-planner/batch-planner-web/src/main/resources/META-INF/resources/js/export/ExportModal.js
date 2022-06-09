@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -28,47 +27,35 @@ const ExportModal = ({
 	formSubmitURL,
 	observer,
 }) => {
-	const {
-		downloadFile,
-		errorMessage,
-		loading,
-		percentage,
-		ready: readyToDownload,
-	} = Poller(
+	const {downloadFile, errorMessage, loading, percentage, ready} = Poller(
 		formDataQuerySelector,
 		formSubmitURL,
 		exportStatus,
 		fetchExportedFile
 	);
 
-	let modalType;
-	let iconType;
+	let modalStatus;
 
-	if (readyToDownload) {
-		modalType = 'modal-success';
-		iconType = 'check-circle-full';
+	if (ready) {
+		modalStatus = 'success';
 	}
 	else if (errorMessage) {
-		modalType = 'modal-danger';
-		iconType = 'exclamation-full';
+		modalStatus = 'danger';
 	}
 	else {
-		modalType = 'modal-info';
-		iconType = 'info-circle';
+		modalStatus = 'info';
 	}
 
 	return (
-		<ClayModal className={modalType} observer={observer} size="md">
+		<ClayModal observer={observer} size="md" status={modalStatus}>
 			<ClayModal.Header>
-				<ClayIcon className="mr-2" symbol={iconType} />
-
 				{Liferay.Language.get('export-file')}
 			</ClayModal.Header>
 
 			<ExportModalBody
 				errorMessage={errorMessage}
 				percentage={percentage}
-				readyToDownload={readyToDownload}
+				readyToDownload={ready}
 			/>
 
 			<ClayModal.Footer
@@ -76,17 +63,15 @@ const ExportModal = ({
 					<ClayButton.Group spaced>
 						<ClayButton
 							disabled={loading}
-							displayType="secondary"
+							displayType={null}
 							onClick={closeModal}
 						>
 							{Liferay.Language.get('back-to-the-list')}
 						</ClayButton>
 
 						<ClayButton
-							disabled={!readyToDownload}
-							displayType={
-								readyToDownload ? 'success' : 'primary'
-							}
+							disabled={!ready}
+							displayType={modalStatus}
 							onClick={downloadFile}
 						>
 							{loading && (

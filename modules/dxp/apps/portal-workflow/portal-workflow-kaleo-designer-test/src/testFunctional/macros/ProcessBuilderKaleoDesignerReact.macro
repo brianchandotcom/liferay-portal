@@ -1286,4 +1286,14 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro gotoInfoWorkflowDefinition {
+        Click(locator1 = "Icon#INFO");
+    }
+
+	macro restorePreviousVersion {
+		Click(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#RESTORE_VERSION_ICON");
+	}
+
 }

@@ -361,6 +361,11 @@
 	<td>//*[contains(@class,'d-flex')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESTORE_VERSION_ICON</td>
+	<td>//div[contains(@class,'version-row')and contains(.,'Version ${key_number}')]//*[*[name()='svg'][contains(@class,'icon-restore')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -2,7 +2,7 @@ definition {
 
 	@description = "Configure Cookie Banner to be visible"
 	macro configuredToShowBanner {
-		CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+		CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 		CookieBannerAdmin.saveSettings();
 	}
@@ -32,8 +32,6 @@ definition {
 	@description = "Save Cookie Banner settings"
 	macro saveSettings {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
-
-		FormFields.enableCheckbox(fieldName = "enable");
 
 		if (isSet(content)) {
 			Type(
@@ -69,6 +67,8 @@ definition {
 	@description = "Set custom texts for Cookie Banner"
 	macro setCustomTextForAllFields {
 		Variables.assertDefined(parameterList = "${text}");
+
+		CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 		Type(
 			locator1 = "CookieBannerAdmin#CONTENT",

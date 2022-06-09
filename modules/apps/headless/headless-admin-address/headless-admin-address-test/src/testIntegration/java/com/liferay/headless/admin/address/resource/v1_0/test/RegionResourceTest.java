@@ -301,7 +301,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		region1 = testGetRegionsPage_addRegion(region1);
 
-		region2.setName(keywords + RandomTestUtil.randomString());
+		region2.setName(keywords + region2.getName());
 
 		region2 = testGetRegionsPage_addRegion(region2);
 

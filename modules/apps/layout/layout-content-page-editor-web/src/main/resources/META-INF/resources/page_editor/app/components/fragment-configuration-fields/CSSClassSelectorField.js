@@ -16,6 +16,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayMultiSelect from '@clayui/multi-select';
+import {FocusScope} from '@clayui/shared';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
@@ -153,39 +154,52 @@ function CSSClassSelectorDropDown({
 			onSetActive={onSetActive}
 			ref={dropdownRef}
 		>
-			<ClayDropDown.ItemList>
-				<ClayDropDown.Group header={Liferay.Language.get('new-class')}>
-					<ClayDropDown.Item
-						className="align-items-center d-flex text-3"
-						innerRef={dropdownItemRef}
-						onClick={() => onItemClick(cssClass)}
-					>
-						{Liferay.Language.get('create')}
-
-						<ClayLabel className="ml-2" displayType="secondary">
-							{cssClass}
-						</ClayLabel>
-					</ClayDropDown.Item>
-				</ClayDropDown.Group>
-
-				{filteredCssClasses.length > 0 && (
-					<ClayDropDown.Group
-						header={Liferay.Language.get('existing-classes')}
-					>
-						{filteredCssClasses.map((availableCssClass) => (
+			<FocusScope>
+				<div>
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Group
+							header={Liferay.Language.get('new-class')}
+						>
 							<ClayDropDown.Item
 								className="align-items-center d-flex text-3"
-								key={availableCssClass}
-								onClick={() => onItemClick(availableCssClass)}
+								innerRef={dropdownItemRef}
+								onClick={() => onItemClick(cssClass)}
 							>
-								<ClayLabel displayType="secondary">
-									{availableCssClass}
+								{Liferay.Language.get('create')}
+
+								<ClayLabel
+									className="ml-2"
+									displayType="secondary"
+								>
+									{cssClass}
 								</ClayLabel>
 							</ClayDropDown.Item>
-						))}
-					</ClayDropDown.Group>
-				)}
-			</ClayDropDown.ItemList>
+						</ClayDropDown.Group>
+
+						{filteredCssClasses.length > 0 && (
+							<ClayDropDown.Group
+								header={Liferay.Language.get(
+									'existing-classes'
+								)}
+							>
+								{filteredCssClasses.map((availableCssClass) => (
+									<ClayDropDown.Item
+										className="align-items-center d-flex text-3"
+										key={availableCssClass}
+										onClick={() =>
+											onItemClick(availableCssClass)
+										}
+									>
+										<ClayLabel displayType="secondary">
+											{availableCssClass}
+										</ClayLabel>
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown.Group>
+						)}
+					</ClayDropDown.ItemList>
+				</div>
+			</FocusScope>
 		</ClayDropDown.Menu>
 	);
 }

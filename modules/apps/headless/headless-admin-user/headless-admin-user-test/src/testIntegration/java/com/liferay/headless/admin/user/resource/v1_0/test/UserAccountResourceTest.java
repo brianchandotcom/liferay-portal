@@ -70,8 +70,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
@@ -1195,19 +1198,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Class<T> exceptionClass)
 		throws Exception {
 
-		HttpInvoker.HttpResponse httpResponse =
-			httpResponseUnsafeSupplier.get();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BaseExceptionMapper.class.getName(), LoggerTestUtil.OFF)) {
 
-		Assert.assertEquals(
-			Response.Status.BAD_REQUEST.getStatusCode(),
-			httpResponse.getStatusCode());
-
-		if (exceptionClass != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				httpResponse.getContent());
+			HttpInvoker.HttpResponse httpResponse =
+				httpResponseUnsafeSupplier.get();
 
 			Assert.assertEquals(
-				exceptionClass.getSimpleName(), jsonObject.get("type"));
+				Response.Status.BAD_REQUEST.getStatusCode(),
+				httpResponse.getStatusCode());
+
+			if (exceptionClass != null) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					httpResponse.getContent());
+
+				Assert.assertEquals(
+					exceptionClass.getSimpleName(), jsonObject.get("type"));
+			}
 		}
 	}
 

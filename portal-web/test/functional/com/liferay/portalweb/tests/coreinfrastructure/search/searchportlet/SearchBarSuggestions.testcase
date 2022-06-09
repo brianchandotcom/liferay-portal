@@ -81,9 +81,11 @@ definition {
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "Apple");
 
-		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple Pie");
+		// Workaround LPS-155754
 
-		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple Pie");
+		/* SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple Pie");
+
+		 SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple Pie");*/
 	}
 
 	@description = "This is a use case for LPS-155317"

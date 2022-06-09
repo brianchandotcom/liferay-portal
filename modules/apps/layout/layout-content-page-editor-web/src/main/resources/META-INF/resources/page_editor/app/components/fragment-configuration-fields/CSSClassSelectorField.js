@@ -47,6 +47,17 @@ export default function CSSClassSelectorField({
 
 	const multiSelectRef = useRef();
 
+	const onKeyDown = (event) => {
+		if (event.key === 'Escape') {
+			setDropdownActive(false);
+			setValue((previousValue) => previousValue.trim());
+
+			// https://github.com/liferay/clay/issues/4915
+
+			multiSelectRef.current?.querySelector('input').focus();
+		}
+	};
+
 	const onItemClick = (newItem) => {
 		setValue('');
 		setDropdownActive(false);
@@ -77,6 +88,9 @@ export default function CSSClassSelectorField({
 					id={cssClassesInputId}
 					items={items}
 					onChange={setValue}
+					onFocus={() => {
+						setDropdownActive(false);
+					}}
 					onItemsChange={(items) => {
 						setItems(items);
 
@@ -110,6 +124,7 @@ export default function CSSClassSelectorField({
 				cssClass={value}
 				multiSelectRef={multiSelectRef}
 				onItemClick={onItemClick}
+				onKeyDown={onKeyDown}
 				onSetActive={setDropdownActive}
 			/>
 		</>
@@ -121,6 +136,7 @@ function CSSClassSelectorDropDown({
 	cssClass,
 	multiSelectRef,
 	onItemClick,
+	onKeyDown,
 	onSetActive,
 }) {
 	const dropdownRef = useRef();
@@ -156,6 +172,7 @@ function CSSClassSelectorDropDown({
 		<ClayDropDown.Menu
 			active={active}
 			alignElementRef={multiSelectRef}
+			onKeyDown={onKeyDown}
 			onSetActive={onSetActive}
 			ref={dropdownRef}
 		>

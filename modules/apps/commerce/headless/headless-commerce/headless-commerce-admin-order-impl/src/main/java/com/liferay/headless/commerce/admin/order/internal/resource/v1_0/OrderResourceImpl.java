@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -93,8 +92,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/order.properties",
 	scope = ServiceScope.PROTOTYPE, service = OrderResource.class
 )
-public class OrderResourceImpl
-	extends BaseOrderResourceImpl implements EntityModelResource {
+public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Override
 	public Response deleteOrder(Long id) throws Exception {

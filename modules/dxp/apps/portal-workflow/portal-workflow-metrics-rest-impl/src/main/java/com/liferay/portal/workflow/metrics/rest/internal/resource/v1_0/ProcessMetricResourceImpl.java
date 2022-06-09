@@ -47,7 +47,6 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.ProcessUtil;
@@ -79,8 +78,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/process-metric.properties",
 	scope = ServiceScope.PROTOTYPE, service = ProcessMetricResource.class
 )
-public class ProcessMetricResourceImpl
-	extends BaseProcessMetricResourceImpl implements EntityModelResource {
+public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)

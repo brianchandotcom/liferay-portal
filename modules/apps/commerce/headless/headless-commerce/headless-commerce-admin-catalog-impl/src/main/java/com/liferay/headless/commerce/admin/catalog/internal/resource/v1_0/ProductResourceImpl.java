@@ -108,7 +108,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
@@ -141,8 +140,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ProductResource.class
 )
 @CTAware
-public class ProductResourceImpl
-	extends BaseProductResourceImpl implements EntityModelResource {
+public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Override
 	public void delete(

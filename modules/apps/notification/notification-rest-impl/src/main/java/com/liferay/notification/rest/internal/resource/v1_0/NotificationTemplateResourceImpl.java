@@ -32,7 +32,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -49,8 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = NotificationTemplateResource.class
 )
 public class NotificationTemplateResourceImpl
-	extends BaseNotificationTemplateResourceImpl
-	implements EntityModelResource {
+	extends BaseNotificationTemplateResourceImpl {
 
 	@Override
 	public void deleteNotificationTemplate(Long notificationTemplateId)

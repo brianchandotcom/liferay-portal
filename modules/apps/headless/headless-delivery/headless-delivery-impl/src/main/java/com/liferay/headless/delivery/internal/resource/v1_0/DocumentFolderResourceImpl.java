@@ -54,7 +54,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -74,8 +73,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/document-folder.properties",
 	scope = ServiceScope.PROTOTYPE, service = DocumentFolderResource.class
 )
-public class DocumentFolderResourceImpl
-	extends BaseDocumentFolderResourceImpl implements EntityModelResource {
+public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 
 	@Override
 	public void deleteDocumentFolder(Long documentFolderId) throws Exception {

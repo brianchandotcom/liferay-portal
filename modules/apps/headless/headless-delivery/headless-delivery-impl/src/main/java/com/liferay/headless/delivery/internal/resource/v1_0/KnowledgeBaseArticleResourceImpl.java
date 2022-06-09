@@ -66,7 +66,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
@@ -89,8 +88,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = KnowledgeBaseArticleResource.class
 )
 public class KnowledgeBaseArticleResourceImpl
-	extends BaseKnowledgeBaseArticleResourceImpl
-	implements EntityModelResource {
+	extends BaseKnowledgeBaseArticleResourceImpl {
 
 	@Override
 	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)

@@ -34,7 +34,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -57,8 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = OptionCategoryResource.class
 )
 @CTAware
-public class OptionCategoryResourceImpl
-	extends BaseOptionCategoryResourceImpl implements EntityModelResource {
+public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 
 	@Override
 	public Response deleteOptionCategory(Long id) throws Exception {

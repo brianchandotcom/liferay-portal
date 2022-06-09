@@ -32,7 +32,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -53,8 +52,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = {ListTypeEntryResource.class, NestedFieldSupport.class}
 )
 public class ListTypeEntryResourceImpl
-	extends BaseListTypeEntryResourceImpl
-	implements EntityModelResource, NestedFieldSupport {
+	extends BaseListTypeEntryResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteListTypeEntry(Long listTypeEntryId) throws Exception {

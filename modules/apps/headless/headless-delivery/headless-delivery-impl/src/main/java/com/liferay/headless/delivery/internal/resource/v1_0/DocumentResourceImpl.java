@@ -94,7 +94,6 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -123,8 +122,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/document.properties",
 	scope = ServiceScope.PROTOTYPE, service = DocumentResource.class
 )
-public class DocumentResourceImpl
-	extends BaseDocumentResourceImpl implements EntityModelResource {
+public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Override
 	public void deleteAssetLibraryDocumentByExternalReferenceCode(

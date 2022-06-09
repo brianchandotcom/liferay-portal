@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -107,8 +106,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DataLayoutResource.class
 )
 @CTAware
-public class DataLayoutResourceImpl
-	extends BaseDataLayoutResourceImpl implements EntityModelResource {
+public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Override
 	public void deleteDataDefinitionDataLayout(Long dataDefinitionId)

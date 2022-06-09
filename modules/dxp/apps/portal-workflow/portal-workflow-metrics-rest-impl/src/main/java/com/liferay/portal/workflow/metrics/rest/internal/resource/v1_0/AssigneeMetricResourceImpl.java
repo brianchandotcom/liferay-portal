@@ -50,7 +50,6 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
@@ -82,8 +81,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/assignee-metric.properties",
 	scope = ServiceScope.PROTOTYPE, service = AssigneeMetricResource.class
 )
-public class AssigneeMetricResourceImpl
-	extends BaseAssigneeMetricResourceImpl implements EntityModelResource {
+public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)

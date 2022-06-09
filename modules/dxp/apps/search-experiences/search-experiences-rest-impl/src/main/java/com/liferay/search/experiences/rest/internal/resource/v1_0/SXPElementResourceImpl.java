@@ -31,7 +31,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
@@ -65,8 +64,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/sxp-element.properties",
 	scope = ServiceScope.PROTOTYPE, service = SXPElementResource.class
 )
-public class SXPElementResourceImpl
-	extends BaseSXPElementResourceImpl implements EntityModelResource {
+public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Override
 	public void deleteSXPElement(Long sxpElementId) throws Exception {

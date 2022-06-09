@@ -106,7 +106,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -144,7 +143,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = StructuredContentResource.class
 )
 public class StructuredContentResourceImpl
-	extends BaseStructuredContentResourceImpl implements EntityModelResource {
+	extends BaseStructuredContentResourceImpl {
 
 	@Override
 	public void deleteAssetLibraryStructuredContentByExternalReferenceCode(

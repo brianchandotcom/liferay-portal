@@ -35,7 +35,6 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BlogPostingImageResource.class
 )
 public class BlogPostingImageResourceImpl
-	extends BaseBlogPostingImageResourceImpl implements EntityModelResource {
+	extends BaseBlogPostingImageResourceImpl {
 
 	@Override
 	public void deleteBlogPostingImage(Long blogPostingImageId)

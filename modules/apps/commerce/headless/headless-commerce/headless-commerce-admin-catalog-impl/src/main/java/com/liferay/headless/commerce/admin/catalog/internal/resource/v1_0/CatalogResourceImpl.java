@@ -42,7 +42,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -66,8 +65,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class CatalogResourceImpl
-	extends BaseCatalogResourceImpl
-	implements EntityModelResource, NestedFieldSupport {
+	extends BaseCatalogResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Response deleteCatalog(Long id) throws Exception {

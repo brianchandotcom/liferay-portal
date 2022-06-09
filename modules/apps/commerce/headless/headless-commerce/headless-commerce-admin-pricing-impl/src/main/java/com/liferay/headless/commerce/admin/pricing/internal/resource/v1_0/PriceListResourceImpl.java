@@ -53,7 +53,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
@@ -78,8 +77,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/price-list.properties",
 	scope = ServiceScope.PROTOTYPE, service = PriceListResource.class
 )
-public class PriceListResourceImpl
-	extends BasePriceListResourceImpl implements EntityModelResource {
+public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 	@Override
 	public Response deletePriceList(Long id) throws Exception {

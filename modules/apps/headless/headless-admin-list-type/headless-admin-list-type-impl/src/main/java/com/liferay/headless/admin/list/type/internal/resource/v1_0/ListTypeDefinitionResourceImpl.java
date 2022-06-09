@@ -35,7 +35,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -55,7 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ListTypeDefinitionResource.class
 )
 public class ListTypeDefinitionResourceImpl
-	extends BaseListTypeDefinitionResourceImpl implements EntityModelResource {
+	extends BaseListTypeDefinitionResourceImpl {
 
 	@Override
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)

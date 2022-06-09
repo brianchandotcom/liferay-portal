@@ -34,7 +34,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -53,7 +52,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ContentStructureResource.class
 )
 public class ContentStructureResourceImpl
-	extends BaseContentStructureResourceImpl implements EntityModelResource {
+	extends BaseContentStructureResourceImpl {
 
 	@Override
 	public Page<ContentStructure> getAssetLibraryContentStructuresPage(

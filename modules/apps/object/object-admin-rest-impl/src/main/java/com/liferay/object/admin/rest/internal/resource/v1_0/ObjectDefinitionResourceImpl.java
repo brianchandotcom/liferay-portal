@@ -53,7 +53,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -70,7 +69,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ObjectDefinitionResource.class
 )
 public class ObjectDefinitionResourceImpl
-	extends BaseObjectDefinitionResourceImpl implements EntityModelResource {
+	extends BaseObjectDefinitionResourceImpl {
 
 	@Override
 	public void deleteObjectDefinition(Long objectDefinitionId)

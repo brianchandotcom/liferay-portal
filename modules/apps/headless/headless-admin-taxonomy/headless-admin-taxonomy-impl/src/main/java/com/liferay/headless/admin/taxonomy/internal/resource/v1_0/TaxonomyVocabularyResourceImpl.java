@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -86,7 +85,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
 )
 public class TaxonomyVocabularyResourceImpl
-	extends BaseTaxonomyVocabularyResourceImpl implements EntityModelResource {
+	extends BaseTaxonomyVocabularyResourceImpl {
 
 	@Override
 	public void deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(

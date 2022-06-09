@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Arrays;
@@ -81,8 +80,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DataListViewResource.class
 )
 @CTAware
-public class DataListViewResourceImpl
-	extends BaseDataListViewResourceImpl implements EntityModelResource {
+public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 	@Override
 	public void deleteDataDefinitionDataListView(Long dataDefinitionId)

@@ -54,7 +54,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
@@ -76,8 +75,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = StructuredContentFolderResource.class
 )
 public class StructuredContentFolderResourceImpl
-	extends BaseStructuredContentFolderResourceImpl
-	implements EntityModelResource {
+	extends BaseStructuredContentFolderResourceImpl {
 
 	@Override
 	public void deleteSiteStructuredContentFolderByExternalReferenceCode(

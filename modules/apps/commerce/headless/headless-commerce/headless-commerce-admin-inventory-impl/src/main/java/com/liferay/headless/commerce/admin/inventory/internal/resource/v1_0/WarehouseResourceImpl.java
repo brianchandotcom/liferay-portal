@@ -35,7 +35,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -55,8 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/warehouse.properties",
 	scope = ServiceScope.PROTOTYPE, service = WarehouseResource.class
 )
-public class WarehouseResourceImpl
-	extends BaseWarehouseResourceImpl implements EntityModelResource {
+public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 
 	@Override
 	public Response deleteWarehousByExternalReferenceCode(

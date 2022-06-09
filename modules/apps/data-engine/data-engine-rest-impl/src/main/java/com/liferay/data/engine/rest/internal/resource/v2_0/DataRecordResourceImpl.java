@@ -73,7 +73,6 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
@@ -98,8 +97,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
 )
 @CTAware
-public class DataRecordResourceImpl
-	extends BaseDataRecordResourceImpl implements EntityModelResource {
+public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public void deleteDataRecord(Long dataRecordId) throws Exception {

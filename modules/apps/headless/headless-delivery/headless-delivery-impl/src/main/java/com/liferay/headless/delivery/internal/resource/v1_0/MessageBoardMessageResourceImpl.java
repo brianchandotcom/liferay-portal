@@ -71,7 +71,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
@@ -100,7 +99,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = MessageBoardMessageResource.class
 )
 public class MessageBoardMessageResourceImpl
-	extends BaseMessageBoardMessageResourceImpl implements EntityModelResource {
+	extends BaseMessageBoardMessageResourceImpl {
 
 	@Override
 	public void deleteMessageBoardMessage(Long messageBoardMessageId)

@@ -59,7 +59,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -83,8 +82,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/blog-posting.properties",
 	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
 )
-public class BlogPostingResourceImpl
-	extends BaseBlogPostingResourceImpl implements EntityModelResource {
+public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
 	public void deleteBlogPosting(Long blogPostingId) throws Exception {

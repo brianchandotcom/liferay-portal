@@ -45,7 +45,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
@@ -67,8 +66,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/keyword.properties",
 	scope = ServiceScope.PROTOTYPE, service = KeywordResource.class
 )
-public class KeywordResourceImpl
-	extends BaseKeywordResourceImpl implements EntityModelResource {
+public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
 	public void deleteKeyword(Long keywordId) throws Exception {

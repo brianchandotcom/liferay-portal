@@ -32,7 +32,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
@@ -67,8 +66,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/sxp-blueprint.properties",
 	scope = ServiceScope.PROTOTYPE, service = SXPBlueprintResource.class
 )
-public class SXPBlueprintResourceImpl
-	extends BaseSXPBlueprintResourceImpl implements EntityModelResource {
+public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Override
 	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception {

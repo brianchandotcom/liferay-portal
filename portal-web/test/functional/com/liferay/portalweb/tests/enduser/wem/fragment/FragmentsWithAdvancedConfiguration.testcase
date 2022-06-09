@@ -342,7 +342,7 @@ definition {
 
 	@description = "This is a test for LPS-150921. The user could view message when the fragment is hidden. The Hide from Site Search Results is not grouped in fieldset on Advanced panel."
 	@priority = "4"
-	test ViewMessageWhenHideFragment {
+	test ViewHideFromSiteSearchResultsNotGroupedInFieldset {
 		task ("Given a Page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

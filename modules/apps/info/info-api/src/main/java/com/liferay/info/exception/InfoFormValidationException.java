@@ -63,7 +63,6 @@ public class InfoFormValidationException extends InfoFormException {
 		_args = args;
 	}
 
-
 	public Object[] getArgs() {
 		return _args;
 	}
@@ -74,6 +73,46 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public String getLanguageKey() {
 		return _languageKey;
+	}
+
+	public static class FileSize extends InfoFormValidationException {
+
+		public FileSize(String infoFieldUniqueId, String maximumSizeAllowed) {
+			super(
+				infoFieldUniqueId, "the-attachment-has-to-be-x-or-less",
+				new String[] {maximumSizeAllowed});
+		}
+
+	}
+
+	public static class InvalidFileExtension
+		extends InfoFormValidationException {
+
+		public InvalidFileExtension(
+			String infoFieldUniqueId, String validFileExtensions) {
+
+			super(
+				infoFieldUniqueId, "the-accepted-extensions-for-the-file-are-x",
+				new String[] {validFileExtensions});
+		}
+
+	}
+
+	public static class InvalidInfoFieldValue
+		extends InfoFormValidationException {
+
+		public InvalidInfoFieldValue(String infoFieldUniqueId) {
+			super(infoFieldUniqueId, "this-field-is-invalid");
+		}
+
+	}
+
+	public static class RequiredInfoField extends InfoFormValidationException {
+
+		public RequiredInfoField(String infoFieldUniqueId) {
+			super(infoFieldUniqueId, "this-field-is-required");
+		}
+
 	}
 
 	private final Object[] _args;

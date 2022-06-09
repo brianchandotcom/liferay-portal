@@ -73,6 +73,7 @@ export default function CSSClassSelectorField({
 				</label>
 
 				<ClayMultiSelect
+					autocomplete="off"
 					id={cssClassesInputId}
 					items={items}
 					onChange={setValue}

@@ -234,12 +234,69 @@ definition {
 	}
 
 	@description = "This test covers LPS-154431."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-154431
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Site Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			title = "Dynamic Collection");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
+
+		Navigator.openSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1");
 	}
 
 	@description = "This test covers LPS-154405. It ensures that an image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."

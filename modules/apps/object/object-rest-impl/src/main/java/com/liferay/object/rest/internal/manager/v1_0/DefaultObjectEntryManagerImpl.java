@@ -19,6 +19,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
@@ -881,7 +882,10 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
-			if (Objects.equals(objectField.getDBType(), "Date")) {
+			if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
+
 				values.put(name, _toDate(locale, String.valueOf(object)));
 			}
 

@@ -31,6 +31,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -120,23 +121,43 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			return TextInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getDBType(), "Boolean")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
 			return BooleanInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getDBType(), "BigDecimal") ||
-				 Objects.equals(objectField.getDBType(), "Double") ||
-				 Objects.equals(objectField.getDBType(), "Integer") ||
-				 Objects.equals(objectField.getDBType(), "Long")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_INTEGER) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_LONG)) {
 
 			return NumberInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getDBType(), "Blob")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BLOB)) {
+
 			return ImageInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getDBType(), "Date")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
+
 			return DateInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(objectField.getDBType(), "String")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_STRING)) {
+
 			return TextInfoFieldType.INSTANCE;
 		}
 
@@ -266,7 +287,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				return objectEntry.getTitleValue();
 			}
 		}
-		else if (Objects.equals(objectField.getDBType(), "Date")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
+
 			Format dateFormat = FastDateFormatFactoryUtil.getDate(
 				serviceContext.getLocale());
 

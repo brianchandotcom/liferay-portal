@@ -30,6 +30,7 @@ import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -141,9 +142,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 								_objectDefinition.getObjectDefinitionId())) {
 
 						if (!(Objects.equals(
-								objectField.getDBType(), "Boolean") ||
+								objectField.getDBType(),
+								ObjectFieldConstants.DB_TYPE_BOOLEAN) ||
 							  (Objects.equals(
-								  objectField.getDBType(), "String") &&
+								  objectField.getDBType(),
+								  ObjectFieldConstants.DB_TYPE_STRING) &&
 							   (objectField.getListTypeDefinitionId() != 0))) ||
 							!objectField.isIndexed()) {
 
@@ -302,10 +305,16 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	}
 
 	private String _getField(ObjectField objectField) {
-		if (Objects.equals(objectField.getDBType(), "Boolean")) {
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
 			return "nestedFieldArray.value_boolean";
 		}
-		else if (Objects.equals(objectField.getDBType(), "String")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_STRING)) {
+
 			return "nestedFieldArray.value_keyword_lowercase";
 		}
 
@@ -350,7 +359,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 					getClass(), "choose-an-option"),
 				""));
 
-		if (Objects.equals(objectField.getDBType(), "Boolean")) {
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
 			options.add(
 				new SelectInfoFieldType.Option(
 					new ResourceBundleInfoLocalizedValue(getClass(), "true"),

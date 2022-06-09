@@ -24,6 +24,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -142,7 +143,9 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
-		if (Objects.equals(objectField.getDBType(), "Blob")) {
+		if (Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_BLOB)) {
+
 			return ImageInfoFieldType.INSTANCE;
 		}
 

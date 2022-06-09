@@ -44,7 +44,6 @@ const SPACING_OPTIONS = [
 
 const TOPPER_STYLES = [
 	'display',
-	'height',
 	'marginBottom',
 	'marginLeft',
 	'marginRight',

@@ -3507,6 +3507,12 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
+		if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#BODY", value1 = "This fragment contains a required form field or a submit element. Are you sure you want to hide it?"))) {
+			Click(
+				key_text = "Hide",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
 		PageEditor.waitForAutoSave();
 	}
 

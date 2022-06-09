@@ -280,6 +280,14 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_S() throws Exception {
+		_persistence.countByODI_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI_S(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByODI_DBT_I() throws Exception {
 		_persistence.countByODI_DBT_I(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());

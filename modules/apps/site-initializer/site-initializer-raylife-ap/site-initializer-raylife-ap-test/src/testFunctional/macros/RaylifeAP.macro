@@ -20,19 +20,23 @@ definition {
 
 		AssertElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION");
 
+		while (IsElementPresent(locator1 = "RaylifeAP#SAVE_LOADING_ANIMATION")) {
+			Pause(locator1 = "1500");
+		}
+
 		Refresh();
 
 		WaitForElementPresent(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertTextEquals(
-			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "Raylife AP");
+				locator1 = "SitesEditSite#DETAILS_NAME",
+				value1 = "${siteName}");
 	}
 
 	macro tearDownCP {

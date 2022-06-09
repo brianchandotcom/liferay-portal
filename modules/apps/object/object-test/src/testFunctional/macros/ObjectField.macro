@@ -134,6 +134,14 @@ definition {
 		Refresh();
 	}
 
+	macro selectOptionOnRequestFiles {
+		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+
+		Click(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+	}
+
 	macro selectSearchableLanguage {
 		Select(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",

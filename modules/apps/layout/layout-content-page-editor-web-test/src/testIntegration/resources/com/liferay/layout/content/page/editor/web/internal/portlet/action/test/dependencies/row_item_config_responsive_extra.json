@@ -1,4 +1,6 @@
 {
+	"cssClasses": [
+	],
 	"desktop": {
 		"modulesPerRow": 6,
 		"numberOfColumns": 6

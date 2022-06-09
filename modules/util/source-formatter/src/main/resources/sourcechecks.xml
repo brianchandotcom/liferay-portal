@@ -1238,13 +1238,14 @@
 		</check>
 	</source-processor>
 	<source-processor name="LibrarySourceProcessor">
-		<check name="PropertiesEmptyLinesCheck">
-			<category name="Styling" />
-			<description name="Finds missing and unnecessary empty lines." />
-		</check>
 		<check name="LibraryVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Check if the library contains known vulnerability." />
+			<property name="queryArgumentsPageNumber" value="50" />
+
+			<!-- Severity of the vulnerability CRITICAL, HIGH, LOW, MODERATE -->
+
+			<property name="queryArgumentsSeverities" value="CRITICAL" />
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">

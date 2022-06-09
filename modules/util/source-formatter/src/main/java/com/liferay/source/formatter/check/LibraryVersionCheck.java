@@ -119,7 +119,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		String resultArguments =
-			"{nodes { advisory {summary} package {name} severity " +
+			"{nodes { advisory {summary, permalink} package {name} severity " +
 				"vulnerableVersionRange } pageInfo {endCursor hasNextPage } " +
 					"totalCount }";
 
@@ -166,17 +166,20 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						vulnerableVersionRange.split(StringPool.COMMA);
 
 					if (_compareVersion(version, vulnerableVersionRangeArray)) {
-						String summary = tmpJSONObject.getJSONObject(
-							"advisory"
-						).getString(
-							"summary"
-						);
+						JSONObject advisoryJSONObject =
+							tmpJSONObject.getJSONObject("advisory");
+
+						String summary = advisoryJSONObject.getString(
+							"summary");
+						String permalink = advisoryJSONObject.getString(
+							"permalink");
 
 						addMessage(
 							fileName,
 							StringBundler.concat(
 								"Library '", packageName, "' ", version,
-								" contain vulnerabilities by '", summary, "'"));
+								" contain vulnerabilities by '", summary, "', ",
+								"look detail in ", permalink));
 
 						return;
 					}
@@ -212,7 +215,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		for (String packageName : jsonObject.keySet()) {
 			String version = jsonObject.getString(packageName);
 
-			if (version.startsWith("^|~|\\*")) {
+			if (version.startsWith("^") || version.startsWith("~") ||
+				version.startsWith("*")) {
+
 				continue;
 			}
 

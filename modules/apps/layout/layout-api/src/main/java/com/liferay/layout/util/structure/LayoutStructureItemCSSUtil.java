@@ -53,6 +53,13 @@ public class LayoutStructureItemCSSUtil {
 			layoutStructureItem.getItemId();
 	}
 
+	public static String getStyledLayoutStructureItemCssClasses(
+		StyledLayoutStructureItem styledLayoutStructureItem) {
+
+		return StringUtil.merge(
+			styledLayoutStructureItem.getCssClasses(), StringPool.SPACE);
+	}
+
 	private static JSONObject _createJSONObject(String value) {
 		try {
 			return JSONFactoryUtil.createJSONObject(value);

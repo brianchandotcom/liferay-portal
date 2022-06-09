@@ -618,6 +618,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write(
 				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
 					layoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.
+					getStyledLayoutStructureItemCssClasses(
+						containerStyledLayoutStructureItem));
 
 			if (Objects.equals(
 					containerStyledLayoutStructureItem.getWidthType(),
@@ -770,6 +775,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write(
 				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
 					layoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.
+					getStyledLayoutStructureItemCssClasses(
+						formStyledLayoutStructureItem));
 		}
 		else {
 			jspWriter.write(
@@ -1060,6 +1070,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write(
 				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
 					layoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.
+					getStyledLayoutStructureItemCssClasses(
+						rowStyledLayoutStructureItem));
 		}
 		else {
 			jspWriter.write(
@@ -1164,6 +1179,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				jspWriter.write(
 					LayoutStructureItemCSSUtil.
 						getLayoutStructureItemUniqueCssClass(
+							fragmentStyledLayoutStructureItem));
+				jspWriter.write(StringPool.SPACE);
+				jspWriter.write(
+					LayoutStructureItemCSSUtil.
+						getStyledLayoutStructureItemCssClasses(
 							fragmentStyledLayoutStructureItem));
 			}
 

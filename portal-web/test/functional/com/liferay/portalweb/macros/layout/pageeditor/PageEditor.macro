@@ -2415,6 +2415,84 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro editInput {
+		PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}");
+
+		AssertTextEquals(
+			key_text = "Label",
+			locator1 = "TextInput#ANY",
+			value1 = "${field}");
+
+		if ("${markAsRequired}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Mark as Required",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Mark as Required",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Mark as Required",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${hideLabel}" == "true") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Label",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Label",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(label)) {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "${label}");
+		}
+
+		if ("${hideHelpText}" == "true") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Help Text",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Help Text",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(helpText)) {
+			Type(
+				key_label = "Help Text",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${helpText}");
+		}
+
+		if (isSet(placeholder)) {
+			Type(
+				key_text = "Placeholder",
+				locator1 = "TextInput#ANY",
+				value1 = "${placeholder}");
+		}
+
+		PageEditor.waitForAutoSave();
+
+		Click(
+			key_tab = "General",
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 	macro editLayoutContainer {
 		if (isSet(position)) {
 			var index = "${position}";

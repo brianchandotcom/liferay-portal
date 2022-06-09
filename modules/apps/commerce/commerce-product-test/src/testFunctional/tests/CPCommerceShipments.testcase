@@ -441,7 +441,6 @@ definition {
 	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
 	@priority = "3"
 	test CanEditShipmentERC {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -546,8 +545,8 @@ definition {
 
 		task ("And edits the ERC of the shipment") {
 			CommerceOrders.editAndCheckOrderAndShipmentERC(
-				checkReferenceCode = "true",
-				keyReferenceCode = "testERC");
+				keyReferenceCode = "testERC",
+				viewReferenceCode = "true");
 		}
 
 		task ("Then the ERC of the shipment remains the same during the shipment steps") {
@@ -580,7 +579,6 @@ definition {
 	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
 	@priority = "3"
 	test CanNotUseTheSameERCForDifferentShipments {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -676,8 +674,8 @@ definition {
 
 		task ("And edits the ERC of the shipment") {
 			CommerceOrders.editAndCheckOrderAndShipmentERC(
-				checkReferenceCode = "true",
-				keyReferenceCode = "testERC");
+				keyReferenceCode = "testERC",
+				viewReferenceCode = "true");
 		}
 
 		task ("And given the buyer places a second order") {

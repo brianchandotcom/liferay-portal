@@ -36,6 +36,10 @@ public class MicroblogsEntryUpgradeProcess extends UpgradeProcess {
 
 	private void _renameReceiverMicroblogsEntryId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasColumn("MicroblogsEntry", "receiverMicroblogsEntryId")) {
+				return;
+			}
+
 			alterTableAddColumn(
 				"MicroblogsEntry", "parentMicroblogsEntryId", "LONG");
 

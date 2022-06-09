@@ -15,6 +15,8 @@
 package com.liferay.commerce.internal.upgrade.v2_0_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
+import com.liferay.commerce.model.impl.CommerceOrderImpl;
+import com.liferay.commerce.model.impl.CommerceOrderPaymentImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -26,29 +28,42 @@ public class CommercePaymentMethodUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn("CommerceOrder", "transactionId", "VARCHAR(75)");
-		addColumn("CommerceOrder", "commercePaymentMethodKey", "VARCHAR(75)");
 
-		String template = StringUtil.read(
-			CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
-				"dependencies/CommerceOrderUpgradeProcess.sql"));
+		if (hasColumn(
+				CommerceOrderImpl.TABLE_NAME, "commercePaymentMethodId")) {
 
-		runSQLTemplateString(template, false);
+			addColumn(
+				"CommerceOrder", "commercePaymentMethodKey", "VARCHAR(75)");
 
-		alterTableDropColumn("CommerceOrder", "commercePaymentMethodId");
+			String template = StringUtil.read(
+				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
+					"dependencies/CommerceOrderUpgradeProcess.sql"));
 
-		addColumn(
-			"CommerceOrderPayment", "commercePaymentMethodKey", "VARCHAR(75)");
+			runSQLTemplateString(template, false);
 
-		template = StringUtil.read(
-			CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
-				"dependencies/CommerceOrderPaymentUpgradeProcess.sql"));
+			alterTableDropColumn("CommerceOrder", "commercePaymentMethodId");
+		}
 
-		runSQLTemplateString(template, false);
+		if (hasColumn(
+				CommerceOrderPaymentImpl.TABLE_NAME,
+				"commercePaymentMethodId")) {
 
-		alterTableDropColumn("CommerceOrderPayment", "commercePaymentMethodId");
+			addColumn(
+				"CommerceOrderPayment", "commercePaymentMethodKey",
+				"VARCHAR(75)");
+
+			String template = StringUtil.read(
+				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
+					"dependencies/CommerceOrderPaymentUpgradeProcess.sql"));
+
+			runSQLTemplateString(template, false);
+
+			alterTableDropColumn(
+				"CommerceOrderPayment", "commercePaymentMethodId");
+		}
 
 		if (hasTable("CommercePaymentMethod")) {
-			template = StringUtil.read(
+			String template = StringUtil.read(
 				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommercePaymentMethodUpgradeProcess.sql"));
 

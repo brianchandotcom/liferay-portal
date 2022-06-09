@@ -25,28 +25,38 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("RemoteAppEntry", "description", "TEXT null");
 		alterTableAddColumn("RemoteAppEntry", "sourceCodeURL", "STRING null");
-		alterTableAddColumn("RemoteAppEntry", "status", "INTEGER");
 
-		runSQL("update RemoteAppEntry set status = 0 where status is null");
+		if (!hasColumn("RemoteAppEntry", "status")) {
+			alterTableAddColumn("RemoteAppEntry", "status", "INTEGER");
 
-		alterTableAddColumn("RemoteAppEntry", "statusByUserId", "LONG");
+			runSQL("update RemoteAppEntry set status = 0 where status is null");
+		}
 
-		runSQL(
-			"update RemoteAppEntry set statusByUserId = userId where " +
-				"statusByUserId is null");
+		if (!hasColumn("RemoteAppEntry", "statusByUserId")) {
+			alterTableAddColumn("RemoteAppEntry", "statusByUserId", "LONG");
 
-		alterTableAddColumn(
-			"RemoteAppEntry", "statusByUserName", "VARCHAR(75)");
+			runSQL(
+				"update RemoteAppEntry set statusByUserId = userId where " +
+					"statusByUserId is null");
+		}
 
-		runSQL(
-			"update RemoteAppEntry set statusByUserName = (select screenName " +
-				"from User_ where RemoteAppEntry.userId = User_.userId)");
+		if (!hasColumn("RemoteAppEntry", "statusByUserName")) {
+			alterTableAddColumn(
+				"RemoteAppEntry", "statusByUserName", "VARCHAR(75)");
 
-		alterTableAddColumn("RemoteAppEntry", "statusDate", "DATE");
+			runSQL(
+				"update RemoteAppEntry set statusByUserName = (select " +
+					"screenName from User_ where RemoteAppEntry.userId = " +
+						"User_.userId)");
+		}
 
-		runSQL(
-			"update RemoteAppEntry set statusDate = modifiedDate where " +
-				"statusDate is null");
+		if (!hasColumn("RemoteAppEntry", "statusDate")) {
+			alterTableAddColumn("RemoteAppEntry", "statusDate", "DATE");
+
+			runSQL(
+				"update RemoteAppEntry set statusDate = modifiedDate where " +
+					"statusDate is null");
+		}
 	}
 
 }

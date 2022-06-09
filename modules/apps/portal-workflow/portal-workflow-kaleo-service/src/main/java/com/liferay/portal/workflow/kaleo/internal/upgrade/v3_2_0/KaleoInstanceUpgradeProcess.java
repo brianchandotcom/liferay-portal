@@ -25,14 +25,17 @@ public class KaleoInstanceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("KaleoInstance", "active_", "BOOLEAN");
+		if (!hasColumn("KaleoInstance", "active_")) {
+			alterTableAddColumn("KaleoInstance", "active_", "BOOLEAN");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update KaleoInstance set active_ = ?")) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update KaleoInstance set active_ = ?")) {
 
-			preparedStatement.setBoolean(1, true);
+				preparedStatement.setBoolean(1, true);
 
-			preparedStatement.execute();
+				preparedStatement.execute();
+			}
 		}
 	}
 

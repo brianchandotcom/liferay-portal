@@ -84,6 +84,10 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 			String tableName, String columnName, String dataType, String data)
 		throws Exception {
 
+		if (hasColumn(tableName, columnName)) {
+			return;
+		}
+
 		String dataTypeUpperCase = StringUtil.toUpperCase(dataType);
 
 		if (dataTypeUpperCase.equals("DATE") || dataType.equals("STRING")) {

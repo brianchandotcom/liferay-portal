@@ -26,21 +26,25 @@ public class AccountGroupUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("AccountGroup", "type_", "VARCHAR(75) null");
+		if (!hasColumn("AccountGroup", "type_")) {
+			alterTableAddColumn("AccountGroup", "type_", "VARCHAR(75) null");
 
-		String type = StringUtil.quote(
-			AccountConstants.ACCOUNT_GROUP_TYPE_STATIC, StringPool.APOSTROPHE);
+			String type = StringUtil.quote(
+				AccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+				StringPool.APOSTROPHE);
 
-		runSQL(
-			"update AccountGroup set type_ = " + type +
-				" where defaultAccountGroup = [$FALSE$]");
+			runSQL(
+				"update AccountGroup set type_ = " + type +
+					" where defaultAccountGroup = [$FALSE$]");
 
-		type = StringUtil.quote(
-			AccountConstants.ACCOUNT_GROUP_TYPE_GUEST, StringPool.APOSTROPHE);
+			type = StringUtil.quote(
+				AccountConstants.ACCOUNT_GROUP_TYPE_GUEST,
+				StringPool.APOSTROPHE);
 
-		runSQL(
-			"update AccountGroup set type_ = " + type +
-				" where defaultAccountGroup = [$TRUE$]");
+			runSQL(
+				"update AccountGroup set type_ = " + type +
+					" where defaultAccountGroup = [$TRUE$]");
+		}
 	}
 
 }

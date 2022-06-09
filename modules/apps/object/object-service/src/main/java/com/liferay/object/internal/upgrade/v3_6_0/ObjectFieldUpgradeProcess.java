@@ -27,6 +27,10 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (hasColumn("ObjectField", "system_")) {
+			return;
+		}
+
 		alterTableAddColumn("ObjectField", "system_", "BOOLEAN");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(

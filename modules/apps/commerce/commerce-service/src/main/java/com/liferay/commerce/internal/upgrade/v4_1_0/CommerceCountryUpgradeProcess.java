@@ -24,10 +24,13 @@ public class CommerceCountryUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"CommerceCountry", "channelFilterEnabled", "BOOLEAN");
+		if (!hasColumn("CommerceCountry", "channelFilterEnabled")) {
+			alterTableAddColumn(
+				"CommerceCountry", "channelFilterEnabled", "BOOLEAN");
 
-		runSQL("update CommerceCountry set channelFilterEnabled = [$FALSE$]");
+			runSQL(
+				"update CommerceCountry set channelFilterEnabled = [$FALSE$]");
+		}
 	}
 
 }

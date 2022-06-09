@@ -33,24 +33,31 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 		alterColumnName(
 			"RemoteAppEntry", "url", "iFrameURL VARCHAR(1024) null");
 
-		alterTableAddColumn("RemoteAppEntry", "instanceable", "BOOLEAN");
+		if (!hasColumn("RemoteAppEntry", "instanceable")) {
+			alterTableAddColumn("RemoteAppEntry", "instanceable", "BOOLEAN");
 
-		runSQL("update RemoteAppEntry set instanceable = [$TRUE$]");
+			runSQL("update RemoteAppEntry set instanceable = [$TRUE$]");
+		}
 
-		alterTableAddColumn(
-			"RemoteAppEntry", "portletCategoryName", "VARCHAR(75)");
+		if (!hasColumn("RemoteAppEntry", "portletCategoryName")) {
+			alterTableAddColumn(
+				"RemoteAppEntry", "portletCategoryName", "VARCHAR(75)");
 
-		runSQL(
-			"update RemoteAppEntry set portletCategoryName = " +
-				"'category.remote-apps'");
+			runSQL(
+				"update RemoteAppEntry set portletCategoryName = " +
+					"'category.remote-apps'");
+		}
 
 		alterTableAddColumn("RemoteAppEntry", "properties", "TEXT");
-		alterTableAddColumn("RemoteAppEntry", "type_", "VARCHAR(75)");
 
-		runSQL(
-			StringBundler.concat(
-				"update RemoteAppEntry set type_ = '",
-				ClientExtensionEntryConstants.TYPE_IFRAME, "'"));
+		if (!hasColumn("RemoteAppEntry", "type_")) {
+			alterTableAddColumn("RemoteAppEntry", "type_", "VARCHAR(75)");
+
+			runSQL(
+				StringBundler.concat(
+					"update RemoteAppEntry set type_ = '",
+					ClientExtensionEntryConstants.TYPE_IFRAME, "'"));
+		}
 	}
 
 }

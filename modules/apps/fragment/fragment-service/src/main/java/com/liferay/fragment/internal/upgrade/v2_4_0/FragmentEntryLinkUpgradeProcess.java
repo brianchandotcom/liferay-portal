@@ -23,10 +23,12 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"FragmentEntryLink", "segmentsExperienceId", "LONG");
+		if (!hasColumn("FragmentEntryLink", "segmentsExperienceId")) {
+			alterTableAddColumn(
+				"FragmentEntryLink", "segmentsExperienceId", "LONG");
 
-		runSQL("update FragmentEntryLink set segmentsExperienceId = 0");
+			runSQL("update FragmentEntryLink set segmentsExperienceId = 0");
+		}
 	}
 
 }

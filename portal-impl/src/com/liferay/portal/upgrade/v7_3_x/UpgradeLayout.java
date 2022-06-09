@@ -28,13 +28,17 @@ public class UpgradeLayout extends UpgradeProcess {
 
 		alterColumnType("Layout", "description", "TEXT null");
 
-		alterTableAddColumn("Layout", "masterLayoutPlid", "LONG");
+		if (!hasColumn("Layout", "masterLayoutPlid")) {
+			alterTableAddColumn("Layout", "masterLayoutPlid", "LONG");
 
-		runSQL("update Layout set masterLayoutPlid = 0");
+			runSQL("update Layout set masterLayoutPlid = 0");
+		}
 
-		alterTableAddColumn("Layout", "status", "INTEGER");
+		if (!hasColumn("Layout", "status")) {
+			alterTableAddColumn("Layout", "status", "INTEGER");
 
-		runSQL("update Layout set status = 0");
+			runSQL("update Layout set status = 0");
+		}
 
 		alterTableAddColumn("Layout", "statusByUserId", "LONG");
 

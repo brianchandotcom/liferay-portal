@@ -28,10 +28,12 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"DLFileEntry", "externalReferenceCode", "VARCHAR(75)");
+		if (!hasColumn("DLFileEntry", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"DLFileEntry", "externalReferenceCode", "VARCHAR(75)");
 
-		_populateExternalReferenceCode();
+			_populateExternalReferenceCode();
+		}
 
 		alterTableAddColumn("DLFileEntry", "expirationDate", "DATE null");
 

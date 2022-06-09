@@ -33,10 +33,12 @@ public class MFAFIDO2CredentialUpgradeProcess extends UpgradeProcess {
 		alterColumnType(
 			"MFAFIDO2CredentialEntry", "credentialKey", "TEXT null");
 
-		alterTableAddColumn(
-			"MFAFIDO2CredentialEntry", "credentialKeyHash", "LONG");
+		if (!hasColumn("MFAFIDO2CredentialEntry", "credentialKeyHash")) {
+			alterTableAddColumn(
+				"MFAFIDO2CredentialEntry", "credentialKeyHash", "LONG");
 
-		_updateCredentialKeys();
+			_updateCredentialKeys();
+		}
 	}
 
 	private void _updateCredentialKey(

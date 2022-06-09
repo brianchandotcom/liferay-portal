@@ -26,15 +26,18 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("KaleoDefinition", "scope", "VARCHAR(75) null");
+		if (!hasColumn("KaleoDefinition", "scope")) {
+			alterTableAddColumn("KaleoDefinition", "scope", "VARCHAR(75) null");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update KaleoDefinition set scope = ?")) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update KaleoDefinition set scope = ?")) {
 
-			preparedStatement.setString(
-				1, WorkflowDefinitionConstants.SCOPE_ALL);
+				preparedStatement.setString(
+					1, WorkflowDefinitionConstants.SCOPE_ALL);
 
-			preparedStatement.execute();
+				preparedStatement.execute();
+			}
 		}
 	}
 

@@ -23,9 +23,11 @@ public class AppUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("Marketplace_App", "required", "BOOLEAN");
+		if (!hasColumn("Marketplace_App", "required")) {
+			alterTableAddColumn("Marketplace_App", "required", "BOOLEAN");
 
-		runSQL("update Marketplace_App set required = FALSE");
+			runSQL("update Marketplace_App set required = FALSE");
+		}
 	}
 
 }

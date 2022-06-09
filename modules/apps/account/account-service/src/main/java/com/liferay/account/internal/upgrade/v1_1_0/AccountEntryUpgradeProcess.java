@@ -29,13 +29,16 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 		alterTableAddColumn(
 			"AccountEntry", "externalReferenceCode", "VARCHAR(75)");
 		alterTableAddColumn("AccountEntry", "taxIdNumber", "VARCHAR(75)");
-		alterTableAddColumn("AccountEntry", "type_", "VARCHAR(75)");
 
-		String defaultType = StringUtil.quote(
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			StringPool.APOSTROPHE);
+		if (!hasColumn("AccountEntry", "type_")) {
+			alterTableAddColumn("AccountEntry", "type_", "VARCHAR(75)");
 
-		runSQL("update AccountEntry set type_ = " + defaultType);
+			String defaultType = StringUtil.quote(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				StringPool.APOSTROPHE);
+
+			runSQL("update AccountEntry set type_ = " + defaultType);
+		}
 	}
 
 }

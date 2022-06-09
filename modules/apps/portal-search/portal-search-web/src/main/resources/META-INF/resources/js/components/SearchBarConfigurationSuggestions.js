@@ -27,7 +27,7 @@ import SelectSXPBlueprintModal from './select_sxp_blueprint_modal/SelectSXPBluep
 
 const CONTRIBUTORS = {
 	BASIC: 'basic',
-	SXP_BLUEPRINT: 'blueprint',
+	SXP_BLUEPRINT: 'sxpBlueprint',
 };
 
 const DEFAULT_ATTRIBUTES = {

@@ -35,14 +35,11 @@ public class CETGlobalJSImpl extends BaseCETImpl implements CETGlobalJS {
 	}
 
 	public CETGlobalJSImpl(PortletRequest portletRequest) {
-
-		// TODO Remove globalJS* prefix
-
 		this(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
-				"url", ParamUtil.getString(portletRequest, "globalJSURL")
+				"url", ParamUtil.getString(portletRequest, "url")
 			).build());
 	}
 
@@ -58,6 +55,11 @@ public class CETGlobalJSImpl extends BaseCETImpl implements CETGlobalJS {
 
 	public CETGlobalJSImpl(UnicodeProperties typeSettingsUnicodeProperties) {
 		super(typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public String getEditJSP() {
+		return "/admin/edit_global_js.jsp";
 	}
 
 	@Override

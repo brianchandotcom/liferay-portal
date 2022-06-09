@@ -35,9 +35,6 @@ public class CETIFrameImpl extends BaseCETImpl implements CETIFrame {
 	}
 
 	public CETIFrameImpl(PortletRequest portletRequest) {
-
-		// TODO Remove iFrame* prefix
-
 		this(
 			UnicodePropertiesBuilder.create(
 				true
@@ -51,7 +48,7 @@ public class CETIFrameImpl extends BaseCETImpl implements CETIFrame {
 				"portletCategoryName",
 				ParamUtil.getString(portletRequest, "portletCategoryName")
 			).put(
-				"url", ParamUtil.getString(portletRequest, "iFrameURL")
+				"url", ParamUtil.getString(portletRequest, "url")
 			).build());
 	}
 
@@ -67,6 +64,11 @@ public class CETIFrameImpl extends BaseCETImpl implements CETIFrame {
 
 	public CETIFrameImpl(UnicodeProperties typeSettingsUnicodeProperties) {
 		super(typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public String getEditJSP() {
+		return "/admin/edit_iframe.jsp";
 	}
 
 	public String getFriendlyURLMapping() {

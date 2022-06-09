@@ -38,25 +38,20 @@ public class CETCustomElementImpl
 	}
 
 	public CETCustomElementImpl(PortletRequest portletRequest) {
-
-		// TODO Remove customElement* prefix
-
 		this(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
 				"cssURLs",
 				StringUtil.merge(
-					ParamUtil.getStringValues(
-						portletRequest, "customElementCSSURLs"),
+					ParamUtil.getStringValues(portletRequest, "cssURLs"),
 					StringPool.NEW_LINE)
 			).put(
 				"friendlyURLMapping",
 				ParamUtil.getString(portletRequest, "friendlyURLMapping")
 			).put(
 				"htmlElementName",
-				ParamUtil.getString(
-					portletRequest, "customElementHTMLElementName")
+				ParamUtil.getString(portletRequest, "htmlElementName")
 			).put(
 				"instanceable",
 				ParamUtil.getBoolean(portletRequest, "instanceable")
@@ -66,12 +61,10 @@ public class CETCustomElementImpl
 			).put(
 				"urls",
 				StringUtil.merge(
-					ParamUtil.getStringValues(
-						portletRequest, "customElementURLs"),
+					ParamUtil.getStringValues(portletRequest, "urls"),
 					StringPool.NEW_LINE)
 			).put(
-				"useESM",
-				ParamUtil.getBoolean(portletRequest, "customElementUseESM")
+				"useESM", ParamUtil.getBoolean(portletRequest, "useESM")
 			).build());
 	}
 
@@ -93,6 +86,11 @@ public class CETCustomElementImpl
 
 	public String getCSSURLs() {
 		return getString("cssURLs");
+	}
+
+	@Override
+	public String getEditJSP() {
+		return "/admin/edit_custom_element.jsp";
 	}
 
 	public String getFriendlyURLMapping() {

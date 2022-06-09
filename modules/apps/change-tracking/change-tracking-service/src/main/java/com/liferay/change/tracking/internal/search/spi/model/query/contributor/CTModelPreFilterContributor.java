@@ -111,7 +111,8 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 						ctSEMCPKContributor : _serviceTrackerList) {
 
 					ctSEMCPKContributor.contribute(
-						className, ctEntry, excludeProductionModelClassPKs);
+						className, ctEntry.getModelClassPK(),
+						excludeProductionModelClassPKs);
 				}
 			}
 

@@ -15,7 +15,6 @@
 package com.liferay.journal.internal.change.tracking.spi.search;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.spi.search.CTSearchExcludeModelClassPKContributor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
@@ -36,7 +35,7 @@ public class JournalArticleCTSearchExcludeModelClassPKContributor
 
 	@Override
 	public void contribute(
-		String className, CTEntry ctEntry,
+		String className, long classPK,
 		List<Long> excludeProductionModelClassPKs) {
 
 		if (!className.equals(JournalArticle.class.getName())) {
@@ -59,8 +58,7 @@ public class JournalArticleCTSearchExcludeModelClassPKContributor
 							).from(
 								JournalArticleTable.INSTANCE
 							).where(
-								JournalArticleTable.INSTANCE.id.eq(
-									ctEntry.getModelClassPK())
+								JournalArticleTable.INSTANCE.id.eq(classPK)
 							))
 					)
 				));

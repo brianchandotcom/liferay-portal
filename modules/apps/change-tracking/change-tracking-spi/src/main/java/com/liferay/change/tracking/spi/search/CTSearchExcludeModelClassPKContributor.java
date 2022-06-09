@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.spi.search;
 
-import com.liferay.change.tracking.model.CTEntry;
-
 import java.util.List;
 
 /**
@@ -24,7 +22,7 @@ import java.util.List;
 public interface CTSearchExcludeModelClassPKContributor {
 
 	public void contribute(
-		String className, CTEntry ctEntry,
+		String className, long classPK,
 		List<Long> excludeProductionModelClassPKs);
 
 }

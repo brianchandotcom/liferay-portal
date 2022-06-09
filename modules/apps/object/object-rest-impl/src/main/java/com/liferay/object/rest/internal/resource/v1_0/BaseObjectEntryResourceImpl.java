@@ -752,6 +752,12 @@ public abstract class BaseObjectEntryResourceImpl
 				objectEntry);
 		}
 
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			objectEntryUnsafeConsumer =
+				objectEntry -> putByExternalReferenceCode(
+					objectEntry.getExternalReferenceCode(), objectEntry);
+		}
+
 		if (objectEntryUnsafeConsumer == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -781,7 +787,7 @@ public abstract class BaseObjectEntryResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("UPSERT", "INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

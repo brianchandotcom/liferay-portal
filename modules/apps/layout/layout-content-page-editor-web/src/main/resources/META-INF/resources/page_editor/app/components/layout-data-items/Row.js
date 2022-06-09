@@ -26,6 +26,7 @@ import checkStylesFF from '../../utils/checkStylesFF';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
+import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
@@ -128,6 +129,8 @@ const Row = React.forwardRef(
 					className,
 					getLayoutDataItemUniqueClassName(item.itemId),
 					{
+						[getLayoutDataItemCssClasses(item)]: Liferay
+							.FeatureFlags['LPS-147511'],
 						[getLayoutDataItemClassName(
 							item.type
 						)]: config.featureFlagLps132571,

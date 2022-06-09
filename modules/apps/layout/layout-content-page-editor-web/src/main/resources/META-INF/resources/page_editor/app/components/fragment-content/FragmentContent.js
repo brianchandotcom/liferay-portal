@@ -38,6 +38,7 @@ import resolveEditableConfig from '../../utils/editable-value/resolveEditableCon
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
@@ -299,6 +300,8 @@ const FragmentContent = ({
 						'page-editor__fragment-content',
 						{
 							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
+							[getLayoutDataItemCssClasses(item)]: Liferay
+								.FeatureFlags['LPS-147511'],
 							[getLayoutDataItemUniqueClassName(
 								item.itemId
 							)]: !hasInnerCommonStyles(fragmentEntryLink),

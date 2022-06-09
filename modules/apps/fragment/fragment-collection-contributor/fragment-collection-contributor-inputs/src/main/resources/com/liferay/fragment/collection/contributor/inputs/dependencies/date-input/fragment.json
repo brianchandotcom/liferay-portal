@@ -1,5 +1,5 @@
 {
-	"cacheable": true,
+	"cacheable": false,
 	"fragmentEntryKey": "date-input",
 	"icon": "calendar",
 	"name": "date",

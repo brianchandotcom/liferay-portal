@@ -1,5 +1,5 @@
 {
-	"cacheable": true,
+	"cacheable": false,
 	"fragmentEntryKey": "text-input",
 	"icon": "custom-field",
 	"name": "text-input",

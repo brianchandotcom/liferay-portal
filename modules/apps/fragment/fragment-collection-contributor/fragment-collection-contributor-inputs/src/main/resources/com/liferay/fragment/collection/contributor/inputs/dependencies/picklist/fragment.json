@@ -1,5 +1,5 @@
 {
-	"cacheable": true,
+	"cacheable": false,
 	"fragmentEntryKey": "picklist",
 	"icon": "select-from-list",
 	"name": "picklist",

@@ -1,5 +1,5 @@
 {
-	"cacheable": true,
+	"cacheable": false,
 	"fragmentEntryKey": "checkbox",
 	"icon": "check-square",
 	"name": "checkbox",

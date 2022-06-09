@@ -12,12 +12,7 @@
  * details.
  */
 
-const TPL_MOVE_FORM =
-	'<form action="{actionUrl}" class="hide" method="POST"><input name="{namespace}cmd" value="move"/>' +
-	'<input name="{namespace}newFolderId" value="{newFolderId}"/>' +
-	'<input name="{namespace}{parameterName}" value="{parameterValue}"/>' +
-	'<input name="{namespace}redirect" value="{redirectUrl}"/>' +
-	'</form>';
+import {buildFragment} from 'frontend-js-web';
 
 export default function DocumentLibrary({
 	editEntryUrl,
@@ -63,14 +58,15 @@ export default function DocumentLibrary({
 
 		const newForm = document.createElement('div');
 
-		newForm.innerHTML = Liferay.Util.sub(TPL_MOVE_FORM, {
-			actionUrl: editEntryUrl,
-			namespace,
-			newFolderId,
-			parameterName,
-			parameterValue,
-			redirectUrl,
-		});
+		newForm.appendChild(
+			buildFragment(
+				`<form action="${editEntryUrl}" class="hide" method="POST"><input name="${namespace}cmd" value="move"/>
+					<input name="${namespace}newFolderId" value="${newFolderId}"/>
+					<input name="${namespace}${parameterName}" value="${parameterValue}"/>
+					<input name="${namespace}redirect" value="${redirectUrl}"/>
+				</form>`
+			)
+		);
 
 		const formNode = newForm.firstElementChild;
 

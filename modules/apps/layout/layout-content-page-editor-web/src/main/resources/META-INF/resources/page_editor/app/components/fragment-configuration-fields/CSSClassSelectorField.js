@@ -16,7 +16,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useSelector} from '../../contexts/StoreContext';
@@ -38,12 +38,27 @@ export default function CSSClassSelectorField({
 
 	const [items, setItems] = useControlledState(cssClass);
 
+	const [dropDownActive, setDropdownActive] = useState(false);
 	const [value, setValue] = useState('');
 
 	const cssClassesInputId = useId();
 	const helpTextId = useId();
 
 	const multiSelectRef = useRef();
+
+	const onItemClick = (newItem) => {
+		setValue('');
+		setDropdownActive(false);
+
+		if (!items.some((item) => item.value === newItem)) {
+			onValueSelect(
+				field.name,
+				[...items, {label: newItem, value: newItem}].map(
+					(item) => item.value
+				)
+			);
+		}
+	};
 
 	return (
 		<>
@@ -64,6 +79,11 @@ export default function CSSClassSelectorField({
 							items.map((item) => item.value)
 						);
 					}}
+					onKeyDown={(event) => {
+						if (event.key === ' ' && value.trim().length > 0) {
+							setDropdownActive(true);
+						}
+					}}
 					placeholder={
 						items.length > 0
 							? null
@@ -79,7 +99,13 @@ export default function CSSClassSelectorField({
 					)}
 				</div>
 			</ClayForm.Group>
-			<CSSClassSelectorDropDown />
+			<CSSClassSelectorDropDown
+				active={dropDownActive}
+				cssClass={value}
+				multiSelectRef={multiSelectRef}
+				onItemClick={onItemClick}
+				onSetActive={setDropdownActive}
+			/>
 		</>
 	);
 }
@@ -98,14 +124,20 @@ function CSSClassSelectorDropDown({
 
 		const cssClasses = new Set();
 
-		layoutData.items
+		Object.values(layoutData.items)
 			?.flatMap((item) => item.config?.cssClasses ?? [])
 			.forEach((cssClass) => {
 				cssClasses.add(cssClass);
 			});
 
-		return cssClasses;
+		return [...cssClasses];
 	});
+
+	const filteredCssClasses = useMemo(() => {
+		return availableCssClasses.filter(
+			(availableCssClass) => availableCssClass.indexOf(cssClass) !== -1
+		);
+	}, [availableCssClasses, cssClass]);
 
 	return (
 		<ClayDropDown.Menu
@@ -128,11 +160,11 @@ function CSSClassSelectorDropDown({
 					</ClayDropDown.Item>
 				</ClayDropDown.Group>
 
-				{availableCssClasses.length > 0 && (
+				{filteredCssClasses.length > 0 && (
 					<ClayDropDown.Group
 						header={Liferay.Language.get('existing-classes')}
 					>
-						{availableCssClasses.map((availableCssClass) => (
+						{filteredCssClasses.map((availableCssClass) => (
 							<ClayDropDown.Item
 								className="align-items-center d-flex text-3"
 								key={availableCssClass}

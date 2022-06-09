@@ -23,6 +23,8 @@ import React, {useEffect, useRef, useState} from 'react';
 const NETWORK_STATUS_LOADING = 1;
 const NETWORK_STATUS_UNUSED = 4;
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 const LoadingWithDebounce = ({loading, render}) => {
 	const debouncedLoadingChange = useDebounce(loading, 500);
 
@@ -94,6 +96,17 @@ export function ObjectRelationship({
 		},
 	});
 
+	const getLabel = (item, labelKey) => {
+		const objectLabel = item[labelKey];
+
+		if (typeof objectLabel === 'object') {
+			return objectLabel[defaultLanguageId];
+		}
+		else {
+			return objectLabel;
+		}
+	};
+
 	const loading = networkStatus < NETWORK_STATUS_UNUSED;
 
 	return (
@@ -124,7 +137,8 @@ export function ObjectRelationship({
 						else {
 							const searchedItem = resource?.items?.find(
 								(item) =>
-									String(item[labelKey]) === currentSearch
+									String(getLabel(item, labelKey)) ===
+									currentSearch
 							);
 
 							onChange({
@@ -178,10 +192,17 @@ export function ObjectRelationship({
 													);
 													setActive(false);
 													setSearch(
-														String(item[labelKey])
+														String(
+															getLabel(
+																item,
+																labelKey
+															)
+														)
 													);
 												}}
-												value={String(item[labelKey])}
+												value={String(
+													getLabel(item, labelKey)
+												)}
 											/>
 										))}
 									</>

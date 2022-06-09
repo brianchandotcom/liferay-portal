@@ -149,7 +149,10 @@ public class DefaultObjectEntryManagerImpl implements ObjectEntryManager {
 			primaryKey2, new ServiceContext());
 
 		return getObjectEntry(
-			dtoConverterContext, objectDefinition, primaryKey1);
+			dtoConverterContext,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2()),
+			primaryKey2);
 	}
 
 	@Override

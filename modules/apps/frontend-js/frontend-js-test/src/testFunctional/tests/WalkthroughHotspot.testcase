@@ -47,6 +47,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-154637. Assert a hotspot element will switch to popover mode after clicking."
+	@priority = "5"
+	test WillDisplayPopoverWhenClicked {
+		task ("When click hospot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("Then popover is present") {
+			AssertElementPresent(locator1 = "Walkthrough#POPOVER");
+		}
+
+		task ("And then hotspot element is not present") {
+			AssertElementNotPresent(locator1 = "Walkthrough#HOTSPOT");
+		}
+	}
+
 	@description = "LPS-154636. Assert walkthrough component renders a hotspot element as initial state."
 	@priority = "5"
 	test WillRenderAsInitialState {

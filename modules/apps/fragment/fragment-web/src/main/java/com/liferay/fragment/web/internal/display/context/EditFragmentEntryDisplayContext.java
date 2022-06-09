@@ -450,6 +450,8 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"cacheable", _fragmentEntry.isCacheable()
 		).put(
+			"cacheableEnabled", _isCacheableEnabled()
+		).put(
 			"dataAttributes",
 			_fragmentEntryProcessorRegistry.getDataAttributesJSONArray()
 		).put(
@@ -560,6 +562,16 @@ public class EditFragmentEntryDisplayContext {
 		).setParameter(
 			"fragmentEntryId", getFragmentEntryId()
 		).buildString();
+	}
+
+	private boolean _isCacheableEnabled() {
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if (fragmentEntry.getType() != FragmentConstants.TYPE_INPUT) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {

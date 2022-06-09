@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -129,49 +130,20 @@ public class CETUtil {
 			for (String annotation : annotations) {
 				annotation = annotation.trim();
 
+				Map<String, String> annotationMemberValuePair =
+					SourceUtil.getAnnotationMemberValuePair(annotation);
+
 				if (annotation.startsWith("@CETProperty")) {
-					String defaultValue = null;
-					String name = null;
-					String type = null;
-
-					int x = annotation.indexOf("defaultValue = \"");
-
-					if (x != -1) {
-						defaultValue = annotation.substring(
-							x + 16, annotation.indexOf("\"", x + 16));
-					}
-
-					x = annotation.indexOf("name = \"");
-
-					if (x != -1) {
-						name = annotation.substring(
-							x + 8, annotation.indexOf("\"", x + 8));
-					}
-
-					x = annotation.indexOf("type = \"");
-
-					if (x != -1) {
-						type = annotation.substring(
-							x + 8, annotation.indexOf("\"", x + 8));
-					}
-
 					cetProperties.add(
-						new CETProperty(name, type, defaultValue));
+						new CETProperty(
+							annotationMemberValuePair.get("name"),
+							annotationMemberValuePair.get("type"),
+							annotationMemberValuePair.get("defaultValue")));
 				}
 				else if (annotation.startsWith("@CETType")) {
-					int x = annotation.indexOf("description = \"");
-
-					if (x != -1) {
-						cetDescription = annotation.substring(
-							x + 15, annotation.indexOf("\"", x + 15));
-					}
-
-					x = annotation.indexOf("name = \"");
-
-					if (x != -1) {
-						cetName = annotation.substring(
-							x + 8, annotation.indexOf("\"", x + 8));
-					}
+					cetDescription = annotationMemberValuePair.get(
+						"description");
+					cetName = annotationMemberValuePair.get("name");
 				}
 			}
 		}

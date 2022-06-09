@@ -35,7 +35,9 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,6 +81,20 @@ public class SourceUtil {
 
 	public static String getAbsolutePath(String fileName) {
 		return getAbsolutePath(Paths.get(fileName));
+	}
+
+	public static Map<String, String> getAnnotationMemberValuePair(
+		String annotation) {
+
+		Map<String, String> annotationMemberValuePair = new HashMap<>();
+
+		Matcher matcher = _annotationMemberValuePairPattern.matcher(annotation);
+
+		while (matcher.find()) {
+			annotationMemberValuePair.put(matcher.group(1), matcher.group(2));
+		}
+
+		return annotationMemberValuePair;
 	}
 
 	public static List<String> getAnnotationsBlocks(String content) {
@@ -428,6 +444,8 @@ public class SourceUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
 
+	private static final Pattern _annotationMemberValuePairPattern =
+		Pattern.compile("(\\w+) = \"(.+?)\"");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

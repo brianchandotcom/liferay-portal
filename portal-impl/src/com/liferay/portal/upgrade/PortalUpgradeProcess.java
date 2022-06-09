@@ -132,6 +132,32 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
+	public static boolean supportsRetry(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select buildNumber from Release_ where servletContextName = " +
+					"?")) {
+
+			preparedStatement.setString(
+				1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (resultSet.getInt("buildNumber") >=
+							_INITIAL_BUILD_NUMBER_SUPPORTS_RETRY) {
+
+						return true;
+					}
+
+					return false;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();

@@ -313,4 +313,151 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147787. The marketer has Basic permissions and view Advanced tab when given Update - Basic and Update - Advanced options permission in Page Section."
+	@priority = "5"
+	test EditPageLayoutAsUserWithUpdateBasicAndAdvancedPermissions {
+		task ("Given a marketer has a content page") {
+			JSONRole.addSiteRole(
+				roleKey = "Marketer",
+				roleTitle = "Marketer");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Marketer",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the marketer has the Update - Basic and Update - Advanced permissions in Page section") {
+			for (var resourceActionIndex : list "UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_ADVANCED_OPTIONS") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Marketer",
+					roleType = "site");
+			}
+		}
+
+		task ("Then the marketer has limited access to styles edition") {
+			task ("Add a Container to a content page") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Access to the General panel of Container") {
+				PageEditor.gotoConfiguration(fragmentName = "Container");
+
+				for (var fieldLabel : list "Width,Height,Min Width,Max Width,Min Height,Max Height") {
+					AssertVisible(
+						key_borderBottom = "Frame",
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD");
+				}
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Overflow",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Default");
+
+				AssertElementPresent(
+					checkboxName = "Hide Fragment",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Access to the Styles panel of Container") {
+				PageEditor.editLayoutContainer(
+					marginBottom = "4",
+					paddingTop = "4",
+					panel = "Styles");
+
+				PageEditor.viewFragmentTopperStyle(
+					fragmentName = "Container",
+					styleName = "marginBottom",
+					styleValue = "4");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "paddingTop",
+					styleValue = "4");
+
+				for (var fieldSetLabel : list "Text,Background,Borders,Effects") {
+					AssertElementNotPresent(
+						key_fieldSetLabel = "${fieldSetLabel}",
+						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				}
+			}
+
+			task ("Access to the Advanced panel of Container") {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "HTML Tag",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "div");
+
+				AssertElementPresent(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Add a Heading fragment into Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+
+			task ("Access to the General panel of Heading") {
+				PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+				for (var fieldLabel : list "Width,Height,Min Width,Max Width,Min Height,Max Height") {
+					AssertElementNotPresent(
+						key_borderBottom = "Frame",
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD");
+				}
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Overflow",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Default");
+
+				AssertElementPresent(
+					checkboxName = "Hide Fragment",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("View the Styles panel of Heading unavailable") {
+				AssertElementNotPresent(
+					key_tab = "Styles",
+					locator1 = "NavTab#TAB_LINK");
+			}
+
+			task ("Access to the Advanced panel of Heading") {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				AssertElementPresent(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Delete the site role") {
+				JSONRole.deleteRole(roleTitle = "Marketer");
+			}
+		}
+	}
+
 }

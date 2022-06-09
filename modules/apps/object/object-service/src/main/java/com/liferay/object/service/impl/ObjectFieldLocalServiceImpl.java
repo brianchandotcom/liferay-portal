@@ -244,6 +244,11 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectField> getCustomObjectFields(long objectFieldId) {
+		return _objectFieldPersistence.findByODI_S(objectFieldId, false);
+	}
+
+	@Override
 	public ObjectField getObjectField(long objectFieldId)
 		throws PortalException {
 
@@ -741,16 +746,7 @@ public class ObjectFieldLocalServiceImpl
 	private ObjectRelationshipPersistence _objectRelationshipPersistence;
 
 	@Reference
-	private ObjectViewColumnPersistence _objectViewColumnPersistence;
-
-	@Reference
 	private ObjectViewLocalService _objectViewLocalService;
-
-	@Reference
-	private ObjectViewPersistence _objectViewPersistence;
-
-	@Reference
-	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
 		"actions", "companyid", "createdate", "creator", "datecreated",

@@ -91,6 +91,10 @@ public class DB2SQLTransformerLogicTest
 				"from Foo");
 
 		Assert.assertEquals(
+			"select * from Foo where foo = ? And bar = ?",
+			sqlTransformer.transform(
+				"select * from Foo where foo = ? And bar = ?"));
+		Assert.assertEquals(
 			"select * from Foo where foo = \" ?\"",
 			sqlTransformer.transform("select * from Foo where foo = \" ?\""));
 		Assert.assertEquals(

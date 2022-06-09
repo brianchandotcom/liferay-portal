@@ -51,16 +51,20 @@ public class DDMFormFieldInfoFieldConverterImpl
 	public InfoField convert(DDMFormField ddmFormField) {
 		LocalizedValue label = ddmFormField.getLabel();
 
+		InfoFieldType infoFieldType = _getInfoFieldType(ddmFormField);
+
 		return _addAttributes(
 			ddmFormField,
 			InfoField.builder(
 			).infoFieldType(
-				_getInfoFieldType(ddmFormField)
+				infoFieldType
 			).namespace(
 				DDMStructure.class.getSimpleName()
 			).name(
 				ddmFormField.getName()
 			)
+		).editable(
+			_isInfoFieldEditable(infoFieldType)
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(
@@ -194,6 +198,20 @@ public class DDMFormFieldInfoFieldConverterImpl
 		}
 
 		return TextInfoFieldType.INSTANCE;
+	}
+
+	private boolean _isInfoFieldEditable(InfoFieldType infoFieldType) {
+		if (Objects.equals(infoFieldType, BooleanInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, SelectInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, DateInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, ImageInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, NumberInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, TextInfoFieldType.INSTANCE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

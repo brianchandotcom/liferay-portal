@@ -16,8 +16,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_POPOVER</td>
+	<td>//*[contains(@class,'popover')]//button[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POPOVER</td>
 	<td>//*[contains(@class,'popover') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POPOVER_SAMPLE_CONTENT</td>
+	<td>//*[contains(@class,'popover-body')][//span[text()='Content ${key_index}'] and //br and //code[text()='Hello${key_index}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POPOVER_TITLE</td>
+	<td>//*[contains(@class,'popover-header')]//span[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -340,7 +340,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150921. The user could view message when the fragment is hidden. The Hide from Site Search Results is not grouped in fieldset on Advanced panel."
+	@description = "This is a test for LPS-150921. The Hide from Site Search Results is not grouped in fieldset on Advanced panel."
 	@priority = "4"
 	test ViewHideFromSiteSearchResultsNotGroupedInFieldset {
 		task ("Given a Page creator has a content page with a Heading fragment") {
@@ -359,16 +359,6 @@ definition {
 
 		task ("Then the Page Creator could view the Hide from Site Search Results is not grouped in fieldset") {
 			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__collapse')]//label[contains(.,'Hide from Site Search Results')]//input[@type='checkbox']");
-		}
-
-		task ("When the Page Creator hides the Heading via General panel") {
-			PageEditor.hideFragmentViaPageStyles(fragmentName = "Heading");
-		}
-
-		task ("Then the Page Creator could view warning message on General panel") {
-			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
-				value1 = "This fragment is still visible on search. You can hide it from search in the advanced tab.");
 		}
 	}
 

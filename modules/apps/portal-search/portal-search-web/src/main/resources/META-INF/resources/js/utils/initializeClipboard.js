@@ -34,7 +34,7 @@ export default function initializeClipboard({selector}) {
 		});
 	});
 
-	return () => {
+	Liferay.once('beforeNavigate', () => {
 		clipboardJS.destroy();
-	};
+	});
 }

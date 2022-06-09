@@ -1,27 +1,99 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 	}
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify users with the 'Manage Commerce Order Shipping Options' permission can select the shipping method during checkout."
+	@priority = "3"
 	test UsersWithManagePermissionCanSelectShippingOptionDuringCheckout {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8613 UsersWithManagePermissionCanSelectShippingOptionDuringCheckout pending implementation
+		task ("Given a new Flat Rate shipping option with amount set to 50") {
+			CommerceChannels.openChannelsAdmin();
 
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
+
+			CommerceChannels.addShippingOption(
+				amount = "50",
+				key = "test-shipping-option",
+				name = "Test Shipping Option");
+		}
+
+		task ("And given Flat Rate / Expedited Delivery is set as the default shipping option for the Commerce Account") {
+			CommerceJSONShippingMethods._setDefaultAccountShippingOption(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Expedited Delivery");
+		}
+
+		task ("And given the Buyer role is given the 'Manage Commerce Order Shipping Options' permission") {
+			Permissions.definePermissionViaJSONAPI(
+				groupName = "Minium",
+				resourceAction = "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("When the buyer checks out an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then Expedited Delivery is set as the default shipping method and the buyer can select a shipping method from a list of available shipping methods") {
+			CommerceCheckout.initializersCheckout(
+				defaultShippingMethod = "Expedited",
+				eligibleShippingMethods = "Expedited,Standard,Test Shipping Option",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Expedited");
+		}
 	}
 
 	@description = "[Please Update]"

@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -170,6 +171,20 @@ public class CETUtil {
 		for (JavaClass cetJavaClass : cetJavaClasses) {
 			cets.add(_getCET(cetJavaClass, defaultCETProperties));
 		}
+
+		Collections.sort(
+			cets,
+			new Comparator<CET>() {
+
+				@Override
+				public int compare(CET cet1, CET cet2) {
+					String name1 = cet1.getName();
+					String name2 = cet2.getName();
+
+					return name1.compareTo(name2);
+				}
+
+			});
 
 		return cets;
 	}

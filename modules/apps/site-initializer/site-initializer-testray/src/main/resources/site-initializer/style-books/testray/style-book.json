@@ -1,4 +1,5 @@
 {
+	"defaultStyleBookEntry": true,
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
 	"name": "Testray"
 }

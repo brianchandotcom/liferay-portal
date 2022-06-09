@@ -486,8 +486,8 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
-		int count = _objectFieldPersistence.countByObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId());
+		int count = _objectFieldPersistence.countByODI_S(
+			objectDefinition.getObjectDefinitionId(), false);
 
 		if (count == 0) {
 			throw new RequiredObjectFieldException();

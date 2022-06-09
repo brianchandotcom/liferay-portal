@@ -202,9 +202,11 @@ definition {
 			searchAssetDescription = "WC WebContent Description",
 			searchAssetTitle = "Apple");
 
-		SearchBarSuggestions.viewSuggestions(
+		// Workaround for LPS-155753
+
+		/*SearchBarSuggestions.viewSuggestions(
 			searchAssetDescription = "DM Document Description",
-			searchAssetTitle = "Apple Pie");
+			searchAssetTitle = "Apple Pie");*/
 	}
 
 }

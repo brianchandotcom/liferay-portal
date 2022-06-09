@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -595,25 +596,47 @@ public class ObjectEntryDisplayContext {
 			}
 		}
 
-		if (objectLayoutTab == null) {
-			for (ObjectField objectField :
-					_objectFieldLocalService.getCustomObjectFields(
-						objectDefinition.getObjectDefinitionId())) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))) {
+			if (objectLayoutTab == null) {
+				for (ObjectField objectField :
+						_objectFieldLocalService.getCustomObjectFields(
+							objectDefinition.getObjectDefinitionId())) {
 
-				if (!_isActive(objectField)) {
-					continue;
+					if (!_isActive(objectField)) {
+						continue;
+					}
+
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectField, readOnly));
 				}
-
-				ddmForm.addDDMFormField(
-					_getDDMFormField(objectField, readOnly));
+			}
+			else {
+				_addDDMFormFields(
+					ddmForm,
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId()),
+					objectLayoutTab, readOnly);
 			}
 		}
 		else {
-			_addDDMFormFields(
-				ddmForm,
+			List<ObjectField> objectFields =
 				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()),
-				objectLayoutTab, readOnly);
+					objectDefinition.getObjectDefinitionId());
+
+			if (objectLayoutTab == null) {
+				for (ObjectField objectField : objectFields) {
+					if (!_isActive(objectField)) {
+						continue;
+					}
+
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectField, readOnly));
+				}
+			}
+			else {
+				_addDDMFormFields(
+					ddmForm, objectFields, objectLayoutTab, readOnly);
+			}
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());

@@ -1258,27 +1258,6 @@
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 	</entity>
-	<entity deprecated="true" local-service="false" name="OrgGroupRole" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="organizationId" primary="true" type="long" />
-		<column name="groupId" primary="true" type="long" />
-		<column name="roleId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="RoleId" return-type="Collection">
-			<finder-column name="roleId" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="OrgLabor" remote-service="true">
 
 		<!-- PK fields -->

@@ -80,20 +80,18 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		Date date;
-
 		try {
-			date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
+			Date date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
+
+			return _getInfoFieldValue(infoField, locale, date);
 		}
 		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(parseException);
 			}
-
-			return null;
 		}
 
-		return _getInfoFieldValue(infoField, locale, date);
+		return null;
 	}
 
 	private <T> List<InfoField> _getInfoFields(String className) {

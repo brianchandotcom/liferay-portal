@@ -316,7 +316,10 @@ definition {
 	@description = "This test covers LPS-154428. It asserts that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";
@@ -468,7 +471,10 @@ definition {
 	@description = "This test covers LPS-154427. It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewImageInContentFieldAfterFriendlyURLIsUpdated";
@@ -558,7 +564,10 @@ definition {
 	@description = "This test covers LPS-154429. It asserts that an image with a custom friendlyURL added in the Blog small image field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewSmallImageAfterFriendlyURLIsUpdated {
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewSmallImageAfterFriendlyURLIsUpdated";

@@ -166,6 +166,12 @@ export default function _JournalPortlet({
 		}
 
 		if (editingDefaultValues) {
+			Liferay.component(`${namespace}dataEngineLayoutRenderer`)
+				.reactComponentRef.current.getFields()
+				.forEach((field) => {
+					field.required = false;
+				});
+
 			actionInput.value = articleId
 				? '/journal/update_data_engine_default_values'
 				: '/journal/add_data_engine_default_values';

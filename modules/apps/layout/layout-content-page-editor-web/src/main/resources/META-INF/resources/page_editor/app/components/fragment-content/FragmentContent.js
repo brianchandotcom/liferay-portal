@@ -122,6 +122,8 @@ const FragmentContent = ({
 
 	const fragmentEntryLinkError = fragmentEntryLink?.error;
 
+	const cssClasses = getLayoutDataItemCssClasses(item);
+
 	useEffect(() => {
 		if (fragmentEntryLinkError) {
 			throw new Error(fragmentEntryLinkError);
@@ -146,6 +148,14 @@ const FragmentContent = ({
 
 		if (!isBeingEdited) {
 			fragmentElement.innerHTML = defaultContent;
+
+			if (hasInnerCommonStyles(fragmentEntryLink)) {
+				const stylesElement = fragmentElement.querySelector(
+					'[data-lfr-styles]'
+				);
+
+				stylesElement.className = `${stylesElement.className} ${cssClasses}`;
+			}
 
 			Promise.all(
 				getAllEditables(fragmentElement).map((editable) => {
@@ -199,6 +209,7 @@ const FragmentContent = ({
 		languageId,
 		segmentsExperienceId,
 		toControlsId,
+		cssClasses,
 	]);
 
 	const responsiveConfig = getResponsiveConfig(
@@ -300,8 +311,9 @@ const FragmentContent = ({
 						'page-editor__fragment-content',
 						{
 							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
-							[getLayoutDataItemCssClasses(item)]: Liferay
-								.FeatureFlags['LPS-147511'],
+							[getLayoutDataItemCssClasses(item)]:
+								Liferay.FeatureFlags['LPS-147511'] &&
+								!hasInnerCommonStyles(fragmentEntryLink),
 							[getLayoutDataItemUniqueClassName(
 								item.itemId
 							)]: !hasInnerCommonStyles(fragmentEntryLink),

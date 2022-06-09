@@ -23,6 +23,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
+import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -106,8 +107,13 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
 				layoutStructureItem);
 
+		String styledLayoutStructureItemCssClasses =
+			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
+				(StyledLayoutStructureItem)layoutStructureItem);
+
 		for (Element element : elements) {
 			element.addClass(layoutStructureItemUniqueCssClass);
+			element.addClass(styledLayoutStructureItemCssClasses);
 		}
 
 		Element bodyElement = document.body();

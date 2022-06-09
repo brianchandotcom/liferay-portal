@@ -969,10 +969,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.60.1":
-  version "3.60.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.60.1.tgz#f64fd95bc868e34fc36a4d07faed72f5946c1e0b"
-  integrity sha512-lKNia9TYA5znodsT5hGgF/QAoHpzaXG9ZsCTLwBbzMMh9uwYISDURWOMd/+dDCrFuNctIjJ9CS0DkwxRBMNtqQ==
+"@clayui/css@3.60.2":
+  version "3.60.2"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.60.2.tgz#de1671569d86b11902aa224ce60e1dfd372d73a9"
+  integrity sha512-0RYVB5tDjXge+OwaYIVCLU/hBKnJN+leXAVtillDDOnLVzhdFH0iC2fWd/Hg6mRt+V4z7RcuGEU9sPTsY6OtBA==
 
 "@clayui/data-provider@3.58.0":
   version "3.58.0"

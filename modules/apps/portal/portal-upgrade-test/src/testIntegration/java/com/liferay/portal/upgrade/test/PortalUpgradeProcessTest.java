@@ -16,9 +16,13 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
@@ -181,6 +185,23 @@ public class PortalUpgradeProcessTest {
 	}
 
 	@Test
+	public void testRetryUpgradeFrom6210IsNotSupported() throws SQLException {
+		_supportsRetryUpgrade(6210);
+	}
+
+	@Test
+	public void testRetryUpgradeFrom7010IsNotSupported() throws SQLException {
+		_supportsRetryUpgrade(7010);
+	}
+
+	@Test
+	public void testRetryUpgradeIsSupported() throws SQLException {
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertTrue(PortalUpgradeProcess.supportsRetry(connection));
+		}
+	}
+
+	@Test
 	public void testRevertCodeToPreviousMajorSchemaVersion() throws Exception {
 		Version nextMajorSchemaVersion = new Version(
 			_currentSchemaVersion.getMajor() + 1, 0, 0);
@@ -282,6 +303,29 @@ public class PortalUpgradeProcessTest {
 		}
 	}
 
+	private void _supportsRetryUpgrade(int buildNumber) throws SQLException {
+		Release release = _releaseLocalService.fetchRelease(
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+		int currentBuildNumber = release.getBuildNumber();
+
+		release.setBuildNumber(buildNumber);
+
+		_releaseLocalService.updateRelease(release);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertFalse(PortalUpgradeProcess.supportsRetry(connection));
+		}
+		finally {
+			release = _releaseLocalService.fetchRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			release.setBuildNumber(currentBuildNumber);
+
+			_releaseLocalService.updateRelease(release);
+		}
+	}
+
 	private void _updateSchemaVersion(Version version) {
 		ReflectionTestUtil.invoke(
 			_innerPortalUpgradeProcess, "updateSchemaVersion",
@@ -294,6 +338,9 @@ public class PortalUpgradeProcessTest {
 	private static Version _currentSchemaVersion;
 
 	private InnerPortalUpgradeProcess _innerPortalUpgradeProcess;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 	private static class InnerPortalUpgradeProcess
 		extends PortalUpgradeProcess {

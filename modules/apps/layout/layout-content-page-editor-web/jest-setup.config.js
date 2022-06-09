@@ -20,6 +20,8 @@ if (typeof Array.prototype.flatMap !== 'function') {
 	};
 }
 
+Liferay.FeatureFlags = {};
+
 // eslint-disable-next-line
 jest.mock(
 	'./src/main/resources/META-INF/resources/page_editor/app/config',

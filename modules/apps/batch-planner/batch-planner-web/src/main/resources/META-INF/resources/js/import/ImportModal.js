@@ -20,19 +20,15 @@ import ClayProgressBar from '@clayui/progress-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {importStatus} from '../BatchPlannerImport';
+import {fetchErrorReportFile, importStatus} from '../BatchPlannerImport';
 import Poller from '../Poller';
-import {EXPORT_FILE_NAME} from '../constants';
 
-const ImportModal = ({
-	closeModal,
-	formDataQuerySelector,
-	formImportURL,
-}) => {
-	const {errorMessage, loading, percentage, ready} = Poller(
+const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
+	const {downloadFile, errorMessage, loading, percentage, ready} = Poller(
 		formDataQuerySelector,
 		formImportURL,
-		importStatus
+		importStatus,
+		fetchErrorReportFile
 	);
 	const {observer} = useModal();
 
@@ -67,17 +63,13 @@ const ImportModal = ({
 	return (
 		<ClayModal observer={observer} size="md" status={modalStatus}>
 			<ClayModal.Header>
-				{Liferay.Language.get('import')}
+				{Liferay.Language.get('import-file')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayForm.Group>
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>{title}</ClayForm.FeedbackItem>
-
-						<ClayForm.FeedbackItem>
-							{EXPORT_FILE_NAME}
-						</ClayForm.FeedbackItem>
 
 						<ClayLabel displayType={labelType}>{label}</ClayLabel>
 					</ClayForm.FeedbackGroup>
@@ -89,7 +81,7 @@ const ImportModal = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={closeModal}>
+						<ClayButton displayType={null} onClick={closeModal}>
 							{Liferay.Language.get('back-to-the-list')}
 						</ClayButton>
 
@@ -97,7 +89,7 @@ const ImportModal = ({
 							<ClayButton
 								disabled={loading}
 								displayType="danger"
-								onClick={closeModal}
+								onClick={downloadFile}
 								type="submit"
 							>
 								{Liferay.Language.get('download-error-report')}

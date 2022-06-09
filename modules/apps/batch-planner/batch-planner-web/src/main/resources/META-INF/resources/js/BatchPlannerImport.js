@@ -38,3 +38,10 @@ export async function importStatus(externalReferenceCode) {
 
 	return await response.json();
 }
+
+export async function fetchErrorReportFile(externalReferenceCode) {
+	const response = await fetch(getImportFileURL(externalReferenceCode));
+	const blob = await response.blob();
+
+	return URL.createObjectURL(blob);
+}

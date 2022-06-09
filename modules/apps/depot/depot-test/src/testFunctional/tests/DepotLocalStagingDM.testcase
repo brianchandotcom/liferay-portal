@@ -3409,9 +3409,7 @@ definition {
 			dmDocumentTitle = "Document_1.jpg",
 			staging = "true");
 
-		DMDocument.editFriendlyURL(
-			dmDocumentTitle = "Document_1.jpg",
-			friendlyURLEdit = "custom-url");
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 

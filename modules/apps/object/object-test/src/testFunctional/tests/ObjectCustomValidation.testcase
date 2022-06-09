@@ -62,8 +62,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153556");
 
 		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Allowed Entry");
@@ -113,8 +111,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
 			objectName = "CustomObject153559",
@@ -123,8 +119,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
 
 		ObjectPortlet.viewEntry(entry = "Allowed Entry");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -139,8 +133,6 @@ definition {
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Allowed Entry')");
 
 		Button.clickSave();
-
-		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153559");
 
@@ -191,8 +183,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
 			objectName = "CustomObject153560",
@@ -201,8 +191,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
 
 		ObjectPortlet.viewEntry(entry = "Allowed Entry");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -217,8 +205,6 @@ definition {
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Update Entry')");
 
 		Button.clickSave();
-
-		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153560");
 
@@ -301,8 +287,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
 			objectName = "CustomObject153558",
@@ -366,8 +350,6 @@ definition {
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
 		Button.clickSave();
-
-		Navigator.openURL();
 
 		for (var entryTitle : list "Entry Test,Decline Entry") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -579,8 +561,6 @@ definition {
 
 		MyAccount.configureDisplaySettingsLanguage(languageName = "português (Brasil)");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153549");
@@ -632,8 +612,6 @@ definition {
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 		Button.clickSave();
-
-		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153546");
 

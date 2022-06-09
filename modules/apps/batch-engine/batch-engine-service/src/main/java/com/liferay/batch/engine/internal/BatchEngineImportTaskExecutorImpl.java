@@ -100,7 +100,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
-				throwable.getMessage());
+				throwable.toString());
 		}
 	}
 
@@ -160,7 +160,7 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getCompanyId(),
 			batchEngineImportTask.getUserId(),
 			batchEngineImportTask.getBatchEngineImportTaskId(), null,
-			processedItemsCount, exception.getMessage());
+			processedItemsCount, exception.toString());
 
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL) {

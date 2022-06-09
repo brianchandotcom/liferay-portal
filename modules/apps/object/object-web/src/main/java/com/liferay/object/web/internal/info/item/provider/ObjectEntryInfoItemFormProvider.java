@@ -17,14 +17,10 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
-import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -34,13 +30,12 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
+import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
-
-import java.util.Objects;
 
 /**
  * @author Jorge Ferrer
@@ -142,16 +137,6 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
-	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
-		if (Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_BLOB)) {
-
-			return ImageInfoFieldType.INSTANCE;
-		}
-
-		return TextInfoFieldType.INSTANCE;
-	}
-
 	private InfoForm _getInfoForm(long objectDefinitionId)
 		throws NoSuchFormVariationException {
 
@@ -227,7 +212,7 @@ public class ObjectEntryInfoItemFormProvider
 					unsafeConsumer.accept(
 						InfoField.builder(
 						).infoFieldType(
-							_getInfoFieldType(objectField)
+							ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
 						).namespace(
 							ObjectField.class.getSimpleName()
 						).name(

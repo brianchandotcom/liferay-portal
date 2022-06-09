@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>DashboardAP</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DashboardAP</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>TASKS_SECTION</td>
+	<td>//div[contains(@class, "tasks-container")]//div[contains(@class, "section-content")]//div[contains(text(),'${section}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

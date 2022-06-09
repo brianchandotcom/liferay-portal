@@ -33,7 +33,7 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
 		Click(
-			locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+			locator1 = "DashboardAP#TASKS_SECTION",
 			section = "Review Eligibility Reports");
 
 		AssertElementPresent(
@@ -47,7 +47,7 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
 		Click(
-			locator1 = "RaylifeAP#DASHBOARD_TASKS_SECTION",
+			locator1 = "DashboardAP#TASKS_SECTION",
 			section = "Contact Expiring Policies");
 
 		AssertElementPresent(

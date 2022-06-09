@@ -16,17 +16,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOGIN_PAGE_TO_RAYLIFEAP</td>
+	<td>LOGIN_PAGE</td>
 	<td>//h3[text()='Sign in to Raylife']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_EMAIL</td>
+	<td>EMAIL_LOGIN_FIELD</td>
 	<td>//input[contains(@id, 'LoginPortlet_login')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_PASSWORD</td>
+	<td>PASSWORD_LOGIN_FIELD</td>
 	<td>//input[contains(@id, 'LoginPortlet_password')]</td>
 	<td></td>
 </tr>
@@ -53,11 +53,6 @@
 <tr>
 	<td>MENU_SIDEBAR</td>
 	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "middle-bar")]/div[contains(@class, "${menu}")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TASKS_SECTION</td>
-	<td>//div[contains(@class, "tasks-container")]//div[contains(@class, "section-content")]//div[contains(text(),'${section}')]</td>
 	<td></td>
 </tr>
 </tbody>

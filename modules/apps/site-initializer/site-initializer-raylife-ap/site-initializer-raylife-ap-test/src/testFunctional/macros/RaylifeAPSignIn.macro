@@ -1,13 +1,23 @@
 definition {
 
 	macro signInRaylifeAP {
-		Type(
-			locator1 = "RaylifeAP#FIELD_EMAIL",
-			value1 = "test@liferay.com");
+
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "test@liferay.com";
+
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
 
 		Type(
-			locator1 = "RaylifeAP#FIELD_PASSWORD",
-			value1 = "test");
+			locator1 = "RaylifeAP#EMAIL_LOGIN_FIELD",
+			value1 = "${emailAddress}");
+
+		Type(
+			locator1 = "RaylifeAP#PASSWORD_LOGIN_FIELD",
+			value1 = "${password}");
 
 		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
 	}

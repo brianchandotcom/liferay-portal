@@ -34,7 +34,7 @@ definition {
 	test CanSignIn {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
 
 		RaylifeAPSignIn.signInRaylifeAP();
 
@@ -46,17 +46,11 @@ definition {
 	test CanViewMessageEmailNotValid {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
 
-		Type(
-			locator1 = "RaylifeAP#FIELD_EMAIL",
-			value1 = "test");
-
-		Type(
-			locator1 = "RaylifeAP#FIELD_PASSWORD",
-			value1 = "test");
-
-		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+		RaylifeAPSignIn.signInRaylifeAP(
+			emailAddress = "test",
+			password = "test");
 
 		AssertElementPresent(locator1 = "RaylifeAP#EMAIL_INVALID_MESSAGE");
 	}
@@ -66,17 +60,11 @@ definition {
 	test CanViewMessageFieldEmailRequired {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
 
-		Type(
-			locator1 = "RaylifeAP#FIELD_EMAIL",
-			value1 = "");
-
-		Type(
-			locator1 = "RaylifeAP#FIELD_PASSWORD",
-			value1 = "test");
-
-		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+		RaylifeAPSignIn.signInRaylifeAP(
+			emailAddress = "",
+			password = "test");
 
 		AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
 	}
@@ -86,17 +74,11 @@ definition {
 	test CanViewMessageFieldPasswordRequired {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE_TO_RAYLIFEAP");
+		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
 
-		Type(
-			locator1 = "RaylifeAP#FIELD_EMAIL",
-			value1 = "test@liferay.com");
-
-		Type(
-			locator1 = "RaylifeAP#FIELD_PASSWORD",
-			value1 = "");
-
-		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+		RaylifeAPSignIn.signInRaylifeAP(
+			emailAddress = "test@liferay.com",
+			password = "");
 
 		AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
 	}

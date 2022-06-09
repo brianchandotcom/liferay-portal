@@ -46,10 +46,20 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Sites and Libraries");
 
-			AssertClick(
-				key_siteName = "${siteName}",
-				locator1 = "ItemSelector#SITE_SELECTOR",
-				value1 = "${siteName}");
+			if (isSet(depotName)) {
+				AssertClick(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
+
+				LexiconCard.clickCard(card = "${depotName}");
+			}
+			else {
+				AssertClick(
+					key_siteName = "${siteName}",
+					locator1 = "ItemSelector#SITE_SELECTOR",
+					value1 = "${siteName}");
+			}
 
 			if (isSet(folderName)) {
 				LexiconCard.clickCard(card = "${folderName}");

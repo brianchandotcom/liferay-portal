@@ -21,8 +21,6 @@ RoleTypeContributorProvider roleTypeContributorProvider = (RoleTypeContributorPr
 
 PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request, renderRequest, roleTypeContributorProvider);
 
-Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
-
 List<Resource> resources = portletConfigurationPermissionsDisplayContext.getResources();
 
 SearchContainer<Role> roleSearchContainer = portletConfigurationPermissionsDisplayContext.getRoleSearchContainer();
@@ -32,7 +30,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
-String resourceName = resource.getName();
+String resourceName = portletConfigurationPermissionsDisplayContext.getResourceName();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">

@@ -295,33 +295,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 		return _modelResourceDescription;
 	}
 
-	public Resource getResource() throws PortalException {
-		if (_resource != null) {
-			return _resource;
+	public String getResourceName() throws PortalException {
+		List<Resource> resources = getResources();
+
+		if (ListUtil.isEmpty(resources)) {
+			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		Resource resource = resources.get(0);
 
-		int count =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				themeDisplay.getCompanyId(), getSelResource(),
-				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
-
-		if (count == 0) {
-			boolean portletActions = Validator.isNull(getModelResource());
-
-			ResourceLocalServiceUtil.addResources(
-				themeDisplay.getCompanyId(), getGroupId(), 0, getSelResource(),
-				getResourcePrimKey(), portletActions, true, true);
-		}
-
-		_resource = ResourceLocalServiceUtil.getResource(
-			themeDisplay.getCompanyId(), getSelResource(),
-			ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
-
-		return _resource;
+		return resource.getName();
 	}
 
 	public String getResourcePrimKey() throws ResourcePrimKeyException {
@@ -871,7 +854,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private String _modelResourceDescription;
 	private String _portletResource;
 	private final RenderRequest _renderRequest;
-	private Resource _resource;
 	private Long _resourceGroupId;
 	private String[] _resourcePrimKeys;
 	private final List<Resource> _resources = new ArrayList<>();

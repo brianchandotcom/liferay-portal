@@ -59,6 +59,10 @@ export default function CSSClassSelectorField({
 				)
 			);
 		}
+
+		// https://github.com/liferay/clay/issues/4915
+
+		multiSelectRef.current?.querySelector('input').focus();
 	};
 
 	return (

@@ -232,6 +232,8 @@ public class ObjectEntryInfoItemFormProvider
 							ObjectField.class.getSimpleName()
 						).name(
 							objectField.getName()
+						).editable(
+							true
 						).labelInfoLocalizedValue(
 							InfoLocalizedValue.<String>builder(
 							).values(

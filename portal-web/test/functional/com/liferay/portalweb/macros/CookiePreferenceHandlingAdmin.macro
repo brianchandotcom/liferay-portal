@@ -1,0 +1,29 @@
+definition {
+
+	@description = "Enable Cookie Preference handling"
+	macro enablePreferenceHandling {
+		CookieNavigator.gotoSiteSettings(portlet = "Preference Handling");
+
+		FormFields.enableCheckbox(fieldName = "Enabled");
+
+		CookiePreferenceHandlingAdmin.saveConfiguration();
+	}
+
+	macro saveConfiguration {
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#UPDATE",
+				value1 = "Update");
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+}

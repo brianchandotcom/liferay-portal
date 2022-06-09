@@ -3503,9 +3503,7 @@ definition {
 			dmDocumentTitle = "Test YouTube Video",
 			staging = "true");
 
-		DMDocument.editFriendlyURL(
-			dmDocumentTitle = "Test YouTube Video",
-			friendlyURLEdit = "custom-url");
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 

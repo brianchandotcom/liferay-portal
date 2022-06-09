@@ -60,6 +60,8 @@ definition {
 	macro setCustomTextForAllFields {
 		Variables.assertDefined(parameterList = "${text}");
 
+		CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
+
 		Type(
 			locator1 = "CookieConsentAdmin#TITLE",
 			value1 = "${text}_1");

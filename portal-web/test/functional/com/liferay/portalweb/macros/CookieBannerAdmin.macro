@@ -104,10 +104,6 @@ definition {
 			Refresh();
 		}
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#ENABLED");
-
-		AssertChecked.assertCheckedNotVisible(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");
-
 		AssertTextEquals(
 			locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",
 			value1 = "${text}");

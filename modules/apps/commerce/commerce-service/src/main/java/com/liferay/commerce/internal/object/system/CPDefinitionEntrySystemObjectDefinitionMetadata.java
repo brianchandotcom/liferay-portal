@@ -57,7 +57,8 @@ public class CPDefinitionEntrySystemObjectDefinitionMetadata
 				"externalReferenceCode", false),
 			createObjectField("Text", "String", "name", "name", false),
 			createObjectField(
-				"Text", "String", "product-id", "productId", false),
+				"Text", "CPDefinitionId", "String", "product-id", "productId",
+				false),
 			createObjectField(
 				"Text", "String", "short-description", "shortDescription",
 				false),

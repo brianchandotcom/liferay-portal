@@ -55,10 +55,10 @@ public class CommerceProductGroupSystemObjectDefinitionMetadata
 			createObjectField(
 				"Text", "String", "external-reference-code",
 				"externalReferenceCode", false),
-			createObjectField("Text", "String", "name", "name", false),
 			createObjectField(
 				"Integer", "Integer", "number-of-products", "productsCount",
-				false));
+				false),
+			createObjectField("Text", "String", "title", "title", false));
 	}
 
 	@Override

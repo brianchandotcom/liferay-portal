@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.renderer;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -24,6 +25,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -161,16 +163,27 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		if (Validator.isNull(fragmentEntryLink.getRendererKey())) {
-			return fragmentEntryLink.isCacheable();
+		FragmentEntry fragmentEntry = null;
+
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					fragmentEntryLink.getRendererKey());
 		}
 
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
-				fragmentEntryLink.getRendererKey());
+		if (fragmentEntry == null) {
+			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+		}
+
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getType() == FragmentConstants.TYPE_INPUT)) {
+
+			return false;
+		}
 
 		if (fragmentEntry == null) {
-			return false;
+			return fragmentEntryLink.isCacheable();
 		}
 
 		return fragmentEntry.isCacheable();
@@ -392,6 +405,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

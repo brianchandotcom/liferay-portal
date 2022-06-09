@@ -564,6 +564,7 @@ definition {
 		PortletEntry.save();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewEmailNotificationDelivery {
 		property test.assert.javascript.errors = "false";
@@ -641,6 +642,7 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewEmailRecipientDelivery {
 		property test.assert.javascript.errors = "false";

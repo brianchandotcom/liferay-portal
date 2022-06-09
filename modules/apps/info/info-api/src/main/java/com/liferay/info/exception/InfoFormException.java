@@ -21,6 +21,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class InfoFormException extends PortalException {
 
+	public InfoFormException(String msg) {
+		super(msg);
+	}
+
+	public InfoFormException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
 	public InfoFormException(Throwable throwable) {
 		super(throwable);
 	}

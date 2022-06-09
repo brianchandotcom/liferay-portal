@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.dto.v1_0.util;
+package com.liferay.object.rest.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.string.StringPool;

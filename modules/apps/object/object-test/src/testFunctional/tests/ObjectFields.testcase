@@ -421,12 +421,34 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a Toggle"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewOptionsWhenSelectDirectlyFromUsersComputerOption {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153411 CanViewOptionsWhenSelectDirectlyFromUsersComputerOption pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementNotPresent(
+			key_labelName = "Show Files in Documents and Media",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		ObjectField.selectOptionOnRequestFiles(option = "Upload Directly from the User's Computer");
+
+		AssertElementPresent(
+			key_labelName = "Show Files in Documents and Media",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 	}
 
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"

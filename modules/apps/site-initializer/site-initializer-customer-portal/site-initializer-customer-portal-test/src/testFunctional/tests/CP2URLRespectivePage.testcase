@@ -1,0 +1,132 @@
+@component-name = "portal-solutions"
+definition {
+
+    property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+    property portal.release = "false";
+    property portal.upstream = "false";
+    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+    property testray.main.component.name = "Site Initializer Customer Portal";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        //CustomerPortal.createCPSite(siteName = "Customer Portal");
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            //CustomerPortal.customerPortalTearDown();
+
+            User.logoutPG();
+        }
+    }
+
+    @description = "LPS-148477 - Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page."
+    @priority = "5"
+    test IfCommerceUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-004/activation/commerce");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "Commerce");
+    }
+
+    @description = "LPS-148478 - Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page."
+    @priority = "5"
+    test IfDXPUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "DXP");
+    }
+
+    @description = "LPS-148479 - Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page."
+    @priority = "5"
+    test IfDXPCloudUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-001/activation/dxp-cloud");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "DXP Cloud");
+    }
+
+    @description = "LPS-148480 - Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page."
+    @priority = "5"
+    test IfPartnershipUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-002/activation/partnership");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "Partnership");
+    }
+
+    @description = "LPS-148481- Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page."
+    @priority = "5"
+    test IfEnterpriseUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-009/activation/enterprise-search");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "Enterprise Search");
+    }
+
+    @description = "LPS-148482 - Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page."
+    @priority = "5"
+    test IfPortalUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-005/activation/portal");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "Portal");
+    }
+
+    @description = "LPS-148483 - Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page."
+    @priority = "5"
+    test IfAnalyticsCloudUrlFollowsRespectivePage {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-003/activation/analytics-cloud");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "Analytics Cloud");
+    }
+
+    @description = "LPS-148484 - Verify if when the user go back to the Project Listing the URLs get back to normal."
+    @priority = "true"
+    @priority = "4"
+    test IfProjectListingURLStillTheSame {
+        ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
+
+        AssertElementPresent(
+            locator1 = "CP2NavigationMenu#PRODUCT",
+            product = "DXP");
+
+        Navigator.openURL(baseURL="http://localhost:8080/group/customer-portal");
+
+        AssertElementPresent(locator1 = "CP2LiferayContact#WELCOME_BANNER");
+    }
+
+}

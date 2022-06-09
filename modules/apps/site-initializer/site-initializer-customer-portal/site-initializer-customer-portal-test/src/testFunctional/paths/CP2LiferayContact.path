@@ -70,6 +70,11 @@
 	<td>//h5[contains(text(),'${number}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIND_A_PROJECT</td>
+	<td>//input[contains(@class, 'cp-search-project')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

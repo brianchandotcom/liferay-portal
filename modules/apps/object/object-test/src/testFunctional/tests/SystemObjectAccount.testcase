@@ -114,12 +114,33 @@ definition {
 	}
 
 	@description = "LPS-151765 - Verify if is possible to create Relationship one to many on System Object Account and to relate with the Custom Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateRelationshipRelatedWithCustomObject {
+		Accounts.openAccountsAdmin();
 
-		// TODO LPS-153518 CanCreateRelationshipRelatedWithCustomObject pending implementation
+		Accounts.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "AccountEntry",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Account");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.assertRelatedObject(relatedObject = "CustomObject");
 	}
 
 	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"

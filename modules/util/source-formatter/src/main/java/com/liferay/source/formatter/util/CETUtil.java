@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author Hugo Huijser
+ * @author Peter Shin
  */
 public class CETUtil {
 

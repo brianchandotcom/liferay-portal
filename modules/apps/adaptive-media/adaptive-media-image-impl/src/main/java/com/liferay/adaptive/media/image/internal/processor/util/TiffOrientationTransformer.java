@@ -20,13 +20,10 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.util.RenderedImageUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -64,10 +61,6 @@ public class TiffOrientationTransformer {
 	private static Optional<Integer> _getTiffOrientationValue(
 		Supplier<InputStream> inputStreamSupplier) {
 
-		if (!_isContentTypeSupported(inputStreamSupplier)) {
-			return Optional.empty();
-		}
-
 		try (InputStream inputStream = inputStreamSupplier.get()) {
 			Metadata metadata = ImageMetadataReader.readMetadata(inputStream);
 
@@ -91,29 +84,6 @@ public class TiffOrientationTransformer {
 		}
 
 		return Optional.empty();
-	}
-
-	private static boolean _isContentTypeSupported(
-		Supplier<InputStream> inputStreamSupplier) {
-
-		try (InputStream inputStream = inputStreamSupplier.get()) {
-			if (ArrayUtil.contains(
-					_UNSUPPORTED_MIME_TYPES,
-					MimeTypesUtil.getContentType(
-						inputStream, StringPool.BLANK))) {
-
-				return false;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static RenderedImage _transform(
@@ -174,10 +144,6 @@ public class TiffOrientationTransformer {
 	private static final int _ORIENTATION_VALUE_ROTATE_180 = 3;
 
 	private static final int _ORIENTATION_VALUE_ROTATE_270_CW = 8;
-
-	private static final String[] _UNSUPPORTED_MIME_TYPES = {
-		"image/jpeg", "image/pjpeg", "image/x-citrix-jpeg"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TiffOrientationTransformer.class);

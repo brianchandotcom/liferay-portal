@@ -46,7 +46,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eric Yan
  */
 @Component(
-	immediate = true, property = "mime.type=image/heic",
+	immediate = true,
+	property = {"mime.type=image/heic", "mime.type=image/webp"},
 	service = AMImageScaler.class
 )
 public class AMImageMagickImageScaler implements AMImageScaler {

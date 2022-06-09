@@ -230,6 +230,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="ODI_S" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="system" />
+		</finder>
 		<finder name="ODI_DBT_I" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="dbType" />

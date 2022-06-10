@@ -82,7 +82,7 @@ public class CreateInfoItemStrutsAction implements StrutsAction {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to create info item", exception);
+				_log.debug("Unable to create a new info item", exception);
 			}
 
 			InfoForm infoForm = _infoItemServiceTracker.getFirstInfoItemService(

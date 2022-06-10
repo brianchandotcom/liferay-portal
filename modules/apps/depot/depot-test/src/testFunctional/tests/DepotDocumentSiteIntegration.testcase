@@ -100,7 +100,7 @@ definition {
 			paddingTop = "2",
 			panel = "Styles");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
@@ -741,7 +741,7 @@ definition {
 			id = "image-square",
 			imageFileName = "Document_1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

@@ -47,7 +47,7 @@ definition {
 				segmentName = "Anyone");
 		}
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -91,7 +91,7 @@ definition {
 			experienceName = "NewAnyoneExperience",
 			segmentName = "Anyone");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -133,7 +133,7 @@ definition {
 			experienceName = "NewAnyoneExperience",
 			segmentName = "Anyone");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -180,7 +180,7 @@ definition {
 				experienceName = "NewAnyoneExperience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -223,7 +223,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "HTML");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		ContentPagesNavigator.openEditContentPage(
@@ -234,7 +234,7 @@ definition {
 			experienceName = "NewAnyoneExperience",
 			segmentName = "Anyone");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -280,7 +280,7 @@ definition {
 				experienceName = "NewAnyoneExperience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -323,7 +323,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "HTML");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -354,7 +354,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Paragraph");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -383,7 +383,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -418,7 +418,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -468,7 +468,7 @@ definition {
 			fragmentName = "Heading",
 			id = "element-text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -510,7 +510,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -550,7 +550,7 @@ definition {
 			fragmentName = "Heading",
 			id = "element-text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -598,7 +598,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -628,7 +628,7 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -681,7 +681,7 @@ definition {
 				fragmentName = "HTML",
 				id = "element-html");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -809,7 +809,7 @@ definition {
 				fragmentName = "HTML",
 				id = "element-html");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -935,7 +935,7 @@ definition {
 				id = "element-text",
 				text = "HeadingExperience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		for (var i : list "1,2") {
@@ -983,7 +983,7 @@ definition {
 				pageName = "TranslationContentPage${i}",
 				siteName = "Guest");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "TranslationContentPage${i}",
@@ -1073,7 +1073,7 @@ definition {
 			experienceName = "NewAnyoneExperience",
 			segmentName = "Anyone");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1094,7 +1094,7 @@ definition {
 
 		PageEditor.deleteExperience(experienceName = "NewAnyoneExperience");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1136,7 +1136,7 @@ definition {
 				id = "element-text",
 				text = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -1288,7 +1288,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1341,7 +1341,7 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -1381,7 +1381,7 @@ definition {
 			id = "link",
 			text = "Title");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1430,7 +1430,7 @@ definition {
 			fragmentName = "Button",
 			id = "link");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -1472,7 +1472,7 @@ definition {
 			fragmentName = "HTML",
 			id = "element-html");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1514,7 +1514,7 @@ definition {
 			fragmentName = "HTML",
 			id = "element-html");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "TranslationContentPage",
@@ -1560,7 +1560,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1636,7 +1636,7 @@ definition {
 				experienceName = "NewAnyoneExperience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -1687,7 +1687,7 @@ definition {
 			id = "element-text",
 			text = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1781,7 +1781,7 @@ definition {
 			fragmentName = "Heading",
 			id = "element-text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "ContentPage",

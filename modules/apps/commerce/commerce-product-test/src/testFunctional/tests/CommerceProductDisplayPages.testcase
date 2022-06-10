@@ -205,7 +205,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Product Details");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public widget page with a Product Details widget") {

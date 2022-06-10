@@ -6298,7 +6298,7 @@ definition {
 			selectedName = "Custom Objects 145",
 			styleDisplay = "Table");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openURL();
 
@@ -6540,7 +6540,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -7829,7 +7829,7 @@ definition {
 			selectedName = "Custom Objects B 169",
 			styleDisplay = "Table");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",

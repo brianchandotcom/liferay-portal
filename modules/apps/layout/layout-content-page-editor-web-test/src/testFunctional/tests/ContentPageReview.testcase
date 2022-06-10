@@ -112,7 +112,7 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -161,7 +161,7 @@ definition {
 
 		PageEditor.resolveComment(fragmentComment = "This is a fragment comment");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -202,7 +202,7 @@ definition {
 			fragmentName = "Static Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -239,7 +239,7 @@ definition {
 			fragmentName = "Rich Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -281,7 +281,7 @@ definition {
 			fragmentName = "Rich Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");
 
@@ -331,7 +331,7 @@ definition {
 			fragmentName = "Rich Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -401,7 +401,7 @@ definition {
 			fragmentName = "Rich Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -460,7 +460,7 @@ definition {
 
 		PageEditor.viewComment(fragmentComment = "Title fragment comment");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -516,7 +516,7 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -642,7 +642,7 @@ definition {
 			fragmentName = "Rich Text",
 			position = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -684,7 +684,7 @@ definition {
 
 		PageEditor.editComment(fragmentCommentEdit = "This is a fragment comment edited.");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",

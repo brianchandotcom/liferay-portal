@@ -95,7 +95,7 @@ definition {
 			selectedName = "Custom Objects 314",
 			styleDisplay = "Table");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -171,7 +171,7 @@ definition {
 			fieldLabel = "Field Picklist",
 			itemName = "Item Test 1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -240,7 +240,7 @@ definition {
 			pagination = "Numeric",
 			selectedName = "Custom Objects 316");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -307,7 +307,7 @@ definition {
 			pagination = "Simple",
 			selectedName = "Custom Objects 317");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -355,7 +355,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -403,7 +403,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -451,7 +451,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -499,7 +499,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -547,7 +547,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -595,7 +595,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1234567891234567");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -645,7 +645,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -783,7 +783,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Blank Display Page");
 
@@ -817,7 +817,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Display Page URL");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openURL();
 
@@ -874,7 +874,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "User Profile Image");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",

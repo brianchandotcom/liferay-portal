@@ -267,7 +267,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public content page with a Category Content widget") {
@@ -282,7 +282,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public widget page with a Category Content widget") {
@@ -309,7 +309,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And Given the Test Public Content Page is set as the Default Category Display Page") {
@@ -467,7 +467,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a private content page with a Category Content widget") {
@@ -483,7 +483,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a private widget page with a Category Content widget") {
@@ -589,7 +589,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a private content page with a Category Content widget") {
@@ -605,7 +605,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public content page with a Category Content widget") {
@@ -620,7 +620,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And Given the private content page is set as the Default Category Display Page") {
@@ -715,7 +715,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public content page with a Category Content widget") {
@@ -730,7 +730,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a private content page with a Category Content widget") {
@@ -746,7 +746,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And Given the Test Public Content Page is set as Default Category Display Page") {
@@ -841,7 +841,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public content page with a Category Content widget") {
@@ -856,7 +856,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public widget page with a Category Content widget") {
@@ -962,7 +962,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a private widget page with a Category Content widget") {
@@ -1023,7 +1023,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the content page is set as the Default Category Display Page") {
@@ -1087,7 +1087,7 @@ definition {
 
 			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the Minium site has a public widget page with a Category Content widget") {
@@ -1147,7 +1147,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Category Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("And given the content page is set as the Default Category Display Page") {

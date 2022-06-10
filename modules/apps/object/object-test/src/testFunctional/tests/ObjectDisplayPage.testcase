@@ -63,7 +63,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "We make it possible for people to reach their full potential to serve others.");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",
@@ -126,7 +126,7 @@ definition {
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Entry Test");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "View",

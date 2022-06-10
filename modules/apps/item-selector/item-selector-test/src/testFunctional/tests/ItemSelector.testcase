@@ -843,7 +843,7 @@ definition {
 			paddingTop = "2",
 			panel = "Styles");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 

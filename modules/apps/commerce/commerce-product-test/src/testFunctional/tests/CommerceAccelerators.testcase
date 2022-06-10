@@ -492,7 +492,7 @@ definition {
 			fragmentName = "HTML",
 			targetFragmentName = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",

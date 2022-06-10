@@ -94,7 +94,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
@@ -181,7 +181,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
@@ -278,7 +278,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
@@ -370,7 +370,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
@@ -462,7 +462,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
@@ -559,7 +559,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 

@@ -73,7 +73,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Table");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 
@@ -210,7 +210,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 

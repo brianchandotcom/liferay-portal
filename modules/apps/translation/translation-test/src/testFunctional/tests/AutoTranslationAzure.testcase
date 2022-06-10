@@ -47,7 +47,7 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Site Name");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "ar/web/site-name/content-page-name");
 

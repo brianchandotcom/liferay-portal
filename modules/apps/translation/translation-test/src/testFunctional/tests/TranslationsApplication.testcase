@@ -478,7 +478,7 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 

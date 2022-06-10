@@ -115,7 +115,7 @@ definition {
 			id = "element-text",
 			text = "New editable fragment es-ES text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
@@ -184,7 +184,7 @@ definition {
 			id = "element-text",
 			text = "New editable fragment ja-JP text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 

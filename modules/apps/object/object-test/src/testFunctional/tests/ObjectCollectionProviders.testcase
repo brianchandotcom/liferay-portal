@@ -80,7 +80,7 @@ definition {
 			filter = "Keywords",
 			fragmentName = "Collection Filter");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Blank Display Page");
 

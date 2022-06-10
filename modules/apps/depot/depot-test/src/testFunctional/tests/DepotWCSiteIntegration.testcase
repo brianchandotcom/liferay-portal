@@ -400,7 +400,7 @@ definition {
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
@@ -441,7 +441,7 @@ definition {
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -530,7 +530,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 

@@ -129,7 +129,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Test Information Template");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -206,7 +206,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Date");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -283,7 +283,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Decimal");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -360,7 +360,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Test Information Template");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -437,7 +437,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Custom Field");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -517,7 +517,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Field Picklist");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
@@ -594,7 +594,7 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Test Information Template");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 

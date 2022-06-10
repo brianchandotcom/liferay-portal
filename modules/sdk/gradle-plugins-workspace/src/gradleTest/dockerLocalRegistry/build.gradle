@@ -1,0 +1,19 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	product = "dxp-7.4-u22"
+}
+
+runGradleTest {
+	dependsOn createDockerfile
+
+	doLast {
+		File dockerfile = createDockerfile.destFile.getAsFile().get()
+
+		assert dockerfile.exists()
+
+		String text = dockerfile.text
+
+		assert text.indexOf("FROM localhost:5000/dxp:7.4.13-u22") != -1;
+	}
+}

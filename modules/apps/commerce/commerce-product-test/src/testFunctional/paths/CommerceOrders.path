@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_LIST_ORDER_TYPE</td>
-	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][3]</td>
+	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][3][contains(.,'${key_orderType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,6 +128,11 @@
 <tr>
 	<td>PLACED_ORDERS_LIST_DATE</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::div[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLACED_ORDERS_LIST_ORDER_TYPE</td>
+	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][2][contains(.,'${key_orderType}')]</td>
 	<td></td>
 </tr>
 <tr>

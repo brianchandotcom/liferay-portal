@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.client.extension.type.internal.validator;
+package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETCustomElement;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CETCustomElementImpl;
-import com.liferay.client.extension.type.validator.CETValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,16 +31,33 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
 @Component(
 	property = "type=" + ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
-	service = CETValidator.class
+	service = CETImplFactory.class
 )
-public class CETCustomElementValidator implements CETValidator {
+public class CETCustomElementImplFactory
+	implements CETImplFactory<CETCustomElement> {
+
+	@Override
+	public CETCustomElement cet(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException {
+
+		return new CETCustomElementImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETCustomElement cet(PortletRequest portletRequest)
+		throws PortalException {
+
+		return new CETCustomElementImpl(portletRequest);
+	}
 
 	@Override
 	public void validate(

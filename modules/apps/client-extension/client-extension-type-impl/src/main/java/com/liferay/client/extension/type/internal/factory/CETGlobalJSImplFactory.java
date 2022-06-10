@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.client.extension.type.internal.validator;
+package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CETGlobalJS;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CETGlobalJSImpl;
-import com.liferay.client.extension.type.validator.CETValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,9 +33,23 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "type=" + ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-	service = CETValidator.class
+	service = CETImplFactory.class
 )
-public class CETGlobalJSValidator implements CETValidator {
+public class CETGlobalJSImplFactory implements CETImplFactory<CETGlobalJS> {
+
+	@Override
+	public CETGlobalJS cet(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException {
+
+		return new CETGlobalJSImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETGlobalJS cet(PortletRequest portletRequest)
+		throws PortalException {
+
+		return new CETGlobalJSImpl(portletRequest);
+	}
 
 	@Override
 	public void validate(

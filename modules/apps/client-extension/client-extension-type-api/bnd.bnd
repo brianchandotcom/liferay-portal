@@ -6,5 +6,4 @@ Export-Package:\
 	com.liferay.client.extension.type.configuration,\
 	com.liferay.client.extension.type.deployer,\
 	com.liferay.client.extension.type.factory,\
-	com.liferay.client.extension.type.manager,\
-	com.liferay.client.extension.type.validator
+	com.liferay.client.extension.type.manager

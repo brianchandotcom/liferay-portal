@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.client.extension.type.internal.validator;
+package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.type.CETThemeFavicon;
-import com.liferay.client.extension.type.internal.CETThemeFaviconImpl;
-import com.liferay.client.extension.type.validator.CETValidator;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETThemeJS;
+import com.liferay.client.extension.type.factory.CETImplFactory;
+import com.liferay.client.extension.type.internal.CETThemeJSImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,10 +32,24 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera Avellón
  */
 @Component(
-	property = "type=" + ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-	service = CETValidator.class
+	property = "type=" + ClientExtensionEntryConstants.TYPE_THEME_JS,
+	service = CETImplFactory.class
 )
-public class CETGlobalFaviconValidator implements CETValidator {
+public class CETThemeJSImplFactory implements CETImplFactory<CETThemeJS> {
+
+	@Override
+	public CETThemeJS cet(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException {
+
+		return new CETThemeJSImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETThemeJS cet(PortletRequest portletRequest)
+		throws PortalException {
+
+		return new CETThemeJSImpl(portletRequest);
+	}
 
 	@Override
 	public void validate(
@@ -40,10 +57,10 @@ public class CETGlobalFaviconValidator implements CETValidator {
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		CETThemeFavicon newCETThemeFaviconImpl = new CETThemeFaviconImpl(
+		CETThemeJS newCETThemeJSImpl = new CETThemeJSImpl(
 			newTypeSettingsUnicodeProperties);
 
-		if (!Validator.isUrl(newCETThemeFaviconImpl.getURL())) {
+		if (!Validator.isUrl(newCETThemeJSImpl.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"please-enter-a-valid-url");
 		}

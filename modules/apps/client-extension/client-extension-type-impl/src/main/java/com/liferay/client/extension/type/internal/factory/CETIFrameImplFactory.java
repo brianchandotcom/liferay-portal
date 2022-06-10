@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.client.extension.type.internal.validator;
+package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CETIFrame;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CETIFrameImpl;
-import com.liferay.client.extension.type.validator.CETValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,16 +27,30 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
 @Component(
 	property = "type=" + ClientExtensionEntryConstants.TYPE_IFRAME,
-	service = CETValidator.class
+	service = CETImplFactory.class
 )
-public class CETIFrameValidator implements CETValidator {
+public class CETIFrameImplFactory implements CETImplFactory<CETIFrame> {
+
+	@Override
+	public CETIFrame cet(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException {
+
+		return new CETIFrameImpl(clientExtensionEntry);
+	}
+
+	@Override
+	public CETIFrame cet(PortletRequest portletRequest) throws PortalException {
+		return new CETIFrameImpl(portletRequest);
+	}
 
 	@Override
 	public void validate(

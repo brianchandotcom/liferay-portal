@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.client.extension.type.validator;
+package com.liferay.client.extension.type.factory;
 
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CET;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
 @ProviderType
-public interface CETValidator {
+public interface CETImplFactory<T extends CET> {
+
+	public T cet(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException;
+
+	public T cet(PortletRequest portletRequest) throws PortalException;
 
 	public void validate(
 			UnicodeProperties newTypeSettingsUnicodeProperties,

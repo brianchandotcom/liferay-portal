@@ -114,13 +114,13 @@ definition {
 
 		Audit.openAuditAdmin();
 
-		Audit.viewAuditEntries(
-			clientIP = "127.0.0.1",
-			createDate = "Seconds Ago",
-			id = "",
-			position = "1",
+		Audit.viewAuditDetailsByPosition(
+			additionalInformation = "Custom Field",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectField",
+			nameByPosition = "2",
 			resourceAction = "ADD",
-			resourceID = "",
 			resourceName = "ObjectField",
 			userName = "Test Test");
 	}
@@ -289,13 +289,12 @@ definition {
 
 		Audit.openAuditAdmin();
 
-		Audit.viewAuditEntries(
-			clientIP = "127.0.0.1",
-			createDate = "Seconds Ago",
-			id = "",
-			position = "1",
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Field",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectField",
 			resourceAction = "DELETE",
-			resourceID = "",
 			resourceName = "ObjectField",
 			userName = "Test Test");
 	}
@@ -537,13 +536,12 @@ definition {
 
 		Audit.openAuditAdmin();
 
-		Audit.viewAuditEntries(
-			clientIP = "127.0.0.1",
-			createDate = "Seconds Ago",
-			id = "",
-			position = "1",
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Field Update",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectField",
 			resourceAction = "UPDATE",
-			resourceID = "",
 			resourceName = "ObjectField",
 			userName = "Test Test");
 	}

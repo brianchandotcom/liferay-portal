@@ -3183,6 +3183,24 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		return "${fileSize}";
 	}
 
+	macro getTopperStylesClass {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		var javascript = '''
+function getWebElement(locator) {
+  return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
+return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+		''';
+
+		var topperStylesClass = selenium.getEval("${javascript}");
+
+		return "${topperStylesClass}";
+	}
+
 	macro getWidthOfSelectedImageResolution {
 		var key_resolutionLabel = "Width";
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.RequestDispatcherAttributeNames;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -183,8 +184,9 @@ public class RestrictPortletServletRequest
 		}
 	}
 
-	private static final String[] _REQUEST_SHARED_ATTRIBUTES =
-		PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES);
+	private static final String[] _REQUEST_SHARED_ATTRIBUTES = ArrayUtil.append(
+		PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES),
+		"LIFERAY_SHARED_");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RestrictPortletServletRequest.class);

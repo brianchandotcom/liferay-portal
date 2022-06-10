@@ -153,12 +153,11 @@ public class FaviconManagerImpl implements FaviconManager {
 		return null;
 	}
 
-	private CET _getCET(
-		long classNameId, long classPK, long companyId, String type) {
-
+	private CET _getCET(long classNameId, long classPK, long companyId) {
 		ClientExtensionEntryRel clientExtensionEntryRel =
 			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				classNameId, classPK, type);
+				classNameId, classPK,
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 		if (clientExtensionEntryRel == null) {
 			return null;
@@ -171,9 +170,7 @@ public class FaviconManagerImpl implements FaviconManager {
 	private String _getCETThemeFaviconURL(
 		long classNameId, long classPK, long companyId) {
 
-		CET cet = _getCET(
-			classNameId, classPK, companyId,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+		CET cet = _getCET(classNameId, classPK, companyId);
 
 		if (cet == null) {
 			return null;

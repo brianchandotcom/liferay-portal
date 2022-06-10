@@ -107,7 +107,7 @@ public class EditClientExtensionEntryMVCActionCommand
 		_clientExtensionEntryService.addClientExtensionEntry(
 			StringPool.BLANK, description, nameMap,
 			ParamUtil.getString(actionRequest, "properties"), sourceCodeURL,
-			type, _cetFactory.typeSettings(actionRequest, type));
+			type, String.valueOf(_cetFactory.cet(actionRequest, type)));
 	}
 
 	private ClientExtensionEntry _fetchClientExtensionEntry(
@@ -140,8 +140,9 @@ public class EditClientExtensionEntryMVCActionCommand
 		_clientExtensionEntryService.updateClientExtensionEntry(
 			clientExtensionEntry.getClientExtensionEntryId(), description,
 			nameMap, properties, sourceCodeURL,
-			_cetFactory.typeSettings(
-				actionRequest, clientExtensionEntry.getType()));
+			String.valueOf(
+				_cetFactory.cet(
+					actionRequest, clientExtensionEntry.getType())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

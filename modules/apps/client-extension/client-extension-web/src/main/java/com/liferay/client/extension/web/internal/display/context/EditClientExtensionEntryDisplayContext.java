@@ -16,6 +16,7 @@ package com.liferay.client.extension.web.internal.display.context;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CETCustomElement;
 import com.liferay.client.extension.type.CETGlobalCSS;
 import com.liferay.client.extension.type.CETGlobalJS;
@@ -27,6 +28,7 @@ import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,10 +56,21 @@ import javax.servlet.http.HttpServletRequest;
 public class EditClientExtensionEntryDisplayContext {
 
 	public EditClientExtensionEntryDisplayContext(
-		CETFactory cetFactory, ClientExtensionEntry clientExtensionEntry,
-		PortletRequest portletRequest) {
+			CETFactory cetFactory, ClientExtensionEntry clientExtensionEntry,
+			PortletRequest portletRequest)
+		throws PortalException {
 
-		_cetFactory = cetFactory;
+		if (clientExtensionEntry == null) {
+			_cet = cetFactory.cet(
+				portletRequest,
+				ParamUtil.getString(
+					portletRequest, "type",
+					ClientExtensionEntryConstants.TYPE_IFRAME));
+		}
+		else {
+			_cet = cetFactory.cet(clientExtensionEntry);
+		}
+
 		_clientExtensionEntry = clientExtensionEntry;
 		_portletRequest = portletRequest;
 	}
@@ -70,12 +83,12 @@ public class EditClientExtensionEntryDisplayContext {
 		return Constants.UPDATE;
 	}
 
-	public String[] getCustomElementCSSURLs() {
+	public String[] getCustomElementCSSURLs() throws PortalException {
 		String[] customElementCSSURLs = StringPool.EMPTY_ARRAY;
 
-		CETCustomElement cetCustomElement = _getCETCustomElement();
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
 
-		if (cetCustomElement != null) {
 			String cssURLsString = cetCustomElement.getCSSURLs();
 
 			customElementCSSURLs = cssURLsString.split(StringPool.NEW_LINE);
@@ -91,20 +104,25 @@ public class EditClientExtensionEntryDisplayContext {
 		return customElementCSSURLs;
 	}
 
-	public String getCustomElementHTMLName() {
-		CETCustomElement cetCustomElement = _getCETCustomElement();
+	public String getCustomElementHTMLName() throws PortalException {
+		String htmlElementName = StringPool.BLANK;
+
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
+
+			htmlElementName = cetCustomElement.getHTMLElementName();
+		}
 
 		return ParamUtil.getString(
-			_getHttpServletRequest(), "customElementHTMLName",
-			cetCustomElement.getHTMLElementName());
+			_getHttpServletRequest(), "customElementHTMLName", htmlElementName);
 	}
 
-	public String[] getCustomElementURLs() {
+	public String[] getCustomElementURLs() throws PortalException {
 		String[] customElementURLs = StringPool.EMPTY_ARRAY;
 
-		CETCustomElement cetCustomElement = _getCETCustomElement();
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
 
-		if (cetCustomElement != null) {
 			String urlsString = cetCustomElement.getURLs();
 
 			customElementURLs = urlsString.split(StringPool.NEW_LINE);
@@ -130,22 +148,16 @@ public class EditClientExtensionEntryDisplayContext {
 			_clientExtensionEntry, _portletRequest, "externalReferenceCode");
 	}
 
-	public String getFriendlyURLMapping() {
+	public String getFriendlyURLMapping() throws PortalException {
 		String friendlyURLMapping = StringPool.BLANK;
 
-		String type = getType();
-
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			CETCustomElement cetCustomElement = _getCETCustomElement();
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
 
 			friendlyURLMapping = cetCustomElement.getFriendlyURLMapping();
 		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			CETIFrame cetiFrame = _getCETIFrame();
+		else if (_cet instanceof CETIFrame) {
+			CETIFrame cetiFrame = (CETIFrame)_cet;
 
 			friendlyURLMapping = cetiFrame.getFriendlyURLMapping();
 		}
@@ -153,25 +165,40 @@ public class EditClientExtensionEntryDisplayContext {
 		return friendlyURLMapping;
 	}
 
-	public String getGlobalCSSURL() {
-		CETGlobalCSS cetGlobalCSS = _getCETGlobalCSS();
+	public String getGlobalCSSURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "globalCSSURL", cetGlobalCSS.getURL());
+		if (_cet instanceof CETGlobalCSS) {
+			CETGlobalCSS cetGlobalCSS = (CETGlobalCSS)_cet;
+
+			url = cetGlobalCSS.getURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "globalCSSURL", url);
 	}
 
-	public String getGlobalJSURL() {
-		CETGlobalJS cetGlobalJS = _getCETGlobalJS();
+	public String getGlobalJSURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "globalJSURL", cetGlobalJS.getURL());
+		if (_cet instanceof CETGlobalJS) {
+			CETGlobalJS cetGlobalJS = (CETGlobalJS)_cet;
+
+			url = cetGlobalJS.getURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "globalJSURL", url);
 	}
 
-	public String getIFrameURL() {
-		CETIFrame cetIFrame = _getCETIFrame();
+	public String getIFrameURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "iFrameURL", cetIFrame.getURL());
+		if (_cet instanceof CETIFrame) {
+			CETIFrame cetiFrame = (CETIFrame)_cet;
+
+			url = cetiFrame.getURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "iFrameURL", url);
 	}
 
 	public String getName() {
@@ -179,22 +206,16 @@ public class EditClientExtensionEntryDisplayContext {
 			_clientExtensionEntry, _portletRequest, "name");
 	}
 
-	public String getPortletCategoryName() {
+	public String getPortletCategoryName() throws PortalException {
 		String portletCategoryName = StringPool.BLANK;
 
-		String type = getType();
-
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			CETCustomElement cetCustomElement = _getCETCustomElement();
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
 
 			portletCategoryName = cetCustomElement.getPortletCategoryName();
 		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			CETIFrame cetiFrame = _getCETIFrame();
+		else if (_cet instanceof CETIFrame) {
+			CETIFrame cetiFrame = (CETIFrame)_cet;
 
 			portletCategoryName = cetiFrame.getPortletCategoryName();
 		}
@@ -206,7 +227,9 @@ public class EditClientExtensionEntryDisplayContext {
 		return portletCategoryName;
 	}
 
-	public List<SelectOption> getPortletCategoryNameSelectOptions() {
+	public List<SelectOption> getPortletCategoryNameSelectOptions()
+		throws PortalException {
+
 		List<SelectOption> selectOptions = new ArrayList<>();
 
 		boolean found = false;
@@ -271,32 +294,52 @@ public class EditClientExtensionEntryDisplayContext {
 		return ParamUtil.getString(_portletRequest, "redirect");
 	}
 
-	public String getThemeCSSClayURL() {
-		CETThemeCSS cetThemeCSS = _getCETThemeCSS();
+	public String getThemeCSSClayURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "themeCSSClayURL", cetThemeCSS.getClayURL());
+		if (_cet instanceof CETThemeCSS) {
+			CETThemeCSS cetThemeCSS = (CETThemeCSS)_cet;
+
+			url = cetThemeCSS.getClayURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "themeCSSMainURL", url);
 	}
 
-	public String getThemeCSSMainURL() {
-		CETThemeCSS cetThemeCSS = _getCETThemeCSS();
+	public String getThemeCSSMainURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "themeCSSMainURL", cetThemeCSS.getMainURL());
+		if (_cet instanceof CETThemeCSS) {
+			CETThemeCSS cetThemeCSS = (CETThemeCSS)_cet;
+
+			url = cetThemeCSS.getMainURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "themeCSSMainURL", url);
 	}
 
-	public String getThemeFaviconURL() {
-		CETThemeFavicon cetThemeFavicon = _getCETThemeFavicon();
+	public String getThemeFaviconURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "themeFaviconURL", cetThemeFavicon.getURL());
+		if (_cet instanceof CETThemeFavicon) {
+			CETThemeFavicon cetThemeFavicon = (CETThemeFavicon)_cet;
+
+			url = cetThemeFavicon.getURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "themeFaviconURL", url);
 	}
 
-	public String getThemeJSURL() {
-		CETThemeJS cetThemeJS = _getCETThemeJS();
+	public String getThemeJSURL() throws PortalException {
+		String url = StringPool.BLANK;
 
-		return ParamUtil.getString(
-			_portletRequest, "themeJSURL", cetThemeJS.getURL());
+		if (_cet instanceof CETThemeJS) {
+			CETThemeJS cetThemeJS = (CETThemeJS)_cet;
+
+			url = cetThemeJS.getURL();
+		}
+
+		return ParamUtil.getString(_portletRequest, "themeJSURL", url);
 	}
 
 	public String getTitle() {
@@ -358,12 +401,17 @@ public class EditClientExtensionEntryDisplayContext {
 					ClientExtensionEntryConstants.TYPE_THEME_JS, type)));
 	}
 
-	public boolean isCustomElementUseESM() {
-		CETCustomElement cetCustomElement = _getCETCustomElement();
+	public boolean isCustomElementUseESM() throws PortalException {
+		boolean useESM = false;
+
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
+
+			useESM = cetCustomElement.isUseESM();
+		}
 
 		return ParamUtil.getBoolean(
-			_getHttpServletRequest(), "customElementUseESM",
-			cetCustomElement.isUseESM());
+			_getHttpServletRequest(), "customElementUseESM", useESM);
 	}
 
 	public boolean isEditingClientExtensionEntryType(String... types) {
@@ -376,22 +424,16 @@ public class EditClientExtensionEntryDisplayContext {
 		return false;
 	}
 
-	public boolean isInstanceable() {
+	public boolean isInstanceable() throws PortalException {
 		boolean instanceable = false;
 
-		String type = getType();
-
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			CETCustomElement cetCustomElement = _getCETCustomElement();
+		if (_cet instanceof CETCustomElement) {
+			CETCustomElement cetCustomElement = (CETCustomElement)_cet;
 
 			instanceable = cetCustomElement.isInstanceable();
 		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			CETIFrame cetiFrame = _getCETIFrame();
+		else if (_cet instanceof CETIFrame) {
+			CETIFrame cetiFrame = (CETIFrame)_cet;
 
 			instanceable = cetiFrame.isInstanceable();
 		}
@@ -416,64 +458,6 @@ public class EditClientExtensionEntryDisplayContext {
 		return false;
 	}
 
-	private CETCustomElement _getCETCustomElement() {
-		if (_cetCustomElement == null) {
-			_cetCustomElement = _cetFactory.cetCustomElement(
-				_clientExtensionEntry);
-		}
-
-		return _cetCustomElement;
-	}
-
-	private CETGlobalCSS _getCETGlobalCSS() {
-		if (_cetGlobalCSS == null) {
-			_cetGlobalCSS = _cetFactory.cetGlobalCSS(_clientExtensionEntry);
-		}
-
-		return _cetGlobalCSS;
-	}
-
-	private CETGlobalJS _getCETGlobalJS() {
-		if (_cetGlobalJS == null) {
-			_cetGlobalJS = _cetFactory.cetGlobalJS(_clientExtensionEntry);
-		}
-
-		return _cetGlobalJS;
-	}
-
-	private CETIFrame _getCETIFrame() {
-		if (_cetIFrame == null) {
-			_cetIFrame = _cetFactory.cetIFrame(_clientExtensionEntry);
-		}
-
-		return _cetIFrame;
-	}
-
-	private CETThemeCSS _getCETThemeCSS() {
-		if (_cetThemeCSS == null) {
-			_cetThemeCSS = _cetFactory.cetThemeCSS(_clientExtensionEntry);
-		}
-
-		return _cetThemeCSS;
-	}
-
-	private CETThemeFavicon _getCETThemeFavicon() {
-		if (_cetThemeFavicon == null) {
-			_cetThemeFavicon = _cetFactory.cetThemeFavicon(
-				_clientExtensionEntry);
-		}
-
-		return _cetThemeFavicon;
-	}
-
-	private CETThemeJS _getCETThemeJS() {
-		if (_cetThemeJS == null) {
-			_cetThemeJS = _cetFactory.cetThemeJS(_clientExtensionEntry);
-		}
-
-		return _cetThemeJS;
-	}
-
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_portletRequest);
 	}
@@ -485,14 +469,7 @@ public class EditClientExtensionEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private CETCustomElement _cetCustomElement;
-	private final CETFactory _cetFactory;
-	private CETGlobalCSS _cetGlobalCSS;
-	private CETGlobalJS _cetGlobalJS;
-	private CETIFrame _cetIFrame;
-	private CETThemeCSS _cetThemeCSS;
-	private CETThemeFavicon _cetThemeFavicon;
-	private CETThemeJS _cetThemeJS;
+	private final CET _cet;
 	private final ClientExtensionEntry _clientExtensionEntry;
 	private final PortletRequest _portletRequest;
 

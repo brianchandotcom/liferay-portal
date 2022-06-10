@@ -762,7 +762,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<form action=\"/c/info/info-item/create\" class=\"");
+		jspWriter.write("<form action=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getAddInfoItemActionURL());
+		jspWriter.write("\" class=\"");
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)layoutStructureItem;

@@ -4374,13 +4374,87 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "dm-document-title");
 	}
 
-	@description = "This test covers LPS-154440."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154440. It ensures that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		// TODO LPS-154440
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Depot Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
+			site = "false",
+			title = "Dynamic Collection");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(
+			assetListName = "Dynamic Collection",
+			depotName = "Test Depot Name");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DepotNavigator.openToEditDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
 	}
 
 	@description = "This test covers LPS-154443."

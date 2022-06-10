@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ALL</td>
+	<td>//h5[contains(@class,'title')][normalize-space(text())='${title}']//following-sibling::div[contains(@class,'search-container')]//input[contains(@title,'Select All')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

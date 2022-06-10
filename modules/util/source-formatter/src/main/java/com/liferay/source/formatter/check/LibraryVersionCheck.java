@@ -32,7 +32,10 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,22 +80,15 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkIsContainVulnerabilities(
-			String fileName, String packageName, String version,
-			CloseableHttpClient httpClient,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+	private void _addResultList(
+			String packageName, String cursor, CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
+			List<SecurityVulnerabilityNode> securityVulnerabilityNodes)
 		throws IOException {
 
-		_checkIsContainVulnerabilities(
-			fileName, packageName, version, null, httpClient,
-			securityAdvisoryEcosystemEnum);
-	}
-
-	private void _checkIsContainVulnerabilities(
-			String fileName, String packageName, String version, String cursor,
-			CloseableHttpClient httpClient,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
-		throws IOException {
+		if (_pageNumber == 0) {
+			return;
+		}
 
 		HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
 
@@ -101,10 +97,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		httpPost.addHeader(
 			"Content-Type",
 			"application/json; charset=utf-8; application/graphql");
-
-		if (_pageNumber == 0) {
-			return;
-		}
 
 		String queryArguments = StringBundler.concat(
 			"first: ", _pageNumber, ", package:\\\"", packageName,
@@ -159,40 +151,31 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				for (Object tmpObject : nodesJSONArray) {
 					JSONObject tmpJSONObject = (JSONObject)tmpObject;
 
-					String vulnerableVersionRange = tmpJSONObject.getString(
-						"vulnerableVersionRange");
+					SecurityVulnerabilityNode securityVulnerabilityNode =
+						new SecurityVulnerabilityNode();
 
-					String[] vulnerableVersionRangeArray =
-						vulnerableVersionRange.split(StringPool.COMMA);
+					JSONObject advisoryJSONObject = tmpJSONObject.getJSONObject(
+						"advisory");
 
-					if (_compareVersion(version, vulnerableVersionRangeArray)) {
-						JSONObject advisoryJSONObject =
-							tmpJSONObject.getJSONObject("advisory");
+					securityVulnerabilityNode.setSummary(
+						advisoryJSONObject.getString("summary"));
+					securityVulnerabilityNode.setPermalink(
+						advisoryJSONObject.getString("permalink"));
 
-						String summary = advisoryJSONObject.getString(
-							"summary");
-						String permalink = advisoryJSONObject.getString(
-							"permalink");
+					securityVulnerabilityNode.setVulnerableVersionRange(
+						tmpJSONObject.getString("vulnerableVersionRange"));
 
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Library '", packageName, "' ", version,
-								" contain vulnerabilities by '", summary, "', ",
-								"look detail in ", permalink));
-
-						return;
-					}
+					securityVulnerabilityNodes.add(securityVulnerabilityNode);
 				}
 
 				JSONObject pageInfoJSONObject =
 					securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
 
 				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
-					_checkIsContainVulnerabilities(
-						fileName, packageName, version,
-						pageInfoJSONObject.getString("endCursor"), httpClient,
-						securityAdvisoryEcosystemEnum);
+					_addResultList(
+						packageName, pageInfoJSONObject.getString("endCursor"),
+						httpClient, securityAdvisoryEcosystemEnum,
+						securityVulnerabilityNodes);
 				}
 			}
 		}
@@ -201,6 +184,47 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				_log.debug(jsonException);
 			}
 		}
+	}
+
+	private void _checkIsContainVulnerabilities(
+		String fileName, String packageName, String version) {
+
+		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+			_queryResultMap.get(packageName);
+
+		for (SecurityVulnerabilityNode securityVulnerabilityNode :
+				securityVulnerabilityNodes) {
+
+			if (_compareVersion(
+					version,
+					securityVulnerabilityNode.getVulnerableVersionRange())) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Library '", packageName, "' ", version,
+						" contain vulnerabilities by '",
+						securityVulnerabilityNode.getSummary(),
+						"', look detail in ",
+						securityVulnerabilityNode.getPermalink()));
+
+				return;
+			}
+		}
+	}
+
+	private void _checkIsContainVulnerabilities(
+			String fileName, String packageName, String version,
+			CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+		throws IOException {
+
+		if (!_queryResultMap.containsKey(packageName)) {
+			_getServerData(
+				packageName, httpClient, securityAdvisoryEcosystemEnum);
+		}
+
+		_checkIsContainVulnerabilities(fileName, packageName, version);
 	}
 
 	private void _checkVersionInJsonFile(
@@ -228,7 +252,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private boolean _compareVersion(
-		String version, String[] vulnerableVersionArray) {
+		String version, String vulnerableVersionRange) {
 
 		boolean result = false;
 
@@ -237,7 +261,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		ComparableVersion currentComparableVersion = new ComparableVersion(
 			version);
 
-		for (String vulnerableVersion : vulnerableVersionArray) {
+		String[] vulnerableVersionRangeArray = vulnerableVersionRange.split(
+			StringPool.COMMA);
+
+		for (String vulnerableVersion : vulnerableVersionRangeArray) {
 			vulnerableVersion = StringUtil.trim(vulnerableVersion);
 
 			char element = vulnerableVersion.charAt(0);
@@ -305,6 +332,25 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return null;
 	}
 
+	private synchronized void _getServerData(
+			String packageName, CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+		throws IOException {
+
+		if (_queryResultMap.containsKey(packageName)) {
+			return;
+		}
+
+		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+			new ArrayList<>();
+
+		_addResultList(
+			packageName, null, httpClient, securityAdvisoryEcosystemEnum,
+			securityVulnerabilityNodes);
+
+		_queryResultMap.put(packageName, securityVulnerabilityNodes);
+	}
+
 	private void _gradleLibraryVersionCheck(String fileName, String content)
 		throws IOException {
 
@@ -333,7 +379,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				break;
 			}
 
-			y++;
+			y = content.indexOf("}", y + 1);
 		}
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -349,7 +395,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 				if (Validator.isNull(line) ||
 					!line.matches(
-						"(compile|compileInclude|compileOnly|classpath) .+")) {
+						"(compile|compileInclude|compileOnly|classpath" +
+							"|testCompile) .+")) {
 
 					continue;
 				}
@@ -361,8 +408,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 				if (Validator.isNull(group) || Validator.isNull(name) ||
 					Validator.isNull(version)) {
-
-					x++;
 
 					continue;
 				}
@@ -579,6 +624,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		"name: \"([^,\n\\\\)]+)\"");
 	private static final Pattern _gradleVersionPattern = Pattern.compile(
 		"version: \"([^,\n\\\\)]+)\"");
+	private static final Map<String, List<SecurityVulnerabilityNode>>
+		_queryResultMap = new ConcurrentHashMap<>();
 	private static final Pattern _xmlArtifactIdPattern = Pattern.compile(
 		"<artifactId>(.+)</artifactId>");
 	private static final Pattern _xmlGroupIdPattern = Pattern.compile(
@@ -594,6 +641,56 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private int _pageNumber;
 	private List<String> _severities;
+
+	private static class SecurityVulnerabilityNode {
+
+		public String getPackageEcosystem() {
+			return _packageEcosystem;
+		}
+
+		public String getPackageName() {
+			return _packageName;
+		}
+
+		public String getPermalink() {
+			return _permalink;
+		}
+
+		public String getSummary() {
+			return _summary;
+		}
+
+		public String getVulnerableVersionRange() {
+			return _vulnerableVersionRange;
+		}
+
+		public void setPackageEcosystem(String packageEcosystem) {
+			_packageEcosystem = packageEcosystem;
+		}
+
+		public void setPackageName(String packageName) {
+			_packageName = packageName;
+		}
+
+		public void setPermalink(String permalink) {
+			_permalink = permalink;
+		}
+
+		public void setSummary(String summary) {
+			_summary = summary;
+		}
+
+		public void setVulnerableVersionRange(String vulnerableVersionRange) {
+			_vulnerableVersionRange = vulnerableVersionRange;
+		}
+
+		private String _packageEcosystem;
+		private String _packageName;
+		private String _permalink;
+		private String _summary;
+		private String _vulnerableVersionRange;
+
+	}
 
 	private enum SecurityAdvisoryEcosystemEnum {
 

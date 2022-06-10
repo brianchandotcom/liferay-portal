@@ -235,7 +235,7 @@ definition {
 		}
 
 		task ("When the page designer publishes the page") {
-			Modal.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+			PageEditor.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
 		}
 
 		task ("Then the page designer cannot see hidden fragments at view mode") {
@@ -330,7 +330,7 @@ definition {
 		}
 
 		task ("When the page designer marks the display page template as default") {
-			Modal.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+			PageEditor.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

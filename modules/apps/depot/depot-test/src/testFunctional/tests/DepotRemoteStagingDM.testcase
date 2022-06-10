@@ -4105,4 +4105,13 @@ definition {
 
 	}
 
+	@description = "This test covers LPS-155797."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageIsStillAccessibleAfterDisablingStaging {
+
+		// TODO LPS-155797
+
+	}
+
 }

@@ -950,6 +950,15 @@ definition {
 			previewImage = "Image_2.jpg");
 	}
 
+	@description = "This test covers LPS-155795."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageIsStillAccessibleAfterDisablingStaging {
+
+		// TODO LPS-155795
+
+	}
+
 	@description = "This ensures that the custom document type being used by document can be edited and republished."
 	@priority = "5"
 	@refactorneeded

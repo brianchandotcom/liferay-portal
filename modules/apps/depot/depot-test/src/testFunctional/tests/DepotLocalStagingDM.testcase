@@ -3909,4 +3909,13 @@ definition {
 			siteList = "Site Name");
 	}
 
+	@description = "This test covers LPS-155796."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageIsStillAccessibleAfterDisablingStaging {
+
+		// TODO LPS-155796
+
+	}
+
 }

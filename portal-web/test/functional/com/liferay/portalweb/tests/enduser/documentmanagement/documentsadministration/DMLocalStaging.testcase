@@ -1173,6 +1173,15 @@ definition {
 			previewImage = "Image_2.jpg");
 	}
 
+	@description = "This test covers LPS-155794."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageIsStillAccessibleAfterDisablingStaging {
+
+		// TODO LPS-155794
+
+	}
+
 	@description = "This test covers LPS-82539."
 	@priority = "5"
 	@refactordone

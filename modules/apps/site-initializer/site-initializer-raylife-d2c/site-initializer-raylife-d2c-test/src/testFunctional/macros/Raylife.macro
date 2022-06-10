@@ -43,7 +43,7 @@ definition {
 		AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
 
 		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			Pause(locator1 = "1500");
+			Pause(locator1 = "2500");
 		}
 
 		Refresh();

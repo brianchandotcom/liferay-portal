@@ -57,9 +57,9 @@ definition {
 				userLoginFullName = "Test Test");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-			
+
 			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-			
+
 			Workflow.assignTaskToUser(
 				assetTitle = "Client Extension Entry",
 				assetType = "Client Extension Entry",

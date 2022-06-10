@@ -912,12 +912,14 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
+		var priceListEntryProduct = '''"MIN55861"''';
+
 		Type(
 			key_title = "Add SKUs",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "MIN55861");
+			value1 = "${priceListEntryProduct}");
 
-		Pause(locator1 = "2000");
+		AssertElementPresent(locator1 = "Button#SELECT");
 
 		Button.clickSelect();
 
@@ -938,9 +940,9 @@ definition {
 		Type(
 			key_title = "Add SKUs",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "MIN55861");
+			value1 = "${priceListEntryProduct}");
 
-		Pause(locator1 = "2000");
+		AssertElementPresent(locator1 = "Button#SELECT");
 
 		Button.clickSelect();
 
@@ -2335,10 +2337,14 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 		for (var sku : list "MIN55861,MIN93015") {
+			var quotedSku = '''"${sku}"''';
+
 			Type(
 				key_title = "Add SKUs",
 				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-				value1 = "'${sku}'");
+				value1 = "${quotedSku}");
+
+			AssertElementPresent(locator1 = "Button#SELECT");
 
 			Button.clickSelect();
 

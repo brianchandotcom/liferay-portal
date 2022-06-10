@@ -1,5 +1,33 @@
 definition {
 
+	macro publish {
+		Button.click(button = "Publish");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "${warningMessage}");
+
+		if ("${action}" == "Cancel") {
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+		else if ("${action}" == "Continue") {
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			Click(
+				key_text = "Publish",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro save {
 		Click(locator1 = "Modal#SAVE_BUTTON");
 

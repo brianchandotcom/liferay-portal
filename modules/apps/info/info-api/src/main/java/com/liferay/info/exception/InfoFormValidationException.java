@@ -22,8 +22,6 @@ import com.liferay.petra.string.StringPool;
 public class InfoFormValidationException extends InfoFormException {
 
 	public InfoFormValidationException() {
-		super("There are validation errors");
-
 		_infoFieldUniqueId = StringPool.BLANK;
 		_languageKey =
 			"an-error-has-occurred-and-the-form-could-not-be-sent.-please-" +
@@ -34,8 +32,6 @@ public class InfoFormValidationException extends InfoFormException {
 	public InfoFormValidationException(
 		String infoFieldUniqueId, String languageKey) {
 
-		super("There are validation errors");
-
 		_infoFieldUniqueId = infoFieldUniqueId;
 		_languageKey = languageKey;
 
@@ -45,8 +41,6 @@ public class InfoFormValidationException extends InfoFormException {
 	public InfoFormValidationException(
 		String infoFieldUniqueId, String languageKey, Object[] args) {
 
-		super("There are validation errors");
-
 		_infoFieldUniqueId = infoFieldUniqueId;
 		_languageKey = languageKey;
 		_args = args;
@@ -55,8 +49,6 @@ public class InfoFormValidationException extends InfoFormException {
 	public InfoFormValidationException(
 		String infoFieldUniqueId, String languageKey, String message,
 		Object[] args, Throwable throwable) {
-
-		super(message, throwable);
 
 		_infoFieldUniqueId = infoFieldUniqueId;
 		_languageKey = languageKey;

@@ -24,18 +24,6 @@ import java.util.Locale;
  */
 public class InfoFormException extends PortalException {
 
-	public InfoFormException(String msg) {
-		super(msg);
-	}
-
-	public InfoFormException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public InfoFormException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
 			locale,

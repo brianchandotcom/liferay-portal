@@ -1,0 +1,17 @@
+definition {
+
+	macro viewQuickActionMenuNotPresent {
+		AssertNotVisible(
+			key_title = "${title}",
+			locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
+
+		AssertNotVisible(
+			key_title = "${title}",
+			locator1 = "FrontendDataSet#EDIT_ACTION_BUTTON");
+
+		AssertNotVisible(
+			key_title = "${title}",
+			locator1 = "FrontendDataSet#DELETE_ACTION_BUTTON");
+	}
+
+}

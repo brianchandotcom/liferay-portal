@@ -106,7 +106,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
 			key_productSku = "MIN55861",
@@ -129,7 +129,7 @@ definition {
 
 		Refresh();
 
-		for (var column : list "2-${orderId},3-Italy,4-0,5-1") {
+		for (var column : list "2-${orderId},4-Italy,5-0,6-1") {
 			var key_columnNumber = StringUtil.extractFirst("${column}", "-");
 			var currentValue = StringUtil.extractLast("${column}", "-");
 

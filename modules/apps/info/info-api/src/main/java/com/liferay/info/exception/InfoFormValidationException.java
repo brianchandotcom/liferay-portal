@@ -15,6 +15,9 @@
 package com.liferay.info.exception;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 /**
  * @author Lourdes Fernández Besada
@@ -73,7 +76,22 @@ public class InfoFormValidationException extends InfoFormException {
 			super(
 				infoFieldUniqueId, "the-attachment-has-to-be-x-or-less",
 				new String[] {maximumSizeAllowed});
+
+			_maximumSizeAllowed = maximumSizeAllowed;
 		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.format(
+				locale, "the-attachment-has-to-be-x-or-less",
+				_maximumSizeAllowed);
+		}
+
+		public String getMaximumSizeAllowed() {
+			return _maximumSizeAllowed;
+		}
+
+		private final String _maximumSizeAllowed;
 
 	}
 
@@ -86,7 +104,22 @@ public class InfoFormValidationException extends InfoFormException {
 			super(
 				infoFieldUniqueId, "the-accepted-extensions-for-the-file-are-x",
 				new String[] {validFileExtensions});
+
+			_validFileExtensions = validFileExtensions;
 		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.format(
+				locale, "the-accepted-extensions-for-the-file-are-x",
+				_validFileExtensions);
+		}
+
+		public String getValidFileExtensions() {
+			return _validFileExtensions;
+		}
+
+		private final String _validFileExtensions;
 
 	}
 
@@ -97,12 +130,22 @@ public class InfoFormValidationException extends InfoFormException {
 			super(infoFieldUniqueId, "this-field-is-invalid");
 		}
 
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(locale, "this-field-is-invalid");
+		}
+
 	}
 
 	public static class RequiredInfoField extends InfoFormValidationException {
 
 		public RequiredInfoField(String infoFieldUniqueId) {
 			super(infoFieldUniqueId, "this-field-is-required");
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(locale, "this-field-is-required");
 		}
 
 	}

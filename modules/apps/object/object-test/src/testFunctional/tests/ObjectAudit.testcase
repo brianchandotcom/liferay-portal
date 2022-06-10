@@ -138,10 +138,7 @@ definition {
 			objectName = "CustomObject153569",
 			pluralLabelName = "Custom Objects 153569");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Custom Object 153569",
@@ -164,10 +161,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditEntries(
 			clientIP = "127.0.0.1",
@@ -270,10 +264,7 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Custom Object 153570",
@@ -302,10 +293,7 @@ definition {
 			objectName = "CustomObject153573",
 			pluralLabelName = "Custom Objects 153573");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "company,CustomObject153573,false,Custom Object 153573",
@@ -334,10 +322,7 @@ definition {
 			fieldName = "CustomObjectEdit153574",
 			pluralLabelName = "Custom Objects Plural 153574");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Custom Object Edit 153574,CustomObjectEdit153574,Custom Objects Plural 153574",
@@ -408,12 +393,7 @@ definition {
 
 		ObjectAdmin.editCustomObject(fieldLabelName = "Custom Object 153571 Edit");
 
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Custom Object 153571 Edit",
@@ -441,10 +421,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "control_panel.sites",
@@ -472,10 +449,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "true,portlet",
@@ -503,10 +477,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "site",
@@ -554,10 +525,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153576");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "true,active",
@@ -587,10 +555,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153577");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "true",
@@ -609,10 +574,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Navigator.openURL();
+
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "false",
@@ -648,10 +612,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		Audit.viewAuditDetails(
 			additionalInformation = "titleObjectFieldId",

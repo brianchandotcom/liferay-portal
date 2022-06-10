@@ -314,6 +314,10 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.fetchFileEntry(
 			getGroupId(), toFolderId(folderId), title);
 
+		if (dlFileEntry == null) {
+			return null;
+		}
+
 		return new LiferayFileEntry(dlFileEntry);
 	}
 

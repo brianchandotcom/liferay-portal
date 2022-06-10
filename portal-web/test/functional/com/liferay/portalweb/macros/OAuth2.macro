@@ -630,10 +630,6 @@ definition {
 
 	macro obtainOAuth2AccessNotAuthorized {
 		AssertConfirm.assertConfirmationNoError(value1 = "There's a problem with your authorization access");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "");
 	}
 
 	macro openOAuth2Admin {

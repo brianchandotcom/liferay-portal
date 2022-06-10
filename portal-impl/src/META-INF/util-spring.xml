@@ -241,11 +241,6 @@
 			<bean class="com.liferay.portal.util.LocalizationImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.MethodParametersResolverUtil" id="com.liferay.portal.kernel.util.MethodParametersResolverUtil">
-		<property name="methodParametersResolver">
-			<bean class="com.liferay.portal.util.MethodParametersResolverImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.util.PortalUtil" id="com.liferay.portal.kernel.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />
 	</bean>

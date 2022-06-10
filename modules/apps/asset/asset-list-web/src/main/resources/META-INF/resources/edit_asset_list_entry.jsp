@@ -37,7 +37,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	<clay:stripe
 		displayType="warning"
 	>
-		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-can-not-be-displayed-because-segmentation-is-disabled") %></strong>
+		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 		<span><%= LanguageUtil.get(request, "to-enable-segmentation-go-to-system-settings-segments-segments-service") %></span>
 	</clay:stripe>

@@ -186,8 +186,6 @@
 	<bean class="com.liferay.portal.service.persistence.impl.OrganizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrganizationModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.OrganizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationPersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.OrganizationFinderImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationFinder" />
-	<bean class="com.liferay.portal.service.persistence.impl.OrgGroupRoleModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrgGroupRoleModelArgumentsResolver" />
-	<bean class="com.liferay.portal.service.persistence.impl.OrgGroupRolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence" />
 	<bean class="com.liferay.portal.service.impl.OrgLaborLocalServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborLocalService" />
 	<bean class="com.liferay.portal.service.impl.OrgLaborServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborService" />
 	<bean class="com.liferay.portal.service.persistence.impl.OrgLaborModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrgLaborModelArgumentsResolver" />

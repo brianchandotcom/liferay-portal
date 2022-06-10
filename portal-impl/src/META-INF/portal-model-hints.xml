@@ -1014,13 +1014,6 @@
 		</field>
 		<field name="logoId" type="long" />
 	</model>
-	<model name="com.liferay.portal.kernel.model.OrgGroupRole">
-		<field name="mvccVersion" type="long" />
-		<field name="organizationId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="roleId" type="long" />
-		<field name="companyId" type="long" />
-	</model>
 	<model name="com.liferay.portal.kernel.model.OrgLabor">
 		<field name="mvccVersion" type="long" />
 		<field name="orgLaborId" type="long" />

@@ -51,14 +51,14 @@ public class CommerceProductGroupSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "String", "description", "description", false),
+				"Text", "String", "description", "description", false, true),
 			createObjectField(
 				"Text", "String", "external-reference-code",
-				"externalReferenceCode", false),
+				"externalReferenceCode", false, true),
 			createObjectField(
 				"Integer", "Integer", "number-of-products", "productsCount",
-				false),
-			createObjectField("Text", "String", "title", "title", false));
+				false, true),
+			createObjectField("Text", "String", "title", "title", false, true));
 	}
 
 	@Override

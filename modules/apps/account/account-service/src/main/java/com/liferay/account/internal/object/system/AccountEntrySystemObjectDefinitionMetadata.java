@@ -50,10 +50,10 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("Text", "String", "name", "name", true),
+			createObjectField("Text", "String", "name", "name", true, true),
 			createObjectField(
-				"Text", "String", "description", "description", false),
-			createObjectField("Text", "String", "type", "type", true));
+				"Text", "String", "description", "description", false, true),
+			createObjectField("Text", "String", "type", "type", true, true));
 	}
 
 	@Override

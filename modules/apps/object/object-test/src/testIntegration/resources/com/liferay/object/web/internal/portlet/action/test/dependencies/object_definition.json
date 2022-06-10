@@ -41,6 +41,7 @@
 			},
 			"name": "textField1",
 			"required": false,
+			"system": false,
 			"type": "String"
 		},
 		{
@@ -54,6 +55,7 @@
 			},
 			"name": "textField2",
 			"required": false,
+			"system": false,
 			"type": "String"
 		}
 	],

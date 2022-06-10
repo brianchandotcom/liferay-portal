@@ -192,11 +192,11 @@ public class ObjectEntryLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
 					"String", true, false, null, "List Type Entry Key",
-					"listTypeEntryKey", false),
+					"listTypeEntryKey", false, false),
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
 					"String", true, false, null, "List Type Entry Key Required",
-					"listTypeEntryKeyRequired", true),
+					"listTypeEntryKeyRequired", true, false),
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, false, null, "Middle Name",
 					"middleName", false),

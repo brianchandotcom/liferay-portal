@@ -107,13 +107,13 @@ public class ObjectDefinitionSampleGenerator {
 						false),
 					ObjectFieldUtil.createObjectField(
 						0, "Text", null, "String", true, true, null, "Easy",
-						"easy", false),
+						"easy", false, false),
 					ObjectFieldUtil.createObjectField(
 						0, "Text", null, "String", true, false, "en_US", "Fox",
-						"fox", false),
+						"fox", false, false),
 					ObjectFieldUtil.createObjectField(
 						0, "Text", null, "String", false, false, null, "George",
-						"george", false),
+						"george", false, false),
 					ObjectFieldUtil.createObjectField(
 						"Decimal", "Double", true, false, null, "How", "how",
 						false),

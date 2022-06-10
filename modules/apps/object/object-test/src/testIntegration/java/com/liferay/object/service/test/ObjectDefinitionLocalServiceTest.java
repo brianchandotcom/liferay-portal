@@ -411,13 +411,13 @@ public class ObjectDefinitionLocalServiceTest {
 						return Arrays.asList(
 							createObjectField(
 								"Boolean", "Boolean", "Action Required",
-								"actionRequired", true),
+								"actionRequired", true, false),
 							createObjectField(
 								"LongInteger", "Long", "Delivery Type",
-								"deliveryType", false),
+								"deliveryType", false, false),
 							createObjectField(
-								"Text", "type_", "String", "Type", "type",
-								true));
+								"Text", "type_", "String", "Type", "type", true,
+								false));
 					}
 
 					@Override
@@ -503,13 +503,13 @@ public class ObjectDefinitionLocalServiceTest {
 						return Arrays.asList(
 							createObjectField(
 								"Boolean", "Boolean", "Archived", "archived",
-								true),
+								true, false),
 							createObjectField(
 								"LongInteger", "Long", "Delivery Type",
-								"deliveryType", true),
+								"deliveryType", true, false),
 							createObjectField(
 								"Text", "type_", "String", "Type", "type",
-								false));
+								false, false));
 					}
 
 					@Override

@@ -51,21 +51,22 @@ public class CPDefinitionEntrySystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "String", "description", "description", false),
+				"Text", "String", "description", "description", false, true),
 			createObjectField(
 				"Text", "String", "external-reference-code",
-				"externalReferenceCode", false),
-			createObjectField("Text", "String", "name", "name", false),
+				"externalReferenceCode", false, true),
+			createObjectField("Text", "String", "name", "name", false, true),
 			createObjectField(
 				"Text", "CPDefinitionId", "String", "product-id", "productId",
-				false),
+				false, true),
 			createObjectField(
 				"Text", "String", "short-description", "shortDescription",
-				false),
-			createObjectField("Text", "String", "sku", "skuFormatted", false),
+				false, true),
 			createObjectField(
-				"Text", "String", "thumbnail", "thumbnail", false),
-			createObjectField("Text", "String", "uuid", "uuid", false));
+				"Text", "String", "sku", "skuFormatted", false, true),
+			createObjectField(
+				"Text", "String", "thumbnail", "thumbnail", false, true),
+			createObjectField("Text", "String", "uuid", "uuid", false, true));
 	}
 
 	@Override

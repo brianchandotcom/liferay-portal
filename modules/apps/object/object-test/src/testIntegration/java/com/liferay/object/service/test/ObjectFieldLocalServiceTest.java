@@ -127,7 +127,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					0, "LargeFile", null, "Blob", true, false, "", "", "able",
-					false));
+					false, true));
 
 			Assert.fail();
 		}
@@ -201,7 +201,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					0, "LongInteger", null, "Long", true, false, "en_US", "",
-					"able", false));
+					"able", false, true));
 
 			Assert.fail();
 		}
@@ -216,7 +216,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					0, "LongInteger", null, "Long", true, true, "en_US", "",
-					"able", false));
+					"able", false, true));
 
 			Assert.fail();
 		}
@@ -231,7 +231,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", null, "String", true, true, "en_US", "", 0, "able",
-					_getObjectFieldSettings("Text"), false));
+					_getObjectFieldSettings("Text"), false, true));
 
 			Assert.fail();
 		}

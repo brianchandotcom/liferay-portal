@@ -55,10 +55,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Integer", "Integer", "order-status", "orderStatus", true),
+				"Integer", "Integer", "order-status", "orderStatus", true,
+				true),
 			createObjectField(
 				"PrecisionDecimal", "BigDecimal", "shipping-amount",
-				"shippingAmount", true));
+				"shippingAmount", true, true));
 	}
 
 	@Override

@@ -19,6 +19,8 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Collection;
+
 import javax.portlet.PortletRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -34,6 +36,8 @@ public interface CETFactory {
 
 	public CET cet(PortletRequest portletRequest, String type)
 		throws PortalException;
+
+	public Collection<String> getTypes();
 
 	public void validate(
 			UnicodeProperties newTypeSettingsUnicodeProperties,

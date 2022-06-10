@@ -21,8 +21,14 @@ import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -57,6 +63,11 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	@Override
+	public Collection<String> getTypes() {
+		return Collections.unmodifiableCollection(_types);
+	}
+
+	@Override
 	public void validate(
 			UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties, String type)
@@ -71,7 +82,8 @@ public class CETFactoryImpl implements CETFactory {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CETImplFactory.class, "type");
+			bundleContext, CETImplFactory.class, "type",
+			_serviceTrackerMapListener);
 	}
 
 	@Deactivate
@@ -97,5 +109,38 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	private ServiceTrackerMap<String, CETImplFactory> _serviceTrackerMap;
+
+	private final ServiceTrackerMapListener
+		<String, CETImplFactory, CETImplFactory> _serviceTrackerMapListener =
+			new ServiceTrackerMapListener
+				<String, CETImplFactory, CETImplFactory>() {
+
+				@Override
+				public void keyEmitted(
+					ServiceTrackerMap<String, CETImplFactory> serviceTrackerMap,
+					String key, CETImplFactory service,
+					CETImplFactory content) {
+
+					synchronized (_types) {
+						_types.add(key);
+
+						Collections.sort(_types);
+					}
+				}
+
+				@Override
+				public void keyRemoved(
+					ServiceTrackerMap<String, CETImplFactory> serviceTrackerMap,
+					String key, CETImplFactory service,
+					CETImplFactory content) {
+
+					synchronized (_types) {
+						_types.remove(key);
+					}
+				}
+
+			};
+
+	private final List<String> _types = new ArrayList<>();
 
 }

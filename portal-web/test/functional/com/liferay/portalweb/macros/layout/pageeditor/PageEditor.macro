@@ -4552,6 +4552,24 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 	}
 
+	macro viewFragmentTopperStyle {
+		var topperStylesClass = PageEditor.getTopperStylesClass(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
+		var actualStyleValue = Css.getStyleValue(
+			className = "${topperStylesClass}",
+			cssSelector = "#layout-common-styles",
+			styleName = "${styleName}");
+
+		if (contains("${topperStylesClass}", "${styleValue}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: expected '${styleValue}', actual was '${actualStyleValue}'");
+		}
+	}
+
 	macro viewGridStyle {
 		if (isSet(columnCount)) {
 			var i = "0";

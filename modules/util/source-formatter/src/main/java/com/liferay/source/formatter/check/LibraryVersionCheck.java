@@ -504,12 +504,14 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (StringUtil.count(libraryAndVersion, StringPool.COLON) == 3) {
-					libraryAndVersion = libraryAndVersion
-							.substring(0, colonIndex);
+				if (StringUtil.count(libraryAndVersion, StringPool.COLON) ==
+						3) {
+
+					libraryAndVersion = libraryAndVersion.substring(
+						0, colonIndex);
 
 					colonIndex = libraryAndVersion.lastIndexOf(
-							StringPool.COLON);
+						StringPool.COLON);
 
 					if (colonIndex == -1) {
 						continue;

@@ -460,6 +460,134 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147787. The site designer has full access permissions when given Update permission in Page section and other permissions."
+	@priority = "3"
+	test ViewFullAccessAsUserWithUpdateAndOtherPermissions {
+		task ("Given a site designer has a content page") {
+			JSONRole.addRegularRole(
+				roleKey = "Site Designer",
+				roleTitle = "Site Designer");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Site Designer",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.addSiteRole(
+				roleKey = "Page Designer",
+				roleTitle = "Page Designer");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Page Designer",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the site designer has Update permission in Page section and other permissions") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Page Designer",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Site Designer");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+				roleTitle = "Site Designer");
+		}
+
+		task ("Then the page designer has full access in page editor") {
+			task ("Add a Container to a content page") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+				ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Access to the General panel of Container") {
+				PageEditor.editLayoutContainer(
+					containerWidth = "Fixed Width",
+					height = "600px",
+					panel = "General");
+
+				PageEditor.viewContainerStyle(containerWidth = "Fixed Width");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "height",
+					styleValue = "600px");
+			}
+
+			task ("Access to the Styles panel of Container") {
+				PageEditor.editLayoutContainer(
+					backgroundColor = "Success",
+					borderWidth = "5",
+					panel = "Styles");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "backgroundColor",
+					styleValue = "success");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "borderWidth",
+					styleValue = "5px");
+
+				PageEditor.detachToken(fieldLabel = "Background Color");
+
+				Type(
+					key_text = "Background Color",
+					locator1 = "TextInput#ANY",
+					value1 = "#334455");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "backgroundColor",
+					styleValue = "rgb(51, 68, 85)");
+			}
+
+			task ("Access to the Advanced panel of Container") {
+				PageEditor.editLayoutContainer(
+					htmlTag = "section",
+					panel = "Advanced");
+
+				AssertVisible(
+					key_position = "1",
+					key_type = "section",
+					locator1 = "PageEditor#CONTAINER_CONTAINER_TYPE");
+			}
+
+			task ("Delete the new roles") {
+				for (var roleTitle : list "Site Designer,Page Designer") {
+					JSONRole.deleteRole(roleTitle = "${roleTitle}");
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-147787. The user don't have full access permissions when not given Update permission in Page section."
 	@priority = "4"
 	test ViewLimitedAccessAsUserWithoutUpdatePermission {

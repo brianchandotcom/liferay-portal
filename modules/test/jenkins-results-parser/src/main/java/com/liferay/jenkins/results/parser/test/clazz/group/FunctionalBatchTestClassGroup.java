@@ -308,6 +308,12 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return _concatPQL(parentFile, testBaseDir, concatedPQL);
 		}
 
+		if (_traversedPropertyFiles.contains(testPropertiesFile)) {
+			return concatedPQL;
+		}
+
+		_traversedPropertyFiles.add(testPropertiesFile);
+
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.run.property.query", getTestSuiteName(), batchName,
 			canonicalFile, JobProperty.Type.MODULE_TEST_DIR);
@@ -457,13 +463,11 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	// 	private static final String _combinedTestBatchRunPropertyQuery =
-
-	//		new String();
 	private static final Pattern _poshiTestCasePattern = Pattern.compile(
 		"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#(?<methodName>.*)");
 
 	private final Map<File, String> _testBatchRunPropertyQueries =
 		new HashMap<>();
+	private final Set<File> _traversedPropertyFiles = new HashSet<>();
 
 }

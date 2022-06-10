@@ -47,7 +47,9 @@ public class InfoFormValidationException extends InfoFormException {
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.format(
-				locale, "the-attachment-has-to-be-x-or-less",
+				locale,
+				"file-size-is-larger-than-the-allowed-overall-maximum-upload-" +
+					"request-size-x",
 				_maximumSizeAllowed);
 		}
 
@@ -73,7 +75,7 @@ public class InfoFormValidationException extends InfoFormException {
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.format(
-				locale, "the-accepted-extensions-for-the-file-are-x",
+				locale, "please-enter-a-file-with-a-valid-extension-x",
 				_validFileExtensions);
 		}
 

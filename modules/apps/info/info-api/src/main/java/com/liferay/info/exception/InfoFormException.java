@@ -26,9 +26,7 @@ public class InfoFormException extends PortalException {
 
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
-			locale,
-			"an-error-has-occurred-and-the-form-could-not-be-sent.-please-" +
-				"try-again");
+			locale, "an-error-occurred-while-sending-the-form-information");
 	}
 
 }

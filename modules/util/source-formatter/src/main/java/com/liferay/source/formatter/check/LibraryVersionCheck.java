@@ -219,6 +219,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
 
+		if (!version.matches("(\\d|v).+")) {
+			return;
+		}
+
 		if (!_queryResultMap.containsKey(packageName)) {
 			_getServerData(
 				packageName, httpClient, securityAdvisoryEcosystemEnum);
@@ -498,6 +502,18 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 				if (colonIndex == -1) {
 					continue;
+				}
+
+				if (StringUtil.count(libraryAndVersion, StringPool.COLON) == 3) {
+					libraryAndVersion = libraryAndVersion
+							.substring(0, colonIndex);
+
+					colonIndex = libraryAndVersion.lastIndexOf(
+							StringPool.COLON);
+
+					if (colonIndex == -1) {
+						continue;
+					}
 				}
 
 				_checkIsContainVulnerabilities(

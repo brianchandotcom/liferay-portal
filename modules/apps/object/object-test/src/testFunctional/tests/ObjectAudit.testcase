@@ -310,12 +310,38 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a relationship is deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDeleteOnResourceActionWhenDeleteRelationship {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153590",
+			objectName = "CustomObject153590",
+			pluralLabelName = "Custom Objects 153590");
 
-		// TODO LPS-153590 CanViewDeleteOnResourceActionWhenDeleteRelationship pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject153590",
+			objectName_2 = "CustomObject153590",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153590");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Relationship,prevent",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectRelationship",
+			resourceAction = "DELETE",
+			resourceName = "ObjectRelationship",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"

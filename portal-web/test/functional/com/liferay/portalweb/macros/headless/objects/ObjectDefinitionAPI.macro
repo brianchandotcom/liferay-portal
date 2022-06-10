@@ -217,6 +217,21 @@ definition {
 		return "${objectFirstname}";
 	}
 
+	macro _getObjectsWithAggregationTerms {
+		Variables.assertDefined(parameterList = "${aggregationTermsValue}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${objects}?aggregationTerms=${aggregationTermsValue} \
+			-u test@liferay.com:test
+		''';
+
+		var json = JSONCurlUtil.get("${curl}");
+
+		return "${json}";
+	}
+
 	macro _getObjectsWithNestedField {
 		Variables.assertDefined(parameterList = "${nestedField}");
 
@@ -304,6 +319,14 @@ definition {
 			objectId = "${objectId}",
 			relationshipName = "${relationshipName}",
 			responseToParse = "${responseToParse}");
+	}
+
+	macro assertInFacetsWithCorrectValue {
+		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..facetValues[?(@.term=='${managerId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
 	}
 
 	macro assertResponseIncludesDetailsOfNotDeletedEmployee {
@@ -398,6 +421,14 @@ definition {
 
 	macro deleteEmployee {
 		ObjectDefinitionAPI._deleteEmployee(employeeId = "${employeeId}");
+	}
+
+	macro getObjectsWithAggregationTerms {
+		var getObjectsWithAggregationTermsJSON = ObjectDefinitionAPI._getObjectsWithAggregationTerms(
+			aggregationTermsValue = "${aggregationTermsValue}",
+			objects = "${objects}");
+
+		return "${getObjectsWithAggregationTermsJSON}";
 	}
 
 	macro getObjectsWithNestedField {

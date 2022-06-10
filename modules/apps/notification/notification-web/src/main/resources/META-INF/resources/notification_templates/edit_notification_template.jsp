@@ -21,16 +21,27 @@ ViewNotificationTemplatesDisplayContext viewNotificationTemplatesDisplayContext 
 
 NotificationTemplate notificationTemplate = viewNotificationTemplatesDisplayContext.getNotificationTemplate();
 
-portletDisplay.setShowBackIcon(true);
+long editingNotificationTemplateId = 0;
 
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
+if (notificationTemplate != null) {
+	editingNotificationTemplateId = notificationTemplate.getNotificationTemplateId();
 }
-else {
-	portletDisplay.setURLBack(redirect);
-}
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 %>
 
-TODO
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
-<%= notificationTemplate.getName() %>
+<react:component
+	module="js/components/EditNotificationTemplate"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"baseResourceURL", String.valueOf(baseResourceURL)
+		).put(
+			"editingNotificationTemplateId", editingNotificationTemplateId
+		).put(
+			"editorConfig", viewNotificationTemplatesDisplayContext.getEditorConfig("rich_text")
+		).build()
+	%>'
+/>

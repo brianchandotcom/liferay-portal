@@ -16,5 +16,6 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

@@ -14,24 +14,22 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.notification.model.NotificationTemplate" %><%@
 page import="com.liferay.notification.web.internal.constants.NotificationFDSNames" %><%@
 page import="com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");

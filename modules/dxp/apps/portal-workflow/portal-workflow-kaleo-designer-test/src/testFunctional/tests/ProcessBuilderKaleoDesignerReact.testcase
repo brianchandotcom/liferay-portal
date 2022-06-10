@@ -1005,11 +1005,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to designate a Role Name at a Role Type"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDesignateRoleTypeRoleName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDesignateRoleTypeRoleName";
 
-		// TODO CanDesignateRoleTypeRoleName pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role Type",
+			roleTypeName = "Regular",
+			roleTypeRoleName = "Administrator");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role Type: Administrator");
 
 	}
 

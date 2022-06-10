@@ -15,6 +15,7 @@
 package com.liferay.layout.manager;
 
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 
 /**
  * @author Eudaldo Alonso
@@ -22,5 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 public interface FaviconManager {
 
 	public String getFaviconURL(Layout layout);
+
+	public String getFaviconURL(LayoutSet layoutSet);
 
 }

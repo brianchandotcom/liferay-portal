@@ -71,11 +71,14 @@ public class FaviconManagerImpl implements FaviconManager {
 			}
 		}
 
-		LayoutSet layoutSet = layout.getLayoutSet();
+		return getFaviconURL(layout.getLayoutSet());
+	}
 
-		faviconURL = _getCETThemeFaviconURL(
+	@Override
+	public String getFaviconURL(LayoutSet layoutSet) {
+		String faviconURL = _getCETThemeFaviconURL(
 			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
-			layout.getCompanyId());
+			layoutSet.getCompanyId());
 
 		if (Validator.isNotNull(faviconURL)) {
 			return faviconURL;

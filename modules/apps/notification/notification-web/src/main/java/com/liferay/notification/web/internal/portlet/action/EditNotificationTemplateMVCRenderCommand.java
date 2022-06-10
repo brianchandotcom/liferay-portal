@@ -19,6 +19,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.web.internal.constants.NotificationWebKeys;
 import com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -66,11 +67,15 @@ public class EditNotificationTemplateMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewNotificationTemplatesDisplayContext(
+				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest),
 				_notificationTemplateModelResourcePermission));
 
 		return "/notification_templates/edit_notification_template.jsp";
 	}
+
+	@Reference
+	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

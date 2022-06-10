@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.notification.web.internal.constants.NotificationFDSNames;
 
 import java.util.Locale;
@@ -41,12 +40,11 @@ public class NotificationTemplatesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField fdsTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField("name", "name");
-
-		fdsTableSchemaField.setContentRenderer("actionLink");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).build();
 	}
 
 	@Reference

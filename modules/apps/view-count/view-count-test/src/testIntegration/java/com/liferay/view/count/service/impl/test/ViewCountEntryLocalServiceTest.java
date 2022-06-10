@@ -173,22 +173,24 @@ public class ViewCountEntryLocalServiceTest {
 				if (Objects.equals("get", method.getName()) &&
 					(countDownLatch.getCount() > 0)) {
 
+					countDownLatch.countDown();
+
+					countDownLatch.await();
+
 					ViewCountEntry viewCountEntry =
 						(ViewCountEntry)method.invoke(session, args);
 
 					viewCountEntries.add(viewCountEntry);
 
-					countDownLatch.countDown();
-
-					countDownLatch.await();
-
 					Assert.assertNull(viewCountEntries.get(0));
 
-					if (_db.getDBType() == DBType.SQLSERVER) {
-						Assert.assertNotNull(viewCountEntries.get(1));
-					}
-					else {
-						Assert.assertNull(viewCountEntries.get(1));
+					if (viewCountEntries.size() == 2) {
+						if (_db.getDBType() == DBType.SQLSERVER) {
+							Assert.assertNotNull(viewCountEntries.get(1));
+						}
+						else {
+							Assert.assertNull(viewCountEntries.get(1));
+						}
 					}
 
 					return viewCountEntry;

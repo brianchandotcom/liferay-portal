@@ -64,6 +64,7 @@ public class CETUtil {
 
 			for (CETProperty cetProperty : cetProperties) {
 				JSONObject cetPropertiesJSONObject = new JSONObjectImpl();
+
 				String defaultValue = cetProperty.getDefaultValue();
 
 				if (defaultValue != null) {

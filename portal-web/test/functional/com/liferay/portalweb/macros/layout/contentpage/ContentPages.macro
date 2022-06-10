@@ -402,7 +402,7 @@ definition {
 
 		var actualStyleValue = Css.getStyleValue(
 			className = "${commonStylesClass}",
-			id = "layout-common-styles",
+			cssSelector = "link[href*=layout-common-styles]",
 			styleName = "${styleName}");
 
 		if (contains("${actualStyleValue}", "${styleValue}")) {

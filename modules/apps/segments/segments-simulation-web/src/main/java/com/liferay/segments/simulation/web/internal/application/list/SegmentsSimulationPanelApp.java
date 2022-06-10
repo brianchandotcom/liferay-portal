@@ -17,20 +17,30 @@ package com.liferay.segments.simulation.web.internal.application.list;
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.simulation.web.internal.display.context.SegmentsSimulationDisplayContext;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +77,28 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		try {
+			SegmentsSimulationDisplayContext segmentsSimulationDisplayContext =
+				new SegmentsSimulationDisplayContext(
+					httpServletRequest, _segmentsConfigurationProvider);
+
+			httpServletRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				segmentsSimulationDisplayContext);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return super.include(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group) {
 		if (group.isControlPanel()) {
 			return false;
@@ -95,9 +127,18 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		super.setServletContext(servletContext);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsSimulationPanelApp.class);
+
+	@Reference
+	private Portal _portal;
+
 	@Reference(
 		target = "(resource.name=" + SegmentsConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
 }

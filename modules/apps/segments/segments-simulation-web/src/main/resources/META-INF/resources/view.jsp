@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new SegmentsSimulationDisplayContext(request, renderResponse);
+SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSimulationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid
@@ -33,6 +33,15 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 		<c:otherwise>
 			<aui:form method="post" name="segmentsSimulationFm">
 				<ul class="list-unstyled">
+					<c:if test="<%= !segmentsSimulationDisplayContext.isSegmentationEnabled() %>">
+						<clay:stripe
+							displayType="warning"
+						>
+							<strong class="lead"><%= LanguageUtil.get(request, "experiences-can-not-be-displayed-because-segmentation-is-disabled") %></strong>
+
+							<span><%= LanguageUtil.get(request, "to-enable-segmentation-go-to-system-settings-segments-segments-service") %></span>
+						</clay:stripe>
+					</c:if>
 
 					<%
 					for (SegmentsEntry segmentsEntry : segmentsSimulationDisplayContext.getSegmentsEntries()) {

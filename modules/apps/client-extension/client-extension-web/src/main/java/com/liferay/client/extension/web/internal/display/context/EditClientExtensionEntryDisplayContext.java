@@ -26,12 +26,14 @@ import com.liferay.client.extension.type.CETThemeFavicon;
 import com.liferay.client.extension.type.CETThemeJS;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,7 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +72,7 @@ public class EditClientExtensionEntryDisplayContext {
 			_cet = cetFactory.cet(clientExtensionEntry);
 		}
 
+		_cetFactory = cetFactory;
 		_clientExtensionEntry = clientExtensionEntry;
 		_portletRequest = portletRequest;
 	}
@@ -359,46 +361,22 @@ public class EditClientExtensionEntryDisplayContext {
 	}
 
 	public List<SelectOption> getTypeSelectOptions() {
+		List<SelectOption> list = new ArrayList<>();
+
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
-		String type = getType();
+		String selectedType = getType();
 
-		return Arrays.asList(
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "custom-element"),
-				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "global-css"),
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "global-js"),
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_GLOBAL_JS, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "iframe"),
-				ClientExtensionEntryConstants.TYPE_IFRAME,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_IFRAME, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "theme-css"),
-				ClientExtensionEntryConstants.TYPE_THEME_CSS,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_THEME_CSS, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "theme-favicon"),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON, type)),
-			new SelectOption(
-				LanguageUtil.get(httpServletRequest, "theme-js"),
-				ClientExtensionEntryConstants.TYPE_THEME_JS,
-				Objects.equals(
-					ClientExtensionEntryConstants.TYPE_THEME_JS, type)));
+		for (String type : _cetFactory.getTypes()) {
+			list.add(
+				new SelectOption(
+					LanguageUtil.get(
+						httpServletRequest,
+						CamelCaseUtil.fromCamelCase(type, CharPool.DASH)),
+					type, Objects.equals(type, selectedType)));
+		}
+
+		return list;
 	}
 
 	public boolean isCustomElementUseESM() throws PortalException {
@@ -470,6 +448,7 @@ public class EditClientExtensionEntryDisplayContext {
 	}
 
 	private final CET _cet;
+	private final CETFactory _cetFactory;
 	private final ClientExtensionEntry _clientExtensionEntry;
 	private final PortletRequest _portletRequest;
 

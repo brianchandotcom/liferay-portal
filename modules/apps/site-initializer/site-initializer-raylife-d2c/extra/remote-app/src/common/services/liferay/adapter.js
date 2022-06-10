@@ -171,16 +171,16 @@ const adaptToFormApplicationRequest = (form, status) => ({
  */
 const adaptToProductQuote = (data = []) =>
 	data.map(({description, name, productId, skus}) => ({
-		description: description.en_US,
+		description,
 		id: productId,
 		period: `($${_formatCommerceProductPrice(
-			skus[0].promoPrice
-		)}-${_formatCommerceProductPrice(skus[0].price)}/mo)`,
+			skus[0].price.price
+		)}-${_formatCommerceProductPrice(skus[0].price.price)}/mo)`,
 		template: {
-			allowed: allowedProductQuote(name.en_US),
-			name: toSlug(name.en_US),
+			allowed: allowedProductQuote(name),
+			name: toSlug(name),
 		},
-		title: name.en_US,
+		title: name,
 	}));
 
 export const LiferayAdapt = {

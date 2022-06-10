@@ -15,14 +15,20 @@
 import {LiferayAdapt} from '../../../common/services/liferay/adapter';
 import {axios} from '../../../common/services/liferay/api';
 
-const headlessAPI = 'o/headless-commerce-admin-catalog/v1.0';
+const headlessAPI = 'o/headless-commerce-delivery-catalog/v1.0/channels';
 
 /**
  * @returns {Promise<ProductQuote[]>)} Array of Product Quote
  */
 export async function getProductQuotes() {
+	const channel = await axios.get(
+		`http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels?search=raylife`
+	);
+
+	const channelId = channel?.data?.items[0]?.id;
+
 	const {data} = await axios.get(
-		`${headlessAPI}/products?nestedFields=skus,catalog&page=1&pageSize=50`
+		`${headlessAPI}/${channelId}/products?nestedFields=skus,catalog&page=1&pageSize=50`
 	);
 
 	return LiferayAdapt.adaptToProductQuote(data.items);

@@ -380,9 +380,8 @@ public class FreeMarkerFragmentEntryProcessor
 				(InfoFormValidationException)SessionErrors.get(
 					httpServletRequest, infoField.getUniqueId());
 
-			errorMessage = LanguageUtil.format(
-				locale, infoFormValidationException.getLanguageKey(),
-				infoFormValidationException.getArgs());
+			errorMessage = infoFormValidationException.getLocalizedMessage(
+				locale);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(

@@ -14,7 +14,7 @@
 
 import {fetch, openModal, sub} from 'frontend-js-web';
 
-import openConfirm from './openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 const RECENTLY_REMOVED_ATTACHMENTS = {
 	multiple: Liferay.Language.get('x-recently-removed-attachments'),
@@ -201,7 +201,7 @@ class MBPortlet {
 		);
 
 		if (tempImages.length) {
-			openConfirm({
+			openConfirmModal({
 				message: this._strings.confirmDiscardImages,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {

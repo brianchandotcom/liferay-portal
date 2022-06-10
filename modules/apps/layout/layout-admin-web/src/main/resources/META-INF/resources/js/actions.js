@@ -14,7 +14,7 @@
 
 import {openModal} from 'frontend-js-web';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 const ACTIONS = {
@@ -38,7 +38,7 @@ const ACTIONS = {
 	},
 
 	discardDraft: ({discardDraftURL}) => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
 			),

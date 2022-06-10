@@ -14,7 +14,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import openConfirm from './openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 const HEADERS = {
 	'Accept': 'application/json',
@@ -83,7 +83,7 @@ export function deleteItem(endpoint) {
 export function confirmDelete(endpoint) {
 	return (item) =>
 		new Promise((resolve, reject) => {
-			openConfirm({
+			openConfirmModal({
 				message: Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-this'
 				),

@@ -14,7 +14,7 @@
 
 import {postForm} from 'frontend-js-web';
 
-import openConfirm from '../../message_boards/js/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web'
 
 export default function propsTransformer({
 	additionalProps: {
@@ -42,7 +42,7 @@ export default function propsTransformer({
 					'are-you-sure-you-want-to-delete-the-selected-entries'
 			  );
 
-		openConfirm({
+		openConfirmModal({
 			message,
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed || trashEnabled) {

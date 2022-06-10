@@ -19,7 +19,7 @@ import {
 	openSelectionModal,
 } from 'frontend-js-web';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	checkin({checkinURL}, portletNamespace) {
@@ -87,7 +87,7 @@ const ACTIONS = {
 	},
 
 	delete({deleteURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),
@@ -125,7 +125,7 @@ const ACTIONS = {
 	},
 
 	publish({publishURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-publish-the-selected-document'
 			),

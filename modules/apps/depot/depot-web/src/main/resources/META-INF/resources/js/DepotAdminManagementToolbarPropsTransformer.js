@@ -18,7 +18,7 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-import openConfirm from './openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteDepotEntriesURL},
@@ -26,7 +26,7 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteSelectedDepotEntries = () => {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'removing-an-asset-library-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-asset-library'
 			),

@@ -14,7 +14,7 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteOAuth2ApplicationsURL},
@@ -25,7 +25,7 @@ export default function propsTransformer({
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'deleteOAuth2Applications') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-the-selected-entries-this-action-revokes-all-authorizations-and-associated-tokens'
 					),

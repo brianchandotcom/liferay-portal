@@ -311,7 +311,7 @@ AUI.add(
 						[contact.fullName]
 					);
 
-					instance._openConfirm({
+					instance._openConfirmModal({
 						message: confirmMessageText,
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
@@ -456,7 +456,7 @@ AUI.add(
 					}
 				},
 
-				_openConfirm({message, onConfirm}) {
+				_openConfirmModal({message, onConfirm}) {
 					if (Liferay.FeatureFlags['LPS-148659']) {
 						Liferay.Util.openConfirmModal({message, onConfirm});
 					}

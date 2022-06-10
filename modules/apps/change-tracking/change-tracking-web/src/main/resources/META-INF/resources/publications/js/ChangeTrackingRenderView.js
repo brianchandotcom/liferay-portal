@@ -26,7 +26,7 @@ import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const LocalizationDropdown = ({
 	currentLocale,
@@ -815,7 +815,7 @@ export default function ChangeTrackingRenderView({
 				editPortletURL.toString()
 			);
 
-			openConfirm({
+			openConfirmModal({
 				message: confirmationMessage,
 				onConfirm: (isConfirmed) =>
 					isConfirmed &&

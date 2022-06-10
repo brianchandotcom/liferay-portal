@@ -14,6 +14,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
+import {openConfirmModal} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
@@ -23,7 +24,6 @@ import {
 	runExperiment,
 	updateSegmentsExperimentStatus,
 } from '../state/actions.es';
-import openConfirm from '../util/openConfirm.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -66,7 +66,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 					className="w-100"
 					displayType="secondary"
 					onClick={() => {
-						openConfirm({
+						openConfirmModal({
 							message: Liferay.Language.get(
 								'are-you-sure-you-want-to-terminate-this-test'
 							),

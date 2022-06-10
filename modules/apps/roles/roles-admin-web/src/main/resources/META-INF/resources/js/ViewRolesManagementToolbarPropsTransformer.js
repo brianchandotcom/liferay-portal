@@ -18,15 +18,6 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags['LPS-148659']) {
-		openConfirmModal({message, onConfirm});
-	}
-	else if (confirm(message)) {
-		onConfirm(true);
-	}
-}
-
 export default function propsTransformer({
 	additionalProps: {deleteRolesURL},
 	portletNamespace,
@@ -46,7 +37,7 @@ export default function propsTransformer({
 				`${portletNamespace}allRowIds`
 			);
 
-			openConfirm({
+			openConfirmModal({
 				message: Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-this-role?-task-assignments-may-be-deleted'
 				),

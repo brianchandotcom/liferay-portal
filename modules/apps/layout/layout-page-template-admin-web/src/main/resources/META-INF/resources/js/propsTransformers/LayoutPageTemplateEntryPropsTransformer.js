@@ -19,7 +19,7 @@ import {
 } from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
-import openConfirm from '../util/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteLayoutPageTemplateEntry({deleteLayoutPageTemplateEntryURL}) {
@@ -38,7 +38,7 @@ const ACTIONS = {
 	},
 
 	discardDraft({discardDraftURL}) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
 			),

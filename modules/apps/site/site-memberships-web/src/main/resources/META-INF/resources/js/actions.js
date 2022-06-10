@@ -14,7 +14,7 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export const ACTIONS = {
 	assignRoles(itemData, portletNamespace) {
@@ -55,7 +55,7 @@ export const ACTIONS = {
 	},
 
 	deleteGroupUsers(itemData) {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

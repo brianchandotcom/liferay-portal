@@ -23,7 +23,7 @@ import {archiveExperiment} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 import {navigateToExperience} from '../util/navigation.es';
-import openConfirm from '../util/openConfirm.es';
+import {openConfirmModal} from 'frontend-js-web';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
@@ -280,7 +280,7 @@ function SegmentsExperiments({
 	);
 
 	function _handleDeleteActiveExperiment() {
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),
@@ -305,7 +305,7 @@ function SegmentsExperiments({
 			winnerSegmentsExperienceId: experienceId,
 		};
 
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-publish-this-variant'
 			),

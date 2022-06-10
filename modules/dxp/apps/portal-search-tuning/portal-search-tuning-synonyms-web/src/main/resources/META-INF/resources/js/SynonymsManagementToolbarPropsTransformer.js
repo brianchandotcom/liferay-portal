@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import openConfirm from './openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
 			if (item?.data?.action === 'deleteMultipleSynonyms') {
-				openConfirm({
+				openConfirmModal({
 					message: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-the-selected-entries'
 					),

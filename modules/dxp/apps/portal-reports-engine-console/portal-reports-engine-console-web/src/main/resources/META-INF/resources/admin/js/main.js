@@ -244,15 +244,6 @@
 			return A.DataType.Date.format(parameterDate);
 		},
 
-		_openConfirm({message, onConfirm}) {
-			if (Liferay.FeatureFlags['LPS-148659']) {
-				Liferay.Util.openConfirmModal({message, onConfirm});
-			}
-			else if (confirm(message)) {
-				onConfirm(true);
-			}
-		},
-
 		_sendMessage(message) {
 			const instance = this;
 
@@ -289,35 +280,36 @@
 
 			instance._portletMessageContainer.setStyle('display', 'none');
 
-			if (
-				confirm(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-this-entry'
-					)
-				)
-			) {
-				const parametersInput = A.one('.report-parameters');
+			Liferay.Util.openConfirmModal({
+				message: Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-this-entry'
+				),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						const parametersInput = A.one('.report-parameters');
 
-				const reportParameters = JSON.parse(parametersInput.val());
+						const reportParameters = JSON.parse(parametersInput.val());
 
-				for (const i in reportParameters) {
-					const reportParameter = reportParameters[i];
+						for (const i in reportParameters) {
+							const reportParameter = reportParameters[i];
 
-					if (reportParameter.key === parameterKey) {
-						reportParameters.splice(i, 1);
+							if (reportParameter.key === parameterKey) {
+								reportParameters.splice(i, 1);
 
-						break;
+								break;
+							}
+						}
+
+						parametersInput.val(JSON.stringify(reportParameters));
+
+						const key = ('.report-tag-' + parameterKey).replace(
+							/ /g,
+							'BLANK'
+						);
+
+						A.one(key).remove(true);
 					}
 				}
-
-				parametersInput.val(JSON.stringify(reportParameters));
-
-				const key = ('.report-tag-' + parameterKey).replace(
-					/ /g,
-					'BLANK'
-				);
-
-				A.one(key).remove(true);
 			}
 		},
 

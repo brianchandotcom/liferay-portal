@@ -40,7 +40,7 @@ import {
 	showChildren,
 	tree,
 } from './utils/index';
-import openConfirm from './utils/openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 import {
 	fillAddButtons,
 	fillEntityNode,
@@ -448,7 +448,7 @@ class D3OrganizationChart {
 									target.data.name
 							  );
 
-					openConfirm({
+					openConfirmModal({
 						message,
 						onConfirm: (isConfimed) => {
 							if (isConfimed) {

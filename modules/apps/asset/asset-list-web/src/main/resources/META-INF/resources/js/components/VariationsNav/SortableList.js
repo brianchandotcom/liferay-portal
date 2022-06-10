@@ -23,15 +23,6 @@ import {saveVariationsListPriorityService} from '../../api/index';
 import SortableListItem from './SortableListItem';
 import {buildItemsPriorityURL} from './utils/index';
 
-function openConfirm({message, onConfirm}) {
-	if (Liferay.FeatureFlags['LPS-148659']) {
-		openConfirmModal({message, onConfirm});
-	}
-	else if (confirm(message)) {
-		onConfirm(true);
-	}
-}
-
 const savePriority = async ({url}) => {
 	try {
 		const {ok, status} = await saveVariationsListPriorityService({url});
@@ -93,7 +84,7 @@ const SortableList = ({items, namespace, savePriorityURL}) => {
 			return;
 		}
 
-		openConfirm({
+		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),

@@ -22,7 +22,7 @@ import {RulesSupport, capitalize} from 'data-engine-js-components-web';
 import {LangUtil, OPERATOR_OPTIONS_TYPES} from 'data-engine-taglib';
 import React, {useMemo} from 'react';
 
-import openConfirm from '../openConfirm';
+import {openConfirmModal} from 'frontend-js-web';
 
 import './RuleList.scss';
 
@@ -433,7 +433,7 @@ const ListItem = ({
 							{
 								label: Liferay.Language.get('delete'),
 								onClick: () =>
-									openConfirm({
+									openConfirmModal({
 										message: Liferay.Language.get(
 											'you-cannot-create-rules-with-nested-functions.-are-you-sure-you-want-to-delete-this-rule'
 										),

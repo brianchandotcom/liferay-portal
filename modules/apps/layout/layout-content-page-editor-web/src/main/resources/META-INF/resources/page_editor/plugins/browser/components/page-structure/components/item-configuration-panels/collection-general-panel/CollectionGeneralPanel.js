@@ -34,7 +34,7 @@ import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
-import openConfirm from '../../../../../../../app/utils/openConfirm';
+import {openConfirmModal} from 'frontend-js-web'
 import {useId} from '../../../../../../../app/utils/useId';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
@@ -151,7 +151,7 @@ export function CollectionGeneralPanel({item}) {
 
 		let result = false;
 
-		openConfirm({
+		openConfirmModal({
 			message: `${Liferay.Language.get(
 				'if-you-change-the-collection-you-unlink-the-collection-filter'
 			)}\n\n${Liferay.Language.get('do-you-want-to-continue')}`,

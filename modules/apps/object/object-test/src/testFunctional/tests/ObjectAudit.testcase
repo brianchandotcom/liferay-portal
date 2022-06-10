@@ -611,12 +611,43 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when updated the basic info or the Searchable of the field, the Additional Information is updated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateWhenEditSearchableOnField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153588",
+			objectName = "CustomObject153588",
+			pluralLabelName = "Custom Objects 153588");
 
-		// TODO LPS-153588 CanViewUpdateWhenEditSearchableOnField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153588");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153588");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+
+		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
+
+		ObjectField.save();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "false,indexedAsKeyword,indexedLanguageId",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectField",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectField",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"

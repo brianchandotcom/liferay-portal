@@ -421,12 +421,34 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the portlet of the object is updated display toggle on the object details"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateWhenChangeDisplayToggle {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153580",
+			objectName = "CustomObject153580",
+			pluralLabelName = "Custom Objects 153580");
 
-		// TODO LPS-153580 CanViewUpdateWhenChangeDisplayToggle pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153580");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "true,portlet",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectDefinition",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify it's  Additional Information of the scope is updated when is modified on the object details"

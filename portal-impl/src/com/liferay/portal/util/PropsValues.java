@@ -1980,9 +1980,6 @@ public class PropsValues {
 	public static final String[] REQUEST_HEADER_IGNORE_INIT_PARAMS =
 		PropsUtil.getArray(PropsKeys.REQUEST_HEADER_IGNORE_INIT_PARAMS);
 
-	public static final String[] REQUEST_SHARED_ATTRIBUTES = PropsUtil.getArray(
-		PropsKeys.REQUEST_SHARED_ATTRIBUTES);
-
 	public static final String[] REQUEST_UNWRAP_PACKAGES = PropsUtil.getArray(
 		PropsKeys.REQUEST_UNWRAP_PACKAGES);
 

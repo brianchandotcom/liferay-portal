@@ -24,7 +24,14 @@ import {fetchErrorReportFile, importStatus} from '../BatchPlannerImport';
 import Poller from '../Poller';
 
 const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
-	const {downloadFile, errorMessage, loading, percentage, ready} = Poller(
+	const {
+		downloadFile,
+		errorMessage,
+		externalReferenceCode,
+		loading,
+		percentage,
+		ready,
+	} = Poller(
 		formDataQuerySelector,
 		formImportURL,
 		importStatus,
@@ -40,7 +47,7 @@ const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
 	if (ready) {
 		modalStatus = 'success';
 		title = Liferay.Language.get(
-			'the-import-process-was-completed-successfully'
+			'the-import-process-completed-successfully'
 		);
 		labelType = 'success';
 		label = Liferay.Language.get('completed');
@@ -85,7 +92,7 @@ const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
 							{Liferay.Language.get('back-to-the-list')}
 						</ClayButton>
 
-						{errorMessage && (
+						{modalStatus === 'danger' && !!externalReferenceCode && (
 							<ClayButton
 								disabled={loading}
 								displayType="danger"

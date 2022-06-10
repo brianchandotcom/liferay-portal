@@ -41,8 +41,11 @@ const initialState = {
 	ready: false,
 };
 
-const setError = (error) => ({
-	payload: error ?? Liferay.Language.get('unexpected-error'),
+const setError = (error, externalReferenceCode) => ({
+	payload: {
+		error: error ?? Liferay.Language.get('unexpected-error'),
+		externalReferenceCode,
+	},
 	type: ERROR,
 });
 
@@ -132,7 +135,8 @@ const reducer = (state = initialState, {payload, type}) => {
 
 			return {
 				...state,
-				errorMessage: payload,
+				errorMessage: payload.error,
+				externalReferenceCode: payload.externalReferenceCode,
 				loading: false,
 				pollingIntervalId: null,
 			};
@@ -227,6 +231,8 @@ const Poller = (
 
 				if (error) {
 					dispatchIfMounted(setError(error));
+
+					return;
 				}
 
 				pollingIntervalId = setInterval(
@@ -234,7 +240,9 @@ const Poller = (
 						getTaskStatus({
 							externalReferenceCode,
 							onFail: (error) =>
-								dispatchIfMounted(setError(error)),
+								dispatchIfMounted(
+									setError(error, externalReferenceCode)
+								),
 							onProgress: (contentType, percent) =>
 								dispatchIfMounted(
 									setProgress(contentType, percent)
@@ -282,6 +290,7 @@ const Poller = (
 		contentType: state.contentType,
 		downloadFile,
 		errorMessage: state.errorMessage,
+		externalReferenceCode: state.externalReferenceCode,
 		loading: state.loading,
 		percentage: state.percentage,
 		ready: state.ready,

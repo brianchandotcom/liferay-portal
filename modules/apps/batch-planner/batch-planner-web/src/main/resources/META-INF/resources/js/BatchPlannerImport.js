@@ -24,6 +24,10 @@ export function getImportFileURL(externalReferenceCode) {
 	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content`;
 }
 
+export function getErrorReportFileURL(externalReferenceCode) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report`;
+}
+
 export async function importStatus(externalReferenceCode) {
 	const response = await fetch(
 		getImportTaskStatusURL(externalReferenceCode),
@@ -40,7 +44,7 @@ export async function importStatus(externalReferenceCode) {
 }
 
 export async function fetchErrorReportFile(externalReferenceCode) {
-	const response = await fetch(getImportFileURL(externalReferenceCode));
+	const response = await fetch(getErrorReportFileURL(externalReferenceCode));
 	const blob = await response.blob();
 
 	return URL.createObjectURL(blob);

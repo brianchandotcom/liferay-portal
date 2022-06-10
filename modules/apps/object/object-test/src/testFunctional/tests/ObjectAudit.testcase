@@ -400,12 +400,36 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when add, delete or update a field the user can view two Resource Name (ObjectField and ObjectFieldSetting) created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewTwoAddsWhenAddOneField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153587",
+			objectName = "CustomObject153587",
+			pluralLabelName = "Custom Objects 153587");
 
-		// TODO LPS-153587 CanViewTwoAddsWhenAddOneField pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153587");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Text");
+
+		Audit.openAuditAdmin();
+
+		for (var resourceNames : list "ObjectField,ObjectFieldSetting") {
+			Audit.viewAuditEntries(
+				clientIP = "127.0.0.1",
+				createDate = "Seconds Ago",
+				id = "0",
+				position = "1",
+				resourceAction = "ADD",
+				resourceID = "",
+				resourceName = "${resourceNames}",
+				userName = "");
+		}
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a layout is updated"

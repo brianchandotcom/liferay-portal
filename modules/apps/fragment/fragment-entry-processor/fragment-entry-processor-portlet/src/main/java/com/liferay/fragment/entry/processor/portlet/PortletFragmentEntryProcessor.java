@@ -463,6 +463,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (fragmentEntryLink != null) {
 			String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
+				"LIFERAY_SHARED_",
 				DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
 				ParamUtil.getLong(
 					fragmentEntryProcessorContext.getHttpServletRequest(),

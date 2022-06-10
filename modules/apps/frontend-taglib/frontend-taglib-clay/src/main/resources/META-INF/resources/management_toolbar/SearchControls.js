@@ -71,9 +71,9 @@ const SearchControls = ({
 
 				{searchData &&
 					Object.keys(searchData).map((key) =>
-						searchData[key].map((value) => (
+						searchData[key].map((value, index) => (
 							<ClayInput
-								key={key}
+								key={`${key}${index}`}
 								name={key}
 								type="hidden"
 								value={value}

@@ -79,11 +79,6 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				originalHttpServletRequest,
 				infoFormValidationException.getInfoFieldUniqueId(),
 				infoFormValidationException);
-
-			httpServletResponse.sendRedirect(
-				httpServletRequest.getHeader(HttpHeaders.REFERER));
-
-			return null;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -96,14 +91,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			SessionErrors.add(
 				originalHttpServletRequest, infoForm.getName(),
 				new InfoFormException());
-
-			httpServletResponse.sendRedirect(
-				httpServletRequest.getHeader(HttpHeaders.REFERER));
-
-			return null;
 		}
 
-		httpServletResponse.sendRedirect(httpServletRequest.getRequestURI());
+		httpServletResponse.sendRedirect(
+			httpServletRequest.getHeader(HttpHeaders.REFERER));
 
 		return null;
 	}

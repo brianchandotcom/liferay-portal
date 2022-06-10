@@ -92,12 +92,12 @@ public class OpenIdConnectSessionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", accessToken=");
 		sb.append(accessToken);
-		sb.append(", configurationPid=");
-		sb.append(configurationPid);
+		sb.append(", authServerWellKnownURI=");
+		sb.append(authServerWellKnownURI);
+		sb.append(", clientId=");
+		sb.append(clientId);
 		sb.append(", idToken=");
 		sb.append(idToken);
-		sb.append(", providerName=");
-		sb.append(providerName);
 		sb.append(", refreshToken=");
 		sb.append(refreshToken);
 		sb.append("}");
@@ -130,11 +130,19 @@ public class OpenIdConnectSessionCacheModel
 			openIdConnectSessionImpl.setAccessToken(accessToken);
 		}
 
-		if (configurationPid == null) {
-			openIdConnectSessionImpl.setConfigurationPid("");
+		if (authServerWellKnownURI == null) {
+			openIdConnectSessionImpl.setAuthServerWellKnownURI("");
 		}
 		else {
-			openIdConnectSessionImpl.setConfigurationPid(configurationPid);
+			openIdConnectSessionImpl.setAuthServerWellKnownURI(
+				authServerWellKnownURI);
+		}
+
+		if (clientId == null) {
+			openIdConnectSessionImpl.setClientId("");
+		}
+		else {
+			openIdConnectSessionImpl.setClientId(clientId);
 		}
 
 		if (idToken == null) {
@@ -142,13 +150,6 @@ public class OpenIdConnectSessionCacheModel
 		}
 		else {
 			openIdConnectSessionImpl.setIdToken(idToken);
-		}
-
-		if (providerName == null) {
-			openIdConnectSessionImpl.setProviderName("");
-		}
-		else {
-			openIdConnectSessionImpl.setProviderName(providerName);
 		}
 
 		if (refreshToken == null) {
@@ -174,9 +175,9 @@ public class OpenIdConnectSessionCacheModel
 		userId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		accessToken = objectInput.readUTF();
-		configurationPid = objectInput.readUTF();
+		authServerWellKnownURI = objectInput.readUTF();
+		clientId = objectInput.readUTF();
 		idToken = objectInput.readUTF();
-		providerName = objectInput.readUTF();
 		refreshToken = objectInput.readUTF();
 	}
 
@@ -198,11 +199,18 @@ public class OpenIdConnectSessionCacheModel
 			objectOutput.writeUTF(accessToken);
 		}
 
-		if (configurationPid == null) {
+		if (authServerWellKnownURI == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(configurationPid);
+			objectOutput.writeUTF(authServerWellKnownURI);
+		}
+
+		if (clientId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(clientId);
 		}
 
 		if (idToken == null) {
@@ -210,13 +218,6 @@ public class OpenIdConnectSessionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(idToken);
-		}
-
-		if (providerName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(providerName);
 		}
 
 		if (refreshToken == null) {
@@ -233,9 +234,9 @@ public class OpenIdConnectSessionCacheModel
 	public long userId;
 	public long modifiedDate;
 	public String accessToken;
-	public String configurationPid;
+	public String authServerWellKnownURI;
+	public String clientId;
 	public String idToken;
-	public String providerName;
 	public String refreshToken;
 
 }

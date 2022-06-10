@@ -162,19 +162,34 @@ public interface OpenIdConnectSessionModel
 	public void setAccessToken(String accessToken);
 
 	/**
-	 * Returns the configuration pid of this open ID connect session.
+	 * Returns the auth server well known uri of this open ID connect session.
 	 *
-	 * @return the configuration pid of this open ID connect session
+	 * @return the auth server well known uri of this open ID connect session
 	 */
 	@AutoEscape
-	public String getConfigurationPid();
+	public String getAuthServerWellKnownURI();
 
 	/**
-	 * Sets the configuration pid of this open ID connect session.
+	 * Sets the auth server well known uri of this open ID connect session.
 	 *
-	 * @param configurationPid the configuration pid of this open ID connect session
+	 * @param authServerWellKnownURI the auth server well known uri of this open ID connect session
 	 */
-	public void setConfigurationPid(String configurationPid);
+	public void setAuthServerWellKnownURI(String authServerWellKnownURI);
+
+	/**
+	 * Returns the client ID of this open ID connect session.
+	 *
+	 * @return the client ID of this open ID connect session
+	 */
+	@AutoEscape
+	public String getClientId();
+
+	/**
+	 * Sets the client ID of this open ID connect session.
+	 *
+	 * @param clientId the client ID of this open ID connect session
+	 */
+	public void setClientId(String clientId);
 
 	/**
 	 * Returns the id token of this open ID connect session.
@@ -190,21 +205,6 @@ public interface OpenIdConnectSessionModel
 	 * @param idToken the id token of this open ID connect session
 	 */
 	public void setIdToken(String idToken);
-
-	/**
-	 * Returns the provider name of this open ID connect session.
-	 *
-	 * @return the provider name of this open ID connect session
-	 */
-	@AutoEscape
-	public String getProviderName();
-
-	/**
-	 * Sets the provider name of this open ID connect session.
-	 *
-	 * @param providerName the provider name of this open ID connect session
-	 */
-	public void setProviderName(String providerName);
 
 	/**
 	 * Returns the refresh token of this open ID connect session.

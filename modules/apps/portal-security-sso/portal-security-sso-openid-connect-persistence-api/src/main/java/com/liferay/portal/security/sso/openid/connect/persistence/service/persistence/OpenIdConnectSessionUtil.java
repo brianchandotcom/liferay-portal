@@ -295,252 +295,300 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	/**
-	 * Returns all the open ID connect sessions where configurationPid = &#63;.
+	 * Returns all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the matching open ID connect sessions
 	 */
-	public static List<OpenIdConnectSession> findByConfigurationPid(
-		String configurationPid) {
+	public static List<OpenIdConnectSession> findByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId) {
 
-		return getPersistence().findByConfigurationPid(configurationPid);
+		return getPersistence().findByC_A_C(
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns a range of all the open ID connect sessions where configurationPid = &#63;.
+	 * Returns a range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
 	 * </p>
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param start the lower bound of the range of open ID connect sessions
 	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
 	 * @return the range of matching open ID connect sessions
 	 */
-	public static List<OpenIdConnectSession> findByConfigurationPid(
-		String configurationPid, int start, int end) {
+	public static List<OpenIdConnectSession> findByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId,
+		int start, int end) {
 
-		return getPersistence().findByConfigurationPid(
-			configurationPid, start, end);
+		return getPersistence().findByC_A_C(
+			companyId, authServerWellKnownURI, clientId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the open ID connect sessions where configurationPid = &#63;.
+	 * Returns an ordered range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
 	 * </p>
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param start the lower bound of the range of open ID connect sessions
 	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching open ID connect sessions
 	 */
-	public static List<OpenIdConnectSession> findByConfigurationPid(
-		String configurationPid, int start, int end,
+	public static List<OpenIdConnectSession> findByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId,
+		int start, int end,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		return getPersistence().findByConfigurationPid(
-			configurationPid, start, end, orderByComparator);
+		return getPersistence().findByC_A_C(
+			companyId, authServerWellKnownURI, clientId, start, end,
+			orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the open ID connect sessions where configurationPid = &#63;.
+	 * Returns an ordered range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
 	 * </p>
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param start the lower bound of the range of open ID connect sessions
 	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching open ID connect sessions
 	 */
-	public static List<OpenIdConnectSession> findByConfigurationPid(
-		String configurationPid, int start, int end,
+	public static List<OpenIdConnectSession> findByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId,
+		int start, int end,
 		OrderByComparator<OpenIdConnectSession> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByConfigurationPid(
-			configurationPid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByC_A_C(
+			companyId, authServerWellKnownURI, clientId, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first open ID connect session in the ordered set where configurationPid = &#63;.
+	 * Returns the first open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching open ID connect session
 	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession findByConfigurationPid_First(
-			String configurationPid,
+	public static OpenIdConnectSession findByC_A_C_First(
+			long companyId, String authServerWellKnownURI, String clientId,
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws com.liferay.portal.security.sso.openid.connect.persistence.
 			exception.NoSuchSessionException {
 
-		return getPersistence().findByConfigurationPid_First(
-			configurationPid, orderByComparator);
+		return getPersistence().findByC_A_C_First(
+			companyId, authServerWellKnownURI, clientId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first open ID connect session in the ordered set where configurationPid = &#63;.
+	 * Returns the first open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession fetchByConfigurationPid_First(
-		String configurationPid,
+	public static OpenIdConnectSession fetchByC_A_C_First(
+		long companyId, String authServerWellKnownURI, String clientId,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		return getPersistence().fetchByConfigurationPid_First(
-			configurationPid, orderByComparator);
+		return getPersistence().fetchByC_A_C_First(
+			companyId, authServerWellKnownURI, clientId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last open ID connect session in the ordered set where configurationPid = &#63;.
+	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching open ID connect session
 	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession findByConfigurationPid_Last(
-			String configurationPid,
+	public static OpenIdConnectSession findByC_A_C_Last(
+			long companyId, String authServerWellKnownURI, String clientId,
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws com.liferay.portal.security.sso.openid.connect.persistence.
 			exception.NoSuchSessionException {
 
-		return getPersistence().findByConfigurationPid_Last(
-			configurationPid, orderByComparator);
+		return getPersistence().findByC_A_C_Last(
+			companyId, authServerWellKnownURI, clientId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last open ID connect session in the ordered set where configurationPid = &#63;.
+	 * Returns the last open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession fetchByConfigurationPid_Last(
-		String configurationPid,
+	public static OpenIdConnectSession fetchByC_A_C_Last(
+		long companyId, String authServerWellKnownURI, String clientId,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		return getPersistence().fetchByConfigurationPid_Last(
-			configurationPid, orderByComparator);
+		return getPersistence().fetchByC_A_C_Last(
+			companyId, authServerWellKnownURI, clientId, orderByComparator);
 	}
 
 	/**
-	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where configurationPid = &#63;.
+	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * @param openIdConnectSessionId the primary key of the current open ID connect session
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next open ID connect session
 	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
 	 */
-	public static OpenIdConnectSession[] findByConfigurationPid_PrevAndNext(
-			long openIdConnectSessionId, String configurationPid,
+	public static OpenIdConnectSession[] findByC_A_C_PrevAndNext(
+			long openIdConnectSessionId, long companyId,
+			String authServerWellKnownURI, String clientId,
 			OrderByComparator<OpenIdConnectSession> orderByComparator)
 		throws com.liferay.portal.security.sso.openid.connect.persistence.
 			exception.NoSuchSessionException {
 
-		return getPersistence().findByConfigurationPid_PrevAndNext(
-			openIdConnectSessionId, configurationPid, orderByComparator);
+		return getPersistence().findByC_A_C_PrevAndNext(
+			openIdConnectSessionId, companyId, authServerWellKnownURI, clientId,
+			orderByComparator);
 	}
 
 	/**
-	 * Removes all the open ID connect sessions where configurationPid = &#63; from the database.
+	 * Removes all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 */
-	public static void removeByConfigurationPid(String configurationPid) {
-		getPersistence().removeByConfigurationPid(configurationPid);
+	public static void removeByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId) {
+
+		getPersistence().removeByC_A_C(
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns the number of open ID connect sessions where configurationPid = &#63;.
+	 * Returns the number of open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
-	 * @param configurationPid the configuration pid
+	 * @param companyId the company ID
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the number of matching open ID connect sessions
 	 */
-	public static int countByConfigurationPid(String configurationPid) {
-		return getPersistence().countByConfigurationPid(configurationPid);
+	public static int countByC_A_C(
+		long companyId, String authServerWellKnownURI, String clientId) {
+
+		return getPersistence().countByC_A_C(
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
+	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.
 	 *
 	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the matching open ID connect session
 	 * @throws NoSuchSessionException if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession findByU_C(
-			long userId, String configurationPid)
+	public static OpenIdConnectSession findByU_A_C(
+			long userId, String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.security.sso.openid.connect.persistence.
 			exception.NoSuchSessionException {
 
-		return getPersistence().findByU_C(userId, configurationPid);
+		return getPersistence().findByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession fetchByU_C(
-		long userId, String configurationPid) {
+	public static OpenIdConnectSession fetchByU_A_C(
+		long userId, String authServerWellKnownURI, String clientId) {
 
-		return getPersistence().fetchByU_C(userId, configurationPid);
+		return getPersistence().fetchByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns the open ID connect session where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
 	 */
-	public static OpenIdConnectSession fetchByU_C(
-		long userId, String configurationPid, boolean useFinderCache) {
+	public static OpenIdConnectSession fetchByU_A_C(
+		long userId, String authServerWellKnownURI, String clientId,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByU_C(
-			userId, configurationPid, useFinderCache);
+		return getPersistence().fetchByU_A_C(
+			userId, authServerWellKnownURI, clientId, useFinderCache);
 	}
 
 	/**
-	 * Removes the open ID connect session where userId = &#63; and configurationPid = &#63; from the database.
+	 * Removes the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the open ID connect session that was removed
 	 */
-	public static OpenIdConnectSession removeByU_C(
-			long userId, String configurationPid)
+	public static OpenIdConnectSession removeByU_A_C(
+			long userId, String authServerWellKnownURI, String clientId)
 		throws com.liferay.portal.security.sso.openid.connect.persistence.
 			exception.NoSuchSessionException {
 
-		return getPersistence().removeByU_C(userId, configurationPid);
+		return getPersistence().removeByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	/**
-	 * Returns the number of open ID connect sessions where userId = &#63; and configurationPid = &#63;.
+	 * Returns the number of open ID connect sessions where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
 	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
+	 * @param authServerWellKnownURI the auth server well known uri
+	 * @param clientId the client ID
 	 * @return the number of matching open ID connect sessions
 	 */
-	public static int countByU_C(long userId, String configurationPid) {
-		return getPersistence().countByU_C(userId, configurationPid);
+	public static int countByU_A_C(
+		long userId, String authServerWellKnownURI, String clientId) {
+
+		return getPersistence().countByU_A_C(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	/**

@@ -131,9 +131,11 @@ public class OpenIdConnectSessionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteOpenIdConnectSessions(String configurationPid) {
+	public void deleteOpenIdConnectSessions(
+		long companyId, String authServerWellKnownURI, String clientId) {
+
 		_openIdConnectSessionLocalService.deleteOpenIdConnectSessions(
-			configurationPid);
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
@@ -264,10 +266,10 @@ public class OpenIdConnectSessionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.security.sso.openid.connect.persistence.model.
 		OpenIdConnectSession fetchOpenIdConnectSession(
-			long userId, String configurationPid) {
+			long userId, String authServerWellKnownURI, String clientId) {
 
 		return _openIdConnectSessionLocalService.fetchOpenIdConnectSession(
-			userId, configurationPid);
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	@Override

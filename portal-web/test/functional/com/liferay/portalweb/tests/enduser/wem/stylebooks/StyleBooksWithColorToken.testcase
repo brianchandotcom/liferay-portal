@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("Cancel the publish process") {
-			PageEditor.publish(publishing = "Cancel");
+			PageEditor.publish(action = "Cancel");
 		}
 
 		task ("View the invalid color token is still shown in Text Color field") {
@@ -313,7 +313,7 @@ definition {
 		}
 
 		task ("Continue the publish process") {
-			PageEditor.publish(publishing = "Continue");
+			PageEditor.publish(action = "Continue");
 		}
 
 		task ("View the Text Color of Heading is the #DA1414 in view mode") {

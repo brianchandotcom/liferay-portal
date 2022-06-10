@@ -1,0 +1,58 @@
+[
+	{
+		"key": "additionalDocuments",
+		"name": "Additional Documents",
+		"name_i18n": {
+			"en-US": "Additional Documents"
+		},
+		"type": "string"
+	},
+	{
+		"key": "buildingInteriorPhotos",
+		"name": "Building Interior Photos",
+		"name_i18n": {
+			"en-US": "Building Interior Photos"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessLicense",
+		"name": "Business License",
+		"name_i18n": {
+			"en-US": "Business License"
+		},
+		"type": "string"
+	},
+	{
+		"key": "damageImage",
+		"name": "Damage Image",
+		"name_i18n": {
+			"en-US": "Damage Image"
+		},
+		"type": "string"
+	},
+	{
+		"key": "diagramImage",
+		"name": "Diagram Image",
+		"name_i18n": {
+			"en-US": "Diagram Image"
+		},
+		"type": "string"
+	},
+	{
+		"key": "proofOfInsurance",
+		"name": "Proof of Insurance",
+		"name_i18n": {
+			"en-US": "Proof of Insurance"
+		},
+		"type": "string"
+	},
+	{
+		"key": "renewalDeclaration",
+		"name": "Renewal Declaration",
+		"name_i18n": {
+			"en-US": "Renewal Declaration"
+		},
+		"type": "string"
+	}
+]

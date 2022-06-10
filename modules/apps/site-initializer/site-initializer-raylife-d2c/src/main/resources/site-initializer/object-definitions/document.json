@@ -1,0 +1,65 @@
+{
+	"label": {
+		"en_US": "Raylife Document"
+	},
+	"name": "RaylifeDocument",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Document Upload"
+			},
+			"name": "documentUpload",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png"
+				},
+				{
+					"name": "fileSource",
+					"value": "documentsAndMedia"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "100"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Document Type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:DocumentType$]",
+			"name": "documentType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Document URL"
+			},
+			"name": "documentURL",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Raylife Document"
+	},
+	"scope": "company"
+}

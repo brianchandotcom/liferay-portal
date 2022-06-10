@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "User"
+	},
+	"name": "userToSalesGoal",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
+	"objectDefinitionName2": "RaylifeSalesGoal",
+	"type": "oneToMany"
+}

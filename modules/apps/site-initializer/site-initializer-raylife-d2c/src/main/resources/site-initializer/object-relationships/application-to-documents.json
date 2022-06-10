@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Application"
+	},
+	"name": "applicationToDocuments",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeDocument$]",
+	"objectDefinitionName2": "RaylifeDocument",
+	"type": "oneToMany"
+}

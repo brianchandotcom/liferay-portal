@@ -1,0 +1,52 @@
+{
+	"label": {
+		"en_US": "Raylife Sales Goal"
+	},
+	"name": "RaylifeSalesGoal",
+	"objectFields": [
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Goal Value"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "goalValue",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Initial Reference Date"
+			},
+			"name": "initialReferenceDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Final Reference Date"
+			},
+			"name": "finalReferenceDate",
+			"required": false,
+			"type": "Date"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Raylife Sales Goal"
+	},
+	"scope": "company"
+}

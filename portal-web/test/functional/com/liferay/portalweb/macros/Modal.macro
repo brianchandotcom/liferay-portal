@@ -1,8 +1,6 @@
 definition {
 
 	macro publish {
-		Button.click(button = "Publish");
-
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
 			value1 = "${warningMessage}");

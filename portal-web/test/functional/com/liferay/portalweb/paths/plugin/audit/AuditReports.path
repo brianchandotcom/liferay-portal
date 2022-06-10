@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORTS_DETAIL_RESOURCE_NAME_BY_POSITION</td>
+	<td>//tbody/tr[${resourceNameByPosition}]/td[5]/a[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

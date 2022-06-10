@@ -145,6 +145,40 @@ definition {
 		}
 	}
 
+	macro viewAuditDetailsByPosition {
+		var key_resourceAction = "${resourceAction}";
+		var key_resourceName = "${resourceName}";
+
+		AssertClick(
+			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_NAME_BY_POSITION",
+			resourceNameByPosition = "${nameByPosition}",
+			value1 = "${resourceAction}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_NAME",
+			value1 = "${resourceName}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_ACTION",
+			value1 = "${resourceAction}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_USER_NAME",
+			value1 = "${userName}");
+
+		for (var additionalInformationList : list "${additionalInformation}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
+				value1 = "${additionalInformationList}");
+		}
+
+		if (isSet(clientIp)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AuditReports#REPORTS_DETAIL_CLIENT_IP",
+				value1 = "${clientIp}");
+		}
+	}
+
 	macro viewAuditEntries {
 		AssertElementPresent(
 			key_clientIP = "${clientIP}",

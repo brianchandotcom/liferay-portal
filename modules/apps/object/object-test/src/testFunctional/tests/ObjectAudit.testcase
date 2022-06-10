@@ -180,12 +180,48 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDefaultResourcesOnSystemObjects {
+		Audit.openAuditAdmin();
 
-		// TODO LPS-153581 CanViewDefaultResourcesOnSystemObjects pending implementation
+		Audit.searchViaKeywords(
+			resourceName = "ObjectDefinition",
+			searchTerm = "ObjectDefinition",
+			userName = "");
 
+		Audit.viewAuditDetailsByPosition(
+			additionalInformation = "User,company,true",
+			clientIp = "",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectDefinition",
+			nameByPosition = "1",
+			resourceAction = "ADD",
+			resourceName = "ObjectDefinition",
+			userName = "");
+
+		Navigator.gotoBack();
+
+		Audit.viewAuditDetailsByPosition(
+			additionalInformation = "Commerce Order,company,true",
+			clientIp = "",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectDefinition",
+			nameByPosition = "2",
+			resourceAction = "ADD",
+			resourceName = "ObjectDefinition",
+			userName = "");
+
+		Navigator.gotoBack();
+
+		Audit.viewAuditDetailsByPosition(
+			additionalInformation = "Account,company,true",
+			clientIp = "",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectDefinition",
+			nameByPosition = "3",
+			resourceAction = "ADD",
+			resourceName = "ObjectDefinition",
+			userName = "");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when one field is deleted"

@@ -40,7 +40,7 @@
 	<#assign useCache = "useFinderCache && productionMode" />
 </#if>
 
-<#if entity.hasUuid() && osgiModule && serviceBuilder.isVersionGTE_7_4_0()>
+<#if osgiModule && serviceBuilder.isVersionGTE_7_4_0() && (entity.hasEntityColumn("externalReferenceCode") || entity.hasExternalReferenceCode() || entity.hasUuid())>
 	<#assign
 		portalUUID = "_portalUUID"
 	/>
@@ -814,7 +814,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if entity.hasExternalReferenceCode() || entity.hasEntityColumn("externalReferenceCode")>
 			if (Validator.isNull(${entity.variableName}.getExternalReferenceCode())) {
-				${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
+				${entity.variableName}.setExternalReferenceCode(${portalUUID}.generate());
 			}
 		</#if>
 
@@ -3135,7 +3135,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#include "model_arguments_resolver.ftl">
 	</#if>
 
-	<#if osgiModule && serviceBuilder.isVersionGTE_7_4_0() && entity.hasUuid()>
+	<#if osgiModule && serviceBuilder.isVersionGTE_7_4_0() && (entity.hasEntityColumn("externalReferenceCode") || entity.hasExternalReferenceCode() || entity.hasUuid())>
 		<#if dependencyInjectorDS>
 			@Reference
 		<#else>

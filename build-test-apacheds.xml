@@ -12,6 +12,17 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="search-apacheds-data">
+		<sequential>
+			<property name="liferay.ldap.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/ldap" />
+
+			<exec dir="${liferay.ldap.dependency.dir}" executable="/bin/bash">
+				<arg value="-c" />
+				<arg value="ldapsearch -x -b dc=example,dc=com -H ldap://0.0.0.0:10389 >> ${project.dir}/LDAPSearchResult.txt" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="unzip-apacheds">
 		<sequential>
 			<delete dir="${apacheds.dir}" />
@@ -59,6 +70,7 @@
 			/>
 		</sequential>
 	</macrodef>
+
 	<macrodef name="update-apacheds-data">
 		<sequential>
 			<property name="liferay.ldap.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/ldap" />
@@ -83,6 +95,9 @@
 
 	<target name="get-apacheds-commands">
 		<install-apacheds-utils/>
+	</target>
+	<target name="search-apacheds">
+		<search-apacheds-data/>
 	</target>
 	<target name="start-apacheds">
 		<unzip-apacheds />

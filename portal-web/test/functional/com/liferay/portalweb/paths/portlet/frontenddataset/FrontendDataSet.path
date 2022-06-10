@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>EDIT_ACTION_BUTTON</td>
+	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ACTION_BUTTON</td>
 	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>

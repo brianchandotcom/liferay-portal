@@ -69,7 +69,7 @@ export function RichTextLocalized({
 				<div className="lfr-notification__rich-text-localized-editor">
 					<ClassicEditor
 						contents={translations[selectedLocale.label as Locale]}
-						editorConfig={JSON.parse(editorConfig)}
+						editorConfig={editorConfig}
 						onChange={(content: string) => {
 							onTranslationsChange({
 								...translations,

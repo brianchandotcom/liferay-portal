@@ -32,7 +32,7 @@ import {
 	defaultLanguageId,
 	defaultLocale,
 } from '../utils/locale';
-import DefinitionOfTerms from './DefinitionOfTerms';
+import {DefinitionOfTerms} from './DefinitionOfTerms';
 
 import './EditNotificationTemplate.scss';
 
@@ -42,9 +42,12 @@ const HEADERS = new Headers({
 });
 
 export default function EditNotificationTemplate({
+	baseResourceURL,
 	editingNotificationTemplateId,
 	editorConfig,
 }: IProps) {
+	editingNotificationTemplateId = Number(editingNotificationTemplateId);
+
 	const initialValues = {
 		bcc: '',
 		body: {
@@ -116,10 +119,12 @@ export default function EditNotificationTemplate({
 		if (response.ok) {
 			openToast({
 				message: Liferay.Language.get(
-					'notification-template-created-successfully'
+					'notification-template-saved-successfully'
 				),
 				type: 'success',
 			});
+
+			window.history.back();
 		}
 		else if (response.status === 404) {
 			openToast({
@@ -187,16 +192,19 @@ export default function EditNotificationTemplate({
 		<ClayForm onSubmit={handleSubmit}>
 			<ClayManagementToolbar className="lfr__notification-template-management-tollbar">
 				<ClayManagementToolbar.ItemList>
-					<h2>Notification Template</h2>
+					<h2>{Liferay.Language.get('notification-templates')}</h2>
 				</ClayManagementToolbar.ItemList>
 
 				<ClayManagementToolbar.ItemList>
-					<ClayButton displayType="secondary" onClick={() => {}}>
-						Cancel
+					<ClayButton
+						displayType="secondary"
+						onClick={() => window.history.back()}
+					>
+						{Liferay.Language.get('cancel')}
 					</ClayButton>
 
 					<ClayButton className="inline-item-after" type="submit">
-						Save
+						{Liferay.Language.get('save')}
 					</ClayButton>
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
@@ -375,7 +383,7 @@ export default function EditNotificationTemplate({
 							translations={values.body}
 						/>
 
-						<DefinitionOfTerms />
+						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
 					</Card>
 				</div>
 			</div>
@@ -384,6 +392,7 @@ export default function EditNotificationTemplate({
 }
 
 interface IProps {
+	baseResourceURL: string;
 	editingNotificationTemplateId: number;
 	editorConfig: string;
 }

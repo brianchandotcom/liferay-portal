@@ -14,4 +14,10 @@
 
 /// <reference types="react" />
 
-export default function DefinitionOfTerms(): JSX.Element;
+export declare function DefinitionOfTerms({
+	baseResourceURL,
+}: IProps): JSX.Element;
+interface IProps {
+	baseResourceURL: string;
+}
+export {};

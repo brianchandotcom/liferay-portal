@@ -17,6 +17,7 @@ package com.liferay.info.internal.request.struts;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
@@ -31,7 +32,9 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -102,11 +105,21 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		return null;
 	}
 
+	@Activate
+	@Modified
+	protected void activate() {
+		_infoRequestFieldValuesProviderHelper =
+			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInfoItemStrutsAction.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	private volatile InfoRequestFieldValuesProviderHelper
+		_infoRequestFieldValuesProviderHelper;
 
 	@Reference
 	private Portal _portal;

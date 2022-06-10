@@ -427,6 +427,39 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-42764. Changes in the User informations will be exported into the LDAP database."
+	@priority = "3"
+	test UserChangesCanBeExportedToLDAP {
+		property apacheds.enabled = "true";
+		property test.name.skip.portal.instance = "LDAP#UserChangesCanBeExportedToLDAP";
+
+		task ("Given: User adds LDAP server and configure settings with group import method") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+		}
+
+		task ("And: creates a new user on LDAP and import it") {
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addUser");
+		}
+
+		task ("When: Logs in with the new User and changes his first name") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "testUser2@liferay.com");
+
+			Navigator.gotoAccountSettings();
+
+			User.editUserInformation(userFirstNameEdit = "changedfirstname");
+		}
+
+		task ("Then: The new user information will be present in the LDAP database") {
+			LDAP.verifyUserFirstNameIsChangedInLDAP(userFirstName = "changedfirstname");
+		}
+	}
+
 	@description = "This is a use case for LRQA-42766. Users can be imported with group import method."
 	@priority = "3"
 	test UsersCanBeImportedFromLDAPByGroups {

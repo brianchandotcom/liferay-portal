@@ -3152,13 +3152,19 @@ definition {
 			var index = "1";
 		}
 
-		var class = selenium.getAttribute("xpath=(//div[@aria-label='${fragmentName}'])[${index}]@class");
+		var javascript = '''
+function getWebElement(locator) {
+  return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
 
-		var class = StringUtil.extractFirst("${class}", " page-editor__topper");
+return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+		''';
 
-		var class = StringUtil.extractLast("${class}", "lfr-layout-structure-item-topper-");
+		var className = selenium.getEval("${javascript}");
 
-		var commonStylesClass = StringUtil.add("lfr-layout-structure-item-", "${class}", "");
+		var className = StringUtil.extractLast("${className}", "lfr-layout-structure-item-topper-");
+
+		var commonStylesClass = StringUtil.add("lfr-layout-structure-item-", "${className}", "");
 
 		return "${commonStylesClass}";
 	}

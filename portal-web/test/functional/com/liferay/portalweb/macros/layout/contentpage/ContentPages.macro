@@ -340,9 +340,15 @@ definition {
 			var index = "1";
 		}
 
-		var class = selenium.getAttribute("xpath=(//div[contains(@class,'${fragmentName}')])[${index}]//ancestor::div[contains(@class,'lfr-layout-structure-item-')]@class");
+		var javascript = '''
+function getWebElement(locator) {
+  return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
 
-		var commonStylesClass = StringUtil.extractFirst("${class}", " lfr-layout-structure-item-");
+return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item-')][contains(@class,'-${fragmentName}')])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+		''';
+
+		var commonStylesClass = selenium.getEval("${javascript}");
 
 		return "${commonStylesClass}";
 	}

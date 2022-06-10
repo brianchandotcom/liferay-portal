@@ -460,4 +460,179 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147787. The user don't have full access permissions when not given Update permission in Page section."
+	@priority = "4"
+	test ViewLimitedAccessAsUserWithoutUpdatePermission {
+		task ("Given a page builder has a content page") {
+			JSONRole.addSiteRole(
+				roleKey = "Page Builder",
+				roleTitle = "Page Builder");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Page Builder",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page builder has all permissions except Update permission in Page section") {
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoDefineRolePermissions(
+				permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
+				portlet = "Pages",
+				roleTitle = "Page Builder",
+				roleType = "Site");
+
+			Check(
+				locator1 = "Permissions#SELECT_ALL",
+				title = "Page");
+
+			PortletEntry.save();
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Page Builder",
+				roleType = "site");
+		}
+
+		task ("Then the page builder has limited access in page editor") {
+			task ("Add a Container to a content page") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Access to the General panel of Container") {
+				PageEditor.gotoConfiguration(fragmentName = "Container");
+
+				for (var fieldLabel : list "Width,Height,Min Width,Max Width,Min Height,Max Height") {
+					AssertVisible(
+						key_borderBottom = "Frame",
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD");
+				}
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Overflow",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Default");
+
+				AssertElementPresent(
+					checkboxName = "Hide Fragment",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Access to the Styles panel of Container") {
+				PageEditor.editLayoutContainer(
+					backgroundColor = "Success",
+					borderWidth = "5",
+					panel = "Styles");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "backgroundColor",
+					styleValue = "success");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Container",
+					styleName = "borderWidth",
+					styleValue = "5px");
+
+				AssertElementNotPresent(
+					key_fieldLabel = "Background Color",
+					key_text = "chain-broken",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+
+			task ("Access to the Advanced panel of Container") {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "HTML Tag",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "div");
+
+				AssertElementPresent(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Add a Heading fragment into Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+
+			task ("Access to the General panel of Heading") {
+				PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+				for (var fieldLabel : list "Width,Height,Min Width,Max Width,Min Height,Max Height") {
+					AssertElementNotPresent(
+						key_borderBottom = "Frame",
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD");
+				}
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Overflow",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Default");
+
+				AssertElementPresent(
+					checkboxName = "Hide Fragment",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Access to the Styles panel of Heading") {
+				PageEditor.gotoStyle(fragmentName = "Heading");
+
+				PageEditor.configureFragment(
+					opacity = "50",
+					textColor = "Success");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Heading",
+					styleName = "color",
+					styleValue = "success");
+
+				PageEditor.viewFragmentCommonStyle(
+					fragmentName = "Heading",
+					styleName = "opacity",
+					styleValue = "0.5");
+
+				AssertElementNotPresent(
+					key_fieldLabel = "Text Color",
+					key_text = "chain-broken",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+
+			task ("Access to the Advanced panel of Heading") {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				AssertElementPresent(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("Delete the site role") {
+				JSONRole.deleteRole(roleTitle = "Page Builder");
+			}
+		}
+	}
+
 }

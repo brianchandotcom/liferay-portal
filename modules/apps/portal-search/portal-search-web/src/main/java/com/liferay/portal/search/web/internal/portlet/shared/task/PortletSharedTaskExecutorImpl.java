@@ -14,20 +14,16 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.task;
 
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTask;
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTaskExecutor;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import javax.portlet.RenderRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,7 +39,7 @@ public class PortletSharedTaskExecutorImpl
 		PortletSharedTask<T> portletSharedTask, String attributeSuffix,
 		RenderRequest renderRequest) {
 
-		String attributeName = _requestSharedAttribute.concat(attributeSuffix);
+		String attributeName = "LIFERAY_SHARED_" + attributeSuffix;
 
 		Optional<FutureTask<T>> oldFutureTaskOptional;
 		FutureTask<T> futureTask;
@@ -76,22 +72,7 @@ public class PortletSharedTaskExecutorImpl
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		String[] requestSharedAttributes = props.getArray(
-			PropsKeys.REQUEST_SHARED_ATTRIBUTES);
-
-		Arrays.sort(requestSharedAttributes);
-
-		_requestSharedAttribute = requestSharedAttributes[0];
-	}
-
 	@Reference
 	protected PortletSharedRequestHelper portletSharedRequestHelper;
-
-	@Reference
-	protected Props props;
-
-	private String _requestSharedAttribute;
 
 }

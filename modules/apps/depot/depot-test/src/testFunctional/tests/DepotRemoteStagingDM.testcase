@@ -4376,9 +4376,10 @@ definition {
 
 	@description = "This test covers LPS-154440. It ensures that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "4"
-	test CanViewImageInDynamicCollectionViaAPAfterPublish {
+	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

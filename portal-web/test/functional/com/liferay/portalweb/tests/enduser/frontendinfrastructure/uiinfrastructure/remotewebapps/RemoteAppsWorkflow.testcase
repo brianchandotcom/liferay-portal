@@ -1,5 +1,7 @@
+@component-name = "portal-frontend-infrastructure"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Remote Apps";
@@ -22,8 +24,6 @@ definition {
 	@description = "LPS-147201. Verify approved remote app portlet can be added to page"
 	@priority = "4"
 	test AdminCanApproveRemotePortlet {
-		property portal.acceptance = "true";
-
 		task ("Apply workflow approval process to remote apps") {
 			RemoteAppsWorkflow.applyWorkflow();
 		}
@@ -96,11 +96,82 @@ definition {
 		}
 	}
 
+	@description = "LPS-147197. Verify rejected remote app portlet cannot be added to page"
+	@priority = "5"
+	test AdminCanRejectRemotePortlet {
+		task ("Given workflow approval process applied to remote apps") {
+			RemoteAppsWorkflow.applyWorkflow();
+		}
+
+		task ("And given a user with permissions to create remote app") {
+			Permissions.setUpRegRoleLoginUserCP(
+				roleTitle = "New Regular Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			RemoteAppsWorkflow.addUserPermissions();
+		}
+
+		task ("And given a remote app created as user with permissions") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.addApp(
+				entryName = "Test Remote App",
+				entryURL = "http://www.liferay.com");
+		}
+
+		task ("When admin rejects remote app") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Notifications.gotoNotifications();
+
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "userfn userln sent you a Client Extension Entry for review in the workflow.");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+
+			Workflow.confirmWorkflowAction();
+		}
+
+		task ("Then Assert remote app pending status") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteAppsWorkflow.assertTableStatus(
+				entryName = "Test Remote App",
+				entryStatus = "Pending");
+		}
+
+		task ("And Then assert remote app portlet cannot be added to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.gotoPage(pageName = "Test Page");
+
+			Portlet.viewCannotAddPG(portletName = "Test Remote App");
+
+			AssertElementNotPresent(
+				key_portletName = "Test Remote App",
+				locator1 = "Portlet#TITLE");
+		}
+	}
+
 	@description = "LPS-147198. Verify remote app entry workflow can be configured at instance level"
 	@priority = "5"
 	test CanConfigureWorkflowInstanceLevel {
-		property portal.acceptance = "true";
-
 		task ("Navigate to workflow configuration") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
@@ -129,8 +200,6 @@ definition {
 	@description = "LPS-147202. Verify admin can receive notification request to approve remote app"
 	@priority = "4"
 	test CanSendWorkflowNotification {
-		property portal.acceptance = "true";
-
 		task ("Apply workflow approval process to remote apps") {
 			RemoteAppsWorkflow.applyWorkflow();
 		}
@@ -174,8 +243,6 @@ definition {
 	@description = "LPS-147200. Verify pending remote app portlet cannot be added to page"
 	@priority = "4"
 	test PendingRemoteAppCannotBeAddedToPage {
-		property portal.acceptance = "true";
-
 		task ("Apply workflow approval process to remote apps") {
 			RemoteAppsWorkflow.applyWorkflow();
 		}

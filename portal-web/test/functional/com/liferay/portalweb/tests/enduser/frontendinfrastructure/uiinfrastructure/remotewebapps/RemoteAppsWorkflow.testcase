@@ -56,19 +56,20 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Notifications.gotoNotifications();
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+			
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+			
+			Workflow.assignTaskToUser(
+				assetTitle = "Client Extension Entry",
+				assetType = "Client Extension Entry",
+				assigneeName = "test (Test Test)",
+				workflowTask = "Review");
 
-			AssertClick(
-				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "userfn userln sent you a Client Extension Entry for review in the workflow.");
-
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
-
-			Workflow.confirmWorkflowAction();
-
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
-
-			Workflow.confirmWorkflowAction();
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Client Extension Entry",
+				workflowAssetType = "Client Extension Entry",
+				workflowTask = "Review");
 		}
 
 		task ("Assert remote app approved status") {
@@ -131,19 +132,20 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			Notifications.gotoNotifications();
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-			AssertClick(
-				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "userfn userln sent you a Client Extension Entry for review in the workflow.");
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+			Workflow.assignTaskToUser(
+				assetTitle = "Client Extension Entry",
+				assetType = "Client Extension Entry",
+				assigneeName = "test (Test Test)",
+				workflowTask = "Review");
 
-			Workflow.confirmWorkflowAction();
-
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
-
-			Workflow.confirmWorkflowAction();
+			Workflow.rejectTaskByActions(
+				workflowAssetTitle = "Client Extension Entry",
+				workflowAssetType = "Client Extension Entry",
+				workflowTask = "Review");
 		}
 
 		task ("Then Assert remote app pending status") {

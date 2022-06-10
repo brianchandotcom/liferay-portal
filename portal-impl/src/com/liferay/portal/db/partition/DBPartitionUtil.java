@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -180,6 +182,24 @@ public class DBPartitionUtil {
 		if (_DATABASE_PARTITION_ENABLED) {
 			_defaultCompanyId = companyId;
 		}
+	}
+
+	public static BaseModel<?> toEntityModel(BaseModel<?> entityModel) {
+		if (!_DATABASE_PARTITION_ENABLED) {
+			return entityModel;
+		}
+
+		if (entityModel instanceof ShardedModel) {
+			ShardedModel shardedModel = (ShardedModel)entityModel;
+
+			if (CompanyThreadLocal.getCompanyId() !=
+					shardedModel.getCompanyId()) {
+
+				return null;
+			}
+		}
+
+		return entityModel;
 	}
 
 	public static DataSource wrapDataSource(DataSource dataSource)

@@ -27,11 +27,11 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 		</p>
 	</c:when>
 	<c:otherwise>
-		<div class="sheet taglib-empty-result-message">
+		<div class="mt-4 taglib-empty-result-message">
 			<div class="<%= (String)request.getAttribute("liferay-ui:empty-result-message:cssClass") %>"></div>
 
 			<c:if test="<%= Validator.isNotNull(message) %>">
-				<div class="sheet-text text-center">
+				<div class="mt-2 text-center text-secondary">
 					<liferay-ui:message key="<%= message %>" />
 				</div>
 			</c:if>

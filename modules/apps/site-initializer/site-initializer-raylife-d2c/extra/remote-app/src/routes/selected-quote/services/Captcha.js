@@ -11,28 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 import {axios} from '../../../common/services/liferay/api';
+const base_URL = '/c/portal/captcha';
 
-const DeliveryAPI = 'o/headless-admin-user';
-
-export function createAccount(
-	firstName,
-	lastName,
-	emailAddress,
-	password,
-	captcha
-) {
-	const payload = {
-		alternateName: `${emailAddress.split('@')[0]}`,
-		emailAddress,
-		familyName: lastName,
-		givenName: firstName,
-		password,
-	};
-
-	return axios.post(
-		`${DeliveryAPI}/v1.0/user-accounts?captchaText=${captcha}`,
-		payload
-	);
+export function getImage() {
+	return axios.get(`${base_URL}/get_image`);
 }

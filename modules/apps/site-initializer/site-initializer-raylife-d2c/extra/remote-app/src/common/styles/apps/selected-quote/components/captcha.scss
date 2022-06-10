@@ -1,0 +1,36 @@
+.captcha-container {
+	.reload-captcha {
+		cursor: pointer;
+	}
+
+	.image-captcha {
+		img {
+			height: 40px;
+			width: 185px;
+		}
+	}
+
+	.input-content {
+		.input-captcha {
+			&::placeholder {
+				font-weight: $font-weight-bolder;
+			}
+		}
+
+		input {
+			background-color: $color-brand-primary-lighten-6;
+			border: none;
+			height: $spacer-5;
+		}
+
+		input:valid {
+			background-color: $background;
+			border: solid 1px $color-neutral-black;
+		}
+
+		input:focus {
+			background-color: $background;
+			border: solid 1px $color-action-primary-default;
+		}
+	}
+}

@@ -26,6 +26,7 @@ import {
 	SendAccountRequest,
 	validadePassword,
 } from '../../../utils/CreateAccount';
+import Captcha from '../../Captcha';
 import {ListRules} from '../CreateAnAccount/ListRules';
 import {
 	CHECK_VALUE,
@@ -48,6 +49,9 @@ export function CreateAnAccount() {
 	const [password, setPassword] = useState('');
 	const [objValidate, setObjValidate] = useState(INITIAL_VALIDATION);
 	const [passwordLabel, setPasswordLabel] = useState('Create a Password');
+	const [captcha, setCaptcha] = useState('');
+	const [hasError, setHasError] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		setAlert(NATURAL_VALUE);
@@ -55,33 +59,44 @@ export function CreateAnAccount() {
 
 	const onCreateAccount = () => {
 		if (isMatchingAllRules) {
-			SendAccountRequest(email, password).then((response) => {
-				dispatch({
-					payload: {
-						panelKey: 'uploadDocuments',
-						value: true,
-					},
-					type: ACTIONS.SET_EXPANDED,
-				});
+			setLoading(true);
 
-				dispatch({
-					payload: {
-						panelKey: 'createAnAccount',
-						value: false,
-					},
-					type: ACTIONS.SET_EXPANDED,
-				});
+			SendAccountRequest(email, password, captcha)
+				.then((response) => {
+					dispatch({
+						payload: {
+							panelKey: 'uploadDocuments',
+							value: true,
+						},
+						type: ACTIONS.SET_EXPANDED,
+					});
 
-				dispatch({
-					payload: {
-						panelKey: 'createAnAccount',
-						value: true,
-					},
-					type: ACTIONS.SET_STEP_CHECKED,
-				});
+					dispatch({
+						payload: {
+							panelKey: 'createAnAccount',
+							value: false,
+						},
+						type: ACTIONS.SET_EXPANDED,
+					});
 
-				dispatch({payload: response.id, type: ACTIONS.SET_ACCOUNT_ID});
-			});
+					dispatch({
+						payload: {
+							panelKey: 'createAnAccount',
+							value: true,
+						},
+						type: ACTIONS.SET_STEP_CHECKED,
+					});
+
+					dispatch({
+						payload: response.id,
+						type: ACTIONS.SET_ACCOUNT_ID,
+					});
+				})
+				.catch((error) => {
+					console.error(error);
+					setHasError(true);
+					setLoading(false);
+				});
 		}
 	};
 
@@ -195,12 +210,14 @@ export function CreateAnAccount() {
 				</div>
 
 				<ListRules objValidate={objValidate} />
+
+				<Captcha captchaValue={captcha} setCaptchaValue={setCaptcha} />
 			</ClayForm>
 
-			<div className="d-flex justify-content-center justify-content-md-end">
+			<div className="align-items-center d-flex justify-content-center justify-content-md-end">
 				<ClayButton
-					className="mb-0 mt-8 mx-0"
-					disabled={!matchAllRules}
+					className="align-items-center d-flex"
+					disabled={!matchAllRules || loading}
 					displayType="primary"
 					onClick={onCreateAccount}
 				>
@@ -208,13 +225,14 @@ export function CreateAnAccount() {
 				</ClayButton>
 			</div>
 
-			{email && alert === UNCHECKED_VALUE && (
-				<div className="create-account__alert-create">
-					<WarningBadge>
-						Unable to create your account. Please try again
-					</WarningBadge>
-				</div>
-			)}
+			{(email && alert === UNCHECKED_VALUE) ||
+				(hasError && (
+					<div className="create-account__alert-create mt-4 rounded">
+						<WarningBadge>
+							Unable to create your account. Please try again
+						</WarningBadge>
+					</div>
+				))}
 		</div>
 	);
 }

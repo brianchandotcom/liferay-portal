@@ -26,13 +26,17 @@ import {createAccount} from '../services/Account';
 const getValueFromValidation = (condition) =>
 	condition ? CHECK_VALUE : UNCHECKED_VALUE;
 
-export async function SendAccountRequest() {
+export async function SendAccountRequest(email, password, captcha) {
 	const {
 		basics: {businessInformation},
 	} = JSON.parse(getItem('raylife-application-form'));
 
 	const {data} = await createAccount(
-		`${businessInformation.firstName} ${businessInformation.lastName}`
+		businessInformation.firstName,
+		businessInformation.lastName,
+		email,
+		password,
+		captcha
 	);
 
 	return data;

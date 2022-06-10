@@ -318,9 +318,6 @@ create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);
 
-create index IX_4A527DD3 on OrgGroupRole (groupId);
-create index IX_AB044D1C on OrgGroupRole (roleId);
-
 create index IX_6AF0D434 on OrgLabor (organizationId);
 
 create index IX_2C1E7914 on Organization_ (companyId, ctCollectionId);

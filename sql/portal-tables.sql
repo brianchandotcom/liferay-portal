@@ -828,6 +828,28 @@ create table MembershipRequest (
 	statusId LONG
 );
 
+create table OrgLabor (
+	mvccVersion LONG default 0 not null,
+	orgLaborId LONG not null primary key,
+	companyId LONG,
+	organizationId LONG,
+	typeId LONG,
+	sunOpen INTEGER,
+	sunClose INTEGER,
+	monOpen INTEGER,
+	monClose INTEGER,
+	tueOpen INTEGER,
+	tueClose INTEGER,
+	wedOpen INTEGER,
+	wedClose INTEGER,
+	thuOpen INTEGER,
+	thuClose INTEGER,
+	friOpen INTEGER,
+	friClose INTEGER,
+	satOpen INTEGER,
+	satClose INTEGER
+);
+
 create table Organization_ (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
@@ -850,37 +872,6 @@ create table Organization_ (
 	comments STRING null,
 	logoId LONG,
 	primary key (organizationId, ctCollectionId)
-);
-
-create table OrgGroupRole (
-	mvccVersion LONG default 0 not null,
-	organizationId LONG not null,
-	groupId LONG not null,
-	roleId LONG not null,
-	companyId LONG,
-	primary key (organizationId, groupId, roleId)
-);
-
-create table OrgLabor (
-	mvccVersion LONG default 0 not null,
-	orgLaborId LONG not null primary key,
-	companyId LONG,
-	organizationId LONG,
-	typeId LONG,
-	sunOpen INTEGER,
-	sunClose INTEGER,
-	monOpen INTEGER,
-	monClose INTEGER,
-	tueOpen INTEGER,
-	tueClose INTEGER,
-	wedOpen INTEGER,
-	wedClose INTEGER,
-	thuOpen INTEGER,
-	thuClose INTEGER,
-	friOpen INTEGER,
-	friClose INTEGER,
-	satOpen INTEGER,
-	satClose INTEGER
 );
 
 create table PasswordPolicy (

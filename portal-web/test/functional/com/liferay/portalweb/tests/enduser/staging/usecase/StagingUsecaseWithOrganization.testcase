@@ -36,74 +36,80 @@ definition {
 		property test.name.skip.portal.instance = "StagingUsecaseWithOrganization#StagingOrganizations";
 		property testray.component.names = "Training";
 
-		User.openUsersAdmin();
+		task ("Given: An administrator of staging organization is added") {
+			User.openUsersAdmin();
 
-		Organization.addCP(
-			orgName = "Staging Organization Name",
-			orgType = "Organization");
+			Organization.addCP(
+				orgName = "Staging Organization Name",
+				orgType = "Organization");
 
-		User.openUsersAdmin();
+			User.openUsersAdmin();
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addSiteCP(orgName = "Staging Organization Name");
+			Organization.addSiteCP(orgName = "Staging Organization Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
-		PagesAdmin.addPage(pageName = "Site Page Name");
+			PagesAdmin.addPage(pageName = "Site Page Name");
 
-		JSONUser.addUser(
-			allowManualMembershipManagement = "true",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				allowManualMembershipManagement = "true",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.assignUserToOrganization(
-			organizationName = "Staging Organization Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Staging Organization Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutPG();
+		task ("When: Log in as administrator and add two types of page variations") {
+			User.logoutPG();
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "true",
-			branchingPublic = "true",
-			groupName = "Staging Organization Name");
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Staging Organization Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
-			siteName = "Staging Organization Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Site Page Name",
+				siteName = "Staging Organization Name");
 
-		Staging.addSitePagesVariationPG(
-			copySitePagesVariationName = "All Site Pages Variations",
-			sitePagesVariationName = "Site Pages Variation Name");
+			Staging.addSitePagesVariationPG(
+				copySitePagesVariationName = "All Site Pages Variations",
+				sitePagesVariationName = "Site Pages Variation Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
-			siteName = "Staging Organization Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Site Page Name",
+				siteName = "Staging Organization Name");
 
-		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+			Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
+		}
 
-		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");
+		task ("Then: Verify if it's possible to see two types of page variations") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Site Page Name",
+				siteName = "Staging Organization Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
-			siteName = "Staging Organization Name");
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
-		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
+			Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
+		}
 	}
 
 }

@@ -220,6 +220,16 @@ public class ObjectFieldSerDes {
 			sb.append(objectField.getRequired());
 		}
 
+		if (objectField.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(objectField.getSystem());
+		}
+
 		if (objectField.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -355,6 +365,13 @@ public class ObjectFieldSerDes {
 			map.put("required", String.valueOf(objectField.getRequired()));
 		}
 
+		if (objectField.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(objectField.getSystem()));
+		}
+
 		if (objectField.getType() == null) {
 			map.put("type", null);
 		}
@@ -472,6 +489,11 @@ public class ObjectFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "required")) {
 				if (jsonParserFieldValue != null) {
 					objectField.setRequired((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setSystem((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

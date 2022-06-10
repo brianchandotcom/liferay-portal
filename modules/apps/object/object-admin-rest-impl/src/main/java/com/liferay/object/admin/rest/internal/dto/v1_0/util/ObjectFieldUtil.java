@@ -69,6 +69,7 @@ public class ObjectFieldUtil {
 				relationshipType = ObjectField.RelationshipType.create(
 					serviceBuilderObjectField.getRelationshipType());
 				required = serviceBuilderObjectField.isRequired();
+				system = serviceBuilderObjectField.getSystem();
 				type = ObjectField.Type.create(
 					serviceBuilderObjectField.getDBType());
 			}
@@ -112,6 +113,8 @@ public class ObjectFieldUtil {
 						objectFieldSetting, objectFieldSettingLocalService)));
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));
+		serviceBuilderObjectField.setSystem(
+			GetterUtil.getBoolean(objectField.getSystem()));
 
 		return serviceBuilderObjectField;
 	}

@@ -167,6 +167,7 @@ definition {
 			clientIP = "127.0.0.1",
 			createDate = "Seconds Ago",
 			id = "",
+			position = "1",
 			resourceAction = "ADD",
 			resourceID = "",
 			resourceName = "ObjectDefinition",
@@ -277,12 +278,26 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewEmptyValuesDefaultOnColumnsOnSystemObjects {
+		Audit.openAuditAdmin();
 
-		// TODO LPS-153582 CanViewEmptyValuesDefaultOnColumnsOnSystemObjects pending implementation
+		Audit.searchViaKeywords(
+			resourceName = "ObjectDefinition",
+			searchTerm = "ObjectDefinition",
+			userName = "");
 
+		for (var positionList : list "1,2,3") {
+			Audit.viewAuditEntries(
+				clientIP = "",
+				createDate = "Minutes Ago",
+				id = "0",
+				position = "${positionList}",
+				resourceAction = "ADD",
+				resourceID = "",
+				resourceName = "ObjectDefinition",
+				userName = "");
+		}
 	}
 
 	@description = "LPS-149508 - Verify it's the Additional Information of the custom object created is validated (for example: scope, name, active and labelMap)"

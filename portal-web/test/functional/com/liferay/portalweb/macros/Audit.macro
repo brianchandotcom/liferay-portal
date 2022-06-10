@@ -184,6 +184,7 @@ definition {
 			key_clientIP = "${clientIP}",
 			key_createDate = "${createDate}",
 			key_id = "${id}",
+			key_position = "${position}",
 			key_resourceAction = "${resourceAction}",
 			key_resourceID = "${resourceID}",
 			key_resourceName = "${resourceName}",

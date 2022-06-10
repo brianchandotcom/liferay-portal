@@ -50,9 +50,9 @@ public class OpenIdConnectSessionWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accessToken", getAccessToken());
-		attributes.put("configurationPid", getConfigurationPid());
+		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
+		attributes.put("clientId", getClientId());
 		attributes.put("idToken", getIdToken());
-		attributes.put("providerName", getProviderName());
 		attributes.put("refreshToken", getRefreshToken());
 
 		return attributes;
@@ -97,22 +97,23 @@ public class OpenIdConnectSessionWrapper
 			setAccessToken(accessToken);
 		}
 
-		String configurationPid = (String)attributes.get("configurationPid");
+		String authServerWellKnownURI = (String)attributes.get(
+			"authServerWellKnownURI");
 
-		if (configurationPid != null) {
-			setConfigurationPid(configurationPid);
+		if (authServerWellKnownURI != null) {
+			setAuthServerWellKnownURI(authServerWellKnownURI);
+		}
+
+		String clientId = (String)attributes.get("clientId");
+
+		if (clientId != null) {
+			setClientId(clientId);
 		}
 
 		String idToken = (String)attributes.get("idToken");
 
 		if (idToken != null) {
 			setIdToken(idToken);
-		}
-
-		String providerName = (String)attributes.get("providerName");
-
-		if (providerName != null) {
-			setProviderName(providerName);
 		}
 
 		String refreshToken = (String)attributes.get("refreshToken");
@@ -138,6 +139,26 @@ public class OpenIdConnectSessionWrapper
 	}
 
 	/**
+	 * Returns the auth server well known uri of this open ID connect session.
+	 *
+	 * @return the auth server well known uri of this open ID connect session
+	 */
+	@Override
+	public String getAuthServerWellKnownURI() {
+		return model.getAuthServerWellKnownURI();
+	}
+
+	/**
+	 * Returns the client ID of this open ID connect session.
+	 *
+	 * @return the client ID of this open ID connect session
+	 */
+	@Override
+	public String getClientId() {
+		return model.getClientId();
+	}
+
+	/**
 	 * Returns the company ID of this open ID connect session.
 	 *
 	 * @return the company ID of this open ID connect session
@@ -145,16 +166,6 @@ public class OpenIdConnectSessionWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the configuration pid of this open ID connect session.
-	 *
-	 * @return the configuration pid of this open ID connect session
-	 */
-	@Override
-	public String getConfigurationPid() {
-		return model.getConfigurationPid();
 	}
 
 	/**
@@ -208,16 +219,6 @@ public class OpenIdConnectSessionWrapper
 	}
 
 	/**
-	 * Returns the provider name of this open ID connect session.
-	 *
-	 * @return the provider name of this open ID connect session
-	 */
-	@Override
-	public String getProviderName() {
-		return model.getProviderName();
-	}
-
-	/**
 	 * Returns the refresh token of this open ID connect session.
 	 *
 	 * @return the refresh token of this open ID connect session
@@ -263,6 +264,26 @@ public class OpenIdConnectSessionWrapper
 	}
 
 	/**
+	 * Sets the auth server well known uri of this open ID connect session.
+	 *
+	 * @param authServerWellKnownURI the auth server well known uri of this open ID connect session
+	 */
+	@Override
+	public void setAuthServerWellKnownURI(String authServerWellKnownURI) {
+		model.setAuthServerWellKnownURI(authServerWellKnownURI);
+	}
+
+	/**
+	 * Sets the client ID of this open ID connect session.
+	 *
+	 * @param clientId the client ID of this open ID connect session
+	 */
+	@Override
+	public void setClientId(String clientId) {
+		model.setClientId(clientId);
+	}
+
+	/**
 	 * Sets the company ID of this open ID connect session.
 	 *
 	 * @param companyId the company ID of this open ID connect session
@@ -270,16 +291,6 @@ public class OpenIdConnectSessionWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
-	}
-
-	/**
-	 * Sets the configuration pid of this open ID connect session.
-	 *
-	 * @param configurationPid the configuration pid of this open ID connect session
-	 */
-	@Override
-	public void setConfigurationPid(String configurationPid) {
-		model.setConfigurationPid(configurationPid);
 	}
 
 	/**
@@ -330,16 +341,6 @@ public class OpenIdConnectSessionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the provider name of this open ID connect session.
-	 *
-	 * @param providerName the provider name of this open ID connect session
-	 */
-	@Override
-	public void setProviderName(String providerName) {
-		model.setProviderName(providerName);
 	}
 
 	/**

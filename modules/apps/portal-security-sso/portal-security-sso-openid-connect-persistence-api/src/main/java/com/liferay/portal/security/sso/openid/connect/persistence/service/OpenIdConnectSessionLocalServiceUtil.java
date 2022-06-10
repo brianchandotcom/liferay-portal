@@ -121,8 +121,11 @@ public class OpenIdConnectSessionLocalServiceUtil {
 		getService().deleteOpenIdConnectSessions(userId);
 	}
 
-	public static void deleteOpenIdConnectSessions(String configurationPid) {
-		getService().deleteOpenIdConnectSessions(configurationPid);
+	public static void deleteOpenIdConnectSessions(
+		long companyId, String authServerWellKnownURI, String clientId) {
+
+		getService().deleteOpenIdConnectSessions(
+			companyId, authServerWellKnownURI, clientId);
 	}
 
 	/**
@@ -227,9 +230,10 @@ public class OpenIdConnectSessionLocalServiceUtil {
 	}
 
 	public static OpenIdConnectSession fetchOpenIdConnectSession(
-		long userId, String configurationPid) {
+		long userId, String authServerWellKnownURI, String clientId) {
 
-		return getService().fetchOpenIdConnectSession(userId, configurationPid);
+		return getService().fetchOpenIdConnectSession(
+			userId, authServerWellKnownURI, clientId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

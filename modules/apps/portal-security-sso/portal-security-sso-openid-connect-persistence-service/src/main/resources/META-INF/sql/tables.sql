@@ -5,8 +5,8 @@ create table OpenIdConnectSession (
 	userId LONG,
 	modifiedDate DATE null,
 	accessToken VARCHAR(3000) null,
-	configurationPid VARCHAR(256) null,
+	authServerWellKnownURI VARCHAR(256) null,
+	clientId VARCHAR(256) null,
 	idToken VARCHAR(3999) null,
-	providerName VARCHAR(75) null,
 	refreshToken VARCHAR(2000) null
 );

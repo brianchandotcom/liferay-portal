@@ -99,6 +99,16 @@ public class RenderLayoutStructureDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAddInfoItemActionURL() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+		sb.append(PortalUtil.getPathContext());
+		sb.append("/c/info/add_info_item");
+
+		return sb.toString();
+	}
+
 	public List<String> getCollectionStyledLayoutStructureItemIds() {
 		List<String> collectionStyledLayoutStructureItemIds =
 			(List<String>)_httpServletRequest.getAttribute(

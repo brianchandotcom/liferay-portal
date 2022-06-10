@@ -224,6 +224,13 @@ definition {
 					configurationScope = "Virtual Instance Scope");
 			}
 
+			if ("${enableSetting}" == "ldapExportEnabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Export",
+					configurationScope = "Virtual Instance Scope");
+			}
+
 			FormFields.enableCheckbox(fieldName = "InstanceSettingsPortlet_${enableSetting}");
 
 			PortletEntry.save();
@@ -1123,6 +1130,13 @@ definition {
 				PortalSettings.gotoConfiguration(
 					configurationCategory = "LDAP",
 					configurationName = "Import",
+					configurationScope = "Virtual Instance Scope");
+			}
+
+			if ("${enableSetting}" == "ldapExportEnabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Export",
 					configurationScope = "Virtual Instance Scope");
 			}
 

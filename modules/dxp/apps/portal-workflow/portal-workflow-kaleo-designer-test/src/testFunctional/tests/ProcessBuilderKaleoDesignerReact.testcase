@@ -1023,7 +1023,6 @@ definition {
 			roleTypeRoleName = "Administrator");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role Type: Administrator");
-
 	}
 
 	@description = "Verify that the user can edit the Action fields"

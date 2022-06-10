@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.events;
+package com.liferay.layout.internal.events;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;

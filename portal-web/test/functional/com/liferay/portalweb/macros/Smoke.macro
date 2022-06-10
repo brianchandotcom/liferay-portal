@@ -104,7 +104,7 @@ definition {
 			}
 
 			task ("Publish Content Page") {
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Navigate to the content page") {

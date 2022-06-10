@@ -135,7 +135,7 @@ definition {
 
 		PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

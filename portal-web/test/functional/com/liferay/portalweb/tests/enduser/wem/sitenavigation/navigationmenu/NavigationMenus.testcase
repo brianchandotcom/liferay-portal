@@ -61,7 +61,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the first display page template as default") {
@@ -84,7 +84,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the second display page template as default") {
@@ -108,7 +108,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the third display page template as default") {
@@ -131,7 +131,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the fourth display page template as default") {
@@ -694,7 +694,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to the second category") {

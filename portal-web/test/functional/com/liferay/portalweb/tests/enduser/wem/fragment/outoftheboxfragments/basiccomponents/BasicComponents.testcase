@@ -281,7 +281,7 @@ definition {
 				paddingTop = "2",
 				textColor = "blockquote-small-color");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Heading styles at view mode") {

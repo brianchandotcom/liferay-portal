@@ -86,7 +86,7 @@ definition {
 				fragmentName = "Collection Filter",
 				targetCollection = "Dynamic Collection");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Search a term with XSS in Collection Filter") {

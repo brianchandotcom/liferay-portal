@@ -70,7 +70,7 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the displayed content at view mode in staging site") {
@@ -208,7 +208,7 @@ definition {
 				key_content = "//a[contains(.,'Web Content Content')]",
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the web content is shown in Content Display") {

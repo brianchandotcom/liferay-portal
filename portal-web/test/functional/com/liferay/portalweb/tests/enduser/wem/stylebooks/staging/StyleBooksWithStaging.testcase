@@ -135,7 +135,7 @@ definition {
 				locator2 = "font-size",
 				value1 = "32px");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the new style book is applied to content page in view mode") {
@@ -206,7 +206,7 @@ definition {
 				locator2 = "font-size",
 				value1 = "26px");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the default style book is applied to content page in view mode") {
@@ -312,7 +312,7 @@ definition {
 				locator2 = "font-size",
 				value1 = "32px");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the new style book is applied to content page in view mode") {
@@ -368,7 +368,7 @@ definition {
 				locator2 = "font-size",
 				value1 = "26px");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the new style book is applied to content page in view mode") {
@@ -603,7 +603,7 @@ definition {
 				composition = "true",
 				fragmentName = "Banner Center");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Preview style book effect on page in page preview iframe") {
@@ -727,7 +727,7 @@ definition {
 				locator2 = "font-size",
 				value1 = "32px");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the new style book is applied to content page in view mode") {

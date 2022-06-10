@@ -353,7 +353,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Message Boards");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Body",

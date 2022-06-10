@@ -198,7 +198,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
@@ -704,7 +704,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-content-page");
 

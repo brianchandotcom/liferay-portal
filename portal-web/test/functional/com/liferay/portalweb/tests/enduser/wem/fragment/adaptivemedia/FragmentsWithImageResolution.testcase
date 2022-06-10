@@ -545,7 +545,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -726,7 +726,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {

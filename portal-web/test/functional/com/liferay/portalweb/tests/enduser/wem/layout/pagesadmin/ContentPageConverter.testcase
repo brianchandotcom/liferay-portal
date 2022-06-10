@@ -116,7 +116,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View current page type after conversion") {
@@ -315,7 +315,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Asset Publisher");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View Heading fragment is shown at view mode") {
@@ -380,7 +380,7 @@ definition {
 					collectionName = "Basic Components",
 					fragmentName = "Heading");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 		}
 
@@ -523,7 +523,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View current page type after conversion") {
@@ -605,7 +605,7 @@ definition {
 				elementName = "Asset Publisher",
 				moduleNumber = "1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View content page is editable after conversion") {
@@ -711,7 +711,7 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View widgets are shown at edit mode") {
@@ -830,7 +830,7 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View widgets are not shown at edit mode") {
@@ -967,7 +967,7 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View widgets are shown at edit mode") {
@@ -1068,7 +1068,7 @@ definition {
 				webContentContent = "Web Content Content 1",
 				webContentTitle = "Web Content Title 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the widget page is converted to content page") {
@@ -1140,7 +1140,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View decorator is shown") {
@@ -1410,7 +1410,7 @@ definition {
 		task ("View Nested Applications widget is not shown then publish") {
 			Portlet.viewNoSpecificPG(portletName = "Nested Applications");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View content page is editable after conversion") {

@@ -62,7 +62,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("When the Page Template creator opens the dropdown menu of display page template") {

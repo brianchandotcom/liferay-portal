@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("View the Advanced Config Field is persisted after publish") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -180,7 +180,7 @@ definition {
 		}
 
 		task ("Publish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Search 'Go Somewhere' from page search bar, assert a search result about Button fragment") {
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Publish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Search 'Go Somewhere' from page search bar, assert no search result about Button fragment") {
@@ -266,7 +266,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create a couple more content pages with the same Paragraph fragment") {
@@ -318,7 +318,7 @@ definition {
 
 			PageEditor.configureFragment(hideFromSiteSearchResults = "true");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Search 'footer' from page search bar, assert the page with Hide from Site Search Results checked does not appear in the search result") {

@@ -84,7 +84,7 @@ definition {
 				portletName = "Asset Publisher",
 				targetFragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create a content page template from the content page under page template collection") {
@@ -141,7 +141,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Button fragment to a content page based on content page template") {

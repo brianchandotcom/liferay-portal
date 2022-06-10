@@ -65,7 +65,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a document with an image") {
@@ -178,7 +178,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the new vocabulary in Categories admin") {
@@ -433,7 +433,7 @@ definition {
 				collectionName = "Fragment Set Name",
 				fragmentName = "Test Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on Basic Web Content") {
@@ -557,7 +557,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content and select the display page template") {
@@ -594,7 +594,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the display page template at view mode in staging site") {
@@ -681,7 +681,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page as default") {
@@ -772,7 +772,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content and select the display page template") {
@@ -865,7 +865,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content and select the display page template") {

@@ -272,7 +272,7 @@ definition {
 		}
 
 		task ("Publish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {

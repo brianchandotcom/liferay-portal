@@ -85,7 +85,7 @@ definition {
 		}
 
 		task ("Pubish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Access to content page at edit mode again") {

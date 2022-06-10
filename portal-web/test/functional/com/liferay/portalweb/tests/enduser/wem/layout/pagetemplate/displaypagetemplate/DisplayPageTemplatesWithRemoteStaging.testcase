@@ -75,7 +75,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Select the display page template in web content") {

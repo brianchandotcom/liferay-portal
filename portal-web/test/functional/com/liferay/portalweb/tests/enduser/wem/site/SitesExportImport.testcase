@@ -89,7 +89,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the created Web Content displayed in the Web Content Display") {
@@ -238,7 +238,7 @@ definition {
 				fragmentName = "Global Fragment Name",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export the site") {
@@ -314,7 +314,7 @@ definition {
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export the site") {
@@ -365,7 +365,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add the second content page") {

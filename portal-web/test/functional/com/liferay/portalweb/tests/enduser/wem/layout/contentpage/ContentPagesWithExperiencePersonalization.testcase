@@ -60,7 +60,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View cannot prioritize, deprioritize, edit, duplicate, delete experiences at view mode") {
@@ -211,7 +211,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the current experience is Default at view mode") {
@@ -520,7 +520,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View both web contents shown in simulation modal by default") {
@@ -588,7 +588,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the page and view the new experience shown in experience selector") {
@@ -653,7 +653,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the inline text of Button in Default experience") {

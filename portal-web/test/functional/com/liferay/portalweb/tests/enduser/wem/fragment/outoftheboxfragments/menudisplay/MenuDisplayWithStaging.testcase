@@ -98,7 +98,7 @@ definition {
 				navigationMenus = "Navigation Menu Name",
 				pageName = "Test Content Page");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add an URL type item to navigation menu") {

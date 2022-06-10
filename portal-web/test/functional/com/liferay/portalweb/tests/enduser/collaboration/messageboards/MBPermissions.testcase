@@ -129,7 +129,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Message Boards");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -535,7 +535,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Message Boards");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

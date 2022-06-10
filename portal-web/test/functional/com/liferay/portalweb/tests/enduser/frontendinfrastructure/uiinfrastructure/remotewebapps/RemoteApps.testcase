@@ -226,7 +226,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Vanilla Counter");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert Vanilla Counter is displayed") {
@@ -329,7 +329,7 @@ definition {
 					portletName = "Vanilla Counter");
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert Vanilla Counter is instanceable") {

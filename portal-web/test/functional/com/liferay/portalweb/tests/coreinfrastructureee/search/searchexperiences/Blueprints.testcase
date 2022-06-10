@@ -175,7 +175,7 @@ definition {
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Content Search Page",
@@ -242,7 +242,7 @@ definition {
 			attributesKey = "search.experiences.blueprint.id",
 			attributesValue = "${blueprintId}");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Content Search Page",

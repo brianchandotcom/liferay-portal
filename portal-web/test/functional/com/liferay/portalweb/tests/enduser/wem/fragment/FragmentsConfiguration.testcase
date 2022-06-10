@@ -140,7 +140,7 @@ definition {
 				checkboxName = "Make Bold",
 				fragmentName = "Checkbox Fragment Example");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration at view mode") {
@@ -211,7 +211,7 @@ definition {
 				checkboxName = "Make Bold",
 				fragmentName = "Checkbox Fragment Example");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {
@@ -275,7 +275,7 @@ definition {
 				checkboxName = "Make Bold",
 				fragmentName = "Checkbox Fragment Example");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {
@@ -323,7 +323,7 @@ definition {
 				colorPalette = "danger",
 				fragmentName = "ColorPalette Fragment Example");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration at view mode") {
@@ -423,7 +423,7 @@ definition {
 				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the second header')]",
 				value1 = "color: var(--brand-color-2);");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the color of fragment texts at view mode") {
@@ -596,7 +596,7 @@ main();
 				size = "lg",
 				type = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment styles in view mode") {
@@ -646,7 +646,7 @@ main();
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration at view mode") {
@@ -712,7 +712,7 @@ main();
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {
@@ -771,7 +771,7 @@ main();
 				fragmentName = "Select Fragment Example",
 				optionValue = "Dark");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {
@@ -828,7 +828,7 @@ main();
 				fragmentName = "Text Fragment Example",
 				textConfigName = "Button Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration at view mode") {
@@ -907,7 +907,7 @@ main();
 				fragmentName = "Text Fragment Example",
 				textConfigName = "Button Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {
@@ -979,7 +979,7 @@ main();
 				fragmentName = "Text Fragment Example",
 				textConfigName = "Button Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the fragment configuration") {

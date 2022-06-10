@@ -40,7 +40,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add three documents and select the display page template") {
@@ -114,7 +114,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the first display page template as default") {
@@ -134,7 +134,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content") {
@@ -202,7 +202,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a blogs entry") {
@@ -277,7 +277,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content") {
@@ -350,7 +350,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content") {
@@ -423,7 +423,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add three web contents and select the display page template") {
@@ -510,7 +510,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add three web contents based on Basic Web Content and select the related display page template") {
@@ -591,7 +591,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a display page template based on Document and Basic Document") {
@@ -609,7 +609,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a display page template based on Blogs Entry") {
@@ -626,7 +626,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on Basic Web Content and select the related display page template") {

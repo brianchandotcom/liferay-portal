@@ -376,7 +376,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -416,7 +416,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -518,7 +518,7 @@ definition {
 		}
 
 		task ("Assert the image is shown in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -621,7 +621,7 @@ definition {
 		}
 
 		task ("Assert the image is shown in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -1962,7 +1962,7 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Bordered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -2006,7 +2006,7 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Bulleted List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -2046,7 +2046,7 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Inline List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -2086,7 +2086,7 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Numbered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -2126,7 +2126,7 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Unstyled List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 

@@ -67,7 +67,7 @@ definition {
 				id = "element-text",
 				text = "New editable fragment ca-ES text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in Edit mode") {

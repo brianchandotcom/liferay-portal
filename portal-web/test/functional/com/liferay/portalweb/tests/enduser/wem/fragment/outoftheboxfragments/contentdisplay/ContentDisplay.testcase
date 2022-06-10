@@ -136,7 +136,7 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -206,7 +206,7 @@ definition {
 				webContentContent = "WC WebContent Content",
 				webContentTitle = "WebContent Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Delete the web content") {
@@ -351,7 +351,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Content Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Content Display is not shown at view mode") {
@@ -708,7 +708,7 @@ definition {
 				webcontent = "true",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the web content is shown in view mode") {
@@ -810,7 +810,7 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				fragmentName = "Content Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the contents of blog entry are shown in Content Display") {
@@ -919,7 +919,7 @@ definition {
 				imageFileName = "Document Title",
 				sourceFileName = "Document_1.jpg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the image is shown in Content Display at view mode") {
@@ -961,7 +961,7 @@ definition {
 				webContentContent = "This content maps from web content",
 				webContentTitle = "Webcontent Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the content of webc content shown in Content Display at view mode") {
@@ -1023,7 +1023,7 @@ definition {
 		}
 
 		task ("Publish page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Go to view page template") {
@@ -1074,7 +1074,7 @@ definition {
 				webContentContent = "WC WebContent Content",
 				webContentTitle = "WebContent Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the content of web content shown in Content Display") {

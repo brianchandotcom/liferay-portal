@@ -237,7 +237,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page") {
@@ -289,7 +289,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Title fragment is updated") {
@@ -315,7 +315,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Button fragment is present") {
@@ -3376,7 +3376,7 @@ definition {
 
 		PageEditor.replyToComment(commentReply = "Fragment Comment 2");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
@@ -4633,7 +4633,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the inline text of the card fragment at view mode") {

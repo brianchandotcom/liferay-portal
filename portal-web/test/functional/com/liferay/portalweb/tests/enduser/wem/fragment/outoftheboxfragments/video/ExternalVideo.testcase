@@ -98,7 +98,7 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Liferay Digital Experience Platform");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the video displayed in view mode") {
@@ -165,7 +165,7 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Liferay Digital Experience Platform");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the video displayed in view mode") {

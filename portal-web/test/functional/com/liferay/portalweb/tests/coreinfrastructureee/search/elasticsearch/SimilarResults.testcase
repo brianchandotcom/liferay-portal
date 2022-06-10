@@ -807,7 +807,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(linkBehavior = "View in Context");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
 
@@ -899,7 +899,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
 
@@ -915,7 +915,7 @@ definition {
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
 

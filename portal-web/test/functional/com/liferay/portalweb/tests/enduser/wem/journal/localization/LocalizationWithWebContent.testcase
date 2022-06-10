@@ -688,7 +688,7 @@ definition {
 					collectionName = "Content Display",
 					fragmentName = "Display Page Content");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Add a template with Content and Friendly URL for Basic Web Content") {

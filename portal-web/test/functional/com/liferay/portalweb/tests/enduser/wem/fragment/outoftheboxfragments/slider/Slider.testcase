@@ -93,7 +93,7 @@ definition {
 				ariaLabel = "Focus slide 3",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content and associate it to the display page template") {
@@ -246,7 +246,7 @@ definition {
 				id = "04-03-subtitle",
 				text = "Eternals");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View inline texts of slides at view mode") {

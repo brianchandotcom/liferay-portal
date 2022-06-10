@@ -236,7 +236,7 @@ definition {
 					text = "Test ${n}");
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Publish to Live via page") {

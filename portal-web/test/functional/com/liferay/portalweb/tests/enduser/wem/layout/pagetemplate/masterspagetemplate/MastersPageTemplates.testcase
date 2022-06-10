@@ -180,7 +180,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the elements are shown in view mode") {
@@ -304,7 +304,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -453,7 +453,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a content page template based on custom master") {
@@ -651,7 +651,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a display page template based on custom masters") {
@@ -1133,7 +1133,7 @@ definition {
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Page Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a page based on the second custom master") {
@@ -1143,7 +1143,7 @@ definition {
 				masterLayoutName = "Custom Masters Page Template 2",
 				pageName = "Test Page Name 2");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a collection and frgament to the colletion") {
@@ -1207,7 +1207,7 @@ definition {
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the only Heading fragment exist in page editor sidebar") {
@@ -1838,7 +1838,7 @@ definition {
 				key_tab = "Liferay",
 				locator1 = "NavTab#TAB_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Liferay item is shown in page") {
@@ -1876,7 +1876,7 @@ definition {
 				key_tab = "Liferay",
 				locator1 = "NavTab#TAB_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a display page template based on custom masters") {
@@ -1895,7 +1895,7 @@ definition {
 				key_tab = "Liferay",
 				locator1 = "NavTab#TAB_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the master page") {

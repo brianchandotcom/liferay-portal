@@ -48,7 +48,7 @@ definition {
 				composition = "true",
 				fragmentName = "Banner Center");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a widget page") {
@@ -241,7 +241,7 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the inline text of Heading in content page template without publish") {
@@ -262,7 +262,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the inline text of Heading in display page template without publish") {
@@ -638,7 +638,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment to the second display page template for Web Content Article and Basic Web Content") {
@@ -663,7 +663,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment to a display page template for Blogs Entry") {
@@ -687,7 +687,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment to a display page template for Document and Basic Document") {
@@ -712,7 +712,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment display page template for Category") {
@@ -736,7 +736,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a style book") {
@@ -1027,7 +1027,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Button fragment to the second content page then publish") {
@@ -1044,7 +1044,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Paragraph fragment to the third content page then publish") {
@@ -1061,7 +1061,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a style book") {
@@ -1292,7 +1292,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a style book") {
@@ -1390,7 +1390,7 @@ definition {
 				backgroundColor = "Danger",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a style book") {

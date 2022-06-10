@@ -90,7 +90,7 @@ definition {
 				editableText = "edit",
 				fragmentName = "Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("When the page designer navigates to the content page at view mode in staging site") {

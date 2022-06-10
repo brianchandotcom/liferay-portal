@@ -628,7 +628,7 @@ definition {
 			portletName = "Asset Publisher",
 			targetFragmentName = "Blogs");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

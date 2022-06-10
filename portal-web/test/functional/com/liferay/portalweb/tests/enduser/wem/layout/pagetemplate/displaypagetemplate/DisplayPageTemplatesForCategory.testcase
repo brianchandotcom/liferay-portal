@@ -59,7 +59,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page template as default") {
@@ -124,7 +124,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add the second display page template for Category") {
@@ -150,7 +150,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {
@@ -208,7 +208,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add the second display page template for Category") {
@@ -234,7 +234,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {
@@ -491,7 +491,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {
@@ -571,7 +571,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {
@@ -691,7 +691,7 @@ definition {
 				fieldName = "Main Image",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {

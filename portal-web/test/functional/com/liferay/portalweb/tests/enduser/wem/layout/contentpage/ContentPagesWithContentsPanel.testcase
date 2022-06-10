@@ -287,7 +287,7 @@ definition {
 				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
 				value1 = "WC WebContent Content Edit");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the edited web content in view mode") {
@@ -340,7 +340,7 @@ definition {
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "WC WebContent Content Edit");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the edited web content in view mode") {
@@ -717,7 +717,7 @@ definition {
 				actual = "${naturalHeight}",
 				expected = "${editedNaturalHeight}");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Take down the new naturalWidth and naturalHeight of image at view mode") {
@@ -808,7 +808,7 @@ definition {
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
 				position = "1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the version of mapped image at view mode") {
@@ -1517,7 +1517,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View permissions of mapped web content in Contents panel") {

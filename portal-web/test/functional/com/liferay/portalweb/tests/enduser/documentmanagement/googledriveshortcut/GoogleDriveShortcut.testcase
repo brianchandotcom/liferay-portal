@@ -165,7 +165,7 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",

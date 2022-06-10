@@ -234,7 +234,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
 				value1 = "Category Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -408,7 +408,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Select the display page template in web content") {
@@ -654,7 +654,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -789,7 +789,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a vocabulary") {
@@ -1575,7 +1575,7 @@ definition {
 				entryTitle = "Sample Collection Item",
 				fragmentName = "Content Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to category") {
@@ -1689,7 +1689,7 @@ definition {
 				infoItemRelatedListProviderName = "Basic Web Content",
 				styleDisplay = "Bordered List");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to category") {
@@ -1808,7 +1808,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to category") {
@@ -1934,7 +1934,7 @@ definition {
 				infoItemRelatedListProviderName = "DM Document Type Name",
 				styleDisplay = "Bordered List");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to category") {
@@ -2078,7 +2078,7 @@ definition {
 				infoItemRelatedListProviderName = "WC Structure Name",
 				styleDisplay = "Bordered List");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Associate the display page template to category") {
@@ -2174,7 +2174,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {
@@ -2269,7 +2269,7 @@ definition {
 				infoItemRelatedListProviderName = "Related Assets",
 				styleDisplay = "Bordered List");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the blogs entry, Select display page template and Select related assets") {
@@ -2332,7 +2332,7 @@ definition {
 				entryTitle = "",
 				fragmentName = "Content Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the document, Select display page template") {
@@ -2422,7 +2422,7 @@ definition {
 					fragmentName = "Heading",
 					id = "element-text");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 		}
 

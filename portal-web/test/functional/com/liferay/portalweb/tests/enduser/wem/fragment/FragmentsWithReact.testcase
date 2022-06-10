@@ -150,7 +150,7 @@ definition {
 
 			AssertVisible(locator1 = "//h1[normalize-space(text())='Hello World']");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the react fragment is rendered correctly in view mode") {

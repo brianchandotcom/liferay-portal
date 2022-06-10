@@ -131,7 +131,7 @@ definition {
 				webcontent = "true",
 				webContentTitle = "Webcontent Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View only the Site ID shown in Content Display at view mode") {
@@ -198,7 +198,7 @@ definition {
 				key_content = "//a[contains(.,'Web Content Content')]",
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the web content is shown in Content Display") {

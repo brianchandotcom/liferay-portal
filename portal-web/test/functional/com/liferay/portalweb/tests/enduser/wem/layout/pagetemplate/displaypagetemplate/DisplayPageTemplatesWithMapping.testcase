@@ -68,7 +68,7 @@ definition {
 				fieldName = "Author Profile Image",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a new user with Administrator role") {
@@ -182,7 +182,7 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page template as default") {
@@ -237,7 +237,7 @@ definition {
 				fieldName = "Last Editor Profile Image",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page as default") {
@@ -365,7 +365,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on Basic Web Content") {
@@ -437,7 +437,7 @@ definition {
 
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the mapped URL in link editable field") {
@@ -476,7 +476,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on Basic Web Content") {
@@ -569,7 +569,7 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -638,7 +638,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page as default") {
@@ -718,7 +718,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(field = "Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -805,7 +805,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(field = "Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -892,7 +892,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(field = "Text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -979,7 +979,7 @@ definition {
 				fieldName = "Image",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -1252,7 +1252,7 @@ definition {
 		}
 
 		task ("Mark the display page template as default") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document Display Page");
 		}

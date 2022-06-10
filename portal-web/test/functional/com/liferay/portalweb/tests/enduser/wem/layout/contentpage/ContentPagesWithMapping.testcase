@@ -182,7 +182,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the mapped content of blogs entry is shown in view mode") {
@@ -322,7 +322,7 @@ definition {
 		}
 
 		task ("Assert mapped content in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -382,7 +382,7 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the mapped title of document is shown in view mode") {
@@ -429,7 +429,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -481,7 +481,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert editable has the specified URL mapped correctly") {
@@ -538,7 +538,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -608,7 +608,7 @@ definition {
 				key_url = "/web/test-site-name/test-public-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to content page in view mode") {
@@ -657,7 +657,7 @@ definition {
 				key_url = "/group/test-site-name/test-private-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to content page in view mode") {
@@ -1099,7 +1099,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -1175,7 +1175,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -1251,7 +1251,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -1336,7 +1336,7 @@ definition {
 				navItem = "Web Content",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the mapped image") {
@@ -1386,7 +1386,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View mapped content is shown in link editable field") {
@@ -1588,7 +1588,7 @@ definition {
 				key_url = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Delete the widget page") {
@@ -1646,7 +1646,7 @@ definition {
 		}
 
 		task ("Publish to content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert no redirection") {

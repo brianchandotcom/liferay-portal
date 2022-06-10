@@ -438,7 +438,7 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
@@ -542,7 +542,7 @@ definition {
 			navTab = "Documents and Media",
 			videoShortcutTitle = "Liferay Digital Experience Platform");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

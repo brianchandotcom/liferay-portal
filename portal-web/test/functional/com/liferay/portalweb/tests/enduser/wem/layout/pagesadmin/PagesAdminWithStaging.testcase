@@ -56,7 +56,7 @@ definition {
 				pageName = "Test Page Name 3",
 				siteName = "Test Site Name Staging");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Publish to Live site") {
@@ -160,7 +160,7 @@ definition {
 				pageName = "Dynamic Collection Page Name",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View header table are shown in collection items via page tree in staging site") {

@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("Assert Fixed Width of Container works in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -534,7 +534,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content article and select the display page template") {
@@ -585,7 +585,7 @@ definition {
 				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped link work in view mode") {
@@ -647,7 +647,7 @@ definition {
 				paddingTop = "2",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the mapped image shown in Container at view mode") {
@@ -691,7 +691,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert mapped URL work in view mode") {
@@ -778,7 +778,7 @@ definition {
 				navItem = "Web Content",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the mapped image shown in Container at view mode") {
@@ -863,7 +863,7 @@ definition {
 		task ("Assert the mapped image is shown in background image field") {
 			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a content page based on content page template") {
@@ -878,7 +878,7 @@ definition {
 		task ("Assert the mapped image is shown in background image field in edit mode") {
 			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the mapped image is shown in background image in view mode") {
@@ -928,7 +928,7 @@ definition {
 				fieldName = "Image",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on new structure") {

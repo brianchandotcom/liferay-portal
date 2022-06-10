@@ -53,7 +53,7 @@ definition {
 
 			PagesFinder.addPublicContentPage(pageName = "Test Content Page");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			PagesFinder.goToPagesFinder();
 
@@ -100,7 +100,7 @@ definition {
 
 			PagesFinder.addContentPage(pageName = "Test Content Page");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View public page names in page tree") {
@@ -262,7 +262,7 @@ definition {
 				selectedAsset = "All Types",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a collection page based on dynamic collection via page tree") {
@@ -273,7 +273,7 @@ definition {
 				selectedAsset = "All Types",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View collection page names in page tree") {
@@ -694,7 +694,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Access to the Page Tree") {

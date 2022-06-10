@@ -551,7 +551,7 @@ definition {
 		}
 
 		task ("Assert the width of modules in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",

@@ -192,7 +192,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Reset applied filters at Preview mode") {
@@ -404,7 +404,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -527,7 +527,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -860,7 +860,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Show More button when the number of applied filters more than limitation at View mode") {

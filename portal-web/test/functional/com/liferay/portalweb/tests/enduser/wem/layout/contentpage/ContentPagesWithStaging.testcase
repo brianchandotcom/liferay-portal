@@ -125,7 +125,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment below the Button") {
@@ -288,7 +288,7 @@ definition {
 				portletName = "Asset Publisher",
 				targetFragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create a content page template from the content page under page template collection") {
@@ -351,7 +351,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Publish the site to live") {
@@ -602,7 +602,7 @@ definition {
 		task ("Assert the mapped image is shown in background image field") {
 			PageEditor.viewContainerStyle(backgroundImage = "Document_2.jpeg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the mapped image is shown in view mode in staging site") {
@@ -738,7 +738,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment below the Button") {
@@ -899,7 +899,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in the staging site") {
@@ -1057,7 +1057,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Publish the site to live") {
@@ -1087,7 +1087,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Heading fragment in view mode") {
@@ -1247,7 +1247,7 @@ definition {
 				actual = "${naturalHeight}",
 				expected = "${editedNaturalHeight}");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Take down the new naturalWidth and naturalHeight of image at view mode") {
@@ -1376,7 +1376,7 @@ definition {
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
 				position = "1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the version of mapped image at view mode") {
@@ -1447,7 +1447,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page at edit mode in the staging site") {
@@ -1523,7 +1523,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page at view mode in staging site") {
@@ -1573,7 +1573,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page at view mode in staging site") {
@@ -1636,7 +1636,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Change to new experience at view mode") {
@@ -1715,7 +1715,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the inline text of Button in Default experience") {

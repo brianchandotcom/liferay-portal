@@ -2248,7 +2248,7 @@ catch (Exception e) {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the pagination in two Asset Publisher widgets") {
@@ -2491,7 +2491,7 @@ catch (Exception e) {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content") {

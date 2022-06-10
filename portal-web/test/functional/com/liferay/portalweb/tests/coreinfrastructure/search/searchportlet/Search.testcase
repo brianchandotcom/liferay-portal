@@ -273,7 +273,7 @@ definition {
 			portletName = "Search Results",
 			targetFragmentName = "Search Options");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
@@ -465,7 +465,7 @@ definition {
 			portletName = "Language Selector",
 			targetFragmentName = "Container");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
@@ -1440,7 +1440,7 @@ definition {
 			portletName = "Search Results",
 			targetFragmentName = "Search Bar");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content",

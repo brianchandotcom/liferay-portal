@@ -284,7 +284,7 @@ definition {
 
 			ContentPages.addPage(pageName = "Test Content Page");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a page based on Search") {

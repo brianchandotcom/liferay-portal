@@ -59,7 +59,7 @@ definition {
 
 		Refresh();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONPublications.addPublication(publicationName = "Publication Name 2");
 
@@ -89,7 +89,7 @@ definition {
 
 		Refresh();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 2");
 
@@ -209,7 +209,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Fragment Name");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/site-name/test-page");
 

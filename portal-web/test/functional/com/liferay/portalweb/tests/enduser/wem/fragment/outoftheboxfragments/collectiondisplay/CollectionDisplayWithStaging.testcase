@@ -134,7 +134,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View displayed contents in Content Flags, Content Ratings and Content Display at view mode in Staging site") {
@@ -337,7 +337,7 @@ definition {
 				fragmentName = "Display Page Content",
 				targetFragmentName = "Collection Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export display page template") {
@@ -456,7 +456,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Default Template");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View contents of web contents at view mode in staging site") {

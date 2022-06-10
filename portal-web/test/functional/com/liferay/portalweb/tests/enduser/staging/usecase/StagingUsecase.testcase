@@ -875,7 +875,7 @@ definition {
 			fragmentName = "Paragraph",
 			id = "element-text");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",

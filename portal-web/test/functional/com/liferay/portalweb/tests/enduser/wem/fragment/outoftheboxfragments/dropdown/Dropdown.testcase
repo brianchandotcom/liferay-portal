@@ -99,7 +99,7 @@ definition {
 				key_element = "//div[contains(@class,'alert-info')][normalize-space(text())='There are no menu items to display.']",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the dropdown panel is collapsed in view mode") {

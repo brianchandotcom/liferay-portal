@@ -111,7 +111,7 @@ definition {
 					collectionName = "Basic Components",
 					fragmentName = "Heading");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Add a navigation menu") {
@@ -186,7 +186,7 @@ definition {
 					collectionName = "Content Display",
 					fragmentName = "Display Page Content");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Mark the first display page template as default") {
@@ -209,7 +209,7 @@ definition {
 					collectionName = "Content Display",
 					fragmentName = "Display Page Content");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Mark the second display page template as default") {
@@ -233,7 +233,7 @@ definition {
 					collectionName = "Content Display",
 					fragmentName = "Display Page Content");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Mark the third display page template as default") {
@@ -256,7 +256,7 @@ definition {
 					collectionName = "Content Display",
 					fragmentName = "Display Page Content");
 
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Mark the fourth display page template as default") {

@@ -77,7 +77,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export display page template") {
@@ -198,7 +198,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export display page template") {

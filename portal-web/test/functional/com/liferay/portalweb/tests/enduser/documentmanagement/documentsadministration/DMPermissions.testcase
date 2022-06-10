@@ -2631,7 +2631,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Documents and Media");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 

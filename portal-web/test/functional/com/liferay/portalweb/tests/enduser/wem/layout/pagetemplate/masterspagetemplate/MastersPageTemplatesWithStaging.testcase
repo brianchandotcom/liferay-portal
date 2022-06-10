@@ -96,7 +96,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Custom Masters Page Template is applied to content page in view mode") {
@@ -134,7 +134,7 @@ definition {
 				key_type = "dark",
 				locator1 = "PageEditor#FOOTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Blank is applied to content page in view mode") {
@@ -293,7 +293,7 @@ definition {
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Page Name Staging");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page at edit mode in staging site") {

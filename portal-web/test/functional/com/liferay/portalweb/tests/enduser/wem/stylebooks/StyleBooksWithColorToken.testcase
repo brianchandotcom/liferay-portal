@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("Cancel the publish process") {
-			PageEditor.clickPublish(publishing = "Cancel");
+			PageEditor.publish(publishing = "Cancel");
 		}
 
 		task ("View the invalid color token is still shown in Text Color field") {
@@ -148,7 +148,7 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Text Color of Heading is new color token in view mode") {
@@ -313,7 +313,7 @@ definition {
 		}
 
 		task ("Continue the publish process") {
-			PageEditor.clickPublish(publishing = "Continue");
+			PageEditor.publish(publishing = "Continue");
 		}
 
 		task ("View the Text Color of Heading is the #DA1414 in view mode") {
@@ -526,7 +526,7 @@ definition {
 				fragmentName = "heading",
 				textColor = "success");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a style book") {

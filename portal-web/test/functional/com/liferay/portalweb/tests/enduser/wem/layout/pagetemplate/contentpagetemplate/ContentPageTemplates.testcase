@@ -67,7 +67,7 @@ definition {
 
 			Portlet.saveAndCloseConfig();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -260,7 +260,7 @@ definition {
 				headingLevel = "h2",
 				textColor = "success");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a page based on content page template") {
@@ -281,7 +281,7 @@ definition {
 		}
 
 		task ("Assert the fragment styles are shown in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",

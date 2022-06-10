@@ -138,7 +138,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 

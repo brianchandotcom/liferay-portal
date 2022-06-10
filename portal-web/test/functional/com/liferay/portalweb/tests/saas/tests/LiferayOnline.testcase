@@ -325,7 +325,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Vanilla Counter");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert Vanilla Counter is displayed") {
@@ -460,7 +460,7 @@ definition {
 			}
 
 			task ("Publish Content Page") {
-				PageEditor.clickPublish();
+				PageEditor.publish();
 			}
 
 			task ("Navigate to the content page") {

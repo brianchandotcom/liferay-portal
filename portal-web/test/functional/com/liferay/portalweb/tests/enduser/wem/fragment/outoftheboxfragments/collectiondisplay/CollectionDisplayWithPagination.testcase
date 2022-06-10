@@ -296,7 +296,7 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View only 5 web contents shown in page 1 of Collection Display at view mode") {
@@ -626,7 +626,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -1011,7 +1011,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {

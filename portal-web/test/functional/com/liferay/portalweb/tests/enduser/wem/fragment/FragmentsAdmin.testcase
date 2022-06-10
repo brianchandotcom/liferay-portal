@@ -422,7 +422,7 @@ definition {
 				fragmentName = "Test Fragment Name",
 				id = "title1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the inline text of new fragment at view mode") {
@@ -549,7 +549,7 @@ definition {
 				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "TEST");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the new fragment") {

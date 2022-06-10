@@ -196,7 +196,7 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "New Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export the fragment collection") {
@@ -1605,7 +1605,7 @@ definition {
 				fragmentName = "Tabs (Copy)",
 				id = "title5");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to Fragments admin") {

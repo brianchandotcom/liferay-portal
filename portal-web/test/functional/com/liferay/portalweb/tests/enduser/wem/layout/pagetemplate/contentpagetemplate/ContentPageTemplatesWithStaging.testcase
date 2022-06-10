@@ -62,7 +62,7 @@ definition {
 		}
 
 		task ("Publish the page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 	}
 
@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in the staging site") {

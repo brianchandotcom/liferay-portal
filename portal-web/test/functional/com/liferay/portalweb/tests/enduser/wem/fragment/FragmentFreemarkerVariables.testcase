@@ -140,7 +140,7 @@ definition {
 				editableText = "edit",
 				fragmentName = "Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("When the page designer navigates to the content page at view mode") {
@@ -204,7 +204,7 @@ definition {
 				editableText = "edit",
 				fragmentName = "Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Given the display page template designer has a web content associated with display page template") {

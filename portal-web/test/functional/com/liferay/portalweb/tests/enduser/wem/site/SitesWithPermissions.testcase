@@ -58,7 +58,7 @@ definition {
 				navTab = "Widgets",
 				portletName = "Message Boards");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a search page in the new site template") {
@@ -101,7 +101,7 @@ definition {
 				navTab = "Widgets",
 				portletName = "Asset Publisher");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Reset Page Changes") {
@@ -187,7 +187,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Message Boards is invisible to guest") {

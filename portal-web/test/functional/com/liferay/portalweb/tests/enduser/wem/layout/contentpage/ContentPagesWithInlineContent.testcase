@@ -50,7 +50,7 @@ definition {
 				fragmentName = "HTML",
 				id = "element-html");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the freemarker codes are not executed") {
@@ -105,7 +105,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "Edit HTML Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View edited inline content in view mode") {
@@ -203,7 +203,7 @@ definition {
 				editableText = "Edit HTML Title A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
 				fragmentName = "Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View edited inline content in view mode") {
@@ -249,7 +249,7 @@ definition {
 		}
 
 		task ("View the edited inline content in view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -288,7 +288,7 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View new inline content shown in view mode") {
@@ -381,7 +381,7 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Document_1.png");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the selected image shown in view mode") {
@@ -429,7 +429,7 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the selected image in view mode") {

@@ -42,7 +42,7 @@ definition {
 	@uitest
 	test CannotDeleteDisplayPageTemplateWithUsage {
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content") {
@@ -83,7 +83,7 @@ definition {
 		task ("Add a Documents and Media widget to the display page template") {
 			PageEditor.addWidget(portletName = "Documents and Media");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page template as default") {
@@ -162,7 +162,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the permissions of Asset Publisher is saved") {
@@ -189,7 +189,7 @@ definition {
 		property test.name.skip.portal.instance = "DisplayPageTemplates#ConfigureTheme";
 
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Import a theme") {
@@ -249,7 +249,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Fjord theme is shown") {
@@ -266,7 +266,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page template as default") {
@@ -327,7 +327,7 @@ definition {
 	@uitest
 	test DisableShowHeaderAndFooter {
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add two widget pages") {
@@ -400,7 +400,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the display page template at view mode") {
@@ -449,7 +449,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the display page template") {
@@ -531,7 +531,7 @@ definition {
 		task ("Publish the display page template") {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the display page") {
@@ -662,7 +662,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Mark the display page template as default") {

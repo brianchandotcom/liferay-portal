@@ -221,7 +221,7 @@ definition {
 				fragmentName = "Global Fragment Name",
 				id = "element-text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the global fragment") {
@@ -455,7 +455,7 @@ definition {
 				fragmentName = "Global Fragment Name 2",
 				targetFragmentName = "Global Fragment Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add two global fragments to the second content page in the first normal site") {
@@ -477,7 +477,7 @@ definition {
 				fragmentName = "Global Fragment Name 2",
 				targetFragmentName = "Global Fragment Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add two global fragments to a content page in the second normal site") {
@@ -496,7 +496,7 @@ definition {
 				collectionName = "Global Collection Name",
 				fragmentName = "Global Fragment Name 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View site usages of the first global fragment") {

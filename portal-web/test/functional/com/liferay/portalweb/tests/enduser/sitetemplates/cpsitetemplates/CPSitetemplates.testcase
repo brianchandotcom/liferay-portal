@@ -73,7 +73,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
@@ -135,7 +135,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -168,7 +168,7 @@ definition {
 			portletName = "Blogs",
 			targetFragmentName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -310,7 +310,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -822,7 +822,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

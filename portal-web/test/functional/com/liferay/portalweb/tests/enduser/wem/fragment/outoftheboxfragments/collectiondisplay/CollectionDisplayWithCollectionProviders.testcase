@@ -158,7 +158,7 @@ definition {
 				AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__collection')]//ul[not(contains(@class,'list-group'))]/li[1][normalize-space(text())='Web Content Title'])[${n}]");
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -311,7 +311,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -1040,7 +1040,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the description of assets shown in Content Display at view mode") {
@@ -1146,7 +1146,7 @@ definition {
 		}
 
 		task ("Assert the Abstract of collection items are shown in Bordered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -1214,7 +1214,7 @@ definition {
 		}
 
 		task ("Assert the Abstract of collection items are shown in Bulleted List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -1278,7 +1278,7 @@ definition {
 		}
 
 		task ("Assert the Abstract of collection items are shown in Inline List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -1342,7 +1342,7 @@ definition {
 		}
 
 		task ("Assert the Abstract of collection items are shown in Numbered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -1406,7 +1406,7 @@ definition {
 		}
 
 		task ("Assert the Abstract of collection items are shown in Unstyled List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "1";
 
@@ -1489,7 +1489,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the title of assets shown in Content Display at view mode") {
@@ -1573,7 +1573,7 @@ definition {
 				fragmentName = "Content Display",
 				text = "Web Content Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View full content are shown in Content Display at view mode") {
@@ -1674,7 +1674,7 @@ definition {
 		}
 
 		task ("Assert the Full Content of collection items are shown in Bordered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -1742,7 +1742,7 @@ definition {
 		}
 
 		task ("Assert the Full Content of collection items are shown in Bulleted List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "2";
 
@@ -1806,7 +1806,7 @@ definition {
 		}
 
 		task ("Assert the Full Content of collection items are shown in Inline List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "2";
 
@@ -1870,7 +1870,7 @@ definition {
 		}
 
 		task ("Assert the Full Content of collection items are shown in Numbered List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "2";
 
@@ -1934,7 +1934,7 @@ definition {
 		}
 
 		task ("Assert the Full Content of collection items are shown in Unstyled List at view mode") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			var n = "2";
 
@@ -2038,7 +2038,7 @@ definition {
 		}
 
 		task ("Rate Third Web Content as 1, Second Web Content as 3, First Web Content as 5") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -2229,7 +2229,7 @@ definition {
 		}
 
 		task ("View Web Content Article one time via Asset Publisher") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -2567,7 +2567,7 @@ definition {
 		}
 
 		task ("Assert the display order of collection items") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",

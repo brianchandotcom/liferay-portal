@@ -56,7 +56,7 @@ definition {
 
 			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the video displayed in view mode") {
@@ -76,7 +76,7 @@ definition {
 
 			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the new video displayed in view mode") {

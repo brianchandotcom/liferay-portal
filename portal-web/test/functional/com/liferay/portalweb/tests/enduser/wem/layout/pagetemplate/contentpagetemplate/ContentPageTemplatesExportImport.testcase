@@ -53,7 +53,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a widget page template") {
@@ -115,7 +115,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a second content page template but not publish") {
@@ -209,7 +209,7 @@ definition {
 				key_fragmentName = "heading",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -344,7 +344,7 @@ definition {
 				editableText = "Lorem ipsum dolor sit amet",
 				fragmentName = "Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -450,7 +450,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -573,7 +573,7 @@ definition {
 
 			Click(locator1 = "Icon#CLOSE");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -666,7 +666,7 @@ definition {
 
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -787,7 +787,7 @@ definition {
 				editableText = "Lorem ipsum dolor sit amet",
 				fragmentName = "Title");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {
@@ -921,7 +921,7 @@ definition {
 				fragmentName = "Heading",
 				targetFragmentName = "Fragment Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export the template.") {
@@ -1021,7 +1021,7 @@ definition {
 				id = "element-text",
 				text = "New editable fragment text");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert content page template has Approved label") {
@@ -1140,7 +1140,7 @@ definition {
 
 			Click(locator1 = "Icon#CLOSE");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Export content page template") {

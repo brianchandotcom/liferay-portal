@@ -58,7 +58,7 @@ definition {
 				pageName = "Test Grand Child Page",
 				siteName = "Test Site Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a great grand child content page") {
@@ -72,7 +72,7 @@ definition {
 				pageName = "Test Great Grand Child Page",
 				siteName = "Test Site Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a custom master page") {
@@ -212,7 +212,7 @@ definition {
 				pageName = "Test Content Page",
 				siteName = "Test Site Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a custom master page") {
@@ -364,7 +364,7 @@ definition {
 				locator2 = "color",
 				value1 = "rgba(185, 80, 0, 1)");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Assert the Test Content Page item color") {

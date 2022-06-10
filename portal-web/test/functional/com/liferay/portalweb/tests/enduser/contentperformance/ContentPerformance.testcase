@@ -594,7 +594,7 @@ definition {
 				id = "element-text",
 				text = "Texto en Español");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Open Content Performance") {
@@ -776,7 +776,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -862,7 +862,7 @@ definition {
 				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -974,7 +974,7 @@ definition {
 				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1066,7 +1066,7 @@ definition {
 				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1149,7 +1149,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
@@ -1236,7 +1236,7 @@ definition {
 				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

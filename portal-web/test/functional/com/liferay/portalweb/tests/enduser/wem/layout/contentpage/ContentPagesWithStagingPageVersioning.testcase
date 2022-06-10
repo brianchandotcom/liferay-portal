@@ -51,7 +51,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Card");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in the staging site") {
@@ -133,7 +133,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a new site page variation at view mode") {
@@ -199,7 +199,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in the staging site") {
@@ -314,7 +314,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the public content page in the staging site") {
@@ -376,7 +376,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the private content page in the staging site") {
@@ -458,7 +458,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "HTML");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page in the staging site") {

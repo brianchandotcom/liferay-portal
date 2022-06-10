@@ -185,7 +185,7 @@ definition {
 				selectedAsset = "All Types",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a dynamic collection when adding a collection page") {
@@ -196,7 +196,7 @@ definition {
 				selectedAsset = "All Types",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View collection pages are shown in pages admin") {
@@ -355,7 +355,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View alert message when delete a page with scoped content") {
@@ -400,7 +400,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View alert message when delete a page with scoped content and child page") {
@@ -1405,7 +1405,7 @@ definition {
 				pageName = "Test Collection Page Name",
 				tabName = "Collection Providers");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View all web contents are shown in collection items") {
@@ -1467,7 +1467,7 @@ definition {
 				collectionName = "Content Display",
 				fragmentName = "Display Page Content");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add three web contents") {
@@ -1518,7 +1518,7 @@ definition {
 				pageName = "Manual Collection Page Name",
 				tabName = "Collections");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View display page of all web contents via collection items in pages admin") {

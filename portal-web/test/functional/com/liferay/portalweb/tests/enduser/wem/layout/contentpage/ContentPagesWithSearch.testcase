@@ -119,7 +119,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page") {
@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page") {
@@ -195,7 +195,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page") {
@@ -263,7 +263,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to the content page") {
@@ -336,7 +336,7 @@ definition {
 				key_url = "/web/test-site-name/test-grand-child-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to content page in view mode") {
@@ -457,7 +457,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content based on Basic Web Content") {

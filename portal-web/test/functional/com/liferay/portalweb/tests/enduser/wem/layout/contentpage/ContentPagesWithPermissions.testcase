@@ -159,7 +159,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -262,7 +262,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Heading fragment below the Button") {
@@ -360,7 +360,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -529,7 +529,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -665,7 +665,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -786,7 +786,7 @@ definition {
 				fragmentName = "Paragraph",
 				targetFragmentName = "Web Content Display");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -857,7 +857,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -895,7 +895,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the edited inline content in view mode") {
@@ -945,7 +945,7 @@ definition {
 		}
 
 		task ("Publish the content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Paragraph shown on content page at view mode") {
@@ -1018,7 +1018,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {
@@ -1050,7 +1050,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View mapped content in view mode") {
@@ -1141,7 +1141,7 @@ definition {
 		}
 
 		task ("Publish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 	}
 
@@ -1225,7 +1225,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Sign in as new user") {

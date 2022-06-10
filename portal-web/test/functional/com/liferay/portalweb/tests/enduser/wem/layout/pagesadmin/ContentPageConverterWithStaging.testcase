@@ -93,7 +93,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",

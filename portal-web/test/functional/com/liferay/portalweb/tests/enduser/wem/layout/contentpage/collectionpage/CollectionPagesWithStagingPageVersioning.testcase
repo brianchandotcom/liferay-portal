@@ -55,7 +55,7 @@ definition {
 		}
 
 		task ("Publish the first collection page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add the second collection page based on dynamic collection") {
@@ -72,7 +72,7 @@ definition {
 				fragmentName = "Button",
 				targetFragmentName = "Container");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add the third collection page based on collection provider") {

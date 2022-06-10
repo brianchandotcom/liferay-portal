@@ -494,7 +494,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -696,7 +696,7 @@ definition {
 		}
 
 		task ("Publish the display page template") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Select the display page template as Specific in the first web content") {
@@ -842,7 +842,7 @@ definition {
 		}
 
 		task ("Publish the page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Collection Filter doesn't appear at view mode") {
@@ -886,7 +886,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Filter results of Collection Display by keywords at View mode") {
@@ -1044,7 +1044,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Filter results of Collection Display by multiple keywords at View mode") {
@@ -1318,7 +1318,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -1635,7 +1635,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -1901,7 +1901,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page at view mode") {
@@ -2207,7 +2207,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -2520,7 +2520,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -2806,7 +2806,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -3054,7 +3054,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -3297,7 +3297,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Filter results of multiple Collection Displays by multiple Collection Filters at View mode") {
@@ -3657,7 +3657,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Navigate to page in view mode") {
@@ -3859,7 +3859,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View No Results Found in Collection Dipslay when search BMW at View mode") {
@@ -3969,7 +3969,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View No Results Found in Collection Dipslay when select Hatchback at View mode") {

@@ -112,7 +112,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("When the page creator navigates to content page at view mode") {

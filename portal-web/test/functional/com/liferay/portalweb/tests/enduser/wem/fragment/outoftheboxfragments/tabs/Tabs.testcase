@@ -83,7 +83,7 @@ definition {
 				portletName = "Asset Publisher",
 				position = "5");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View no NPE thrown in server console") {
@@ -320,7 +320,7 @@ definition {
 		}
 
 		task ("Assert no NPE after publishing content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 		}
@@ -368,7 +368,7 @@ definition {
 		task ("When the page creator selects the Tab 2") {
 			PageEditor.gotoTabsFragmentNavItem(navItem = "Tab 2");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Then the Tab 2 should be still selected after navigating through the site") {
@@ -536,7 +536,7 @@ definition {
 		}
 
 		task ("Assert no NPE after publishing content page") {
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 		}

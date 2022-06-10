@@ -65,7 +65,7 @@ definition {
 
 			Portlet.saveAndCloseConfig();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the List Menu is applied to Navigation Menu at view mode in staging site") {

@@ -155,7 +155,7 @@ definition {
 
 			PageEditor.prioritizeExperience(experienceName = "Experience User 1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPages.gotoPageEditor();
 
@@ -197,7 +197,7 @@ definition {
 
 			PageEditor.prioritizeExperience(experienceName = "Experience User 3");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with each user and check the correct experiece is shown") {
@@ -263,7 +263,7 @@ definition {
 				id = "element-text",
 				text = "Default");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add an Experience for that page") {
@@ -286,7 +286,7 @@ definition {
 				id = "element-text",
 				text = "Anyone1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Logout and assert the default experience is displayed") {
@@ -348,7 +348,7 @@ definition {
 				locator1 = "Button#CANCEL",
 				value1 = "Cancel");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 	}
 
@@ -438,7 +438,7 @@ definition {
 		task ("Priotitize the experience created") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Log in with both users and check the experience dispalyed") {
@@ -545,7 +545,7 @@ definition {
 		task ("Priotitize the experience created") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Country");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userea1 user") {
@@ -635,7 +635,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Modified Date");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -727,7 +727,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Hierarchy Path");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -819,7 +819,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Name");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -911,7 +911,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Users In A Specific Org");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1016,7 +1016,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Parent Organization");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1129,7 +1129,7 @@ definition {
 		task ("Modify the experience created") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Region");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1239,7 +1239,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Tag");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1360,7 +1360,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "Experience For Org with Type");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1531,7 +1531,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae user") {
@@ -1604,7 +1604,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1673,7 +1673,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1742,7 +1742,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1811,7 +1811,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -1858,7 +1858,7 @@ definition {
 
 			ContentPages.addPage(pageName = "Experience Content Page");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create a session segment at new instance") {
@@ -1923,7 +1923,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create a userea user") {
@@ -2007,7 +2007,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2078,7 +2078,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2147,7 +2147,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2224,7 +2224,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae user") {
@@ -2371,7 +2371,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2440,7 +2440,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2502,7 +2502,7 @@ definition {
 		task ("Prioritize experience created") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userfn1") {
@@ -2565,7 +2565,7 @@ definition {
 		task ("Prioritize experience created") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userfn1") {
@@ -2634,7 +2634,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2702,7 +2702,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2770,7 +2770,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2838,7 +2838,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2898,7 +2898,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -2972,7 +2972,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3040,7 +3040,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3128,7 +3128,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3202,7 +3202,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3284,7 +3284,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae user") {
@@ -3377,7 +3377,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3460,7 +3460,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3528,7 +3528,7 @@ definition {
 		task ("Prioritize the experience") {
 			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with userae1 user") {
@@ -3598,7 +3598,7 @@ definition {
 				id = "element-text",
 				text = "This is a new Screen Name experience for you");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Go to the Content Page and add a new experience for the second segment") {
@@ -3625,7 +3625,7 @@ definition {
 				id = "element-text",
 				text = "This is a new Email Address Experience for you");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with the user and check that the correct experience is shown") {
@@ -3695,7 +3695,7 @@ definition {
 
 			PageEditor.prioritizeExperience(experienceName = "Screen Name Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Go to the Content Page and add a new experience for the second segment") {
@@ -3724,7 +3724,7 @@ definition {
 
 			PageEditor.prioritizeExperience(experienceName = "Email Address Experience");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Login with the user and check that the correct experience is shown") {
@@ -3791,7 +3791,7 @@ definition {
 				backgroundColor = "Danger",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Create an experience") {
@@ -3799,7 +3799,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Change the background color of the default experience") {
@@ -3807,7 +3807,7 @@ definition {
 				backgroundColor = "Success",
 				panel = "Styles");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check if any experience has its own container with its own background color") {
@@ -3850,7 +3850,7 @@ definition {
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Change the background image in the default experience") {
@@ -3863,7 +3863,7 @@ definition {
 				panel = "Styles",
 				uploadFileName = "Document_4.jpg");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check if any experience has his own background image") {
@@ -3962,7 +3962,7 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 	}
 
@@ -3996,7 +3996,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add content to both experiences") {
@@ -4014,7 +4014,7 @@ definition {
 
 			IFrame.closeFrame();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check if the content is present only in the New Experience") {
@@ -4190,7 +4190,7 @@ definition {
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -4230,7 +4230,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -4285,7 +4285,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Edit the fragment recently added without publishing the changes") {
@@ -4340,7 +4340,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -4459,7 +4459,7 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Exp1");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 	}
 
@@ -5161,7 +5161,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Chech the mapped value at first experience") {
@@ -5286,7 +5286,7 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Chech the mapped value at first experience") {
@@ -5551,7 +5551,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check if the content is present only in the New Experience") {
@@ -5585,7 +5585,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Remove the fragment from the Default Experience and check that is not present") {
@@ -5595,7 +5595,7 @@ definition {
 
 			PageEditor.removeFragment(fragmentName = "Grid");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check the fragment is present in the Default experience") {
@@ -5732,7 +5732,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Remove the fragment created from the default experience") {
@@ -5742,7 +5742,7 @@ definition {
 
 			PageEditor.removeFragment(fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check if the fragment is only present in the new experience") {
@@ -5770,7 +5770,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
@@ -5833,7 +5833,7 @@ definition {
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a Banner Center to default experience") {
@@ -5858,7 +5858,7 @@ definition {
 				id = "element-text",
 				text = "Title of Banner");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Check that Banner fragment was properly added") {

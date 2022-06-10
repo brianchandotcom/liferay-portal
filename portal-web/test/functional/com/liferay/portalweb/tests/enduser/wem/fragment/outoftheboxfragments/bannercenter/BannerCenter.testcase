@@ -74,7 +74,7 @@ definition {
 
 			PageEditor.viewContainerStyle(backgroundColor = "gray-500");
 
-			PageEditor.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("View the Banner Center shown in view mode") {

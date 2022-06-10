@@ -75,7 +75,7 @@ definition {
 
 		Button.clickSave();
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 	}
 
 	macro addPageTemplate {

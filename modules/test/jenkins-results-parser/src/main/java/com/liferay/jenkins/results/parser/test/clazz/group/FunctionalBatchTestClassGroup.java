@@ -274,7 +274,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private String _concatPQL(File file, File testBaseDir) {
+	private String _concatPQL(File file, File testBaseDir, String concatedPQL) {
 		if (file == null) {
 			return null;
 		}
@@ -295,17 +295,17 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		Path parentFilePath = parentFile.toPath();
 
 		if (parentFilePath.equals(modulesBaseDirPath)) {
-			return _combinedTestBatchRunPropertyQuery;
+			return concatedPQL;
 		}
 
 		if (!canonicalFile.isDirectory()) {
-			return _concatPQL(parentFile, testBaseDir);
+			return _concatPQL(parentFile, testBaseDir, concatedPQL);
 		}
 
 		File testPropertiesFile = new File(canonicalFile, "test.properties");
 
 		if (!testPropertiesFile.exists()) {
-			return _concatPQL(parentFile, testBaseDir);
+			return _concatPQL(parentFile, testBaseDir, concatedPQL);
 		}
 
 		JobProperty jobProperty = getJobProperty(
@@ -316,26 +316,24 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBatchPropertyQuery) &&
 			!testBatchPropertyQuery.equals("false") &&
-			!_combinedTestBatchRunPropertyQuery.contains(
-				testBatchPropertyQuery)) {
+			!concatedPQL.contains(testBatchPropertyQuery)) {
 
 			recordJobProperty(jobProperty);
 
-			if (!_combinedTestBatchRunPropertyQuery.isEmpty()) {
-				_combinedTestBatchRunPropertyQuery +=
-					JenkinsResultsParserUtil.combine(
-						" OR (", testBatchPropertyQuery, ")");
+			if (!concatedPQL.isEmpty()) {
+				concatedPQL += JenkinsResultsParserUtil.combine(
+					" OR (", testBatchPropertyQuery, ")");
 			}
 			else {
-				_combinedTestBatchRunPropertyQuery += testBatchPropertyQuery;
+				concatedPQL += testBatchPropertyQuery;
 			}
 		}
 
 		if (!parentFilePath.equals(modulesBaseDirPath)) {
-			_concatPQL(parentFile, testBaseDir);
+			return _concatPQL(parentFile, testBaseDir, concatedPQL);
 		}
 
-		return getDefaultTestBatchRunPropertyQuery(testBaseDir, testSuiteName);
+		return concatedPQL;
 	}
 
 	private String _getTestBatchRunPropertyQuery(File testBaseDir) {
@@ -354,7 +352,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String sbToString = sb.toString();
 
 		for (File modifiedFile : modifiedFilesList) {
-			String testBatchPQL = _concatPQL(modifiedFile, testBaseDir);
+			String testBatchPQL = _concatPQL(
+				modifiedFile, testBaseDir, new String());
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(testBatchPQL) ||
 				testBatchPQL.equals("false")) {
@@ -450,10 +449,12 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
+	// 	private static final String _combinedTestBatchRunPropertyQuery =
+
+	//		new String();
 	private static final Pattern _poshiTestCasePattern = Pattern.compile(
 		"(?<namespace>[^\\.]+)\\.(?<className>[^\\#]+)\\#(?<methodName>.*)");
 
-	private String _combinedTestBatchRunPropertyQuery = new String();
 	private final Map<File, String> _testBatchRunPropertyQueries =
 		new HashMap<>();
 

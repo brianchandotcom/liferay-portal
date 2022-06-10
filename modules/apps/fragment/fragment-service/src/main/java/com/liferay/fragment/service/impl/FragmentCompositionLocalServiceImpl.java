@@ -75,9 +75,10 @@ public class FragmentCompositionLocalServiceImpl
 		fragmentCompositionKey = _getFragmentCompositionKey(
 			fragmentCompositionKey);
 
+		validateFragmentCompositionKey(groupId, fragmentCompositionKey);
+
 		validate(name);
 		validateDescription(description);
-		validateFragmentCompositionKey(groupId, fragmentCompositionKey);
 
 		long fragmentCompositionId = counterLocalService.increment();
 

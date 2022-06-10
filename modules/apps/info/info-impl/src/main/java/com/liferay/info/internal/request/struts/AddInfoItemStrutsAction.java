@@ -65,6 +65,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 			infoItemCreator.createFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
+				).infoFieldValues(
+					_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
+						httpServletRequest)
 				).build());
 		}
 		catch (InfoFormValidationException infoFormValidationException) {

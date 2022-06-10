@@ -20,12 +20,21 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CETThemeFavicon;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.manager.FaviconManager;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,6 +44,57 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = FaviconManager.class)
 public class FaviconManagerImpl implements FaviconManager {
+
+	@Override
+	public String getFaviconTitle(Layout layout, Locale locale) {
+		if (layout.getFaviconFileEntryId() > 0) {
+			try {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					layout.getFaviconFileEntryId());
+
+				return fileEntry.getTitle();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		if (layout.getMasterLayoutPlid() > 0) {
+			Layout masterLayout = _layoutLocalService.fetchLayout(
+				layout.getMasterLayoutPlid());
+
+			if ((masterLayout != null) &&
+				(masterLayout.getFaviconFileEntryId() > 0)) {
+
+				return LanguageUtil.get(locale, "favicon-from-master");
+			}
+		}
+
+		return getFaviconTitle(layout.getLayoutSet(), locale);
+	}
+
+	@Override
+	public String getFaviconTitle(LayoutSet layoutSet, Locale locale) {
+		if (layoutSet.getFaviconFileEntryId() > 0) {
+			try {
+				Group group = layoutSet.getGroup();
+
+				return LanguageUtil.format(
+					locale, "favicon-from-x",
+					group.getLayoutRootNodeName(
+						layoutSet.isPrivateLayout(), locale));
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		return LanguageUtil.get(locale, "favicon-from-theme");
+	}
 
 	@Override
 	public String getFaviconURL(Layout layout) {
@@ -124,12 +184,18 @@ public class FaviconManagerImpl implements FaviconManager {
 		return cetThemeFavicon.getURL();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FaviconManagerImpl.class);
+
 	@Reference
 	private CETManager _cetManager;
 
 	@Reference
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -17,10 +17,16 @@ package com.liferay.layout.manager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 
+import java.util.Locale;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface FaviconManager {
+
+	public String getFaviconTitle(Layout layout, Locale locale);
+
+	public String getFaviconTitle(LayoutSet layoutSet, Locale locale);
 
 	public String getFaviconURL(Layout layout);
 

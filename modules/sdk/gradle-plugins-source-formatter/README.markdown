@@ -123,7 +123,7 @@ manually adding a dependency to the `sourceFormatter` configuration:
 
 ```gradle
 dependencies {
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1230"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1231"
 }
 ```
 

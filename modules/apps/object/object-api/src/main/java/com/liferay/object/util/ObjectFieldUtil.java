@@ -29,12 +29,13 @@ public class ObjectFieldUtil {
 	public static ObjectField createObjectField(
 		long listTypeDefinitionId, String businessType, String dbColumnName,
 		String dbType, boolean indexed, boolean indexedAsKeyword,
-		String indexedLanguageId, String label, String name, boolean required) {
+		String indexedLanguageId, String label, String name, boolean required,
+		boolean system) {
 
 		return createObjectField(
 			businessType, dbColumnName, dbType, indexed, indexedAsKeyword,
 			indexedLanguageId, label, listTypeDefinitionId, name,
-			Collections.emptyList(), required);
+			Collections.emptyList(), required, system);
 	}
 
 	public static ObjectField createObjectField(
@@ -44,7 +45,7 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			0, businessType, null, dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, label, name, required);
+			indexedLanguageId, label, name, required, false);
 	}
 
 	public static ObjectField createObjectField(
@@ -55,7 +56,8 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, label, 0, name, objectFieldSettings, required);
+			indexedLanguageId, label, 0, name, objectFieldSettings, required,
+			false);
 	}
 
 	public static ObjectField createObjectField(
@@ -68,7 +70,8 @@ public class ObjectFieldUtil {
 		String businessType, String dbColumnName, String dbType,
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String label, long listTypeDefinitionId, String name,
-		List<ObjectFieldSetting> objectFieldSettings, boolean required) {
+		List<ObjectFieldSetting> objectFieldSettings, boolean required,
+		boolean system) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
@@ -84,6 +87,7 @@ public class ObjectFieldUtil {
 		objectField.setName(name);
 		objectField.setObjectFieldSettings(objectFieldSettings);
 		objectField.setRequired(required);
+		objectField.setSystem(system);
 
 		return objectField;
 	}
@@ -94,7 +98,7 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, false, false, null, name, 0, name,
-			objectFieldSettings, false);
+			objectFieldSettings, false, false);
 	}
 
 	public static ObjectField createObjectField(
@@ -109,7 +113,7 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			0, businessType, null, dbType, false, false, null, label, name,
-			required);
+			required, false);
 	}
 
 	public static ObjectField createObjectField(
@@ -118,7 +122,7 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, false, false, null, label, 0, name,
-			objectFieldSettings, false);
+			objectFieldSettings, false, false);
 	}
 
 }

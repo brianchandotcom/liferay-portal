@@ -32,12 +32,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 
 import java.io.Serializable;
@@ -414,8 +417,23 @@ public class EntityCacheImpl
 
 		entityModel.setCachedModel(true);
 
+		if (_DATABASE_PARTITION_ENABLED &&
+			(entityModel instanceof ShardedModel)) {
+
+			ShardedModel shardedModel = (ShardedModel)entityModel;
+
+			if (CompanyThreadLocal.getCompanyId() !=
+					shardedModel.getCompanyId()) {
+
+				return null;
+			}
+		}
+
 		return entityModel;
 	}
+
+	private static final boolean _DATABASE_PARTITION_ENABLED =
+		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
 
 	private static final String _GROUP_KEY_PREFIX =
 		EntityCache.class.getName() + StringPool.PERIOD;

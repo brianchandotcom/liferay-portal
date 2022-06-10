@@ -26,56 +26,20 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public InfoFormValidationException() {
 		_infoFieldUniqueId = StringPool.BLANK;
-		_languageKey =
-			"an-error-has-occurred-and-the-form-could-not-be-sent.-please-" +
-				"try-again";
-		_args = new Object[0];
 	}
 
-	public InfoFormValidationException(
-		String infoFieldUniqueId, String languageKey) {
-
+	public InfoFormValidationException(String infoFieldUniqueId) {
 		_infoFieldUniqueId = infoFieldUniqueId;
-		_languageKey = languageKey;
-
-		_args = new Object[0];
-	}
-
-	public InfoFormValidationException(
-		String infoFieldUniqueId, String languageKey, Object[] args) {
-
-		_infoFieldUniqueId = infoFieldUniqueId;
-		_languageKey = languageKey;
-		_args = args;
-	}
-
-	public InfoFormValidationException(
-		String infoFieldUniqueId, String languageKey, String message,
-		Object[] args, Throwable throwable) {
-
-		_infoFieldUniqueId = infoFieldUniqueId;
-		_languageKey = languageKey;
-		_args = args;
-	}
-
-	public Object[] getArgs() {
-		return _args;
 	}
 
 	public String getInfoFieldUniqueId() {
 		return _infoFieldUniqueId;
 	}
 
-	public String getLanguageKey() {
-		return _languageKey;
-	}
-
 	public static class FileSize extends InfoFormValidationException {
 
 		public FileSize(String infoFieldUniqueId, String maximumSizeAllowed) {
-			super(
-				infoFieldUniqueId, "the-attachment-has-to-be-x-or-less",
-				new String[] {maximumSizeAllowed});
+			super(infoFieldUniqueId);
 
 			_maximumSizeAllowed = maximumSizeAllowed;
 		}
@@ -101,9 +65,7 @@ public class InfoFormValidationException extends InfoFormException {
 		public InvalidFileExtension(
 			String infoFieldUniqueId, String validFileExtensions) {
 
-			super(
-				infoFieldUniqueId, "the-accepted-extensions-for-the-file-are-x",
-				new String[] {validFileExtensions});
+			super(infoFieldUniqueId);
 
 			_validFileExtensions = validFileExtensions;
 		}
@@ -127,7 +89,7 @@ public class InfoFormValidationException extends InfoFormException {
 		extends InfoFormValidationException {
 
 		public InvalidInfoFieldValue(String infoFieldUniqueId) {
-			super(infoFieldUniqueId, "this-field-is-invalid");
+			super(infoFieldUniqueId);
 		}
 
 		@Override
@@ -140,7 +102,7 @@ public class InfoFormValidationException extends InfoFormException {
 	public static class RequiredInfoField extends InfoFormValidationException {
 
 		public RequiredInfoField(String infoFieldUniqueId) {
-			super(infoFieldUniqueId, "this-field-is-required");
+			super(infoFieldUniqueId);
 		}
 
 		@Override
@@ -150,8 +112,6 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
-	private final Object[] _args;
 	private final String _infoFieldUniqueId;
-	private final String _languageKey;
 
 }

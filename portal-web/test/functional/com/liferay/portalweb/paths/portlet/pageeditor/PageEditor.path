@@ -662,6 +662,14 @@
 	<td></td>
 </tr>
 
+<!--FORM_COMPONENTS-->
+
+<tr>
+	<td>FORM_CONTAINER_CONTAINER</td>
+	<td>xpath=(//div[@aria-label='Form Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')]</td>
+	<td></td>
+</tr>
+
 <!--LAYOUT ELEMENTS-->
 
 <tr>

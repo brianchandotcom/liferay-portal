@@ -1,9 +1,24 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 (function () {
 	'use strict';
 
 	// Note this needs to be a real ES6 class (not transpiled).
 	//
 	// See: https://github.com/w3c/webcomponents/issues/587
+
 	class VanillaCounter extends HTMLElement {
 		constructor() {
 			super();
@@ -80,7 +95,8 @@
 
 			if (prefixIndex === -1) {
 				route = '/';
-			} else {
+			}
+			else {
 				route = url.substring(prefixIndex + prefix.length - 1);
 			}
 
@@ -88,11 +104,7 @@
 		}
 	}
 
-	if (customElements.get('vanilla-counter')) {
-		console.log(
-			'Skipping registration for <vanilla-counter> (already registered)'
-		);
-	} else {
+	if (!customElements.get('vanilla-counter')) {
 		customElements.define('vanilla-counter', VanillaCounter);
 	}
 })();

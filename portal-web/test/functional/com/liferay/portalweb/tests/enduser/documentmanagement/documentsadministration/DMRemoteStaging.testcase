@@ -82,13 +82,67 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
 	}
 
-	@description = "This test covers LPS-154433."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154433. It ensures that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = "4"
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
+		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterFriendlyURLIsUpdated";
 
-		// TODO LPS-154433
+		DMNavigator.openToAddEntry(
+			documentTypeName = "External Video Shortcut",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
+		VideoShortcut.addCP(
+			skipNavigation = "true",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Media Gallery");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Test YouTube Video",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "hqdefault.jpg",
+			staging = "true");
 	}
 
 	@description = "This test covers LPS-154407. This ensures that a Media Gallery widget containing an external video with a custom friendlyURL can be published on a site."

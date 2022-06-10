@@ -95,12 +95,34 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when one field is created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAddOnResourceActionWhenAddField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153584",
+			objectName = "CustomObject153584",
+			pluralLabelName = "Custom Objects 153584");
 
-		// TODO LPS-153584 CanViewAddOnResourceActionWhenAddField pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153584");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Text");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditEntries(
+			clientIP = "127.0.0.1",
+			createDate = "Seconds Ago",
+			id = "",
+			position = "1",
+			resourceAction = "ADD",
+			resourceID = "",
+			resourceName = "ObjectField",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a layout is created"

@@ -47,6 +47,14 @@ public class FaviconManagerImpl implements FaviconManager {
 
 	@Override
 	public String getFaviconTitle(Layout layout, Locale locale) {
+		String faviconTitle = _getCETThemeFaviconTitle(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			layout.getCompanyId(), locale);
+
+		if (Validator.isNotNull(faviconTitle)) {
+			return faviconTitle;
+		}
+
 		if (layout.getFaviconFileEntryId() > 0) {
 			try {
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
@@ -65,10 +73,16 @@ public class FaviconManagerImpl implements FaviconManager {
 			Layout masterLayout = _layoutLocalService.fetchLayout(
 				layout.getMasterLayoutPlid());
 
-			if ((masterLayout != null) &&
-				(masterLayout.getFaviconFileEntryId() > 0)) {
+			if (masterLayout != null) {
+				faviconTitle = _getCETThemeFaviconTitle(
+					_portal.getClassNameId(Layout.class),
+					masterLayout.getPlid(), layout.getCompanyId(), locale);
 
-				return LanguageUtil.get(locale, "favicon-from-master");
+				if ((masterLayout.getFaviconFileEntryId() > 0) ||
+					Validator.isNotNull(faviconTitle)) {
+
+					return LanguageUtil.get(locale, "favicon-from-master");
+				}
 			}
 		}
 
@@ -77,7 +91,13 @@ public class FaviconManagerImpl implements FaviconManager {
 
 	@Override
 	public String getFaviconTitle(LayoutSet layoutSet, Locale locale) {
-		if (layoutSet.getFaviconFileEntryId() > 0) {
+		String faviconTitle = _getCETThemeFaviconTitle(
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
+			layoutSet.getCompanyId(), locale);
+
+		if ((layoutSet.getFaviconFileEntryId() > 0) ||
+			Validator.isNotNull(faviconTitle)) {
+
 			try {
 				Group group = layoutSet.getGroup();
 
@@ -112,22 +132,24 @@ public class FaviconManagerImpl implements FaviconManager {
 			return faviconURL;
 		}
 
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			layout.getMasterLayoutPlid());
+		if (layout.getMasterLayoutPlid() > 0) {
+			Layout masterLayout = _layoutLocalService.fetchLayout(
+				layout.getMasterLayoutPlid());
 
-		if (masterLayout != null) {
-			faviconURL = _getCETThemeFaviconURL(
-				_portal.getClassNameId(Layout.class), masterLayout.getPlid(),
-				layout.getCompanyId());
+			if (masterLayout != null) {
+				faviconURL = _getCETThemeFaviconURL(
+					_portal.getClassNameId(Layout.class),
+					masterLayout.getPlid(), layout.getCompanyId());
 
-			if (Validator.isNotNull(faviconURL)) {
-				return faviconURL;
-			}
+				if (Validator.isNotNull(faviconURL)) {
+					return faviconURL;
+				}
 
-			faviconURL = masterLayout.getFaviconURL();
+				faviconURL = masterLayout.getFaviconURL();
 
-			if (Validator.isNotNull(faviconURL)) {
-				return faviconURL;
+				if (Validator.isNotNull(faviconURL)) {
+					return faviconURL;
+				}
 			}
 		}
 
@@ -165,6 +187,20 @@ public class FaviconManagerImpl implements FaviconManager {
 
 		return _cetManager.getCET(
 			companyId, clientExtensionEntryRel.getCETExternalReferenceCode());
+	}
+
+	private String _getCETThemeFaviconTitle(
+		long classNameId, long classPK, long companyId, Locale locale) {
+
+		CET cet = _getCET(classNameId, classPK, companyId);
+
+		if (cet == null) {
+			return null;
+		}
+
+		CETThemeFavicon cetThemeFavicon = (CETThemeFavicon)cet;
+
+		return cetThemeFavicon.getName(locale);
 	}
 
 	private String _getCETThemeFaviconURL(

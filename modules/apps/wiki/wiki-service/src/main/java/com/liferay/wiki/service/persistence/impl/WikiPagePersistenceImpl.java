@@ -23745,8 +23745,7 @@ public class WikiPagePersistenceImpl
 		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
 
 		if (Validator.isNull(wikiPage.getExternalReferenceCode())) {
-			wikiPage.setExternalReferenceCode(
-				String.valueOf(wikiPage.getPrimaryKey()));
+			wikiPage.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(wikiPage.getUuid())) {

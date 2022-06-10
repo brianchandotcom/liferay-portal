@@ -35013,8 +35013,7 @@ public class KBArticlePersistenceImpl
 		KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
 
 		if (Validator.isNull(kbArticle.getExternalReferenceCode())) {
-			kbArticle.setExternalReferenceCode(
-				String.valueOf(kbArticle.getPrimaryKey()));
+			kbArticle.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(kbArticle.getUuid())) {

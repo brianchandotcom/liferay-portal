@@ -9171,8 +9171,7 @@ public class CommercePriceListPersistenceImpl
 			(CommercePriceListModelImpl)commercePriceList;
 
 		if (Validator.isNull(commercePriceList.getExternalReferenceCode())) {
-			commercePriceList.setExternalReferenceCode(
-				String.valueOf(commercePriceList.getPrimaryKey()));
+			commercePriceList.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commercePriceList.getUuid())) {

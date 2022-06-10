@@ -2814,7 +2814,7 @@ public class BatchEngineImportTaskPersistenceImpl
 				batchEngineImportTask.getExternalReferenceCode())) {
 
 			batchEngineImportTask.setExternalReferenceCode(
-				String.valueOf(batchEngineImportTask.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(batchEngineImportTask.getUuid())) {

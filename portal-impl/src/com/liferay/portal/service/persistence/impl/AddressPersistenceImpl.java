@@ -6928,8 +6928,7 @@ public class AddressPersistenceImpl
 		AddressModelImpl addressModelImpl = (AddressModelImpl)address;
 
 		if (Validator.isNull(address.getExternalReferenceCode())) {
-			address.setExternalReferenceCode(
-				String.valueOf(address.getPrimaryKey()));
+			address.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(address.getUuid())) {

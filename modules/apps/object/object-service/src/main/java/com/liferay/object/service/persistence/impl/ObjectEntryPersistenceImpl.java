@@ -4716,8 +4716,7 @@ public class ObjectEntryPersistenceImpl
 			(ObjectEntryModelImpl)objectEntry;
 
 		if (Validator.isNull(objectEntry.getExternalReferenceCode())) {
-			objectEntry.setExternalReferenceCode(
-				String.valueOf(objectEntry.getPrimaryKey()));
+			objectEntry.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(objectEntry.getUuid())) {

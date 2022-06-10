@@ -5018,8 +5018,7 @@ public class WikiNodePersistenceImpl
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
 		if (Validator.isNull(wikiNode.getExternalReferenceCode())) {
-			wikiNode.setExternalReferenceCode(
-				String.valueOf(wikiNode.getPrimaryKey()));
+			wikiNode.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(wikiNode.getUuid())) {

@@ -12427,8 +12427,7 @@ public class AssetCategoryPersistenceImpl
 			(AssetCategoryModelImpl)assetCategory;
 
 		if (Validator.isNull(assetCategory.getExternalReferenceCode())) {
-			assetCategory.setExternalReferenceCode(
-				String.valueOf(assetCategory.getPrimaryKey()));
+			assetCategory.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(assetCategory.getUuid())) {

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -2968,8 +2969,7 @@ public class CommerceShipmentPersistenceImpl
 			(CommerceShipmentModelImpl)commerceShipment;
 
 		if (Validator.isNull(commerceShipment.getExternalReferenceCode())) {
-			commerceShipment.setExternalReferenceCode(
-				String.valueOf(commerceShipment.getPrimaryKey()));
+			commerceShipment.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		ServiceContext serviceContext =
@@ -3440,5 +3440,8 @@ public class CommerceShipmentPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

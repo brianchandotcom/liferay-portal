@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -4437,8 +4438,7 @@ public class AccountGroupPersistenceImpl
 			(AccountGroupModelImpl)accountGroup;
 
 		if (Validator.isNull(accountGroup.getExternalReferenceCode())) {
-			accountGroup.setExternalReferenceCode(
-				String.valueOf(accountGroup.getPrimaryKey()));
+			accountGroup.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		ServiceContext serviceContext =
@@ -4972,6 +4972,9 @@ public class AccountGroupPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private AccountGroupModelArgumentsResolver

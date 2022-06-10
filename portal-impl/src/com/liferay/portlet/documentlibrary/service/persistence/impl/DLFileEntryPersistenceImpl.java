@@ -15289,8 +15289,7 @@ public class DLFileEntryPersistenceImpl
 			(DLFileEntryModelImpl)dlFileEntry;
 
 		if (Validator.isNull(dlFileEntry.getExternalReferenceCode())) {
-			dlFileEntry.setExternalReferenceCode(
-				String.valueOf(dlFileEntry.getPrimaryKey()));
+			dlFileEntry.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(dlFileEntry.getUuid())) {

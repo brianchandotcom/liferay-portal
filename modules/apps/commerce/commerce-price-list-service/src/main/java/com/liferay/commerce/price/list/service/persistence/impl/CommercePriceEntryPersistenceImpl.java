@@ -5835,8 +5835,7 @@ public class CommercePriceEntryPersistenceImpl
 			(CommercePriceEntryModelImpl)commercePriceEntry;
 
 		if (Validator.isNull(commercePriceEntry.getExternalReferenceCode())) {
-			commercePriceEntry.setExternalReferenceCode(
-				String.valueOf(commercePriceEntry.getPrimaryKey()));
+			commercePriceEntry.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commercePriceEntry.getUuid())) {

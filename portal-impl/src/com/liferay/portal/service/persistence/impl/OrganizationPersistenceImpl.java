@@ -9460,8 +9460,7 @@ public class OrganizationPersistenceImpl
 			(OrganizationModelImpl)organization;
 
 		if (Validator.isNull(organization.getExternalReferenceCode())) {
-			organization.setExternalReferenceCode(
-				String.valueOf(organization.getPrimaryKey()));
+			organization.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(organization.getUuid())) {

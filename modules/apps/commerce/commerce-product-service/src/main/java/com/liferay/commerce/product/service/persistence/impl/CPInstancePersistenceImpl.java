@@ -7578,8 +7578,7 @@ public class CPInstancePersistenceImpl
 			(CPInstanceModelImpl)cpInstance;
 
 		if (Validator.isNull(cpInstance.getExternalReferenceCode())) {
-			cpInstance.setExternalReferenceCode(
-				String.valueOf(cpInstance.getPrimaryKey()));
+			cpInstance.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(cpInstance.getUuid())) {

@@ -76,17 +76,17 @@ public class ViewNotificationTemplatesDisplayContext {
 			return creationMenu;
 		}
 
-		creationMenu.addDropdownItem(
+		return creationMenu.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref("addNotificationTemplate");
+				dropdownItem.setHref(
+					getPortletURL(), "mvcRenderCommandName",
+					"/notification_templates/edit_notification_template",
+					"backURL", _notificationRequestHelper.getCurrentURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_notificationRequestHelper.getRequest(),
 						"add-notification-template"));
-				dropdownItem.setTarget("event");
 			});
-
-		return creationMenu;
 	}
 
 	public Object getEditorConfig(String editorConfigKey) {

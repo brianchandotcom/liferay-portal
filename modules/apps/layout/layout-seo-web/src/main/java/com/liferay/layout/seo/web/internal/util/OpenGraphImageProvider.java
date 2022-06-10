@@ -111,44 +111,47 @@ public class OpenGraphImageProvider {
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 					openGraphImageFileEntryId);
 
-				Iterable<KeyValuePair>
-					fileEntryMetadataOpenGraphTagKeyValuePairs =
-						_fileEntryMetadataOpenGraphTagsProvider.
-							getFileEntryMetadataOpenGraphTagKeyValuePairs(
-								fileEntry);
+				if ((fileEntry != null) && !fileEntry.isInTrash()) {
+					Iterable<KeyValuePair>
+						fileEntryMetadataOpenGraphTagKeyValuePairs =
+							_fileEntryMetadataOpenGraphTagsProvider.
+								getFileEntryMetadataOpenGraphTagKeyValuePairs(
+									fileEntry);
 
-				String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
-					fileEntry, themeDisplay);
+					String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
+						fileEntry, themeDisplay);
 
-				return Optional.of(
-					new OpenGraphImage() {
+					return Optional.of(
+						new OpenGraphImage() {
 
-						@Override
-						public Optional<String> getAltOptional() {
-							return Optional.ofNullable(
-								_getImageAltTagValue(
-									infoItemFieldValues, layout, layoutSEOEntry,
-									themeDisplay.getLocale()));
-						}
+							@Override
+							public Optional<String> getAltOptional() {
+								return Optional.ofNullable(
+									_getImageAltTagValue(
+										infoItemFieldValues, layout,
+										layoutSEOEntry,
+										themeDisplay.getLocale()));
+							}
 
-						@Override
-						public Iterable<KeyValuePair>
-							getMetadataTagKeyValuePairs() {
+							@Override
+							public Iterable<KeyValuePair>
+								getMetadataTagKeyValuePairs() {
 
-							return fileEntryMetadataOpenGraphTagKeyValuePairs;
-						}
+								return fileEntryMetadataOpenGraphTagKeyValuePairs;
+							}
 
-						@Override
-						public Optional<String> getMimeTypeOptional() {
-							return Optional.of(fileEntry.getMimeType());
-						}
+							@Override
+							public Optional<String> getMimeTypeOptional() {
+								return Optional.of(fileEntry.getMimeType());
+							}
 
-						@Override
-						public String getUrl() {
-							return imagePreviewURL;
-						}
+							@Override
+							public String getUrl() {
+								return imagePreviewURL;
+							}
 
-					});
+						});
+				}
 			}
 		}
 		catch (Exception exception) {

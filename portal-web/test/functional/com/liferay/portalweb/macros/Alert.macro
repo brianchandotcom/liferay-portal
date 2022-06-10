@@ -143,4 +143,10 @@ definition {
 			locator1 = "Message#WARNING_SPECIFIC");
 	}
 
+	macro viewWarningSpecificNotPresent {
+		AssertElementNotPresent(
+			key_warningMessage = "${warningMessage}",
+			locator1 = "Message#WARNING_SPECIFIC");
+	}
+
 }

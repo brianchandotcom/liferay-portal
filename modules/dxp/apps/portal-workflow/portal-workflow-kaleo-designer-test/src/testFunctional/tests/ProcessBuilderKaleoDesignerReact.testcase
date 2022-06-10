@@ -3362,11 +3362,40 @@ definition {
 	}
 
 	@description = "Verify that a message warning is not displayed when the user adds another transition and do not selects it as default"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test WarningIsNotDisplayedWhenNewTransitionNotDefault {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsNotDisplayedWhenNewTransitionNotDefault";
 
-		// TODO LRQA-73833 WarningIsNotDisplayedWhenNewTransitionNotDefault pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "True");
+
+		Alert.viewWarningSpecific(warningMessage = "Default Was Changed:Your workflow may have changed because the default was changed.");
+
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "False");
+
+		Alert.viewWarningSpecificNotPresent(warningMessage = "Default Was Changed:Your workflow may have changed because the default was changed.");
+		
 
 	}
 

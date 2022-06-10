@@ -116,4 +116,4 @@ Import-Package:\
 	!sun.security.x509,\
 	\
 	*
--fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/11/";is:=warning

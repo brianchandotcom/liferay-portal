@@ -274,7 +274,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private String _concatPQL(File file, File testBaseDir, String concatedPQL) {
+	private String _concatPQL(File file, String concatedPQL) {
 		if (file == null) {
 			return null;
 		}
@@ -299,13 +299,13 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (!canonicalFile.isDirectory()) {
-			return _concatPQL(parentFile, testBaseDir, concatedPQL);
+			return _concatPQL(parentFile, concatedPQL);
 		}
 
 		File testPropertiesFile = new File(canonicalFile, "test.properties");
 
 		if (!testPropertiesFile.exists()) {
-			return _concatPQL(parentFile, testBaseDir, concatedPQL);
+			return _concatPQL(parentFile, concatedPQL);
 		}
 
 		if (_traversedPropertyFiles.contains(testPropertiesFile)) {
@@ -336,7 +336,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (!parentFilePath.equals(modulesBaseDirPath)) {
-			return _concatPQL(parentFile, testBaseDir, concatedPQL);
+			return _concatPQL(parentFile, concatedPQL);
 		}
 
 		return concatedPQL;
@@ -348,18 +348,13 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				testBaseDir, testSuiteName);
 		}
 
-		Set<File> modifiedFilesList = new HashSet<>();
-
-		modifiedFilesList.addAll(
-			portalGitWorkingDirectory.getModifiedFilesList());
-
 		StringBuilder sb = new StringBuilder();
 
-		String sbToString = sb.toString();
+		Set<File> modifiedFilesList = new HashSet<>(
+			portalGitWorkingDirectory.getModifiedFilesList());
 
 		for (File modifiedFile : modifiedFilesList) {
-			String testBatchPQL = _concatPQL(
-				modifiedFile, testBaseDir, new String());
+			String testBatchPQL = _concatPQL(modifiedFile, "");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(testBatchPQL) ||
 				testBatchPQL.equals("false")) {
@@ -367,17 +362,14 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			if (!(sb.indexOf(testBatchPQL) > -1)) {
+			if (sb.indexOf(testBatchPQL) == -1) {
 				if (!JenkinsResultsParserUtil.isNullOrEmpty(sb.toString())) {
 					sb.append(" OR ");
 				}
 
 				sb.append("(");
 				sb.append(testBatchPQL);
-
 				sb.append(")");
-
-				sbToString = sb.toString();
 			}
 		}
 
@@ -385,19 +377,15 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			testBaseDir, testSuiteName);
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(defaultPQL) &&
-			!sbToString.contains(defaultPQL)) {
+			(sb.indexOf(defaultPQL) == -1)) {
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(sbToString)) {
+			if (sb.length() > 0) {
 				sb.append(" OR ");
 			}
 
 			sb.append("(");
-
 			sb.append(defaultPQL);
-
 			sb.append(")");
-
-			sbToString = sb.toString();
 		}
 
 		if (!NAME_STABLE_TEST_SUITE.equals(getTestSuiteName())) {
@@ -415,11 +403,11 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 			if ((jobPropertyValue != null) && includeStableTestSuite &&
 				isStableTestSuiteBatch(batchName) &&
-				!sbToString.contains(jobPropertyValue)) {
+				(sb.indexOf(jobPropertyValue) == -1)) {
 
 				recordJobProperty(jobProperty);
 
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(sb.toString())) {
+				if (sb.length() > 0) {
 					sb.append(" OR ");
 				}
 

@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(minium = "true");
+		CommerceConfiguration.commerceSetUp();
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Commerce Account",
@@ -228,6 +228,80 @@ definition {
 				key_entry = "Commerce Account",
 				key_orderType = "Test Order Type 2",
 				locator1 = "CommerceOrders#PENDING_ORDERS_LIST_ORDER_TYPE");
+		}
+	}
+
+	@description = "Verify the selected order type for an order is displayed in the Placed Orders list."
+	@priority = "3"
+	test AssertOrderTypeInPlacedOrdersList {
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given two active order types") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Description 1",
+				orderTypeName = "Test Order Type 1");
+
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Description 2",
+				orderTypeName = "Test Order Type 2");
+		}
+
+		task ("And given the buyer creates an order from Pending Orders with Order Type 2") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Test Order Type 2");
+		}
+
+		task ("And given the buyer completes the checkout process for the order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer goes to the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the Order Type field is present in the Placed Orders list and populated with Test Order Type 2") {
+			AssertElementPresent(
+				key_entry = "Commerce Account",
+				key_orderType = "Test Order Type 2",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ORDER_TYPE");
 		}
 	}
 

@@ -2,9 +2,15 @@ Bundle-Name: Liferay Portal Store Azure
 Bundle-SymbolicName: com.liferay.portal.store.azure
 Bundle-Version: 5.0.2
 Import-Package:\
+	!com.aayushatharva.brotli4j,\
+	!com.aayushatharva.brotli4j.decoder,\
+	!com.aayushatharva.brotli4j.encoder,\
+	\
 	!com.conversantmedia.util.concurrent,\
 	\
 	!com.fasterxml.jackson.dataformat.yaml,\
+	\
+	!com.github.luben.zstd,\
 	\
 	!com.google.crypto.tink.subtle,\
 	!com.google.protobuf,\
@@ -30,6 +36,7 @@ Import-Package:\
 	!io.micrometer.core.instrument.search,\
 	\
 	!io.netty.handler.codec.haproxy,\
+	!io.netty.incubator.channel.uring,\
 	\
 	!javax.annotation.meta,\
 	\
@@ -72,6 +79,7 @@ Import-Package:\
 	!org.bouncycastle.crypto.engines,\
 	!org.bouncycastle.crypto.modes,\
 	!org.bouncycastle.crypto.params,\
+	!org.bouncycastle.jcajce.provider,\
 	!org.bouncycastle.jce.provider,\
 	!org.bouncycastle.openssl,\
 	!org.bouncycastle.openssl.jcajce,\
@@ -114,6 +122,8 @@ Import-Package:\
 	!reactor.blockhound.integration,\
 	\
 	!sun.security.x509,\
+	\
+	!zipkin2.internal.gson.internal.bind,\
 	\
 	*
 -fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/11/";is:=warning

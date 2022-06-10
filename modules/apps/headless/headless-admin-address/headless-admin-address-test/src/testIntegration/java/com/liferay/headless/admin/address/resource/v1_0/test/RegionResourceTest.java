@@ -20,6 +20,7 @@ import com.liferay.headless.admin.address.client.http.HttpInvoker;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -34,7 +35,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -356,45 +360,49 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		return _addRegion(region);
 	}
 
+	private <T extends Exception> void _assertProblem(
+			UnsafeSupplier<HttpInvoker.HttpResponse, Exception>
+				httpResponseUnsafeSupplier,
+			Class<T> exceptionClass)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BaseExceptionMapper.class.getName(), LoggerTestUtil.OFF)) {
+
+			HttpInvoker.HttpResponse httpResponse =
+				httpResponseUnsafeSupplier.get();
+
+			Assert.assertEquals(
+				Response.Status.BAD_REQUEST.getStatusCode(),
+				httpResponse.getStatusCode());
+
+			if (exceptionClass != null) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					httpResponse.getContent());
+
+				Assert.assertEquals(
+					exceptionClass.getSimpleName(), jsonObject.get("type"));
+			}
+		}
+	}
+
 	private <T extends Exception> void _testPostCountryRegionProblem(
 			Region region, Class<T> exceptionClass)
 		throws Exception {
 
-		HttpInvoker.HttpResponse httpResponse =
-			regionResource.postCountryRegionHttpResponse(
-				_country.getCountryId(), region);
-
-		Assert.assertEquals(
-			Response.Status.BAD_REQUEST.getStatusCode(),
-			httpResponse.getStatusCode());
-
-		if (exceptionClass != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				httpResponse.getContent());
-
-			Assert.assertEquals(
-				exceptionClass.getSimpleName(), jsonObject.get("type"));
-		}
+		_assertProblem(
+			() -> regionResource.postCountryRegionHttpResponse(
+				_country.getCountryId(), region),
+			exceptionClass);
 	}
 
 	private <T extends Exception> void _testPutRegionProblem(
 			Long regionId, Region region, Class<T> exceptionClass)
 		throws Exception {
 
-		HttpInvoker.HttpResponse httpResponse =
-			regionResource.putRegionHttpResponse(regionId, region);
-
-		Assert.assertEquals(
-			Response.Status.BAD_REQUEST.getStatusCode(),
-			httpResponse.getStatusCode());
-
-		if (exceptionClass != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				httpResponse.getContent());
-
-			Assert.assertEquals(
-				exceptionClass.getSimpleName(), jsonObject.get("type"));
-		}
+		_assertProblem(
+			() -> regionResource.putRegionHttpResponse(regionId, region),
+			exceptionClass);
 	}
 
 	@DeleteAfterTestRun

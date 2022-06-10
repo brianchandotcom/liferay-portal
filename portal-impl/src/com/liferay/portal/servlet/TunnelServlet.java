@@ -137,17 +137,17 @@ public class TunnelServlet extends HttpServlet {
 				}
 			}
 			else {
-				if (throwable instanceof PortalException) {
-					returnObject = throwable;
-				}
-				else {
-					if (throwable != null) {
+				if (throwable != null) {
+					if (throwable instanceof PortalException) {
+						returnObject = throwable;
+					}
+					else {
 						returnObject = new SystemException(
 							throwable.getMessage());
 					}
-					else {
-						returnObject = new SystemException();
-					}
+				}
+				else {
+					returnObject = new SystemException();
 				}
 			}
 		}

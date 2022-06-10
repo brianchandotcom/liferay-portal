@@ -54,7 +54,7 @@ return computedStyle.getPropertyValue("${attribute}");
 		WaitForSPARefresh();
 
 		var javascript = '''
-return	Array.from(document.getElementById('${id}').sheet.rules).filter(rule => rule.selectorText == `.${className}`)[0].style.${styleName};
+return	Array.from(document.querySelector('${cssSelector}').sheet.rules).filter(rule => rule.selectorText == `.${className}`)[0].style.${styleName};
 		''';
 
 		var styleValue = selenium.getEval("${javascript}");

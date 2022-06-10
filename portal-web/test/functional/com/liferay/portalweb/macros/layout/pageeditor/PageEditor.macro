@@ -1067,24 +1067,6 @@ definition {
 			value1 = "${offSetX},${offSetY}");
 	}
 
-	macro clickPublish {
-		Button.click(button = "Publish");
-
-		if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected"))) {
-			Modal.publish(
-				action = "${action}",
-				warningMessage = "Some of the fields have invalid values. If you continue publishing, the latest valid values will display.");
-		}
-		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Required Form Components"))) {
-			Modal.publish(
-				action = "${action}",
-				warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
-		}
-		else {
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	macro closeSidebar {
 		var key_tabName = "${tabName}";
 
@@ -3582,6 +3564,24 @@ definition {
 		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+	}
+
+	macro publish {
+		Button.click(button = "Publish");
+
+		if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected"))) {
+			Modal.publish(
+				action = "${action}",
+				warningMessage = "Some of the fields have invalid values. If you continue publishing, the latest valid values will display.");
+		}
+		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Required Form Components"))) {
+			Modal.publish(
+				action = "${action}",
+				warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro removeFragment {

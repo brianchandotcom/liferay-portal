@@ -16,9 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -41,6 +39,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Arrays;
 
@@ -72,23 +73,22 @@ public class StartupAction extends SimpleAction {
 		// Check Tomcat's lib/ext directory
 
 		if (ServerDetector.isTomcat()) {
-			String appServerDir = StringUtil.replace(
-				System.getProperty("catalina.base"), CharPool.BACK_SLASH,
-				CharPool.FORWARD_SLASH);
+			Path libPath = Paths.get(
+				System.getProperty("catalina.base"), "lib");
 
-			String globalSharedDir = appServerDir + "/lib/";
+			Path extPath = libPath.resolve("ext");
 
-			File libExtDir = new File(globalSharedDir, "ext");
+			File extDir = extPath.toFile();
 
-			if (libExtDir.exists()) {
-				File[] extJarFiles = libExtDir.listFiles();
+			if (extDir.exists()) {
+				File[] extJarFiles = extDir.listFiles();
 
 				if (extJarFiles.length != 0) {
 					_log.error(
 						StringBundler.concat(
 							"Files ", Arrays.toString(extJarFiles), " in ",
-							libExtDir, " are no longer read. Move them to ",
-							globalSharedDir, " or ",
+							extDir, " are no longer read. Move them to ",
+							libPath, " or ",
 							PropsValues.
 								LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
 							"."));

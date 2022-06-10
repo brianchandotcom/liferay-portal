@@ -1297,6 +1297,10 @@
 		['aui-base', 'liferay-util-window']
 	);
 
+	/**
+	 * Used in `modules/apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/open_window.js`
+	 * which will need to be migrated over to `openModal`.
+	 */
 	Liferay.provide(
 		Util,
 		'_openWindowProvider',

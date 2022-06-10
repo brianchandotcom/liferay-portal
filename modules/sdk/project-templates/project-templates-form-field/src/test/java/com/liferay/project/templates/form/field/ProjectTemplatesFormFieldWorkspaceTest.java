@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.gradle.internal.impldep.com.google.api.client.repackaged.com.google.common.base.Objects;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -137,7 +138,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			"\"@liferay/portal-" + _liferayVersion.substring(0, 3) +
 				"\": \"*\"",
 			"\"metal-tools-soy\": \"4.3.2\"");
-		
+
 		if (Objects.equal("7.2.1-1", _liferayVersion)) {
 			testContains(
 				gradleProjectDir, "build.gradle",
@@ -147,7 +148,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 					"\"com.liferay.frontend.js.loader.modules.extender.api\"",
 				"jsCompile group: \"com.liferay\", name: " +
 					"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-				DEPENDENCY_PORTAL_KERNEL);			
+				DEPENDENCY_PORTAL_KERNEL);
 		}
 		else {
 			testContains(
@@ -156,7 +157,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 					"\"release.portal.api\"",
 				"jsCompile group: \"com.liferay\", name: " +
 					"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-				DEPENDENCY_PORTAL_KERNEL);
+				DEPENDENCY_PORTAL_RELEASE_API);
 		}
 
 		testContains(

@@ -128,6 +128,10 @@ public interface BaseProjectTemplatesTestCase {
 		"compileOnly group: \"com.liferay.portal\", name: " +
 			"\"com.liferay.portal.kernel\"";
 
+	public static final String DEPENDENCY_PORTAL_RELEASE_API =
+		"compileOnly group: \"com.liferay.portal\", name: " +
+			"\"release.portal.api\"";
+
 	public static final String DEPENDENCY_RELEASE_PORTAL_API =
 		"compileOnly group: \"com.liferay.portal\", name: " +
 			"\"release.portal.api\"";

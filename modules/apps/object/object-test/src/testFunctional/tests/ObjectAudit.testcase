@@ -242,12 +242,40 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when one field is deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDeleteOnResourceActionWhenDeleteField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153585",
+			objectName = "CustomObject153585",
+			pluralLabelName = "Custom Objects 153585");
 
-		// TODO LPS-153585 CanViewDeleteOnResourceActionWhenDeleteField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153585");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153585");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.deleteObjectField(fieldName = "Custom Field");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditEntries(
+			clientIP = "127.0.0.1",
+			createDate = "Seconds Ago",
+			id = "",
+			position = "1",
+			resourceAction = "DELETE",
+			resourceID = "",
+			resourceName = "ObjectField",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a layout is deleted"

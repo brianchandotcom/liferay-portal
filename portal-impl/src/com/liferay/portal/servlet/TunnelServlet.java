@@ -137,9 +137,10 @@ public class TunnelServlet extends HttpServlet {
 				}
 			}
 			else {
-				returnObject = throwable;
-
-				if (!(throwable instanceof PortalException)) {
+				if (throwable instanceof PortalException) {
+					returnObject = throwable;
+				}
+				else {
 					if (throwable != null) {
 						returnObject = new SystemException(
 							throwable.getMessage());

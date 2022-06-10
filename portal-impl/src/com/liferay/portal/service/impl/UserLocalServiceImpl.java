@@ -27,6 +27,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -1335,9 +1338,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		serviceLatch.waitFor(
 			EntityCache.class,
-			entityCache -> PortalCacheMapSynchronizeUtil.synchronize(
-				entityCache.getPortalCache(UserImpl.class), _defaultUsers,
-				_synchronizer));
+			entityCache -> {
+				PortalCache<?, ?> portalCache = entityCache.getPortalCache(
+					UserImpl.class);
+
+				PortalCacheMapSynchronizeUtil.synchronize(
+					PortalCacheHelperUtil.getPortalCache(
+						PortalCacheManagerNames.MULTI_VM,
+						portalCache.getPortalCacheName(), false,
+						portalCache.isMVCC()),
+					_defaultUsers, _synchronizer);
+			});
 
 		serviceLatch.openOn(
 			() -> {

@@ -49,6 +49,20 @@ definition {
 		}
 	}
 
+	@description = "155457. Assert that over mouse off of the table body quick action menu is not visible."
+	@priority = "5"
+	test CanDisappearWhenNotHovered {
+		task ("When hover mouse off of the table body") {
+			MouseOver(
+				key_portletTitleName = "FDSSamplePortlet",
+				locator1 = "Home#PORTLET_HEADER");
+		}
+
+		task ("Then quick action menu is not visible") {
+			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
+		}
+	}
+
 	@description = "155466. Assert that test-pencil is appended to browser URL after clicking."
 	@priority = "5"
 	test CanExecuteAnAction {

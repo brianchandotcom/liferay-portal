@@ -14,7 +14,9 @@
 
 package com.liferay.info.internal.struts;
 
+import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
@@ -50,13 +52,13 @@ public class CreateInfoItemStrutsAction implements StrutsAction {
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(httpServletRequest);
 
+		String className = _portal.getClassName(
+			ParamUtil.getLong(originalHttpServletRequest, "classNameId"));
+
 		try {
 			InfoItemCreator<Object> infoItemCreator =
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemCreator.class,
-					_portal.getClassName(
-						ParamUtil.getLong(
-							originalHttpServletRequest, "classNameId")));
+					InfoItemCreator.class, className);
 
 			infoItemCreator.createFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
@@ -82,6 +84,18 @@ public class CreateInfoItemStrutsAction implements StrutsAction {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to create info item", exception);
 			}
+
+			InfoForm infoForm = _infoItemServiceTracker.getFirstInfoItemService(
+				InfoForm.class, className);
+
+			SessionErrors.add(
+				originalHttpServletRequest, infoForm.getName(),
+				new InfoFormException());
+
+			httpServletResponse.sendRedirect(
+				httpServletRequest.getHeader(HttpHeaders.REFERER));
+
+			return null;
 		}
 
 		httpServletResponse.sendRedirect(httpServletRequest.getRequestURI());

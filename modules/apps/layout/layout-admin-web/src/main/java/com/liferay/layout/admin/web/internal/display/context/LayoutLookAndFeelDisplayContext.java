@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.layout.manager.FaviconManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -125,29 +125,13 @@ public class LayoutLookAndFeelDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
 	}
 
-	public String getFaviconImage() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+	public String getFaviconURL() {
+		FaviconManager faviconManager =
+			(FaviconManager)_httpServletRequest.getAttribute(
+				FaviconManager.class.getName());
 
-		String faviconImage = selLayout.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		Theme theme = null;
-
-		try {
-			theme = selLayout.getTheme();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
+		return faviconManager.getFaviconURL(
+			_layoutsAdminDisplayContext.getSelLayout());
 	}
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {

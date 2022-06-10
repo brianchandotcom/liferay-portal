@@ -30,6 +30,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.manager.FaviconManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -55,7 +56,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -501,15 +501,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getFaviconImage() {
-		LayoutSet layoutSet = getSelLayoutSet();
+		FaviconManager faviconManager =
+			(FaviconManager)httpServletRequest.getAttribute(
+				FaviconManager.class.getName());
 
-		String faviconImage = layoutSet.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		return getThemeFavicon(layoutSet.getTheme());
+		return faviconManager.getFaviconURL(getSelLayoutSet());
 	}
 
 	public String getFaviconTitle() {
@@ -1257,14 +1253,6 @@ public class LayoutsAdminDisplayContext {
 				return cetItemSelectorURL.toString();
 			}
 		).build();
-	}
-
-	public String getThemeFavicon(Theme theme) {
-		if (theme == null) {
-			return StringPool.BLANK;
-		}
-
-		return theme.getContextPath() + theme.getImagesPath() + "/favicon.ico";
 	}
 
 	public String getTitle(boolean privatePages) {

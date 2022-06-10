@@ -26,6 +26,7 @@ import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplay
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
+import com.liferay.layout.manager.FaviconManager;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -213,6 +214,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 			renderRequest.setAttribute(
+				FaviconManager.class.getName(), _faviconManager);
+			renderRequest.setAttribute(
 				TranslationURLProvider.class.getName(),
 				_translationURLProvider);
 
@@ -258,6 +261,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);
+
+	@Reference
+	private FaviconManager _faviconManager;
 
 	@Reference
 	private GroupProvider _groupProvider;

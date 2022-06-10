@@ -70,6 +70,13 @@ definition {
 			value1 = "get-apacheds-commands");
 	}
 
+	@description = "List the contents of the LDAP database"
+	macro searchLDAPDatabaseForUsersAndGroups {
+		AntCommand(
+			locator1 = "build-test-apacheds.xml",
+			value1 = "search-apacheds");
+	}
+
 	macro setGeneralMethod {
 		Variables.assertDefined(parameterList = "${generalMethod}");
 
@@ -125,6 +132,26 @@ definition {
 		UserGroup.viewRemoveMemberCP(
 			userFirstName = "${userFirstName}",
 			userGroupName = "${userGroupName}");
+	}
+
+	@description = "Verify that the user's first name has changed in the LDAP database after sync"
+	macro verifyUserFirstNameIsChangedInLDAP {
+		Variables.assertDefined(parameterList = "${userFirstName}");
+
+		LDAP.searchLDAPDatabaseForUsersAndGroups();
+
+		var projectDir = PropsUtil.get("project.dir");
+
+		var result = FileUtil.read("${projectDir}/LDAPSearchResult.txt");
+
+		if (!(contains("${result}", "${userFirstName}"))) {
+			echo("${result}");
+
+			fail("Failed to find LDAP contact in LDAP database");
+		}
+		else {
+			echo("Contact found in LDAP database.");
+		}
 	}
 
 	@description = "Verify that the user is imported on localhost after LDAP sync, after a specified interval time."

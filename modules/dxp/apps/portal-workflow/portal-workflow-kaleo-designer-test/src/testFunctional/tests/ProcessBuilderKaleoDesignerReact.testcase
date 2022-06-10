@@ -3395,8 +3395,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "False");
 
 		Alert.viewWarningSpecificNotPresent(warningMessage = "Default Was Changed:Your workflow may have changed because the default was changed.");
-		
-
 	}
 
 }

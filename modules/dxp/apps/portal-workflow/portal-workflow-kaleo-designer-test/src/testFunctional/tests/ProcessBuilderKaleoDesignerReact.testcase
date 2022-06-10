@@ -180,12 +180,38 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple Timers to a task node"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddMultipleTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleTimers";
 
-		// TODO CanAddMultipleTimers pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "1",
+			newSection = "New Timer",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			sectionOptionList = "1,2,3");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Duration: 11 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Duration: 12 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Duration: 13 minute");
 	}
 
 	@description = "Verify that is possible to add new languages"
@@ -298,7 +324,8 @@ definition {
 			actionsTemplateValue = "Timer Template",
 			durationValue = "2",
 			newTimer = "true",
-			scaleTypeOption = "Minute");
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1245,12 +1272,44 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Description of the Timer"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanEditTimerDescription {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDescription";
 
-		// TODO CanEditTimerDescription pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer Action",
+			actionsTemplateValue = "Timer Template",
+			description = "Description of Workflow Timer",
+			durationValue = "1",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(description = "Description of Workflow Timer");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			description = "Description of Definition Timer",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(description = "Description of Definition Timer");
 	}
 
 	@description = "Verify that the user can edit the Duration of the Timer"
@@ -1271,7 +1330,8 @@ definition {
 			actionsTemplateValue = "Timer Template",
 			durationValue = "1",
 			newTimer = "true",
-			scaleTypeOption = "Minute");
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1291,7 +1351,8 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			durationValue = "2",
-			scaleTypeOption = "Minute");
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1669,12 +1730,51 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a workflow with Timer configured"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWorkflowWithTimerConfigured {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflowWithTimerConfigured";
 
-		// TODO CanPublishWorkflowWithTimerConfigured pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "2",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Task-End Connector",
+			connectorOut = "task",
+			key_direction = "top");
+
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
+
+		
 	}
 
 	@description = "Verify that the user can restore to a previous definition version in the Revision History tab"
@@ -2192,12 +2292,19 @@ definition {
 	}
 
 	@description = "Verify that the user can see the Timers Recurrence tooltip with the value 'Repeat the action at a given duration until the workflow task is completed.'"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanViewTimerRecurrenceFieldTooltip {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimerRecurrenceFieldTooltip";
 
-		// TODO CanViewTimerRecurrenceFieldTooltip pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(newTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.viewToolTip(tooltipMessage = "Repeat the action at a given duration until the workflow task is completed.");
 	}
 
 	@description = "Verify that the user can view the Timer required fields"
@@ -2718,7 +2825,6 @@ definition {
 	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
 	@priority = "3"
 	test NodeCoordinatedAreUpdated {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeCoordinatedAreUpdated";
 
 		Workflow.openWorkflowListView();
@@ -2738,13 +2844,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodeLabel = "Start",
-			nodePosition = "100,-50");
+			nodePosition = "90,50");
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.viewXMLSourceNodeCoordinate(
-			coordinateX = "400",
-			coordinateY = "50",
+			coordinateX = "390",
+			coordinateY = "149",
 			lineX = "15",
 			lineY = "16",
 			nodeLabel = "Start");

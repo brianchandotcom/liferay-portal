@@ -14,6 +14,16 @@
 <!-- GENERAL_PATHS -->
 
 <tr>
+	<td>BUTTON_GENERIC</td>
+	<td>//button[contains(., '${key_buttonName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_GENERIC_BY_POSITION</td>
+	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//button[contains(., '${key_buttonName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BUTTON_DIAGRAM_SOURCE_SWITCH</td>
 	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()=''][not(contains(@class,'navbar'))]</td>
 	<td></td>
@@ -187,6 +197,11 @@
 <!-- NODES_PROPERTIES_PATHS -->
 
 <tr>
+	<td>NODE_PROPERTY_TOOLTIP</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-question-circle-full text-muted')]/../..//span[@title='${key_tooltipMessage}'] | //*[name()='svg'][contains(@class,'lexicon-icon-question-circle-full text-muted')]/../..//span[@data-restore-title='${key_tooltipMessage}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR_PROPERTY</td>
 	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')]</td>
 	<td></td>
@@ -217,13 +232,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_INPUT_BY_POSITION</td>
+	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//label[contains(., '${key_inputOption}')]/..//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_SELECTORS</td>
 	<td>//label[contains(., '${key_selectorField}')]/..//select</td>
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_SELECTORS_BY_POSITION</td>
+	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//label[contains(., '${key_selectorField}')]/..//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_TEMPLATE_TEXTAREA</td>
 	<td>//label[contains(., 'Template')]/..//textarea | //label[contains(., 'Script')]/..//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_DESCRIPTION_TEXTAREA</td>
+	<td>//label[contains(., 'Description')]/..//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION</td>
+	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//label[contains(., 'Script')]/..//textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -278,6 +313,11 @@
 </tr>
 <tr>
 	<td>RECIPIENT_TYPE_NAME_FIELD</td>
+	<td>//input[contains(@id,'role-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECIPIENT_TYPE_PROPERTIES_INPUT_FIELD</td>
 	<td>//input[contains(@id,'role-name')]</td>
 	<td></td>
 </tr>

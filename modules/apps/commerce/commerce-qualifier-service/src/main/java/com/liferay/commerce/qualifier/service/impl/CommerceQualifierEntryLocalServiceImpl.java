@@ -64,7 +64,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 	@Override
 	public CommerceQualifierEntry addCommerceQualifierEntry(
 			long userId, String sourceClassName, long sourceClassPK,
-			String targetClassName, long targetClassPK)
+			String sourceCommerceQualifierMetadataKey, String targetClassName,
+			long targetClassPK, String targetCommerceQualifierMetadataKey)
 		throws PortalException {
 
 		CommerceQualifierEntry commerceQualifierEntry =
@@ -80,9 +81,13 @@ public class CommerceQualifierEntryLocalServiceImpl
 		commerceQualifierEntry.setSourceClassNameId(
 			classNameLocalService.getClassNameId(sourceClassName));
 		commerceQualifierEntry.setSourceClassPK(sourceClassPK);
+		commerceQualifierEntry.setSourceCommerceQualifierMetadataKey(
+			sourceCommerceQualifierMetadataKey);
 		commerceQualifierEntry.setTargetClassNameId(
 			classNameLocalService.getClassNameId(targetClassName));
 		commerceQualifierEntry.setTargetClassPK(targetClassPK);
+		commerceQualifierEntry.setTargetCommerceQualifierMetadataKey(
+			targetCommerceQualifierMetadataKey);
 
 		commerceQualifierEntry = commerceQualifierEntryPersistence.update(
 			commerceQualifierEntry);
@@ -139,50 +144,12 @@ public class CommerceQualifierEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteSourceCommerceQualifierEntries(
-			String sourceClassName, long sourceClassPK, String targetClassName)
-		throws PortalException {
-
-		List<CommerceQualifierEntry> commerceQualifierEntries =
-			commerceQualifierEntryPersistence.findByS_S_T(
-				classNameLocalService.getClassNameId(sourceClassName),
-				sourceClassPK,
-				classNameLocalService.getClassNameId(targetClassName));
-
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				commerceQualifierEntries) {
-
-			commerceQualifierEntryLocalService.deleteCommerceQualifierEntry(
-				commerceQualifierEntry);
-		}
-	}
-
-	@Override
 	public void deleteTargetCommerceQualifierEntries(
 			String targetClassName, long targetClassPK)
 		throws PortalException {
 
 		List<CommerceQualifierEntry> commerceQualifierEntries =
 			commerceQualifierEntryPersistence.findByT_T(
-				classNameLocalService.getClassNameId(targetClassName),
-				targetClassPK);
-
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				commerceQualifierEntries) {
-
-			commerceQualifierEntryLocalService.deleteCommerceQualifierEntry(
-				commerceQualifierEntry);
-		}
-	}
-
-	@Override
-	public void deleteTargetCommerceQualifierEntries(
-			String sourceClassName, String targetClassName, long targetClassPK)
-		throws PortalException {
-
-		List<CommerceQualifierEntry> commerceQualifierEntries =
-			commerceQualifierEntryPersistence.findByS_T_T(
-				classNameLocalService.getClassNameId(sourceClassName),
 				classNameLocalService.getClassNameId(targetClassName),
 				targetClassPK);
 
@@ -209,11 +176,12 @@ public class CommerceQualifierEntryLocalServiceImpl
 	@Override
 	public <E> List<E> getSourceCommerceQualifierEntries(
 		long companyId, Class<E> sourceClass,
+		String sourceCommerceQualifierMetadataKey,
 		CommerceQualifierSearchContext commerceQualifierSearchContext) {
 
 		CommerceQualifierMetadata sourceCommerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				sourceClass.getName());
+				sourceCommerceQualifierMetadataKey);
 
 		if (sourceCommerceQualifierMetadata == null) {
 			return Collections.emptyList();
@@ -239,12 +207,13 @@ public class CommerceQualifierEntryLocalServiceImpl
 	@Override
 	public List<CommerceQualifierEntry> getSourceCommerceQualifierEntries(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords, int start, int end)
+			String targetCommerceQualifierMetadataKey, String keywords,
+			int start, int end)
 		throws PortalException {
 
 		CommerceQualifierMetadata targetCommerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				targetClassName);
+				targetCommerceQualifierMetadataKey);
 
 		if (targetCommerceQualifierMetadata == null) {
 			return Collections.emptyList();
@@ -260,7 +229,10 @@ public class CommerceQualifierEntryLocalServiceImpl
 					CommerceQualifierEntryTable.INSTANCE),
 				targetCommerceQualifierMetadata.getTable(),
 				primaryKeyColumn.eq(
-					CommerceQualifierEntryTable.INSTANCE.targetClassPK),
+					CommerceQualifierEntryTable.INSTANCE.targetClassPK
+				).and(
+					targetCommerceQualifierMetadata.getFilterPredicate()
+				),
 				false, sourceClassName, sourceClassPK,
 				targetCommerceQualifierMetadata.getModelClassName(), keywords,
 				targetCommerceQualifierMetadata.getKeywordsColumn()
@@ -272,12 +244,12 @@ public class CommerceQualifierEntryLocalServiceImpl
 	@Override
 	public int getSourceCommerceQualifierEntriesCount(
 			long companyId, String sourceClassName, long sourceClassPK,
-			String targetClassName, String keywords)
+			String targetCommerceQualifierMetadataKey, String keywords)
 		throws PortalException {
 
 		CommerceQualifierMetadata targetCommerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				targetClassName);
+				targetCommerceQualifierMetadataKey);
 
 		if (targetCommerceQualifierMetadata == null) {
 			return 0;
@@ -294,7 +266,10 @@ public class CommerceQualifierEntryLocalServiceImpl
 						commerceQualifierEntryId),
 				targetCommerceQualifierMetadata.getTable(),
 				primaryKeyColumn.eq(
-					CommerceQualifierEntryTable.INSTANCE.targetClassPK),
+					CommerceQualifierEntryTable.INSTANCE.targetClassPK
+				).and(
+					targetCommerceQualifierMetadata.getFilterPredicate()
+				),
 				false, sourceClassName, sourceClassPK,
 				targetCommerceQualifierMetadata.getModelClassName(), keywords,
 				targetCommerceQualifierMetadata.getKeywordsColumn()));
@@ -302,13 +277,14 @@ public class CommerceQualifierEntryLocalServiceImpl
 
 	@Override
 	public List<CommerceQualifierEntry> getTargetCommerceQualifierEntries(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords, int start, int end)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords,
+			int start, int end)
 		throws PortalException {
 
 		CommerceQualifierMetadata sourceCommerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				sourceClassName);
+				sourceCommerceQualifierMetadataKey);
 
 		if (sourceCommerceQualifierMetadata == null) {
 			return Collections.emptyList();
@@ -324,7 +300,10 @@ public class CommerceQualifierEntryLocalServiceImpl
 					CommerceQualifierEntryTable.INSTANCE),
 				sourceCommerceQualifierMetadata.getTable(),
 				primaryKeyColumn.eq(
-					CommerceQualifierEntryTable.INSTANCE.sourceClassPK),
+					CommerceQualifierEntryTable.INSTANCE.sourceClassPK
+				).and(
+					sourceCommerceQualifierMetadata.getFilterPredicate()
+				),
 				true, targetClassName, targetClassPK,
 				sourceCommerceQualifierMetadata.getModelClassName(), keywords,
 				sourceCommerceQualifierMetadata.getKeywordsColumn()
@@ -335,13 +314,13 @@ public class CommerceQualifierEntryLocalServiceImpl
 
 	@Override
 	public int getTargetCommerceQualifierEntriesCount(
-			long companyId, String sourceClassName, String targetClassName,
-			long targetClassPK, String keywords)
+			long companyId, String sourceCommerceQualifierMetadataKey,
+			String targetClassName, long targetClassPK, String keywords)
 		throws PortalException {
 
 		CommerceQualifierMetadata sourceCommerceQualifierMetadata =
 			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
-				sourceClassName);
+				sourceCommerceQualifierMetadataKey);
 
 		if (sourceCommerceQualifierMetadata == null) {
 			return 0;
@@ -358,7 +337,10 @@ public class CommerceQualifierEntryLocalServiceImpl
 						commerceQualifierEntryId),
 				sourceCommerceQualifierMetadata.getTable(),
 				primaryKeyColumn.eq(
-					CommerceQualifierEntryTable.INSTANCE.sourceClassPK),
+					CommerceQualifierEntryTable.INSTANCE.sourceClassPK
+				).and(
+					sourceCommerceQualifierMetadata.getFilterPredicate()
+				),
 				true, targetClassName, targetClassPK,
 				sourceCommerceQualifierMetadata.getModelClassName(), keywords,
 				sourceCommerceQualifierMetadata.getKeywordsColumn()));
@@ -395,6 +377,8 @@ public class CommerceQualifierEntryLocalServiceImpl
 			"companyId"
 		).eq(
 			companyId
+		).and(
+			sourceCommerceQualifierMetadata.getFilterPredicate()
 		);
 
 		if (sourceAttributes != null) {
@@ -439,25 +423,24 @@ public class CommerceQualifierEntryLocalServiceImpl
 			);
 		}
 
-		String[] allowedTargetClassNames = Stream.of(
-			sourceCommerceQualifierMetadata.getAllowedTargetClassNameGroups()
+		String[] allowedTargetKeys = Stream.of(
+			sourceCommerceQualifierMetadata.getAllowedTargetKeysArray()
 		).flatMap(
 			Stream::of
 		).toArray(
 			String[]::new
 		);
 
-		if (allowedTargetClassNames.length == 0) {
+		if (allowedTargetKeys.length == 0) {
 			return joinStep.where(predicate);
 		}
 
 		Predicate subpredicate = null;
 
-		for (String allowedTargetClassName : allowedTargetClassNames) {
+		for (String allowedTargetKey : allowedTargetKeys) {
 			CommerceQualifierEntryTable aliasCommerceQualifierEntryTable =
 				_commerceQualifierHelper.getAliasCommerceQualifierEntryTable(
-					sourceCommerceQualifierMetadata.getModelClassName(),
-					allowedTargetClassName);
+					sourceCommerceQualifierMetadata.getKey(), allowedTargetKey);
 
 			joinStep = joinStep.leftJoinOn(
 				aliasCommerceQualifierEntryTable,
@@ -467,12 +450,14 @@ public class CommerceQualifierEntryLocalServiceImpl
 					aliasCommerceQualifierEntryTable.sourceClassPK,
 					sourceCommerceQualifierMetadata.getPrimaryKeyColumn(),
 					aliasCommerceQualifierEntryTable.targetClassNameId,
-					allowedTargetClassName));
+					aliasCommerceQualifierEntryTable.
+						targetCommerceQualifierMetadataKey,
+					allowedTargetKey));
 
 			Predicate targetPredicate = _getTargetPredicate(
 				aliasCommerceQualifierEntryTable.commerceQualifierEntryId,
 				aliasCommerceQualifierEntryTable.targetClassPK,
-				targetAttributes.get(allowedTargetClassName));
+				targetAttributes.get(allowedTargetKey));
 
 			if (subpredicate == null) {
 				subpredicate = targetPredicate;
@@ -551,10 +536,20 @@ public class CommerceQualifierEntryLocalServiceImpl
 		Column<CommerceQualifierEntryTable, Long> sourceClassPKColumn,
 		Column<?, Long> sourceCommerceQualifierPrimaryColumn,
 		Column<CommerceQualifierEntryTable, Long> targetClassNameIdColumn,
-		String targetClassName) {
+		Column<CommerceQualifierEntryTable, String>
+			targetCommerceQualifierMetadataKeyColumn,
+		String targetCommerceQualifierMetadataKey) {
+
+		CommerceQualifierMetadata targetCommerceQualifierMetadata =
+			_commerceQualifierMetadataRegistry.getCommerceQualifierMetadata(
+				targetCommerceQualifierMetadataKey);
 
 		return targetClassNameIdColumn.eq(
-			classNameLocalService.getClassNameId(targetClassName)
+			classNameLocalService.getClassNameId(
+				targetCommerceQualifierMetadata.getModelClassName())
+		).and(
+			targetCommerceQualifierMetadataKeyColumn.eq(
+				targetCommerceQualifierMetadataKey)
 		).and(
 			sourceClassNameIdColumn.eq(
 				classNameLocalService.getClassNameId(sourceClassName))

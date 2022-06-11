@@ -249,7 +249,7 @@ EOF
 
 	cat <<EOF > index.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import HelloBar from './routes/hello-bar/pages/HelloBar';
 import HelloFoo from './routes/hello-foo/pages/HelloFoo';
@@ -269,11 +269,14 @@ const App = ({ route }) => {
 };
 
 class WebComponent extends HTMLElement {
+	root = null;
+
 	connectedCallback() {
-		ReactDOM.render(
-			<App route={this.getAttribute("route")} />,
-			this
-		);
+		if (!this.root) {
+      		this.root = createRoot(this);
+
+      		this.root.render(<App route={this.getAttribute("route")} />);
+    	}
 	}
 }
 

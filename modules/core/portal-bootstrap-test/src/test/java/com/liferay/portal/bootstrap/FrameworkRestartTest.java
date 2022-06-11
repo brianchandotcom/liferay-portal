@@ -73,7 +73,8 @@ public class FrameworkRestartTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	public static void doTestFrameworkRestart() throws Exception {
-		URL url = FrameworkRestartTest.class.getResource("security.policy");
+		URL url = FrameworkRestartTest.class.getResource(
+			"dependencies/security.policy");
 
 		System.setProperty("java.security.policy", url.getFile());
 

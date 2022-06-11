@@ -37,6 +37,10 @@ public class JavaClassGetResourceCallCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (absolutePath.contains("/modules/sdk/")) {
+			return content;
+		}
+
 		String className = JavaSourceUtil.getClassName(fileName);
 
 		Pattern pattern = Pattern.compile(

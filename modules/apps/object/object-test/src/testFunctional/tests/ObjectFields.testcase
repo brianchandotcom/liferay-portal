@@ -428,8 +428,6 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");

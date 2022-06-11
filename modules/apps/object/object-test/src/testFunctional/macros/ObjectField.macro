@@ -36,8 +36,8 @@ definition {
 			locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
 		AssertElementPresent(
-			key_imageName = "${imageName}",
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ON_CUSTOM_ATTACHMENT");
+			key_card = "${imageName}",
+			locator1 = "Card#CARD");
 	}
 
 	macro assertLabel {

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
+public class PropertiesTestFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
@@ -35,14 +35,14 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkPropertiesBlocksOrder(
+		_checkPropertiesOrder(
 			fileName, content, StringPool.BLANK,
 			StringPool.POUND + StringPool.POUND);
 
 		return content;
 	}
 
-	private void _checkPropertiesBlocksOrder(
+	private void _checkPropertiesOrder(
 		String fileName, String content, String indent, String pounds) {
 
 		String indentWithPounds = indent + pounds;
@@ -85,7 +85,7 @@ public class PropertiesTestPropertiesBlockOrderCheck extends BaseFileCheck {
 			}
 
 			if (pounds.length() == 2) {
-				_checkPropertiesBlocksOrder(
+				_checkPropertiesOrder(
 					fileName,
 					content.substring(
 						previousBlockCommentStartPosition,

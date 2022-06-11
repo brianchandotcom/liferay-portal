@@ -16,6 +16,7 @@ package com.liferay.commerce.qualifier.metadata;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -28,7 +29,11 @@ import java.util.Map;
  */
 public interface CommerceQualifierMetadata<T extends ClassedModel> {
 
-	public String[][] getAllowedTargetClassNameGroups();
+	public String[][] getAllowedTargetKeysArray();
+
+	public Predicate getFilterPredicate();
+
+	public String getKey();
 
 	public Column<?, String> getKeywordsColumn();
 

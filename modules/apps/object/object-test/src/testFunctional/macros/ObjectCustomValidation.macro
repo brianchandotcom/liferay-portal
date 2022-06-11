@@ -50,20 +50,18 @@ definition {
 			value1 = "${editValidationName}");
 	}
 
-	macro gotoBasicInfoTab {
-		Click(locator1 = "ObjectCustomValidation#OBJECT_BASIC_INFO_TAB");
-	}
-
-	macro gotoConditionsTab {
-		Click(locator1 = "ObjectCustomValidation#OBJECT_CONDITIONS_TAB");
-	}
-
 	macro gotoCustomValidation {
 		Click(
 			key_validationName = "${validationName}",
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
+	}
+
+	macro gotoTab {
+		Click(
+			key_tab = "${tabName}",
+			locator1 = "NavTab#TAB_LINK");
 	}
 
 	macro insertGroovyScript {

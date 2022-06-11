@@ -41,16 +41,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_BASIC_INFO_TAB</td>
-		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Basic Info')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_CONDITIONS_TAB</td>
-		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Conditions')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>INSERT_GROOVY_SCRIPT_ON_VALIDATION</td>
 		<td>//div[contains(@class,'lfr-objects__editor')]/div[contains(@class,'CodeMirror')]</td>
 		<td></td>

@@ -182,8 +182,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -202,8 +200,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
-
-		Navigator.openURL();
 
 		Accounts.openAccountsAdmin();
 
@@ -375,8 +371,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openURL();
-
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -395,8 +389,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
-
-		Navigator.openURL();
 
 		Accounts.openAccountsAdmin();
 

@@ -551,8 +551,6 @@ definition {
 
 		CreateObject.saveObject();
 
-		Navigator.openURL();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
@@ -591,8 +589,6 @@ definition {
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
-
-		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

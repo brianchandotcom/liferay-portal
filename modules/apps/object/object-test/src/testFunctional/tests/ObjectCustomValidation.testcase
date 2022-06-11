@@ -54,7 +54,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
 
@@ -103,7 +103,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
 
@@ -128,7 +128,7 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Allowed Entry')");
 
@@ -175,7 +175,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField != 'Allowed Entry')");
 
@@ -200,7 +200,7 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Update Entry')");
 
@@ -279,7 +279,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
 
@@ -343,7 +343,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
 
@@ -397,7 +397,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField < 18)");
 
@@ -497,7 +497,7 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.viewActiveTabOnCustomValidation(activeTab = "Conditions");
 
@@ -543,13 +543,13 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == 'Decline Entry')");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "Error: This entry is not possible.");
 
-		ObjectCustomValidation.gotoBasicInfoTab();
+		ObjectCustomValidation.gotoTab(tabName = "Basic Info");
 
 		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
 
@@ -605,7 +605,7 @@ definition {
 
 		ObjectCustomValidation.activeValidation();
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
 
@@ -670,7 +670,7 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.gotoConditionsTab();
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
 		ObjectCustomValidation.insertGroovyScript(groovyScript = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
 

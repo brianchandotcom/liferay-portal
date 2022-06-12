@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
@@ -35,14 +36,12 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkPropertiesOrder(
+		return _sortTestProperties(
 			fileName, content, StringPool.BLANK,
 			StringPool.POUND + StringPool.POUND);
-
-		return content;
 	}
 
-	private void _checkPropertiesOrder(
+	private String _sortTestProperties(
 		String fileName, String content, String indent, String pounds) {
 
 		String indentWithPounds = indent + pounds;
@@ -51,51 +50,61 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
-				"(?<=\\A|\n\n)", indentWithPounds, "\n", indentWithPounds,
-				"( .+)\n", indentWithPounds, "((?=\n\n))"));
+				"((?<=\\A|\n\n)", indentWithPounds, "\n", indentWithPounds,
+				"( .+)\n", indentWithPounds, "\n\n[\\s\\S]*?)(?=(\n\n",
+				indentWithPounds, "\n|\\Z))"));
 
 		Matcher matcher = pattern.matcher(content);
 
-		String previousBlockComment = null;
-		int previousBlockCommentStartPosition = -1;
+		String previousProperties = null;
+		String previousPropertiesComment = null;
+		int previousPropertiesStartPosition = -1;
 
 		while (matcher.find()) {
-			String blockComment = matcher.group(1);
-			int blockCommentStartPosition = matcher.start();
+			String properties = matcher.group(1);
+			String propertiesComment = matcher.group(2);
+			int propertiesStartPosition = matcher.start();
 
-			if (Validator.isNull(previousBlockComment)) {
-				previousBlockComment = blockComment;
-				previousBlockCommentStartPosition = blockCommentStartPosition;
+			if (pounds.length() == 2) {
+				String newProperties = _sortTestProperties(
+					fileName, properties, indent + StringPool.FOUR_SPACES,
+					StringPool.POUND);
+
+				if (!newProperties.equals(properties)) {
+					return StringUtil.replaceFirst(
+						content, properties, newProperties,
+						propertiesStartPosition);
+				}
+			}
+
+			if (Validator.isNull(previousProperties)) {
+				previousProperties = properties;
+				previousPropertiesComment = propertiesComment;
+				previousPropertiesStartPosition = propertiesStartPosition;
 
 				continue;
 			}
 
-			if (comparator.compare(previousBlockComment, blockComment) > 0) {
-				StringBundler sb = new StringBundler(7);
+			int value = comparator.compare(
+				previousPropertiesComment, propertiesComment);
 
-				sb.append("Incorrect order: Properties block '");
-				sb.append(pounds);
-				sb.append(previousBlockComment);
-				sb.append("' should come after '");
-				sb.append(pounds);
-				sb.append(blockComment);
-				sb.append("'");
+			if (value > 0) {
+				content = StringUtil.replaceFirst(
+					content, properties, previousProperties,
+					propertiesStartPosition);
+				content = StringUtil.replaceFirst(
+					content, previousProperties, properties,
+					previousPropertiesStartPosition);
 
-				addMessage(fileName, sb.toString());
+				return content;
 			}
 
-			if (pounds.length() == 2) {
-				_checkPropertiesOrder(
-					fileName,
-					content.substring(
-						previousBlockCommentStartPosition,
-						blockCommentStartPosition),
-					indent + StringPool.FOUR_SPACES, StringPool.POUND);
-			}
-
-			previousBlockComment = blockComment;
-			previousBlockCommentStartPosition = blockCommentStartPosition;
+			previousProperties = properties;
+			previousPropertiesComment = propertiesComment;
+			previousPropertiesStartPosition = propertiesStartPosition;
 		}
+
+		return content;
 	}
 
 	private class CommentComparator extends NaturalOrderStringComparator {

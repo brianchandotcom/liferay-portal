@@ -14,12 +14,15 @@
 
 package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.storage.salesforce.internal.client.SalesforceClient;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.storage.salesforce.internal.http.SalesforceHttp;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,12 +31,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +48,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,10 +122,14 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _salesforceClient.query(
-			"SELECT FIELDS(ALL) FROM " +
-				_getSalesforceObjectName(objectDefinition.getName()) +
-					_getSalesforcePagination(pagination));
+		JSONObject responseJSONObject = _salesforceHttp.get(
+			companyId, _getGroupId(objectDefinition, scopeKey),
+			HttpComponentsUtil.addParameter(
+				"query", "q",
+				StringBundler.concat(
+					"SELECT FIELDS(ALL) FROM ",
+					_getSalesforceObjectName(objectDefinition.getName()),
+					_getSalesforcePagination(pagination))));
 
 		if ((responseJSONObject == null) ||
 			(responseJSONObject.length() == 0)) {
@@ -192,6 +203,28 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 		return null;
 	}
 
+	private long _getGroupId(
+		ObjectDefinition objectDefinition, String scopeKey) {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			if (Objects.equals("site", objectDefinition.getScope())) {
+				return GroupUtil.getGroupId(
+					objectDefinition.getCompanyId(), scopeKey,
+					_groupLocalService);
+			}
+
+			return GroupUtil.getDepotGroupId(
+				scopeKey, objectDefinition.getCompanyId(),
+				_depotEntryLocalService, _groupLocalService);
+		}
+
+		return 0;
+	}
+
 	private String _getSalesforceObjectName(String objectDefinitionName) {
 		return StringUtil.removeFirst(objectDefinitionName, "C_") + "__c";
 	}
@@ -262,6 +295,15 @@ public class SalesforceObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Reference
-	private SalesforceClient _salesforceClient;
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private SalesforceHttp _salesforceHttp;
 
 }

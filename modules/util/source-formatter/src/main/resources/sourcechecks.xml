@@ -1321,7 +1321,7 @@
 		</check>
 		<check name="PropertiesTestFileCheck">
 			<category name="Styling" />
-			<description name="Sorts properties in `test.properties`." />
+			<description name="Performs several checks in `test.properties`." />
 		</check>
 		<check name="PropertiesWhitespaceCheck">
 			<category name="Styling" />

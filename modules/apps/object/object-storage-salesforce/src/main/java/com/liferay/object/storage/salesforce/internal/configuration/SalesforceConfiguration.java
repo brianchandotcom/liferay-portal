@@ -16,17 +16,22 @@ package com.liferay.object.storage.salesforce.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author Guilherme Camacho
  */
+@ExtendedObjectClassDefinition(
+	category = "third-party", scope = ExtendedObjectClassDefinition.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.object.storage.salesforce.internal.configuration.SalesforceConfiguration",
 	localization = "content/Language", name = "salesforce-configuration-name"
 )
 public interface SalesforceConfiguration {
 
-	@Meta.AD(name = "url", required = false)
-	public String url();
+	@Meta.AD(name = "login-url", required = false)
+	public String loginURL();
 
 	@Meta.AD(name = "consumer-key", required = false)
 	public String consumerKey();

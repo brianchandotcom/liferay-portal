@@ -1,12 +1,12 @@
 ##
-## Test Batch
+## Build
 ##
 
-    #
-    # Backend
-    #
+    build.app.server=false
 
-    test.batch.dist.app.servers[backend]=tomcat
+##
+## Test Batch
+##
 
     #
     # Default
@@ -28,15 +28,15 @@
     test.batch.names[analytics-cloud-quarantine]=\
         functional-tomcat90-mysql57-jdk8
 
+    #
+    # Backend
+    #
+
+    test.batch.dist.app.servers[backend]=tomcat
+
 ##
 ## Upgrade
 ##
-
-    #
-    # Hypersonic
-    #
-
-    database.hypersonic.device.name=
 
     #
     # DB2
@@ -47,8 +47,8 @@
     #database.db2.docker.run.options=
     database.db2.driver=com.ibm.db2.jcc.DB2Driver
 
-##
-## Build
-##
+    #
+    # Hypersonic
+    #
 
-    build.app.server=false
+    database.hypersonic.device.name=

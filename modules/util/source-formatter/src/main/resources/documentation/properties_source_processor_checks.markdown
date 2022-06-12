@@ -25,5 +25,6 @@ PropertiesServiceKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug
 PropertiesSourceFormatterContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter.properties` file. |
 PropertiesSourceFormatterFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter.properties` file. |
 PropertiesStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
+PropertiesTestFileCheck | [Styling](styling_checks.markdown#styling-checks) | Performs several checks in `test.properties`. |
 PropertiesVerifyPropertiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds usage of legacy properties in `portal.properties` or `system.properties`. |
 PropertiesWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace in `.properties` files. |

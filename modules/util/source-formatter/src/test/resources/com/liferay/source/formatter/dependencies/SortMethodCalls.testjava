@@ -15,19 +15,29 @@
 package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 
 /**
  * @author Alan Huang
  */
 public class SortMethodCalls {
 
-	public ThemeDisplay method() {
+	public ThemeDisplay method1() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setUser("user1");
 		themeDisplay.setScopeGroupId("group1");
 
 		return themeDisplay;
+	}
+
+	public Http.Options method2() {
+		Http.Options options = new Http.Options();
+
+		options.addPart("username", "test");
+		options.addPart("password", "pwd");
+
+		return options;
 	}
 
 }

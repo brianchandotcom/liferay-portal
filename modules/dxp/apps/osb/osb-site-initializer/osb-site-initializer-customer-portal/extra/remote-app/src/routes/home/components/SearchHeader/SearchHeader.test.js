@@ -21,14 +21,14 @@ describe('render Search Header component', () => {
 			<SearchHeader count={countProject} onSearchSubmit={functionMock} />
 		);
 
-		const projectsNumber = screen.getByRole('heading');
+		const projectsNumber = screen.queryByRole('heading');
 
 		expect(projectsNumber).toHaveTextContent(`${countProject} project`);
 	});
 
 	test('test if number of projects is working with more than one result', async () => {
 		const functionMock = jest.fn();
-		const countProject = faker.random.numeric();
+		const countProject = faker.random.numeric(2);
 
 		render(
 			<SearchHeader count={countProject} onSearchSubmit={functionMock} />

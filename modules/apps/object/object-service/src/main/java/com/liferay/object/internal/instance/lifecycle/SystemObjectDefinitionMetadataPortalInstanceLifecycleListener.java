@@ -231,21 +231,14 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata),
 				null);
-
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-146754"))) {
-
-				_bundleContext.registerService(
-					ObjectRelatedModelsProvider.class,
-					new SystemObjectMtoMObjectRelatedModelsProviderImpl(
-						objectDefinition, _objectDefinitionLocalService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService,
-						_persistedModelLocalServiceRegistry,
-						systemObjectDefinitionMetadata),
-					null);
-			}
-
+			_bundleContext.registerService(
+				ObjectRelatedModelsProvider.class,
+				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					_persistedModelLocalServiceRegistry,
+					systemObjectDefinitionMetadata),
+				null);
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(

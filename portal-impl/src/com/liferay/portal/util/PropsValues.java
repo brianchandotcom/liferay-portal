@@ -2556,6 +2556,10 @@ public class PropsValues {
 	public static final String[] VIRTUAL_HOSTS_IGNORE_EXTENSIONS =
 		PropsUtil.getArray(PropsKeys.VIRTUAL_HOSTS_IGNORE_EXTENSIONS);
 
+	public static final boolean VIRTUAL_HOSTS_STRICT_ACCESS =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.VIRTUAL_HOSTS_STRICT_ACCESS));
+
 	public static final String[] VIRTUAL_HOSTS_VALID_HOSTS = PropsUtil.getArray(
 		PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS);
 

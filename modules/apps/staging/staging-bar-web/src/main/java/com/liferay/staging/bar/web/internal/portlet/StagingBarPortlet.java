@@ -16,6 +16,7 @@ package com.liferay.staging.bar.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -283,6 +284,13 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, originalAssetEntry);
+
+			if (originalAssetEntry instanceof AssetEntry) {
+				AssetEntry assetEntry = (AssetEntry)originalAssetEntry;
+
+				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+					httpServletRequest, assetEntry.getEntryId());
+			}
 
 			themeDisplay.setScopeGroupId(originalScopeGroupId);
 
@@ -621,6 +629,10 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, scopedAssetEntry);
+
+			LinkedAssetEntryIdsUtil.replaceLinkedAssetEntryId(
+				httpServletRequest, assetEntry.getEntryId(),
+				scopedAssetEntry.getEntryId());
 		}
 	}
 

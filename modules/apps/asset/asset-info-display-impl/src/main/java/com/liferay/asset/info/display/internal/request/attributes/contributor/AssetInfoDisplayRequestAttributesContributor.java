@@ -16,6 +16,7 @@ package com.liferay.asset.info.display.internal.request.attributes.contributor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
@@ -117,6 +118,9 @@ public class AssetInfoDisplayRequestAttributesContributor
 		}
 
 		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+			httpServletRequest, assetEntry.getEntryId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

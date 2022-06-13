@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -1012,8 +1013,12 @@ public class JournalContentDisplayContext {
 			ddmTemplateModelResourcePermission;
 
 		if (isShowArticle()) {
-			portletRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, _getAssetEntry());
+			AssetEntry assetEntry = _getAssetEntry();
+
+			portletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+				portletRequest, assetEntry.getEntryId());
 		}
 
 		if (Validator.isNull(getPortletResource()) && !isShowArticle()) {

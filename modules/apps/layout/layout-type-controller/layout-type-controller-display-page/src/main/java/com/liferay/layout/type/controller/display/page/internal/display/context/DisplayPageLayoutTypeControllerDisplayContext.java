@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -105,6 +106,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 					InfoItemFieldValuesProvider.class, className));
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+				_httpServletRequest, assetEntry.getEntryId());
 		}
 
 		_infoItem = infoItem;

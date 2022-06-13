@@ -311,11 +311,9 @@ public class CSVCommerceOrderImporterTypeImpl
 		if (csvRecord.isMapped(_REQUESTED_DELIVERY_DATE_FIELD_NAME) &&
 			csvRecord.isSet(_REQUESTED_DELIVERY_DATE_FIELD_NAME)) {
 
-			String requestedDeliveryDateString = GetterUtil.getString(
-				csvRecord.get(_REQUESTED_DELIVERY_DATE_FIELD_NAME));
-
 			commerceOrderImporterItemImpl.setRequestedDeliveryDateString(
-				requestedDeliveryDateString);
+				GetterUtil.getString(
+					csvRecord.get(_REQUESTED_DELIVERY_DATE_FIELD_NAME)));
 		}
 
 		return commerceOrderImporterItemImpl;

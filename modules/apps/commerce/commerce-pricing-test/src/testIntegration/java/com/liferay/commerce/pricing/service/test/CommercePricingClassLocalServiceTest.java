@@ -146,11 +146,10 @@ public class CommercePricingClassLocalServiceTest {
 			"The count of pricing classes shall increase to 1"
 		);
 
-		int commercePricingClassesCount =
+		Assert.assertEquals(
+			0,
 			_commercePricingClassLocalService.getCommercePricingClassesCount(
-				_user.getCompanyId());
-
-		Assert.assertEquals(0, commercePricingClassesCount);
+				_user.getCompanyId()));
 
 		_commercePricingClassLocalService.addCommercePricingClass(
 			_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),

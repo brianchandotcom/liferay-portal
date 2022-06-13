@@ -22,7 +22,6 @@ import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
@@ -125,16 +124,16 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				jsonObject.put(
 					"displayDiscountLevels",
-					commercePriceConfiguration.displayDiscountLevels());
-
-				PriceModel priceModel = _productHelper.getPriceModel(
-					cpInstance.getCPInstanceId(), quantity, commerceContext,
-					ddmFormValues, themeDisplay.getLocale());
-
-				jsonObject.put(
+					commercePriceConfiguration.displayDiscountLevels()
+				).put(
 					"prices",
 					_jsonFactory.createJSONObject(
-						_OBJECT_MAPPER.writeValueAsString(priceModel)));
+						_OBJECT_MAPPER.writeValueAsString(
+							_productHelper.getPriceModel(
+								cpInstance.getCPInstanceId(), quantity,
+								commerceContext, ddmFormValues,
+								themeDisplay.getLocale())))
+				);
 
 				List<CPContentContributor> cpContentContributors =
 					_cpContentContributorRegistry.getCPContentContributors();

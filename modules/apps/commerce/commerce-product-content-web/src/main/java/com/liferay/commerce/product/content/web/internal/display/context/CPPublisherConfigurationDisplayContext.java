@@ -293,11 +293,10 @@ public class CPPublisherConfigurationDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "productDefinitionsSelectItem",
-			cpDefinitionItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
+				cpDefinitionItemSelectorCriterion));
 	}
 
 	public String getOrderByColumn1() {

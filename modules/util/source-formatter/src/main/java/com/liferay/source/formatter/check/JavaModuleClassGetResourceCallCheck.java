@@ -26,10 +26,10 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaClassGetResourceCallCheck extends BaseFileCheck {
+public class JavaModuleClassGetResourceCallCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isLiferaySourceCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

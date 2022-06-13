@@ -58,9 +58,10 @@ export default function CSSClassSelectorField({
 		}
 	};
 
-	const onItemClick = (newItem) => {
-		setValue('');
-		setDropdownActive(false);
+	const addItem = (newItem) => {
+		if (!newItem.trim()) {
+			return;
+		}
 
 		if (!items.some((item) => item.value === newItem)) {
 			const nextItems = [...items, {label: newItem, value: newItem}];
@@ -71,6 +72,13 @@ export default function CSSClassSelectorField({
 				nextItems.map((item) => item.value)
 			);
 		}
+	};
+
+	const onItemClick = (newItem) => {
+		setValue('');
+		setDropdownActive(false);
+
+		addItem(newItem);
 
 		// https://github.com/liferay/clay/issues/4915
 
@@ -91,6 +99,12 @@ export default function CSSClassSelectorField({
 					autocomplete="off"
 					id={cssClassesInputId}
 					items={items}
+					onBlur={() => {
+						if (!dropDownActive) {
+							addItem(value);
+							setValue('');
+						}
+					}}
 					onChange={setValue}
 					onFocus={() => {
 						setDropdownActive(false);

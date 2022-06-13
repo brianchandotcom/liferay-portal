@@ -83,31 +83,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public String getFaviconImage() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		String faviconImage = selLayout.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		Theme theme = null;
-
-		try {
-			theme = selLayout.getTheme();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
-	}
-
 	public String getFaviconTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -148,6 +123,31 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
+	}
+
+	public String getFaviconURL() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		String faviconImage = selLayout.getFaviconURL();
+
+		if (faviconImage != null) {
+			return faviconImage;
+		}
+
+		Theme theme = null;
+
+		try {
+			theme = selLayout.getTheme();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
 	}
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {

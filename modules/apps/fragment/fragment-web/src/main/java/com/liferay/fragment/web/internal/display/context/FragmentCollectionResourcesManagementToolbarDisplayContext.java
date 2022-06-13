@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -149,13 +147,12 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			liferayPortletResponse.getNamespace() +
-				"uploadFragmentCollectionResource",
-			itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				liferayPortletResponse.getNamespace() +
+					"uploadFragmentCollectionResource",
+				itemSelectorCriterion));
 	}
 
 	private final FragmentPortletConfiguration _fragmentPortletConfiguration;

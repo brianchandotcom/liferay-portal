@@ -137,6 +137,9 @@ public class OAuthClientEntryPersistenceTest {
 
 		newOAuthClientEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newOAuthClientEntry.setAuthRequestParametersJSON(
+			RandomTestUtil.randomString());
+
 		newOAuthClientEntry.setAuthServerWellKnownURI(
 			RandomTestUtil.randomString());
 
@@ -144,7 +147,8 @@ public class OAuthClientEntryPersistenceTest {
 
 		newOAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
 
-		newOAuthClientEntry.setParametersJSON(RandomTestUtil.randomString());
+		newOAuthClientEntry.setTokenRequestParametersJSON(
+			RandomTestUtil.randomString());
 
 		_oAuthClientEntries.add(_persistence.update(newOAuthClientEntry));
 
@@ -173,6 +177,9 @@ public class OAuthClientEntryPersistenceTest {
 			Time.getShortTimestamp(existingOAuthClientEntry.getModifiedDate()),
 			Time.getShortTimestamp(newOAuthClientEntry.getModifiedDate()));
 		Assert.assertEquals(
+			existingOAuthClientEntry.getAuthRequestParametersJSON(),
+			newOAuthClientEntry.getAuthRequestParametersJSON());
+		Assert.assertEquals(
 			existingOAuthClientEntry.getAuthServerWellKnownURI(),
 			newOAuthClientEntry.getAuthServerWellKnownURI());
 		Assert.assertEquals(
@@ -182,8 +189,8 @@ public class OAuthClientEntryPersistenceTest {
 			existingOAuthClientEntry.getInfoJSON(),
 			newOAuthClientEntry.getInfoJSON());
 		Assert.assertEquals(
-			existingOAuthClientEntry.getParametersJSON(),
-			newOAuthClientEntry.getParametersJSON());
+			existingOAuthClientEntry.getTokenRequestParametersJSON(),
+			newOAuthClientEntry.getTokenRequestParametersJSON());
 	}
 
 	@Test
@@ -245,8 +252,9 @@ public class OAuthClientEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"OAuthClientEntry", "mvccVersion", true, "oAuthClientEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "authServerWellKnownURI", true,
-			"clientId", true);
+			true, "modifiedDate", true, "authRequestParametersJSON", true,
+			"authServerWellKnownURI", true, "clientId", true,
+			"tokenRequestParametersJSON", true);
 	}
 
 	@Test
@@ -552,6 +560,9 @@ public class OAuthClientEntryPersistenceTest {
 
 		oAuthClientEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		oAuthClientEntry.setAuthRequestParametersJSON(
+			RandomTestUtil.randomString());
+
 		oAuthClientEntry.setAuthServerWellKnownURI(
 			RandomTestUtil.randomString());
 
@@ -559,7 +570,8 @@ public class OAuthClientEntryPersistenceTest {
 
 		oAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
 
-		oAuthClientEntry.setParametersJSON(RandomTestUtil.randomString());
+		oAuthClientEntry.setTokenRequestParametersJSON(
+			RandomTestUtil.randomString());
 
 		_oAuthClientEntries.add(_persistence.update(oAuthClientEntry));
 

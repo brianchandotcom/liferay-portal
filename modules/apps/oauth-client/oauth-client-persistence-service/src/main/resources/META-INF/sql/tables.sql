@@ -18,8 +18,9 @@ create table OAuthClientEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	authRequestParametersJSON VARCHAR(3999) null,
 	authServerWellKnownURI VARCHAR(256) null,
 	clientId VARCHAR(128) null,
 	infoJSON TEXT null,
-	parametersJSON TEXT null
+	tokenRequestParametersJSON VARCHAR(3999) null
 );

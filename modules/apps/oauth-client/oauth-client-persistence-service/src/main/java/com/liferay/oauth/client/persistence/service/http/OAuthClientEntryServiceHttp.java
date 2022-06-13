@@ -53,8 +53,8 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			addOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long userId,
-				String authServerWellKnownURI, String infoJSON,
-				String parametersJSON)
+				String authRequestParametersJSON, String authServerWellKnownURI,
+				String infoJSON, String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,8 +63,8 @@ public class OAuthClientEntryServiceHttp {
 				_addOAuthClientEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, authServerWellKnownURI, infoJSON,
-				parametersJSON);
+				methodKey, userId, authRequestParametersJSON,
+				authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -418,8 +418,8 @@ public class OAuthClientEntryServiceHttp {
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			updateOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long oAuthClientEntryId,
-				String authServerWellKnownURI, String infoJSON,
-				String parametersJSON)
+				String authRequestParametersJSON, String authServerWellKnownURI,
+				String infoJSON, String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -428,8 +428,8 @@ public class OAuthClientEntryServiceHttp {
 				_updateOAuthClientEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, oAuthClientEntryId, authServerWellKnownURI, infoJSON,
-				parametersJSON);
+				methodKey, oAuthClientEntryId, authRequestParametersJSON,
+				authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -464,7 +464,9 @@ public class OAuthClientEntryServiceHttp {
 		OAuthClientEntryServiceHttp.class);
 
 	private static final Class<?>[] _addOAuthClientEntryParameterTypes0 =
-		new Class[] {long.class, String.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class
+		};
 	private static final Class<?>[] _deleteOAuthClientEntryParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteOAuthClientEntryParameterTypes2 =
@@ -485,6 +487,8 @@ public class OAuthClientEntryServiceHttp {
 	private static final Class<?>[] _getUserOAuthClientEntriesParameterTypes8 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _updateOAuthClientEntryParameterTypes9 =
-		new Class[] {long.class, String.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class
+		};
 
 }

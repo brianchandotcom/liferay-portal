@@ -49,10 +49,13 @@ public class OAuthClientEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put(
+			"authRequestParametersJSON", getAuthRequestParametersJSON());
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
-		attributes.put("parametersJSON", getParametersJSON());
+		attributes.put(
+			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
 
 		return attributes;
 	}
@@ -101,6 +104,13 @@ public class OAuthClientEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String authRequestParametersJSON = (String)attributes.get(
+			"authRequestParametersJSON");
+
+		if (authRequestParametersJSON != null) {
+			setAuthRequestParametersJSON(authRequestParametersJSON);
+		}
+
 		String authServerWellKnownURI = (String)attributes.get(
 			"authServerWellKnownURI");
 
@@ -120,16 +130,27 @@ public class OAuthClientEntryWrapper
 			setInfoJSON(infoJSON);
 		}
 
-		String parametersJSON = (String)attributes.get("parametersJSON");
+		String tokenRequestParametersJSON = (String)attributes.get(
+			"tokenRequestParametersJSON");
 
-		if (parametersJSON != null) {
-			setParametersJSON(parametersJSON);
+		if (tokenRequestParametersJSON != null) {
+			setTokenRequestParametersJSON(tokenRequestParametersJSON);
 		}
 	}
 
 	@Override
 	public OAuthClientEntry cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the auth request parameters json of this o auth client entry.
+	 *
+	 * @return the auth request parameters json of this o auth client entry
+	 */
+	@Override
+	public String getAuthRequestParametersJSON() {
+		return model.getAuthRequestParametersJSON();
 	}
 
 	/**
@@ -213,16 +234,6 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Returns the parameters json of this o auth client entry.
-	 *
-	 * @return the parameters json of this o auth client entry
-	 */
-	@Override
-	public String getParametersJSON() {
-		return model.getParametersJSON();
-	}
-
-	/**
 	 * Returns the primary key of this o auth client entry.
 	 *
 	 * @return the primary key of this o auth client entry
@@ -230,6 +241,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the token request parameters json of this o auth client entry.
+	 *
+	 * @return the token request parameters json of this o auth client entry
+	 */
+	@Override
+	public String getTokenRequestParametersJSON() {
+		return model.getTokenRequestParametersJSON();
 	}
 
 	/**
@@ -265,6 +286,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the auth request parameters json of this o auth client entry.
+	 *
+	 * @param authRequestParametersJSON the auth request parameters json of this o auth client entry
+	 */
+	@Override
+	public void setAuthRequestParametersJSON(String authRequestParametersJSON) {
+		model.setAuthRequestParametersJSON(authRequestParametersJSON);
 	}
 
 	/**
@@ -348,16 +379,6 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Sets the parameters json of this o auth client entry.
-	 *
-	 * @param parametersJSON the parameters json of this o auth client entry
-	 */
-	@Override
-	public void setParametersJSON(String parametersJSON) {
-		model.setParametersJSON(parametersJSON);
-	}
-
-	/**
 	 * Sets the primary key of this o auth client entry.
 	 *
 	 * @param primaryKey the primary key of this o auth client entry
@@ -365,6 +386,18 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the token request parameters json of this o auth client entry.
+	 *
+	 * @param tokenRequestParametersJSON the token request parameters json of this o auth client entry
+	 */
+	@Override
+	public void setTokenRequestParametersJSON(
+		String tokenRequestParametersJSON) {
+
+		model.setTokenRequestParametersJSON(tokenRequestParametersJSON);
 	}
 
 	/**

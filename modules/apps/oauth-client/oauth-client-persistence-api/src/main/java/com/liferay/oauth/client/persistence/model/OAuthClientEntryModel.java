@@ -187,6 +187,21 @@ public interface OAuthClientEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the auth request parameters json of this o auth client entry.
+	 *
+	 * @return the auth request parameters json of this o auth client entry
+	 */
+	@AutoEscape
+	public String getAuthRequestParametersJSON();
+
+	/**
+	 * Sets the auth request parameters json of this o auth client entry.
+	 *
+	 * @param authRequestParametersJSON the auth request parameters json of this o auth client entry
+	 */
+	public void setAuthRequestParametersJSON(String authRequestParametersJSON);
+
+	/**
 	 * Returns the auth server well known uri of this o auth client entry.
 	 *
 	 * @return the auth server well known uri of this o auth client entry
@@ -232,19 +247,20 @@ public interface OAuthClientEntryModel
 	public void setInfoJSON(String infoJSON);
 
 	/**
-	 * Returns the parameters json of this o auth client entry.
+	 * Returns the token request parameters json of this o auth client entry.
 	 *
-	 * @return the parameters json of this o auth client entry
+	 * @return the token request parameters json of this o auth client entry
 	 */
 	@AutoEscape
-	public String getParametersJSON();
+	public String getTokenRequestParametersJSON();
 
 	/**
-	 * Sets the parameters json of this o auth client entry.
+	 * Sets the token request parameters json of this o auth client entry.
 	 *
-	 * @param parametersJSON the parameters json of this o auth client entry
+	 * @param tokenRequestParametersJSON the token request parameters json of this o auth client entry
 	 */
-	public void setParametersJSON(String parametersJSON);
+	public void setTokenRequestParametersJSON(
+		String tokenRequestParametersJSON);
 
 	@Override
 	public OAuthClientEntry cloneWithOriginalValues();

@@ -39,12 +39,14 @@ public class OAuthClientEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerWellKnownURI, String infoJSON,
-			String parametersJSON)
+			long userId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		return getService().addOAuthClientEntry(
-			userId, authServerWellKnownURI, infoJSON, parametersJSON);
+			userId, authRequestParametersJSON, authServerWellKnownURI, infoJSON,
+			tokenRequestParametersJSON);
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
@@ -113,13 +115,14 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authServerWellKnownURI,
-			String infoJSON, String parametersJSON)
+			long oAuthClientEntryId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		return getService().updateOAuthClientEntry(
-			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
-			parametersJSON);
+			oAuthClientEntryId, authRequestParametersJSON,
+			authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
 	}
 
 	public static OAuthClientEntryService getService() {

@@ -51,6 +51,10 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	public final Column<OAuthClientEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, String>
+		authRequestParametersJSON = createColumn(
+			"authRequestParametersJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, String> authServerWellKnownURI =
 		createColumn(
 			"authServerWellKnownURI", String.class, Types.VARCHAR,
@@ -59,9 +63,10 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 		"clientId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Clob> infoJSON = createColumn(
 		"infoJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<OAuthClientEntryTable, Clob> parametersJSON =
-		createColumn(
-			"parametersJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, String>
+		tokenRequestParametersJSON = createColumn(
+			"tokenRequestParametersJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private OAuthClientEntryTable() {
 		super("OAuthClientEntry", OAuthClientEntryTable::new);

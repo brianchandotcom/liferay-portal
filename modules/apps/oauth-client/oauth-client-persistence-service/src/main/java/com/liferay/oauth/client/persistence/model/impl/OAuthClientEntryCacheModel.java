@@ -78,7 +78,7 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -94,14 +94,16 @@ public class OAuthClientEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", authRequestParametersJSON=");
+		sb.append(authRequestParametersJSON);
 		sb.append(", authServerWellKnownURI=");
 		sb.append(authServerWellKnownURI);
 		sb.append(", clientId=");
 		sb.append(clientId);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
-		sb.append(", parametersJSON=");
-		sb.append(parametersJSON);
+		sb.append(", tokenRequestParametersJSON=");
+		sb.append(tokenRequestParametersJSON);
 		sb.append("}");
 
 		return sb.toString();
@@ -137,6 +139,14 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (authRequestParametersJSON == null) {
+			oAuthClientEntryImpl.setAuthRequestParametersJSON("");
+		}
+		else {
+			oAuthClientEntryImpl.setAuthRequestParametersJSON(
+				authRequestParametersJSON);
+		}
+
 		if (authServerWellKnownURI == null) {
 			oAuthClientEntryImpl.setAuthServerWellKnownURI("");
 		}
@@ -159,11 +169,12 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setInfoJSON(infoJSON);
 		}
 
-		if (parametersJSON == null) {
-			oAuthClientEntryImpl.setParametersJSON("");
+		if (tokenRequestParametersJSON == null) {
+			oAuthClientEntryImpl.setTokenRequestParametersJSON("");
 		}
 		else {
-			oAuthClientEntryImpl.setParametersJSON(parametersJSON);
+			oAuthClientEntryImpl.setTokenRequestParametersJSON(
+				tokenRequestParametersJSON);
 		}
 
 		oAuthClientEntryImpl.resetOriginalValues();
@@ -185,10 +196,11 @@ public class OAuthClientEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		authRequestParametersJSON = objectInput.readUTF();
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
-		parametersJSON = (String)objectInput.readObject();
+		tokenRequestParametersJSON = objectInput.readUTF();
 	}
 
 	@Override
@@ -211,6 +223,13 @@ public class OAuthClientEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (authRequestParametersJSON == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(authRequestParametersJSON);
+		}
+
 		if (authServerWellKnownURI == null) {
 			objectOutput.writeUTF("");
 		}
@@ -232,11 +251,11 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeObject(infoJSON);
 		}
 
-		if (parametersJSON == null) {
-			objectOutput.writeObject("");
+		if (tokenRequestParametersJSON == null) {
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(parametersJSON);
+			objectOutput.writeUTF(tokenRequestParametersJSON);
 		}
 	}
 
@@ -247,9 +266,10 @@ public class OAuthClientEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String authRequestParametersJSON;
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String infoJSON;
-	public String parametersJSON;
+	public String tokenRequestParametersJSON;
 
 }

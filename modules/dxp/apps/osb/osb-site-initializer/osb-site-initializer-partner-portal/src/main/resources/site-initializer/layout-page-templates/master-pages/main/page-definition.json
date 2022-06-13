@@ -26,7 +26,8 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
+								"borderWidth": "0",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -136,6 +137,7 @@
 											"fragmentStyle": {
 												"borderColor": "",
 												"borderWidth": "",
+												"textAlign": "",
 												"width": "700"
 											},
 											"indexed": true
@@ -154,6 +156,9 @@
 											}
 										},
 										"target": "Self"
+									},
+									"fragmentStyle": {
+										"borderWidth": "0"
 									},
 									"indexed": true,
 									"layout": {
@@ -187,22 +192,21 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"backgroundColor": "",
-												"fontWeight": "fontWeightLighter",
-												"marginRight": "3",
-												"textColor": ""
+												"fontFamily": "fontFamilyBase",
+												"fontWeight": "fontWeightLight",
+												"textAlign": "right"
 											},
 											"indexed": true,
 											"widgetInstances": [
 												{
 													"widgetConfig": {
 														"displayDepth": "0",
-														"displayStyle": "ddmTemplate_45735",
-														"displayStyleGroupId": "44612",
+														"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+														"displayStyleGroupId": "42638",
 														"expandedLevels": "auto",
 														"rootMenuItemLevel": "0",
 														"rootMenuItemType": "absolute",
-														"siteNavigationMenuId": "45730",
+														"siteNavigationMenuId": "0",
 														"siteNavigationMenuType": "-1"
 													},
 													"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
@@ -248,6 +252,7 @@
 												"height": "4%",
 												"marginLeft": "3",
 												"marginRight": "3",
+												"textAlign": "",
 												"width": "4%"
 											},
 											"indexed": true
@@ -335,6 +340,7 @@
 											"fragmentStyle": {
 												"height": "3.5%",
 												"paddingLeft": "2",
+												"textAlign": "",
 												"width": "3.5%"
 											},
 											"indexed": true
@@ -353,9 +359,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -375,8 +380,7 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"backgroundFragmentImage": {
-								},
+								"textAlign": "",
 								"textColor": ""
 							},
 							"widgetInstance": {
@@ -400,7 +404,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -1160,7 +1165,8 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0"
+												"borderWidth": "0",
+												"textAlign": ""
 											},
 											"indexed": true,
 											"layout": {

@@ -54,6 +54,7 @@ page import="com.liferay.portal.kernel.lock.Lock" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.RepositoryEntry" %><%@
+page import="com.liferay.portal.kernel.servlet.MultiSessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@

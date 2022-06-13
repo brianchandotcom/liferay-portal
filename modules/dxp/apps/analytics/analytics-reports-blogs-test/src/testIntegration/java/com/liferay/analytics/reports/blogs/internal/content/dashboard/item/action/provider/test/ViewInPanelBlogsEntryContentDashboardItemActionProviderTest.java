@@ -17,7 +17,9 @@ package com.liferay.analytics.reports.blogs.internal.content.dashboard.item.acti
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
@@ -230,10 +232,16 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					BlogsEntry.class.getName(), _blogsEntry.getEntryId())));
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			BlogsEntry.class.getName(), _blogsEntry.getEntryId());
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY,
-			_assetEntryLocalService.getEntry(
-				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
+			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+		LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+			mockHttpServletRequest, assetEntry.getEntryId());
+
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(mockHttpServletRequest, user));

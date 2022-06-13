@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -280,6 +281,9 @@ public class AssetInfoCollectionProviderTest {
 		_httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry1);
 
+		LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+			_httpServletRequest, assetEntry1.getEntryId());
+
 		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class,
@@ -298,6 +302,9 @@ public class AssetInfoCollectionProviderTest {
 
 		_httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry2);
+
+		LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+			_httpServletRequest, assetEntry2.getEntryId());
 
 		assetEntriesInfoPage = infoCollectionProvider.getCollectionInfoPage(
 			new CollectionQuery());

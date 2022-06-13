@@ -47,6 +47,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-154368. Assert component will switch to hotspot mode in the current step when closing popover."
+	@priority = "5"
+	test CanBeClosed {
+		task ("Given click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("When Click close icon") {
+			Click(locator1 = "Walkthrough#CLOSE_POPOVER");
+		}
+
+		task ("Then hotspot element is present") {
+			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+		}
+	}
+
 	@description = "LPS-154643. Assert popover mode contains content."
 	@priority = "5"
 	test CanDisplayContent {

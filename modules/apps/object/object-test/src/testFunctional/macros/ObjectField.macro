@@ -172,6 +172,12 @@ definition {
 			value1 = "${fieldName}");
 	}
 
+	macro typeStorageFolder {
+		Type(
+			locator1 = "ObjectField#STORAGE_FOLDER_INPUT",
+			value1 = "${content}");
+	}
+
 	macro typeValueOnLimitCharacters {
 		Type(
 			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",

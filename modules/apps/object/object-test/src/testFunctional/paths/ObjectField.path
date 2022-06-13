@@ -63,6 +63,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>STORAGE_FOLDER_INPUT</td>
+		<td>//label[contains(text(),'Storage Folder')]/..//input</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>MAXIMUM_NUMBER_CHARACTERS_OPTION</td>
 		<td>//input[contains(@value, '${key_maxValue}')]//..//label[contains(text(),'Maximum Number of Characters')]/..//input</td>
 		<td></td>

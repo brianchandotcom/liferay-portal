@@ -808,12 +808,36 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder is required"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StorageFolderFieldIsRequired {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153416 StorageFolderFieldIsRequired pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			enableShowFiles = "true",
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		ObjectField.typeStorageFolder(content = "");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_fieldName = "Storage Folder",
+			locator1 = "ObjectField#ERROR_REQUIRED_FIELD_SPECIFIC");
 	}
 
 }

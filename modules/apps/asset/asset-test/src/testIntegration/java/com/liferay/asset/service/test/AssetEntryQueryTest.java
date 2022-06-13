@@ -881,7 +881,8 @@ public class AssetEntryQueryTest {
 
 		blogsEntries.add(notLinkedBlogsEntry);
 
-		assetEntryQuery.setLinkedAssetEntryId(assetEntry1.getEntryId());
+		assetEntryQuery.setLinkedAssetEntryIds(
+			new long[] {assetEntry1.getEntryId()});
 
 		threadLocalCache.removeAll();
 

@@ -12,9 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web';
+import {fetch, openConfirmModal} from 'frontend-js-web';
 
 const HEADERS = {
 	'Accept': 'application/json',

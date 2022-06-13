@@ -12,10 +12,8 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, openConfirmModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
-
-import {openConfirmModal} from 'frontend-js-web';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	delete(itemData) {

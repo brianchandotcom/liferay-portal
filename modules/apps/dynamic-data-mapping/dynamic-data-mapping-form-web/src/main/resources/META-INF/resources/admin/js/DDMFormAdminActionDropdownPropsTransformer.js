@@ -13,10 +13,9 @@
  */
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
-import {openModal} from 'frontend-js-web';
+import {openConfirmModal, openModal} from 'frontend-js-web';
 
 import {openShareFormModal} from './components/share-form/openShareFormModal.es';
-import {openConfirmModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	delete({deleteFormInstanceURL}) {

@@ -17,6 +17,7 @@ import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
+import {openConfirmModal} from 'frontend-js-web';
 import React from 'react';
 
 import {
@@ -26,7 +27,6 @@ import {
 	getOptionLabel,
 } from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
-import {openConfirmModal} from 'frontend-js-web'
 import DropDown from '../drop-down/DropDown.es';
 
 const ACTION_LABELS = {

@@ -17,11 +17,15 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
+import {
+	fetch,
+	objectToFormData,
+	openConfirmModal,
+	runScriptsInElement,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {openConfirmModal} from 'frontend-js-web'
 import {useConstants} from '../contexts/ConstantsContext';
 import {
 	useSelectedMenuItemId,

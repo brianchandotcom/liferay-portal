@@ -12,9 +12,8 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {openConfirmModal, openModal} from 'frontend-js-web';
 
-import {openConfirmModal} from 'frontend-js-web';
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 const ACTIONS = {

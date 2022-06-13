@@ -12,9 +12,7 @@
  * details.
  */
 
-import {fetch, sub} from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web';
+import {fetch, openConfirmModal, sub} from 'frontend-js-web';
 
 const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
 	'uploads-are-in-progress-confirmation'

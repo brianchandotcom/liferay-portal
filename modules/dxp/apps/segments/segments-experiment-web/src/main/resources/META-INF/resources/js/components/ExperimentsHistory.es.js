@@ -11,13 +11,13 @@
 
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import SegmentsExperimentContext from '../context.es';
 import {SegmentsExperimentType} from '../types.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
-import {openConfirmModal} from 'frontend-js-web';
 import {statusToLabelDisplayType} from '../util/statuses.es';
 
 const {useContext} = React;

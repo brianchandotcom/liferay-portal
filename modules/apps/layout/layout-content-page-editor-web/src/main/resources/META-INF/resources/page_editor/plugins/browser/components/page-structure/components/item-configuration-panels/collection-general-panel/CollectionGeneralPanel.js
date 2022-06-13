@@ -13,6 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -34,7 +35,6 @@ import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
-import {openConfirmModal} from 'frontend-js-web'
 import {useId} from '../../../../../../../app/utils/useId';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';

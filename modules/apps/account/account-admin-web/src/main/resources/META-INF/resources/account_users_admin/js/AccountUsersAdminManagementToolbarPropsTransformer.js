@@ -16,11 +16,10 @@ import {
 	createPortletURL,
 	getCheckedCheckboxes,
 	navigate,
+	openConfirmModal,
 	openSelectionModal,
 	postForm,
 } from 'frontend-js-web';
-
-import {openConfirmModal} from 'frontend-js-web';
 
 const updateAccountUsers = (portletNamespace, url) => {
 	const form = document.getElementById(`${portletNamespace}fm`);

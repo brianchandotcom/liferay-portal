@@ -10,7 +10,7 @@
  */
 
 import * as d3 from 'd3';
-import {openToast, sub} from 'frontend-js-web';
+import {openConfirmModal, openToast, sub} from 'frontend-js-web';
 
 import {getAccount} from './data/accounts';
 import {getOrganization} from './data/organizations';
@@ -40,7 +40,6 @@ import {
 	showChildren,
 	tree,
 } from './utils/index';
-import {openConfirmModal} from 'frontend-js-web';
 import {
 	fillAddButtons,
 	fillEntityNode,

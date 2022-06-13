@@ -18,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
-import {debounce, fetch, openModal, openToast} from 'frontend-js-web';
+import {debounce, fetch, openConfirmModal, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -33,7 +33,6 @@ import {
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors,
 } from '../../utils/contributors.es';
-import {openConfirmModal} from 'frontend-js-web'
 import {initialContributorShape} from '../../utils/types.es';
 import {sub} from '../../utils/utils.es';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';

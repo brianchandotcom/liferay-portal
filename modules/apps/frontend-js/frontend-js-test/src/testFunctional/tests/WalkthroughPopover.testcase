@@ -75,4 +75,21 @@ definition {
 		}
 	}
 
+	@description = "LPS-154641. Assert a dark background overlay can be toggled."
+	@priority = "3"
+	test CanHaveADarkBackgroundOverlay {
+		task ("When click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("Then outside the element has a dark background overlay") {
+			AssertElementPresent(locator1 = "Walkthrough#POPOVER_OVERLAY");
+
+			AssertAttributeValue(
+				attribute1 = "fill",
+				locator1 = "Walkthrough#POPOVER_OVERLAY",
+				value1 = "#393a4a");
+		}
+	}
+
 }

@@ -178,8 +178,13 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 									>
 										<c:choose>
 											<c:when test="<%= group.isActive() %>">
-												<aui:a cssClass="card-title selector-button text-truncate" data="<%= data %>" href="javascript:;" title="<%= siteVerticalCard.getSubtitle() %>">
-													<%= siteVerticalCard.getTitle() %>
+
+												<%
+												boolean isNull = data.get("url") == null;
+												%>
+
+												<aui:a cssClass='<%= isNull ? " disabled text-muted " : "selector-button " %>' data="<%= data %>" href='<%= isNull ? " " : "javascript:; " %>'>
+													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
 												</aui:a>
 											</c:when>
 											<c:otherwise>

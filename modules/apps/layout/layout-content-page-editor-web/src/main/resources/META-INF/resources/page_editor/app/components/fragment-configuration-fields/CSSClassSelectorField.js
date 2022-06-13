@@ -79,7 +79,10 @@ export default function CSSClassSelectorField({
 
 	return (
 		<>
-			<ClayForm.Group small>
+			<ClayForm.Group
+				className="page-editor__css-class-selector-field"
+				small
+			>
 				<label htmlFor={cssClassesInputId}>
 					{Liferay.Language.get('css-classes')}
 				</label>
@@ -175,6 +178,10 @@ function CSSClassSelectorDropDown({
 		<ClayDropDown.Menu
 			active={active}
 			alignElementRef={multiSelectRef}
+			className="page-editor__css-class-selector-dropdown"
+			containerProps={{
+				className: 'cadmin',
+			}}
 			onKeyDown={onKeyDown}
 			onSetActive={onSetActive}
 			ref={dropdownRef}

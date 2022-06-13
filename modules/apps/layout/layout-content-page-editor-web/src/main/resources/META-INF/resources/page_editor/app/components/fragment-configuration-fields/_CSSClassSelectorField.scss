@@ -1,0 +1,24 @@
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__css-class-selector-dropdown .label {
+			text-transform: none;
+		}
+
+		.page-editor__css-class-selector-field .label {
+			position: relative;
+
+			.label-item-after {
+				opacity: 0;
+				position: absolute;
+			}
+
+			&:hover .label-item-after,
+			&:focus-within .label-item-after {
+				background: $white;
+				opacity: 1;
+				right: 4px;
+				top: calc(100% - 16px);
+			}
+		}
+	}
+}

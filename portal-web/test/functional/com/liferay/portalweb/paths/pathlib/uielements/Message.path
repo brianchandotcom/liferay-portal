@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
+	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')] | //div[contains(@class,'taglib-empty-result-message')]/div[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>

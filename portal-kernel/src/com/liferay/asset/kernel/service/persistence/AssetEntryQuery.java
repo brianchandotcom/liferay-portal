@@ -262,6 +262,11 @@ public class AssetEntryQuery {
 		return _layout;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getLinkedAssetEntryIds()}
+	 */
+	@Deprecated
 	public long getLinkedAssetEntryId() {
 		return _linkedAssetEntryId;
 	}
@@ -482,6 +487,11 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setLinkedAssetEntryIds(long[])}
+	 */
+	@Deprecated
 	public void setLinkedAssetEntryId(long linkedAssetEntryId) {
 		_linkedAssetEntryId = linkedAssetEntryId;
 

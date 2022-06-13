@@ -3221,6 +3221,13 @@ components:
                     items:
                         $ref: "#/components/schemas/CollectionViewport"
                     type: array
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 displayAllItems:
                     # @review
                     description:
@@ -3433,6 +3440,13 @@ components:
             description:
                 Represent a definition of a Page form.
             properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 formConfig:
                     # @review
                     description:
@@ -3470,6 +3484,13 @@ components:
             description:
                 Represents a definition of a Page Fragment Instance.
             properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 fragment:
                     allOf:
                         - $ref: "#/components/schemas/Fragment"
@@ -3526,6 +3547,13 @@ components:
             description:
                 Represents a definition of a Page row.
             properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"
@@ -3640,6 +3668,13 @@ components:
                                 - $ref: "#/components/schemas/FragmentInlineValue"
                                 - $ref: "#/components/schemas/FragmentMappedValue"
                     type: object
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 fragmentLink:
                     allOf:
                         - $ref: "#/components/schemas/FragmentLink"
@@ -3915,6 +3950,13 @@ components:
             description:
                 Represents a definition of a Page Widget instance.
             properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"

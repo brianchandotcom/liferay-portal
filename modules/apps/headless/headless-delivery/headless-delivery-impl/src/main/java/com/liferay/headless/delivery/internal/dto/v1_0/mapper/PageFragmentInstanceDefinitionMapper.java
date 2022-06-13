@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,6 +128,12 @@ public class PageFragmentInstanceDefinitionMapper {
 
 				setCssClasses(
 					() -> {
+						if (!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-147511"))) {
+
+							return null;
+						}
+
 						Set<String> cssClasses =
 							fragmentStyledLayoutStructureItem.getCssClasses();
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -109,7 +110,9 @@ public class ContainerLayoutStructureItemImporter
 			stylesJSONObject.put("backgroundImage", jsonObject);
 		}
 
-		if (definitionMap.containsKey("cssClasses")) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511")) &&
+			definitionMap.containsKey("cssClasses")) {
+
 			List<String> cssClasses = (List<String>)definitionMap.get(
 				"cssClasses");
 

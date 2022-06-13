@@ -20,8 +20,10 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.WidgetInstanceMapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Set;
 
@@ -51,7 +53,10 @@ public class PageWidgetInstanceDefinitionUtil {
 
 				setCssClasses(
 					() -> {
-						if (SetUtil.isEmpty(cssClassesSet)) {
+						if (!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-147511")) ||
+							SetUtil.isEmpty(cssClassesSet)) {
+
 							return null;
 						}
 

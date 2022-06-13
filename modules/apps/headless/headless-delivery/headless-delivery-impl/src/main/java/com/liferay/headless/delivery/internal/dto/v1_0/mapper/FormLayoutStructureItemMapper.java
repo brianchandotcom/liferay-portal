@@ -23,8 +23,10 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Set;
 
@@ -65,6 +67,13 @@ public class FormLayoutStructureItemMapper
 
 						setCssClasses(
 							() -> {
+								if (!GetterUtil.getBoolean(
+										PropsUtil.get(
+											"feature.flag.LPS-147511"))) {
+
+									return null;
+								}
+
 								Set<String> cssClasses =
 									formStyledLayoutStructureItem.
 										getCssClasses();

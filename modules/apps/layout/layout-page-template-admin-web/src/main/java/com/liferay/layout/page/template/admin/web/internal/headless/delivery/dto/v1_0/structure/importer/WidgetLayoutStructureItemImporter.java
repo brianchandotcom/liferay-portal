@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashSet;
@@ -81,7 +83,10 @@ public class WidgetLayoutStructureItemImporter
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			if (definitionMap.containsKey("cssClasses")) {
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-147511")) &&
+				definitionMap.containsKey("cssClasses")) {
+
 				List<String> cssClasses = (List<String>)definitionMap.get(
 					"cssClasses");
 

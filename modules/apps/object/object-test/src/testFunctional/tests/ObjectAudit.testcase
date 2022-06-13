@@ -383,12 +383,35 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a layout is deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDeleteOnResourceActionWhenDeleteLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153594",
+			objectName = "CustomObject153594",
+			pluralLabelName = "Custom Objects 153594");
 
-		// TODO LPS-153594 CanViewDeleteOnResourceActionWhenDeleteLayout pending implementation
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Custom Layout",
+			objectName = "CustomObject153594");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153594");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Layout",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectLayout",
+			resourceAction = "DELETE",
+			resourceName = "ObjectLayout",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a relationship is deleted"

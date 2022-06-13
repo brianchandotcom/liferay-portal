@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_ERC</td>
+	<td>//dl[@class='commerce-list']/dt[contains(.,'ERC')]/following-sibling::dd[contains(.,'${key_ERC}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
 	<td>//span[contains(@class,'payment-name')]</td>
 	<td></td>

@@ -1891,24 +1891,28 @@ public class AssetPublisherDisplayContext {
 			_assetPublisherWebHelper.getDefaultAssetPublisherId(
 				_themeDisplay.getLayout());
 
-		if (isDefaultAssetPublisher() ||
-			Validator.isNull(defaultAssetPublisherPortletId) ||
-			!PortletPermissionUtil.contains(
+		if (!isDefaultAssetPublisher() &&
+			Validator.isNotNull(defaultAssetPublisherPortletId) &&
+			PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				defaultAssetPublisherPortletId, ActionKeys.VIEW)) {
 
-			if (_httpServletRequest.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) ==
-					null) {
-
-				_httpServletRequest.setAttribute(
-					WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-			}
-
-			if (assetEntry != null) {
-				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
-					_httpServletRequest, assetEntry.getEntryId());
-			}
+			return;
 		}
+
+		if (_httpServletRequest.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) ==
+				null) {
+
+			_httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		}
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
+			_httpServletRequest, assetEntry.getEntryId());
 	}
 
 	public void setPageKeywords() {

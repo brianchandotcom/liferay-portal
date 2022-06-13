@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
 import java.util.Collections;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -98,11 +96,10 @@ public class SiteCommerceChannelTypeDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "sitesSelectItem",
-			simpleSiteItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "sitesSelectItem",
+				simpleSiteItemSelectorCriterion));
 	}
 
 	private final DLAppLocalService _dlAppLocalService;

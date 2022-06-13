@@ -320,11 +320,10 @@ public class CommerceChannelDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "addFileEntry",
-			fileItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "addFileEntry",
+				fileItemSelectorCriterion));
 	}
 
 	public String getOrderImporterDateFormat() throws PortalException {

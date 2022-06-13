@@ -265,11 +265,10 @@ public class CommerceCatalogDisplayContext {
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "addFileEntry",
-			imageItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "addFileEntry",
+				imageItemSelectorCriterion));
 	}
 
 	public long getImageMaxSize() {

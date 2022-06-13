@@ -31,6 +31,8 @@ import com.liferay.client.extension.type.internal.CETThemeJSImpl;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -141,6 +143,24 @@ public class CETManagerImpl implements CETManager {
 
 	@Override
 	public CET getCET(long companyId, String externalReferenceCode) {
+		ClientExtensionEntry clientExtensionEntry =
+			_clientExtensionEntryLocalService.
+				fetchClientExtensionEntryByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (clientExtensionEntry != null) {
+			try {
+				return _cetFactory.cet(clientExtensionEntry);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+
+				return null;
+			}
+		}
+
 		Map<String, CET> cetsMap = _getCETsMap(companyId);
 
 		return cetsMap.get(externalReferenceCode);
@@ -262,6 +282,8 @@ public class CETManagerImpl implements CETManager {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CETManagerImpl.class);
 
 	@Reference
 	private CETDeployer _cetDeployer;

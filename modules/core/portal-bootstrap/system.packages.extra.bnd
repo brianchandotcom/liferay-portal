@@ -258,7 +258,6 @@ Provide-Capability:\
 	@../../../lib/portal/hibernate-core.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jodd-json.jar,\
-	@../../../lib/portal/jodd-proxetta.jar,\
 	@../../../lib/portal/jodd-util.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/log4j-1.2-api.jar,\

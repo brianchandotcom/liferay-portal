@@ -233,7 +233,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			return StringBundler.concat(
 				issuerURI.getScheme(), "://", issuerURI.getAuthority(),
 				"/.well-known/", wellKnownURISuffix, issuerURI.getPath(), '/',
-				Base64.encode(
+				Base64.encodeToURL(
 					messageDigest.digest(
 						_getBytes(oAuthClientASLocalMetadataId))),
 				"/local");

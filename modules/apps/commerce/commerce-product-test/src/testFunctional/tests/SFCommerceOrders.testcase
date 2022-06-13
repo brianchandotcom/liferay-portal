@@ -303,6 +303,61 @@ definition {
 		}
 	}
 
+	@description = "Verify the status of an order is shown in the placed order details."
+	@priority = "3"
+	test AssertOrderStatusInPlacedOrderDetails {
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer completes the checkout process for an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Shipping Address",
+				newAddressCity = "Test Shipping City",
+				newAddressCountry = "United States",
+				newAddressName = "Shipping Address Name",
+				newAddressZipCode = "Test Shipping Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer goes to the order details") {
+			Button.click(button = "Go to Order Details");
+		}
+
+		task ("Then the status field is present and populated with Pending") {
+			AssertElementPresent(
+				key_status = "Pending",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+		}
+	}
+
 	@description = "Verify the selected order type for an order is displayed in the Open Carts widget."
 	@priority = "3"
 	test AssertOrderTypeInOpenCartsWidgetList {

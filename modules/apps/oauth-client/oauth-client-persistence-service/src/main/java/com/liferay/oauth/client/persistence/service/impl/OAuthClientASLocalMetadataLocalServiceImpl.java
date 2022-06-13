@@ -73,8 +73,9 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		oAuthClientASLocalMetadata.setUserName(user.getFullName());
 		oAuthClientASLocalMetadata.setLocalWellKnownURI(
 			_generateLocalWellKnownURI(
-				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
-				metadataJSONObject.getAsString("issuer"), wellKnownURISuffix));
+				metadataJSONObject.getAsString("issuer"),
+				metadataJSONObject.getAsString("token_endpoint"),
+				wellKnownURISuffix));
 		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
 
 		oAuthClientASLocalMetadata =
@@ -211,8 +212,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			oAuthClientASLocalMetadata.setLocalWellKnownURI(
 				_generateLocalWellKnownURI(
-					oAuthClientASLocalMetadataId,
 					metadataJSONObject.getAsString("issuer"),
+					metadataJSONObject.getAsString("token_endpoint"),
 					wellKnownURISuffix));
 		}
 
@@ -221,8 +222,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	private String _generateLocalWellKnownURI(
-			long oAuthClientASLocalMetadataId, String issuer,
-			String wellKnownURISuffix)
+			String issuer, String tokenEndPoint, String wellKnownURISuffix)
 		throws PortalException {
 
 		try {
@@ -234,26 +234,12 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				issuerURI.getScheme(), "://", issuerURI.getAuthority(),
 				"/.well-known/", wellKnownURISuffix, issuerURI.getPath(), '/',
 				Base64.encodeToURL(
-					messageDigest.digest(
-						_getBytes(oAuthClientASLocalMetadataId))),
+					messageDigest.digest(tokenEndPoint.getBytes())),
 				"/local");
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
-	}
-
-	private byte[] _getBytes(long oAuthClientASLocalMetadataId) {
-		return new byte[] {
-			(byte)((oAuthClientASLocalMetadataId >> 56) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 48) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 40) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 32) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 24) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 16) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 8) & 0xff),
-			(byte)((oAuthClientASLocalMetadataId >> 0) & 0xff)
-		};
 	}
 
 	private JSONObject _getMetadataJSONObject(String metadataJSON)

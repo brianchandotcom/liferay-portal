@@ -547,12 +547,30 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if after create a attachment field with option Request Files: Directly from User's Computer selected and when the 'Show files' is enabled there is a new configuration field called Storage Folder"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewStorageFolderWhenShowFilesIsEnable {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153415 CanViewStorageFolderWhenShowFilesIsEnable pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			enableShowFiles = "true",
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		AssertElementPresent(locator1 = "ObjectField#LABEL_STORAGE_FOLDER");
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a tooltip on the Toggle"

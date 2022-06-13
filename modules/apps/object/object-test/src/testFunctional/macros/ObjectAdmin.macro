@@ -109,6 +109,14 @@ definition {
 				Click(
 					key_fieldType = "${fieldAttachment}",
 					locator1 = "ObjectField#TYPE_OPTION");
+
+				var enableShowFiles = "${enableShowFiles}";
+
+				if (isSet(enableShowFiles)) {
+					Check.checkNotVisible(
+						key_toggleSwitchLabel = "Show Files in Documents and Media",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
 			}
 		}
 

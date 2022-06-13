@@ -15,26 +15,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<div class="lfr-segments-experiment-sidebar" id="segmentsExperimentSidebar">
-	<div class="d-flex justify-content-between p-3 sidebar-header">
-		<h1 class="sr-only">
-			<liferay-ui:message key="ab-test-panel" />
-		</h1>
-
-		<span class="font-weight-bold">
-		<liferay-ui:message key="ab-test" /></span>
-
-		<clay:button
-			aria-label='<%= LanguageUtil.get(request, "close") %>'
-			cssClass="btn btn-monospaced btn-unstyle component-action sidenav-close text-secondary"
-			displayType="unstyled"
-			icon="times"
-			monospaced="<%= true %>"
-		/>
-	</div>
-
-	<div class="sidebar-body">
-		<liferay-util:include page="/segments_experiment_panel.jsp" servletContext="<%= application %>" />
-	</div>
-</div>

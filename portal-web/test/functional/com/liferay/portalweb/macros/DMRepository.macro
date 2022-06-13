@@ -30,6 +30,13 @@ definition {
 				value1 = "${dmServerVersion}");
 		}
 
+		if (isSet(dmRepositoryLibraryPath)) {
+			Type(
+				key_fieldLabel = "Library Path",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmRepositoryLibraryPath}");
+		}
+
 		if (isSet(dmRepositorySiteAbsoluteURL)) {
 			Type(
 				key_fieldLabel = "Site Absolute URL",

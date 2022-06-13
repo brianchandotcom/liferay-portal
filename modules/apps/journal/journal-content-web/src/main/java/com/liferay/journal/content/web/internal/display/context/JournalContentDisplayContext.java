@@ -1015,8 +1015,6 @@ public class JournalContentDisplayContext {
 		AssetEntry assetEntry = _getAssetEntry();
 
 		if (isShowArticle() && (assetEntry != null)) {
-			portletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-
 			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
 				portletRequest, assetEntry.getEntryId());
 		}

@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -112,13 +111,11 @@ public class DepotAdminMembershipsDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		List<UserGroupRole> userGroupRoles =
+		return UsersAdminUtil.getUserColumnText(
+			_themeDisplay.getLocale(),
 			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
 				_user.getUserId(), group.getGroupId(), 0,
-				PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
-
-		return UsersAdminUtil.getUserColumnText(
-			_themeDisplay.getLocale(), userGroupRoles,
+				PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT),
 			UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR,
 			UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(
 				_user.getUserId(), group.getGroupId()));

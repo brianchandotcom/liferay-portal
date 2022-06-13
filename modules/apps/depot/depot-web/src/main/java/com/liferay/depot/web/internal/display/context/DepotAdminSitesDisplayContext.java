@@ -43,7 +43,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 
 /**
@@ -67,14 +66,12 @@ public class DepotAdminSitesDisplayContext {
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				ActionURL updateSearchableActionURL =
-					DepotEntryURLUtil.getUpdateSearchableActionURL(
-						depotEntryGroupRel.getDepotEntryGroupRelId(),
-						!depotEntryGroupRel.isSearchable(),
-						_currentURL.toString(), _liferayPortletResponse);
-
-				dropdownItem.setHref(updateSearchableActionURL.toString());
-
+				dropdownItem.setHref(
+					String.valueOf(
+						DepotEntryURLUtil.getUpdateSearchableActionURL(
+							depotEntryGroupRel.getDepotEntryGroupRelId(),
+							!depotEntryGroupRel.isSearchable(),
+							_currentURL.toString(), _liferayPortletResponse)));
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						PortalUtil.getHttpServletRequest(
@@ -83,21 +80,23 @@ public class DepotAdminSitesDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
-				ActionURL updateDDMStructuresAvailableActionURL =
-					DepotEntryURLUtil.getUpdateDDMStructuresAvailableActionURL(
-						depotEntryGroupRel.getDepotEntryGroupRelId(),
-						!depotEntryGroupRel.isDdmStructuresAvailable(),
-						_currentURL.toString(), _liferayPortletResponse);
-
 				dropdownItem.setData(
 					HashMapBuilder.<String, Object>put(
 						"action", "shareWebContentStructures"
 					).put(
 						"shared", depotEntryGroupRel.isDdmStructuresAvailable()
 					).put(
-						"url", updateDDMStructuresAvailableActionURL.toString()
+						"url",
+						String.valueOf(
+							DepotEntryURLUtil.
+								getUpdateDDMStructuresAvailableActionURL(
+									depotEntryGroupRel.
+										getDepotEntryGroupRelId(),
+									!depotEntryGroupRel.
+										isDdmStructuresAvailable(),
+									_currentURL.toString(),
+									_liferayPortletResponse))
 					).build());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						PortalUtil.getHttpServletRequest(
@@ -112,16 +111,11 @@ public class DepotAdminSitesDisplayContext {
 						"action", "disconnect"
 					).put(
 						"url",
-						() -> {
-							ActionURL disconnectSiteActionURL =
-								DepotEntryURLUtil.getDisconnectSiteActionURL(
-									depotEntryGroupRel.
-										getDepotEntryGroupRelId(),
-									_currentURL.toString(),
-									_liferayPortletResponse);
-
-							return disconnectSiteActionURL.toString();
-						}
+						() -> String.valueOf(
+							DepotEntryURLUtil.getDisconnectSiteActionURL(
+								depotEntryGroupRel.getDepotEntryGroupRelId(),
+								_currentURL.toString(),
+								_liferayPortletResponse))
 					).build());
 
 				dropdownItem.setDisabled(

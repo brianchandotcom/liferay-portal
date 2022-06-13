@@ -57,7 +57,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -401,16 +400,13 @@ public class InputAssetLinksDisplayContext {
 			selectorEntryData.put("href", assetBrowserPortletURL.toString());
 		}
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			_pageContext);
-
 		selectorEntryData.put(
 			"title",
 			LanguageUtil.format(
-				resourceBundle, "select-x",
+				TagResourceBundleUtil.getResourceBundle(_pageContext),
+				"select-x",
 				assetRendererFactory.getTypeName(_themeDisplay.getLocale()),
 				false));
-
 		selectorEntryData.put("type", assetRendererFactory.getClassName());
 
 		return selectorEntryData;

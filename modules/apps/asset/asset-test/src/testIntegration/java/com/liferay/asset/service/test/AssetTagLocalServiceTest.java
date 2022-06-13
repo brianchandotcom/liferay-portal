@@ -167,13 +167,10 @@ public class AssetTagLocalServiceTest {
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithOnlySpacesInName() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.SPACE,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test

@@ -22,11 +22,14 @@ import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -65,6 +68,18 @@ public class RowLayoutStructureItemMapper
 						verticalAlignment =
 							rowStyledLayoutStructureItem.getVerticalAlignment();
 
+						setCssClasses(
+							() -> {
+								Set<String> cssClasses =
+									rowStyledLayoutStructureItem.
+										getCssClasses();
+
+								if (SetUtil.isEmpty(cssClasses)) {
+									return null;
+								}
+
+								return ArrayUtil.toStringArray(cssClasses);
+							});
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =

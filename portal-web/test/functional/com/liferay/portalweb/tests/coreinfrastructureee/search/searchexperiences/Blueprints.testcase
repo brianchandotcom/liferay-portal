@@ -473,6 +473,21 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
 	}
 
+	test AssertCommerceItemsSearchable {
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "brake pad");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+			resultRanking = "1",
+			value1 = "brake pad");
+	}
+
 	test AssertDisabledQueryElementNotAppliedToSearch {
 		JSONWebcontent.addWebContent(
 			content = "",

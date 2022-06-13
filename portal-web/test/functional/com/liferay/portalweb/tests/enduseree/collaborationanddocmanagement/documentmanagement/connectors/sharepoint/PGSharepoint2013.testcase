@@ -70,6 +70,7 @@ definition {
 
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
+			dmRepositoryLibraryPath = "Shared Documents",
 			dmRepositoryName = "Sharepoint",
 			dmRepositorySiteURL = "http://${sharepointVmHostName}",
 			dmServerVersion = "2013");

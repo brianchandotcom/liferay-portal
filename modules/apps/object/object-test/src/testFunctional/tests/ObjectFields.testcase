@@ -412,12 +412,30 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer the toggle is OFF by default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewOptionsDisableWhenSelectDirectlyFromUsersComputerOption {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153413 CanViewOptionsDisableWhenSelectDirectlyFromUsersComputerOption pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		ObjectField.selectOptionOnRequestFiles(option = "Upload Directly from the User's Computer");
+
+		Uncheck.uncheckNotVisible(
+			key_toggleSwitchLabel = "Show Files in Documents and Media",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a Toggle"

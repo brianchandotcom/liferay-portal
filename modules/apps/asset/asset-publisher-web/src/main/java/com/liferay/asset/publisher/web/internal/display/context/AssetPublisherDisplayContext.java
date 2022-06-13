@@ -1887,12 +1887,6 @@ public class AssetPublisherDisplayContext {
 	public void setLayoutAssetEntry(AssetEntry assetEntry)
 		throws PortalException {
 
-		if (_httpServletRequest.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) !=
-				null) {
-
-			return;
-		}
-
 		String defaultAssetPublisherPortletId =
 			_assetPublisherWebHelper.getDefaultAssetPublisherId(
 				_themeDisplay.getLayout());
@@ -1903,8 +1897,12 @@ public class AssetPublisherDisplayContext {
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				defaultAssetPublisherPortletId, ActionKeys.VIEW)) {
 
-			_httpServletRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+			if (_httpServletRequest.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) ==
+					null) {
+
+				_httpServletRequest.setAttribute(
+					WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+			}
 
 			if (assetEntry != null) {
 				LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(

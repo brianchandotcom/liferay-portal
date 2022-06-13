@@ -1636,8 +1636,10 @@ public class WebServerServlet extends HttpServlet {
 					else {
 						sendDocumentLibrary(
 							httpServletRequest, httpServletResponse, user,
-							httpServletRequest.getServletPath() +
-								StringPool.SLASH + path,
+							StringBundler.concat(
+								PortalUtil.getPathContext(),
+								httpServletRequest.getServletPath(),
+								StringPool.SLASH, path),
 							pathArray);
 					}
 				}

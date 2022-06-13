@@ -329,10 +329,9 @@ definition {
 
 			Button.click(button = "View");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				key_orderType = "",
-				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
-				value1 = "");
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 
 		task ("When the buyer creates an order from pending orders") {
@@ -340,10 +339,9 @@ definition {
 		}
 
 		task ("Then a new order is created and the order type field is empty") {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_orderType = "",
-				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
-				value1 = "");
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 
 		task ("When the buyer creates an order from the account selector") {
@@ -351,10 +349,9 @@ definition {
 		}
 
 		task ("Then a new order is created and the order type field is empty") {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_orderType = "",
-				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
-				value1 = "");
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
 

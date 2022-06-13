@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -262,8 +263,9 @@ public class ObjectFieldServiceTest {
 			objectField = _addObjectField(user);
 
 			objectField = _objectFieldService.updateCustomObjectField(
-				objectField.getObjectFieldId(), 0, "Text", "String", true,
-				false, LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+				objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+				"String", true, false,
+				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
 				Collections.emptyList());
 		}

@@ -77,6 +77,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-154645. Assert popover contains a button to transition to previous step."
+	@priority = "5"
+	test CanDisplayPreviousButtonOnIntermediateStep {
+		task ("And Given popover mode") {
+			Walkthrough.enablePopoverMode();
+		}
+
+		task ("When navigate to 2nd step popover") {
+			Walkthrough.goToNextStep(key_step = "2");
+		}
+
+		task ("Then previous step button is present") {
+			AssertElementPresent(locator1 = "Button#PREVIOUS");
+		}
+
+		task ("And When click on previous step button") {
+			Click(locator1 = "Button#PREVIOUS");
+		}
+
+		task ("Then 1st step popover is present") {
+			AssertElementPresent(
+				key_title = "Step 1 of 5: Title 1",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And Then 2nd step popover is not present") {
+			AssertElementNotPresent(
+				key_title = "Step 2 of 5: Title 2",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
 	@description = "LPS-154642. Assert popover mode contains a title."
 	@priority = "5"
 	test CanDisplayTitle {
@@ -105,6 +137,44 @@ definition {
 				attribute1 = "fill",
 				locator1 = "Walkthrough#POPOVER_OVERLAY",
 				value1 = "#393a4a");
+		}
+	}
+
+	@description = "LPS-154646. Assert 1st step popover does not contain a button to transition to previous step."
+	@priority = "5"
+	test FirstStepDoesNotHavePreviousStepButton {
+		task ("And Given popover mode") {
+			Walkthrough.enablePopoverMode();
+		}
+
+		task ("When on 1st step popover") {
+			VerifyElementPresent(
+				key_title = "Step 1 of 5: Title 1",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("Then previous step button is not present") {
+			AssertElementNotPresent(locator1 = "Button#PREVIOUS");
+		}
+
+		task ("And Then the primary button next step is present") {
+			AssertElementPresent(locator1 = "Button#OK");
+		}
+
+		task ("And When click on next step button") {
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("Then 2nd step popover is present") {
+			AssertElementPresent(
+				key_title = "Step 2 of 5: Title 2",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And Then 1st step popover is not present") {
+			AssertElementNotPresent(
+				key_title = "Step 1 of 5: Title 1",
+				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 	}
 

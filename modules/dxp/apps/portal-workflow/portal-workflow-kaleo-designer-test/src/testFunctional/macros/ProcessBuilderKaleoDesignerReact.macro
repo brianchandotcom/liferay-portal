@@ -28,7 +28,6 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_BY_LABEL",
 				value1 = "0,0");
 		}
-
 		else {
 			MouseOver.mouseOverInvisible(
 				key_direction = "${direction}",
@@ -44,21 +43,18 @@ definition {
 		}
 
 		if (isSet(connectorInLabel)) {
-
 			MouseMove(
-				key_nodeType = "${nodeType}",
 				key_nodeLabel = "${connectorInLabel}",
+				key_nodeType = "${nodeType}",
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
 				value1 = "0,47");
 
 			MouseUp.mouseUpAt(
-				key_nodeType = "${nodeType}",
 				key_nodeLabel = "${connectorInLabel}",
+				key_nodeType = "${nodeType}",
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
 				value1 = "0,47");
-
 		}
-
 		else {
 			MouseMove(
 				key_nodeType = "${connectorIn}",

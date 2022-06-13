@@ -1834,38 +1834,35 @@ definition {
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
 			nodePosition = "600,-300");
-		
+
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-		
+
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
 			nodePosition = "300,-80");
-		
+
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
 			infoValue = "Task1");
-		
+
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-		
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task");
-		
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
 			infoValue = "Task2");
-		
+
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodeLabel = "Task2",
 			nodePosition = "-40,-500");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Join XOR");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Join XOR");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-		
+
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "fork",
 			connectorLabel = "Start-Fork Connector",
@@ -1875,35 +1872,35 @@ definition {
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorInLabel = "Task1",
 			connectorLabel = "Fork-Task1 Connector",
-			nodeType = "task",
 			connectorOut = "fork",
-			key_direction = "bottom");
+			key_direction = "bottom",
+			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorInLabel = "Task2",
 			connectorLabel = "Fork-Task2 Connector",
-			nodeType = "task",
 			connectorOut = "fork",
-			key_direction = "bottom");
-		
+			key_direction = "bottom",
+			nodeType = "task");
+
 		ProcessBuilderKaleoDesignerReact.addConnector(
-            connectorIn = "join-xor",
-            connectorLabel = "join XOR-Task1 Connector",
-            connectorOutLabel = "Task1",
-            key_direction = "right");
-		
+			connectorIn = "join-xor",
+			connectorLabel = "join XOR-Task1 Connector",
+			connectorOutLabel = "Task1",
+			key_direction = "right");
+
 		ProcessBuilderKaleoDesignerReact.addConnector(
-            connectorIn = "join-xor",
-            connectorLabel = "join XOR-Task2 Connector",
-            connectorOutLabel = "Task2",
-            key_direction = "right");
-		
+			connectorIn = "join-xor",
+			connectorLabel = "join XOR-Task2 Connector",
+			connectorOutLabel = "Task2",
+			key_direction = "right");
+
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "end",
 			connectorLabel = "join XOR-end Connector",
 			connectorOut = "join-xor",
 			key_direction = "right");
-		
+
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
@@ -1911,9 +1908,6 @@ definition {
 		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
-
-
-
 	}
 
 	@description = "Verify that the user can publish a definition with State node"

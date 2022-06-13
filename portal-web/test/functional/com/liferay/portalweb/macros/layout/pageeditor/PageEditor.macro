@@ -2444,6 +2444,8 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${field}");
 
+		PageEditor.waitForAutoSave();
+
 		AssertTextEquals(
 			key_text = "Label",
 			locator1 = "TextInput#ANY",
@@ -2454,25 +2456,29 @@ definition {
 				checkboxName = "Mark as Required",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "Mark as Required",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			PageEditor.waitForAutoSave();
 		}
 		else {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Mark as Required",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if ("${hideLabel}" == "true") {
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Show Label",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
 		}
 		else {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Label",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(label)) {
@@ -2480,17 +2486,27 @@ definition {
 				key_text = "Label",
 				locator1 = "TextInput#ANY",
 				value1 = "${label}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if ("${hideHelpText}" == "true") {
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Show Help Text",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
 		}
 		else {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Help Text",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(helpText)) {
@@ -2498,6 +2514,12 @@ definition {
 				key_label = "Help Text",
 				locator1 = "TextArea#ANY_LABELED",
 				value1 = "${helpText}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(placeholder)) {
@@ -2505,13 +2527,13 @@ definition {
 				key_text = "Placeholder",
 				locator1 = "TextInput#ANY",
 				value1 = "${placeholder}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
 		}
-
-		PageEditor.waitForAutoSave();
-
-		Click(
-			key_tab = "General",
-			locator1 = "NavTab#TAB_LINK");
 	}
 
 	macro editLayoutContainer {

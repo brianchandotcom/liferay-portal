@@ -194,7 +194,14 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		return null;
+		return _toObjectEntry(
+			companyId, _getDateFormat(),
+			_salesforceHttp.get(
+				companyId, getGroupId(objectDefinition, scopeKey),
+				StringBundler.concat(
+					"sobjects/",
+					_getSalesforceObjectName(objectDefinition.getName()), "/",
+					externalReferenceCode)));
 	}
 
 	@Override
@@ -217,6 +224,10 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
+	private DateFormat _getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	}
+
 	private String _getSalesforceObjectName(String objectDefinitionName) {
 		return StringUtil.removeFirst(objectDefinitionName, "C_") + "__c";
 	}
@@ -231,12 +242,10 @@ public class SalesforceObjectEntryManagerImpl
 			long companyId, JSONArray jsonArray)
 		throws Exception {
 
-		DateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
 		return JSONUtil.toList(
 			jsonArray,
-			jsonObject -> _toObjectEntry(companyId, dateFormat, jsonObject));
+			jsonObject -> _toObjectEntry(
+				companyId, _getDateFormat(), jsonObject));
 	}
 
 	private ObjectEntry _toObjectEntry(

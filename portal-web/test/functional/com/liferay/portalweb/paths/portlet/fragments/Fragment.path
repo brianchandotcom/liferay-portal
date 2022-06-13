@@ -138,6 +138,19 @@
 	<td></td>
 </tr>
 
+<!--FORM COMPONENTS-->
+
+<tr>
+	<td>FORM_CHECKBOX_LABEL</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'forms-checkbox')]//input[@type='checkbox']//following-sibling::label[normalize-space()='${fieldLabel}'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_CHECKBOX_LABEL_INVISIBLE</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'forms-checkbox')]//input[@type='checkbox']//following-sibling::label//span[contains(@class,'sr-only')][normalize-space()='${fieldLabel}'])[${index}]</td>
+	<td></td>
+</tr>
+
 <!--FRAGMENT_COMMENT-->
 
 <tr>

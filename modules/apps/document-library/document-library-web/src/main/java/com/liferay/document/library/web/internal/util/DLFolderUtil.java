@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryServiceUtil;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,7 +58,7 @@ public class DLFolderUtil {
 		}
 
 		List<Long> groupConnectedDepotEntries = ListUtil.toList(
-			DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+			DepotEntryLocalServiceUtil.getGroupConnectedDepotEntries(
 				scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			DepotEntry::getGroupId);
 

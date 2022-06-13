@@ -489,12 +489,42 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a relationship is updated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateOnResourceActionWhenEditRelationship {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153591",
+			objectName = "CustomObject153591",
+			pluralLabelName = "Custom Objects 153591");
 
-		// TODO LPS-153591 CanViewUpdateOnResourceActionWhenEditRelationship pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject153591",
+			objectName_2 = "CustomObject153591",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153591");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
+
+		CreateObject.editLabel(labelName = "New Relationship");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "New Relationship",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectRelationship",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectRelationship",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"

@@ -43,6 +43,7 @@ public class PostalAddressUtil {
 				addressLocality = address.getCity();
 				addressType = listType.getName();
 				id = address.getAddressId();
+				name = address.getName();
 				postalCode = address.getZip();
 				primary = address.isPrimary();
 				streetAddressLine1 = address.getStreet1();

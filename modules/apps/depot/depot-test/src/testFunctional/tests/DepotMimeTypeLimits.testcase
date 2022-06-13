@@ -144,6 +144,7 @@ definition {
 	@uitest
 	test SystemTakesEffectOverALLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
+		property test.name.skip.portal.instance = "DepotMimeTypeLimits#SystemTakesEffectOverALLimit";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = "10240",

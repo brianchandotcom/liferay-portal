@@ -169,6 +169,8 @@ definition {
 	@priority = "4"
 	@uitest
 	test InstanceTakesEffectOverSystemLimit {
+		property test.name.skip.portal.instance = "DMMimeTypeLimits#InstanceTakesEffectOverSystemLimit";
+
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = "30720",
 			mimeTypeValue = "application/pdf");

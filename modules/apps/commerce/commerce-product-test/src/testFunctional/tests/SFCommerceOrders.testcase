@@ -209,6 +209,72 @@ definition {
 		}
 	}
 
+	@description = "Verify the shipping and billing addresses of an order are present in the placed order details."
+	@priority = "3"
+	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer completes the checkout process for an order with a billing and shipping address set") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				billingAddressAddress = "Test Billing Address",
+				billingAddressCity = "Test Billing City",
+				billingAddressCountry = "United States",
+				billingAddressName = "Billing Address Name",
+				billingAddressZipCode = "Test Billing Zip Code",
+				newAddressAddress = "Test Shipping Address",
+				newAddressCity = "Test Shipping City",
+				newAddressCountry = "United States",
+				newAddressName = "Shipping Address Name",
+				newAddressZipCode = "Test Shipping Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer goes to the order details") {
+			Button.click(button = "Go to Order Details");
+		}
+
+		task ("Then the billing and shipping addresses of the order are shown") {
+			CommerceOrders.viewOrdersDetails(
+				billingAddressAddress = "Test Billing Address",
+				billingAddressCity = "Test Billing City",
+				billingAddressName = "Billing Address Name",
+				billingAddressZipCode = "Test Billing Zip Code",
+				shippingAddressAddress = "Test Shipping Address",
+				shippingAddressCity = "Test Shipping City",
+				shippingAddressName = "Shipping Address Name",
+				shippingAddressZipCode = "Test Shipping Zip Code");
+		}
+	}
+
 	@description = "Verify the Order Date Display configuration section is displayed in the Placed Orders widget."
 	@priority = "3"
 	test AssertOrderDateDisplayIsPresent {

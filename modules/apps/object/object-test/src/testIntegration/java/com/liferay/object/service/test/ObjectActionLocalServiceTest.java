@@ -52,6 +52,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 import org.junit.After;
@@ -482,6 +483,14 @@ public class ObjectActionLocalServiceTest {
 				clazz.getClassLoader(), new Class<?>[] {clazz},
 				(proxy, method, arguments) -> {
 					_argumentsList.add(arguments);
+
+					if (Objects.equals(
+							method.getDeclaringClass(),
+							GroovyScriptingExecutor.class) &&
+						Objects.equals(method.getName(), "execute")) {
+
+						return Collections.emptyMap();
+					}
 
 					return null;
 				}));

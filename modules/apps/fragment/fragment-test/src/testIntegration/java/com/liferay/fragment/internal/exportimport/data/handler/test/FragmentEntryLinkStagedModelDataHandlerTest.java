@@ -117,10 +117,6 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	public void testStageFragmentEntryLinkWithNoFragmentEntry()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
@@ -128,7 +124,9 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
+				StringPool.BLANK, 0, StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		try {
 			exportImportStagedModel(stagedModel);

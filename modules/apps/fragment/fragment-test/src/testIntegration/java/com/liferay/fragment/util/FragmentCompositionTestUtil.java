@@ -19,7 +19,6 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCompositionServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -37,16 +36,14 @@ public class FragmentCompositionTestUtil {
 			FragmentCollectionLocalServiceUtil.getFragmentCollection(
 				fragmentCollectionId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				fragmentCollection.getGroupId());
-
 		return FragmentCompositionServiceUtil.addFragmentComposition(
 			fragmentCollection.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				fragmentCollection.getGroupId()));
 	}
 
 }

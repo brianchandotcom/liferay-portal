@@ -20,28 +20,24 @@ export default function propsTransformer({
 	return {
 		...props,
 		onClick() {
-			const {faviconFileEntryTitleValue} = additionalProps;
+			const {faviconTitleValue} = additionalProps;
 
 			const faviconFileEntryId = document.getElementById(
 				`${portletNamespace}faviconFileEntryId`
 			);
 
-			const faviconFileEntryImage = document.getElementById(
-				`${portletNamespace}faviconFileEntryImage`
+			const faviconImage = document.getElementById(
+				`${portletNamespace}faviconImage`
 			);
 
-			const faviconFileEntryTitle = document.getElementById(
-				`${portletNamespace}faviconFileEntryTitle`
+			const faviconTitle = document.getElementById(
+				`${portletNamespace}faviconTitle`
 			);
 
-			if (
-				faviconFileEntryId &&
-				faviconFileEntryImage &&
-				faviconFileEntryTitle
-			) {
+			if (faviconFileEntryId && faviconImage && faviconTitle) {
 				faviconFileEntryId.value = '0';
-				faviconFileEntryImage.classList.add('d-none');
-				faviconFileEntryTitle.innerHTML = faviconFileEntryTitleValue;
+				faviconImage.classList.add('d-none');
+				faviconTitle.innerHTML = faviconTitleValue;
 			}
 		},
 	};

@@ -48,10 +48,10 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 <clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>
 
-	<img alt="<%= HtmlUtil.escape(layoutLookAndFeelDisplayContext.getFaviconFileEntryTitle()) %>" class="mb-2" height="16" id="<portlet:namespace />faviconFileEntryImage" src="<%= layoutLookAndFeelDisplayContext.getFaviconImage() %>" width="16" />
+	<img alt="<%= HtmlUtil.escape(layoutLookAndFeelDisplayContext.getFaviconTitle()) %>" class="mb-2" height="16" id="<portlet:namespace />faviconImage" src="<%= layoutLookAndFeelDisplayContext.getFaviconImage() %>" width="16" />
 
 	<p>
-		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconFileEntryTitle"><%= layoutLookAndFeelDisplayContext.getFaviconFileEntryTitle() %></span>
+		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconTitle"><%= layoutLookAndFeelDisplayContext.getFaviconTitle() %></span>
 	</p>
 
 	<clay:content-row>

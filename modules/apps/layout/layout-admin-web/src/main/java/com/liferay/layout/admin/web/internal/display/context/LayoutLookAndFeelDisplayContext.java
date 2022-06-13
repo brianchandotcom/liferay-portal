@@ -79,11 +79,36 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getClearFaviconButtonAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"faviconFileEntryTitleValue", _getClearFaviconButtonFileEntryTitle()
+			"faviconTitleValue", _getClearFaviconButtonTitle()
 		).build();
 	}
 
-	public String getFaviconFileEntryTitle() {
+	public String getFaviconImage() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		String faviconImage = selLayout.getFaviconURL();
+
+		if (faviconImage != null) {
+			return faviconImage;
+		}
+
+		Theme theme = null;
+
+		try {
+			theme = selLayout.getTheme();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
+	}
+
+	public String getFaviconTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
 		if (selLayout.getFaviconFileEntryId() > 0) {
@@ -123,31 +148,6 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
-	}
-
-	public String getFaviconImage() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		String faviconImage = selLayout.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		Theme theme = null;
-
-		try {
-			theme = selLayout.getTheme();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
 	}
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {
@@ -418,7 +418,7 @@ public class LayoutLookAndFeelDisplayContext {
 		return false;
 	}
 
-	private String _getClearFaviconButtonFileEntryTitle() {
+	private String _getClearFaviconButtonTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
 		if (hasEditableMasterLayout() &&

@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>FAVICON_NAME</td>
-	<td>//span[contains(@id,'faviconFileEntryTitle')][contains(.,'${faviconName}')]</td>
+	<td>//span[contains(@id,'faviconTitle')][contains(.,'${faviconName}')]</td>
 	<td></td>
 </tr>
 <tr>

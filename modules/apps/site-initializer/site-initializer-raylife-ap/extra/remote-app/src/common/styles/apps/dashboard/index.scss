@@ -1,0 +1,43 @@
+.ray-dashboard-recent-applications {
+	.ray-header-container {
+		button svg {
+			width: 10px;
+		}
+	}
+
+	.ray-table {
+		tbody {
+			tr {
+				td {
+					.bound {
+						background-color: #d9e4fe;
+					}
+
+					.underwriting {
+						background-color: #b5cdfe;
+					}
+
+					.quoted {
+						background-color: #81a8ff;
+					}
+
+					.reviewed {
+						background-color: #4c84ff;
+					}
+
+					.incomplete {
+						background-color: #1f77d4;
+					}
+
+					.rejected {
+						background-color: #191970;
+					}
+
+					.open {
+						background-color: #ff7f0e;
+					}
+				}
+			}
+		}
+	}
+}

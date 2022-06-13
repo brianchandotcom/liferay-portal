@@ -15,11 +15,11 @@
 import ReactDOM from 'react-dom';
 
 import ClayIconProvider from './common/context/ClayIconProvider';
-import Dashboard from './routes/dashboard/pages/Dashboard';
 
 import './common/styles/index.scss';
 import Applications from './routes/applications/pages/Applications';
 import Claims from './routes/claims/pages/Claims';
+import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import Policies from './routes/policies/pages/Policies';
 import Reports from './routes/reports/pages/Reports';
 
@@ -32,8 +32,8 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 
 	const routeEntry = SearchParams.get('raylife_dev_application') || route;
 
-	if (routeEntry === 'dashboard') {
-		return <Dashboard />;
+	if (routeEntry === 'recent-applications') {
+		return <RecentApplications />;
 	}
 
 	if (routeEntry === 'applications') {

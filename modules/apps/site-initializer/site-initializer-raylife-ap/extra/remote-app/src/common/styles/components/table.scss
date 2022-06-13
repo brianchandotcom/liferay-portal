@@ -1,0 +1,40 @@
+.ray-table {
+	thead th {
+		border-bottom: 1px solid #ccdae7;
+		font-size: 14px !important;
+	}
+
+	tbody {
+		td:after {
+			background-image: linear-gradient(
+				to right,
+				#aaa 0%,
+				#aaa 20%,
+				transparent 20%
+			);
+			background-position: 0 0;
+			background-repeat: repeat-x;
+			background-size: 6px 1px;
+			bottom: 0;
+			content: '';
+			height: 1px;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+
+		.cursor-pointer {
+			cursor: pointer;
+			text-decoration: underline;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+		.status-color {
+			height: 8px;
+			width: 8px;
+		}
+	}
+}

@@ -12,10 +12,16 @@
  * details.
  */
 
-const Dashboard = () => (
-	<div className="m-5">
-		<h1>Dashboard</h1>
-	</div>
-);
+import {CONSTANTS} from './constants';
 
-export default Dashboard;
+export default function formatDate(date, withSlash = false) {
+	const newDate = date.toISOString().substring(0, 10).split('-');
+
+	if (withSlash) {
+		return `${newDate[1]}/${newDate[2]}/${newDate[0]}`;
+	}
+
+	return `${CONSTANTS.MONTHS_ABREVIATIONS[date.getMonth()]} ${newDate[2]}, ${
+		newDate[0]
+	}`;
+}

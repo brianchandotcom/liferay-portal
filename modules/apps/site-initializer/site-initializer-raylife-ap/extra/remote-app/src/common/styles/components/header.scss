@@ -1,0 +1,11 @@
+.ray-header-container {
+	.header-title::after {
+		background-color: var(--primary);
+		content: '';
+		display: block;
+		height: 1px;
+		margin-top: 6px;
+		position: absolute;
+		width: 19px;
+	}
+}

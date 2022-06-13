@@ -41,12 +41,76 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the field created of the a relation is deleted, updated or created when a relationship is deleted, updated or created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAdditionalInformationRelatedRelationship {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153592",
+			objectName = "CustomObject153592",
+			pluralLabelName = "Custom Objects 153592");
 
-		// TODO LPS-153592 CanViewAdditionalInformationRelatedRelationship pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153592");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "CustomObject153592",
+			type = "One to Many");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Relationship",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectField",
+			resourceAction = "ADD",
+			resourceName = "ObjectField",
+			userName = "Test Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153592");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Relationship");
+
+		CreateObject.editLabel(labelName = "Update Relationship");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Update Relationship",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectField",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectField",
+			userName = "Test Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153592");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Update Relationship",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectField",
+			resourceAction = "DELETE",
+			resourceName = "ObjectField",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a relationship tab on layout is created"

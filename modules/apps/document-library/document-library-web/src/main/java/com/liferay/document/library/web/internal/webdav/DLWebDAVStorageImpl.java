@@ -1168,10 +1168,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
 			assetEntry.getEntryId());
 
-		long[] assetLinkEntryIds = ListUtil.toLongArray(
-			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		serviceContext.setAssetLinkEntryIds(
+			ListUtil.toLongArray(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR));
 
 		serviceContext.setAssetTagNames(
 			_assetTagLocalService.getTagNames(

@@ -176,10 +176,6 @@ public class FileEntryStagedModelDataHandlerTest
 						"enabled", true
 					).build())) {
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					liveGroup.getGroupId(), TestPropsValues.getUserId());
-
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -187,7 +183,9 @@ public class FileEntryStagedModelDataHandlerTest
 				ContentTypes.APPLICATION_OCTET_STREAM,
 				StringUtil.randomString(), StringPool.BLANK,
 				StringUtil.randomString(), StringUtil.randomString(),
-				new byte[0], null, null, serviceContext);
+				new byte[0], null, null,
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

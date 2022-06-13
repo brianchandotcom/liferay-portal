@@ -136,10 +136,6 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			() -> {
 				byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						group.getGroupId(), TestPropsValues.getUserId());
-
 				DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 					null, TestPropsValues.getUserId(), group.getGroupId(),
 					group.getGroupId(), parentFolder.getFolderId(),
@@ -148,7 +144,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 					StringPool.BLANK, StringPool.BLANK,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					null, null, new ByteArrayInputStream(bytes), bytes.length,
-					null, null, serviceContext);
+					null, null,
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), TestPropsValues.getUserId()));
 
 				FriendlyURLEntry friendlyURLEntry =
 					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

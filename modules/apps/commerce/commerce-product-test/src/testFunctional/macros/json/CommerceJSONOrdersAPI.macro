@@ -288,4 +288,27 @@ definition {
 		return "${ordersCount}";
 	}
 
+	macro _updateCommerceOrderERC {
+		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(commerceOrderId))) {
+			var commerceOrderId = CommerceJSONOrdersAPI._getCommerceOrder();
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/commerce.commerceorder/update-commerce-order-external-reference-code \
+			-u test@liferay.com:test \
+			-d externalReferenceCode='${externalReferenceCode}' \
+			-d commerceOrderId=${commerceOrderId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

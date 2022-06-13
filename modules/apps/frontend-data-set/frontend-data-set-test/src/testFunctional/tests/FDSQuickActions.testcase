@@ -49,7 +49,7 @@ definition {
 		}
 	}
 
-	@description = "155457. Assert that over mouse off of the table body quick action menu is not visible."
+	@description = "LPS-155457. Assert that over mouse off of the table body quick action menu is not visible."
 	@priority = "5"
 	test CanDisappearWhenNotHovered {
 		task ("When hover mouse off of the table body") {
@@ -63,7 +63,7 @@ definition {
 		}
 	}
 
-	@description = "155466. Assert that test-pencil is appended to browser URL after clicking."
+	@description = "LPS-155466. Assert that test-pencil is appended to browser URL after clicking."
 	@priority = "5"
 	test CanExecuteAnAction {
 		var portalURL = PropsUtil.get("portal.url");

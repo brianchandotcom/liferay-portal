@@ -52,9 +52,10 @@
 		<!-- Other fields -->
 
 		<column name="authServerWellKnownURI" type="String" />
+		<column name="authRequestParametersJSON" type="String" />
 		<column name="clientId" type="String" />
 		<column name="infoJSON" type="String" />
-		<column name="parametersJSON" type="String" />
+		<column name="tokenRequestParametersJSON" type="String" />
 
 		<!-- Finder methods -->
 

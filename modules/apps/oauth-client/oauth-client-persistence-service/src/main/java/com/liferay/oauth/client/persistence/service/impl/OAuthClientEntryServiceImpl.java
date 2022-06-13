@@ -44,8 +44,9 @@ public class OAuthClientEntryServiceImpl
 
 	@Override
 	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerWellKnownURI, String infoJSON,
-			String parametersJSON)
+			long userId, String authServerWellKnownURI,
+			String authRequestParametersJSON, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -54,7 +55,8 @@ public class OAuthClientEntryServiceImpl
 			OAuthClientPersistenceActionKeys.ACTION_ADD_OAUTH_CLIENT_ENTRY);
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
-			userId, authServerWellKnownURI, infoJSON, parametersJSON);
+			userId, authServerWellKnownURI, authRequestParametersJSON, infoJSON,
+			tokenRequestParametersJSON);
 	}
 
 	@Override
@@ -151,15 +153,16 @@ public class OAuthClientEntryServiceImpl
 	@Override
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authServerWellKnownURI,
-			String infoJSON, String parametersJSON)
+			String authRequestParametersJSON, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntryId, ActionKeys.UPDATE);
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
-			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
-			parametersJSON);
+			oAuthClientEntryId, authServerWellKnownURI,
+			authRequestParametersJSON, infoJSON, tokenRequestParametersJSON);
 	}
 
 	@Reference(

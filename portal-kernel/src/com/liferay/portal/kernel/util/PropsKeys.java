@@ -672,6 +672,9 @@ public interface PropsKeys {
 	public static final String DEFAULT_USER_PUBLIC_LAYOUTS_LAR =
 		"default.user.public.layouts.lar";
 
+	public static final String DEPENDENCY_MANAGER_SYNC_TIMEOUT =
+		"dependency.manager.sync.timeout";
+
 	public static final String DIRECT_SERVLET_CONTEXT_ENABLED =
 		"direct.servlet.context.enabled";
 

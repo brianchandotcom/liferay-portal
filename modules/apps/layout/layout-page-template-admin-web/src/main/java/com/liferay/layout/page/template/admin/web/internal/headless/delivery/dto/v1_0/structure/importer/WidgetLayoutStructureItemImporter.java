@@ -83,42 +83,42 @@ public class WidgetLayoutStructureItemImporter
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-147511")) &&
-				definitionMap.containsKey("cssClasses")) {
+			return fragmentStyledLayoutStructureItem;
+		}
 
-				List<String> cssClasses = (List<String>)definitionMap.get(
-					"cssClasses");
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511")) &&
+			definitionMap.containsKey("cssClasses")) {
 
-				fragmentStyledLayoutStructureItem.setCssClasses(
-					new HashSet<>(cssClasses));
-			}
+			List<String> cssClasses = (List<String>)definitionMap.get(
+				"cssClasses");
 
-			Map<String, Object> fragmentStyleMap =
-				(Map<String, Object>)definitionMap.get("fragmentStyle");
+			fragmentStyledLayoutStructureItem.setCssClasses(
+				new HashSet<>(cssClasses));
+		}
 
-			if (fragmentStyleMap != null) {
+		Map<String, Object> fragmentStyleMap =
+			(Map<String, Object>)definitionMap.get("fragmentStyle");
+
+		if (fragmentStyleMap != null) {
+			JSONObject jsonObject = JSONUtil.put(
+				"styles",
+				toStylesJSONObject(
+					layoutStructureItemImporterContext, fragmentStyleMap));
+
+			fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
+		}
+
+		if (definitionMap.containsKey("fragmentViewports")) {
+			List<Map<String, Object>> fragmentViewports =
+				(List<Map<String, Object>>)definitionMap.get(
+					"fragmentViewports");
+
+			for (Map<String, Object> fragmentViewport : fragmentViewports) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles",
-					toStylesJSONObject(
-						layoutStructureItemImporterContext, fragmentStyleMap));
+					(String)fragmentViewport.get("id"),
+					toFragmentViewportStylesJSONObject(fragmentViewport));
 
 				fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
-			}
-
-			if (definitionMap.containsKey("fragmentViewports")) {
-				List<Map<String, Object>> fragmentViewports =
-					(List<Map<String, Object>>)definitionMap.get(
-						"fragmentViewports");
-
-				for (Map<String, Object> fragmentViewport : fragmentViewports) {
-					JSONObject jsonObject = JSONUtil.put(
-						(String)fragmentViewport.get("id"),
-						toFragmentViewportStylesJSONObject(fragmentViewport));
-
-					fragmentStyledLayoutStructureItem.updateItemConfig(
-						jsonObject);
-				}
 			}
 		}
 

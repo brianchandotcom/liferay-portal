@@ -123,12 +123,57 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout tab is created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAdditionalInformationRelatedTabLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153596",
+			objectName = "CustomObject153596",
+			pluralLabelName = "Custom Objects 153596");
 
-		// TODO LPS-153596 CanViewAdditionalInformationRelatedTabLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153596");
 
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Custom Layout",
+			objectName = "CustomObject153596");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153596");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Custom Layout");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Field Tab",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectLayoutTab",
+			resourceAction = "ADD",
+			resourceName = "ObjectLayoutTab",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the custom view is add when of the custom view is duplicated"

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -74,11 +72,10 @@ public class CommerceThemeMiniumHttpHelper {
 	public String getNotificationsURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, UserNotificationEvent.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		return portletURL.toString();
+		return String.valueOf(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, UserNotificationEvent.class.getName(),
+				PortletProvider.Action.VIEW));
 	}
 
 	@Reference

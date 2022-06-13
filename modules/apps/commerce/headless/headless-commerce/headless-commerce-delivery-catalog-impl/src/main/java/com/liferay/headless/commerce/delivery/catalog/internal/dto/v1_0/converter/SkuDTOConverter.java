@@ -224,14 +224,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	private SkuOption[] _getSkuOptions(CPInstance cpInstance) throws Exception {
 		List<SkuOption> skuOptions = new ArrayList<>();
 
-		Map<String, List<String>>
-			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
-				_cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
-						cpInstance.getCPInstanceId());
-
 		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
-			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
+			_cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+					cpInstance.getCPInstanceId()));
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelsMap =

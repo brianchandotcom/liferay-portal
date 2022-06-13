@@ -18,7 +18,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 /**
  * @author Guilherme Camacho
@@ -36,7 +35,7 @@ public class ObjectDefinitionPermissionUtil {
 
 		return objectEntryService.hasModelResourcePermission(
 			objectDefinition.getObjectDefinitionId(), objectEntry.getId(),
-			ActionKeys.UPDATE);
+			actionId);
 	}
 
 }

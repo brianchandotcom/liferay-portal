@@ -91,6 +91,7 @@ export default function CSSClassSelectorField({
 					onChange={setValue}
 					onFocus={() => {
 						setDropdownActive(false);
+						setValue((previousValue) => previousValue.trim());
 					}}
 					onItemsChange={(items) => {
 						setItems(items);

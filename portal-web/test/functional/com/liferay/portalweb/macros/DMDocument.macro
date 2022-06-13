@@ -2690,7 +2690,7 @@ definition {
 		}
 
 		Type(
-			key_fieldLabel = "Maximum File Size",
+			key_fieldLabel = "File Max Size",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${fieldValue}");
 

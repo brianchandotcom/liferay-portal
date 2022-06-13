@@ -451,12 +451,31 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAddOnResourceActionWhenAddView {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153600",
+			objectName = "CustomObject153600",
+			pluralLabelName = "Custom Objects 153600");
 
-		// TODO LPS-153600 CanViewAddOnResourceActionWhenAddView pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153600");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Views,false",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectView",
+			resourceAction = "ADD",
+			resourceName = "ObjectView",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"

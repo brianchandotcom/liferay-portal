@@ -105,6 +105,7 @@ definition {
 	@description = "This ensures that an old image friendlyURL redirects properly after document is reverted."
 	@priority = "5"
 	test CanAccessOldFriendlyURLAfterRevert {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 

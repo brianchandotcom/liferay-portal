@@ -85,6 +85,51 @@ definition {
 		}
 	}
 
+	@description = "Aggregation Terms in oneToMany relationship after object deletion"
+	@priority = "5"
+	test CanReturnAggregationTermsDetailsInOneToManyRelationshipAfterObjectDeletion {
+		property portal.acceptance = "true";
+
+		task ("Given two manager accounts created") {
+			var managerId1 = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
+			var managerId2 = ObjectDefinitionAPI.createManager(managerFirstname = "Aaron");
+		}
+
+		task ("Given three employee accounts created with two of them related with the same manager") {
+			var employeeId1 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Bruce",
+				managerId = "${managerId1}");
+			var employeeId2 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Riley",
+				managerId = "${managerId2}");
+			var employeeId3 = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Justin",
+				managerId = "${managerId2}");
+		}
+
+		task ("Given deleting one of the employees related with the same manager") {
+			ObjectDefinitionAPI.deleteEmployee(employeeId = "${employeeId3}");
+		}
+
+		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {
+			var getFacetsWithManagerId = ObjectDefinitionAPI.getObjectsWithAggregationTerms(
+				aggregationTermsValue = "managerId",
+				objects = "employees");
+		}
+
+		task ("Then both managerId in facets have value 1 as the number of ocurrences") {
+			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
+				expectedValue = "1",
+				managerId = "${managerId1}",
+				responseToParse = "${getFacetsWithManagerId}");
+
+			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
+				expectedValue = "1",
+				managerId = "${managerId2}",
+				responseToParse = "${getFacetsWithManagerId}");
+		}
+	}
+
 	@description = "Nested fields in oneToMany relationship"
 	@priority = "5"
 	test CanReturnNestedFieldsDetailsInOneToManyRelationship {

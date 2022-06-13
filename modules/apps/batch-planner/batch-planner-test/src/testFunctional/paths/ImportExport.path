@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_EXPORT_STATUS</td>
+	<td>//span[contains(@class,'label-item-expand')][contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPORT_MAPPING_SELECT</td>
 	<td>//div[contains(@class,'import-mapping-table')]//select[contains(@id,'input-field-${key_destinationField}')]</td>
 	<td></td>

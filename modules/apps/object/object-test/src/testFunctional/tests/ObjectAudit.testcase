@@ -215,12 +215,68 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a relationship tab on layout is created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAdditionalInformationRelatedRelationshipTabOnLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153599",
+			objectName = "CustomObject153599",
+			pluralLabelName = "Custom Objects 153599");
 
-		// TODO LPS-153599 CanViewAdditionalInformationRelatedRelationshipTabOnLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153599");
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject153599",
+			objectName_2 = "CustomObject153599",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Custom Layout",
+			objectName = "CustomObject153599");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153599");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Custom Layout");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldList = "Custom Field,Relationship",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Relationship Tab,objectLayoutId,objectRelationshipId",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectLayoutTab",
+			resourceAction = "ADD",
+			resourceName = "ObjectLayoutTab",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout tab is created"

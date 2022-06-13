@@ -77,6 +77,9 @@
 		<suppress checks="JavaHelperUtilCheck" files="portal-kernel/src/com/liferay/portal/kernel/settings/SettingsLocatorHelperUtil\.java" />
 		<suppress checks="JavaIllegalImportsCheck" files="util-slf4j/src/com/liferay/util/slf4j/LiferayLoggerFactory\.java" />
 		<suppress checks="JavaMetaAnnotationsCheck" files="modules/apps/portal-configuration/portal-configuration-metatype-definitions-test/src/testIntegration/java/com/liferay/portal/configuration/metatype/definitions/test/MetatypeAttributeDefinitionTest\.java" />
+		<suppress checks="JavaModuleClassGetResourceCallCheck" files="modules/apps/dispatch/dispatch-talend-api/src/test/java/com/liferay/dispatch/talend/TalendArchiveUtil\.java" />
+		<suppress checks="JavaModuleClassGetResourceCallCheck" files="modules/apps/dispatch/dispatch-talend-web/src/test/java/com/liferay/dispatch/talend/web/internal/process/TalendProcessTest\.java" />
+		<suppress checks="JavaModuleClassGetResourceCallCheck" files="modules/core/portal-bootstrap/src/main/java/com/liferay/portal/bootstrap/ModuleFrameworkImpl\.java" />
 		<suppress checks="JavaStaticMethodCheck" files="portal-impl/src/com/liferay/portal/struts/FindStrutsAction\.java" />
 		<suppress checks="JavaStringBundlerConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="JavaStringBundlerInitialCapacityCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />

@@ -2105,6 +2105,32 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Organization"]
+    "/accounts/{accountId}/postal-addresses":
+        get:
+            description:
+                Retrieves the account's postal addresses.
+            operationId: getAccountPostalAddressesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+            tags: ["PostalAddress"]
     "/accounts/{accountId}/user-accounts":
         get:
             # @review

@@ -77,12 +77,68 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout field is created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAdditionalInformationRelatedFieldLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153598",
+			objectName = "CustomObject153598",
+			pluralLabelName = "Custom Objects 153598");
 
-		// TODO LPS-153598 CanViewAdditionalInformationRelatedFieldLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153598");
 
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Custom Layout",
+			objectName = "CustomObject153598");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153598");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Custom Layout");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "objectLayoutBoxId",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectLayoutRow",
+			resourceAction = "ADD",
+			resourceName = "ObjectLayoutRow",
+			userName = "Test Test");
+
+		Navigator.gotoBack();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "objectLayoutRowId,objectFieldId",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectLayoutColumn",
+			resourceAction = "ADD",
+			resourceName = "ObjectLayoutColumn",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the field created of the a relation is deleted, updated or created when a relationship is deleted, updated or created"

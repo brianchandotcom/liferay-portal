@@ -368,15 +368,13 @@ public class CookiesManagerImpl implements CookiesManager {
 		throws UnsupportedCookieException {
 
 		if (_SESSION_ENABLE_PERSISTENT_COOKIES &&
-			_SESSION_TEST_COOKIE_SUPPORT) {
+			_SESSION_TEST_COOKIE_SUPPORT &&
+			Validator.isNull(
+				getCookieValue(
+					CookiesConstants.NAME_COOKIE_SUPPORT, httpServletRequest,
+					false))) {
 
-			String cookieValue = getCookieValue(
-				CookiesConstants.NAME_COOKIE_SUPPORT, httpServletRequest,
-				false);
-
-			if (Validator.isNull(cookieValue)) {
-				throw new UnsupportedCookieException();
-			}
+			throw new UnsupportedCookieException();
 		}
 	}
 

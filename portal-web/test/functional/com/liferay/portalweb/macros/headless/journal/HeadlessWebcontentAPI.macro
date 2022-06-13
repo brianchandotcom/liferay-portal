@@ -212,24 +212,6 @@ definition {
 		return "${curl}";
 	}
 
-	macro _versionStructuredContent {
-		Variables.assertDefined(parameterList = "${versionvalue},${responseToParse}");
-
-		var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
-
-		var portalURL = JSONCompany.getDefaultPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${structuredContentId}/by-version/${versionvalue} \
-			-u test@liferay.com:test \
-			-H accept: application/json
-		''';
-
-		var curl = JSONCurlUtil.get("${curl}");
-
-		return "${curl}";
-	}
-
 	macro _sortStructureContent {
 		Variables.assertDefined(parameterList = "${sortvalue}");
 
@@ -240,6 +222,23 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents?sort=${sortvalue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _versionStructuredContent {
+		Variables.assertDefined(parameterList = "${versionvalue},${responseToParse}");
+
+		var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${structuredContentId}/by-version/${versionvalue} \
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';

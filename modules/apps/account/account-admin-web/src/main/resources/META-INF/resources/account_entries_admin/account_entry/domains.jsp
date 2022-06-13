@@ -136,6 +136,9 @@ List<String> domains = accountEntryDisplay.getDomains();
 			event.preventDefault();
 
 			Liferay.Util.openModal({
+				containerProps: {
+					className: '',
+				},
 				customEvents: [
 					{
 						name:
@@ -169,6 +172,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 					},
 				],
 				id: '<%= liferayPortletResponse.getNamespace() %>addDomains',
+				iframeBodyCssClass: '',
 				title: '<liferay-ui:message key="add-domain" />',
 				url:
 					'<%=

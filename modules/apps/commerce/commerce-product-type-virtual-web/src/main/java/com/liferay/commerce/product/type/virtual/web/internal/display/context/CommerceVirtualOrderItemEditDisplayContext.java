@@ -166,11 +166,10 @@ public class CommerceVirtualOrderItemEditDisplayContext {
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "uploadCommerceVirtualOrderItem",
-			fileItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				"uploadCommerceVirtualOrderItem", fileItemSelectorCriterion));
 	}
 
 	private final CommerceOrder _commerceOrder;

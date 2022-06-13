@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -189,11 +188,10 @@ public class CPDefinitionVirtualSettingDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "uploadCPDefinitionVirtualSetting",
-			fileItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				"uploadCPDefinitionVirtualSetting", fileItemSelectorCriterion));
 	}
 
 	public JournalArticle getJournalArticle() throws PortalException {

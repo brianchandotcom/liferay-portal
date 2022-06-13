@@ -494,6 +494,10 @@ components:
                         The address's ID.
                     format: int64
                     type: integer
+                name:
+                    description:
+                        The address's name.
+                    type: string
                 postalCode:
                     description:
                         The address's postal code (e.g., zip code).

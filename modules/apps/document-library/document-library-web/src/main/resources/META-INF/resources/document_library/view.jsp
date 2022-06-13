@@ -408,3 +408,5 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>
 </c:choose>
+
+<%@ include file="/document_library/friendly_url_changed_message.jspf" %>

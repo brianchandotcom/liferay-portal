@@ -116,4 +116,33 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test StructuredContentDraftByVersionContainsSetPriority {
+		property portal.acceptance = "true";
+
+		task ("When in Headless Admin Content I create a structuredContent draft with a priority field set") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(
+				data = "Text",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				priority = "1",
+				title = "Title");
+		}
+
+		task ("When web contents are filtered with 1.0 version") {
+			var response = HeadlessWebcontentAPI.filterStructuredVersion(
+				responseToParse = "${responseToParse}",
+				versionvalue = "1.0");
+		}
+		
+		task ("Then the response body includes the set priority") {
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
+				expectedPriorityValue = "1.0",
+				responseToParse = "${response}");
+		}
+	}
+
 }

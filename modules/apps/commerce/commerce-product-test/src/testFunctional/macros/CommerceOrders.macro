@@ -547,17 +547,23 @@ definition {
 	}
 
 	macro viewOrdersDetails {
-		AssertElementPresent(
-			key_productSku = "${productSku}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU");
+		if (isSet(productSku)) {
+			AssertElementPresent(
+				key_productSku = "${productSku}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU");
+		}
 
-		AssertElementPresent(
-			key_productName = "${productName}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		if (isSet(productName)) {
+			AssertElementPresent(
+				key_productName = "${productName}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
 
-		AssertElementPresent(
-			key_productListPrice = "${productListPrice}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE");
+		if (isSet(productListPrice)) {
+			AssertElementPresent(
+				key_productListPrice = "${productListPrice}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE");
+		}
 
 		if (isSet(productDiscount)) {
 			AssertElementPresent(
@@ -565,13 +571,65 @@ definition {
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT");
 		}
 
-		AssertElementPresent(
-			key_productQuantity = "${productQuantity}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+		if (isSet(productQuantity)) {
+			AssertElementPresent(
+				key_productQuantity = "${productQuantity}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+		}
 
-		AssertElementPresent(
-			key_productTotalPrice = "${productTotalPrice}",
-			locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE");
+		if (isSet(productTotalPrice)) {
+			AssertElementPresent(
+				key_productTotalPrice = "${productTotalPrice}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE");
+		}
+
+		if (isSet(shippingAddressName)) {
+			AssertElementPresent(
+				key_addressInfo = "${shippingAddressName}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
+		}
+
+		if (isSet(shippingAddressAddress)) {
+			AssertElementPresent(
+				key_addressInfo = "${shippingAddressAddress}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
+		}
+
+		if (isSet(shippingAddressCity)) {
+			AssertElementPresent(
+				key_addressInfo = "${shippingAddressCity}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
+		}
+
+		if (isSet(shippingAddressZipCode)) {
+			AssertElementPresent(
+				key_addressInfo = "${shippingAddressZipCode}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
+		}
+
+		if (isSet(billingAddressName)) {
+			AssertElementPresent(
+				key_addressInfo = "${billingAddressName}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
+		}
+
+		if (isSet(billingAddressAddress)) {
+			AssertElementPresent(
+				key_addressInfo = "${billingAddressAddress}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
+		}
+
+		if (isSet(billingAddressCity)) {
+			AssertElementPresent(
+				key_addressInfo = "${billingAddressCity}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
+		}
+
+		if (isSet(billingAddressZipCode)) {
+			AssertElementPresent(
+				key_addressInfo = "${billingAddressZipCode}",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
+		}
 	}
 
 	macro viewOrdersEntry {

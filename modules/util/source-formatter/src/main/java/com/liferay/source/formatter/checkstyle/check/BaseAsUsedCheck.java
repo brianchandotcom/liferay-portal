@@ -62,8 +62,14 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 				chainStyle = true;
 			}
 			else {
-				if ((getStartLineNumber(assignExpressionDetailAST) !=
-						getEndLineNumber(assignExpressionDetailAST)) ||
+				if (((getStartLineNumber(assignExpressionDetailAST) !=
+						getEndLineNumber(assignExpressionDetailAST)) &&
+					 (hasParentWithTokenType(
+						 identDetailAST, ARITHMETIC_OPERATOR_TOKEN_TYPES) ||
+					  hasParentWithTokenType(
+						  identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES)) &&
+					 hasParentWithTokenType(
+						 identDetailAST, TokenTypes.METHOD_CALL)) ||
 					(_isInsideStatementClause(identDetailAST) &&
 					 hasParentWithTokenType(
 						 identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES))) {

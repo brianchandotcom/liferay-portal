@@ -671,12 +671,33 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDeleteOnResourceActionWhenDeleteView {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153600",
+			objectName = "CustomObject153600",
+			pluralLabelName = "Custom Objects 153600");
 
-		// TODO LPS-153601 CanViewDeleteOnResourceActionWhenDeleteView pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153600");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.deleteObjectCustomViewViaUI(viewLabel = "Custom Views");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Views,false",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectView",
+			resourceAction = "DELETE",
+			resourceName = "ObjectView",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"

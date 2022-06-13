@@ -142,4 +142,15 @@ public interface JournalServiceConfiguration {
 	)
 	public boolean enableContentTransformerListener();
 
+	@Meta.AD(
+		deflt = "0", name = "terms-of-use-journal-article-group-id",
+		required = false
+	)
+	public long termsOfUseJournalArticleGroupId();
+
+	@Meta.AD(
+		deflt = "", name = "terms-of-use-journal-article-id", required = false
+	)
+	public String termsOfUseJournalArticleId();
+
 }

@@ -56,6 +56,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,6 +82,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -98,8 +101,10 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -942,6 +947,36 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		return expirationDate;
 	}
 
+	private void _getFriendlyURLChangedMessage(
+		ActionRequest actionRequest, String originalFriendlyURL,
+		long fileEntryId) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				fileEntryId);
+
+		String currentFriendlyURL = friendlyURLEntry.getUrlTitle();
+
+		if (Validator.isNotNull(originalFriendlyURL) &&
+			!currentFriendlyURL.equals(
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					originalFriendlyURL))) {
+
+			MultiSessionMessages.add(
+				actionRequest, "friendlyURLChanged",
+				_language.format(
+					_portal.getHttpServletRequest(actionRequest),
+					"the-following-friendly-url-x-was-changed-to-x-to-ensure-" +
+						"uniqueness",
+					new Object[] {
+						"<strong>" + _html.escapeURL(originalFriendlyURL) +
+							"</strong>",
+						"<strong>" + currentFriendlyURL + "</strong>"
+					}));
+		}
+	}
+
 	private Date _getReviewDate(
 			UploadPortletRequest uploadPortletRequest,
 			boolean neverReviewDefaultValue, TimeZone timeZone)
@@ -1370,6 +1405,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, portletResource + "requestProcessed");
 			}
 
+			if (_ffFriendlyURLEntryFileEntryConfiguration.enabled() &&
+				Validator.isNotNull(urlTitle)) {
+
+				_getFriendlyURLChangedMessage(
+					actionRequest, urlTitle, fileEntry.getFileEntryId());
+			}
+
 			return fileEntry;
 		}
 	}
@@ -1394,6 +1436,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private AssetDisplayPageEntryFormProcessor
 		_assetDisplayPageEntryFormProcessor;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;
@@ -1423,6 +1468,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private volatile FFFriendlyURLEntryFileEntryConfiguration
 		_ffFriendlyURLEntryFileEntryConfiguration;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Language _language;

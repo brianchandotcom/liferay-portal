@@ -131,6 +131,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLACED_ORDERS_DETAILS_BILLING_ADDRESS</td>
+	<td>//div[@class='commerce-panel__title'][text()='Billing Address']/following-sibling::div/p[contains(.,'${key_addressInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS</td>
+	<td>//div[@class='commerce-panel__title'][text()='Shipping Address']/following-sibling::div/p[contains(.,'${key_addressInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLACED_ORDERS_LIST_DATE</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::div[4]</td>
 	<td></td>

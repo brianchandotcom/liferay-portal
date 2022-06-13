@@ -1438,9 +1438,26 @@ public abstract class BaseCommentResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			commentUnsafeConsumer = comment -> postBlogPostingComment(
-				Long.parseLong((String)parameters.get("blogPostingId")),
-				comment);
+			if (parameters.containsKey("blogPostingId")) {
+				commentUnsafeConsumer = comment -> postBlogPostingComment(
+					Long.parseLong((String)parameters.get("blogPostingId")),
+					comment);
+			}
+			else if (parameters.containsKey("documentId")) {
+				commentUnsafeConsumer = comment -> postDocumentComment(
+					Long.parseLong((String)parameters.get("documentId")),
+					comment);
+			}
+			else if (parameters.containsKey("structuredContentId")) {
+				commentUnsafeConsumer = comment -> postStructuredContentComment(
+					Long.parseLong(
+						(String)parameters.get("structuredContentId")),
+					comment);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [blogPostingId, documentId, structuredContentId]");
+			}
 		}
 
 		if (commentUnsafeConsumer == null) {
@@ -1503,9 +1520,25 @@ public abstract class BaseCommentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getBlogPostingCommentsPage(
-			Long.parseLong((String)parameters.get("blogPostingId")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("blogPostingId")) {
+			return getBlogPostingCommentsPage(
+				Long.parseLong((String)parameters.get("blogPostingId")), search,
+				null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("documentId")) {
+			return getDocumentCommentsPage(
+				Long.parseLong((String)parameters.get("documentId")), search,
+				null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("structuredContentId")) {
+			return getStructuredContentCommentsPage(
+				Long.parseLong((String)parameters.get("structuredContentId")),
+				search, null, filter, pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [blogPostingId, documentId, structuredContentId]");
+		}
 	}
 
 	@Override

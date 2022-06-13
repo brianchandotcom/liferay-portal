@@ -1478,12 +1478,17 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			messageBoardMessageUnsafeConsumer =
-				messageBoardMessage ->
+			if (parameters.containsKey("messageBoardThreadId")) {
+				messageBoardMessageUnsafeConsumer = messageBoardMessage ->
 					postMessageBoardThreadMessageBoardMessage(
 						Long.parseLong(
 							(String)parameters.get("messageBoardThreadId")),
 						messageBoardMessage);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [messageBoardThreadId]");
+			}
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
@@ -1565,10 +1570,14 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				Boolean.parseBoolean((String)parameters.get("flatten")), search,
 				null, filter, pagination, sorts);
 		}
-		else {
+		else if (parameters.containsKey("messageBoardThreadId")) {
 			return getMessageBoardThreadMessageBoardMessagesPage(
 				Long.parseLong((String)parameters.get("messageBoardThreadId")),
 				search, null, filter, pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId, messageBoardThreadId]");
 		}
 	}
 

@@ -411,8 +411,14 @@ public abstract class BaseSLAResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			slaUnsafeConsumer = sla -> postProcessSLA(
-				Long.parseLong((String)parameters.get("processId")), sla);
+			if (parameters.containsKey("processId")) {
+				slaUnsafeConsumer = sla -> postProcessSLA(
+					Long.parseLong((String)parameters.get("processId")), sla);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [processId]");
+			}
 		}
 
 		if (slaUnsafeConsumer == null) {
@@ -475,9 +481,15 @@ public abstract class BaseSLAResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessSLAsPage(
-			Long.parseLong((String)parameters.get("processId")),
-			Integer.parseInt((String)parameters.get("status")), pagination);
+		if (parameters.containsKey("processId")) {
+			return getProcessSLAsPage(
+				Long.parseLong((String)parameters.get("processId")),
+				Integer.parseInt((String)parameters.get("status")), pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [processId]");
+		}
 	}
 
 	@Override

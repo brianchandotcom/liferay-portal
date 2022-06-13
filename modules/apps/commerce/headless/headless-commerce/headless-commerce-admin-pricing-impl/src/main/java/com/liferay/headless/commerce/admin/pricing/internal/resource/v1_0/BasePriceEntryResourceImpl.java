@@ -519,6 +519,9 @@ public abstract class BasePriceEntryResourceImpl
 			java.util.Collection<PriceEntry> priceEntries,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -565,7 +568,8 @@ public abstract class BasePriceEntryResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

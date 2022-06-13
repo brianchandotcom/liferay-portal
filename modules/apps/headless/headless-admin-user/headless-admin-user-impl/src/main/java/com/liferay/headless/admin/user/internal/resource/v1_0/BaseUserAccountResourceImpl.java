@@ -1391,9 +1391,15 @@ public abstract class BaseUserAccountResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			userAccountUnsafeConsumer = userAccount -> postAccountUserAccount(
-				Long.parseLong((String)parameters.get("accountId")),
+			userAccountUnsafeConsumer = userAccount -> postUserAccount(
 				userAccount);
+
+			if (parameters.containsKey("accountId")) {
+				userAccountUnsafeConsumer =
+					userAccount -> postAccountUserAccount(
+						Long.parseLong((String)parameters.get("accountId")),
+						userAccount);
+			}
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
@@ -1468,10 +1474,18 @@ public abstract class BaseUserAccountResourceImpl
 				(Long)parameters.get("siteId"), search, filter, pagination,
 				sorts);
 		}
-		else {
+		else if (parameters.containsKey("accountId")) {
 			return getAccountUserAccountsPage(
 				Long.parseLong((String)parameters.get("accountId")), search,
 				filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("organizationId")) {
+			return getOrganizationUserAccountsPage(
+				(String)parameters.get("organizationId"), search, filter,
+				pagination, sorts);
+		}
+		else {
+			return getUserAccountsPage(search, filter, pagination, sorts);
 		}
 	}
 

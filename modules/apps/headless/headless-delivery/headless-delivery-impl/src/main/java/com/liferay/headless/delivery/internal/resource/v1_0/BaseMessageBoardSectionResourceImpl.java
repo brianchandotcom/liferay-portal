@@ -1007,13 +1007,14 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			messageBoardSectionUnsafeConsumer = messageBoardSection -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				messageBoardSectionUnsafeConsumer =
 					messageBoardSection -> postSiteMessageBoardSection(
 						(Long)parameters.get("siteId"), messageBoardSection);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -1087,7 +1088,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				null, filter, pagination, sorts);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 

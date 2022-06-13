@@ -356,14 +356,15 @@ public abstract class BaseBlogPostingImageResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			blogPostingImageUnsafeConsumer = blogPostingImage -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				blogPostingImageUnsafeConsumer =
 					blogPostingImage -> postSiteBlogPostingImage(
 						(Long)parameters.get("siteId"),
 						(MultipartBody)parameters.get("multipartBody"));
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -434,7 +435,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 				pagination, sorts);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 
@@ -465,6 +467,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 			java.util.Collection<BlogPostingImage> blogPostingImages,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

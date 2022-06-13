@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -175,6 +176,9 @@ public abstract class BasePhoneResourceImpl
 			java.util.Collection<Phone> phones,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -182,6 +186,9 @@ public abstract class BasePhoneResourceImpl
 			java.util.Collection<Phone> phones,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -217,8 +224,18 @@ public abstract class BasePhoneResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getOrganizationPhonesPage(
-			(String)parameters.get("organizationId"));
+		if (parameters.containsKey("organizationId")) {
+			return getOrganizationPhonesPage(
+				(String)parameters.get("organizationId"));
+		}
+		else if (parameters.containsKey("userAccountId")) {
+			return getUserAccountPhonesPage(
+				Long.parseLong((String)parameters.get("userAccountId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [organizationId, userAccountId]");
+		}
 	}
 
 	@Override
@@ -248,6 +265,9 @@ public abstract class BasePhoneResourceImpl
 			java.util.Collection<Phone> phones,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

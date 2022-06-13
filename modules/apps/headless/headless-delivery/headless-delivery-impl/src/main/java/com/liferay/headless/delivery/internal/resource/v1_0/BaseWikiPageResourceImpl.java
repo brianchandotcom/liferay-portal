@@ -798,8 +798,15 @@ public abstract class BaseWikiPageResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			wikiPageUnsafeConsumer = wikiPage -> postWikiNodeWikiPage(
-				Long.parseLong((String)parameters.get("wikiNodeId")), wikiPage);
+			if (parameters.containsKey("wikiNodeId")) {
+				wikiPageUnsafeConsumer = wikiPage -> postWikiNodeWikiPage(
+					Long.parseLong((String)parameters.get("wikiNodeId")),
+					wikiPage);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [wikiNodeId]");
+			}
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
@@ -871,9 +878,15 @@ public abstract class BaseWikiPageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getWikiNodeWikiPagesPage(
-			Long.parseLong((String)parameters.get("wikiNodeId")), search, null,
-			filter, pagination, sorts);
+		if (parameters.containsKey("wikiNodeId")) {
+			return getWikiNodeWikiPagesPage(
+				Long.parseLong((String)parameters.get("wikiNodeId")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [wikiNodeId]");
+		}
 	}
 
 	@Override

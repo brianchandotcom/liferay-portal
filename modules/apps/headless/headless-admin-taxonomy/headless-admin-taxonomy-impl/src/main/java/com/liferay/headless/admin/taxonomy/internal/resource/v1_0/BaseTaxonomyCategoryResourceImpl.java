@@ -965,11 +965,17 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			taxonomyCategoryUnsafeConsumer =
-				taxonomyCategory -> postTaxonomyVocabularyTaxonomyCategory(
-					Long.parseLong(
-						(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyCategory);
+			if (parameters.containsKey("taxonomyVocabularyId")) {
+				taxonomyCategoryUnsafeConsumer =
+					taxonomyCategory -> postTaxonomyVocabularyTaxonomyCategory(
+						Long.parseLong(
+							(String)parameters.get("taxonomyVocabularyId")),
+						taxonomyCategory);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [taxonomyVocabularyId]");
+			}
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
@@ -1044,7 +1050,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

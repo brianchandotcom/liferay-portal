@@ -421,11 +421,18 @@ public abstract class BaseObjectRelationshipResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			objectRelationshipUnsafeConsumer =
-				objectRelationship -> postObjectDefinitionObjectRelationship(
-					Long.parseLong(
-						(String)parameters.get("objectDefinitionId")),
-					objectRelationship);
+			if (parameters.containsKey("objectDefinitionId")) {
+				objectRelationshipUnsafeConsumer =
+					objectRelationship ->
+						postObjectDefinitionObjectRelationship(
+							Long.parseLong(
+								(String)parameters.get("objectDefinitionId")),
+							objectRelationship);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [objectDefinitionId]");
+			}
 		}
 
 		if (objectRelationshipUnsafeConsumer == null) {
@@ -489,9 +496,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionObjectRelationshipsPage(
-			Long.parseLong((String)parameters.get("objectDefinitionId")),
-			search, filter, pagination);
+		if (parameters.containsKey("objectDefinitionId")) {
+			return getObjectDefinitionObjectRelationshipsPage(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				search, filter, pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [objectDefinitionId]");
+		}
 	}
 
 	@Override

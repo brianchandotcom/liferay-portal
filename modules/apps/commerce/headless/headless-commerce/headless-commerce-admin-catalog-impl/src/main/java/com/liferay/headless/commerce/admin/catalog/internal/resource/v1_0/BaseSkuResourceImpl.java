@@ -561,6 +561,9 @@ public abstract class BaseSkuResourceImpl
 			java.util.Collection<Sku> skus,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

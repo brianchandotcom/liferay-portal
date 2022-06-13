@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -121,6 +122,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 				dataDefinitionFieldLinks,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -129,6 +133,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 				dataDefinitionFieldLinks,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -164,9 +171,15 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getDataDefinitionDataDefinitionFieldLinksPage(
-			Long.parseLong((String)parameters.get("dataDefinitionId")),
-			(String)parameters.get("fieldName"));
+		if (parameters.containsKey("dataDefinitionId")) {
+			return getDataDefinitionDataDefinitionFieldLinksPage(
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				(String)parameters.get("fieldName"));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [dataDefinitionId]");
+		}
 	}
 
 	@Override
@@ -197,6 +210,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 				dataDefinitionFieldLinks,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

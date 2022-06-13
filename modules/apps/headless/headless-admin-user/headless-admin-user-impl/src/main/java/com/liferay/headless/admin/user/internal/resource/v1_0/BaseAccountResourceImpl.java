@@ -982,7 +982,14 @@ public abstract class BaseAccountResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getAccountsPage(search, filter, pagination, sorts);
+		if (parameters.containsKey("organizationId")) {
+			return getOrganizationAccountsPage(
+				(String)parameters.get("organizationId"), search, filter,
+				pagination, sorts);
+		}
+		else {
+			return getAccountsPage(search, filter, pagination, sorts);
+		}
 	}
 
 	@Override

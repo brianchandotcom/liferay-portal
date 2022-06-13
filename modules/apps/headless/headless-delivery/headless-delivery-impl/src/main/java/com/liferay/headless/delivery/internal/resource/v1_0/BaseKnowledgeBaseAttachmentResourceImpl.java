@@ -350,11 +350,19 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			knowledgeBaseAttachmentUnsafeConsumer = knowledgeBaseAttachment ->
-				postKnowledgeBaseArticleKnowledgeBaseAttachment(
-					Long.parseLong(
-						(String)parameters.get("knowledgeBaseArticleId")),
-					(MultipartBody)parameters.get("multipartBody"));
+			if (parameters.containsKey("knowledgeBaseArticleId")) {
+				knowledgeBaseAttachmentUnsafeConsumer =
+					knowledgeBaseAttachment ->
+						postKnowledgeBaseArticleKnowledgeBaseAttachment(
+							Long.parseLong(
+								(String)parameters.get(
+									"knowledgeBaseArticleId")),
+							(MultipartBody)parameters.get("multipartBody"));
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [knowledgeBaseArticleId]");
+			}
 		}
 
 		if (knowledgeBaseAttachmentUnsafeConsumer == null) {
@@ -425,8 +433,15 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-			Long.parseLong((String)parameters.get("knowledgeBaseArticleId")));
+		if (parameters.containsKey("knowledgeBaseArticleId")) {
+			return getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+				Long.parseLong(
+					(String)parameters.get("knowledgeBaseArticleId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [knowledgeBaseArticleId]");
+		}
 	}
 
 	@Override
@@ -457,6 +472,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 				knowledgeBaseAttachments,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

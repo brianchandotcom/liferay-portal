@@ -1133,12 +1133,13 @@ public abstract class BaseBlogPostingResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			blogPostingUnsafeConsumer = blogPosting -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				blogPostingUnsafeConsumer = blogPosting -> postSiteBlogPosting(
 					(Long)parameters.get("siteId"), blogPosting);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -1217,7 +1218,8 @@ public abstract class BaseBlogPostingResourceImpl
 				pagination, sorts);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 

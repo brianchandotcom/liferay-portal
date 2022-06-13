@@ -543,6 +543,9 @@ public abstract class BaseOptionValueResourceImpl
 			java.util.Collection<OptionValue> optionValues,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -589,7 +592,8 @@ public abstract class BaseOptionValueResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

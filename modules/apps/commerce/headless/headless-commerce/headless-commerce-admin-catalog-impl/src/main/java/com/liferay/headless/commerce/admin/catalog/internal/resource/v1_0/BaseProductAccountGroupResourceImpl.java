@@ -284,6 +284,9 @@ public abstract class BaseProductAccountGroupResourceImpl
 			java.util.Collection<ProductAccountGroup> productAccountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -330,7 +333,8 @@ public abstract class BaseProductAccountGroupResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -360,6 +364,9 @@ public abstract class BaseProductAccountGroupResourceImpl
 			java.util.Collection<ProductAccountGroup> productAccountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

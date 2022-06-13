@@ -247,12 +247,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			dsEnvelopeUnsafeConsumer = dsEnvelope -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				dsEnvelopeUnsafeConsumer = dsEnvelope -> postSiteDSEnvelope(
 					(Long)parameters.get("siteId"), dsEnvelope);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -278,6 +279,9 @@ public abstract class BaseDSEnvelopeResourceImpl
 			java.util.Collection<DSEnvelope> dsEnvelopes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -318,7 +322,8 @@ public abstract class BaseDSEnvelopeResourceImpl
 				(Long)parameters.get("siteId"), pagination);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 
@@ -349,6 +354,9 @@ public abstract class BaseDSEnvelopeResourceImpl
 			java.util.Collection<DSEnvelope> dsEnvelopes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -1315,9 +1315,16 @@ public abstract class BaseOrganizationResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getAccountOrganizationsPage(
-			Long.parseLong((String)parameters.get("accountId")), search, filter,
-			pagination, sorts);
+		if (parameters.containsKey("accountId")) {
+			return getAccountOrganizationsPage(
+				Long.parseLong((String)parameters.get("accountId")), search,
+				filter, pagination, sorts);
+		}
+		else {
+			return getOrganizationsPage(
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				filter, pagination, sorts);
+		}
 	}
 
 	@Override

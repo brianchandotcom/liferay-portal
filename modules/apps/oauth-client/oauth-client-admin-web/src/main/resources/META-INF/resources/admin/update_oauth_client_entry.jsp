@@ -48,7 +48,9 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<aui:input name="oAuthClientEntryId" type="hidden" />
 
-				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-parameters-json" name="parametersJSON" style="min-height: 200px;" type="textarea" value='{"authorization_request_parameters":{"resource":["resource1","resource2"]},"token_request_parameters":{"audience":"audience1","resource":["resource1","resource2"]}}' />
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-auth-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-auth-request-parameters-json" name="authRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"redirect_uri":"","resource":[]}' />
+
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-token-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-token-request-parameters-json" name="tokenRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"grant_type":"authorization_code","resource":[]}' />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
@@ -76,23 +78,51 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 		document.getElementById('<portlet:namespace />infoJSON').value = infoJSON;
 
-		var parametersJSON = document.getElementById(
-			'<portlet:namespace />parametersJSON'
+		var authRequestParametersJSON = document.getElementById(
+			'<portlet:namespace />authRequestParametersJSON'
 		).value;
 
 		try {
-			parametersJSON = JSON.stringify(JSON.parse(parametersJSON), null, 0);
+			authRequestParametersJSON = JSON.stringify(
+				JSON.parse(authRequestParametersJSON),
+				null,
+				0
+			);
 		}
 		catch (e) {
-			alert('Ill-formatted Parameters JSON');
+			alert('Ill-formatted Default Authorization Request Parameters JSON');
 			return;
 		}
 
 		document.getElementById(
-			'<portlet:namespace />parametersJSON'
-		).value = parametersJSON;
+			'<portlet:namespace />authRequestParametersJSON'
+		).value = authRequestParametersJSON;
 
-		submitForm(document.getElementById('<portlet:namespace />oauth-client-entry-fm'));
+		document.getElementById('<portlet:namespace />infoJSON').value = infoJSON;
+
+		var tokenRequestParametersJSON = document.getElementById(
+			'<portlet:namespace />tokenRequestParametersJSON'
+		).value;
+
+		try {
+			tokenRequestParametersJSON = JSON.stringify(
+				JSON.parse(tokenRequestParametersJSON),
+				null,
+				0
+			);
+		}
+		catch (e) {
+			alert('Ill-formatted Default Token Request Parameters JSON');
+			return;
+		}
+
+		document.getElementById(
+			'<portlet:namespace />tokenRequestParametersJSON'
+		).value = tokenRequestParametersJSON;
+
+		submitForm(
+			document.getElementById('<portlet:namespace />oauth-client-entry-fm')
+		);
 	}
 
 	function <portlet:namespace />init() {
@@ -100,12 +130,22 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 		infoJSON.value = JSON.stringify(JSON.parse(infoJSON.value), null, 4);
 
-		var parametersJSON = document.getElementById(
-			'<portlet:namespace />parametersJSON'
+		var authRequestParametersJSON = document.getElementById(
+			'<portlet:namespace />authRequestParametersJSON'
 		);
 
-		parametersJSON.value = JSON.stringify(
-			JSON.parse(parametersJSON.value),
+		authRequestParametersJSON.value = JSON.stringify(
+			JSON.parse(authRequestParametersJSON.value),
+			null,
+			4
+		);
+
+		var tokenRequestParametersJSON = document.getElementById(
+			'<portlet:namespace />tokenRequestParametersJSON'
+		);
+
+		tokenRequestParametersJSON.value = JSON.stringify(
+			JSON.parse(tokenRequestParametersJSON.value),
 			null,
 			4
 		);

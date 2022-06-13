@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -69,7 +70,9 @@ public class PostalAddressResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"postalCode", "primary", "streetAddressLine1"};
+		return new String[] {
+			"name", "postalCode", "primary", "streetAddressLine1"
+		};
 	}
 
 	@Override
@@ -77,6 +80,7 @@ public class PostalAddressResourceTest
 		return new PostalAddress() {
 			{
 				addressLocality = RandomTestUtil.randomString();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				postalCode = RandomTestUtil.randomString();
 				primary = false;
 				streetAddressLine1 = RandomTestUtil.randomString();
@@ -202,6 +206,7 @@ public class PostalAddressResourceTest
 			{
 				addressLocality = address.getCity();
 				id = address.getAddressId();
+				name = address.getName();
 				postalCode = address.getZip();
 				primary = address.isPrimary();
 				streetAddressLine1 = address.getStreet1();

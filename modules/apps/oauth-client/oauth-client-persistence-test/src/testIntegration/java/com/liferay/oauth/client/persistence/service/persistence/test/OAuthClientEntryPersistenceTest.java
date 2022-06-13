@@ -140,11 +140,15 @@ public class OAuthClientEntryPersistenceTest {
 		newOAuthClientEntry.setAuthServerWellKnownURI(
 			RandomTestUtil.randomString());
 
+		newOAuthClientEntry.setAuthRequestParametersJSON(
+			RandomTestUtil.randomString());
+
 		newOAuthClientEntry.setClientId(RandomTestUtil.randomString());
 
 		newOAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
 
-		newOAuthClientEntry.setParametersJSON(RandomTestUtil.randomString());
+		newOAuthClientEntry.setTokenRequestParametersJSON(
+			RandomTestUtil.randomString());
 
 		_oAuthClientEntries.add(_persistence.update(newOAuthClientEntry));
 
@@ -176,14 +180,17 @@ public class OAuthClientEntryPersistenceTest {
 			existingOAuthClientEntry.getAuthServerWellKnownURI(),
 			newOAuthClientEntry.getAuthServerWellKnownURI());
 		Assert.assertEquals(
+			existingOAuthClientEntry.getAuthRequestParametersJSON(),
+			newOAuthClientEntry.getAuthRequestParametersJSON());
+		Assert.assertEquals(
 			existingOAuthClientEntry.getClientId(),
 			newOAuthClientEntry.getClientId());
 		Assert.assertEquals(
 			existingOAuthClientEntry.getInfoJSON(),
 			newOAuthClientEntry.getInfoJSON());
 		Assert.assertEquals(
-			existingOAuthClientEntry.getParametersJSON(),
-			newOAuthClientEntry.getParametersJSON());
+			existingOAuthClientEntry.getTokenRequestParametersJSON(),
+			newOAuthClientEntry.getTokenRequestParametersJSON());
 	}
 
 	@Test
@@ -246,7 +253,8 @@ public class OAuthClientEntryPersistenceTest {
 			"OAuthClientEntry", "mvccVersion", true, "oAuthClientEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "authServerWellKnownURI", true,
-			"clientId", true);
+			"authRequestParametersJSON", true, "clientId", true,
+			"tokenRequestParametersJSON", true);
 	}
 
 	@Test
@@ -555,11 +563,15 @@ public class OAuthClientEntryPersistenceTest {
 		oAuthClientEntry.setAuthServerWellKnownURI(
 			RandomTestUtil.randomString());
 
+		oAuthClientEntry.setAuthRequestParametersJSON(
+			RandomTestUtil.randomString());
+
 		oAuthClientEntry.setClientId(RandomTestUtil.randomString());
 
 		oAuthClientEntry.setInfoJSON(RandomTestUtil.randomString());
 
-		oAuthClientEntry.setParametersJSON(RandomTestUtil.randomString());
+		oAuthClientEntry.setTokenRequestParametersJSON(
+			RandomTestUtil.randomString());
 
 		_oAuthClientEntries.add(_persistence.update(oAuthClientEntry));
 

@@ -62,8 +62,9 @@ public interface OAuthClientEntryLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerWellKnownURI, String infoJSON,
-			String parametersJSON)
+			long userId, String authServerWellKnownURI,
+			String authRequestParametersJSON, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException;
 
 	/**
@@ -288,7 +289,8 @@ public interface OAuthClientEntryLocalService
 
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authServerWellKnownURI,
-			String infoJSON, String parametersJSON)
+			String authRequestParametersJSON, String infoJSON,
+			String tokenRequestParametersJSON)
 		throws PortalException;
 
 	/**

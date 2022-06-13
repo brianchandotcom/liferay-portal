@@ -40,12 +40,14 @@ public class OAuthClientEntryServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			addOAuthClientEntry(
-				long userId, String authServerWellKnownURI, String infoJSON,
-				String parametersJSON)
+				long userId, String authServerWellKnownURI,
+				String authRequestParametersJSON, String infoJSON,
+				String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryService.addOAuthClientEntry(
-			userId, authServerWellKnownURI, infoJSON, parametersJSON);
+			userId, authServerWellKnownURI, authRequestParametersJSON, infoJSON,
+			tokenRequestParametersJSON);
 	}
 
 	@Override
@@ -137,12 +139,13 @@ public class OAuthClientEntryServiceWrapper
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			updateOAuthClientEntry(
 				long oAuthClientEntryId, String authServerWellKnownURI,
-				String infoJSON, String parametersJSON)
+				String authRequestParametersJSON, String infoJSON,
+				String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryService.updateOAuthClientEntry(
-			oAuthClientEntryId, authServerWellKnownURI, infoJSON,
-			parametersJSON);
+			oAuthClientEntryId, authServerWellKnownURI,
+			authRequestParametersJSON, infoJSON, tokenRequestParametersJSON);
 	}
 
 	@Override

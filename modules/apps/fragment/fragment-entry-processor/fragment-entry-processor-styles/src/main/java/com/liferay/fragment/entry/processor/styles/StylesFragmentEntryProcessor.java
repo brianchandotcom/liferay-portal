@@ -103,6 +103,9 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			return html;
 		}
 
+		String fragmentEntryLinkCssClass =
+			LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+				fragmentEntryLink);
 		String layoutStructureItemUniqueCssClass =
 			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
 				layoutStructureItem);
@@ -111,6 +114,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 				(StyledLayoutStructureItem)layoutStructureItem);
 
 		for (Element element : elements) {
+			element.addClass(fragmentEntryLinkCssClass);
 			element.addClass(layoutStructureItemUniqueCssClass);
 			element.addClass(styledLayoutStructureItemCssClasses);
 		}

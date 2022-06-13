@@ -113,6 +113,10 @@ function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 	return (
 		<div className="page-editor__sidebar__fieldset">
 			{fields.map((field, index) => {
+				if (field.type === 'separator') {
+					return <div className="mb-2 w-100"></div>;
+				}
+
 				const FieldComponent =
 					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
 

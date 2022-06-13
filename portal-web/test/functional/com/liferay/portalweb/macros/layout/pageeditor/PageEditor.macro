@@ -2439,17 +2439,19 @@ definition {
 	macro editInput {
 		PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
 
-		Select(
-			key_fieldLabel = "Field",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${field}");
+		if (isSet(field)) {
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${field}");
 
-		PageEditor.waitForAutoSave();
+			PageEditor.waitForAutoSave();
 
-		AssertTextEquals(
-			key_text = "Label",
-			locator1 = "TextInput#ANY",
-			value1 = "${field}");
+			AssertTextEquals(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "${field}");
+		}
 
 		if ("${markAsRequired}" == "true") {
 			Check.checkNotVisible(

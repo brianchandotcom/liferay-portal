@@ -1270,12 +1270,6 @@ AUI.add(
 
 					var keysPressed = {};
 
-					var template = A.CalendarBase.HEADER_TEMPLATE;
-
-					template = template.replace('aria-role="heading"', '');
-
-					A.CalendarBase.HEADER_TEMPLATE = template;
-
 					var trigger = instance.get('templateNode').one('input');
 
 					if (trigger) {
@@ -1861,7 +1855,6 @@ AUI.add(
 			'aui-base',
 			'aui-color-picker-popover',
 			'aui-url',
-			'calendar',
 			'liferay-item-selector-dialog',
 			'liferay-portlet-dynamic-data-mapping',
 		],

@@ -16,12 +16,6 @@ AUI.add(
 	'liferay-calendar-a11y',
 	(A) => {
 		A.CalendarBase.ATTRS.tabIndex.value = 0;
-
-		let template = A.CalendarBase.HEADER_TEMPLATE;
-
-		template = template.replace('aria-role="heading"', '');
-
-		A.CalendarBase.HEADER_TEMPLATE = template;
 	},
 	'',
 	{

@@ -223,12 +223,6 @@ else {
 		function() {
 			var keysPressed = {};
 
-			var template = A.CalendarBase.HEADER_TEMPLATE;
-
-			template = template.replace('aria-role="heading"', '');
-
-			A.CalendarBase.HEADER_TEMPLATE = template;
-
 			var datePicker = new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
 					calendar: {

@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_ITEM_BY_INDEX</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li)[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@type,'text')]</td>
 	<td></td>

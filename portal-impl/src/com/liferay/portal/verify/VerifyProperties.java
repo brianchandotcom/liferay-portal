@@ -2157,6 +2157,10 @@ public class VerifyProperties {
 			"module.framework.file.install.subdir.mode"
 		},
 		{
+			"module.framework.properties.initial.system.check.enabled",
+			"initial.system.check.enabled"
+		},
+		{
 			"passwords.passwordpolicytoolkit.charset.lowercase",
 			"passwords.passwordpolicytoolkit.validator.charset.lowercase"
 		},

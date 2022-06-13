@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
@@ -358,8 +359,13 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
+		_validateExternalReferenceCode(
+			objectField.getCompanyId(), externalReferenceCode,
+			objectField.getObjectFieldId(),
+			objectField.getObjectDefinitionId());
 		_validateLabel(labelMap);
 
+		objectField.setExternalReferenceCode(externalReferenceCode);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
 		if (objectDefinition.isApproved()) {
@@ -610,6 +616,25 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			throw new ObjectFieldDBTypeException("Invalid DB type " + dbType);
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId, long objectFieldId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		ObjectField objectField = objectFieldPersistence.fetchByC_ERC_ODI(
+			companyId, externalReferenceCode, objectDefinitionId);
+
+		if ((objectField != null) &&
+			(objectField.getObjectFieldId() != objectFieldId)) {
+
+			throw new DuplicateObjectFieldExternalReferenceCodeException();
 		}
 	}
 

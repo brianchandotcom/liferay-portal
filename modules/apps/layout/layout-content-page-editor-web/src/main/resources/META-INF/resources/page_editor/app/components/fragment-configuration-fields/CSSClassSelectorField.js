@@ -96,7 +96,7 @@ export default function CSSClassSelectorField({
 				</label>
 
 				<ClayMultiSelect
-					autocomplete="off"
+					autoComplete="off"
 					id={cssClassesInputId}
 					items={items}
 					onBlur={() => {

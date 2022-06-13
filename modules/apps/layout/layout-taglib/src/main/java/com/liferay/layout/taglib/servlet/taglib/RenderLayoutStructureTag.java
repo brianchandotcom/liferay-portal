@@ -1177,6 +1177,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
 			if (!_includeCommonStyles(fragmentEntryLink)) {
 				jspWriter.write(
+					LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+						fragmentEntryLink));
+				jspWriter.write(
 					LayoutStructureItemCSSUtil.
 						getLayoutStructureItemUniqueCssClass(
 							fragmentStyledLayoutStructureItem));
@@ -1186,11 +1189,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						getStyledLayoutStructureItemCssClasses(
 							fragmentStyledLayoutStructureItem));
 			}
-
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
-					fragmentEntryLink));
 		}
 		else {
 			jspWriter.write(

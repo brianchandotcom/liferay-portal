@@ -1,0 +1,9 @@
+<div class="form-input-captcha [#if !input.showLabel || !input.label?has_content]form-input-catpcha--hidden-label[/#if] [#if !input.showHelpText || !input.helpText?has_content]form-input-catpcha--hidden-help-text[/#if]">
+	[@liferay_captcha["captcha"]
+		helpText="${input.helpText}"
+		label="${input.label}"
+		name="${input.name}"
+		placeholder="${configuration.placeholder}"
+		wrapperCssClasses="my-3"
+	/]
+</div>

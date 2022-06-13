@@ -113,12 +113,11 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "filter-by"),
-					LanguageUtil.get(httpServletRequest, getNavigation()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(httpServletRequest, "filter-by"),
+						LanguageUtil.get(httpServletRequest, getNavigation())));
 			}
 		).build();
 	}

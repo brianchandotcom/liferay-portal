@@ -137,12 +137,10 @@ public class AMImageConfigurationEntryParserTest {
 				).build(),
 				true);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
-			"test:desc:12345:max-height=100:enabled=true", configurationString);
+			"test:desc:12345:max-height=100:enabled=true",
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test

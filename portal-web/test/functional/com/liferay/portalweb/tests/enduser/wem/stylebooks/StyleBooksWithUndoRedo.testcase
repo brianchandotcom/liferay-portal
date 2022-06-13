@@ -28,6 +28,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142363. The History dropdown menu could list up to the last 100 interaction states."
+	@priority = "4"
+	test ListUpToLastHundredInteractionStatesOnHistoryDropdownMenu {
+		property custom.properties = "session.timeout=30";
+		property web.xml.timeout = "30";
+
+		task ("Given a style book designer has a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("When the style book designer creates 100 interactions states") {
+			for (var n : list "1,2,3,4") {
+				for (var token : list "111111,222222,333333,444444,555555,666666,777777,888888,999999,000000") {
+					Type(
+						key_fieldLabel = "Brand Color ${n}",
+						key_groupLabel = "Brand Colors",
+						locator1 = "TextInput#GROUPED_TEXT_INPUT",
+						value1 = "#${token}");
+
+					StyleBooks.clickManagementBar();
+
+					StyleBooks.waitForAutoSave();
+				}
+			}
+
+			StyleBooks.expandSection(sectionName = "Grays");
+
+			for (var n : list "100,200,300,400,500,600") {
+				for (var token : list "111111,222222,333333,444444,555555,666666,777777,888888,999999,000000") {
+					Type(
+						key_fieldLabel = "Gray ${n}",
+						key_groupLabel = "Grays",
+						locator1 = "TextInput#GROUPED_TEXT_INPUT",
+						value1 = "#${token}");
+
+					StyleBooks.clickManagementBar();
+
+					StyleBooks.waitForAutoSave();
+				}
+			}
+		}
+
+		task ("Then the style book designer could see the last 100 interactions states on history dropdown menu") {
+			Click(locator1 = "PageEditor#UNDO_HISTORY");
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
+				value1 = "Update Gray 600");
+
+			AssertTextEquals(
+				index = "100",
+				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
+				value1 = "Update Brand Color 1");
+
+			AssertTextEquals(
+				index = "102",
+				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
+				value1 = "Undo All");
+		}
+	}
+
 	@description = "This is a test for LPS-142363. The style book designer could undo or redo interaction states."
 	@priority = "5"
 	test UndoAndRedoInteractionStates {

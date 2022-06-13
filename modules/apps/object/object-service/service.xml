@@ -194,6 +194,7 @@
 
 		<!-- Other fields -->
 
+		<column name="externalReferenceCode" type="String" />
 		<column name="listTypeDefinitionId" type="long" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="businessType" type="String" />
@@ -234,6 +235,11 @@
 		<finder name="ODI_S" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="system" />
+		</finder>
+		<finder name="C_ERC_ODI" return-type="ObjectEntry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="objectDefinitionId" />
 		</finder>
 		<finder name="ODI_DBT_I" return-type="Collection">
 			<finder-column name="objectDefinitionId" />

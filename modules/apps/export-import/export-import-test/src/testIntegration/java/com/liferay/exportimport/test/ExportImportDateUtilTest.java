@@ -376,10 +376,8 @@ public class ExportImportDateUtilTest {
 	public void testUpdateLastPublishDateWithoutExistingLastPublishDate()
 		throws Exception {
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			_portletPreferences);
-
-		Assert.assertNull(lastPublishDate);
+		Assert.assertNull(
+			ExportImportDateUtil.getLastPublishDate(_portletPreferences));
 
 		Date date = new Date();
 
@@ -388,10 +386,8 @@ public class ExportImportDateUtilTest {
 		ExportImportDateUtil.updateLastPublishDate(
 			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, date);
 
-		lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			_portletPreferences);
-
-		Assert.assertNull(lastPublishDate);
+		Assert.assertNull(
+			ExportImportDateUtil.getLastPublishDate(_portletPreferences));
 
 		dateRange = new DateRange(null, date);
 

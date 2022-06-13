@@ -182,6 +182,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		postalAddress.setAddressLocality(regex);
 		postalAddress.setAddressRegion(regex);
 		postalAddress.setAddressType(regex);
+		postalAddress.setName(regex);
 		postalAddress.setPostalCode(regex);
 		postalAddress.setStreetAddressLine1(regex);
 		postalAddress.setStreetAddressLine2(regex);
@@ -197,6 +198,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertEquals(regex, postalAddress.getAddressLocality());
 		Assert.assertEquals(regex, postalAddress.getAddressRegion());
 		Assert.assertEquals(regex, postalAddress.getAddressType());
+		Assert.assertEquals(regex, postalAddress.getName());
 		Assert.assertEquals(regex, postalAddress.getPostalCode());
 		Assert.assertEquals(regex, postalAddress.getStreetAddressLine1());
 		Assert.assertEquals(regex, postalAddress.getStreetAddressLine2());
@@ -611,6 +613,14 @@ public abstract class BasePostalAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (postalAddress.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("postalCode", additionalAssertFieldName)) {
 				if (postalAddress.getPostalCode() == null) {
 					valid = false;
@@ -810,6 +820,16 @@ public abstract class BasePostalAddressResourceTestCase {
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						postalAddress1.getId(), postalAddress2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						postalAddress1.getName(), postalAddress2.getName())) {
 
 					return false;
 				}
@@ -1017,6 +1037,14 @@ public abstract class BasePostalAddressResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(postalAddress.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("postalCode")) {
 			sb.append("'");
 			sb.append(String.valueOf(postalAddress.getPostalCode()));
@@ -1107,6 +1135,7 @@ public abstract class BasePostalAddressResourceTestCase {
 				addressType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				postalCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				primary = RandomTestUtil.randomBoolean();

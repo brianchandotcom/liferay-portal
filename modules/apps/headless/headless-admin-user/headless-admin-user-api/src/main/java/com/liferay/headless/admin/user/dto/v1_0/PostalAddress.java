@@ -231,6 +231,32 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(description = "The address's name.")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The address's name.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
 	@Schema(description = "The address's postal code (e.g., zip code).")
 	public String getPostalCode() {
 		return postalCode;
@@ -480,6 +506,20 @@ public class PostalAddress implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
 		if (postalCode != null) {

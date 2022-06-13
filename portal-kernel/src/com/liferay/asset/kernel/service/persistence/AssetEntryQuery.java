@@ -98,7 +98,6 @@ public class AssetEntryQuery {
 		setGroupIds(assetEntryQuery.getGroupIds());
 		setKeywords(assetEntryQuery.getKeywords());
 		setLayout(assetEntryQuery.getLayout());
-		setLinkedAssetEntryId(assetEntryQuery.getLinkedAssetEntryId());
 		setLinkedAssetEntryIds(assetEntryQuery.getLinkedAssetEntryIds());
 		setListable(assetEntryQuery.isListable());
 		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
@@ -260,15 +259,6 @@ public class AssetEntryQuery {
 
 	public Layout getLayout() {
 		return _layout;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getLinkedAssetEntryIds()}
-	 */
-	@Deprecated
-	public long getLinkedAssetEntryId() {
-		return _linkedAssetEntryId;
 	}
 
 	public long[] getLinkedAssetEntryIds() {
@@ -483,17 +473,6 @@ public class AssetEntryQuery {
 
 	public void setLayout(Layout layout) {
 		_layout = layout;
-
-		_toString = null;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setLinkedAssetEntryIds(long[])}
-	 */
-	@Deprecated
-	public void setLinkedAssetEntryId(long linkedAssetEntryId) {
-		_linkedAssetEntryId = linkedAssetEntryId;
 
 		_toString = null;
 	}
@@ -738,7 +717,6 @@ public class AssetEntryQuery {
 	private long[] _groupIds = new long[0];
 	private String _keywords;
 	private Layout _layout;
-	private long _linkedAssetEntryId;
 	private long[] _linkedAssetEntryIds;
 	private Boolean _listable = true;
 	private long[] _notAllCategoryIds = new long[0];

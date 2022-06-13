@@ -1504,7 +1504,9 @@ definition {
 
 			Button.click(button = "Start Import");
 
-			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+			WaitForElementPresent(
+				key_status = "Failed",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
 		}
 
 		task ("When the user goes to the Import/Export Center and clicks on the ellipses for the import execution") {
@@ -1548,7 +1550,9 @@ definition {
 
 			Button.click(button = "Start Import");
 
-			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+			WaitForElementPresent(
+				key_status = "Failed",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
 		}
 
 		task ("And given a succesful import") {

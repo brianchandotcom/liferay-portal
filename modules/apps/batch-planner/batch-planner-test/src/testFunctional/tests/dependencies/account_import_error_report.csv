@@ -1,2 +1,2 @@
 item,itemIndex,message
-Unable to read item at index 2,2,"Cannot construct instance of `com.liferay.headless.admin.user.dto.v1_0.Account$Type`, problem: Invalid enum value: invalidType  at [Source: UNKNOWN; byte offset: #UNKNOWN]"
+Unable to read item at index 2,2,"java.lang.IllegalArgumentException: Cannot construct instance of `com.liferay.headless.admin.user.dto.v1_0.Account$Type`, problem: Invalid enum value: invalidType  at [Source: UNKNOWN; byte offset: #UNKNOWN]"

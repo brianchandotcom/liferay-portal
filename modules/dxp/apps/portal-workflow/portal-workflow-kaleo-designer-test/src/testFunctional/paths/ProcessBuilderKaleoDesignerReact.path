@@ -242,6 +242,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_INPUT_WITHOUT_TEXT_WARNING</td>
+	<td>//label[contains(., 'Duration') and not(contains(., '*'))]/..//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_INPUT_BY_POSITION</td>
 	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//label[contains(., '${key_inputOption}')]/..//input</td>
 	<td></td>
@@ -254,6 +259,11 @@
 <tr>
 	<td>PROPERTIES_SELECTORS_BY_POSITION</td>
 	<td>//div[@class='panel'][div[@class='panel-group panel-group-flush']][${key_sectionOption}]//label[contains(., '${key_selectorField}')]/..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_SELECTORS_WITHOUT_TEXT_WARNING</td>
+	<td>//label[contains(., 'Scale') and not(contains(., '*'))]/..//select</td>
 	<td></td>
 </tr>
 <tr>

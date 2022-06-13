@@ -2507,12 +2507,32 @@ definition {
 	}
 
 	@description = "Verify that the user can turn on the Timers recurrence mode"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanTurnOnTimerRecurrenceMode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanTurnOnTimerRecurrenceMode";
 
-		// TODO CanTurnOnTimerRecurrenceMode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "2",
+			newTimer = "true",
+			recurrenceDurationValue = "1",
+			recurrenceOption = "True",
+			recurrenceScaleTypeOption = "Hour",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Recurrence: 1 hour");
 	}
 
 	@description = "Verify that the Revision History tab display the definition current version"

@@ -768,6 +768,24 @@ definition {
 				}
 			}
 		}
+
+		if ("${recurrenceOption}" == "True") {
+			Check.checkToggleSwitch(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
+		}
+
+		if (isSet(recurrenceScaleTypeOption)) {
+				Select(
+					key_selectorField = "Scale",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_WITHOUT_TEXT_WARNING",
+					value1 = "${recurrenceScaleTypeOption}");
+			}
+
+			if (isSet(recurrenceDurationValue)) {
+				Type(
+					key_inputOption = "Duration",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_WITHOUT_TEXT_WARNING",
+					value1 = "${recurrenceDurationValue}");
+			}
 	}
 
 	macro viewConnectorID {

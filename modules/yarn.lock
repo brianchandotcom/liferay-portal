@@ -938,10 +938,10 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/color-picker@3.58.1":
-  version "3.58.1"
-  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.58.1.tgz#859516d0d08b2153980fb1071ab3b55109ef5612"
-  integrity sha512-9iwfw3syc1gVaf441eXDE2hor3y6fOJp9rSfuc6ZdJGfngz6eUwwO3dBci73jJYOd18ftwFaeHUy64MqSzTXuw==
+"@clayui/color-picker@3.61.0":
+  version "3.61.0"
+  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.61.0.tgz#f0ae3622b330ae7dd1f52a193d6dbe096a58bb62"
+  integrity sha512-tOXcSnOTMnXY9wItPE5ewOl8LAVONGODfNoigkX3dozAx7jBFn6+xJiVmIPFN7inrAOYCHQdL8DoqroUKNZsOQ==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.58.0"
@@ -951,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/core@3.60.0":
-  version "3.60.0"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.60.0.tgz#44cbcb8ca76c533d1507912d0a8f2f4179f13e36"
-  integrity sha512-sp8R7XSv3DBJRHbnzCIYuzvJ/zN4qrenxb72+53YDcapDmJ9NBiYe9u8IVv7P3VMEkFzA45XPp26x0DKiTxyAA==
+"@clayui/core@3.61.0":
+  version "3.61.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.61.0.tgz#054e2c7bbb4c32761d04fbc2dc383bb950d40f7a"
+  integrity sha512-zc+Wnf++Zd0DjlISWx448kDweZ6BiHROsNov2mTfGds+wMM+PJ9JnVz9JqnzuC8DuLap4V+KECOGwjHjF0kFXQ==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.58.0"
@@ -969,10 +969,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.60.2":
-  version "3.60.2"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.60.2.tgz#de1671569d86b11902aa224ce60e1dfd372d73a9"
-  integrity sha512-0RYVB5tDjXge+OwaYIVCLU/hBKnJN+leXAVtillDDOnLVzhdFH0iC2fWd/Hg6mRt+V4z7RcuGEU9sPTsY6OtBA==
+"@clayui/css@3.61.0":
+  version "3.61.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.61.0.tgz#39625a7161bcf18f75d3e5178f4b0141315473e8"
+  integrity sha512-m3dtgou8872qohqNgRY2zo6BxNyLirrvsEzOVXZ/cmri+zAQwafUPbeC3szFZBuk2tpL9UuTMlJlTPTMdOx7LQ==
 
 "@clayui/data-provider@3.58.0":
   version "3.58.0"
@@ -1114,10 +1114,10 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/multi-select@3.60.0":
-  version "3.60.0"
-  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.60.0.tgz#68fd23f6b7a0533bb27e3010650ae03cfff69d36"
-  integrity sha512-uyAGxQQMtDdMuyp+kVi9Zk9jH9nXhEvGwI2YhcJuIWKCRtC5475hylnPgzMzAdraPJ8LdYmjj84xCj65EpTs8g==
+"@clayui/multi-select@3.61.0":
+  version "3.61.0"
+  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.61.0.tgz#ccc6b213883fbabb9a48cb3daafdaa2bcda944e2"
+  integrity sha512-UpR1jB8ZYmtYX3hI9D3GtflpqMujbmkGh/i2IwYknOpyGsvQWqEA6oUmAdpkh3tSTBuamNOUaTLe/e/8OlBokQ==
   dependencies:
     "@clayui/autocomplete" "^3.60.0"
     "@clayui/button" "^3.56.0"

@@ -675,6 +675,8 @@ public interface WebKeys {
 	public static final String UNIQUE_ELEMENT_IDS =
 		"LIFERAY_SHARED_UNIQUE_ELEMENT_IDS";
 
+	public static final String UNKNOWN_VIRTUAL_HOST = "UNKNOWN_VIRTUAL_HOST";
+
 	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
 
 	public static final String USER = "USER";

@@ -43,6 +43,9 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 %>
 
 <c:choose>
+	<c:when test="<%= GetterUtil.getBoolean(request.getAttribute(WebKeys.UNKNOWN_VIRTUAL_HOST)) %>">
+		Unknown virtual host name : <%= PortalUtil.getHost(request) %>
+	</c:when>
 	<c:when test="<%= !Validator.isBlank(dynamicIncludeKey) %>">
 		<liferay-util:dynamic-include key="<%= dynamicIncludeKey %>" />
 	</c:when>

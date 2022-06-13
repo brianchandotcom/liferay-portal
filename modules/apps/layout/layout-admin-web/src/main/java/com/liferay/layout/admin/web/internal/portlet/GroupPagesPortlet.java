@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -177,6 +178,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 			}
 
+			renderRequest.setAttribute(CETManager.class.getName(), _cetManager);
+
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, _layoutConverterRegistry, _layoutCopyHelper,
@@ -258,6 +261,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private GroupProvider _groupProvider;

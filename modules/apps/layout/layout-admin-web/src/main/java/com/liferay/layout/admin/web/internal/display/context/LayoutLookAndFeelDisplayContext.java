@@ -15,6 +15,10 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -22,8 +26,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +53,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -152,7 +160,9 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"globalCSSCETs", JSONFactoryUtil.createJSONArray()
+			"globalCSSCETs",
+			_getClientExtensionEntryRelsJSONArray(
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 		).put(
 			"globalCSSCETSelectorURL",
 			() -> {
@@ -174,7 +184,9 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getGlobalJSCETsConfigurationProps() {
 		return HashMapBuilder.<String, Object>put(
-			"globalJSCETs", JSONFactoryUtil.createJSONArray()
+			"globalJSCETs",
+			_getClientExtensionEntryRelsJSONArray(
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 		).put(
 			"globalJSCETSelectorURL",
 			() -> {
@@ -444,6 +456,41 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
+	}
+
+	private JSONArray _getClientExtensionEntryRelsJSONArray(String type) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
+				PortalUtil.getClassNameId(Layout.class), selLayout.getPlid(),
+				type, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
+			CETManager.class.getName());
+
+		for (ClientExtensionEntryRel clientExtensionEntryRel :
+				clientExtensionEntryRels) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"externalReferenceCode",
+					clientExtensionEntryRel.getExternalReferenceCode()
+				).put(
+					"name",
+					() -> {
+						CET cet = cetManager.getCET(
+							_themeDisplay.getCompanyId(),
+							clientExtensionEntryRel.getExternalReferenceCode());
+
+						return cet.getName(_themeDisplay.getLocale());
+					}
+				));
+		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

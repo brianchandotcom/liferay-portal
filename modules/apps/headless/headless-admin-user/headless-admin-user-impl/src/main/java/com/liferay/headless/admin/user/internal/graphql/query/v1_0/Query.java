@@ -668,6 +668,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountPostalAddresses(accountId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's postal addresses.")
+	public PostalAddressPage accountPostalAddresses(
+			@GraphQLName("accountId") Long accountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource -> new PostalAddressPage(
+				postalAddressResource.getAccountPostalAddressesPage(
+					accountId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationPostalAddresses(organizationId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -1893,6 +1911,27 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountPostalAddressesPageTypeExtension {
+
+		public GetAccountPostalAddressesPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's postal addresses.")
+		public PostalAddressPage postalAddresses() throws Exception {
+			return _applyComponentServiceObjects(
+				_postalAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				postalAddressResource -> new PostalAddressPage(
+					postalAddressResource.getAccountPostalAddressesPage(
+						_account.getId())));
+		}
+
+		private Account _account;
 
 	}
 

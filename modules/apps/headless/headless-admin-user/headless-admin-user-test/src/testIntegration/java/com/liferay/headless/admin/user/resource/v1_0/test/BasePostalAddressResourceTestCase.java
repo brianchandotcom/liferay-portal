@@ -204,6 +204,72 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountPostalAddressesPage() throws Exception {
+		Long accountId = testGetAccountPostalAddressesPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountPostalAddressesPage_getIrrelevantAccountId();
+
+		Page<PostalAddress> page =
+			postalAddressResource.getAccountPostalAddressesPage(accountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantAccountId != null) {
+			PostalAddress irrelevantPostalAddress =
+				testGetAccountPostalAddressesPage_addPostalAddress(
+					irrelevantAccountId, randomIrrelevantPostalAddress());
+
+			page = postalAddressResource.getAccountPostalAddressesPage(
+				irrelevantAccountId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantPostalAddress),
+				(List<PostalAddress>)page.getItems());
+			assertValid(page);
+		}
+
+		PostalAddress postalAddress1 =
+			testGetAccountPostalAddressesPage_addPostalAddress(
+				accountId, randomPostalAddress());
+
+		PostalAddress postalAddress2 =
+			testGetAccountPostalAddressesPage_addPostalAddress(
+				accountId, randomPostalAddress());
+
+		page = postalAddressResource.getAccountPostalAddressesPage(accountId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(postalAddress1, postalAddress2),
+			(List<PostalAddress>)page.getItems());
+		assertValid(page);
+	}
+
+	protected PostalAddress testGetAccountPostalAddressesPage_addPostalAddress(
+			Long accountId, PostalAddress postalAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountPostalAddressesPage_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountPostalAddressesPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetOrganizationPostalAddressesPage() throws Exception {
 		String organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();

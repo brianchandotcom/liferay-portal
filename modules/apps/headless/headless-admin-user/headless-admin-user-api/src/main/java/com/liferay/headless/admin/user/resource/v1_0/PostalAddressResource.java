@@ -56,6 +56,9 @@ public interface PostalAddressResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
+		throws Exception;
+
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
 			String organizationId)
 		throws Exception;

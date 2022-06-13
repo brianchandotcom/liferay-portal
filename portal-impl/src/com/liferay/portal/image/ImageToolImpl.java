@@ -64,7 +64,10 @@ import java.util.Queue;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -704,25 +707,42 @@ public class ImageToolImpl implements ImageTool {
 			OutputStream outputStream)
 		throws IOException {
 
-		if (contentType.contains(TYPE_BMP)) {
-			ImageIO.write(renderedImage, "bmp", outputStream);
-		}
-		else if (contentType.contains(TYPE_GIF)) {
-			encodeGIF(renderedImage, outputStream);
-		}
-		else if (contentType.contains(TYPE_JPEG) ||
-				 contentType.contains("jpeg")) {
+		Iterator<ImageWriter> imageWriterIterator =
+			ImageIO.getImageWritersByMIMEType(contentType);
 
-			ImageIO.write(renderedImage, "jpeg", outputStream);
-		}
-		else if (contentType.contains(TYPE_PNG)) {
-			ImageIO.write(renderedImage, TYPE_PNG, outputStream);
-		}
-		else if (contentType.contains(TYPE_TIFF) ||
-				 contentType.contains("tif")) {
+		if (!imageWriterIterator.hasNext()) {
+			ImageTypeSpecifier type =
+				ImageTypeSpecifier.createFromRenderedImage(renderedImage);
 
-			ImageIO.write(renderedImage, "tiff", outputStream);
+			imageWriterIterator = ImageIO.getImageWriters(type, contentType);
 		}
+
+		while (imageWriterIterator.hasNext()) {
+			ImageWriter imageWriter = imageWriterIterator.next();
+
+			ImageOutputStream imageOutputStream =
+				ImageIO.createImageOutputStream(outputStream);
+
+			try {
+				imageWriter.setOutput(imageOutputStream);
+
+				imageWriter.write(renderedImage);
+
+				return;
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+			finally {
+				imageWriter.dispose();
+
+				imageOutputStream.flush();
+			}
+		}
+
+		throw new IOException("No image writer available for image type");
 	}
 
 	protected RenderedImage doScale(

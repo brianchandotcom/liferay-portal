@@ -1,0 +1,96 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Style Books";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-142363. The style book designer could undo or redo interaction states."
+	@priority = "5"
+	test UndoAndRedoInteractionStates {
+		task ("Given a style book designer has a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("When the style book designer creates interactions states") {
+			AssertVisible(
+				key_text = "undo",
+				locator1 = "Icon#ANY_DISABLED");
+
+			AssertVisible(
+				key_text = "redo",
+				locator1 = "Icon#ANY_DISABLED");
+
+			StyleBooks.linkValueFromStyleBook(
+				colorSwatchItem = "Success",
+				fieldLabel = "Brand Color 1");
+
+			AssertVisible(
+				key_text = "redo",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+
+		task ("Then the style book designer could undo and redo interactions states") {
+			task ("Undo the last interaction state") {
+				Click(
+					key_text = "undo",
+					locator1 = "Icon#ANY");
+
+				InputField.viewText(
+					fieldLabel = "Brand Color 1",
+					text = "#0B5FFF");
+
+				AssertVisible(
+					key_text = "undo",
+					locator1 = "Icon#ANY_DISABLED");
+			}
+
+			task ("Redo the last interaction state") {
+				Click(
+					key_text = "redo",
+					locator1 = "Icon#ANY");
+
+				AssertElementPresent(
+					key_fieldLabel = "Brand Color 1",
+					key_text = "Success",
+					locator1 = "Button#ANY_WITH_LABEL");
+
+				AssertVisible(
+					key_text = "undo",
+					locator1 = "Icon#ANY_ENABLED");
+			}
+		}
+	}
+
+}

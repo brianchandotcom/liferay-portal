@@ -17,14 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long termsOfUseGroupId = PrefsPropsUtil.getLong(themeDisplay.getCompanyId(), JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, JournalServiceConfigurationValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
-String termsOfUseArticleId = PrefsPropsUtil.getString(themeDisplay.getCompanyId(), JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, JournalServiceConfigurationValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
-
-JournalArticle journalArticle = null;
-
-if ((termsOfUseGroupId > 0) && Validator.isNotNull(termsOfUseArticleId)) {
-	journalArticle = JournalArticleLocalServiceUtil.fetchArticle(termsOfUseGroupId, termsOfUseArticleId);
-}
+JournalArticle journalArticle = journalArticleTermsOfUseDisplayContext.getJournalArticle();
 %>
 
 <c:choose>

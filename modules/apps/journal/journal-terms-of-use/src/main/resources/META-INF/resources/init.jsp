@@ -23,14 +23,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
-page import="com.liferay.journal.configuration.JournalServiceConfigurationKeys" %><%@
-page import="com.liferay.journal.configuration.JournalServiceConfigurationValues" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
-page import="com.liferay.journal.service.JournalArticleLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.journal.terms.of.use.internal.constants.JournalArticleTermsOfUseWebConstants" %><%@
+page import="com.liferay.journal.terms.of.use.internal.display.context.JournalArticleTermsOfUseDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+JournalArticleTermsOfUseDisplayContext journalArticleTermsOfUseDisplayContext = (JournalArticleTermsOfUseDisplayContext)request.getAttribute(JournalArticleTermsOfUseWebConstants.JOURNAL_ARTICLE_TERMS_OF_USE_DISPLAY_CONTEXT);
+%>

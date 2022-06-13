@@ -790,12 +790,32 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have a default value"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StorageFolderFieldHaveDefaultValue {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153417 StorageFolderFieldHaveDefaultValue pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			enableShowFiles = "true",
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#STORAGE_FOLDER_INPUT",
+			value1 = "/CustomObject");
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have help text"

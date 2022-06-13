@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -140,11 +139,9 @@ public class TaxonomyVocabularyResourceImpl
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception {
 
-		AssetVocabulary assetVocabulary =
-			_getTaxonomyVocabularyByExternalReferenceCode(
-				assetLibraryId, externalReferenceCode);
-
-		return _toTaxonomyVocabulary(assetVocabulary);
+		return _toTaxonomyVocabulary(
+			_assetVocabularyService.getAssetVocabularyByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode));
 	}
 
 	@Override
@@ -191,11 +188,9 @@ public class TaxonomyVocabularyResourceImpl
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		AssetVocabulary assetVocabulary =
-			_getTaxonomyVocabularyByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		return _toTaxonomyVocabulary(assetVocabulary);
+		return _toTaxonomyVocabulary(
+			_assetVocabularyService.getAssetVocabularyByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override
@@ -616,28 +611,6 @@ public class TaxonomyVocabularyResourceImpl
 		assetVocabularySettingsHelper.setMultiValued(true);
 
 		return assetVocabularySettingsHelper.toString();
-	}
-
-	private AssetVocabulary _getTaxonomyVocabularyByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
-		throws Exception {
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.
-				getAssetVocabularyByExternalReferenceCode(
-					groupId, externalReferenceCode);
-
-		String resourceName = getPermissionCheckerResourceName(
-			assetVocabulary.getVocabularyId());
-
-		Long resourceId = getPermissionCheckerResourceId(
-			assetVocabulary.getVocabularyId());
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(assetVocabulary.getVocabularyId()));
-
-		return assetVocabulary;
 	}
 
 	private TaxonomyVocabulary _toTaxonomyVocabulary(

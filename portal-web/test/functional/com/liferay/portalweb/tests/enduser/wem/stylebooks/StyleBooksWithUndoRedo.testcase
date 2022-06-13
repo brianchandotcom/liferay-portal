@@ -98,6 +98,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142363. The style book designer could undo all interaction states at one time."
+	@priority = "5"
+	test UndoAllInteractionStates {
+		task ("Given a style book designer has a style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the style book designer creates interactions states") {
+			task ("Change the Success to #557744 in Color System form") {
+				StyleBooks.expandSection(sectionName = "Theme Colors");
+
+				Type(
+					key_fieldLabel = "Success",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "#557744");
+
+				StyleBooks.clickManagementBar();
+
+				StyleBooks.waitForAutoSave();
+			}
+
+			task ("Change the Font Family Base to times in Typography form") {
+				StyleBooks.selectForm(formName = "Typography");
+
+				Type(
+					key_fieldLabel = "Font Family Base",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "times");
+
+				StyleBooks.clickManagementBar();
+
+				StyleBooks.waitForAutoSave();
+			}
+		}
+
+		task ("Then the style book designer could undo all interactions states") {
+			Click(locator1 = "PageEditor#UNDO_HISTORY");
+
+			MenuItem.click(menuItem = "Undo All");
+
+			StyleBooks.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Font Family Base",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'");
+
+			StyleBooks.selectForm(formName = "Color System");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			AssertTextEquals(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#287D3C");
+		}
+	}
+
 	@description = "This is a test for LPS-142363. The style book designer could undo or redo interaction states."
 	@priority = "5"
 	test UndoAndRedoInteractionStates {

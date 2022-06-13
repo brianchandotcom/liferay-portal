@@ -277,13 +277,20 @@ public class AssetEntryFinderImpl
 			sb.append("AssetEntries_AssetTags.tagId) ");
 		}
 
-		if (entryQuery.getLinkedAssetEntryId() > 0) {
+		String linkedAssetEntryIdsSQL = _getLinkedAssetEntryIdsSQL(entryQuery);
+
+		if (Validator.isNotNull(linkedAssetEntryIdsSQL)) {
 			sb.append("INNER JOIN (SELECT AssetLink.entryId1 AS entryId ");
-			sb.append("FROM AssetLink WHERE AssetLink.entryId2 = ? AND ");
-			sb.append("AssetLink.entryId1 != ? UNION SELECT ");
-			sb.append("AssetLink.entryId2 AS entryId FROM AssetLink WHERE ");
-			sb.append("AssetLink.entryId1 = ? AND AssetLink.entryId2 != ? ) ");
-			sb.append("TEMP_TABLE_ASSET_LINK ON ");
+			sb.append("FROM AssetLink WHERE AssetLink.entryId2 IN ");
+			sb.append(linkedAssetEntryIdsSQL);
+			sb.append("AND AssetLink.entryId1 NOT IN ");
+			sb.append(linkedAssetEntryIdsSQL);
+			sb.append("UNION SELECT AssetLink.entryId2 AS entryId FROM ");
+			sb.append("AssetLink WHERE AssetLink.entryId1 IN ");
+			sb.append(linkedAssetEntryIdsSQL);
+			sb.append(" AND AssetLink.entryId2 NOT IN ");
+			sb.append(linkedAssetEntryIdsSQL);
+			sb.append(" ) TEMP_TABLE_ASSET_LINK ON ");
 			sb.append("(TEMP_TABLE_ASSET_LINK.entryId = AssetEntry.entryId) ");
 		}
 
@@ -335,8 +342,10 @@ public class AssetEntryFinderImpl
 
 		int whereIndex = sb.index();
 
-		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			sb.append(" AND (AssetEntry.entryId != ?)");
+		if (Validator.isNotNull(linkedAssetEntryIdsSQL)) {
+			sb.append(" AND (AssetEntry.entryId NOT IN ");
+			sb.append(linkedAssetEntryIdsSQL);
+			sb.append(" )");
 		}
 
 		if (entryQuery.isListable() != null) {
@@ -549,14 +558,6 @@ public class AssetEntryFinderImpl
 		}
 
 		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			queryPos.add(entryQuery.getLinkedAssetEntryId());
-			queryPos.add(entryQuery.getLinkedAssetEntryId());
-			queryPos.add(entryQuery.getLinkedAssetEntryId());
-			queryPos.add(entryQuery.getLinkedAssetEntryId());
-			queryPos.add(entryQuery.getLinkedAssetEntryId());
-		}
 
 		if (entryQuery.isListable() != null) {
 			queryPos.add(entryQuery.isListable());
@@ -832,6 +833,30 @@ public class AssetEntryFinderImpl
 
 			queryPos.add(expirationDate_TS);
 		}
+	}
+
+	private String _getLinkedAssetEntryIdsSQL(AssetEntryQuery entryQuery) {
+		if (ArrayUtil.isNotEmpty(entryQuery.getLinkedAssetEntryIds())) {
+			long[] linkedAssetEntryIds = entryQuery.getLinkedAssetEntryIds();
+
+			StringBundler linkedAssetEntryIdsSQLSB = new StringBundler();
+
+			linkedAssetEntryIdsSQLSB.append(" (");
+
+			for (int i = 0; i < linkedAssetEntryIds.length; i++) {
+				if (i > 0) {
+					linkedAssetEntryIdsSQLSB.append(StringPool.COMMA);
+				}
+
+				linkedAssetEntryIdsSQLSB.append(linkedAssetEntryIds[i]);
+			}
+
+			linkedAssetEntryIdsSQLSB.append(") ");
+
+			return linkedAssetEntryIdsSQLSB.toString();
+		}
+
+		return null;
 	}
 
 }

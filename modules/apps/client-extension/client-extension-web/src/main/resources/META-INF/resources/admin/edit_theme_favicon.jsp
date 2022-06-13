@@ -22,6 +22,4 @@ EditClientExtensionEntryPartDisplayContext<CETThemeFavicon> editClientExtensionE
 CETThemeFavicon cetThemeFavicon = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input label="url" name="url" type="text" value="<%= cetThemeFavicon.getURL() %>">
-	<aui:validator name="urlAllowRelative" />
-</aui:input>
+<aui:input label="url" name="url" type="text" value="<%= cetThemeFavicon.getURL() %>" />

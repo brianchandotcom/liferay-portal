@@ -22,9 +22,7 @@ EditClientExtensionEntryPartDisplayContext<CETCustomElement> editClientExtension
 CETCustomElement cetCustomElement = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input label="html-element-name" name="htmlElementName" type="text" value="<%= cetCustomElement.getHTMLElementName() %>">
-	<aui:validator name="customElementName" />
-</aui:input>
+<aui:input label="html-element-name" name="htmlElementName" type="text" value="<%= cetCustomElement.getHTMLElementName() %>" />
 
 <aui:input label="use-esm" name="useESM" type="checkbox" value="<%= cetCustomElement.isUseESM() %>" />
 
@@ -35,9 +33,7 @@ CETCustomElement cetCustomElement = editClientExtensionEntryPartDisplayContext.g
 	%>
 
 		<div class="lfr-form-row">
-			<aui:input ignoreRequestValue="<%= true %>" label="url" name="urls" type="text" value="<%= url %>">
-				<aui:validator name="urlAllowRelative" />
-			</aui:input>
+			<aui:input ignoreRequestValue="<%= true %>" label="url" name="urls" type="text" value="<%= url %>" />
 		</div>
 
 	<%
@@ -53,9 +49,7 @@ CETCustomElement cetCustomElement = editClientExtensionEntryPartDisplayContext.g
 	%>
 
 		<div class="lfr-form-row">
-			<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="cssURLs" type="text" value="<%= cssURL %>">
-				<aui:validator name="urlAllowRelative" />
-			</aui:input>
+			<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="cssURLs" type="text" value="<%= cssURL %>" />
 		</div>
 
 	<%
@@ -80,9 +74,7 @@ CETCustomElement cetCustomElement = editClientExtensionEntryPartDisplayContext.g
 	options="<%= editClientExtensionEntryPartDisplayContext.getPortletCategoryNameSelectOptions(cetCustomElement.getPortletCategoryName()) %>"
 />
 
-<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= cetCustomElement.getFriendlyURLMapping() %>">
-	<aui:validator name="friendlyURLMapping" />
-</aui:input>
+<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= cetCustomElement.getFriendlyURLMapping() %>" />
 
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({

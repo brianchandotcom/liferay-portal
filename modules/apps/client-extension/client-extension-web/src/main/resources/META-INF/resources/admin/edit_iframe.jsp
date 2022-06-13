@@ -22,9 +22,7 @@ EditClientExtensionEntryPartDisplayContext<CETIFrame> editClientExtensionEntryPa
 CETIFrame cetIFrame = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input label="url" name="url" type="text" value="<%= cetIFrame.getURL() %>">
-	<aui:validator name="urlAllowRelative" />
-</aui:input>
+<aui:input label="url" name="url" type="text" value="<%= cetIFrame.getURL() %>" />
 
 <c:choose>
 	<c:when test="<%= editClientExtensionEntryPartDisplayContext.isNew() %>">
@@ -42,6 +40,4 @@ CETIFrame cetIFrame = editClientExtensionEntryPartDisplayContext.getCET();
 	options="<%= editClientExtensionEntryPartDisplayContext.getPortletCategoryNameSelectOptions(cetIFrame.getPortletCategoryName()) %>"
 />
 
-<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= cetIFrame.getFriendlyURLMapping() %>">
-	<aui:validator name="friendlyURLMapping" />
-</aui:input>
+<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= cetIFrame.getFriendlyURLMapping() %>" />

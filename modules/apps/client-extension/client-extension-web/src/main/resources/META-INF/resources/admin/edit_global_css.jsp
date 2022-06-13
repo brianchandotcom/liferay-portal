@@ -22,6 +22,4 @@ EditClientExtensionEntryPartDisplayContext<CETGlobalCSS> editClientExtensionEntr
 CETGlobalCSS cetGlobalCSS = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input ignoreRequestValue="<%= true %>" label="url" name="url" type="text" value="<%= cetGlobalCSS.getURL() %>">
-	<aui:validator name="urlAllowRelative" />
-</aui:input>
+<aui:input ignoreRequestValue="<%= true %>" label="url" name="url" type="text" value="<%= cetGlobalCSS.getURL() %>" />

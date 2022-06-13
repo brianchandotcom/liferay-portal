@@ -22,10 +22,6 @@ EditClientExtensionEntryPartDisplayContext<CETThemeCSS> editClientExtensionEntry
 CETThemeCSS cetThemeCSS = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input label="main-css-url" name="mainURL" type="text" value="<%= cetThemeCSS.getMainURL() %>">
-	<aui:validator name="urlAllowRelative" />
-</aui:input>
+<aui:input label="main-css-url" name="mainURL" type="text" value="<%= cetThemeCSS.getMainURL() %>" />
 
-<aui:input label="clay-css-url" name="clayURL" type="text" value="<%= cetThemeCSS.getClayURL() %>">
-	<aui:validator name="urlAllowRelative" />
-</aui:input>
+<aui:input label="clay-css-url" name="clayURL" type="text" value="<%= cetThemeCSS.getClayURL() %>" />

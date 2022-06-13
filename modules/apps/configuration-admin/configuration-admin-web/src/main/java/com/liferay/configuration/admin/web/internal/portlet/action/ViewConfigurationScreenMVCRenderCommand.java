@@ -17,7 +17,6 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
@@ -72,16 +71,13 @@ public class ViewConfigurationScreenMVCRenderCommand
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
-		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,
 			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(
 				configurationScreen.getCategoryKey(),
 				themeDisplay.getLanguageId(),
 				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,
-			configurationCategoryMenuDisplay);
+				configurationScopeDisplayContext.getScopePK()));
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_SCREEN,

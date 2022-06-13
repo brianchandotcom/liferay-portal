@@ -425,11 +425,17 @@ public abstract class BaseObjectViewResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			objectViewUnsafeConsumer =
-				objectView -> postObjectDefinitionObjectView(
-					Long.parseLong(
-						(String)parameters.get("objectDefinitionId")),
-					objectView);
+			if (parameters.containsKey("objectDefinitionId")) {
+				objectViewUnsafeConsumer =
+					objectView -> postObjectDefinitionObjectView(
+						Long.parseLong(
+							(String)parameters.get("objectDefinitionId")),
+						objectView);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [objectDefinitionId]");
+			}
 		}
 
 		if (objectViewUnsafeConsumer == null) {
@@ -493,9 +499,15 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionObjectViewsPage(
-			Long.parseLong((String)parameters.get("objectDefinitionId")),
-			search, pagination);
+		if (parameters.containsKey("objectDefinitionId")) {
+			return getObjectDefinitionObjectViewsPage(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				search, pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [objectDefinitionId]");
+		}
 	}
 
 	@Override

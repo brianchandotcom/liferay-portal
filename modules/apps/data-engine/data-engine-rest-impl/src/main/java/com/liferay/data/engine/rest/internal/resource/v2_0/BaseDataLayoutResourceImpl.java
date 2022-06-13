@@ -509,10 +509,17 @@ public abstract class BaseDataLayoutResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			dataLayoutUnsafeConsumer =
-				dataLayout -> postDataDefinitionDataLayout(
-					Long.parseLong((String)parameters.get("dataDefinitionId")),
-					dataLayout);
+			if (parameters.containsKey("dataDefinitionId")) {
+				dataLayoutUnsafeConsumer =
+					dataLayout -> postDataDefinitionDataLayout(
+						Long.parseLong(
+							(String)parameters.get("dataDefinitionId")),
+						dataLayout);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [dataDefinitionId]");
+			}
 		}
 
 		if (dataLayoutUnsafeConsumer == null) {
@@ -576,9 +583,15 @@ public abstract class BaseDataLayoutResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getDataDefinitionDataLayoutsPage(
-			Long.parseLong((String)parameters.get("dataDefinitionId")),
-			(String)parameters.get("keywords"), pagination, sorts);
+		if (parameters.containsKey("dataDefinitionId")) {
+			return getDataDefinitionDataLayoutsPage(
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				(String)parameters.get("keywords"), pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [dataDefinitionId]");
+		}
 	}
 
 	@Override

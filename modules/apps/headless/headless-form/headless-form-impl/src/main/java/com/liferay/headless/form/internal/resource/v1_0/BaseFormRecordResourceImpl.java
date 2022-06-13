@@ -354,8 +354,15 @@ public abstract class BaseFormRecordResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			formRecordUnsafeConsumer = formRecord -> postFormFormRecord(
-				Long.parseLong((String)parameters.get("formId")), formRecord);
+			if (parameters.containsKey("formId")) {
+				formRecordUnsafeConsumer = formRecord -> postFormFormRecord(
+					Long.parseLong((String)parameters.get("formId")),
+					formRecord);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [formId]");
+			}
 		}
 
 		if (formRecordUnsafeConsumer == null) {
@@ -380,6 +387,9 @@ public abstract class BaseFormRecordResourceImpl
 			java.util.Collection<FormRecord> formRecords,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -415,8 +425,14 @@ public abstract class BaseFormRecordResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getFormFormRecordsPage(
-			Long.parseLong((String)parameters.get("formId")), pagination);
+		if (parameters.containsKey("formId")) {
+			return getFormFormRecordsPage(
+				Long.parseLong((String)parameters.get("formId")), pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [formId]");
+		}
 	}
 
 	@Override

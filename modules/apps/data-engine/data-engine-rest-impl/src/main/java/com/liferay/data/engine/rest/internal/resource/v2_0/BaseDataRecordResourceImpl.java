@@ -645,10 +645,24 @@ public abstract class BaseDataRecordResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			dataRecordUnsafeConsumer =
-				dataRecord -> postDataDefinitionDataRecord(
-					Long.parseLong((String)parameters.get("dataDefinitionId")),
-					dataRecord);
+			if (parameters.containsKey("dataDefinitionId")) {
+				dataRecordUnsafeConsumer =
+					dataRecord -> postDataDefinitionDataRecord(
+						Long.parseLong(
+							(String)parameters.get("dataDefinitionId")),
+						dataRecord);
+			}
+			else if (parameters.containsKey("dataRecordCollectionId")) {
+				dataRecordUnsafeConsumer =
+					dataRecord -> postDataRecordCollectionDataRecord(
+						Long.parseLong(
+							(String)parameters.get("dataRecordCollectionId")),
+						dataRecord);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [dataDefinitionId, dataRecordCollectionId]");
+			}
 		}
 
 		if (dataRecordUnsafeConsumer == null) {
@@ -712,10 +726,23 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getDataDefinitionDataRecordsPage(
-			Long.parseLong((String)parameters.get("dataDefinitionId")),
-			Long.parseLong((String)parameters.get("dataListViewId")),
-			(String)parameters.get("keywords"), pagination, sorts);
+		if (parameters.containsKey("dataDefinitionId")) {
+			return getDataDefinitionDataRecordsPage(
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				Long.parseLong((String)parameters.get("dataListViewId")),
+				(String)parameters.get("keywords"), pagination, sorts);
+		}
+		else if (parameters.containsKey("dataRecordCollectionId")) {
+			return getDataRecordCollectionDataRecordsPage(
+				Long.parseLong(
+					(String)parameters.get("dataRecordCollectionId")),
+				Long.parseLong((String)parameters.get("dataListViewId")),
+				(String)parameters.get("keywords"), pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [dataDefinitionId, dataRecordCollectionId]");
+		}
 	}
 
 	@Override

@@ -1321,9 +1321,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			structuredContentFolderUnsafeConsumer = structuredContentFolder -> {
-			};
-
 			if (parameters.containsKey("assetLibraryId")) {
 				structuredContentFolderUnsafeConsumer =
 					structuredContentFolder ->
@@ -1336,6 +1333,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 					structuredContentFolder -> postSiteStructuredContentFolder(
 						(Long)parameters.get("siteId"),
 						structuredContentFolder);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [assetLibraryId, siteId]");
 			}
 		}
 
@@ -1420,7 +1421,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				null, filter, pagination, sorts);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [assetLibraryId, siteId]");
 		}
 	}
 

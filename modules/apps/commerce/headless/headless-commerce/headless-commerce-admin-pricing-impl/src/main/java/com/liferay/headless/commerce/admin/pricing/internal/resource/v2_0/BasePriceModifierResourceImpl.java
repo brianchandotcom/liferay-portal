@@ -553,6 +553,9 @@ public abstract class BasePriceModifierResourceImpl
 			java.util.Collection<PriceModifier> priceModifiers,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -599,7 +602,8 @@ public abstract class BasePriceModifierResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

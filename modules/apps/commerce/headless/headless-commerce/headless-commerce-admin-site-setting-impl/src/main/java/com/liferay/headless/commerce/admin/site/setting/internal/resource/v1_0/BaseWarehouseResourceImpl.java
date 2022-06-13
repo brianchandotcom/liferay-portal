@@ -351,6 +351,9 @@ public abstract class BaseWarehouseResourceImpl
 			java.util.Collection<Warehouse> warehouses,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -397,7 +400,8 @@ public abstract class BaseWarehouseResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

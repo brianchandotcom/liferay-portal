@@ -429,10 +429,17 @@ public abstract class BaseDataListViewResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			dataListViewUnsafeConsumer =
-				dataListView -> postDataDefinitionDataListView(
-					Long.parseLong((String)parameters.get("dataDefinitionId")),
-					dataListView);
+			if (parameters.containsKey("dataDefinitionId")) {
+				dataListViewUnsafeConsumer =
+					dataListView -> postDataDefinitionDataListView(
+						Long.parseLong(
+							(String)parameters.get("dataDefinitionId")),
+						dataListView);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [dataDefinitionId]");
+			}
 		}
 
 		if (dataListViewUnsafeConsumer == null) {
@@ -496,9 +503,15 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getDataDefinitionDataListViewsPage(
-			Long.parseLong((String)parameters.get("dataDefinitionId")),
-			(String)parameters.get("keywords"), pagination, sorts);
+		if (parameters.containsKey("dataDefinitionId")) {
+			return getDataDefinitionDataListViewsPage(
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				(String)parameters.get("keywords"), pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [dataDefinitionId]");
+		}
 	}
 
 	@Override

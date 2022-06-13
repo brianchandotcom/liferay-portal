@@ -844,12 +844,13 @@ public abstract class BaseWikiNodeResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			wikiNodeUnsafeConsumer = wikiNode -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				wikiNodeUnsafeConsumer = wikiNode -> postSiteWikiNode(
 					(Long)parameters.get("siteId"), wikiNode);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -928,7 +929,8 @@ public abstract class BaseWikiNodeResourceImpl
 				pagination, sorts);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 

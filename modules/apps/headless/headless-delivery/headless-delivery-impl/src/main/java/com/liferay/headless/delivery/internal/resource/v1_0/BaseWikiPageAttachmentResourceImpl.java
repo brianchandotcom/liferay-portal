@@ -329,10 +329,16 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			wikiPageAttachmentUnsafeConsumer =
-				wikiPageAttachment -> postWikiPageWikiPageAttachment(
-					Long.parseLong((String)parameters.get("wikiPageId")),
-					(MultipartBody)parameters.get("multipartBody"));
+			if (parameters.containsKey("wikiPageId")) {
+				wikiPageAttachmentUnsafeConsumer =
+					wikiPageAttachment -> postWikiPageWikiPageAttachment(
+						Long.parseLong((String)parameters.get("wikiPageId")),
+						(MultipartBody)parameters.get("multipartBody"));
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [wikiPageId]");
+			}
 		}
 
 		if (wikiPageAttachmentUnsafeConsumer == null) {
@@ -396,8 +402,14 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getWikiPageWikiPageAttachmentsPage(
-			Long.parseLong((String)parameters.get("wikiPageId")));
+		if (parameters.containsKey("wikiPageId")) {
+			return getWikiPageWikiPageAttachmentsPage(
+				Long.parseLong((String)parameters.get("wikiPageId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [wikiPageId]");
+		}
 	}
 
 	@Override
@@ -427,6 +439,9 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			java.util.Collection<WikiPageAttachment> wikiPageAttachments,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

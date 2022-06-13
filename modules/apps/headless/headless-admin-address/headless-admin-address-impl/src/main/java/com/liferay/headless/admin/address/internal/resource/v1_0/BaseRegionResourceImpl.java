@@ -555,8 +555,15 @@ public abstract class BaseRegionResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			regionUnsafeConsumer = region -> postCountryRegion(
-				Long.parseLong((String)parameters.get("countryId")), region);
+			if (parameters.containsKey("countryId")) {
+				regionUnsafeConsumer = region -> postCountryRegion(
+					Long.parseLong((String)parameters.get("countryId")),
+					region);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [countryId]");
+			}
 		}
 
 		if (regionUnsafeConsumer == null) {
@@ -619,10 +626,17 @@ public abstract class BaseRegionResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getCountryRegionsPage(
-			Long.parseLong((String)parameters.get("countryId")),
-			Boolean.parseBoolean((String)parameters.get("active")), search,
-			pagination, sorts);
+		if (parameters.containsKey("countryId")) {
+			return getCountryRegionsPage(
+				Long.parseLong((String)parameters.get("countryId")),
+				Boolean.parseBoolean((String)parameters.get("active")), search,
+				pagination, sorts);
+		}
+		else {
+			return getRegionsPage(
+				Boolean.parseBoolean((String)parameters.get("active")), search,
+				pagination, sorts);
+		}
 	}
 
 	@Override

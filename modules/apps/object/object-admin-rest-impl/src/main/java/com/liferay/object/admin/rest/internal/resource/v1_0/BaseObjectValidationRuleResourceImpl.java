@@ -525,12 +525,17 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			objectValidationRuleUnsafeConsumer =
-				objectValidationRule ->
+			if (parameters.containsKey("objectDefinitionId")) {
+				objectValidationRuleUnsafeConsumer = objectValidationRule ->
 					postObjectDefinitionObjectValidationRule(
 						Long.parseLong(
 							(String)parameters.get("objectDefinitionId")),
 						objectValidationRule);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [objectDefinitionId]");
+			}
 		}
 
 		if (objectValidationRuleUnsafeConsumer == null) {
@@ -598,9 +603,15 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionObjectValidationRulesPage(
-			Long.parseLong((String)parameters.get("objectDefinitionId")),
-			search, pagination);
+		if (parameters.containsKey("objectDefinitionId")) {
+			return getObjectDefinitionObjectValidationRulesPage(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				search, pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [objectDefinitionId]");
+		}
 	}
 
 	@Override

@@ -483,11 +483,17 @@ public abstract class BaseObjectFieldResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			objectFieldUnsafeConsumer =
-				objectField -> postObjectDefinitionObjectField(
-					Long.parseLong(
-						(String)parameters.get("objectDefinitionId")),
-					objectField);
+			if (parameters.containsKey("objectDefinitionId")) {
+				objectFieldUnsafeConsumer =
+					objectField -> postObjectDefinitionObjectField(
+						Long.parseLong(
+							(String)parameters.get("objectDefinitionId")),
+						objectField);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [objectDefinitionId]");
+			}
 		}
 
 		if (objectFieldUnsafeConsumer == null) {
@@ -551,9 +557,15 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionObjectFieldsPage(
-			Long.parseLong((String)parameters.get("objectDefinitionId")),
-			search, pagination);
+		if (parameters.containsKey("objectDefinitionId")) {
+			return getObjectDefinitionObjectFieldsPage(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				search, pagination);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [objectDefinitionId]");
+		}
 	}
 
 	@Override

@@ -138,6 +138,9 @@ public abstract class BaseSkuForecastResourceImpl
 			java.util.Collection<SkuForecast> skuForecasts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -145,6 +148,9 @@ public abstract class BaseSkuForecastResourceImpl
 			java.util.Collection<SkuForecast> skuForecasts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -180,7 +186,8 @@ public abstract class BaseSkuForecastResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -210,6 +217,9 @@ public abstract class BaseSkuForecastResourceImpl
 			java.util.Collection<SkuForecast> skuForecasts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

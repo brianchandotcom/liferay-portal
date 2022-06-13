@@ -661,13 +661,14 @@ public abstract class BaseNavigationMenuResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			navigationMenuUnsafeConsumer = navigationMenu -> {
-			};
-
 			if (parameters.containsKey("siteId")) {
 				navigationMenuUnsafeConsumer =
 					navigationMenu -> postSiteNavigationMenu(
 						(Long)parameters.get("siteId"), navigationMenu);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [siteId]");
 			}
 		}
 
@@ -737,7 +738,8 @@ public abstract class BaseNavigationMenuResourceImpl
 				(Long)parameters.get("siteId"), pagination);
 		}
 		else {
-			return null;
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId]");
 		}
 	}
 

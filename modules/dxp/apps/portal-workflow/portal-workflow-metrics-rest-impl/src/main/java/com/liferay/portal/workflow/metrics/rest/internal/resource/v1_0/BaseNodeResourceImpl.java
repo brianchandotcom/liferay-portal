@@ -235,8 +235,14 @@ public abstract class BaseNodeResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			nodeUnsafeConsumer = node -> postProcessNode(
-				Long.parseLong((String)parameters.get("processId")), node);
+			if (parameters.containsKey("processId")) {
+				nodeUnsafeConsumer = node -> postProcessNode(
+					Long.parseLong((String)parameters.get("processId")), node);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [processId]");
+			}
 		}
 
 		if (nodeUnsafeConsumer == null) {
@@ -260,6 +266,9 @@ public abstract class BaseNodeResourceImpl
 			java.util.Collection<Node> nodes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -295,8 +304,14 @@ public abstract class BaseNodeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessNodesPage(
-			Long.parseLong((String)parameters.get("processId")));
+		if (parameters.containsKey("processId")) {
+			return getProcessNodesPage(
+				Long.parseLong((String)parameters.get("processId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [processId]");
+		}
 	}
 
 	@Override
@@ -326,6 +341,9 @@ public abstract class BaseNodeResourceImpl
 			java.util.Collection<Node> nodes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

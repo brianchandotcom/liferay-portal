@@ -715,9 +715,16 @@ public abstract class BaseAccountRoleResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			accountRoleUnsafeConsumer = accountRole -> postAccountAccountRole(
-				Long.parseLong((String)parameters.get("accountId")),
-				accountRole);
+			if (parameters.containsKey("accountId")) {
+				accountRoleUnsafeConsumer =
+					accountRole -> postAccountAccountRole(
+						Long.parseLong((String)parameters.get("accountId")),
+						accountRole);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [accountId]");
+			}
 		}
 
 		if (accountRoleUnsafeConsumer == null) {
@@ -742,6 +749,9 @@ public abstract class BaseAccountRoleResourceImpl
 			java.util.Collection<AccountRole> accountRoles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -777,9 +787,15 @@ public abstract class BaseAccountRoleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getAccountAccountRolesPage(
-			Long.parseLong((String)parameters.get("accountId")),
-			(String)parameters.get("keywords"), filter, pagination, sorts);
+		if (parameters.containsKey("accountId")) {
+			return getAccountAccountRolesPage(
+				Long.parseLong((String)parameters.get("accountId")),
+				(String)parameters.get("keywords"), filter, pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [accountId]");
+		}
 	}
 
 	@Override
@@ -809,6 +825,9 @@ public abstract class BaseAccountRoleResourceImpl
 			java.util.Collection<AccountRole> accountRoles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

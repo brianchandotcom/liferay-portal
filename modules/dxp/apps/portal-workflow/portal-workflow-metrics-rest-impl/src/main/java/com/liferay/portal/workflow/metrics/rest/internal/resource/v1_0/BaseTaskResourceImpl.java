@@ -383,8 +383,14 @@ public abstract class BaseTaskResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			taskUnsafeConsumer = task -> postProcessTask(
-				Long.parseLong((String)parameters.get("processId")), task);
+			if (parameters.containsKey("processId")) {
+				taskUnsafeConsumer = task -> postProcessTask(
+					Long.parseLong((String)parameters.get("processId")), task);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [processId]");
+			}
 		}
 
 		if (taskUnsafeConsumer == null) {
@@ -408,6 +414,9 @@ public abstract class BaseTaskResourceImpl
 			java.util.Collection<Task> tasks,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -443,8 +452,14 @@ public abstract class BaseTaskResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessTasksPage(
-			Long.parseLong((String)parameters.get("processId")));
+		if (parameters.containsKey("processId")) {
+			return getProcessTasksPage(
+				Long.parseLong((String)parameters.get("processId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [processId]");
+		}
 	}
 
 	@Override
@@ -474,6 +489,9 @@ public abstract class BaseTaskResourceImpl
 			java.util.Collection<Task> tasks,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

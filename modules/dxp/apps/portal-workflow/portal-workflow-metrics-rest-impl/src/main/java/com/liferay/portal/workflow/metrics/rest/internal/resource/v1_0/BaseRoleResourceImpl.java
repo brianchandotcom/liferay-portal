@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -113,6 +114,9 @@ public abstract class BaseRoleResourceImpl
 			java.util.Collection<Role> roles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -120,6 +124,9 @@ public abstract class BaseRoleResourceImpl
 			java.util.Collection<Role> roles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -155,9 +162,15 @@ public abstract class BaseRoleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessRolesPage(
-			Long.parseLong((String)parameters.get("processId")),
-			Boolean.parseBoolean((String)parameters.get("completed")));
+		if (parameters.containsKey("processId")) {
+			return getProcessRolesPage(
+				Long.parseLong((String)parameters.get("processId")),
+				Boolean.parseBoolean((String)parameters.get("completed")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [processId]");
+		}
 	}
 
 	@Override
@@ -187,6 +200,9 @@ public abstract class BaseRoleResourceImpl
 			java.util.Collection<Role> roles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -108,6 +109,9 @@ public abstract class BaseProcessVersionResourceImpl
 			java.util.Collection<ProcessVersion> processVersions,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -115,6 +119,9 @@ public abstract class BaseProcessVersionResourceImpl
 			java.util.Collection<ProcessVersion> processVersions,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -150,8 +157,14 @@ public abstract class BaseProcessVersionResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessProcessVersionsPage(
-			Long.parseLong((String)parameters.get("processId")));
+		if (parameters.containsKey("processId")) {
+			return getProcessProcessVersionsPage(
+				Long.parseLong((String)parameters.get("processId")));
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [processId]");
+		}
 	}
 
 	@Override
@@ -181,6 +194,9 @@ public abstract class BaseProcessVersionResourceImpl
 			java.util.Collection<ProcessVersion> processVersions,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

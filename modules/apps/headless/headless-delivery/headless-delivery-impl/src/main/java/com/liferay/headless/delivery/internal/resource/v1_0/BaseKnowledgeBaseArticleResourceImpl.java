@@ -1592,17 +1592,21 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			knowledgeBaseArticleUnsafeConsumer =
-				knowledgeBaseArticle ->
+			if (parameters.containsKey("knowledgeBaseFolderId")) {
+				knowledgeBaseArticleUnsafeConsumer = knowledgeBaseArticle ->
 					postKnowledgeBaseFolderKnowledgeBaseArticle(
 						Long.parseLong(
 							(String)parameters.get("knowledgeBaseFolderId")),
 						knowledgeBaseArticle);
-
-			if (parameters.containsKey("siteId")) {
+			}
+			else if (parameters.containsKey("siteId")) {
 				knowledgeBaseArticleUnsafeConsumer =
 					knowledgeBaseArticle -> postSiteKnowledgeBaseArticle(
 						(Long)parameters.get("siteId"), knowledgeBaseArticle);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be informed: [knowledgeBaseFolderId, siteId]");
 			}
 		}
 
@@ -1687,11 +1691,15 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				Boolean.parseBoolean((String)parameters.get("flatten")), search,
 				null, filter, pagination, sorts);
 		}
-		else {
+		else if (parameters.containsKey("knowledgeBaseFolderId")) {
 			return getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long.parseLong((String)parameters.get("knowledgeBaseFolderId")),
 				Boolean.parseBoolean((String)parameters.get("flatten")), search,
 				null, filter, pagination, sorts);
+		}
+		else {
+			throw new NotSupportedException(
+				"One of the following parameters must be informed: [siteId, knowledgeBaseFolderId]");
 		}
 	}
 

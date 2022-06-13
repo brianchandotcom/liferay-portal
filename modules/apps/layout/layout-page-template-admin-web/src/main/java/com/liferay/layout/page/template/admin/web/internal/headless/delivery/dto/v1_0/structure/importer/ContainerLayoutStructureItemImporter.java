@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -106,6 +107,14 @@ public class ContainerLayoutStructureItemImporter
 			}
 
 			stylesJSONObject.put("backgroundImage", jsonObject);
+		}
+
+		if (definitionMap.containsKey("cssClasses")) {
+			List<String> cssClasses = (List<String>)definitionMap.get(
+				"cssClasses");
+
+			containerStyledLayoutStructureItem.setCssClasses(
+				new HashSet<>(cssClasses));
 		}
 
 		Map<String, Object> containerHtmlProperties =

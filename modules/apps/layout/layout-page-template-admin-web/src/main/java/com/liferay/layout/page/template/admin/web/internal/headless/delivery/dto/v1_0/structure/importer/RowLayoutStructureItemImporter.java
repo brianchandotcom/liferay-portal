@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,6 +58,14 @@ public class RowLayoutStructureItemImporter
 
 		if (definitionMap == null) {
 			return rowStyledLayoutStructureItem;
+		}
+
+		if (definitionMap.containsKey("cssClasses")) {
+			List<String> cssClasses = (List<String>)definitionMap.get(
+				"cssClasses");
+
+			rowStyledLayoutStructureItem.setCssClasses(
+				new HashSet<>(cssClasses));
 		}
 
 		rowStyledLayoutStructureItem.setGutters(

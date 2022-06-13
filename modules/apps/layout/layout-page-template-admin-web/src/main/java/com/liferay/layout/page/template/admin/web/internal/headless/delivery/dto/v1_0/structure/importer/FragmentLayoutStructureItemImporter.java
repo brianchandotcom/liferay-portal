@@ -67,6 +67,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -116,6 +117,14 @@ public class FragmentLayoutStructureItemImporter
 
 		if (definitionMap == null) {
 			return fragmentStyledLayoutStructureItem;
+		}
+
+		if (definitionMap.containsKey("cssClasses")) {
+			List<String> cssClasses = (List<String>)definitionMap.get(
+				"cssClasses");
+
+			fragmentStyledLayoutStructureItem.setCssClasses(
+				new HashSet<>(cssClasses));
 		}
 
 		Map<String, Object> fragmentStyleMap =

@@ -63,6 +63,36 @@ public class PageFragmentInstanceDefinitionSerDes {
 
 		sb.append("{");
 
+		if (pageFragmentInstanceDefinition.getCssClasses() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClasses\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageFragmentInstanceDefinition.getCssClasses().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(
+					_escape(pageFragmentInstanceDefinition.getCssClasses()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) <
+						pageFragmentInstanceDefinition.getCssClasses().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageFragmentInstanceDefinition.getFragment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -215,6 +245,15 @@ public class PageFragmentInstanceDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (pageFragmentInstanceDefinition.getCssClasses() == null) {
+			map.put("cssClasses", null);
+		}
+		else {
+			map.put(
+				"cssClasses",
+				String.valueOf(pageFragmentInstanceDefinition.getCssClasses()));
+		}
+
 		if (pageFragmentInstanceDefinition.getFragment() == null) {
 			map.put("fragment", null);
 		}
@@ -304,7 +343,13 @@ public class PageFragmentInstanceDefinitionSerDes {
 			PageFragmentInstanceDefinition pageFragmentInstanceDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragment")) {
+			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentInstanceDefinition.setCssClasses(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragment")) {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setFragment(
 						FragmentSerDes.toDTO((String)jsonParserFieldValue));

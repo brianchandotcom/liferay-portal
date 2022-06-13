@@ -57,6 +57,32 @@ public class PageFormDefinitionSerDes {
 
 		sb.append("{");
 
+		if (pageFormDefinition.getCssClasses() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClasses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageFormDefinition.getCssClasses().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(pageFormDefinition.getCssClasses()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < pageFormDefinition.getCssClasses().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageFormDefinition.getFormConfig() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -134,6 +160,15 @@ public class PageFormDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (pageFormDefinition.getCssClasses() == null) {
+			map.put("cssClasses", null);
+		}
+		else {
+			map.put(
+				"cssClasses",
+				String.valueOf(pageFormDefinition.getCssClasses()));
+		}
+
 		if (pageFormDefinition.getFormConfig() == null) {
 			map.put("formConfig", null);
 		}
@@ -189,7 +224,13 @@ public class PageFormDefinitionSerDes {
 			PageFormDefinition pageFormDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "formConfig")) {
+			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+				if (jsonParserFieldValue != null) {
+					pageFormDefinition.setCssClasses(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formConfig")) {
 				if (jsonParserFieldValue != null) {
 					pageFormDefinition.setFormConfig(
 						FormConfigSerDes.toDTO((String)jsonParserFieldValue));

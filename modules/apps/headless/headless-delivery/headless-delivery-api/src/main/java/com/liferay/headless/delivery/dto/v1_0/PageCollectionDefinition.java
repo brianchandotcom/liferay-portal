@@ -127,6 +127,38 @@ public class PageCollectionDefinition implements Serializable {
 	protected CollectionViewport[] collectionViewports;
 
 	@Schema(
+		description = "A list of CSS Classes that are applied to the element."
+	)
+	public String[] getCssClasses() {
+		return cssClasses;
+	}
+
+	public void setCssClasses(String[] cssClasses) {
+		this.cssClasses = cssClasses;
+	}
+
+	@JsonIgnore
+	public void setCssClasses(
+		UnsafeSupplier<String[], Exception> cssClassesUnsafeSupplier) {
+
+		try {
+			cssClasses = cssClassesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A list of CSS Classes that are applied to the element."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] cssClasses;
+
+	@Schema(
 		description = "Whether to show all items when pagination is disabled."
 	)
 	public Boolean getDisplayAllItems() {
@@ -587,6 +619,30 @@ public class PageCollectionDefinition implements Serializable {
 				sb.append(String.valueOf(collectionViewports[i]));
 
 				if ((i + 1) < collectionViewports.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (cssClasses != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClasses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cssClasses.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(cssClasses[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < cssClasses.length) {
 					sb.append(", ");
 				}
 			}

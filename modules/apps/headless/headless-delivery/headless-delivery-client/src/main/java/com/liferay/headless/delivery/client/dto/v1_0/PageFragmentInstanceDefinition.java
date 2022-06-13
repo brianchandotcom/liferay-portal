@@ -35,6 +35,27 @@ public class PageFragmentInstanceDefinition implements Cloneable, Serializable {
 		return PageFragmentInstanceDefinitionSerDes.toDTO(json);
 	}
 
+	public String[] getCssClasses() {
+		return cssClasses;
+	}
+
+	public void setCssClasses(String[] cssClasses) {
+		this.cssClasses = cssClasses;
+	}
+
+	public void setCssClasses(
+		UnsafeSupplier<String[], Exception> cssClassesUnsafeSupplier) {
+
+		try {
+			cssClasses = cssClassesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] cssClasses;
+
 	public Fragment getFragment() {
 		return fragment;
 	}

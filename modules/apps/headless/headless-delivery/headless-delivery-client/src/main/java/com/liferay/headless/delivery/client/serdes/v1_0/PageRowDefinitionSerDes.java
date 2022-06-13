@@ -58,6 +58,30 @@ public class PageRowDefinitionSerDes {
 
 		sb.append("{");
 
+		if (pageRowDefinition.getCssClasses() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClasses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageRowDefinition.getCssClasses().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(pageRowDefinition.getCssClasses()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < pageRowDefinition.getCssClasses().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageRowDefinition.getFragmentStyle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -210,6 +234,15 @@ public class PageRowDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (pageRowDefinition.getCssClasses() == null) {
+			map.put("cssClasses", null);
+		}
+		else {
+			map.put(
+				"cssClasses",
+				String.valueOf(pageRowDefinition.getCssClasses()));
+		}
+
 		if (pageRowDefinition.getFragmentStyle() == null) {
 			map.put("fragmentStyle", null);
 		}
@@ -317,7 +350,13 @@ public class PageRowDefinitionSerDes {
 			PageRowDefinition pageRowDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
+			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setCssClasses(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
 				if (jsonParserFieldValue != null) {
 					pageRowDefinition.setFragmentStyle(
 						FragmentStyleSerDes.toDTO(

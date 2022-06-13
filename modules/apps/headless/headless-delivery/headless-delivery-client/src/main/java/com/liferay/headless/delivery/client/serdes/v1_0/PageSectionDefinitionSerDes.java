@@ -94,6 +94,32 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getCssClasses() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClasses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageSectionDefinition.getCssClasses().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(pageSectionDefinition.getCssClasses()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < pageSectionDefinition.getCssClasses().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageSectionDefinition.getFragmentLink() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -220,6 +246,15 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getCssClasses() == null) {
+			map.put("cssClasses", null);
+		}
+		else {
+			map.put(
+				"cssClasses",
+				String.valueOf(pageSectionDefinition.getCssClasses()));
+		}
+
 		if (pageSectionDefinition.getFragmentLink() == null) {
 			map.put("fragmentLink", null);
 		}
@@ -313,6 +348,12 @@ public class PageSectionDefinitionSerDes {
 					pageSectionDefinition.setBackgroundImage(
 						BackgroundImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setCssClasses(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentLink")) {

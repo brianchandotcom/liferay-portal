@@ -37,7 +37,7 @@
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionDropdownItems) %>">
-		<div class="c-mt-3 text-center">
+		<div class="c-mt-3">
 			<c:choose>
 				<c:when test="<%= actionDropdownItems.size() > 1 %>">
 					<clay:dropdown-menu

@@ -242,30 +242,24 @@ public class FragmentEntryLinkStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				SegmentsExperience.class);
 
-		long segmentsExperienceId = MapUtil.getLong(
-			segmentsExperienceIds, fragmentEntryLink.getSegmentsExperienceId(),
-			fragmentEntryLink.getSegmentsExperienceId());
-
-		importedFragmentEntryLink.setSegmentsExperienceId(segmentsExperienceId);
+		importedFragmentEntryLink.setSegmentsExperienceId(
+			MapUtil.getLong(
+				segmentsExperienceIds,
+				fragmentEntryLink.getSegmentsExperienceId(),
+				fragmentEntryLink.getSegmentsExperienceId()));
 
 		importedFragmentEntryLink.setClassPK(referenceClassPK);
 		importedFragmentEntryLink.setPlid(referenceClassPK);
-
-		String html =
+		importedFragmentEntryLink.setHtml(
 			_dlReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, fragmentEntryLink,
-					fragmentEntryLink.getHtml());
-
-		importedFragmentEntryLink.setHtml(html);
-
-		String editableValues =
+					fragmentEntryLink.getHtml()));
+		importedFragmentEntryLink.setEditableValues(
 			_fragmentEntryLinkExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, fragmentEntryLink,
-					fragmentEntryLink.getEditableValues());
-
-		importedFragmentEntryLink.setEditableValues(editableValues);
+					fragmentEntryLink.getEditableValues()));
 
 		FragmentEntryLink existingFragmentEntryLink =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

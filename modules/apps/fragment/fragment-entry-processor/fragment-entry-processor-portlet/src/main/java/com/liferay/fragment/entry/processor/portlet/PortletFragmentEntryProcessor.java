@@ -442,16 +442,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String encodePortletId = PortletIdCodec.encode(portletId, instanceId);
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				encodePortletId);
-
 		String html = _fragmentPortletRenderer.renderPortlet(
 			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
 			instanceId,
-			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+			PortletPreferencesFactoryUtil.toXML(
+				PortletPreferencesFactoryUtil.getPortletPreferences(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					encodePortletId)));
 
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();

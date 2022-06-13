@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {createResourceURL, openToast} from 'frontend-js-web';
 
 export default function ({
 	getRedirectEntryChainCauseURL,
@@ -59,13 +59,10 @@ export default function ({
 		}
 		else {
 			Liferay.Util.fetch(
-				Liferay.Util.PortletURL.createResourceURL(
-					getRedirectEntryChainCauseURL,
-					{
-						destinationURL: destinationURL.value,
-						sourceURL: sourceURL.value,
-					}
-				)
+				createResourceURL(getRedirectEntryChainCauseURL, {
+					destinationURL: destinationURL.value,
+					sourceURL: sourceURL.value,
+				})
 			)
 				.then((response) => {
 					return response.json();

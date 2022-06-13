@@ -64,11 +64,8 @@ export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimp
 // PortletURL API
 
 export {default as createActionURL} from './liferay/util/portlet_url/create_action_url.es';
-
 export {default as createPortletURL} from './liferay/util/portlet_url/create_portlet_url.es';
-
 export {default as createRenderURL} from './liferay/util/portlet_url/create_render_url.es';
-
 export {default as createResourceURL} from './liferay/util/portlet_url/create_resource_url.es';
 
 // Align API

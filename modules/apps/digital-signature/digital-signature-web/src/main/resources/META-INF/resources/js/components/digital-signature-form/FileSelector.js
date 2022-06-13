@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {createPortletURL} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext';
@@ -33,7 +34,7 @@ const getDocumentLibrarySelectorURL = (portletNamespace) => {
 		'refererGroupId': Liferay.ThemeDisplay.getSiteGroupId(),
 	};
 
-	const documentLibrarySelectorURL = Liferay.Util.PortletURL.createPortletURL(
+	const documentLibrarySelectorURL = createPortletURL(
 		themeDisplay.getLayoutRelativeControlPanelURL(),
 		documentLibrarySelectorParameters
 	);

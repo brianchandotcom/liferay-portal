@@ -736,6 +736,21 @@ export function toggleSelectBox(
 	toggleBoxId: string
 ): void;
 
+export function createActionURL(
+	basePortletURL: string,
+	parameters?: Object
+): URL;
+
+export function createPortletURL(
+	basePortletURL: string,
+	parameters?: Object
+): URL;
+
+export function createRenderURL(
+	basePortletURL: string,
+	parameters?: Object
+): URL;
+
 export function createResourceURL(
 	basePortletURL: string,
 	parameters?: Object

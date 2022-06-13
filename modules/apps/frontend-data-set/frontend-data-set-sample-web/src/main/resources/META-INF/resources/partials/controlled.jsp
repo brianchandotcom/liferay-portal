@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,27 +12,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.frontend.data.set.sample.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Marko Cikos
- */
-public class FDSSampleFDSNames {
+<%
+ControlledFDSDisplayContext controlledFDSDisplayContext = new ControlledFDSDisplayContext(request);
+%>
 
-	public static final String CLASSIC =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
-
-	public static final String CONTROLLED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-controlled";
-
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
-
-	public static final String MINIMUM =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
-
-	public static final String REACT =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-react";
-
-}
+<react:component
+	module="js/ControlledFrontendDataSet"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"id", FDSSampleFDSNames.CONTROLLED
+		).put(
+			"items", controlledFDSDisplayContext.getItems()
+		).put(
+			"showManagementBar", false
+		).put(
+			"style", "fluid"
+		).put(
+			"views", controlledFDSDisplayContext.getViews()
+		).build()
+	%>'
+/>

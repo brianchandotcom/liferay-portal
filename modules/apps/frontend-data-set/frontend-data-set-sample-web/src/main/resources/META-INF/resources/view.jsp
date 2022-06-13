@@ -19,7 +19,7 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "customized");
 
-String tabs1Names = "classic,customized,minimum,react";
+String tabs1Names = "classic,controlled,customized,minimum,react";
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse

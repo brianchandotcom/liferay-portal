@@ -35,6 +35,11 @@
 	<td>//*[contains(@class,'popover-header')]//span[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>POPOVER_OVERLAY</td>
+	<td>//*[contains(@clip-path,'overlay')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

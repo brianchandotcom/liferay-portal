@@ -178,8 +178,9 @@ public class ObjectFieldServiceHttp {
 
 	public static com.liferay.object.model.ObjectField updateCustomObjectField(
 			HttpPrincipal httpPrincipal, long objectFieldId,
-			long listTypeDefinitionId, String businessType, String dbType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String externalReferenceCode, long listTypeDefinitionId,
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
@@ -192,9 +193,10 @@ public class ObjectFieldServiceHttp {
 				_updateCustomObjectFieldParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectFieldId, listTypeDefinitionId, businessType,
-				dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-				name, required, objectFieldSettings);
+				methodKey, objectFieldId, externalReferenceCode,
+				listTypeDefinitionId, businessType, dbType, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				objectFieldSettings);
 
 			Object returnObj = null;
 
@@ -239,9 +241,9 @@ public class ObjectFieldServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateCustomObjectFieldParameterTypes3 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, boolean.class,
-			boolean.class, String.class, java.util.Map.class, String.class,
-			boolean.class, java.util.List.class
+			long.class, String.class, long.class, String.class, String.class,
+			boolean.class, boolean.class, String.class, java.util.Map.class,
+			String.class, boolean.class, java.util.List.class
 		};
 
 }

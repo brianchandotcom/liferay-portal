@@ -138,6 +138,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectField.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newObjectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
 
 		newObjectField.setObjectDefinitionId(RandomTestUtil.nextLong());
@@ -191,6 +193,9 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectField.getModifiedDate()),
 			Time.getShortTimestamp(newObjectField.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectField.getExternalReferenceCode(),
+			newObjectField.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingObjectField.getListTypeDefinitionId(),
 			newObjectField.getListTypeDefinitionId());
@@ -262,6 +267,15 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByODI_DTN() throws Exception {
 		_persistence.countByODI_DTN(RandomTestUtil.nextLong(), "");
 
@@ -318,12 +332,12 @@ public class ObjectFieldPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "listTypeDefinitionId",
-			true, "objectDefinitionId", true, "businessType", true,
-			"dbColumnName", true, "dbTableName", true, "dbType", true,
-			"indexed", true, "indexedAsKeyword", true, "indexedLanguageId",
-			true, "label", true, "name", true, "relationshipType", true,
-			"required", true, "system", true);
+			"createDate", true, "modifiedDate", true, "externalReferenceCode",
+			true, "listTypeDefinitionId", true, "objectDefinitionId", true,
+			"businessType", true, "dbColumnName", true, "dbTableName", true,
+			"dbType", true, "indexed", true, "indexedAsKeyword", true,
+			"indexedLanguageId", true, "label", true, "name", true,
+			"relationshipType", true, "required", true, "system", true);
 	}
 
 	@Test
@@ -587,6 +601,17 @@ public class ObjectFieldPersistenceTest {
 
 	private void _assertOriginalValues(ObjectField objectField) {
 		Assert.assertEquals(
+			Long.valueOf(objectField.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectField, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			objectField.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				objectField, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+
+		Assert.assertEquals(
 			Long.valueOf(objectField.getObjectDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
 				objectField, "getColumnOriginalValue",
@@ -616,6 +641,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setCreateDate(RandomTestUtil.nextDate());
 
 		objectField.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectField.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		objectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
 

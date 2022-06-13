@@ -538,12 +538,30 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a tooltip on the Toggle"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewTootipWhenSelectDirectlyFromUsersComputerOption {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153412 CanViewTootipWhenSelectDirectlyFromUsersComputerOption pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		ObjectField.selectOptionOnRequestFiles(option = "Upload Directly from the User's Computer");
+
+		AssertElementPresent(
+			key_text = "question-circle-full",
+			locator1 = "Icon#ANY");
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"

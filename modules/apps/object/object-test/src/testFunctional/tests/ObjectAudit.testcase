@@ -586,12 +586,57 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a layout is updated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewUpdateOnResourceActionWhenEditLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153595",
+			objectName = "CustomObject153595",
+			pluralLabelName = "Custom Objects 153595");
 
-		// TODO LPS-153595 CanViewUpdateOnResourceActionWhenEditLayout pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153595");
 
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Custom Layout",
+			objectName = "CustomObject153595");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153595");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "View",
+			objectLabel = "Custom Layout");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "true,defaultObjectLayout",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "UPDATE",
+			key_resourceName = "ObjectLayout",
+			resourceAction = "UPDATE",
+			resourceName = "ObjectLayout",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a relationship is updated"

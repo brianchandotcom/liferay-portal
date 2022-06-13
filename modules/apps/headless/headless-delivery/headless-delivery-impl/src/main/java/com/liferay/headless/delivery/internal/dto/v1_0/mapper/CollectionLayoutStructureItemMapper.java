@@ -27,16 +27,13 @@ import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -100,32 +97,9 @@ public class CollectionLayoutStructureItemMapper
 							collectionStyledLayoutStructureItem.
 								getTemplateKey();
 
-						setCssClasses(
-							() -> {
-								Set<String> cssClasses =
-									collectionStyledLayoutStructureItem.
-										getCssClasses();
-
-								if (SetUtil.isEmpty(cssClasses)) {
-									return null;
-								}
-
-								return ArrayUtil.toStringArray(cssClasses);
-							});
 						setCollectionViewports(
 							_getCollectionViewports(
 								collectionStyledLayoutStructureItem));
-						setFragmentStyle(
-							() -> {
-								JSONObject itemConfigJSONObject =
-									collectionStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return toFragmentStyle(
-									itemConfigJSONObject.getJSONObject(
-										"styles"),
-									saveMappingConfiguration);
-							});
 						setFragmentViewports(
 							() -> getFragmentViewPorts(
 								collectionStyledLayoutStructureItem.

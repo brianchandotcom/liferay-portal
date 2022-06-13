@@ -196,15 +196,14 @@ public class ViewJournalArticleContentDashboardItemAction
 					httpServletRequest);
 
 				try {
-					String canonicalURL = _portal.getCanonicalURL(
-						completeURL, themeDisplay, layout, false, false);
-
-					Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
-						_portal.getScopeGroupId(_httpServletRequest));
-
 					List<LayoutSEOLink> localizedLayoutSEOLinks =
 						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							layout, siteDefaultLocale, canonicalURL,
+							layout,
+							_portal.getSiteDefaultLocale(
+								_portal.getScopeGroupId(_httpServletRequest)),
+							_portal.getCanonicalURL(
+								completeURL, themeDisplay, layout, false,
+								false),
 							Collections.singleton(locale));
 
 					return _getLocalizedURL(locale, localizedLayoutSEOLinks);

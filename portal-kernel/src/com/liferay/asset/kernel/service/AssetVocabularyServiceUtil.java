@@ -115,6 +115,14 @@ public class AssetVocabularyServiceUtil {
 		return getService().fetchVocabulary(vocabularyId);
 	}
 
+	public static AssetVocabulary getAssetVocabularyByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getAssetVocabularyByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static List<AssetVocabulary> getGroupsVocabularies(long[] groupIds) {
 		return getService().getGroupsVocabularies(groupIds);
 	}

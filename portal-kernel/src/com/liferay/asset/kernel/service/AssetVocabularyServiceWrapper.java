@@ -127,6 +127,16 @@ public class AssetVocabularyServiceWrapper
 	}
 
 	@Override
+	public AssetVocabulary getAssetVocabularyByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyService.
+			getAssetVocabularyByExternalReferenceCode(
+				groupId, externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<AssetVocabulary> getGroupsVocabularies(
 		long[] groupIds) {
 

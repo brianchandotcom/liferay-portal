@@ -18,7 +18,7 @@ import APIService from './util/APIService.es';
 
 import '../css/main.scss';
 
-export default function ({context, portletNamespace, props}) {
+export default function ({context, props}) {
 	const isAnalyticsSync = props.analyticsData?.isSynced;
 	const {endpoints, imagesPath, page} = context;
 	const {
@@ -34,7 +34,7 @@ export default function ({context, portletNamespace, props}) {
 		runSegmentsExperimentURL,
 	} = endpoints;
 	const segmentsExperimentPanelToggle = document.getElementById(
-		`${portletNamespace}segmentsExperimentPanelToggleId`
+		`${context.namespace}segmentsExperimentPanelToggleId`
 	);
 
 	useEffect(() => {
@@ -61,10 +61,10 @@ export default function ({context, portletNamespace, props}) {
 				Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
 			});
 		}
-	}, [segmentsExperimentPanelToggle, portletNamespace]);
+	}, [segmentsExperimentPanelToggle]);
 
 	return (
-		<div id={`${portletNamespace}-segments-experiment-root`}>
+		<div id={`${context.namespace}-segments-experiment-root`}>
 			{isAnalyticsSync ? (
 				<SegmentsExperimentsContext.Provider
 					value={{
@@ -89,7 +89,7 @@ export default function ({context, portletNamespace, props}) {
 						page,
 					}}
 				>
-					<div id={`${portletNamespace}-segments-experiment-root`}>
+					<div id={`${context.namespace}-segments-experiment-root`}>
 						<SegmentsExperimentsSidebar
 							initialExperimentHistory={
 								props.historySegmentsExperiments

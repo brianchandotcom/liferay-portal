@@ -96,11 +96,8 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
 			type: 'checkbox',
 			typeOptions: {displayType: 'toggle'},
-		}
-	);
-
-	if (configurationValues[SHOW_HELP_TEXT_CONFIGURATION_KEY] !== false) {
-		fields.push({
+		},
+		{
 			defaultValue: '',
 			label: Liferay.Language.get('help-text'),
 			localizable: true,
@@ -112,8 +109,8 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 					'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
 				),
 			},
-		});
-	}
+		}
+	);
 
 	return fields;
 }

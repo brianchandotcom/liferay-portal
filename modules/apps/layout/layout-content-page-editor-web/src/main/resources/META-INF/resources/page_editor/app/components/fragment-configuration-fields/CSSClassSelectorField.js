@@ -111,12 +111,18 @@ export default function CSSClassSelectorField({
 						setValue((previousValue) => previousValue.trim());
 					}}
 					onItemsChange={(items) => {
-						setItems(items);
+						const nextItems = [
+							...new Set(items.map((item) => item.value)),
+						];
 
-						onValueSelect(
-							field.name,
-							items.map((item) => item.value)
+						setItems(
+							nextItems.map((item) => ({
+								label: item,
+								value: item,
+							}))
 						);
+
+						onValueSelect(field.name, nextItems);
 					}}
 					onKeyDown={(event) => {
 						if (event.key === ' ' && value.trim().length > 0) {

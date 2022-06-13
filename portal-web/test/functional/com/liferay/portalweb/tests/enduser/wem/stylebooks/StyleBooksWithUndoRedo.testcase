@@ -28,6 +28,116 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142363. The history will be cleared when publishing the style book or leaving style book editor or reloading page."
+	@priority = "4"
+	test ClearInteractionStatesHistory {
+		task ("Given a style book designer has a style book with interaction states") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			WaitForPageLoad();
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			Type(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#557744");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			Click(locator1 = "PageEditor#UNDO_HISTORY");
+
+			MenuItem.viewVisible(menuItem = "Update Success");
+		}
+
+		task ("When the style book designer publishes the style book") {
+			StyleBooks.clickPublish();
+		}
+
+		task ("Then the interaction states history is cleared") {
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			AssertVisible(
+				key_text = "time",
+				locator1 = "Icon#ANY_DISABLED");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			AssertTextEquals(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#557744");
+		}
+
+		task ("When the style book designer leaves the style book editor") {
+			Type(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#115544");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the interaction states history is cleared") {
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+
+			AssertVisible(
+				key_text = "time",
+				locator1 = "Icon#ANY_DISABLED");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			AssertTextEquals(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#115544");
+		}
+
+		task ("When the style book designer refreshes the page") {
+			Type(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#335544");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			Refresh();
+		}
+
+		task ("Then the interaction states history is cleared") {
+			AssertVisible(
+				key_text = "time",
+				locator1 = "Icon#ANY_DISABLED");
+
+			StyleBooks.expandSection(sectionName = "Theme Colors");
+
+			AssertTextEquals(
+				key_fieldLabel = "Success",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#335544");
+		}
+	}
+
 	@description = "This is a test for LPS-142363. The History dropdown menu could list up to the last 100 interaction states."
 	@priority = "4"
 	test ListUpToLastHundredInteractionStatesOnHistoryDropdownMenu {

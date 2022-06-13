@@ -845,6 +845,7 @@
 		<check name="JavaModuleClassGetResourceCallCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that dependencies files are located in the correct directory." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaModuleComponentCheck">
 			<category name="Bug Prevention" />

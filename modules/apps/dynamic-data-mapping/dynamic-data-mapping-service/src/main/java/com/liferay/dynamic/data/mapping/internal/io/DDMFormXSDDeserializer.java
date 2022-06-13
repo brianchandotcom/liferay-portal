@@ -356,10 +356,8 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldNamespace(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		String fieldNamespace = dynamicElementElement.attributeValue(
-			"fieldNamespace");
-
-		ddmFormField.setFieldNamespace(fieldNamespace);
+		ddmFormField.setFieldNamespace(
+			dynamicElementElement.attributeValue("fieldNamespace"));
 	}
 
 	private void _setDDMFormFieldReadOnly(

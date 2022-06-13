@@ -1016,11 +1016,8 @@ public class DDMFormPagesTemplateContextFactoryTest {
 	}
 
 	private static void _setUpResourceBundleLoaderUtil() {
-		ResourceBundleLoader portalResourceBundleLoader = Mockito.mock(
-			ResourceBundleLoader.class);
-
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
-			portalResourceBundleLoader);
+			Mockito.mock(ResourceBundleLoader.class));
 	}
 
 	private static void _setUpResourceBundleUtil() {

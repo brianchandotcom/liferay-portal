@@ -71,11 +71,10 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValuesJSONArray = getFieldValuesJSONArray(
-			formInstance.getSettings());
-
 		Assert.assertFalse(
-			containsField(fieldValuesJSONArray, "requireAuthentication"));
+			containsField(
+				getFieldValuesJSONArray(formInstance.getSettings()),
+				"requireAuthentication"));
 
 		_ddmFormInstanceSettingsUpgradeProcess.upgrade();
 
@@ -93,11 +92,10 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		DDMFormInstance formInstance = createFormInstance(settings);
 
-		JSONArray fieldValuesJSONArray = getFieldValuesJSONArray(
-			formInstance.getSettings());
-
 		Assert.assertFalse(
-			containsField(fieldValuesJSONArray, "autosaveEnabled"));
+			containsField(
+				getFieldValuesJSONArray(formInstance.getSettings()),
+				"autosaveEnabled"));
 
 		_ddmFormInstanceSettingsUpgradeProcess.upgrade();
 

@@ -174,10 +174,10 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 				"value " + i, "Reference " + i);
 		}
 
-		List<Map<String, String>> actualOptions = _getActualOptions(
-			ddmFormField, ddmFormFieldOptions, LocaleUtil.US);
-
-		Assert.assertNotEquals(expectedOptions, actualOptions);
+		Assert.assertNotEquals(
+			expectedOptions,
+			_getActualOptions(
+				ddmFormField, ddmFormFieldOptions, LocaleUtil.US));
 
 		ddmFormField.setProperty("alphabeticalOrder", "true");
 

@@ -500,10 +500,9 @@ public class DDMDataProviderInvokerImplTest {
 				ddmDataProviderRequest,
 				_createDDMRESTDataProviderSettingsWithTimeout(timeout));
 
-		int executionTimeoutInMilliseconds = _getExecutionTimeoutInMilliseconds(
-			ddmDataProviderInvokeCommand);
-
-		Assert.assertEquals(timeout, executionTimeoutInMilliseconds);
+		Assert.assertEquals(
+			timeout,
+			_getExecutionTimeoutInMilliseconds(ddmDataProviderInvokeCommand));
 
 		timeout = 15000;
 

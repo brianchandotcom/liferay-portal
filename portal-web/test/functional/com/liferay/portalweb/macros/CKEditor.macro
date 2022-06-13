@@ -138,9 +138,7 @@ definition {
 	macro assertSourceValue {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Click.clickAtNotVisible(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON");
-
-		AssertTextEquals.assertValue(
+		AssertValue(
 			locator1 = "CKEditor#BODY_SOURCE_VALUE",
 			value1 = "${sourceValue}");
 	}

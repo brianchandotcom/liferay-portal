@@ -90,6 +90,7 @@ definition {
 
 			KBArticle.editCP(
 				kbArticleTitle = "Test AntiSamy",
+				kbArticleTitleEdit = "Test AntiSamy Edit",
 				saveAsDraft = "true");
 		}
 

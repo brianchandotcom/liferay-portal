@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -179,13 +177,12 @@ public class CPDefinitionDisplayLayoutDisplayContext
 
 		CommerceChannel commerceChannel = getCommerceChannel();
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
-			commerceChannel.getSiteGroupId(), "selectDisplayPage",
-			layoutItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
+				commerceChannel.getSiteGroupId(), "selectDisplayPage",
+				layoutItemSelectorCriterion));
 	}
 
 	public String getProductItemSelectorUrl() {

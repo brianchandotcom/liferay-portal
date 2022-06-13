@@ -190,11 +190,10 @@ public class CPDefinitionOptionRelDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "productOptionsSelectItem",
-			cpOptionItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "productOptionsSelectItem",
+				cpOptionItemSelectorCriterion));
 	}
 
 	@Override

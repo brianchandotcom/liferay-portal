@@ -96,11 +96,10 @@ public class CPAttachmentFileEntriesDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
-			fileItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
+				fileItemSelectorCriterion));
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
@@ -207,11 +206,10 @@ public class CPAttachmentFileEntriesDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
-			imageItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
+				imageItemSelectorCriterion));
 	}
 
 	public long getImageMaxSize() {

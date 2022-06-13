@@ -138,12 +138,11 @@ public class CPDefinitionSpecificationOptionValueDisplayContext
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			"productSpecificationOptionsSelectItem",
-			cpSpecificationOptionItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				"productSpecificationOptionsSelectItem",
+				cpSpecificationOptionItemSelectorCriterion));
 	}
 
 	@Override

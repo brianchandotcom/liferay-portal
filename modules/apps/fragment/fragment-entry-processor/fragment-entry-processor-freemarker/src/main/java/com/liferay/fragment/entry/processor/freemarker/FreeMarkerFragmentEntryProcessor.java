@@ -14,12 +14,17 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.entry.processor.freemarker.internal.templateparser.InputTemplateNode;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
@@ -58,6 +63,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -263,6 +269,44 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 	}
 
+	private String _getFragmentEntryName(
+		FragmentEntryLink fragmentEntryLink, Locale locale) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getName();
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNull(rendererKey)) {
+			return StringPool.BLANK;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
+			rendererKey);
+
+		if (contributedFragmentEntry != null) {
+			return contributedFragmentEntry.getName();
+		}
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(
+				fragmentEntryLink.getRendererKey());
+
+		if (fragmentRenderer != null) {
+			return fragmentRenderer.getLabel(locale);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getLayoutMode(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getString(
 			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
@@ -326,7 +370,9 @@ public class FreeMarkerFragmentEntryProcessor
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getEditableValues(),
 				new FragmentConfigurationField(
-					"inputLabel", "string", StringPool.BLANK, true, "text"),
+					"inputLabel", "string",
+					_getFragmentEntryName(fragmentEntryLink, locale), true,
+					"text"),
 				locale));
 
 		String name = "name";
@@ -413,7 +459,17 @@ public class FreeMarkerFragmentEntryProcessor
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private Portal _portal;

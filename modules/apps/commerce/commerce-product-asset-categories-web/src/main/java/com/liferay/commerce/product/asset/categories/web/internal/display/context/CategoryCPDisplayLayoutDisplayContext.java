@@ -226,13 +226,12 @@ public class CategoryCPDisplayLayoutDisplayContext
 
 		CommerceChannel commerceChannel = getCommerceChannel();
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
-			commerceChannel.getSiteGroupId(), "selectDisplayPage",
-			layoutItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_groupLocalService.getGroup(commerceChannel.getSiteGroupId()),
+				commerceChannel.getSiteGroupId(), "selectDisplayPage",
+				layoutItemSelectorCriterion));
 	}
 
 	@Override

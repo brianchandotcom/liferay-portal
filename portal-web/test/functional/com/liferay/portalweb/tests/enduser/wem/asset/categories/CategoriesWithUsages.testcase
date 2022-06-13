@@ -95,4 +95,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154273. The site designer can view number of usages on categories admin in global site."
+	@priority = "4"
+	test ViewUsagesOfGlobalCategory {
+		task ("Given a site designer has a web content with a global category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Category Name",
+				vocabularyName = "Topic");
+
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${categoryId}",
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("When the site designer accesses to the Categories admin") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+		}
+
+		task ("Then the usage number of category is 1") {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Category Name",
+				tableEntryInfo = "1");
+		}
+
+		task ("When the site designer moves the blogs entry to recycle bin") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsEntry.moveToRecycleBinCP(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the usage number of category is 1") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Category Name",
+				tableEntryInfo = "1");
+		}
+
+		task ("When the site designer delete the blogs entry in recycle bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+			RecycleBin.deleteCP(
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+		}
+
+		task ("Then the usage number of category is 0") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Category Name",
+				tableEntryInfo = "0");
+
+			JSONCategory.deleteCategory(
+				categoryName = "Category Name",
+				groupName = "Global",
+				vocabularyName = "Topic");
+		}
+	}
+
 }

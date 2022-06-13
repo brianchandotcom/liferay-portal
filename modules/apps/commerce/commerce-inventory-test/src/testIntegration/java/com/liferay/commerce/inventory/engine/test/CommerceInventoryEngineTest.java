@@ -331,13 +331,11 @@ public class CommerceInventoryEngineTest {
 				_user.getUserId(), _cpInstance1.getSku(), bookQuantity, null,
 				Collections.emptyMap());
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _commerceChannel.getGroupId(),
-			_cpInstance1.getSku());
-
 		Assert.assertEquals(
 			_commerceInventoryWarehouseItem1.getQuantity() - bookQuantity,
-			stockQuantity);
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _commerceChannel.getGroupId(),
+				_cpInstance1.getSku()));
 
 		_commerceInventoryEngine.consumeQuantity(
 			_user.getUserId(),

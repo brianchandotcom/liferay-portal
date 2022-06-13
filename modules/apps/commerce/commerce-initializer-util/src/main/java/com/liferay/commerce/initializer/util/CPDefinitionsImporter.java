@@ -513,17 +513,13 @@ public class CPDefinitionsImporter {
 
 				double priceDouble = jsonObject.getDouble("price", 0);
 
-				BigDecimal price = BigDecimal.valueOf(priceDouble);
-
-				BigDecimal cost = BigDecimal.valueOf(
-					jsonObject.getDouble("cost", 0));
-
 				cpInstance.setManufacturerPartNumber(
 					jsonObject.getString("manufacturerPartNumber"));
-				cpInstance.setPrice(price);
+				cpInstance.setPrice(BigDecimal.valueOf(priceDouble));
 				cpInstance.setPromoPrice(
 					BigDecimal.valueOf(jsonObject.getDouble("promoPrice", 0)));
-				cpInstance.setCost(cost);
+				cpInstance.setCost(
+					BigDecimal.valueOf(jsonObject.getDouble("cost", 0)));
 
 				_cpInstanceLocalService.updateCPInstance(cpInstance);
 

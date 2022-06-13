@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.type.manager.CETManager;
@@ -1391,6 +1393,17 @@ public class LayoutsAdminDisplayContext {
 		LayoutSet selLayoutSet = getSelLayoutSet();
 
 		if (selLayoutSet.getFaviconFileEntryId() > 0) {
+			return true;
+		}
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(LayoutSet.class),
+					selLayoutSet.getLayoutSetId(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel != null) {
 			return true;
 		}
 

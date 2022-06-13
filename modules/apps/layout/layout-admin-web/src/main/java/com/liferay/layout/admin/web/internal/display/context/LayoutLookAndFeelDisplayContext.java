@@ -367,6 +367,17 @@ public class LayoutLookAndFeelDisplayContext {
 			return true;
 		}
 
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class),
+					selLayout.getPlid(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel != null) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -379,11 +390,20 @@ public class LayoutLookAndFeelDisplayContext {
 			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
 				selLayout.getMasterLayoutPlid());
 
-			if ((masterLayout != null) &&
-				(masterLayout.getFaviconFileEntryId() > 0)) {
+			if (masterLayout != null) {
+				ClientExtensionEntryRel clientExtensionEntryRel =
+					ClientExtensionEntryRelLocalServiceUtil.
+						fetchClientExtensionEntryRel(
+							PortalUtil.getClassNameId(Layout.class),
+							selLayout.getPlid(),
+							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
-				return LanguageUtil.get(
-					_httpServletRequest, "favicon-from-master");
+				if ((masterLayout.getFaviconFileEntryId() > 0) ||
+					(clientExtensionEntryRel != null)) {
+
+					return LanguageUtil.get(
+						_httpServletRequest, "favicon-from-master");
+				}
 			}
 		}
 

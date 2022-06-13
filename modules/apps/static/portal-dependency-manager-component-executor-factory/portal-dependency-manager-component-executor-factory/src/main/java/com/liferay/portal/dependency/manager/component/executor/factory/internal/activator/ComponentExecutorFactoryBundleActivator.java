@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -49,7 +51,7 @@ public class ComponentExecutorFactoryBundleActivator
 		}
 
 		long syncTimeout = GetterUtil.getInteger(
-			bundleContext.getProperty("dependency.manager.sync.timeout"), 60);
+			PropsUtil.get(PropsKeys.DEPENDENCY_MANAGER_SYNC_TIMEOUT), 60);
 
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			0, 1, 1, TimeUnit.MINUTES, new LinkedBlockingDeque<>(),

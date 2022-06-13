@@ -717,26 +717,14 @@
 																				"pageElements": [
 																					{
 																						"definition": {
-																							"fragment": {
-																								"key": "fake-content"
-																							},
-																							"fragmentConfig": {
-																								"fakeContentId": "fake content",
-																								"height": "642px"
-																							},
-																							"fragmentFields": [
-																							],
-																							"fragmentViewports": [
-																								{
-																									"fragmentViewportStyle": {
-																										"marginBottom": "4"
-																									},
-																									"id": "tablet"
-																								}
-																							],
-																							"indexed": true
+																							"widgetInstance": {
+																								"widgetConfig": {
+																									"properties": "route=recent-applications"
+																								},
+																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+																							}
 																						},
-																						"type": "Fragment"
+																						"type": "Widget"
 																					}
 																				],
 																				"type": "FragmentDropZone"

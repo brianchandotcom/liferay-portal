@@ -190,12 +190,31 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a layout is created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAddOnResourceActionWhenAddLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153593",
+			objectName = "CustomObject153593",
+			pluralLabelName = "Custom Objects 153593");
 
-		// TODO LPS-153593 CanViewAddOnResourceActionWhenAddLayout pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153593");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.addObjectLayoutViaUI(layoutName = "Custom Layout");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Custom Layout,false",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectLayout",
+			resourceAction = "ADD",
+			resourceName = "ObjectLayout",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a relationship is created"

@@ -19,28 +19,22 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -75,6 +69,8 @@ public class LayoutLookAndFeelDisplayContext {
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_cetManager = (CETManager)_httpServletRequest.getAttribute(
+			CETManager.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -92,70 +88,14 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getFaviconTitle() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		if (selLayout.getFaviconFileEntryId() > 0) {
-			try {
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-					selLayout.getFaviconFileEntryId());
-
-				return fileEntry.getTitle();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
-		}
-
-		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
-
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				selLayout.getMasterLayoutPlid());
-
-			if ((masterLayout != null) &&
-				(masterLayout.getFaviconFileEntryId() > 0)) {
-
-				return LanguageUtil.get(
-					_httpServletRequest, "favicon-from-master");
-			}
-		}
-
-		LayoutSet layoutSet = selLayout.getLayoutSet();
-
-		if (layoutSet.getFaviconFileEntryId() > 0) {
-			return LanguageUtil.format(
-				_themeDisplay.getLocale(), "favicon-from-x",
-				_layoutsAdminDisplayContext.getRootNodeName());
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
+		return FaviconUtil.getFaviconTitle(
+			_cetManager, _layoutsAdminDisplayContext.getSelLayout(),
+			_themeDisplay.getLocale());
 	}
 
 	public String getFaviconURL() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		String faviconImage = selLayout.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		Theme theme = null;
-
-		try {
-			theme = selLayout.getTheme();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return _layoutsAdminDisplayContext.getThemeFavicon(theme);
+		return FaviconUtil.getFaviconURL(
+			_cetManager, _layoutsAdminDisplayContext.getSelLayout());
 	}
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {
@@ -447,15 +387,8 @@ public class LayoutLookAndFeelDisplayContext {
 			}
 		}
 
-		LayoutSet layoutSet = selLayout.getLayoutSet();
-
-		if (layoutSet.getFaviconFileEntryId() > 0) {
-			return LanguageUtil.format(
-				_themeDisplay.getLocale(), "favicon-from-x",
-				_layoutsAdminDisplayContext.getRootNodeName());
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "favicon-from-theme");
+		return FaviconUtil.getFaviconTitle(
+			selLayout.getLayoutSet(), _themeDisplay.getLocale());
 	}
 
 	private JSONArray _getClientExtensionEntryRelsJSONArray(String type) {
@@ -493,9 +426,7 @@ public class LayoutLookAndFeelDisplayContext {
 		return jsonArray;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutLookAndFeelDisplayContext.class);
-
+	private final CETManager _cetManager;
 	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasMasterLayout;
 	private Boolean _hasStyleBooks;

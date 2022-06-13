@@ -21,7 +21,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -30,6 +30,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -55,7 +56,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -143,6 +142,8 @@ public class LayoutsAdminDisplayContext {
 		httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
 
+		_cetManager = (CETManager)httpServletRequest.getAttribute(
+			CETManager.class.getName());
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			httpServletRequest);
 
@@ -501,37 +502,12 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getFaviconImage() {
-		LayoutSet layoutSet = getSelLayoutSet();
-
-		String faviconImage = layoutSet.getFaviconURL();
-
-		if (faviconImage != null) {
-			return faviconImage;
-		}
-
-		return getThemeFavicon(layoutSet.getTheme());
+		return FaviconUtil.getFaviconURL(_cetManager, getSelLayoutSet());
 	}
 
 	public String getFaviconTitle() {
-		LayoutSet selLayoutSet = getSelLayoutSet();
-
-		if (selLayoutSet.getFaviconFileEntryId() == 0) {
-			return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
-		}
-
-		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				selLayoutSet.getFaviconFileEntryId());
-
-			return fileEntry.getTitle();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return LanguageUtil.get(httpServletRequest, "favicon-from-theme");
+		return FaviconUtil.getFaviconTitle(
+			getSelLayoutSet(), themeDisplay.getLocale());
 	}
 
 	public String getFileEntryItemSelectorURL() {
@@ -1257,14 +1233,6 @@ public class LayoutsAdminDisplayContext {
 				return cetItemSelectorURL.toString();
 			}
 		).build();
-	}
-
-	public String getThemeFavicon(Theme theme) {
-		if (theme == null) {
-			return StringPool.BLANK;
-		}
-
-		return theme.getContextPath() + theme.getImagesPath() + "/favicon.ico";
 	}
 
 	public String getTitle(boolean privatePages) {
@@ -2135,6 +2103,7 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
+	private final CETManager _cetManager;
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

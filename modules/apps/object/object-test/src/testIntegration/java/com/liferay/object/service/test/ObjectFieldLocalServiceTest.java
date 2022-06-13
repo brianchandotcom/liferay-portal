@@ -922,8 +922,10 @@ public class ObjectFieldLocalServiceTest {
 		String indexedLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			objectField.getObjectFieldId(), externalReferenceCode, 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, indexedLanguageId,
 			LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
@@ -932,6 +934,8 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals(
 			ObjectFieldConstants.DB_TYPE_STRING, objectField.getDBType());
+		Assert.assertEquals(
+			externalReferenceCode, objectField.getExternalReferenceCode());
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(

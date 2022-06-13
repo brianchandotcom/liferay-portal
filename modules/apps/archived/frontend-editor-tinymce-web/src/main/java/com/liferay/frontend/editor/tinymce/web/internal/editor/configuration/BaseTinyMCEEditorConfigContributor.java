@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Ambrín Chaudhary
  */
@@ -79,12 +77,12 @@ public abstract class BaseTinyMCEEditorConfigContributor
 
 		itemSelectorCriteria.add(itemSelectorCriterion);
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
 		jsonObject.put(
-			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+			"filebrowserImageBrowseUrl",
+			String.valueOf(
+				itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					itemSelectorCriteria.toArray(new ItemSelectorCriterion[0])))
 		).put(
 			"invalid_elements", "script"
 		);

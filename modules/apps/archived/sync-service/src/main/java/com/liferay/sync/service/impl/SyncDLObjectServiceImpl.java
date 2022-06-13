@@ -438,10 +438,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		try {
 			_syncHelper.checkSyncEnabled(repositoryId);
 
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				repositoryId, folderId, title);
-
-			return toSyncDLObject(fileEntry, SyncDLObjectConstants.EVENT_GET);
+			return toSyncDLObject(
+				_dlAppService.getFileEntry(repositoryId, folderId, title),
+				SyncDLObjectConstants.EVENT_GET);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -599,28 +598,24 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			SyncContext syncContext = new SyncContext();
 
-			String authType = PrefsPropsUtil.getString(
-				CompanyThreadLocal.getCompanyId(),
-				PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
-				PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
-
-			syncContext.setAuthType(authType);
+			syncContext.setAuthType(
+				PrefsPropsUtil.getString(
+					CompanyThreadLocal.getCompanyId(),
+					PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
+					PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE)));
 
 			boolean oAuthEnabled = PrefsPropsUtil.getBoolean(
 				user.getCompanyId(), SyncConstants.SYNC_OAUTH_ENABLED);
 
 			if (oAuthEnabled) {
-				String oAuthConsumerKey = PrefsPropsUtil.getString(
-					user.getCompanyId(), SyncConstants.SYNC_OAUTH_CONSUMER_KEY);
-
-				syncContext.setOAuthConsumerKey(oAuthConsumerKey);
-
-				String oAuthConsumerSecret = PrefsPropsUtil.getString(
-					user.getCompanyId(),
-					SyncConstants.SYNC_OAUTH_CONSUMER_SECRET);
-
-				syncContext.setOAuthConsumerSecret(oAuthConsumerSecret);
-
+				syncContext.setOAuthConsumerKey(
+					PrefsPropsUtil.getString(
+						user.getCompanyId(),
+						SyncConstants.SYNC_OAUTH_CONSUMER_KEY));
+				syncContext.setOAuthConsumerSecret(
+					PrefsPropsUtil.getString(
+						user.getCompanyId(),
+						SyncConstants.SYNC_OAUTH_CONSUMER_SECRET));
 				syncContext.setOAuthEnabled(true);
 			}
 
@@ -637,24 +632,18 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 					SyncServiceConfigurationValues.SYNC_LAN_ENABLED);
 
 				if (lanEnabled) {
-					String lanCertificate = PrefsPropsUtil.getString(
-						user.getCompanyId(),
-						SyncConstants.SYNC_LAN_CERTIFICATE);
-
-					syncContext.setLanCertificate(lanCertificate);
-
+					syncContext.setLanCertificate(
+						PrefsPropsUtil.getString(
+							user.getCompanyId(),
+							SyncConstants.SYNC_LAN_CERTIFICATE));
 					syncContext.setLanEnabled(true);
-
-					String lanKey = PrefsPropsUtil.getString(
-						user.getCompanyId(), SyncConstants.SYNC_LAN_KEY);
-
-					syncContext.setLanKey(lanKey);
-
-					String lanServerUuid = PrefsPropsUtil.getString(
-						user.getCompanyId(),
-						SyncConstants.SYNC_LAN_SERVER_UUID);
-
-					syncContext.setLanServerUuid(lanServerUuid);
+					syncContext.setLanKey(
+						PrefsPropsUtil.getString(
+							user.getCompanyId(), SyncConstants.SYNC_LAN_KEY));
+					syncContext.setLanServerUuid(
+						PrefsPropsUtil.getString(
+							user.getCompanyId(),
+							SyncConstants.SYNC_LAN_SERVER_UUID));
 				}
 
 				syncContext.setPortalBuildNumber(ReleaseInfo.getBuildNumber());
@@ -709,11 +698,10 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				lastAccessTime, repositoryId, events);
 
 			if (count == 0) {
-				SyncDLObjectUpdate syncDLObjectUpdate = getSyncDLObjectUpdate(
-					Collections.<SyncDLObject>emptyList(), 0, lastAccessTime,
-					lastAccessTime);
-
-				return syncDLObjectUpdate.toString();
+				return String.valueOf(
+					getSyncDLObjectUpdate(
+						Collections.<SyncDLObject>emptyList(), 0,
+						lastAccessTime, lastAccessTime));
 			}
 
 			int start = 0;
@@ -745,11 +733,11 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			SyncDLObject syncDLObject = syncDLObjects.get(
 				syncDLObjects.size() - 1);
 
-			SyncDLObjectUpdate syncDLObjectUpdate = getSyncDLObjectUpdate(
-				checkSyncDLObjects(syncDLObjects, repositoryId, lastAccessTime),
-				count, syncDLObject.getModifiedTime(), lastAccessTime);
-
-			return syncDLObjectUpdate.toString();
+			return String.valueOf(
+				getSyncDLObjectUpdate(
+					checkSyncDLObjects(
+						syncDLObjects, repositoryId, lastAccessTime),
+					count, syncDLObject.getModifiedTime(), lastAccessTime));
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -776,12 +764,12 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			SyncDLObject syncDLObject = syncDLObjects.get(
 				syncDLObjects.size() - 1);
 
-			SyncDLObjectUpdate syncDLObjectUpdate = getSyncDLObjectUpdate(
-				checkSyncDLObjects(syncDLObjects, repositoryId, lastAccessTime),
-				syncDLObjects.size(), syncDLObject.getModifiedTime(),
-				lastAccessTime);
-
-			return syncDLObjectUpdate.toString();
+			return String.valueOf(
+				getSyncDLObjectUpdate(
+					checkSyncDLObjects(
+						syncDLObjects, repositoryId, lastAccessTime),
+					syncDLObjects.size(), syncDLObject.getModifiedTime(),
+					lastAccessTime));
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(

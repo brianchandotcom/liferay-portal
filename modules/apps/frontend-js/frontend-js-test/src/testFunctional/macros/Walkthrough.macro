@@ -1,0 +1,17 @@
+definition {
+
+	macro enablePopoverMode {
+		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+	}
+
+	macro goToNextStep {
+		Click(locator1 = "Button#OK");
+
+		VerifyElementPresent(
+			key_title = "Step ${key_step}",
+			locator1 = "Walkthrough#POPOVER_TITLE");
+	}
+
+}

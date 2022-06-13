@@ -1823,11 +1823,96 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Join XOR node "
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWithJoinXORNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinXORNode";
 
-		// TODO CanPublishWithJoinXORNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "600,-300");
+		
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "300,-80");
+		
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Task1");
+		
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task");
+		
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Task2");
+		
+		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
+			nodeLabel = "Task2",
+			nodePosition = "-40,-500");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join XOR");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "fork",
+			connectorLabel = "Start-Fork Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorInLabel = "Task1",
+			connectorLabel = "Fork-Task1 Connector",
+			nodeType = "task",
+			connectorOut = "fork",
+			key_direction = "bottom");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorInLabel = "Task2",
+			connectorLabel = "Fork-Task2 Connector",
+			nodeType = "task",
+			connectorOut = "fork",
+			key_direction = "bottom");
+		
+		ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "join-xor",
+            connectorLabel = "join XOR-Task1 Connector",
+            connectorOutLabel = "Task1",
+            key_direction = "right");
+		
+		ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "join-xor",
+            connectorLabel = "join XOR-Task2 Connector",
+            connectorOutLabel = "Task2",
+            key_direction = "right");
+		
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "join XOR-end Connector",
+			connectorOut = "join-xor",
+			key_direction = "right");
+		
+		PortletEntry.publish();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
+
+
 
 	}
 

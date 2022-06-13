@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_NODE_TYPE_LABEL</td>
+	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')]/../../..//div[contains(@class, 'node ${key_nodeType}-node')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_POSITION</td>
 	<td>//div[@class='react-flow']//span[contains(text(),'${key_nodeLabel}')]/../../..//div[@xpos='${key_nodeXPosition}' and @ypos='${key_nodeYPosition}']</td>
 	<td></td>
@@ -153,6 +158,11 @@
 <tr>
 	<td>CONNECTOR_SOURCE</td>
 	<td>//div[@class='node ${key_nodeType}-node']/..//div[@data-handleid='${key_direction}Source']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECTOR_SOURCE_BY_LABEL</td>
+	<td>//span[contains(@class,'node-label truncate-container') and contains(text(),'${key_nodeLabel}')]/../../..//div[@data-handleid='${key_direction}Source']</td>
 	<td></td>
 </tr>
 <tr>

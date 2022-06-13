@@ -14,6 +14,21 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_SELECTED",
 				value1 = "0,0");
 		}
+
+		if (isSet(connectorOutLabel)) {
+			MouseOver.mouseOverInvisible(
+				key_direction = "${direction}",
+				key_nodeLabel = "${connectorOutLabel}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_BY_LABEL",
+				value1 = "0,0");
+
+			MouseDown.mouseDownAt(
+				key_direction = "${direction}",
+				key_nodeLabel = "${connectorOutLabel}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_BY_LABEL",
+				value1 = "0,0");
+		}
+
 		else {
 			MouseOver.mouseOverInvisible(
 				key_direction = "${direction}",
@@ -28,15 +43,33 @@ definition {
 				value1 = "0,0");
 		}
 
-		MouseMove(
-			key_nodeType = "${connectorIn}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
-			value1 = "0,47");
+		if (isSet(connectorInLabel)) {
 
-		MouseUp.mouseUpAt(
-			key_nodeType = "${connectorIn}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
-			value1 = "0,47");
+			MouseMove(
+				key_nodeType = "${nodeType}",
+				key_nodeLabel = "${connectorInLabel}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
+				value1 = "0,47");
+
+			MouseUp.mouseUpAt(
+				key_nodeType = "${nodeType}",
+				key_nodeLabel = "${connectorInLabel}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
+				value1 = "0,47");
+
+		}
+
+		else {
+			MouseMove(
+				key_nodeType = "${connectorIn}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+				value1 = "0,47");
+
+			MouseUp.mouseUpAt(
+				key_nodeType = "${connectorIn}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
+				value1 = "0,47");
+		}
 
 		if (isSet(connectorLabel)) {
 			Type(

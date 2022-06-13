@@ -6,6 +6,7 @@
 
 		<#if !entry.isDisabled()>
 			<@liferay_aui["icon"]
+				ariaLabel=entry.getLongDisplayName()
 				cssClass=cssClass
 				image=entry.getW3cLanguageId()?lower_case
 				markupView="lexicon"

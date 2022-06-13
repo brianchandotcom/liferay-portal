@@ -42,6 +42,7 @@ import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -732,8 +733,8 @@ public class ObjectFieldLocalServiceTest {
 			"maximumFileSize", objectField.getObjectFieldId(), "100");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Attachment", "Long", true,
-			false, null,
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Attachment",
+			"Long", true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
@@ -751,8 +752,8 @@ public class ObjectFieldLocalServiceTest {
 		// Business type text
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
-			null,
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+			"String", true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false, _getObjectFieldSettings("Text"));
 
@@ -767,8 +768,8 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getObjectFieldId(), "maximumFileSize"));
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
-			null,
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+			"String", true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
@@ -781,8 +782,8 @@ public class ObjectFieldLocalServiceTest {
 			"showCounter", objectField.getObjectFieldId(), "true");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
-			null,
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+			"String", true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Collections.singletonList(
@@ -825,9 +826,9 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertFalse(objectField.isRequired());
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "LongInteger", "Long", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false,
-			Collections.emptyList());
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "LongInteger",
+			"Long", false, true, "", LocalizedMapUtil.getLocalizedMap("able"),
+			"able", false, Collections.emptyList());
 
 		Assert.assertEquals("able_", objectField.getDBColumnName());
 		Assert.assertEquals("Long", objectField.getDBType());
@@ -844,9 +845,10 @@ public class ObjectFieldLocalServiceTest {
 			LocaleUtil.getDefault());
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
-			indexedLanguageId, LocalizedMapUtil.getLocalizedMap("baker"),
-			"baker", true, _getObjectFieldSettings("Text"));
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+			"String", true, false, indexedLanguageId,
+			LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
+			_getObjectFieldSettings("Text"));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -865,9 +867,10 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), 0, "Integer", "Integer", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("charlie"), "charlie",
-			false, _getObjectFieldSettings("Text"));
+			objectField.getObjectFieldId(), StringPool.BLANK, 0, "Integer",
+			"Integer", false, true, "",
+			LocalizedMapUtil.getLocalizedMap("charlie"), "charlie", false,
+			_getObjectFieldSettings("Text"));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -1032,7 +1035,7 @@ public class ObjectFieldLocalServiceTest {
 					objectDefinition1.getPKObjectFieldName());
 
 			_objectFieldLocalService.updateCustomObjectField(
-				objectField.getObjectFieldId(),
+				objectField.getObjectFieldId(), StringPool.BLANK,
 				objectField.getListTypeDefinitionId(),
 				objectField.getBusinessType(), "String",
 				objectField.isIndexed(), objectField.isIndexedAsKeyword(),

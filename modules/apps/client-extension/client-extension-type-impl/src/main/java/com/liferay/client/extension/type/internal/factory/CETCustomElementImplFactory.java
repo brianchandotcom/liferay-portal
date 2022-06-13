@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +58,17 @@ public class CETCustomElementImplFactory
 		throws PortalException {
 
 		return new CETCustomElementImpl(portletRequest);
+	}
+
+	public CETCustomElement cet(
+			String baseURL, long companyId, String description,
+			String externalReferenceCode, String name, Properties properties,
+			String sourceCodeURL, UnicodeProperties unicodeProperties)
+		throws PortalException {
+
+		return new CETCustomElementImpl(
+			baseURL, companyId, description, externalReferenceCode, name,
+			properties, sourceCodeURL, unicodeProperties);
 	}
 
 	@Override

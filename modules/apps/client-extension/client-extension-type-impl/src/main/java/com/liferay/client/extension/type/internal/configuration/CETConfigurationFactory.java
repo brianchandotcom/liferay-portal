@@ -17,20 +17,14 @@ package com.liferay.client.extension.type.internal.configuration;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
-import java.util.Properties;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.ComponentConstants;
@@ -56,12 +50,8 @@ public class CETConfigurationFactory {
 			CETConfiguration.class, properties);
 
 		_cet = _cetManager.addCET(
-			cetConfiguration.baseURL(), _getCompanyId(properties),
-			cetConfiguration.description(),
-			_getExternalReferenceCode(properties), cetConfiguration.name(),
-			_loadProperties(cetConfiguration), cetConfiguration.sourceCodeURL(),
-			cetConfiguration.type(),
-			_toTypeSettingsUnicodeProperties(cetConfiguration));
+			cetConfiguration, _getCompanyId(properties),
+			_getExternalReferenceCode(properties));
 	}
 
 	@Deactivate
@@ -102,40 +92,6 @@ public class CETConfigurationFactory {
 		}
 
 		return "LXC:" + pid;
-	}
-
-	private Properties _loadProperties(CETConfiguration cetConfiguration)
-		throws Exception {
-
-		String[] properties = cetConfiguration.properties();
-
-		if (properties == null) {
-			return new Properties();
-		}
-
-		return PropertiesUtil.load(
-			StringUtil.merge(properties, StringPool.NEW_LINE));
-	}
-
-	private UnicodeProperties _toTypeSettingsUnicodeProperties(
-		CETConfiguration cetConfiguration) {
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).build();
-
-		String[] typeSettings = cetConfiguration.typeSettings();
-
-		if (typeSettings == null) {
-			return typeSettingsUnicodeProperties;
-		}
-
-		for (String typeSetting : typeSettings) {
-			typeSettingsUnicodeProperties.put(typeSetting);
-		}
-
-		return typeSettingsUnicodeProperties;
 	}
 
 	private CET _cet;

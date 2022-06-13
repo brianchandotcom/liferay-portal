@@ -15,13 +15,12 @@
 package com.liferay.client.extension.type.manager;
 
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
-import java.util.Properties;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,10 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CETManager {
 
 	public CET addCET(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, String type,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			CETConfiguration cetConfiguration, long companyId,
+			String externalReferenceCode)
 		throws PortalException;
 
 	public void deleteCET(CET cet);

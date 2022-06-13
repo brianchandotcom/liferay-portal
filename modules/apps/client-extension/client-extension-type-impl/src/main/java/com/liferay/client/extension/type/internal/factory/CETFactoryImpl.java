@@ -17,18 +17,26 @@ package com.liferay.client.extension.type.internal.factory;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import javax.portlet.PortletRequest;
 
@@ -42,6 +50,28 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(immediate = true, service = CETFactory.class)
 public class CETFactoryImpl implements CETFactory {
+
+	@Override
+	public CET cet(
+			CETConfiguration cetConfiguration, long companyId,
+			String externalReferenceCode)
+		throws PortalException {
+
+		CETImplFactory cetImplFactory = _getCETImplFactory(
+			cetConfiguration.type());
+
+		try {
+			return cetImplFactory.cet(
+				cetConfiguration.baseURL(), companyId,
+				cetConfiguration.description(), externalReferenceCode,
+				cetConfiguration.name(), _loadProperties(cetConfiguration),
+				cetConfiguration.sourceCodeURL(),
+				_toTypeSettingsUnicodeProperties(cetConfiguration));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
+	}
 
 	@Override
 	public CET cet(ClientExtensionEntry clientExtensionEntry)
@@ -106,6 +136,40 @@ public class CETFactoryImpl implements CETFactory {
 		}
 
 		return cetImplFactory;
+	}
+
+	private Properties _loadProperties(CETConfiguration cetConfiguration)
+		throws IOException {
+
+		String[] properties = cetConfiguration.properties();
+
+		if (properties == null) {
+			return new Properties();
+		}
+
+		return PropertiesUtil.load(
+			StringUtil.merge(properties, StringPool.NEW_LINE));
+	}
+
+	private UnicodeProperties _toTypeSettingsUnicodeProperties(
+		CETConfiguration cetConfiguration) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).build();
+
+		String[] typeSettings = cetConfiguration.typeSettings();
+
+		if (typeSettings == null) {
+			return typeSettingsUnicodeProperties;
+		}
+
+		for (String typeSetting : typeSettings) {
+			typeSettingsUnicodeProperties.put(typeSetting);
+		}
+
+		return typeSettingsUnicodeProperties;
 	}
 
 	private ServiceTrackerMap<String, CETImplFactory> _serviceTrackerMap;

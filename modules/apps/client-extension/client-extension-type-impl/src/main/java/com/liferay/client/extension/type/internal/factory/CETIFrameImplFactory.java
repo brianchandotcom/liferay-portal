@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +51,18 @@ public class CETIFrameImplFactory implements CETImplFactory<CETIFrame> {
 	@Override
 	public CETIFrame cet(PortletRequest portletRequest) throws PortalException {
 		return new CETIFrameImpl(portletRequest);
+	}
+
+	@Override
+	public CETIFrame cet(
+			String baseURL, long companyId, String description,
+			String externalReferenceCode, String name, Properties properties,
+			String sourceCodeURL, UnicodeProperties unicodeProperties)
+		throws PortalException {
+
+		return new CETIFrameImpl(
+			baseURL, companyId, description, externalReferenceCode, name,
+			properties, sourceCodeURL, unicodeProperties);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.client.extension.type.factory;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -30,6 +31,11 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CETFactory {
+
+	public CET cet(
+			CETConfiguration cetConfiguration, long companyId,
+			String externalReferenceCode)
+		throws PortalException;
 
 	public CET cet(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException;

@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Properties;
+
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +51,18 @@ public class CETGlobalJSImplFactory implements CETImplFactory<CETGlobalJS> {
 		throws PortalException {
 
 		return new CETGlobalJSImpl(portletRequest);
+	}
+
+	@Override
+	public CETGlobalJS cet(
+			String baseURL, long companyId, String description,
+			String externalReferenceCode, String name, Properties properties,
+			String sourceCodeURL, UnicodeProperties unicodeProperties)
+		throws PortalException {
+
+		return new CETGlobalJSImpl(
+			baseURL, companyId, description, externalReferenceCode, name,
+			properties, sourceCodeURL, unicodeProperties);
 	}
 
 	@Override

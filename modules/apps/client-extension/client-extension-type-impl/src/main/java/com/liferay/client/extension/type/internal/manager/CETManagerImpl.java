@@ -14,20 +14,12 @@
 
 package com.liferay.client.extension.type.internal.manager;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.exception.ClientExtensionEntryTypeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
-import com.liferay.client.extension.type.internal.CETCustomElementImpl;
-import com.liferay.client.extension.type.internal.CETGlobalCSSImpl;
-import com.liferay.client.extension.type.internal.CETGlobalJSImpl;
-import com.liferay.client.extension.type.internal.CETIFrameImpl;
-import com.liferay.client.extension.type.internal.CETThemeCSSImpl;
-import com.liferay.client.extension.type.internal.CETThemeFaviconImpl;
-import com.liferay.client.extension.type.internal.CETThemeJSImpl;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +29,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -45,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.ServiceRegistration;
@@ -61,66 +51,12 @@ public class CETManagerImpl implements CETManager {
 
 	@Override
 	public CET addCET(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, String type,
-			UnicodeProperties typeSettingsUnicodeProperties)
+			CETConfiguration cetConfiguration, long companyId,
+			String externalReferenceCode)
 		throws PortalException {
 
-		CET cet = null;
-
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			cet = new CETCustomElementImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
-
-			cet = new CETGlobalCSSImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-
-			cet = new CETGlobalJSImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			cet = new CETIFrameImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
-
-			cet = new CETThemeCSSImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
-
-			cet = new CETThemeFaviconImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
-
-			cet = new CETThemeJSImpl(
-				baseURL, companyId, description, externalReferenceCode, name,
-				properties, sourceCodeURL, typeSettingsUnicodeProperties);
-		}
-		else {
-			throw new ClientExtensionEntryTypeException("Invalid type " + type);
-		}
+		CET cet = _cetFactory.cet(
+			cetConfiguration, companyId, externalReferenceCode);
 
 		Map<String, CET> cetsMap = _getCETsMap(cet.getCompanyId());
 
